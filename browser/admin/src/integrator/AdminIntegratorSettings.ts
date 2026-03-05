@@ -323,6 +323,13 @@ class OnlineSettingsStorage extends SettingsStorage {
 	}
 }
 
+let isCODesktop = false;
+try {
+	isCODesktop = (window as any).parent.mode.isCODesktop();
+} catch (e) {
+	isCODesktop = false;
+}
+
 class SettingIframe {
 	private settingsStorage: SettingsStorage;
 	private wordbook;
@@ -421,12 +428,12 @@ class SettingIframe {
 	init(): void {
 		this._allConfigSection = document.getElementById('allConfigSection');
 		this.initWindowVariables();
-		if ((window as any).parent.mode.isCODesktop()) {
+		if (isCODesktop) {
 			this.settingsStorage = new DesktopSettingsStorage();
 		} else {
 			this.settingsStorage = new OnlineSettingsStorage();
 		}
-		if (!(window.parent as any).mode.isCODesktop()) {
+		if (!isCODesktop) {
 			this.insertConfigSections();
 			this.setupLeftNavbar();
 		}
@@ -896,7 +903,7 @@ class SettingIframe {
 				);
 
 				await this.uploadFile(this.PATH.browserSettingsUpload(), file);
-				if ((window as any).parent.mode.isCODesktop()) {
+				if (isCODesktop) {
 					(window.parent as any).postMobileMessage('SYNCSETTINGS');
 				}
 				button.disabled = false;
@@ -1272,8 +1279,7 @@ class SettingIframe {
 
 		const image = document.createElement('img');
 		let src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
-		if ((window as any).parent.mode.isCODesktop())
-			src = `admin/images/${imageSrc}`;
+		if (isCODesktop) src = `admin/images/${imageSrc}`;
 		image.src = src;
 		image.alt = imageAlt;
 		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
@@ -1604,7 +1610,7 @@ class SettingIframe {
 
 		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
-		if (!(window.parent as any).mode.isCODesktop()) {
+		if (!isCODesktop) {
 			if (data.xcu && data.xcu.length > 0) {
 				const xcuFileContent = await this.settingsStorage.fetchSettingFile(
 					data.xcu[0].uri,
