@@ -614,7 +614,6 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         QString fileName = QString::fromStdString(uriPath.getFileName());
         applicationTitle = fileName + " - " APP_NAME;
     }
-    QApplication::setApplicationName(applicationTitle);
     if (_webView->window())
         _webView->window()->setWindowTitle(applicationTitle);
 
