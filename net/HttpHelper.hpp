@@ -76,16 +76,11 @@ inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
     if (uri.find(wopiSrc) != std::string::npos && Uri::needsEncoding(wopiSrc))
     {
 #if !ENABLE_DEBUG
-        (void)socket;
-        static bool warnedOnce = false;
-        if (!warnedOnce)
-        {
-            LOG_WRN_S("WOPISrc validation error: unencoded WOPISrc ["
-                      << wopiSrc << "] in URL [" << uri
-                      << "]. WOPISrc must be URI-encoded. This is highly problematic with proxies, "
-                         "load balancers, and when tunneling. Will not warn again");
-            warnedOnce = true;
-        }
+        LOG_WRN_ONCE_S(
+            "WOPISrc validation error: unencoded WOPISrc ["
+            << wopiSrc << "] in URL [" << uri
+            << "]. WOPISrc must be URI-encoded. This is highly problematic with proxies, "
+               "load balancers, and when tunneling. Will not warn again");
 #else
         // In debug mode, be assertive. Logs might go unnoticed.
         LOG_ERR_S("WOPISrc validation error: unencoded WOPISrc ["
