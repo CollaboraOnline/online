@@ -1828,8 +1828,8 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
             AC_MSG_ERROR([node required to build cool, but not installed])
        else
            NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-           if test "$NODE_VER" -lt 100000; then
-               AC_MSG_ERROR([This node version is old, upgrade to >= 10.0.0])
+           if test "$NODE_VER" -lt 200000; then
+               AC_MSG_ERROR([This node version is old, upgrade to >= 20.0.0])
            fi
        fi
 
@@ -1839,8 +1839,8 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
                AC_MSG_ERROR([npm required to build cool, but not installed])
            else
                NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-               if test "$NPM_VER" -lt 50000; then
-                   AC_MSG_ERROR([This npm version is too old, upgrade to >= 5.0.0])
+               if test "$NPM_VER" -lt 90000; then
+                   AC_MSG_ERROR([This npm version is too old, upgrade to >= 9.0.0])
                fi
            fi
        fi
