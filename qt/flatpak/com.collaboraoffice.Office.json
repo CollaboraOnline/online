@@ -446,13 +446,6 @@
                     "dest-filename": "NotoSansLisu-v2.102.zip"
                 },
                 {
-                    "url": "https://dev-www.libreoffice.org/src/openldap-2.6.12.tgz",
-                    "sha256": "1716ad779e85d743694c3e3b05277fb71b6a5eadca43c7a958aa62683b22208e",
-                    "type": "file",
-                    "dest": "external/tarballs",
-                    "dest-filename": "openldap-2.6.12.tgz"
-                },
-                {
                     "url": "https://dev-www.libreoffice.org/src/liborcus-0.21.0.tar.xz",
                     "sha256": "1c6e473d6b8a63d61d0e6874a1762d6f0e0e78338d763e48ac93126ecde19b37",
                     "type": "file",
@@ -765,7 +758,7 @@
         "--without-system-libzmf",
         "--without-system-mdds",
         "--without-system-odbc",
-        "--without-system-openldap",
+        "--disable-ldap",
         "--without-system-orcus",
         "--without-system-redland",
         "--without-system-sane",
