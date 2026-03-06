@@ -166,7 +166,40 @@ export class CodaQtServiceLauncher {
 	}
 
 	async onComplete(): Promise<void> {
-		killProcess(this.#codaQtProcess, 'coda-qt');
+		// Give coda-qt a moment to exit after the EXIT_TEST message.
+		if (
+			this.#codaQtProcess &&
+			this.#codaQtProcess.exitCode === null &&
+			!this.#codaQtProcess.signalCode
+		) {
+			await new Promise<void>((resolve) => {
+				const timeout = setTimeout(resolve, 5000);
+				this.#codaQtProcess!.once('exit', () => {
+					clearTimeout(timeout);
+					resolve();
+				});
+			});
+		}
+
+		let error: string | null = null;
+		const proc = this.#codaQtProcess;
+		if (proc) {
+			const { exitCode, signalCode } = proc;
+			if (exitCode === null && !signalCode) {
+				console.error(
+					'coda-qt did not exit within timeout after EXIT_TEST',
+				);
+				killProcess(proc, 'coda-qt');
+				error = 'coda-qt did not exit gracefully';
+			} else if (signalCode) {
+				error = `coda-qt crashed during tests (signal=${signalCode})`;
+			} else if (exitCode !== 0) {
+				error = `coda-qt crashed during tests (code=${exitCode})`;
+			} else {
+				console.log('coda-qt exited gracefully');
+			}
+		}
+
 		killProcess(this.#atSpiServerProcess, 'at-spi');
 		killProcess(this.#webEngineDriverProcess, 'webenginedriver');
 
@@ -180,5 +213,7 @@ export class CodaQtServiceLauncher {
 				);
 			}
 		}
+
+		if (error) throw new Error(error);
 	}
 }
