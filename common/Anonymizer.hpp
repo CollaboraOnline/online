@@ -23,8 +23,10 @@
 #include <unordered_map>
 #include <vector>
 
+#if !MOBILEAPP
 #include <openssl/evp.h>
 #include <openssl/rand.h>
+#endif
 
 /// Responsible for anonymizing names and URLs.
 /// The anonymized version is always the same for
@@ -119,11 +121,13 @@ public:
         }
 
         std::string res;
+#if !MOBILEAPP
         if (_highStrength)
         {
             res = highStrengthHash(text);
         }
         else
+#endif
         {
             res = fnvHash(text);
         }
@@ -157,6 +161,7 @@ private:
         return '#' + Util::encodeId(_prefix++, 0) + '#' + Util::encodeId(hash, 0) + '#';
     }
 
+#if !MOBILEAPP
     /// Cryptographic one-way hash using PBKDF2-HMAC-SHA512 via OpenSSL.
     /// This is irreversible even with knowledge of the salt, unlike the FNV-1a hash.
     static constexpr int HighStrengthIterations = 10000;
@@ -185,6 +190,7 @@ private:
 
         return '#' + HexUtil::dataToHexString(hash, 0, HighStrengthHashLen) + '#';
     }
+#endif
 
 public:
     /// Clears the shared state of mapAnonymized() / anonymize().
