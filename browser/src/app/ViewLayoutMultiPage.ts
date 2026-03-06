@@ -22,8 +22,8 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		app.events.on('resize', this.reset.bind(this));
 		app.map.on('zoomend', this.reset.bind(this));
 
-		this.reset();
 		this.adjustViewZoomLevel();
+		this.reset();
 	}
 
 	public adjustViewZoomLevel() {
