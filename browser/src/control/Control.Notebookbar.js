@@ -35,6 +35,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.model = model;
 	},
 
+	getWidgetSnapshot(id) {
+		return this.model.getById(id);
+	},
+
 	// happens only once
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
