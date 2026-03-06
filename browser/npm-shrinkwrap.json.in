@@ -27,7 +27,7 @@
         "browserify": "16.5.1",
         "browserify-css": "0.15.0",
         "d3": "6.7.0",
-        "dompurify": "3.2.4",
+        "dompurify": "3.3.2",
         "eslint": "7.0.0",
         "eslint-config-prettier": "^9.1.0",
         "fzstd": "0.1.0",
@@ -54,9 +54,9 @@
       }
     },
     "node_modules/@babel/code-frame": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_code-frame-7.28.6.tar",
-      "integrity": "sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q== sha512-xpdzI5W2gnhUGtIZ+DttlXmMJftrKjuzXHUHgC9jBrPIsU0yaZn5ENHdIeIUZ7ySSAhKVhjjmHsAIlo5/TB5yg==",
+      "version": "7.29.0",
+      "resolved": "file:node_shrinkpack/@babel_code-frame-7.29.0.tar",
+      "integrity": "sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw== sha512-ZnkUk63V3iWz5XXvTJ+BIpltnh32PruhlCqii+NXXB3h8MsKkFGvk5tVQpKZnkEzWYW3ghi6SOnOMfHYtUy7dg==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -69,9 +69,9 @@
       }
     },
     "node_modules/@babel/compat-data": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_compat-data-7.28.6.tar",
-      "integrity": "sha512-2lfu57JtzctfIrcGMz992hyLlByuzgIk58+hhGCxjKZ3rWI82NnVLjXcaTqkI2NvlcvOskZaiZ5kjUALo3Lpxg== sha512-pV71+EWtl8+mMPfhouE32uzQbvuAwII8sWyNeFJUnhrrQRmnk3ofCD7J/BjLfkQTRdpCQK1J4E30xd+A3jcKKw==",
+      "version": "7.29.0",
+      "resolved": "file:node_shrinkpack/@babel_compat-data-7.29.0.tar",
+      "integrity": "sha512-T1NCJqT/j9+cn8fvkt7jtwbLBfLC/1y1c7NtCeXFRgzGTsafi68MRv8yzkYSapBnFA6L3U2VSc02ciDzoAJhJg== sha512-A5S7exfncAdSrkv3Y8F2UIgcPJzNMlC3QsC7F+jHYfApAtIoE1nZW39pbSNh5vcMPraU8y+gli32aa7xN22Qgg==",
       "dev": true,
       "license": "MIT",
       "engines": {
@@ -79,21 +79,21 @@
       }
     },
     "node_modules/@babel/core": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_core-7.28.6.tar",
-      "integrity": "sha512-H3mcG6ZDLTlYfaSNi0iOKkigqMFvkTKlGUYlD8GW7nNOYRrevuA46iTypPyv+06V3fEmvvazfntkBU34L0azAw== sha512-GJT+bgOXAQEVtGL0zhIKvHSk+bErNFA3wDz/4KvR5gHvptFP8dp/Z+nQRQyj/zY4t5di9NWRPDIGOWcrHE6wog==",
+      "version": "7.29.0",
+      "resolved": "file:node_shrinkpack/@babel_core-7.29.0.tar",
+      "integrity": "sha512-CGOfOJqWjg2qW/Mb6zNsDm+u5vFQ8DxXfbM09z69p5Z6+mE1ikP2jUXw+j42Pf1XTYED2Rni5f95npYeuwMDQA== sha512-UiFuRlh9AwXz6mEDpcDyZpOli2oHv7ng6x/GyBoJ185Y6Cq4De/pk82Ti62Se+uJUlEUykL0t+JQt67DQswb1A==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
-        "@babel/code-frame": "^7.28.6",
-        "@babel/generator": "^7.28.6",
+        "@babel/code-frame": "^7.29.0",
+        "@babel/generator": "^7.29.0",
         "@babel/helper-compilation-targets": "^7.28.6",
         "@babel/helper-module-transforms": "^7.28.6",
         "@babel/helpers": "^7.28.6",
-        "@babel/parser": "^7.28.6",
+        "@babel/parser": "^7.29.0",
         "@babel/template": "^7.28.6",
-        "@babel/traverse": "^7.28.6",
-        "@babel/types": "^7.28.6",
+        "@babel/traverse": "^7.29.0",
+        "@babel/types": "^7.29.0",
         "@jridgewell/remapping": "^2.3.5",
         "convert-source-map": "^2.0.0",
         "debug": "^4.1.0",
@@ -127,14 +127,14 @@
       }
     },
     "node_modules/@babel/generator": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_generator-7.28.6.tar",
-      "integrity": "sha512-lOoVRwADj8hjf7al89tvQ2a1lf53Z+7tiXMgpZJL3maQPDxh0DgLMN62B2MKUOFcoodBHLMbDM6WAbKgNy5Suw== sha512-vyLPrJfYlHKLYLQjpPQ5Dw2hAyOgS9i6g0wfj2Bc4rKRM0/LxPcW6TvaVEyDOuRWAr3VRRC9TNtF6dm9puhacA==",
+      "version": "7.29.1",
+      "resolved": "file:node_shrinkpack/@babel_generator-7.29.1.tar",
+      "integrity": "sha512-qsaF+9Qcm2Qv8SRIMMscAvG4O3lJ0F1GuMo5HR/Bp02LopNgnZBC/EkbevHFeGs4ls/oPz9v+Bsmzbkbe+0dUw== sha512-k68DdRpLNDODpCLR3om46pHd1b7ksdRmAyN3ucA5zeMuZsK/IybtNewOsi7aSVdcCfC1uByhO4wUEZrCwDAwKQ==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
-        "@babel/parser": "^7.28.6",
-        "@babel/types": "^7.28.6",
+        "@babel/parser": "^7.29.0",
+        "@babel/types": "^7.29.0",
         "@jridgewell/gen-mapping": "^0.3.12",
         "@jridgewell/trace-mapping": "^0.3.28",
         "jsesc": "^3.0.2"
@@ -274,13 +274,13 @@
       }
     },
     "node_modules/@babel/parser": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_parser-7.28.6.tar",
-      "integrity": "sha512-TeR9zWR18BvbfPmGbLampPMW+uW1NZnJlRuuHso8i87QZNq2JRF9i6RgxRqtEq+wQGsS19NNTWr2duhnE49mfQ== sha512-wGYt9GvgVAqISod/Z5BG6haKbOq2NJsRk84FFaGEABmvIhLjJTRSLXH/HRBQWJgE+5dVQqv4qwiUfAI0+0jehA==",
+      "version": "7.29.0",
+      "resolved": "file:node_shrinkpack/@babel_parser-7.29.0.tar",
+      "integrity": "sha512-IyDgFV5GeDUVX4YdF/3CPULtVGSXXMLh1xVIgdCgxApktqnQV0r7/8Nqthg+8YLGaAtdyIlo2qIdZrbCv4+7ww== sha512-TqTvmm5JzC1j06WblmWv4DiqDhXXNm9peN76N5vkw/5vAvjeHalGVqmFGYm5zj+kUN5inLnDU7aKdqRiRBCq1A==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
-        "@babel/types": "^7.28.6"
+        "@babel/types": "^7.29.0"
       },
       "bin": {
         "parser": "bin/babel-parser.js"
@@ -305,18 +305,18 @@
       }
     },
     "node_modules/@babel/traverse": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_traverse-7.28.6.tar",
-      "integrity": "sha512-fgWX62k02qtjqdSNTAGxmKYY/7FSL9WAS1o2Hu5+I5m9T0yxZzr4cnrfXQ/MX0rIifthCSs6FKTlzYbJcPtMNg== sha512-JESx3UPUbfETfLhZEpk8BeADTgaYOF69OXgEu4+xZ3ARidk7BaxastU04i4Jj8JWybp9h7drGcpL7vJCNCaaqA==",
+      "version": "7.29.0",
+      "resolved": "file:node_shrinkpack/@babel_traverse-7.29.0.tar",
+      "integrity": "sha512-4HPiQr0X7+waHfyXPZpWPfWL/J7dcN1mx9gL6WdQVMbPnF3+ZhSMs8tCxN7oHddJE9fhNE7+lxdnlyemKfJRuA== sha512-YsMjYdPD4INPyF5bUZpaw9aPFU0ufNm1hFsKWZCp9O2HjQqzbJ/8Q3WnhfUPwUwMTYDkNgaLUbK9wYFZJD2obw==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
-        "@babel/code-frame": "^7.28.6",
-        "@babel/generator": "^7.28.6",
+        "@babel/code-frame": "^7.29.0",
+        "@babel/generator": "^7.29.0",
         "@babel/helper-globals": "^7.28.0",
-        "@babel/parser": "^7.28.6",
+        "@babel/parser": "^7.29.0",
         "@babel/template": "^7.28.6",
-        "@babel/types": "^7.28.6",
+        "@babel/types": "^7.29.0",
         "debug": "^4.3.1"
       },
       "engines": {
@@ -324,9 +324,9 @@
       }
     },
     "node_modules/@babel/types": {
-      "version": "7.28.6",
-      "resolved": "file:node_shrinkpack/@babel_types-7.28.6.tar",
-      "integrity": "sha512-0ZrskXVEHSWIqZM/sQZ4EV3jZJXRkio/WCxaqKZP1g//CEWEPSfeZFcms4XeKBCHU0ZKnIkdJeU/kF+eRp5lBg== sha512-poBJbwdDk5mTM6yhSPgtdIwld+xLilDcLeh3TFppz9hww77l5tXDaZhq/r2cA/93lz5i6NatZ2+EFsbtMlhffg==",
+      "version": "7.29.0",
+      "resolved": "file:node_shrinkpack/@babel_types-7.29.0.tar",
+      "integrity": "sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A== sha512-y1jD1Yn40J1AbJ0AkuZ3EJpidbS2rOsx3vXDSVSdvs3Du+2HHnlqNBJeNX/G9WixZqlnW8VTzWoH6JCIEk4ccg==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -659,9 +659,9 @@
       "license": "MIT"
     },
     "node_modules/@types/jquery": {
-      "version": "3.5.33",
-      "resolved": "file:node_shrinkpack/@types_jquery-3.5.33.tar",
-      "integrity": "sha512-SeyVJXlCZpEki5F0ghuYe+L+PprQta6nRZqhONt9F13dWBtR/ftoaIbdRQ7cis7womE+X2LKhsDdDtkkDhJS6g== sha512-FLRt7OXLxPqODSl7NiYJZA2zxzl/mkMe9bn7/nRQ8TUELtQK6wEzehcbCYoVfRVXAcafx87ErqeJhGyZ7bbseA==",
+      "version": "3.5.34",
+      "resolved": "file:node_shrinkpack/@types_jquery-3.5.34.tar",
+      "integrity": "sha512-3m3939S3erqmTLJANS/uy0B6V7BorKx7RorcGZVjZ62dF5PAGbKEDZK1CuLtKombJkFA2T1jl8LAIIs7IV6gBQ== sha512-hfi65DVUqyi4tiPmiGJDkaBx8PqzSidC/g6BValTbbkHZwjK89EULIDwy1r8qrKaSPRLImiLrVOyDQMcD2ZgCA==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -753,6 +753,14 @@
       "integrity": "sha512-TC0dmN0K8YcWEAEfiPi5gJP14eJe30TTGjkvek3iM/1NdHHsdCA/Td6GvNndMOo/iSnIsZ4HuuhrYPDAmbxzww== sha512-+a2FSP8Durg6K/1wMZGRJItyMwjd/ri2Msk+6KDw8BLMGg2BHb4WMUtYYZi4FVrqNEqPpGx8NF1nzVa2yW+H+g==",
       "dev": true,
       "license": "MIT"
+    },
+    "node_modules/@types/trusted-types": {
+      "version": "2.0.7",
+      "resolved": "file:node_shrinkpack/@types_trusted-types-2.0.7.tar",
+      "integrity": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw== sha512-YaytOT5HV6inyPVv9WZby/qCmfEnIHXSUDp4Pp+JXrZMkWBxlpoheASR9nkV4HA1tTfrgPKTZTwjFybRua3vLQ==",
+      "dev": true,
+      "license": "MIT",
+      "optional": true
     },
     "node_modules/@types/unist": {
       "version": "2.0.11",
@@ -1039,9 +1047,9 @@
       }
     },
     "node_modules/ajv": {
-      "version": "6.12.6",
-      "resolved": "file:node_shrinkpack/ajv-6.12.6.tar",
-      "integrity": "sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g== sha512-TU4er+qx+2mtKlWflXb7fK0G58xbqs3QO55WyDDMAxnFLsWLHqJ2Prz404ikkvT9L5OgcNEkwcvlZ61Ayk3jNQ==",
+      "version": "6.14.0",
+      "resolved": "file:node_shrinkpack/ajv-6.14.0.tar",
+      "integrity": "sha512-IWrosm/yrn43eiKqkfkHis7QioDleaXQHdDVPKg0FSwwd/DuvyX79TZnFOnYpB7dcsFAMmtFztZuXPDvSePkFw== sha512-omZhR75jS7qzThI/IM2KGHzrtNgWAH3oLzAQj6XgJZI0IdIJW+wxKrZ1aOw21nEhAI5gx1tRhp6yk2R2jt0sIQ==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -1221,9 +1229,9 @@
       }
     },
     "node_modules/asn1.js/node_modules/bn.js": {
-      "version": "4.12.2",
-      "resolved": "file:node_shrinkpack/bn.js-4.12.2.tar",
-      "integrity": "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw== sha512-ldZDlbUBkhiijue0dUhwr0xCFJOMriTKGVuNVVgGPvhGCOK058v5IimruJH5Kj01IHXnKKjQEX81UdyXKJqP1A==",
+      "version": "4.12.3",
+      "resolved": "file:node_shrinkpack/bn.js-4.12.3.tar",
+      "integrity": "sha512-fGTi3gxV/23FTYdAoUtLYp6qySe2KE3teyZitipKNRuVYcBkoP/bB3guXN/XVKUe9mxCHXnc9C4ocyz8OmgN0g== sha512-J+oHThJGFGT7fr6pkrHSdS/ntruhcNG+1iBhpAqWTAyT6z7D7te+oyT+/uBOm748YuRytiRhtCH9DxGBybKG+A==",
       "dev": true,
       "license": "MIT"
     },
@@ -1393,13 +1401,16 @@
       "license": "MIT"
     },
     "node_modules/baseline-browser-mapping": {
-      "version": "2.9.19",
-      "resolved": "file:node_shrinkpack/baseline-browser-mapping-2.9.19.tar",
-      "integrity": "sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg== sha512-X0yDf5oAmWwxkpTvSUllIYJBVug8jxZoT/wOlG4W0wJ+jYzUmNt/oXiUErXD1ApdDMtDSMeMnZoJyGlj+tDP8w==",
+      "version": "2.10.0",
+      "resolved": "file:node_shrinkpack/baseline-browser-mapping-2.10.0.tar",
+      "integrity": "sha512-lIyg0szRfYbiy67j9KN8IyeD7q7hcmqnJ1ddWmNt19ItGpNN64mnllmxUNFIOdOm6by97jlL6wfpTTJrmnjWAA== sha512-lr6E5WPeI+/PfAbG7vnyT/XBh2NVENBNfBVwzidMnWA2c3EkggkcV1DXNd379xMS2F5OEKqBjBZF+MvsRcFY1w==",
       "dev": true,
       "license": "Apache-2.0",
       "bin": {
-        "baseline-browser-mapping": "dist/cli.js"
+        "baseline-browser-mapping": "dist/cli.cjs"
+      },
+      "engines": {
+        "node": ">=6.0.0"
       }
     },
     "node_modules/binary-extensions": {
@@ -1482,9 +1493,9 @@
       }
     },
     "node_modules/bn.js": {
-      "version": "5.2.2",
-      "resolved": "file:node_shrinkpack/bn.js-5.2.2.tar",
-      "integrity": "sha512-v2YAxEmKaBLahNwE1mjp4WON6huMNeuDvagFZW+ASCuA/ku0bXR9hSMw0XpiqMoA3+rmnyck/tPRSFQkoC9Cuw== sha512-L3Rf1jNhz7hgQwaOl1ul0Ua6wJECKS9bBnHHOsNfrM7Zv2D250VPeW5sjNuy2+xJk2ps62nAQ8AWFHwL+d7tNQ==",
+      "version": "5.2.3",
+      "resolved": "file:node_shrinkpack/bn.js-5.2.3.tar",
+      "integrity": "sha512-EAcmnPkxpntVL+DS7bO1zhcZNvCkxqtkd0ZY53h06GNQ3DEkkGZ/gKgmDv6DdZQGj9BgfSPKtJJ7Dp1GPP8f7w== sha512-lCq9wqvxQqvPsMdVK/6NoZN2jAH47TH0S9dtTd70D2wSJ83y6DQ/PjgMAxC3ixhr0swPX82PlO11YDVSAKICDg==",
       "dev": true,
       "license": "MIT"
     },
@@ -1958,9 +1969,9 @@
       }
     },
     "node_modules/caniuse-lite": {
-      "version": "1.0.30001766",
-      "resolved": "file:node_shrinkpack/caniuse-lite-1.0.30001766.tar",
-      "integrity": "sha512-4C0lfJ0/YPjJQHagaE9x2Elb69CIqEPZeG0anQt9SIvIoOH4a4uaRl73IavyO+0qZh6MDLH//DrXThEYKHkmYA== sha512-Je1t23UysMBXOtgdJDezKchWXUbsuWzk3Rx2RsXkdBaCfcwEeBAocs1IUBKZeQ3otDvP3XwXQjWQl5UY0B2ipA==",
+      "version": "1.0.30001777",
+      "resolved": "file:node_shrinkpack/caniuse-lite-1.0.30001777.tar",
+      "integrity": "sha512-tmN+fJxroPndC74efCdp12j+0rk0RHwV5Jwa1zWaFVyw2ZxAuPeG8ZgWC3Wz7uSjT3qMRQ5XHZ4COgQmsCMJAQ== sha512-5d3vPb9fefb7mh29x/Whd0JsrWvhAlI0//U5d4gSuk6qU0bRe1TOfpXoeizkXXfRkaAvStIChipyhJyIJGbqqw==",
       "dev": true,
       "funding": [
         {
@@ -2446,9 +2457,9 @@
       }
     },
     "node_modules/create-ecdh/node_modules/bn.js": {
-      "version": "4.12.2",
-      "resolved": "file:node_shrinkpack/bn.js-4.12.2.tar",
-      "integrity": "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw== sha512-ldZDlbUBkhiijue0dUhwr0xCFJOMriTKGVuNVVgGPvhGCOK058v5IimruJH5Kj01IHXnKKjQEX81UdyXKJqP1A==",
+      "version": "4.12.3",
+      "resolved": "file:node_shrinkpack/bn.js-4.12.3.tar",
+      "integrity": "sha512-fGTi3gxV/23FTYdAoUtLYp6qySe2KE3teyZitipKNRuVYcBkoP/bB3guXN/XVKUe9mxCHXnc9C4ocyz8OmgN0g== sha512-J+oHThJGFGT7fr6pkrHSdS/ntruhcNG+1iBhpAqWTAyT6z7D7te+oyT+/uBOm748YuRytiRhtCH9DxGBybKG+A==",
       "dev": true,
       "license": "MIT"
     },
@@ -3170,9 +3181,9 @@
       }
     },
     "node_modules/diffie-hellman/node_modules/bn.js": {
-      "version": "4.12.2",
-      "resolved": "file:node_shrinkpack/bn.js-4.12.2.tar",
-      "integrity": "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw== sha512-ldZDlbUBkhiijue0dUhwr0xCFJOMriTKGVuNVVgGPvhGCOK058v5IimruJH5Kj01IHXnKKjQEX81UdyXKJqP1A==",
+      "version": "4.12.3",
+      "resolved": "file:node_shrinkpack/bn.js-4.12.3.tar",
+      "integrity": "sha512-fGTi3gxV/23FTYdAoUtLYp6qySe2KE3teyZitipKNRuVYcBkoP/bB3guXN/XVKUe9mxCHXnc9C4ocyz8OmgN0g== sha512-J+oHThJGFGT7fr6pkrHSdS/ntruhcNG+1iBhpAqWTAyT6z7D7te+oyT+/uBOm748YuRytiRhtCH9DxGBybKG+A==",
       "dev": true,
       "license": "MIT"
     },
@@ -3294,11 +3305,17 @@
       }
     },
     "node_modules/dompurify": {
-      "version": "3.2.4",
-      "resolved": "file:node_shrinkpack/dompurify-3.2.4.tar",
-      "integrity": "sha512-ysFSFEDVduQpyhzAob/kkuJjf5zWkZD8/A9ywSp1byueyuCfHamrCBa14/Oc2iiB0e51B+NpxSl5gmzn+Ms/mg== sha512-pDTEpsuAerJDXEZPEanAMJwJgP5fy4Kopcie5gWtgjgQGlJDvs/oO5QJnpNpcxFEnWyGUQYkyj4NmYcxNMvTvg==",
+      "version": "3.3.2",
+      "resolved": "file:node_shrinkpack/dompurify-3.3.2.tar",
+      "integrity": "sha512-6obghkliLdmKa56xdbLOpUZ43pAR6xFy1uOrxBaIDjT+yaRuuybLjGS9eVBoSR/UPU5fq3OXClEHLJNGvbxKpQ== sha512-mhtjFX9OFs59mBf0ic+VLxi3p56LcVhFOsFTWd3m7FakRif4wL9oo0nTLeUBJkZtjenT83NsB8vMBf6LK47q9A==",
       "dev": true,
-      "license": "(MPL-2.0 OR Apache-2.0)"
+      "license": "(MPL-2.0 OR Apache-2.0)",
+      "engines": {
+        "node": ">=20"
+      },
+      "optionalDependencies": {
+        "@types/trusted-types": "^2.0.7"
+      }
     },
     "node_modules/domutils": {
       "version": "1.7.0",
@@ -3349,9 +3366,9 @@
       }
     },
     "node_modules/electron-to-chromium": {
-      "version": "1.5.283",
-      "resolved": "file:node_shrinkpack/electron-to-chromium-1.5.283.tar",
-      "integrity": "sha512-3vifjt1HgrGW/h76UEeny+adYApveS9dH2h3p57JYzBSXJIKUJAvtmIytDKjcSCt9xHfrNCFJ7gts6vkhuq++w== sha512-b9Tp3ghYXiA/gmnTVFmk5VOgZq/F+v2fmewzuQ1d6F/2RdJRRQeHFuEr6LNqUKJ0keKgtzpkmUXqsv6HMjV+uQ==",
+      "version": "1.5.307",
+      "resolved": "file:node_shrinkpack/electron-to-chromium-1.5.307.tar",
+      "integrity": "sha512-5z3uFKBWjiNR44nFcYdkcXjKMbg5KXNdciu7mhTPo9tB7NbqSNP2sSnGR+fqknZSCwKkBN+oxiiajWs4dT6ORg== sha512-TTzdiciEuYiYusAHtjizcvZmIPJr/tm/mTBmrM4Ec+HqmY1/gIyoX0xMSblxR1xr64UIw9nkyeHhLheCaB6F2A==",
       "dev": true,
       "license": "ISC"
     },
@@ -3372,9 +3389,9 @@
       }
     },
     "node_modules/elliptic/node_modules/bn.js": {
-      "version": "4.12.2",
-      "resolved": "file:node_shrinkpack/bn.js-4.12.2.tar",
-      "integrity": "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw== sha512-ldZDlbUBkhiijue0dUhwr0xCFJOMriTKGVuNVVgGPvhGCOK058v5IimruJH5Kj01IHXnKKjQEX81UdyXKJqP1A==",
+      "version": "4.12.3",
+      "resolved": "file:node_shrinkpack/bn.js-4.12.3.tar",
+      "integrity": "sha512-fGTi3gxV/23FTYdAoUtLYp6qySe2KE3teyZitipKNRuVYcBkoP/bB3guXN/XVKUe9mxCHXnc9C4ocyz8OmgN0g== sha512-J+oHThJGFGT7fr6pkrHSdS/ntruhcNG+1iBhpAqWTAyT6z7D7te+oyT+/uBOm748YuRytiRhtCH9DxGBybKG+A==",
       "dev": true,
       "license": "MIT"
     },
@@ -4363,7 +4380,7 @@
       "version": "7.2.3",
       "resolved": "file:node_shrinkpack/glob-7.2.3.tar",
       "integrity": "sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q== sha512-g+Vmp07qZXdYl0GYn8yY+xUhb19wMH4F3mQxCdiyd7IAcZku0Xrh/DGsSqNPHTLN0a/m2AXiWduRxFDZ0Ovztw==",
-      "deprecated": "Glob versions prior to v9 are no longer supported",
+      "deprecated": "Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me",
       "dev": true,
       "license": "ISC",
       "dependencies": {
@@ -5539,9 +5556,9 @@
       }
     },
     "node_modules/jsdom/node_modules/acorn": {
-      "version": "8.15.0",
-      "resolved": "file:node_shrinkpack/acorn-8.15.0.tar",
-      "integrity": "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg== sha512-H3fJhZKIdSqkF9ubnTtRX41mqwf/tamUQaw+y1B6btE/EGaN5b8ZjwJwZJfoje2ka2mp3ciXv9kndQmG5jupsQ==",
+      "version": "8.16.0",
+      "resolved": "file:node_shrinkpack/acorn-8.16.0.tar",
+      "integrity": "sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw== sha512-lDXTydLixx1ljramqk/3D+pozYxzHviKtrxAdzIqSwfO2xgdAlo08fQc1CW1eI8WMXMmzucbVPZjUn4akTKNfA==",
       "license": "MIT",
       "bin": {
         "acorn": "bin/acorn"
@@ -6059,9 +6076,9 @@
       }
     },
     "node_modules/miller-rabin/node_modules/bn.js": {
-      "version": "4.12.2",
-      "resolved": "file:node_shrinkpack/bn.js-4.12.2.tar",
-      "integrity": "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw== sha512-ldZDlbUBkhiijue0dUhwr0xCFJOMriTKGVuNVVgGPvhGCOK058v5IimruJH5Kj01IHXnKKjQEX81UdyXKJqP1A==",
+      "version": "4.12.3",
+      "resolved": "file:node_shrinkpack/bn.js-4.12.3.tar",
+      "integrity": "sha512-fGTi3gxV/23FTYdAoUtLYp6qySe2KE3teyZitipKNRuVYcBkoP/bB3guXN/XVKUe9mxCHXnc9C4ocyz8OmgN0g== sha512-J+oHThJGFGT7fr6pkrHSdS/ntruhcNG+1iBhpAqWTAyT6z7D7te+oyT+/uBOm748YuRytiRhtCH9DxGBybKG+A==",
       "dev": true,
       "license": "MIT"
     },
@@ -6134,9 +6151,9 @@
       "license": "MIT"
     },
     "node_modules/minimatch": {
-      "version": "3.1.2",
-      "resolved": "file:node_shrinkpack/minimatch-3.1.2.tar",
-      "integrity": "sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw== sha512-AcJfUBk+N/sFlPgxwMUkS/8Z5GAMYOc2geuGg6WXiB132uWdSZz0iw9AtZEN7iCzXV49CRXQG+0IeJOivis5UA==",
+      "version": "3.1.5",
+      "resolved": "file:node_shrinkpack/minimatch-3.1.5.tar",
+      "integrity": "sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w== sha512-7hFa+yqnVt32mXKQTYiQe23APdondINjfayB6gNJ50icNba3+DP634CcpVQgSwUyAiW+FBfvEIJm7BA9JhYkXA==",
       "dev": true,
       "license": "ISC",
       "dependencies": {
@@ -6380,7 +6397,7 @@
       "version": "7.1.6",
       "resolved": "file:node_shrinkpack/glob-7.1.6.tar",
       "integrity": "sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA== sha512-r0Yv1Z/3ZACv9tEf7aFHYq3EOEDpFaC9kNbNV7ofWkUAoXi3R8vKvq7uMPxmHzdiIZexkZslaFV/kUEJ0purbQ==",
-      "deprecated": "Glob versions prior to v9 are no longer supported",
+      "deprecated": "Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me",
       "dev": true,
       "license": "ISC",
       "dependencies": {
@@ -6564,9 +6581,9 @@
       }
     },
     "node_modules/node-releases": {
-      "version": "2.0.27",
-      "resolved": "file:node_shrinkpack/node-releases-2.0.27.tar",
-      "integrity": "sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA== sha512-ZaRGBLtreUwbb9fpkCB2NoNfh2xGa38EmVmsJ3GQsWQk8IFSW1mDuGW+sjT4nNWzK5hg0Qzmm5XpVSb/o2CzzQ==",
+      "version": "2.0.36",
+      "resolved": "file:node_shrinkpack/node-releases-2.0.36.tar",
+      "integrity": "sha512-TdC8FSgHz8Mwtw9g5L4gR/Sh9XhSP/0DEkQxfEFXOpiul5IiHgHan2VhYYb6agDSfp4KuvltmGApc8HMgUrIkA== sha512-zZzvJfY1572VZVoRjcvjF0gliGJ5Vcq7rUuwT+sw03e3S4fuPuPoBI3ayQZDVy/d+xoNyJd0VZh4/cO1dFAjbg==",
       "dev": true,
       "license": "MIT"
     },
@@ -7526,9 +7543,9 @@
       }
     },
     "node_modules/public-encrypt/node_modules/bn.js": {
-      "version": "4.12.2",
-      "resolved": "file:node_shrinkpack/bn.js-4.12.2.tar",
-      "integrity": "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw== sha512-ldZDlbUBkhiijue0dUhwr0xCFJOMriTKGVuNVVgGPvhGCOK058v5IimruJH5Kj01IHXnKKjQEX81UdyXKJqP1A==",
+      "version": "4.12.3",
+      "resolved": "file:node_shrinkpack/bn.js-4.12.3.tar",
+      "integrity": "sha512-fGTi3gxV/23FTYdAoUtLYp6qySe2KE3teyZitipKNRuVYcBkoP/bB3guXN/XVKUe9mxCHXnc9C4ocyz8OmgN0g== sha512-J+oHThJGFGT7fr6pkrHSdS/ntruhcNG+1iBhpAqWTAyT6z7D7te+oyT+/uBOm748YuRytiRhtCH9DxGBybKG+A==",
       "dev": true,
       "license": "MIT"
     },
@@ -7669,9 +7686,9 @@
       "license": "MIT"
     },
     "node_modules/pump": {
-      "version": "3.0.3",
-      "resolved": "file:node_shrinkpack/pump-3.0.3.tar",
-      "integrity": "sha512-todwxLMY7/heScKmntwQG8CXVkWUOdYxIvY2s0VWAAMh/nd8SoYiRaKjlr7+iCs984f2P8zvrfWcDDYVb73NfA== sha512-t3ATSim70iKgzsP8izrOZGSPAg8oCQETlU5m2Xx4lQ1ngJhuwkWShfoyY5lagWAs2v9MqdxpbvIEXghWKDKt4A==",
+      "version": "3.0.4",
+      "resolved": "file:node_shrinkpack/pump-3.0.4.tar",
+      "integrity": "sha512-VS7sjc6KR7e1ukRFhQSY5LM2uBWAUPiOPa/A3mkKmiMwSmRFUITt0xuj+/lesgnCv+dPIEYlkzrcyXgquIHMcA== sha512-cWdfEPUDQPz7gjQGEUUG+kviFGEKxkdDSvhzVOCE47Ol/I0HmDUbVF8GuK0755akRij2YSrp1UQK/ixQ07pJUA==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -7710,9 +7727,9 @@
       "license": "MIT"
     },
     "node_modules/qs": {
-      "version": "6.14.1",
-      "resolved": "file:node_shrinkpack/qs-6.14.1.tar",
-      "integrity": "sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ== sha512-CrPiGUmoufiiLeb3v3zorEcKCOhDa+vYo7jsPOog4q0yMkp73D/68n8ubzl8/m41iiXQg+KGkD2ELSwkfgRU/A==",
+      "version": "6.15.0",
+      "resolved": "file:node_shrinkpack/qs-6.15.0.tar",
+      "integrity": "sha512-mAZTtNCeetKMH+pSjrb76NAM8V9a05I9aBZOHztWy/UqcJdQYNsf59vrRKWnojAT9Y+GbIvoTBC++CPHqpDBhQ== sha512-pFnZ3MppzdXG7teVLCQKk7F3Lp+iLd2n+2+BLncvwcBEaJh5qcfQZKgbiNbwjySSO+HCbvgN6/fvmNY2jH0GeQ==",
       "dev": true,
       "license": "BSD-3-Clause",
       "dependencies": {
@@ -8316,9 +8333,9 @@
       "license": "MIT"
     },
     "node_modules/semver": {
-      "version": "7.7.3",
-      "resolved": "file:node_shrinkpack/semver-7.7.3.tar",
-      "integrity": "sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q== sha512-7oKIVIN2N3HeGkJOeS0hq4ofXGHApEB6+HjqT5AE/S+zVh1i4FU1jFskUyecGfOAwCk22eYXMubdnie75yaLSA==",
+      "version": "7.7.4",
+      "resolved": "file:node_shrinkpack/semver-7.7.4.tar",
+      "integrity": "sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA== sha512-yhENm8zeCRXydJMOmtKp54B2GpXPvAPiAMzIMrG9LzTGDHrRrYSzx+a1IYnVU6Vfz0Ibgb5+hiwpTQ1dOC1lnw==",
       "dev": true,
       "license": "ISC",
       "bin": {
@@ -8783,9 +8800,9 @@
       }
     },
     "node_modules/spdx-license-ids": {
-      "version": "3.0.22",
-      "resolved": "file:node_shrinkpack/spdx-license-ids-3.0.22.tar",
-      "integrity": "sha512-4PRT4nh1EImPbt2jASOKHX7PB7I+e4IWNLvkKFDxNhJlfjbYlleYQh285Z/3mPTHSAK/AvdMmw5BNNuYH8ShgQ== sha512-TTXP+VIyXVMYawJjqiAMt94BMelLgpqVYxaevFibAfflMmuTLEhhH/SFMrUYJ87tQaPYa71H4fW2Ac7mRN9oOA==",
+      "version": "3.0.23",
+      "resolved": "file:node_shrinkpack/spdx-license-ids-3.0.23.tar",
+      "integrity": "sha512-CWLcCCH7VLu13TgOH+r8p1O/Znwhqv/dbb6lqWy67G+pT1kHmeD/+V36AVb/vq8QMIQwVShJ6Ssl5FPh0fuSdw== sha512-n/83NGDeVNmQNgXZyb4MRnw1GXy37SctRpqibJuGrwZQNHeyoRK2shBsj6FvogjJjK38msivhiwF9CK/wSiewQ==",
       "dev": true,
       "license": "CC0-1.0"
     },
@@ -9049,9 +9066,9 @@
       }
     },
     "node_modules/stylelint/node_modules/ajv": {
-      "version": "8.17.1",
-      "resolved": "file:node_shrinkpack/ajv-8.17.1.tar",
-      "integrity": "sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g== sha512-P4vWRUBSj7HyVLhzLwB4VSEIRjvUx5548IVGFvnyk2Rsm1lmLUlA6hkUsUWUj9K7EWpHhF8sBZfqeGHhkuw35Q==",
+      "version": "8.18.0",
+      "resolved": "file:node_shrinkpack/ajv-8.18.0.tar",
+      "integrity": "sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A== sha512-AWYPMU7rv2VZXW1+cuxCuIxEcRtLcg2+5MUMz2trCKg8WjBEU25nwbwQkPSuY3XldPhqHPMCdpbi1wFJi3sG5w==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -9311,7 +9328,7 @@
       "version": "6.2.1",
       "resolved": "file:node_shrinkpack/tar-6.2.1.tar",
       "integrity": "sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A== sha512-dHnUJoDIJPETkDP9EH5CCpALzwdftE54f6knLQEDCX1RsKhdImgsPoiTJD6g0SjDuoLlO3+0ar4sxz2I4lu0kw==",
-      "deprecated": "Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me",
+      "deprecated": "Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me",
       "dev": true,
       "license": "ISC",
       "dependencies": {
@@ -9672,13 +9689,13 @@
       }
     },
     "node_modules/typescript-strict-plugin/node_modules/minimatch": {
-      "version": "9.0.5",
-      "resolved": "file:node_shrinkpack/minimatch-9.0.5.tar",
-      "integrity": "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow== sha512-GxeZ+Wau6a6K/HgEEUo5vkClVfs30AS5pZUajuj1xEcvlMjC/AvEVAqb5GetGeIMwJbXzb7D69ut1i1r1jj4Rw==",
+      "version": "9.0.9",
+      "resolved": "file:node_shrinkpack/minimatch-9.0.9.tar",
+      "integrity": "sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg== sha512-y9NhoAsEEvh955CGKqwdzye+Q5kyguMD3IOW9diOCdS4G55jxEISUjKgVpZlg28a2JGQAlkZC06dEQMQkEAJKw==",
       "dev": true,
       "license": "ISC",
       "dependencies": {
-        "brace-expansion": "^2.0.1"
+        "brace-expansion": "^2.0.2"
       },
       "engines": {
         "node": ">=16 || 14 >=14.17"
