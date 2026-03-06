@@ -462,10 +462,6 @@ class Dispatcher {
 			document.getElementById('#addressInput input').focus();
 		};
 
-		this.actionsMap['apply-table-style'] = function (newStyleNumber: number) {
-			app.tableStyles.applyStyle(newStyleNumber);
-		};
-
 		// sheets toolbar
 		this.actionsMap['insertsheet'] = function () {
 			var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
