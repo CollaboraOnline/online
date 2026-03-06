@@ -833,6 +833,13 @@ label.notebookbar.ui-checkbox-label {
 
 /* Table Tab */
 
+.notebookbar #tablestyles_design-iconview,
+#tablestyles_design.jsdialog {
+	grid-template-columns: repeat(5, 1fr);
+	grid-gap: 20px;
+	padding: 5px 20px;
+}
+
 /* Draw Tab */
 
 /* other */
