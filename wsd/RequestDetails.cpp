@@ -307,7 +307,7 @@ void RequestDetails::processURI()
 
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
-    const std::string decoded = Util::isMobileApp() ? uri : Uri::decode(uri);
+    const std::string decoded = Uri::decode(uri);
 
     // Detect local file paths before constructing Poco::URI, because a bare '%'
     // (from the WebSocket URL decode of %25) would cause Poco::URI to throw.
