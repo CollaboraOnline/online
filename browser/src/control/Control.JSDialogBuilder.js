@@ -2429,7 +2429,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 			const oldImage = this.rendersCache[control.id].images[data.pos];
 			if (oldImage === data.image) {
-					app.console.debug('rendered_entry: no change');
+					app.console.debug('rendered_entry: "' + data.pos + '" for "' + control.id + '" - no change');
 					break;
 			}
 
@@ -2438,12 +2438,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (typeof control.updateRenders == 'function')
 				control.updateRenders(data.pos);
 			else
-				app.console.error('widget doesn\'t support custom entries');
+				app.console.error('widget "' + control.id + '" doesn\'t support custom entries');
 		}
 		break;
 
 		default:
-			app.console.error('unknown action: "' + data.action_type + '"');
+			app.console.error('unknown action: "' + data.action_type + '" for "' + control.id + '"');
 			break;
 		}
 	},
