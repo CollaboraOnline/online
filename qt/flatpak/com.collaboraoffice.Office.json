@@ -44,7 +44,7 @@
         {
 	  "type": "git",
 	  "url" : "https://gerrit.libreoffice.org/core",
-	  "branch": "distro/collabora/co-25.04"
+	  "branch": "distro/collabora/co-26.04"
         },
         {
           "url": "https://dev-www.libreoffice.org/src/cairo-1.17.6.tar.xz",
