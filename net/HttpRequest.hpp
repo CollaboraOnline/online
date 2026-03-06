@@ -1344,13 +1344,16 @@ private:
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
                "Invalid hostname and portNumber for http::Sesssion");
-#if ENABLE_DEBUG
-        std::string scheme;
-        std::string hostString;
-        std::string portString;
-        assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() && portString.empty()
-               && hostString == _host && "http::Session expects a hostname and not a URI");
-#endif
+
+        if constexpr (Util::isDebugEnabled())
+        {
+            std::string scheme;
+            std::string hostString;
+            std::string portString;
+            assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() &&
+                   portString.empty() && hostString == _host &&
+                   "http::Session expects a hostname and not a URI");
+        }
     }
 
     /// Returns the given protocol's scheme.
