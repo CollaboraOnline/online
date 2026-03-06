@@ -1875,11 +1875,23 @@ if test "$srcdir" != '.'; then
              as_fn_error $? "cannot create directory $dirname"
 
        rm -f "$dst_dir"
-       src_dir=$srcdir/$dst_dir
+       case $srcdir in
+         /*)
+           src_dir=$srcdir/$dst_dir
+           ;;
+         *)
+           dir=$(dirname "$dst_dir")
+           if test "$dir" = .; then
+             src_dir=$srcdir/$dst_dir
+           else
+             src_dir=$(printf %s "$dir" | sed -e 's|[[^/]]*|..|g')/$srcdir/$dst_dir
+           fi
+           ;;
+       esac
        echo "linking $src_dir to $dst_dir"
        ln -s "$src_dir" "$dst_dir" 2>/dev/null ||
           ln "$src_dir" "$dst_dir" 2>/dev/null ||
-             cp -p "$src_dir" "$dst_dir" ||
+             cp -p "$srcdir/$dst_dir" "$dst_dir" ||
                 as_fn_error $? "cannot link or copy $src_dir to $dst_dir"
    done
 fi])
