@@ -720,6 +720,7 @@
         "--with-system-nss",
         "--with-system-openssl",
         "--with-system-zlib",
+        "--with-system-zstd",
         "--with-theme=colibre colibre_svg",
         "--with-vendor=Collabora",
         "--without-buildconfig-recorded",
