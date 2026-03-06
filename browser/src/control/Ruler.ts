@@ -155,7 +155,7 @@ abstract class Ruler {
 		if (showRuler) map.uiManager.showRuler();
 	}
 
-	public _fixOffset() {
+	public fixOffset() {
 		app.layoutingService.appendLayoutingTask(() => {
 			this._fixOffsetImpl();
 		});
