@@ -13,6 +13,8 @@
 
 #include "QtClipboard.hpp"
 
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
 

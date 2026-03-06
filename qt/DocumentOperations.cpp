@@ -13,6 +13,8 @@
 
 #include "DocumentOperations.hpp"
 
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
