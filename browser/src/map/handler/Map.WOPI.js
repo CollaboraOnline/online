@@ -788,7 +788,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			this._map.mention.openMentionPopup(list);
 		}
 		else if (msg.MessageId === 'Action_ResolveComment') {
-			if (msg.Values) {
+			// Currently only Writer has "Resolve Comment" feature.
+			if (msg.Values && this._map._docLayer._docType === 'text') {
 				const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
 				if (commentSection) {
 					const comment = commentSection.getComment(msg.Values.Id);
