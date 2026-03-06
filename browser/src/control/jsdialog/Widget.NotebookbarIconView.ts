@@ -63,19 +63,31 @@ function _createButtonForNotebookbarIconview(
 	button.onclick = onClickCallback;
 }
 
-function _getDropdownContent(data: any) {
-	const dropdownContent = [{ type: 'json', content: data }];
-	if (data.id === 'stylesview') {
+function _getDropdownContent(data: IconViewListJSON) {
+	const dropdownContent: Array<MenuDefinition> = [];
+	for (const child of data.children) {
+		// only first was visible in the notebookbar
+		child.visible = true;
+		dropdownContent.push({
+			id: 'dropdown-entry-' + child.id,
+			type: 'json',
+			content: child,
+		});
+	}
+
+	if (data.children.length === 1 && data.children[0].id === 'stylesview') {
 		dropdownContent.push(
 			{
+				id: 'dropdown-entry-stylesview',
 				type: 'json',
 				content: {
 					type: 'separator',
 					id: 'iconview-button-separator',
 					orientation: 'horizontal',
-				},
+				} as SeparatorWidgetJSON,
 			},
 			{
+				id: 'dropdown-entry-more',
 				type: 'json',
 				content: {
 					id: 'format-style-list-dialog',
@@ -83,7 +95,7 @@ function _getDropdownContent(data: any) {
 					text: _('Open Styles Sidebar'),
 					command: 'showstylelistdeck',
 					icon: 'lc_stylepreviewmore.svg',
-				},
+				} as ToolItemWidgetJSON,
 			},
 		);
 	}
@@ -172,7 +184,7 @@ JSDialog.notebookbarIconViewList = function (
 		JSDialog.OpenDropdown(
 			data.id,
 			commonContainer,
-			_getDropdownContent(data.children[0]),
+			_getDropdownContent(data),
 			notebookbarIconViewCallback,
 		);
 		bIsExpanded = true;
