@@ -879,7 +879,8 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			if (hasManyChildren) {
+			var isContainer = this.isContainerType(childData.type);
+			if (hasManyChildren && isContainer) {
 				if (childData.id && childData.id.indexOf(' ') >= 0)
 					console.error('notebookbar: space in the id: "' + childData.id + '"');
 				var tableId = childData.id ? childData.id.replace(' ', '') : '';
