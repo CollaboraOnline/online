@@ -147,25 +147,47 @@ class TableStylesService {
 			} catch (e) {
 				app.console.error('Failed to parse TableStyles: ' + e);
 			}
+
+			app.map.fire('jsdialogupdate', {
+				data: {
+					id: WindowId.Notebookbar + '',
+					type: '',
+					jsontype: 'notebookbar',
+					action: 'update',
+					control: this.generateTableStylesJSON(),
+				} as JSDialogJSON,
+			});
+		} else if (e.commandName === '.uno:DatabaseSettings') {
+			const currentStyle = e.state as TableStyleInfo;
+
+			let position = -1;
+			if (currentStyle) {
+				position = 0; // state set -> at least None can be selected
+
+				for (const style of this.styles) {
+					position++;
+
+					if (style.Name === currentStyle.TableStyleName) break;
+				}
+			}
+
+			app.map.fire('jsdialogaction', {
+				data: {
+					id: WindowId.Notebookbar + '',
+					type: '',
+					jsontype: 'notebookbar',
+					action: 'action',
+					data: {
+						control_id: 'tablestyles_design',
+						action_type: 'select',
+						position: position,
+						data: {
+							position: position,
+						},
+					},
+				} as JSDialogJSON,
+			});
 		}
-
-		// update ntoebookbar model - tab can not exist yet
-
-		if (
-			e.commandName !== '.uno:TableStyles' &&
-			e.commandName !== '.uno:DatabaseSettings'
-		)
-			return;
-
-		app.map.fire('jsdialogupdate', {
-			data: {
-				id: '0',
-				type: '',
-				jsontype: 'notebookbar',
-				action: 'update',
-				control: this.generateTableStylesJSON(),
-			} as JSDialogJSON,
-		});
 	}
 
 	public generateTableStylesJSON(): IconViewJSON {
