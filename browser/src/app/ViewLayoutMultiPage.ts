@@ -239,7 +239,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		TileManager.checkRequestTiles(this.currentCoordList);
 
 		// We most likely scrolled the view. We also need to check ruler position.
-		if (app.UI.horizontalRuler) app.UI.horizontalRuler._fixOffset();
+		if (app.UI.horizontalRuler) app.UI.horizontalRuler.fixOffset();
 	}
 
 	public documentToViewX(point: cool.SimplePoint): number {

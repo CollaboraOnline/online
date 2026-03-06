@@ -1798,7 +1798,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// In that case, we need to fix offset again (if required - it checks values before changing offset).
 		const layout = app.activeDocument ? (app.activeDocument.activeLayout ?  app.activeDocument.activeLayout.type : "") : "";
 		if (layout === 'ViewLayoutMultiPage' && app.UI.horizontalRuler)
-			app.UI.horizontalRuler._fixOffset();
+			app.UI.horizontalRuler.fixOffset();
 	},
 
 	_isHyperlinkChanged: function(hyperlink)

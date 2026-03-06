@@ -69,7 +69,7 @@ class HRuler extends Ruler {
 		this._map.on('rulerupdate', this._updateOptions, this);
 		this._map.on('tabstoplistupdate', this._updateTabStops, this);
 		this._map.on('scrolllimits', this._updatePaintTimer, this);
-		this._map.on('moveend fixruleroffset', this._fixOffset, this);
+		this._map.on('moveend fixruleroffset', this.fixOffset, this);
 		this._map.on('updatepermission', this._changeInteractions, this);
 		window.L.DomUtil.addClass(this._map.getContainer(), 'hasruler');
 
@@ -90,7 +90,7 @@ class HRuler extends Ruler {
 		this._map.off('rulerupdate', this._updateOptions, this);
 		this._map.off('tabstoplistupdate', this._updateTabStops, this);
 		this._map.off('scrolllimits', this._updatePaintTimer, this);
-		this._map.off('moveend fixruleroffset', this._fixOffset, this);
+		this._map.off('moveend fixruleroffset', this.fixOffset, this);
 		this._map.off('updatepermission', this._changeInteractions, this);
 	}
 
@@ -494,7 +494,7 @@ class HRuler extends Ruler {
 		const increaseBy = Math.round(numbersPerCM + 0.5);
 		const markerWidthPx = (increaseBy / numbersPerCM) * (1 / 0.026458);
 
-		this._fixOffset();
+		this.fixOffset();
 
 		this.options.DraggableConvertRatio = rulerWidth / this.options.pageWidth;
 		this._rFace.style.width = rulerWidth + 'px';
@@ -663,7 +663,7 @@ class HRuler extends Ruler {
 		wPixel =
 			this._map._docLayer._docPixelSize.x - this.options.tileMargin * 2 * scale;
 
-		this._fixOffset();
+		this.fixOffset();
 
 		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
 		this._rFace.style.width = wPixel + 'px';
