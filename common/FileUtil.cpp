@@ -66,7 +66,8 @@ namespace FileUtil
         return size;
     }
 
-    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error)
+    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error,
+              LOG_CAPTURE_CALLER)
     {
         int from = -1, to = -1;
         try
@@ -173,7 +174,8 @@ namespace FileUtil
         return newTmp;
     }
 
-    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps)
+    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps,
+                    LOG_CAPTURE_CALLER)
     {
         const std::string randFilename = toPath + Util::rng::getFilename(12);
         if (copy(fromPath, randFilename, /*log=*/false, /*throw_on_error=*/false))
