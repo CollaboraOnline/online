@@ -186,7 +186,7 @@ COOL_ADMIN_JS =\
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
-	dompurify@3.2.4 \
+	dompurify@3.3.2 \
 	json-js@1.1.2 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
