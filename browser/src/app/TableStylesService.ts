@@ -264,8 +264,8 @@ class TableStylesService {
 			row: -1,
 			text: _('None'),
 			image: 'images/lc_table_none.svg',
-			width: 35,
-			height: 35,
+			width: 50,
+			height: 50,
 			selected: !currentStyle || currentStyle.TableStyleName === '',
 		} as IconViewEntry);
 
@@ -277,8 +277,8 @@ class TableStylesService {
 				row: i++,
 				text: element.UIName,
 				image: this.generateIcon(element),
-				width: 35,
-				height: 35,
+				width: 50,
+				height: 50,
 				selected: selected,
 			} as IconViewEntry);
 		});
