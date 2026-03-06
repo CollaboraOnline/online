@@ -194,13 +194,6 @@
                     "dest-filename": "CoinMP-1.8.4.tgz"
                 },
                 {
-                    "url": "https://dev-www.libreoffice.org/src/cppunit-1.15.1.tar.gz",
-                    "sha256": "89c5c6665337f56fd2db36bc3805a5619709d51fb136e51937072f63fcc717a7",
-                    "type": "file",
-                    "dest": "external/tarballs",
-                    "dest-filename": "cppunit-1.15.1.tar.gz"
-                },
-                {
                     "url": "https://dev-www.libreoffice.org/src/glm-1.0.3.zip",
                     "sha256": "3aa4347b8f13cba882df1c7b61a6ca910c75a875c56ec3d75d7dc9ae8eac34df",
                     "type": "file",
@@ -741,7 +734,7 @@
         "--without-system-cairo",
         "--without-system-clucene",
         "--without-system-coinmp",
-        "--without-system-cppunit",
+        "--with-system-cppunit",
         "--without-system-dragonbox",
         "--without-system-frozen",
         "--without-system-glm",
