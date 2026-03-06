@@ -26,8 +26,11 @@ class CalcTableTab implements NotebookbarTab {
 		builder: JSBuilder,
 	) {
 		if (object.id === 'tablestyles_design') {
-			if (eventType === 'activate')
-				app.dispatcher.dispatch('apply-table-style', data);
+			if (eventType === 'activate') {
+				const stylePos = data as number;
+				app.tableStyles.applyStyle(stylePos);
+			}
+
 			return true;
 		}
 
