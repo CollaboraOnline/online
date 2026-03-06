@@ -220,7 +220,7 @@
     {
       "SPDXID": "SPDXRef-dompurify",
       "name": "DOMPurify",
-      "versionInfo": "3.2.4",
+      "versionInfo": "3.3.2",
       "filesAnalyzed": false,
       "downloadLocation": "NONE",
       "licenseConcluded": "Apache-2.0"
