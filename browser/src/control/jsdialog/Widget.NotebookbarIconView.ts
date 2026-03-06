@@ -63,15 +63,21 @@ function _createButtonForNotebookbarIconview(
 	button.onclick = onClickCallback;
 }
 
-function _getDropdownContent(data: IconViewListJSON) {
+function _getDropdownContent(data: IconViewListJSON, builder: JSBuilder) {
 	const dropdownContent: Array<MenuDefinition> = [];
 	for (const child of data.children) {
 		// only first was visible in the notebookbar
 		child.visible = true;
+
+		// get up-to-date copy from model, TODO: more clean way to do that
+		const childData = (
+			builder?.options?.mobileWizard as any
+		)?.getWidgetSnapshot(child.id);
+
 		dropdownContent.push({
 			id: 'dropdown-entry-' + child.id,
 			type: 'json',
-			content: child,
+			content: childData ? childData : undefined,
 		});
 	}
 
@@ -184,7 +190,7 @@ JSDialog.notebookbarIconViewList = function (
 		JSDialog.OpenDropdown(
 			data.id,
 			commonContainer,
-			_getDropdownContent(data),
+			_getDropdownContent(data, builder),
 			notebookbarIconViewCallback,
 		);
 		bIsExpanded = true;
