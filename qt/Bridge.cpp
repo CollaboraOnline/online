@@ -518,6 +518,24 @@ QVariant Bridge::cool(const QString& messageStr)
             }
         });
     }
+    else if (tokens.equals(0, "EXIT_TEST"))
+    {
+        LOG_INF("EXIT_TEST received -- closing document and quitting");
+        fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
+        QTimer::singleShot(0, [this]() {
+            if (_webView)
+            {
+                QWidget* topLevel = _webView->window();
+                if (topLevel)
+                {
+                    topLevel->hide();
+                    topLevel->close();
+                    topLevel->deleteLater();
+                }
+            }
+            QApplication::quit();
+        });
+    }
     else if (tokens.equals(0, "TEXTCLIPBOARD"))
     {
         QString text = QString::fromStdString(tokens.substrFromToken(1));

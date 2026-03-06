@@ -104,7 +104,7 @@ export const config = {
 
 	logLevel: 'info',
 	outputDir: './logs',
-	bail: 0,
+	bail: 1,
 	specFileRetries: 1,
 	waitforTimeout: 10000,
 	waitforInterval: 500,
@@ -150,5 +150,17 @@ export const config = {
 			},
 			true,
 		);
+	},
+
+	after: async function () {
+		// Ask the app to close the document and quit.
+		try {
+			await browser.webEngine.execute(() => {
+				window.postMobileMessage('EXIT_TEST');
+			});
+		} catch (e) {
+			// Page or webenginedriver may already be gone.
+			// onComplete will detect that via the exit code.
+		}
 	},
 };
