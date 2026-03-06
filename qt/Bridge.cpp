@@ -13,6 +13,8 @@
 
 #include "bridge.hpp"
 
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <qt/DBusService.hpp>
 #include <qt/DocumentOperations.hpp>
 #include <net/FakeSocket.hpp>
