@@ -27,7 +27,7 @@
         "browserify": "16.5.1",
         "browserify-css": "0.15.0",
         "d3": "6.7.0",
-        "dompurify": "3.3.1",
+        "dompurify": "3.3.2",
         "eslint": "7.0.0",
         "eslint-config-prettier": "^9.1.0",
         "fzstd": "0.1.0",
@@ -1967,9 +1967,9 @@
       }
     },
     "node_modules/caniuse-lite": {
-      "version": "1.0.30001776",
-      "resolved": "file:node_shrinkpack/caniuse-lite-1.0.30001776.tar",
-      "integrity": "sha512-sg01JDPzZ9jGshqKSckOQthXnYwOEP50jeVFhaSFbZcOy05TiuuaffDOfcwtCisJ9kNQuLBFibYywv2Bgm9osw== sha512-/m5l9bmAzkNTJAKkMyRlncNb2D/MFP2zlp/gEDT3m64l2C68NBc8P2/qXbody45blGW2dUnGJoTKVvMj3GLIRA==",
+      "version": "1.0.30001777",
+      "resolved": "file:node_shrinkpack/caniuse-lite-1.0.30001777.tar",
+      "integrity": "sha512-tmN+fJxroPndC74efCdp12j+0rk0RHwV5Jwa1zWaFVyw2ZxAuPeG8ZgWC3Wz7uSjT3qMRQ5XHZ4COgQmsCMJAQ== sha512-5d3vPb9fefb7mh29x/Whd0JsrWvhAlI0//U5d4gSuk6qU0bRe1TOfpXoeizkXXfRkaAvStIChipyhJyIJGbqqw==",
       "dev": true,
       "funding": [
         {
@@ -3303,11 +3303,14 @@
       }
     },
     "node_modules/dompurify": {
-      "version": "3.3.1",
-      "resolved": "file:node_shrinkpack/dompurify-3.3.1.tar",
-      "integrity": "sha512-qkdCKzLNtrgPFP1Vo+98FRzJnBRGe4ffyCea9IwHB1fyxPOeNTHpLKYGd4Uk9xvNoH0ZoOjwZxNptyMwqrId1Q== sha512-uyRaWGuzGPC3fHp0nXJGayT/n1fJup3KGzF16fEnLZ+z625m9eVEdfSi3vTJilKul5cZ7RkXdhP9wYdV9P5Tcw==",
+      "version": "3.3.2",
+      "resolved": "file:node_shrinkpack/dompurify-3.3.2.tar",
+      "integrity": "sha512-6obghkliLdmKa56xdbLOpUZ43pAR6xFy1uOrxBaIDjT+yaRuuybLjGS9eVBoSR/UPU5fq3OXClEHLJNGvbxKpQ== sha512-mhtjFX9OFs59mBf0ic+VLxi3p56LcVhFOsFTWd3m7FakRif4wL9oo0nTLeUBJkZtjenT83NsB8vMBf6LK47q9A==",
       "dev": true,
       "license": "(MPL-2.0 OR Apache-2.0)",
+      "engines": {
+        "node": ">=20"
+      },
       "optionalDependencies": {
         "@types/trusted-types": "^2.0.7"
       }
