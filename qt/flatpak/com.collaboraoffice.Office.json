@@ -523,13 +523,6 @@
                     "dest-filename": "Amiri-1.001.zip"
                 },
                 {
-                    "url": "https://dev-www.libreoffice.org/src/culmus-0.140.tar.gz",
-                    "sha256": "6daed104481007752a76905000e71c0093c591c8ef3017d1b18222c277fc52e3",
-                    "type": "file",
-                    "dest": "external/tarballs",
-                    "dest-filename": "culmus-0.140.tar.gz"
-                },
-                {
                     "url": "https://dev-www.libreoffice.org/src/libre-hebrew-1.0.tar.gz",
                     "sha256": "f596257c1db706ce35795b18d7f66a4db99d427725f20e9384914b534142579a",
                     "type": "file",
