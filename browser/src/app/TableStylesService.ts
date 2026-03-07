@@ -199,19 +199,25 @@ class TableStylesService {
 		}
 	}
 
-	public generateTableStylesJSON(): IconViewJSON {
+	public generateTableStylesJSON(): IconViewListJSON {
 		return {
-			id: 'tablestyles_design',
-			type: 'iconview',
-			text: _('Table Styles'),
-			command: '.uno:DatabaseSettings',
-			aria: { label: _('Table Styles') },
-			accessibility: { focusBack: true, combination: 'TS' },
-			entries: this.generateJSON(),
-			singleclickactivate: true,
-			textWithIconEnabled: false, // standard names from core are not translated yet
-			selectionmode: 'single',
-		} as IconViewJSON;
+			id: 'tablestyles_design-iconview-list',
+			type: 'iconviewlist',
+			children: [
+				{
+					id: 'tablestyles_design',
+					type: 'iconview',
+					text: _('Table Styles'),
+					command: '.uno:DatabaseSettings',
+					aria: { label: _('Table Styles') },
+					accessibility: { focusBack: true, combination: 'TS' },
+					entries: this.generateJSON(),
+					singleclickactivate: true,
+					textWithIconEnabled: false, // standard names from core are not translated yet
+					selectionmode: 'single',
+				} as IconViewJSON,
+			],
+		};
 	}
 
 	private styleHasElement(

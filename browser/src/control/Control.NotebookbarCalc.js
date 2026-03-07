@@ -2761,8 +2761,14 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'icon': 'lc_themesthames.svg',
 				'children': [
 					{
-						'id': 'iconview_theme_colors', // has to match core id
-						'type': 'iconview'
+						'id': 'iconview_theme_colors-iconview-list',
+						'type': 'iconviewlist',
+						'children': [
+							{
+								'id': 'iconview_theme_colors', // has to match core id
+								'type': 'iconview'
+							}
+						]
 					}
 				]
 			},
