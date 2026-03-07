@@ -301,17 +301,16 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
                 return false;
 
             // remove obsolete states of the same .uno: command
-            size_t unoCommandLen = unoCommand.size();
+            const size_t unoCommandLen = unoCommand.size();
             for (size_t i = 0; i < _callbacks.size(); ++i)
             {
-                Callback& it = _callbacks[i];
+                const Callback& it = _callbacks[i];
                 if (it._type != type || it._view != view)
                     continue;
 
-                size_t payloadLen = it._payload.size();
-                if (payloadLen < unoCommandLen + 1 ||
-                    unoCommand.compare(0, unoCommandLen, it._payload) != 0 ||
-                    it._payload[unoCommandLen] != '=')
+                // Skip if the current callback payload doesn't start with '<unoCommand>='.
+                if (it._payload.size() < unoCommandLen + 1 || it._payload[unoCommandLen] != '=' ||
+                    !it._payload.starts_with(unoCommand))
                     continue;
 
                 LOG_TRC("Remove obsolete uno command: " << it << " -> "
