@@ -1797,6 +1797,26 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$EN
                 [AC_MSG_ERROR([header Poco/SAX/SAXParser.h not found, perhaps you want to use --with-poco-includes])])
        fi
 
+       # If Poco is built with --unbundled, its static archives reference
+       # system pcre2 (PocoFoundation), expat (PocoXML) and zlib (PocoZip)
+       # instead of bundled copies.  Detect by trying to link with
+       # Poco::RegularExpression which needs PCRE2 from PocoFoundation.
+       AC_MSG_CHECKING([if we need to link with PCRE2, expat and zlib (unbundled Poco)])
+       AC_LINK_IFELSE([AC_LANG_SOURCE([
+       #include <Poco/RegularExpression.h>
+       int main(int argc, char **argv)
+       {
+           (void)argc;
+           Poco::RegularExpression e("abc.[[def]]");
+           Poco::RegularExpression::Match m;
+           return e.match(argv[[1]], m);
+       }
+       ])],
+                      [AC_MSG_RESULT([no])],
+                      [AC_MSG_RESULT([yes])
+                       PKG_CHECK_MODULES([PCRE2], [libpcre2-8])
+                       LIBS="$LIBS $PCRE2_LIBS -lexpat -lz"])
+
        ])
 
 AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darwin"],
