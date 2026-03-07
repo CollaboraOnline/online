@@ -37,7 +37,7 @@ public:
 };
 
 /// Queue for handling the Kit's messaging needs
-class KitQueue
+class KitQueue final
 {
     friend class KitQueueTests;
 
@@ -45,7 +45,10 @@ class KitQueue
 public:
     using Payload = std::vector<char>;
 
-    KitQueue(const TilePrioritizer &prio) : _prio(prio) { }
+    explicit KitQueue(const TilePrioritizer& prio)
+        : _prio(prio)
+    {
+    }
     ~KitQueue() = default;
 
     KitQueue(const KitQueue&) = delete;
@@ -109,7 +112,7 @@ public:
     }
 
     /// Obtain the next callback
-    Callback getCallback()
+    [[nodiscard]] Callback getCallback()
     {
         assert(_callbacks.size() > 0);
         Callback front = _callbacks.front();
@@ -117,7 +120,7 @@ public:
         return front;
     }
 
-    bool getCallback(Callback &callback)
+    [[nodiscard]] bool getCallback(Callback& callback)
     {
         if (_callbacks.size() == 0)
             return false;
@@ -151,7 +154,7 @@ public:
 
     void dumpState(std::ostream& oss);
 
-protected:
+private:
     /// Search the queue for a previous textinput message and if found, remove it and combine its
     /// input with that in the current textinput message. We check that there aren't any interesting
     /// messages inbetween that would make it wrong to merge the textinput messages.
@@ -168,7 +171,6 @@ protected:
     /// @return New message to put into the queue. If empty, use what we got.
     std::string combineRemoveText(const StringVector& tokens);
 
-private:
     /// Search the queue for a duplicate callback and remove it (if present).
     ///
     /// This removes also callbacks that are made invalid by the current

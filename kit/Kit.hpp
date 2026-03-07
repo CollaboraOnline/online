@@ -292,7 +292,7 @@ private:
 
     /// Calculate tile rendering priority from a TileDesc
     Priority getTilePriority(const TileDesc& desc) const override;
-    virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
+    std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:
     /// Request loading a document, or a new view, if one exists,
