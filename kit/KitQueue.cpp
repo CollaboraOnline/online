@@ -561,17 +561,15 @@ namespace {
     struct SpeculativeTileDesc
     {
         const TileDesc& _prioTile;
-        int _tilePosX;
-        int _tilePosY;
+        const int _tilePosX;
+        const int _tilePosY;
 
-        SpeculativeTileDesc(const TileDesc& prioTile,
-                            int leftGridX, int vertDirection)
+        SpeculativeTileDesc(const TileDesc& prioTile, int leftGridX, int vertDirection)
             : _prioTile(prioTile)
+            , _tilePosX(leftGridX * prioTile.getTileWidth())
+            , _tilePosY(prioTile.getTilePosY() + (prioTile.getTileHeight() * vertDirection))
         {
-            _tilePosX = leftGridX * prioTile.getTileWidth();
-            _tilePosY = prioTile.getTilePosY() + (prioTile.getTileHeight() * vertDirection);
         }
-
     };
 
     bool operator<(const TileDesc& candidate, const SpeculativeTileDesc& other)
