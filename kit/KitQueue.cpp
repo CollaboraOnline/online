@@ -117,19 +117,6 @@ std::string extractViewId(const std::string& payload)
     return json->get("viewId").toString();
 }
 
-/// Extract the .uno: command ID from the potential command.
-std::string extractUnoCommand(const std::string& command)
-{
-    if (!COOLProtocol::matchPrefix(".uno:", command))
-        return std::string();
-
-    size_t equalPos = command.find('=');
-    if (equalPos != std::string::npos)
-        return command.substr(0, equalPos);
-
-    return command;
-}
-
 /// Extract rectangle from the invalidation callback payload
 bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h, int& part, int& mode)
 {
@@ -297,9 +284,16 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
 
         case LOK_CALLBACK_STATE_CHANGED: // state changed
         {
-            std::string unoCommand = extractUnoCommand(payload);
-            if (unoCommand.empty())
+            constexpr std::string_view unoPrefix(".uno:");
+            if (!payload.starts_with(unoPrefix))
                 return false;
+
+            // Only elide .uno commands that have a value.
+            const size_t equalPos = payload.find('=', unoPrefix.size());
+            if (equalPos == std::string::npos)
+                return false;
+
+            const std::string_view unoCommand = std::string_view(payload).substr(0, equalPos);
 
             // This is needed because otherwise it creates some problems when
             // a save occurs while a cell is still edited in Calc.
