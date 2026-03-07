@@ -109,34 +109,24 @@ function _getDropdownContent(data: IconViewListJSON, builder: JSBuilder) {
 	return dropdownContent;
 }
 
-JSDialog.notebookbarIconView = function (
-	parentContainer: Element,
-	data: IconViewJSON,
-	builder: JSBuilder,
-) {
-	const iconviewlistdata = {
-		id: data.id + '-iconview-list',
-		type: 'iconviewlist',
-		children: [data],
-	};
-	return JSDialog.notebookbarIconViewList(
-		parentContainer,
-		iconviewlistdata,
-		builder,
-	);
-};
-
 JSDialog.notebookbarIconViewList = function (
 	parentContainer: Element,
 	data: IconViewListJSON,
 	builder: JSBuilder,
 ) {
+	const rootNode = window.L.DomUtil.create(
+		'div',
+		builder.options.cssClass + ' ui-iconview-root',
+		parentContainer,
+	);
+	rootNode.id = data.id;
+
 	const commonContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-window',
-		parentContainer,
+		rootNode,
 	);
-	commonContainer.id = data.id;
+	commonContainer.id = data.id + '-window';
 
 	// we insert into DOM only the first iconview (rest is accessible only in the dropdown)
 	JSDialog.iconView(commonContainer, data.children[0], builder);
@@ -153,7 +143,7 @@ JSDialog.notebookbarIconViewList = function (
 	const buttonsContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-buttons-container',
-		parentContainer,
+		rootNode,
 	);
 	buttonsContainer.id = data.id + '-buttons-container';
 
@@ -193,7 +183,6 @@ JSDialog.notebookbarIconViewList = function (
 			_getDropdownContent(data, builder),
 			notebookbarIconViewCallback,
 		);
-		bIsExpanded = true;
 	};
 
 	_createButtonForNotebookbarIconview(
@@ -272,22 +261,15 @@ JSDialog.notebookbarIconViewList = function (
 		when the overflowgroups collapse displacing the
 		underlying iconview.
 	*/
-	let bIsExpanded = false;
 
 	// update indexes on resize
 	const resizeObserver = new ResizeObserver(() => {
 		updateAllIndexes();
-		if (bIsExpanded) JSDialog.CloseDropdown(data.id);
+		const dropdown = JSDialog.GetDropdown(data.id);
+		if (dropdown) JSDialog.CloseDropdown(data.id);
 	});
 
-	/*
-	 * NOTE: `resizeObserver` observes the iconview, not the dropdown.
-	 * and since the iconview grid is always max height (with overflow),
-	 * height changes do not trigger the observer as only the container's
-	 * height changes and it looks as if the iconview's dimentions
-	 * changd.
-	 */
-	resizeObserver.observe(iconview);
+	resizeObserver.observe(rootNode);
 
 	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
 	const firstSelected = $(iconview).children('.selected').get(0);
@@ -296,7 +278,7 @@ JSDialog.notebookbarIconViewList = function (
 		iconview.scrollTop = offsetTop;
 	}
 
-	commonContainer.updateRenders = iconview.updateRenders = (pos: number) => {
+	rootNode.updateRenders = iconview.updateRenders = (pos: number) => {
 		iconview.updateRendersImpl(pos, data.children[0].id, iconview);
 
 		// also update the dropdown (if any);
@@ -305,7 +287,7 @@ JSDialog.notebookbarIconViewList = function (
 			iconview.updateRendersImpl(pos, data.children[0].id, dropdownContainer);
 	};
 
-	iconview.updateSelection = (position: number) => {
+	rootNode.updateSelection = (position: number) => {
 		iconview.updateSelectionImpl(position, data.children[0]);
 	};
 

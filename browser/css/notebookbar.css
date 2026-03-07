@@ -482,6 +482,10 @@ label.notebookbar.ui-checkbox-label {
 	display: none;
 }
 
+.notebookbar .ui-iconview-root {
+	display: flex;
+}
+
 /* Writer */
 
 /* File Tab */
@@ -491,7 +495,7 @@ label.notebookbar.ui-checkbox-label {
 	line-height: 22px;
 }
 
-/* Styles preview #<originalid>-iconview-list */
+/* root of iconview */
 .jsdialog #stylesview-iconview-list:not(.sidebar),
 .jsdialog #masterpagenb-iconview-list:not(.sidebar),
 .jsdialog #tablestyles_design-iconview-list:not(.sidebar),
@@ -544,19 +548,15 @@ label.notebookbar.ui-checkbox-label {
 	box-sizing: border-box;
 }
 
-/* #<originalid> (inner iconview) */
-.jsdialog #stylesview-iconview-list:not(.sidebar),
-.jasialog #masterpagenb-iconview-list:not(.sidebar),
-.jsdialog #tablestyles_design-iconview-list:not(.sidebar),
-.jsdialog #transitions_icons-iconview-list:not(.sidebar),
-.notebookbar #stylesview,
-.notebookbar #masterpageall_icons,
-.notebookbar #masterpagecurrent_icons,
-.notebookbar #tablestyles_design,
-.notebookbar #transitions_icons,
-.notebookbar #iconview_theme_colors,
-#custom_animation_list,
-#effect_list {
+/* inner iconview - don't set height for dropdown ones */
+.notebookbar#stylesview,
+.notebookbar#masterpageall_icons,
+.notebookbar#masterpagecurrent_icons,
+.notebookbar#tablestyles_design,
+.notebookbar#transitions_icons,
+.notebookbar#iconview_theme_colors,
+.notebookbar#custom_animation_list,
+.notebookbar#effect_list {
 	height: var(--notebookbar-element-height);
 	overflow: auto;
 	display: grid;
@@ -581,7 +581,7 @@ label.notebookbar.ui-checkbox-label {
  * see `JSDialog.notebookbarIconView` for details.
  */
 .jsdialog #stylesview,
-.notebookbar #stylesview-iconview {
+.notebookbar #stylesview {
 	width: 36.8vw !important;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
@@ -594,13 +594,13 @@ label.notebookbar.ui-checkbox-label {
 	justify-content: center;
 }
 
-#masterpagenb-dropdown,
-#stylesview-dropdown,
-#iconview_theme_colors-dropdown {
+#masterpagenb-iconview-list-dropdown,
+#stylesview-iconview-list-dropdown,
+#iconview_theme_colors-iconview-list-dropdown {
 	margin-top: 37px !important;
 }
 
-#transitions_icons-dropdown {
+#transitions_icons-iconview-list-dropdown {
 	margin-top: 42px !important;
 }
 
@@ -785,7 +785,7 @@ label.notebookbar.ui-checkbox-label {
 	justify-items: stretch;
 }
 
-.notebookbar #transitions_icons.ui-iconview {
+.notebookbar#transitions_icons.ui-iconview {
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
