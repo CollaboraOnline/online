@@ -944,12 +944,18 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			   'name':_('Styles'),
 			   'children' : [
 					{
-						   'id': 'stylesview',
-						   'type': 'iconview',
-						   'entries': [],
-						   'vertical': 'false'
+						'id': 'stylesview-iconview-list',
+						'type': 'iconviewlist',
+						'children': [
+							{
+								'id': 'stylesview',
+								'type': 'iconview',
+								'entries': [],
+								'vertical': 'false'
+							}
+						]
 					},
-			   ]
+			  ]
 			},
 			{
 				'type': 'overflowgroup',
