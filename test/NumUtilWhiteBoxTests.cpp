@@ -28,11 +28,104 @@
 class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(NumUtilWhiteBoxTests);
+    CPPUNIT_TEST(testI32FromString);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST_SUITE_END();
 
+    void testI32FromString();
     void testSafeAtoi();
 };
+
+void NumUtilWhiteBoxTests::testI32FromString()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Basic positive numbers.
+    {
+        const auto [value, success] = NumUtil::i32FromString("0");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(0), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("42");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(42), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("12345");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(12345), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("12345,");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(12345), value);
+    }
+
+    // Negative numbers.
+    {
+        const auto [value, success] = NumUtil::i32FromString("-1");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("-999");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-999), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("-999,");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-999), value);
+    }
+
+    // INT32_MAX boundary.
+    {
+        const auto [value, success] = NumUtil::i32FromString("2147483647");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::int32_t>::max(), value);
+    }
+
+    // INT32_MIN boundary.
+    {
+        const auto [value, success] = NumUtil::i32FromString("-2147483648");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::int32_t>::min(), value);
+    }
+
+    // Overflow returns failure.
+    {
+        const auto [value, success] = NumUtil::i32FromString("99999999999999");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("-99999999999999");
+        LOK_ASSERT(!success);
+    }
+
+    // Empty and invalid strings.
+    {
+        const auto [value, success] = NumUtil::i32FromString("");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::i32FromString("abc");
+        LOK_ASSERT(!success);
+    }
+
+    // Trailing non-numeric characters (strtol stops, still succeeds).
+    {
+        const auto [value, success] = NumUtil::i32FromString("42xy");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int32_t>(42), value);
+    }
+
+    // Default-value overload.
+    LOK_ASSERT_EQUAL(static_cast<std::int32_t>(42), NumUtil::i32FromString("42", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), NumUtil::i32FromString("", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), NumUtil::i32FromString("abc", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int32_t>(99), NumUtil::i32FromString("99999999999999", 99));
+}
 
 void NumUtilWhiteBoxTests::testSafeAtoi()
 {
