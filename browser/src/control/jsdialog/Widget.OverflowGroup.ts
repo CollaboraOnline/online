@@ -86,7 +86,8 @@ function createMoreButton(
 	moreOptionsButton.addEventListener('click', (e) => {
 		e.stopPropagation();
 		e.preventDefault();
-		app.map.sendUnoCommand(more.command);
+		if (more.command.startsWith('.uno:')) app.map.sendUnoCommand(more.command);
+		else app.dispatcher.dispatch(more.command);
 	});
 
 	return expanderIconRightDiv;

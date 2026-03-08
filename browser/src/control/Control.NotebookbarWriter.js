@@ -2257,10 +2257,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'review-spell-break', orientation: 'vertical' },
 			{
-				'id': 'review-insert-annotation:AnnotationMenu',
-				'type': 'menubutton',
+				'id': 'review-insert-annotation',
+				'class': 'unoAccessibilityCheck',
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertAnnotation'),
-				'applyCallback': 'insertcomment',
 				'command': '.uno:InsertAnnotation',
 				'accessibility': { focusBack: false, combination: 'C', de: 'N' }
 			},
@@ -2270,6 +2270,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'id': 'review-comments',
 				'name':_('Show Comments'),
 				'accessibility': { focusBack: false, combination: 'SC', de: 'N' },
+				'more': {
+					'command':'showcommentsnavigator',
+					'accessibility': { focusBack: true,	combination: 'MC', de: null },
+				},
 				'children' : [
 					{
 						'type': 'container',
