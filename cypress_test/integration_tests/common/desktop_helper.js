@@ -333,7 +333,7 @@ function toggleComments(resolved = false) {
 	if (mode === 'notebookbar') {
 		cy.cGet('#Review-tab-label').click();
 		if (resolved) getNbIcon('ShowResolvedAnnotations', 'Review').click();
-		else cy.cGet('.showannotations').click();
+		else cy.cGet('#showannotations').click();
 		// to avoid notebookbar collapse in subsequent calls to toggleComments.
 		cy.cGet('#Home-tab-label').click();
 	} else {
