@@ -59,7 +59,7 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		// with label
 		cy.cGet('.notebookbar #Review-tab-label').click();
 		cy.cGet('.notebookbar .unoSpellOnline').should('be.visible');
-		cy.cGet('.notebookbar .unoSpellOnline span').contains('Automatic Spell Checking');
+		cy.cGet('.notebookbar .unoSpellOnline span').contains('Auto Spell Check');
 	});
 });
 
