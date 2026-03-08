@@ -29,6 +29,9 @@ interface WidgetJSON {
 	allyRole?: string;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
+	icon?: string;
+	accessibility?: NotebookbarAccessibilityDescriptor;
+	opensPopup?: boolean;
 }
 
 interface JSBuilderOptions {
@@ -51,6 +54,7 @@ interface JSBuilder {
 	_unoToolButton: UnoToolButtonHandler; // special handler which returns toolitem object
 	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
 	_menus: Map<string, Array<MenuDefinition>>;
+	_iconviewSiblingsData: Map<string, Array<WidgetJSON>>; // cache for siblings of notebookbar iconview entries, used for static items
 
 	options: JSBuilderOptions; // current state
 	map: MapInterface; // reference to map
@@ -408,6 +412,7 @@ interface IconViewJSON extends WidgetJSON {
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
 	selectionmode: string; // single or multiple
+	siblings?: Array<WidgetJSON>; // sibling elements i.e scroll-up, scroll-down, expand
 }
 
 interface IconViewElement extends HTMLElement {
