@@ -2233,7 +2233,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 									{
 										'id': 'review-spelling-and-grammar-dialog',
 										'type': 'toolitem',
-										'text': _UNO('.uno:SpellingAndGrammarDialog'),
+										'text': _('Spelling Options'),
 										'command': '.uno:SpellingAndGrammarDialog',
 										'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
 									}
@@ -2245,7 +2245,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 									{
 										'id': 'review-spell-online',
 										'type': 'toolitem',
-										'text': _UNO('.uno:SpellOnline'),
+										'text': _('Auto Spell Check'),
 										'command': '.uno:SpellOnline',
 										'accessibility': { focusBack: true, combination: 'SO', de: null},
 										'stateIcons': {
@@ -2265,7 +2265,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'id': 'review-insert-annotation',
 				'class': 'unoAccessibilityCheck',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation'),
+				'text': _('New Comment'),
 				'command': '.uno:InsertAnnotation',
 				'accessibility': { focusBack: false, combination: 'C', de: 'N' }
 			},
