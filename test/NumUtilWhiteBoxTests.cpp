@@ -29,10 +29,12 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(NumUtilWhiteBoxTests);
     CPPUNIT_TEST(testI32FromString);
+    CPPUNIT_TEST(testU64FromString);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST_SUITE_END();
 
     void testI32FromString();
+    void testU64FromString();
     void testSafeAtoi();
 };
 
@@ -125,6 +127,70 @@ void NumUtilWhiteBoxTests::testI32FromString()
     LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), NumUtil::i32FromString("", -1));
     LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), NumUtil::i32FromString("abc", -1));
     LOK_ASSERT_EQUAL(static_cast<std::int32_t>(99), NumUtil::i32FromString("99999999999999", 99));
+}
+
+void NumUtilWhiteBoxTests::testU64FromString()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Basic positive numbers.
+    {
+        const auto [value, success] = NumUtil::u64FromString("0");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(0), value);
+    }
+    {
+        const auto [value, success] = NumUtil::u64FromString("42");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(42), value);
+    }
+    {
+        const auto [value, success] = NumUtil::u64FromString("123456789");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(123456789), value);
+    }
+    {
+        const auto [value, success] = NumUtil::u64FromString("123456789,");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(123456789), value);
+    }
+
+    // Large values.
+    {
+        const auto [value, success] = NumUtil::u64FromString("18446744073709551615");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::uint64_t>::max(), value);
+    }
+
+    // Overflow returns failure.
+    {
+        const auto [value, success] = NumUtil::u64FromString("18446744073709551616");
+        LOK_ASSERT(!success);
+    }
+
+    // Empty and invalid strings.
+    {
+        const auto [value, success] = NumUtil::u64FromString("");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::u64FromString("abc");
+        LOK_ASSERT(!success);
+    }
+
+    // Trailing non-numeric characters.
+    {
+        const auto [value, success] = NumUtil::u64FromString("42xy");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(42), value);
+    }
+
+    // Default-value overload.
+    LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(42), NumUtil::u64FromString("42", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(99), NumUtil::u64FromString("", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(99), NumUtil::u64FromString("abc", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(77),
+                     NumUtil::u64FromString("18446744073709551616", 77));
 }
 
 void NumUtilWhiteBoxTests::testSafeAtoi()
