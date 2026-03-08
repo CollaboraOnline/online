@@ -374,6 +374,20 @@ class Dispatcher {
 			const sidebar = JSDialog.getAIChatSidebar();
 			sidebar.toggle();
 		};
+
+		this.actionsMap['helpfixformulaerror'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			if (!sidebar.isVisible()) sidebar.show();
+			sidebar.diagnoseFormulaError();
+		};
 	}
 
 	private addExportCommands() {
