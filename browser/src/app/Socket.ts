@@ -75,7 +75,7 @@ class Socket {
 		this.socket = undefined;
 		this.traceEvents = new TraceEvents(this);
 
-		if (window.Worker && !(window as any).ThisIsAMobileApp) {
+		if (window.Worker && (!(window as any).ThisIsAMobileApp || (window as any).mode.isCODesktop())) {
 			window.app.console.info('Creating TaskWorkers');
 			for (let i = 0; i < 4; ++i) {
 				this.workers.push(

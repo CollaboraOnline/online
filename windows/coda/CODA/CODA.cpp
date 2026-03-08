@@ -1537,8 +1537,12 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
 
     auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
 
+    // Required for instantiating new Web Workers, which otherwise fail with a
+    // cross-origin SecurityError because file:// gets origin 'null'.
+    std::wstring additionalArgs = L"--allow-file-access-from-files";
     if (enableWebDriver)
-        options->put_AdditionalBrowserArguments(L"--remote-debugging-port=9222");
+        additionalArgs += L" --remote-debugging-port=9222";
+    options->put_AdditionalBrowserArguments(additionalArgs.c_str());
 
     CreateCoreWebView2EnvironmentWithOptions(
         nullptr,

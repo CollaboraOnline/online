@@ -16,9 +16,12 @@
 if ('undefined' === typeof window) {
 	self.L = {};
 
-	importScripts(
-		'%SERVICE_ROOT%/browser/%VERSION%/src/layer/tile/CanvasTileUtils.js',
-	);
+	// CanvasTileUtils is bundled inline for mobile/desktop app builds
+	if (typeof cool === 'undefined' || !cool.CanvasTileUtils) {
+		importScripts(
+			'%SERVICE_ROOT%/browser/%VERSION%/src/layer/tile/CanvasTileUtils.js',
+		);
+	}
 
 	let tileImageCache = new Map(); // Map<string, Uint8Array>
 
