@@ -1895,11 +1895,22 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				const updateFunction = () => {
 					const items = builder.map['stateChangeHandler'];
 					const state = items.getItemValue(data.command);
+					const isOn = state && state === 'true';
 
-					if (state && state === 'true')
+					if (isOn)
 						selectFn();
 					else
 						unSelectFn();
+
+					// Swap icon if stateIcons are provided
+					if (data.stateIcons && buttonImage) {
+						const iconName = isOn ? data.stateIcons.on : data.stateIcons.off;
+						app.LOUtil.setImage(
+							buttonImage,
+							'lc_' + iconName + '.svg',
+							builder.map,
+						);
+					}
 				};
 
 				updateFunction();
