@@ -34,7 +34,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 
 		cy.cGet('#Review-tab-label').click();
 
-                cy.cGet('.notebookbar > .unoSpellingAndGrammarDialog > button').click();
+                cy.cGet('.notebookbar > .unoSpellingAndGrammarDialog > button').first().click();
 
 		// we should end up with the "there are no misspelling information dialog"
 		cy.cGet('.ui-dialog-title').should('have.text', 'Spelling: Information');
@@ -63,7 +63,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 
 		cy.cGet('#Review-tab-label').click();
 
-                cy.cGet('.notebookbar > .unoSpellingAndGrammarDialog > button').click();
+                cy.cGet('.notebookbar > .unoSpellingAndGrammarDialog > button').first().click();
 
 		// we should end up with the "there are no misspelling information dialog"
 		cy.cGet('.ui-dialog-title').should('have.text', 'Spelling: Information');
