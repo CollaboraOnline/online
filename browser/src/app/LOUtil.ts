@@ -310,8 +310,12 @@ class LOUtil {
 	public static getURL(path: string): string {
 		if (path === '') return '';
 		const customWindow = window as any;
-		if (customWindow.host === '' && customWindow.serviceRoot === '')
-			return path; // mobile app
+		if (customWindow.host === '' && customWindow.serviceRoot === '') {
+			// Mobile / desktop app: return a relative path so it resolves
+			// against the page's file:// origin rather than the filesystem root.
+			if (path.startsWith('/')) return path.substring(1);
+			return path;
+		}
 
 		let url = customWindow.makeHttpUrl('/browser/' + customWindow.versionPath);
 		if (path.substr(0, 1) !== '/') url += '/';

@@ -240,10 +240,13 @@ WORKER_NODE_MODULES_JS =\
 $(DIST_FOLDER)/src/app/TaskWorker.js: \
 	$(srcdir)/src/app/TaskWorker.js.m4 \
 	$(srcdir)/src/app/TaskWorkerSrc.js \
+	$(DIST_FOLDER)/src/layer/tile/CanvasTileUtils.js \
 	$(WORKER_NODE_MODULES_JS)
 
 	$(QUIET_M4) m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
+		-DMOBILEAPP=$(ENABLE_MOBILEAPP) \
 		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(WORKER_NODE_MODULES_JS)) \
+		-DTILEUTILS_JS=$(DIST_FOLDER)/src/layer/tile/CanvasTileUtils.js \
 		-DWORKER_JS=$(srcdir)/src/app/TaskWorkerSrc.js \
 		$(srcdir)/src/app/TaskWorker.js.m4 > $@
 
