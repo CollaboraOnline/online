@@ -1,0 +1,6 @@
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <text x="1" y="17" font-family="serif" font-size="15" font-weight="bold" font-style="italic" fill="#2e7d32">f</text>
+  <text x="9" y="17" font-family="serif" font-size="11" font-style="italic" fill="#2e7d32">x</text>
+  <path d="M18 4l.8 1.6L20.4 6.4l-1.6.8L18 8.8l-.8-1.6-1.6-.8 1.6-.8z" fill="#f9a825"/>
+  <path d="M21.5 9l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" fill="#f9a825" opacity="0.7"/>
+</svg>

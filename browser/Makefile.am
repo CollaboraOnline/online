@@ -380,6 +380,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CellCursorSection.ts \
 	src/canvas/sections/CellSelectionHandleSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
+	src/canvas/sections/FormulaErrorHelpSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
 	src/canvas/sections/TextSelectionSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \

@@ -665,7 +665,7 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     if (docType == "spreadsheet")
         systemPrompt +=
             " When referencing specific spreadsheet cells in your responses, "
-            "format them as clickable links using this pattern: [CL1008](cell://CL1008), "
+            "format them as clickable links using this pattern: [B2](cell://B2), "
             "where the column letters come from the header row and the row number from the Row column.";
 
     Poco::JSON::Array::Ptr sanitizedMessages = new Poco::JSON::Array();
