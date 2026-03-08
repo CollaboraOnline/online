@@ -941,10 +941,35 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			   'name':_('Styles'),
 			   'children' : [
 					{
-						   'id': 'stylesview',
-						   'type': 'iconview',
-						   'entries': [],
-						   'vertical': 'false'
+						'id': 'stylesview',
+						'type': 'iconview',
+						'entries': [],
+						'vertical': 'false',
+						'siblings' : [
+							{
+								'id': 'scroll-up',
+								'type': 'customtoolitem',
+								'text': _('Scroll up'),
+								'command': 'scrollpreviewup',
+								'icon': 'lc_searchprev.svg',
+							},
+							{
+								'id': 'scroll-down',
+								'type': 'customtoolitem',
+								'text': _('Scroll down'),
+								'command': 'scrollpreviewdown',
+								'icon': 'lc_searchnext.svg',
+							},
+							{
+								'id': 'format-style-list-dialog',
+								'type': 'toolitem',
+								'text': _('Style list'),
+								'command': '.uno:SidebarDeck.StyleListDeck',
+								'icon': 'lc_iconviewexpander.svg',
+								'accessibility': { focusBack: true, combination: 'SD', de: null },
+								'opensPopup': true,
+							},
+						]
 					},
 			   ]
 			},
