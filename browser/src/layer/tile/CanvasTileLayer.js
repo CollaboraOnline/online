@@ -1456,6 +1456,55 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 		this._lastFormula = newFormula;
 		this._map.fire('cellformula', {formula: newFormula});
+
+		if (this.isCalc()) {
+			this._checkForFormulaError(newFormula);
+		}
+	},
+
+	_checkForFormulaError: function (formula) {
+		app.definitions.formulaErrorHelpSection.hide();
+
+		if (!app.map.isAIConfigured || !formula || !formula.startsWith('='))
+			return;
+
+		if (this._formulaErrorCheckTimer)
+			clearTimeout(this._formulaErrorCheckTimer);
+
+		this._formulaErrorCheckTimer = setTimeout(
+			this._doFormulaErrorCheck.bind(this),
+			300,
+		);
+	},
+
+	_doFormulaErrorCheck: function () {
+		this._formulaErrorCheckTimer = null;
+
+		var handleResponse = function (e) {
+			if (e.commandName === '.uno:FormulaDepChain') {
+				clearTimeout(timeout);
+				app.map.off('commandvalues', handleResponse);
+				if (
+					e.commandValues &&
+					e.commandValues.hasError &&
+					app.calc.cellCursorVisible
+				) {
+					var rect = app.calc.cellCursorRectangle;
+					var pos = new cool.SimplePoint(
+						rect.x2,
+						rect.y1,
+					);
+					app.definitions.formulaErrorHelpSection.show(pos);
+				}
+			}
+		};
+
+		var timeout = setTimeout(function () {
+			app.map.off('commandvalues', handleResponse);
+		}, 3000);
+
+		app.map.on('commandvalues', handleResponse);
+		app.socket.sendMessage('commandvalues command=.uno:FormulaDepChain');
 	},
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
@@ -1703,6 +1752,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// Remove input help if there is any:
 		app.definitions.validityInputHelpSection.removeValidityInputHelp();
+
+		// Hide formula error help button when cell cursor changes.
+		app.definitions.formulaErrorHelpSection.hide();
 	},
 
 	_onDocumentRepair: function (textMsg) {

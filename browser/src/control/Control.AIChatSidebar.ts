@@ -1265,7 +1265,7 @@ namespace cool {
 			});
 		}
 
-		private async diagnoseFormulaError(): Promise<void> {
+		public async diagnoseFormulaError(): Promise<void> {
 			if (this.isProcessing) return;
 
 			this.hintText = _('Analyzing formula dependencies...');
@@ -1292,8 +1292,26 @@ namespace cool {
 				return;
 			}
 
-			this.inputText = this.buildFormulaDiagnosisPrompt(depChain);
-			this.sendMessage();
+			const content = this.buildFormulaDiagnosisPrompt(depChain);
+			const cell = depChain.cell;
+			const displayContent =
+				_('Diagnose formula error in') +
+				' ' +
+				cell.address +
+				': ' +
+				cell.formula;
+			this.messages.push({
+				role: 'user',
+				content: content,
+				displayContent: displayContent,
+				timestamp: Date.now(),
+			});
+			this.inputText = '';
+			this.hintText = '';
+			this.isProcessing = true;
+			this.updateChatState(true);
+			this.updateHint();
+			this.dispatchRequest();
 		}
 
 		private buildFormulaDiagnosisPrompt(depChain: any): string {
@@ -1327,6 +1345,11 @@ namespace cool {
 				_('error.') +
 				' ';
 			context += _('Explain the root cause and suggest how to fix it.');
+			context +=
+				' ' +
+				_(
+					'When referencing specific cells, format each cell address as a clickable link: [A1](cell://A1).',
+				);
 
 			return context;
 		}
@@ -1499,10 +1522,10 @@ namespace cool {
 				) + ' ';
 			instructions +=
 				_(
-					'Reference a cell by combining its column header with the row number (e.g., CL + row 1008 = CL1008).',
+					'Reference a cell by combining its column header with the row number (e.g., column B + row 2 = B2).',
 				) + ' ';
 			instructions += _(
-				'When referencing specific cells, format each cell as a clickable link: [CL1008](cell://CL1008).',
+				'When referencing specific cells, format each cell as a clickable link: [B2](cell://B2).',
 			);
 			return instructions;
 		}
