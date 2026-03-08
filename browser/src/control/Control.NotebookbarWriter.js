@@ -2221,6 +2221,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'overflowgroup',
 				'id': 'review-Spellcheck',
 				'name': _('Spellcheck'),
+				'icon': 'lc_spellcheck.svg',
 				'accessibility': { focusBack: false,combination: 'SP',	de:	'SP' },
 				'children' : [
 					{
@@ -2246,7 +2247,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:SpellOnline'),
 										'command': '.uno:SpellOnline',
-										'accessibility': { focusBack: true, combination: 'SO', de: null }
+										'accessibility': { focusBack: true, combination: 'SO', de: null},
+										'stateIcons': {
+											on: 'autospellcheck-on',
+											off: 'autospellcheck-off',
+										},
 									}
 								]
 							},
