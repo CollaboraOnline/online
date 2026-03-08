@@ -33,7 +33,9 @@ inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
     char* endptr = nullptr;
     errno = 0;
     const auto value = std::strtol(str, &endptr, 10);
-    return std::make_pair(value, endptr > str && errno != ERANGE);
+    return std::make_pair(value, endptr > str && errno != ERANGE &&
+                                     value >= std::numeric_limits<std::int32_t>::min() &&
+                                     value <= std::numeric_limits<std::int32_t>::max());
 }
 
 /// Convert a string to 64-bit unsigned int. On failure, returns the default value.
