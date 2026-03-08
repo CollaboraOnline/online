@@ -58,6 +58,9 @@ var NotebookbarAccessibilityDefinitions = function() {
 				else if (rawList[i].children && Array.isArray(rawList[i].children) && rawList[i].children.length > 0) {
 					this.getContentListRecursive(rawList[i].children, list, language);
 				}
+				else if (rawList[i].siblings && Array.isArray(rawList[i].siblings) && rawList[i].siblings.length > 0) {
+					this.getContentListRecursive(rawList[i].siblings, list, language);
+				}
 			}
 		}
 		else if (rawList.children && Array.isArray(rawList.children) && rawList.children.length > 0) {
