@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0100\n"
-"PO-Revision-Date: 2025-12-08 11:24+0000\n"
+"PO-Revision-Date: 2026-03-05 08:10+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1225,7 +1225,7 @@ msgstr "Új"
 
 #: src/control/Control.BackstageView.ts:288
 msgid "Open"
-msgstr ""
+msgstr "Megnyitás"
 
 #: src/control/Control.BackstageView.ts:296
 #: src/control/Control.Notebookbar.js:633
@@ -1419,7 +1419,7 @@ msgstr "Kitöltés sorozattal"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "Dokumentum neve"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -5333,7 +5333,7 @@ msgstr "Következő dia"
 #: src/slideshow/PresenterConsole.js:35
 #: src/slideshow/SlideShowPresenter.ts:871
 msgid "Exchange"
-msgstr ""
+msgstr "Felcserélés"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Pause"
@@ -5387,11 +5387,11 @@ msgstr "Kattintson bárhova a bemutató befejezéséhez..."
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "Az első dián van"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
-msgstr ""
+msgstr "Várunk az előadóra, hogy továbbhaladjon"
 
 #: src/slideshow/SlideShowPresenter.ts:805
 msgid "End Show"
@@ -5413,39 +5413,39 @@ msgstr "Követés megszüntetése"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "Modern üzleti levél (sans-serif)"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "Üzleti levél"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
-msgstr ""
+msgstr "Modern üzleti levél (serif)"
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "Önéletrajz"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
-msgstr ""
+msgstr "Önéletrajz (egy oldalas)"
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "Modern stílus"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "Egyszerű stílus"
 
 #: templates/templates.js:76
 msgid "Beehive"
-msgstr ""
+msgstr "Méhkaptár"
 
 #: templates/templates.js:86
 msgid "Blue Curve"
-msgstr ""
+msgstr "Kék görbe"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
