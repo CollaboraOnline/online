@@ -23,6 +23,7 @@
 #include <helpers.hpp>
 #include <common/StringVector.hpp>
 #include <WebSocketSession.hpp>
+#include <unistd.h>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <test/lokassert.hpp>
@@ -32,6 +33,8 @@
 #include <thread>
 
 using namespace std::literals;
+
+constexpr auto StampFileCheckPeriodMs = 100ms;
 
 /// Save torture testcase.
 class UnitSaveTorture : public UnitWSD
@@ -71,6 +74,9 @@ class UnitSaveTorture : public UnitWSD
         TST_LOG("create stamp " << name << ": " << path);
         std::ofstream stamp(path);
         stamp.close();
+        std::this_thread::sleep_for(StampFileCheckPeriodMs);
+        sync(); // Flush the filesystem as sometimes the kit doesn't see the stamp file.
+        std::this_thread::sleep_for(StampFileCheckPeriodMs);
     }
 
     void removeStamp(const std::string &name)
@@ -452,7 +458,7 @@ class UnitKitSaveTorture : public UnitKit
                 LOK_ASSERT_FAIL("Timed out while waiting for stamp file " << name << " to go");
                 return;
             }
-            std::this_thread::sleep_for(100ms);
+            std::this_thread::sleep_for(StampFileCheckPeriodMs);
         }
         TST_LOG("stamp removed " << name);
     }
