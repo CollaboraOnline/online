@@ -9,7 +9,7 @@
     <string name="new_textdocument">Novi tekstualni dokument</string>
     <string name="new_presentation">Nova prezentacija</string>
     <string name="new_spreadsheet">Nova proračunska tablica</string>
-    <string name="default_document_name">neimenovano</string>
+    <string name="default_document_name">bez naslova</string>
     <string name="filter">Filtriranje</string>
     <string name="sort_largest">Najprije najveće</string>
     <string name="sort_az">A-Z</string>

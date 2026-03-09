@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0200\n"
-"PO-Revision-Date: 2025-11-19 08:51+0000\n"
+"PO-Revision-Date: 2026-03-06 18:09+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/"
-"collabora-online/help/hr/>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
+"online/help/hr/>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -2017,6 +2017,14 @@ msgid ""
 "click the show icon <span class=\"w2ui-icon unfold icon-size\" role=\"img\" "
 "aria-label=\"show menu bar\" title=\"Show menu bar\"></span>."
 msgstr ""
+"<span class=\"def\">Traka izbornika:</span> Glavni izbornik se nalazi na "
+"vrhu i uključuje mnoge opcije, kao što su naredbe za ispis, uređivanje, "
+"pregledavanje i druge napredne naredbe. Traku izbornika možeš sakriti klikom "
+"na ikonu za skrivanje <span class=\"w2ui-icon fold icon-size\" role=\"img\" "
+"aria-label=\"hide menu bar\" title=\"Sakrij traku izbornika\"></span> na "
+"krajnjoj desnoj strani. Za ponovno prikazivanje, klikni ikonu za prikaz "
+"<span class=\"w2ui-icon unfold icon-size\" role=\"img\" aria-label=\"show "
+"menu bar\" title=\"Prikaži traku izbornika\"></span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:378-5
 msgid ""
@@ -2047,7 +2055,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "Traka stanja"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2062,30 +2070,28 @@ msgstr ""
 "slova. Postoje tri gumba odmah pored polja pretrage:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
-msgstr "Pretraživanje prema natrag"
+msgstr "Pretraži prema natrag"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:391-7
 msgid "Search forward"
-msgstr "Pretraživanje prema naprijed"
+msgstr "Pretraži prema naprijed"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:392-7
 msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "Prekini pretragu (pojavljuje se samo kad je jeki tekst pretražen)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">Traka za zumiranje:</span> Desno od trake stanja nalazi "
-"se niz gumbova koji omogućuju zumiranje do 100 %, smanjivanje i povećavanje "
-"prikaza. Zumiranje se odnosi na područje dokumenta – ne utječe na korisničko "
-"sučelje. U ovom području prikazana je trenutačna razina zumiranja."
+"<span class=\"def\">Traka zumiranja:</span> Traka zumiranja uključuje gumbe "
+"za zumiranje na 100 %, za smanjivanje i za povećavanje prikaza. Zumiranje se "
+"odnosi na područje dokumenta – ne utječe na korisničko sučelje. U ovom "
+"području se prikazuje trenutačna razina zumiranja."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -2108,10 +2114,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">Traka informacija:</span> Traka informacija prikazuje "
+"detalje o trenutačnom dokumentu. Stvarne informacije ovise o prirodi "
+"dokumenta."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "Traka informacija"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2322,9 +2331,9 @@ msgid ""
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 msgstr ""
-"Neformatiran tekst možeš umetnuti tipkovničkim prečacem: <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd- -plus\">+</span><kbd>V</kbd>"
+"Neformatiran tekst možeš umetnuti tipkovničkim prečacem: <kbd>Ctrl</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2582,7 +2591,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "formatiraj polja"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2741,7 +2750,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "uvjetno formatiranje"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -3200,7 +3209,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "rječnik"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3383,7 +3392,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "upravljaj promjenama"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3415,7 +3424,7 @@ msgstr "Prikaži margine stranice u dijaloškom okviru."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "stil stranice"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3475,14 +3484,14 @@ msgstr "Odaberi tekst s postojećim formatom"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"Pritisni ikonu za kloniranje <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. Kursor miša se mijenja u kanticu boje."
+"Pritisni ikonu za kloniranje <img alt=\"format paintbrush\" class=\"icon-"
+"size\" src=\"images/lc_formatpaintbrush.svg\" />. Kursor miša se mijenja u "
+"kanticu boje."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3567,10 +3576,10 @@ msgid ""
 "\"true\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
 "dialog opens to let you describe the precise format of the CSV data."
 msgstr ""
-"Umetni iz preglednika <span class=\"ui\">Uredi</span> → <span class=\"ui\""
-">Umetni</span> ili pritisni <kbd>Ctrl</kbd><span class=\"kbd--plus \""
-">+</span><kbd>V</kbd>. Otvara se dijalog <span class=\"ui\">Uvoz teksta</"
-"span> za određivanje točnog formata CSV podataka."
+"Umetni iz preglednika <span class=\"ui\">Uredi</span> → <span class=\"ui\">"
+"Umetni</span> ili pritisni <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>V</kbd>. Otvara se dijalog <span class=\"ui\">"
+"Uvoz teksta</span> za određivanje točnog formata CSV podataka."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:772-31
 msgid "import"
@@ -3659,9 +3668,8 @@ msgstr ""
 "ikonu na dnu ploče slajdova:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
-msgstr "Dijaprojekcija"
+msgstr "dijaprojekcija"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:807-5
 msgid "How can I change the line, area and position of a shape in my slides?"
