@@ -1,13 +1,13 @@
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
-# Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>, 2021.
+# Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>, 2021, 2026.
 # bittin1ddc447d824349b2 <bittin@reimu.nl>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0200\n"
-"PO-Revision-Date: 2024-09-10 22:08+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2026-03-05 08:10+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/sv/>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -83,9 +83,9 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
-"Använd felspåraren och bifoga alla filer som orsakade problem via <a "
-"href=\"https://col.la/android\">https://col.la/android</a>. Observera att "
-"allt du anger i felspåraren kommer att vara offentligt."
+"Använd ärendehanteringen och bifoga filer som orsakade problem via <a "
+"href=\"https://col.la/android\"> https://col.la/android</a>. Observera att "
+"allt du lägger in i ärendet kommer att vara offentligt."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
