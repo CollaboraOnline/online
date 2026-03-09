@@ -128,13 +128,21 @@ JSDialog.notebookbarIconViewList = function (
 	);
 	commonContainer.id = data.id + '-window';
 
-	// we insert into DOM only the first iconview (rest is accessible only in the dropdown)
-	JSDialog.iconView(commonContainer, data.children[0], builder);
-	// builder will not do it for us - we manage children (return is false in this handler)
-	builder.postProcess(commonContainer, data.children[0]);
+	let firstIconViewIndex = 0;
 
-	const iconViews = commonContainer.querySelectorAll('.ui-iconview');
-	const iconview = iconViews.length ? iconViews[0] : null;
+	while (data.children && data.children[firstIconViewIndex]) {
+		if (data.children[firstIconViewIndex].type === 'iconview') break;
+		firstIconViewIndex++;
+	}
+
+	const iconViewData = data.children[firstIconViewIndex];
+
+	// we insert into DOM only the first iconview (rest is accessible only in the dropdown)
+	JSDialog.iconView(commonContainer, iconViewData, builder);
+	// builder will not do it for us - we manage children (return is false in this handler)
+	builder.postProcess(commonContainer, iconViewData);
+
+	const iconview = commonContainer.querySelector('.ui-iconview');
 	if (!iconview) {
 		app.console.error('IconView cannot be created: ' + data.id);
 		return false;
@@ -281,16 +289,16 @@ JSDialog.notebookbarIconViewList = function (
 	}
 
 	rootNode.updateRenders = iconview.updateRenders = (pos: number) => {
-		iconview.updateRendersImpl(pos, data.children[0].id, iconview);
+		iconview.updateRendersImpl(pos, iconViewData.id, iconview);
 
 		// also update the dropdown (if any);
 		const dropdownContainer = JSDialog.GetDropdown(data.id);
 		if (dropdownContainer)
-			iconview.updateRendersImpl(pos, data.children[0].id, dropdownContainer);
+			iconview.updateRendersImpl(pos, iconViewData.id, dropdownContainer);
 	};
 
 	rootNode.updateSelection = (position: number) => {
-		iconview.updateSelectionImpl(position, data.children[0]);
+		iconview.updateSelectionImpl(position, iconViewData);
 	};
 
 	/*
@@ -304,7 +312,7 @@ JSDialog.notebookbarIconViewList = function (
 		entryContainer: Element,
 	) => {
 		iconview.requestRendersImpl(
-			data.children[0].id,
+			iconViewData.id,
 			entry,
 			placeholder,
 			entryContainer,
@@ -321,7 +329,7 @@ JSDialog.notebookbarIconViewList = function (
 		entry: any,
 		builder: JSBuilder,
 	) => {
-		builder.callback(objectType, eventType, data.children[0], entry, builder);
+		builder.callback(objectType, eventType, iconViewData, entry, builder);
 	};
 
 	commonContainer.onSelect = iconview.onSelect;
