@@ -991,7 +991,8 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     httpSession->setTimeout(std::chrono::seconds(60));
 
     // Send image result via aichatresult with imageData field
-    auto sendImageResult = [clientSession = client_from_this(), requestId](
+    auto clientSessionPtr = client_from_this();
+    auto sendImageResult = [clientSession = clientSessionPtr, requestId](
                                bool success, const std::string& imageData,
                                const std::string& error)
     {
@@ -1009,8 +1010,10 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     };
 
     http::Session::FinishedCallback finishedCallback =
-        [sendImageResult](const std::shared_ptr<http::Session>& session)
+        [clientSessionPtr, sendImageResult](const std::shared_ptr<http::Session>& session)
     {
+        clientSessionPtr->_activeAIChatSession.reset();
+
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
 
@@ -1065,8 +1068,11 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [sendImageResult](const std::shared_ptr<http::Session>& /*session*/)
-    { sendImageResult(false, "", "Network error - please check your connection"); };
+        [clientSessionPtr, sendImageResult](const std::shared_ptr<http::Session>& /*session*/)
+    {
+        clientSessionPtr->_activeAIChatSession.reset();
+        sendImageResult(false, "", "Network error - please check your connection");
+    };
     httpSession->setConnectFailHandler(std::move(connectFailCallback));
 
     http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
@@ -1080,6 +1086,7 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     LOG_DBG("AIImageGeneration: sending request [" << requestId << "] to "
             << requestUrl << ", model: " << imageModel);
 
+    _activeAIChatSession = httpSession;
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     httpSession->asyncRequest(httpRequest, docBroker->getPoll());
     return true;
