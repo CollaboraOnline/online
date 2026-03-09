@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-cs\n"
-"PO-Revision-Date: 2026-02-10 19:09+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/lokit/cs/>\n"
+"PO-Revision-Date: 2026-03-08 21:09+0000\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/cs/>\n"
 "Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -54,31 +55,31 @@ msgstr "Vložit jako"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Nad:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
 msgctxt "RID_BELOW"
 msgid "Below:"
-msgstr ""
+msgstr "Pod:"
 
 #. fvxsX
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Před:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "Po:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "První:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -363,7 +364,7 @@ msgstr "Zaměření stylu tabulky"
 #: cui/uiconfig/ui/areatabpage.ui:39
 msgctxt "areatabpage|tablelb-atkobject"
 msgid "Apply to"
-msgstr ""
+msgstr "Použít na"
 
 #. GYGFd
 #: cui/uiconfig/ui/borderpage.ui:94
@@ -375,7 +376,7 @@ msgstr ""
 #: cui/uiconfig/ui/charnamepage.ui:930
 msgctxt "charnamepage|preview-atkobject"
 msgid "Font preview"
-msgstr ""
+msgstr "Náhled písma"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -417,7 +418,7 @@ msgstr "Měna"
 #: cui/uiconfig/ui/numberingformatpage.ui:682
 msgctxt "numberingformatpage|preview-atkobject"
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
