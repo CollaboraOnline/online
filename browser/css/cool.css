@@ -1080,7 +1080,7 @@ body {
 	padding: 0px;
 }
 
-.lokdialog.ui-dialog-content [Id$='Page'] {
+.lokdialog.ui-dialog-content [Id$='Page']:not(.checkbutton) {
 	grid-column-gap: 24px;
 }
 

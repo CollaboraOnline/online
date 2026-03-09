@@ -2910,9 +2910,7 @@ kbd,
 	align-items: center;
 }
 
-/* Writer - Format - Paragraph - Text Flow */
 /* Writer - Format - Paragraph - Tabs */
-#ParagraphPropertiesDialog #textflow #checkAcrossPage.checkbutton,
 #ParagraphPropertiesDialog #labelTP_TABULATOR #ParagraphTabsPage {
 	grid-column-gap: 0;
 }
