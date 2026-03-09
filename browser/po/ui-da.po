@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0100\n"
-"PO-Revision-Date: 2025-11-20 07:05+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2026-03-06 18:10+0000\n"
+"Last-Translator: J A <jokkels@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -229,7 +229,7 @@ msgstr "Ingen"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr "Indstil Logningniveauer"
+msgstr "Indstil logningniveauer"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
@@ -372,7 +372,7 @@ msgstr "Er du sikker på, du vil afslutte denne session?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
-msgstr "Er du sikker på, at du vil stoppe denne server?"
+msgstr "Er du sikker på, du vil stoppe denne server?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Shared Config URL is missing in initial variables."
@@ -390,8 +390,9 @@ msgstr ""
 "Noget gik galt ved henting af indstillingsfilen. Prøv at genindlæse siden."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:334
+#, fuzzy
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Signaturcertifikat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:335
 #, fuzzy
@@ -417,14 +418,13 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1751
 msgid "Dark Mode"
-msgstr "Mørketilstand"
+msgstr "Mørkt tema"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:341
 msgid "Compact layout"
-msgstr ""
+msgstr "Kompakt layout"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:342
-#, fuzzy
 msgid "Show status bar"
 msgstr "Vis statuslinjen"
 
@@ -435,12 +435,12 @@ msgstr "Vis lineal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:344
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Tilgængelighedskontrol"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:345
 #: src/control/Control.NavigatorPanel.ts:285
 msgid "Navigator"
-msgstr "Navigator"
+msgstr "Navigation"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid "Show Sidebar"
@@ -448,7 +448,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:347
 msgid "Custom Animation"
-msgstr ""
+msgstr "Brugerdefineret animation"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:350
 #, fuzzy
@@ -459,17 +459,19 @@ msgstr "Typografi-liste"
 #: src/control/Control.NotebookbarCalc.js:1150
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:667
+#, fuzzy
 msgid "Grid"
-msgstr ""
+msgstr "Gitter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:354
 #: src/control/Control.BackstageView.ts:328
 msgid "Print"
-msgstr ""
+msgstr "Udskriv"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:355
+#, fuzzy
 msgid "Other"
-msgstr ""
+msgstr "Øvrige"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:356
 #: src/control/Control.NotebookbarImpress.js:676
@@ -477,7 +479,6 @@ msgid "Show Grid"
 msgstr "Vis gitter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:357
-#, fuzzy
 msgid "Snap to grid"
 msgstr "Fastgør til gitter"
 
@@ -489,7 +490,7 @@ msgstr "Fastgør til gitter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:359
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Synkronisér akser"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:360
 #, fuzzy
