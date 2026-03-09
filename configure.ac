@@ -1595,20 +1595,49 @@ AS_IF([test "$ENABLE_WINDOWSAPP" != "true"],
 
 dnl config for qtapp frontend for cool
 AS_IF([test "$ENABLE_QTAPP" = true],
-      [PKG_CHECK_MODULES([QT6],[Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus],,)
-       dnl Qt6 moc executable is found at /usr/lib64/qt6/libexec/moc with
-       dnl qt-base-devel on fedora... TODO: check what is the story with other
-       dnl distros is it ever really in the PATH?
-       AC_PATH_PROG([MOC], [moc], [no], [$PATH$PATH_SEPARATOR/usr/lib64/qt6/libexec$PATH_SEPARATOR/usr/lib/qt6$PATH_SEPARATOR/usr/libexec/qt6$PATH_SEPARATOR/usr/lib/qt6/libexec])
-       if test "x$MOC" = "xno"; then
-             AC_MSG_ERROR([moc not found. Please install Qt development tools.])
+      [
+       PKG_CHECK_MODULES([QT6],
+             [Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus Qt6PrintSupport],,
+             [AC_MSG_ERROR([Qt6 not found. Set QT6_CFLAGS and QT6_LIBS if your distro lacks .pc files.])])
+
+       dnl Locate qtpaths6 for Qt6 tool discovery
+       AC_PATH_PROG([QTPATHS6], [qtpaths6], [no],
+             [$PATH$PATH_SEPARATOR/usr/lib/qt6/bin])
+       if test "x$QTPATHS6" = "xno"; then
+             AC_MSG_ERROR([qtpaths6 not found. Install Qt6 development tools.])
+       fi
+       QT_LIBEXEC_DIR=$($QTPATHS6 --qt-query QT_INSTALL_LIBEXECS 2>/dev/null)
+       QT_BIN_DIR=$($QTPATHS6 --qt-query QT_INSTALL_BINS 2>/dev/null)
+
+       AC_MSG_CHECKING([for moc])
+       if test -n "$QT_LIBEXEC_DIR" -a -x "$QT_LIBEXEC_DIR/moc"; then
+             MOC="$QT_LIBEXEC_DIR/moc"
+             AC_MSG_RESULT([$MOC])
+       else
+             AC_MSG_RESULT([no])
+             AC_MSG_ERROR([moc not found in $QT_LIBEXEC_DIR])
        fi
        AC_SUBST(MOC)
-       AC_PATH_PROGS(LRELEASE, [lrelease6 lrelease-qt6 lrelease], [:], [$PATH$PATH_SEPARATOR/usr/lib/qt6/bin])
-       AC_PATH_PROGS(LUPDATE,  [lupdate6  lupdate-qt6  lupdate],  [:], [$PATH$PATH_SEPARATOR/usr/lib/qt6/bin])
-       if test "x$LRELEASE" = "x:"; then
-             AC_MSG_ERROR([lrelease or lrelease6 not found – please install Qt Linguist tools])
+
+       AC_MSG_CHECKING([for lrelease])
+       if test -n "$QT_BIN_DIR" -a -x "$QT_BIN_DIR/lrelease"; then
+             LRELEASE="$QT_BIN_DIR/lrelease"
+             AC_MSG_RESULT([$LRELEASE])
+       else
+             AC_MSG_RESULT([no])
+             AC_MSG_ERROR([lrelease not found in $QT_BIN_DIR])
        fi
+       AC_SUBST(LRELEASE)
+
+       AC_MSG_CHECKING([for lupdate])
+       if test -n "$QT_BIN_DIR" -a -x "$QT_BIN_DIR/lupdate"; then
+             LUPDATE="$QT_BIN_DIR/lupdate"
+             AC_MSG_RESULT([$LUPDATE])
+       else
+             AC_MSG_RESULT([no])
+             AC_MSG_WARN([lupdate not found in $QT_BIN_DIR])
+       fi
+       AC_SUBST(LUPDATE)
 ])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
