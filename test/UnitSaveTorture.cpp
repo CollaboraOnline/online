@@ -67,8 +67,9 @@ class UnitSaveTorture : public UnitWSD
 
     void createStamp(const std::string &name)
     {
-        TST_LOG("create stamp " << name);
-        std::ofstream stamp(getJailRootPath(name));
+        const auto path = getJailRootPath(name);
+        TST_LOG("create stamp " << name << ": " << path);
+        std::ofstream stamp(path);
         stamp.close();
     }
 
@@ -254,6 +255,7 @@ void UnitSaveTorture::testBgSaveCrash()
 
     forceAutosave = true;
     // force a crashing save ...
+    TST_LOG("Sending save request");
     wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
 
     std::vector<char> message;
@@ -430,13 +432,17 @@ void UnitSaveTorture::invokeWSDTest()
 // Inside the forkit & kit processes
 class UnitKitSaveTorture : public UnitKit
 {
-    bool stampExists(const std::string &name)
+    bool stampExists(const std::string& name)
     {
-        return FileUtil::Stat(std::string("/tmp/") + name).exists();
+        const std::string path = "/tmp/" + name;
+        const bool exists = FileUtil::Stat(path).exists();
+        TST_LOG("Stamp [" << name << "] " << (exists ? "exists" : "missing"));
+        return exists;
     }
 
     void waitWhileStamp(const std::string &name)
     {
+        TST_LOG("waiting while stamp " << name << " exists");
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         while (stampExists(name))
         {
