@@ -23,7 +23,7 @@
 #include <unordered_map>
 #include <vector>
 
-#if !MOBILEAPP
+#if ENABLE_SSL
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 #endif
@@ -41,7 +41,7 @@ class Anonymizer
 {
     explicit Anonymizer(const std::uint64_t salt, [[maybe_unused]] bool highStrength)
         : _salt(salt)
-#if !MOBILEAPP
+#if ENABLE_SSL
         , _highStrength(highStrength)
 #endif
     {
@@ -123,7 +123,7 @@ public:
         }
 
         std::string res;
-#if !MOBILEAPP
+#if ENABLE_SSL
         if (_highStrength)
         {
             res = highStrengthHash(text);
@@ -163,7 +163,7 @@ private:
         return '#' + Util::encodeId(_prefix++, 0) + '#' + Util::encodeId(hash, 0) + '#';
     }
 
-#if !MOBILEAPP
+#if ENABLE_SSL
     /// Cryptographic one-way hash using PBKDF2-HMAC-SHA512 via OpenSSL.
     /// This is irreversible even with knowledge of the salt, unlike the FNV-1a hash.
     static constexpr int HighStrengthIterations = 10000;
@@ -229,7 +229,7 @@ private:
     /// The salt used to hash.
     const std::uint64_t _salt;
 
-#if !MOBILEAPP
+#if ENABLE_SSL
     /// Whether to use PBKDF2-HMAC-SHA512 (high-strength) instead of FNV-1a.
     const bool _highStrength;
 #endif
