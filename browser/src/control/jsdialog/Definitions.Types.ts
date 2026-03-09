@@ -431,16 +431,17 @@ interface IconViewElement extends HTMLElement {
 		placeholder: Element,
 		entryContainer: Element,
 	) => void;
+
+	updateRenders: (pos: number) => void;
+
+	updateRendersImpl: (pos: number, id: string, where: HTMLElement) => void;
+
 	builderCallback: (
 		objectType: string,
 		eventType: string,
 		entryData: any,
 		builder: JSBuilder,
 	) => void;
-}
-
-interface IconViewWrapper extends Element {
-	updateDropdown?: (id: string, pos: number) => void;
 }
 
 interface EditWidgetJSON extends WidgetJSON {
