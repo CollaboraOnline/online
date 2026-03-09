@@ -91,7 +91,7 @@ const initTranslationStr = () => {
 
 const onLoaded = () => {
 	window.addEventListener('message', onMessage, false);
-	window.parent.postMessage('{"MessageId":"settings-ready"}', '*');
+	window.parent.postMessage('{"MessageId":"settings-ready"}', window.origin);
 };
 
 const onMessage = (e) => {
@@ -99,7 +99,10 @@ const onMessage = (e) => {
 		const data = JSON.parse(e.data);
 		if (e.origin === window.origin && window.parent !== window.self) {
 			if (data.MessageId === 'settings-ready')
-				window.parent.postMessage('{"MessageId":"settings-show"}', '*');
+				window.parent.postMessage(
+					'{"MessageId":"settings-show"}',
+					window.origin,
+				);
 			else if (data.MessageId === 'settings-save-all') {
 				const settingIframe = (window as any).settingIframe as SettingIframe;
 				if (settingIframe) {
@@ -109,7 +112,7 @@ const onMessage = (e) => {
 								MessageId: 'settings-save-complete',
 								viewSettings: settingIframe.getViewSettings(),
 							}),
-							'*',
+							window.origin,
 						);
 					});
 				}
