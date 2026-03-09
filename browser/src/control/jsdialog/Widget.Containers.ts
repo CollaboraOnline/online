@@ -45,6 +45,14 @@ JSDialog.container = function (
 
 	if (parentContainer && !parentContainer.id) parentContainer.id = id;
 
+	// ARIA support for non-grid containers
+	if (parentContainer) {
+		if (data.allyRole) parentContainer.setAttribute('role', data.allyRole);
+		if (data.aria?.label)
+			parentContainer.setAttribute('aria-label', data.aria.label);
+		if (data.ariaLive) parentContainer.setAttribute('aria-live', data.ariaLive);
+	}
+
 	return true;
 };
 

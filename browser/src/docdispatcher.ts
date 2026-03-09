@@ -361,6 +361,35 @@ class Dispatcher {
 		};
 	}
 
+	private addAICommands() {
+		this.actionsMap['aichat'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			sidebar.toggle();
+		};
+
+		this.actionsMap['helpfixformulaerror'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			if (!sidebar.isVisible()) sidebar.show();
+			sidebar.diagnoseFormulaError();
+		};
+	}
+
 	private addExportCommands() {
 		this.actionsMap['exportpdf'] = function () {
 			app.map.sendUnoCommand('.uno:ExportToPDF', {
@@ -874,6 +903,7 @@ class Dispatcher {
 
 		this.addGeneralCommands();
 		this.addExportCommands();
+		this.addAICommands();
 
 		if (docType === 'text') {
 			this.addWriterCommands();

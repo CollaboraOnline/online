@@ -43,6 +43,7 @@ class TextSelections {
 		if (!this.active) return;
 
 		this.active = false;
+		app.map.fire('textselectionchange', { active: this.active });
 		this.start.setShowSection(false);
 		this.end.setShowSection(false);
 	}
@@ -51,6 +52,7 @@ class TextSelections {
 		if (this.active) return;
 
 		this.active = true;
+		app.map.fire('textselectionchange', { active: this.active });
 
 		if (this.startRectangle && this.endRectangle) {
 			this.start.setShowSection(true);

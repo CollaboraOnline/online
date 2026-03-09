@@ -17,6 +17,7 @@
 <body>
     <form id="form" action enctype="multipart/form-data" target="coolframe" method="post">
          <input name="access_token" value="test" type="hidden"/>
+         <input id="wopi_setting_base_url" name="wopi_setting_base_url" type="hidden"/>
     </form>
     <iframe id="coolframe" name= "coolframe" style="width:100%;height:100%;position:absolute;" title="Collabora Online" allow="fullscreen">
     </iframe>
@@ -67,6 +68,10 @@
             return localUrl
           }
         var form = document.getElementById("form");
+        var settingsBaseUrl = new URLSearchParams(window.location.search).get('wopi_setting_base_url');
+        if (!settingsBaseUrl)
+          settingsBaseUrl = window.location.protocol + "//" + window.location.host + "/wopi/settings";
+        document.getElementById("wopi_setting_base_url").value = settingsBaseUrl;
         form.action = constructWopiUrl();
         form.submit();
 

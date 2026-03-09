@@ -1,0 +1,12 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Chat bubble -->
+  <path d="M4.5 8H15.5C16.88 8 18 9.12 18 10.5V17.5C18 18.88 16.88 20 15.5 20H8L4.5 23V20C3.12 20 2 18.88 2 17.5V10.5C2 9.12 3.12 8 4.5 8Z" fill="#deeaf6" stroke="#3a3a38" stroke-width="1" stroke-linejoin="round"/>
+  <!-- Text lines -->
+  <line x1="5" y1="12" x2="11" y2="12" stroke="#3a3a38" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="5" y1="14.5" x2="10.5" y2="14.5" stroke="#3a3a38" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="5" y1="17" x2="8" y2="17" stroke="#3a3a38" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- AI Sparkle - main, centered exactly at bubble top-right corner (18,8) -->
+  <path d="M18 4C18.15 6.5 20 7.7 22 8C20 8.3 18.15 9.5 18 12C17.85 9.5 16 8.3 14 8C16 7.7 17.85 6.5 18 4Z" fill="#0063b1"/>
+  <!-- AI Sparkle - small accent -->
+  <path d="M13.5 3C13.6 4 14.3 4.35 15 4.5C14.3 4.65 13.6 5 13.5 6C13.4 5 12.7 4.65 12 4.5C12.7 4.35 13.4 4 13.5 3Z" fill="#83beec"/>
+</svg>

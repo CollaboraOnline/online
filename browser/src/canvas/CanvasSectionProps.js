@@ -67,6 +67,7 @@ app.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 }
 app.CSections.TooltipAnchorLeft =     { name: 'tooltip anchor left' , zIndex: 11 };
 app.CSections.TooltipAnchorRight =    { name: 'tooltip anchor right' };
 app.CSections.CalcValidityDropDown =  { name: 'calc validity dropdown', zIndex: 11 };
+app.CSections.FormulaErrorHelpButton = { name: 'formula error help button', zIndex: 11 };
 
 app.CSections.Scroll =				{ name: 'scroll'			, zIndex: 13 };
 
