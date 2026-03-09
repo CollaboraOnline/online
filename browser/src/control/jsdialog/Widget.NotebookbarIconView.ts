@@ -147,16 +147,18 @@ JSDialog.notebookbarIconViewList = function (
 	);
 	buttonsContainer.id = data.id + '-buttons-container';
 
+	// be aware the child iconviews can get update and be replaced in DOM
+	// we need to use firstChild to get correct instance at the time of execution
 	const scrollUpCallback = () => {
-		iconview.scrollBy({
-			top: -iconview.offsetHeight,
+		commonContainer.firstChild.scrollBy({
+			top: -commonContainer.firstChild.offsetHeight,
 			behavior: 'smooth',
 		});
 	};
 
 	const scrollDownCallback = () => {
-		iconview.scrollBy({
-			top: iconview.offsetHeight,
+		commonContainer.firstChild.scrollBy({
+			top: commonContainer.firstChild.offsetHeight,
 			behavior: 'smooth',
 		});
 	};
