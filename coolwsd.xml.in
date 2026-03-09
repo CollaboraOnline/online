@@ -272,7 +272,8 @@
     </user_interface>
 
     <view_mode desc="View mode settings">
-        <file_extensions desc="List of file extensions that should be opened in view mode by default." type="string" default="docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx"></file_extensions>
+        <!-- Example: "docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx" -->
+        <file_extensions desc="List of file extensions that should be opened in view mode by default." type="string" default=""></file_extensions>
     </view_mode>
 
     <storage desc="Backend storage">
