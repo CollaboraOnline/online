@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0100\n"
-"PO-Revision-Date: 2026-01-01 17:01+0000\n"
+"PO-Revision-Date: 2026-03-05 08:10+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/id/>\n"
-"Language: \n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1068,23 +1068,23 @@ msgstr "Tersimpan"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Terakhir diedit oleh %1 pada %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Versi Awal"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Versi Saat Ini"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
-msgstr ""
+msgstr "Versi Awal"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
 msgid "Current Version"
-msgstr ""
+msgstr "Versi Saat Ini"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1225,7 +1225,7 @@ msgstr "Baru"
 
 #: src/control/Control.BackstageView.ts:288
 msgid "Open"
-msgstr ""
+msgstr "Buka"
 
 #: src/control/Control.BackstageView.ts:296
 #: src/control/Control.Notebookbar.js:633
@@ -1273,12 +1273,12 @@ msgstr "Pilihan"
 
 #: src/control/Control.BackstageView.ts:407
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "Mulai dokumen baru dari salah satu templat berikut."
 
 #: src/control/Control.BackstageView.ts:450
 #: src/control/Control.BackstageView.ts:453
 msgid "More Templates"
-msgstr ""
+msgstr "Templat Lainnya"
 
 #: src/control/Control.BackstageView.ts:479
 #: src/control/jsdialog/Widget.ColorPicker.ts:426
@@ -1291,11 +1291,11 @@ msgstr "Dokumen yang baru dibuka akan muncul di sini"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
-msgstr ""
+msgstr "Tanggal Diubah"
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
@@ -1399,7 +1399,7 @@ msgstr "Dokumen Kosong"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "Tanpa judul"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1419,7 +1419,7 @@ msgstr "Isi Seri"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "Nama dokumen"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -1946,11 +1946,11 @@ msgstr "Tambah Komentar"
 
 #: src/control/Control.JSDialogBuilder.js:1956
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "Alihkan dropdown"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Dialog dropdown"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1596
@@ -1959,7 +1959,7 @@ msgstr "Tarik turun"
 
 #: src/control/Control.JSDialogBuilder.js:1962
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "Terapkan dropdown tindakan"
 
 #: src/control/Control.JSDialogBuilder.js:1989
 msgid "Open {name}"
@@ -3150,7 +3150,7 @@ msgstr "Tombol Filter"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
-msgstr ""
+msgstr "Gaya Tabel"
 
 #: src/control/Control.NotebookbarCalc.js:1805
 #: src/control/Control.NotebookbarCalc.js:2553
@@ -3684,7 +3684,7 @@ msgstr "Perbesar agar Sesuai Lebar Halaman"
 
 #: src/control/Control.StatusBar.js:415
 msgid "The document is probably locked and has been opened as view-only"
-msgstr ""
+msgstr "Dokumen kemungkinan terkunci dan telah dibuka sebagai hanya lihat"
 
 #: src/control/Control.StatusBar.js:424
 msgid ""
@@ -5210,7 +5210,7 @@ msgstr "Mengunggah berkas ke server gagal dengan status: {0}"
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "Gagal membaca file yang dipilih."
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5319,7 +5319,7 @@ msgstr "Salindia Selanjutnya"
 #: src/slideshow/PresenterConsole.js:35
 #: src/slideshow/SlideShowPresenter.ts:871
 msgid "Exchange"
-msgstr ""
+msgstr "Pertukaran"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Pause"
@@ -5334,9 +5334,8 @@ msgid "Resume"
 msgstr "Lanjutkan"
 
 #: src/slideshow/PresenterConsole.js:39
-#, fuzzy
 msgid "Present to all"
-msgstr "Sajikan ke Semua"
+msgstr "Presentasikan ke semua"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Go Back"
@@ -5373,11 +5372,11 @@ msgstr "Klik untuk keluar presentasi..."
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "Anda berada di slide pertama"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
-msgstr ""
+msgstr "Menunggu presenter untuk maju"
 
 #: src/slideshow/SlideShowPresenter.ts:805
 msgid "End Show"
@@ -5393,129 +5392,128 @@ msgid "Enable Animations"
 msgstr "Aktifkan Animasi"
 
 #: src/slideshow/SlideShowPresenter.ts:1479
-#, fuzzy
 msgid "Stop Following"
-msgstr "Berhenti mengikuti"
+msgstr "Hentikan Mengikuti"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "Surat Bisnis Modern (sans-serif)"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "Surat Bisnis"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
-msgstr ""
+msgstr "Surat Bisnis Modern (serif)"
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
-msgstr ""
+msgstr "Resume (satu halaman)"
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "Gaya Modern"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "Gaya Sederhana"
 
 #: templates/templates.js:76
 msgid "Beehive"
-msgstr ""
+msgstr "Sarang Lebah"
 
 #: templates/templates.js:86
 msgid "Blue Curve"
-msgstr ""
+msgstr "Lengkung Biru"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
-msgstr ""
+msgstr "Rencana Cetak Biru"
 
 #: templates/templates.js:106
 msgid "Candy"
-msgstr ""
+msgstr "Permen"
 
 #: templates/templates.js:116
 msgid "DNA"
-msgstr ""
+msgstr "DNA"
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "Fokus"
 
 #: templates/templates.js:136
 msgid "Forestbird"
-msgstr ""
+msgstr "Burung Hutan"
 
 #: templates/templates.js:146
 msgid "Freshes"
-msgstr ""
+msgstr "Segar"
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
-msgstr ""
+msgstr "Abu-abu Elegan"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
-msgstr ""
+msgstr "Kebebasan Bertumbuh"
 
 #: templates/templates.js:176
 msgid "Inspiration"
-msgstr ""
+msgstr "Inspirasi"
 
 #: templates/templates.js:186
 msgid "Lights"
-msgstr ""
+msgstr "Cahaya"
 
 #: templates/templates.js:196
 msgid "Metropolis"
-msgstr ""
+msgstr "Metropolis"
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
-msgstr ""
+msgstr "Biru Tengah Malam"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
-msgstr ""
+msgstr "Ilustrasi Alam"
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "Pensil"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "Piano"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "Portofolio"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "Progres"
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "Matahari Terbenam"
 
 #: templates/templates.js:276
 msgid "Vintage"
-msgstr ""
+msgstr "Vintage"
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "Cerlang"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "Ide Kuning"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
