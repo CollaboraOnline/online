@@ -60,6 +60,7 @@
 		BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A72CBE99340007435A /* DocumentBroker.cpp */; };
 		BEA82C9D2EC2116E00CDC5A6 /* font in Resources */ = {isa = PBXBuildFile; fileRef = BEA82C9C2EC2116A00CDC5A6 /* font */; };
 		BEB7CC182F332BF8006FCAE9 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = BEB7CC172F332BF8006FCAE9 /* TestPlan.xctestplan */; };
+		BEDAD86B2F5EF7BA00E82F00 /* WSDGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEDAD86A2F5EF7BA00E82F00 /* WSDGlobals.cpp */; };
 		BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */; };
 		BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF5CE8E2D633CE60006FD77 /* discovery.xml */; };
 		BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF6F02C2DD1EC0200EA06BF /* RegexUtil.cpp */; };
@@ -175,6 +176,8 @@
 		BECC4BAB2CBD3FA300A120B3 /* Collabora Office.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collabora Office.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDAD8692F5EF7BA00E82F00 /* WSDGlobals.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = WSDGlobals.hpp; path = ../../../../wsd/WSDGlobals.hpp; sourceTree = "<group>"; };
+		BEDAD86A2F5EF7BA00E82F00 /* WSDGlobals.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WSDGlobals.cpp; path = ../../../../wsd/WSDGlobals.cpp; sourceTree = "<group>"; };
 		BEEF3F822CE20BDD00ABE785 /* SetupKitEnvironment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SetupKitEnvironment.hpp; path = ../../../../kit/SetupKitEnvironment.hpp; sourceTree = "<group>"; };
 		BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = ../../../coolkitconfig.xcu; sourceTree = "<group>"; };
 		BEF5CE8E2D633CE60006FD77 /* discovery.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
@@ -395,6 +398,8 @@
 		BEA2648A2CBE98010007435A /* wsd */ = {
 			isa = PBXGroup;
 			children = (
+				BEDAD8692F5EF7BA00E82F00 /* WSDGlobals.hpp */,
+				BEDAD86A2F5EF7BA00E82F00 /* WSDGlobals.cpp */,
 				BE44ACC32D7F00B000BFA3B2 /* ClientRequestDispatcher.hpp */,
 				BE44ACC42D7F00B000BFA3B2 /* ClientRequestDispatcher.cpp */,
 				BE4C62252D59EBAC00047DF2 /* ClientSession.hpp */,
@@ -587,6 +592,8 @@
 				en_AU,
 				vi,
 				et,
+				en_NZ,
+				lo,
 			);
 			mainGroup = BECC4BA22CBD3FA300A120B3;
 			minimizedProjectReferenceProxies = 1;
@@ -718,6 +725,7 @@
 				BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */,
 				BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */,
 				BEA264962CBE986C0007435A /* DeltaSimd.c in Sources */,
+				BEDAD86B2F5EF7BA00E82F00 /* WSDGlobals.cpp in Sources */,
 				BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */,
 				BEA2636E2CBE38E20007435A /* Util.cpp in Sources */,
 				BE44ACC22D7EFF1500BFA3B2 /* Util-mobile.cpp in Sources */,
