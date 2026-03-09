@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-04 08:24+0100\n"
+"POT-Creation-Date: 2026-03-09 17:39+0100\n"
 "PO-Revision-Date: 2025-12-09 11:58+0000\n"
 "Last-Translator: Marco Cecchetti <mrcekets@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
@@ -31,7 +31,7 @@ msgstr "Console di amministrazione"
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: admin/admin.strings.js:17 src/control/Control.StatusBar.js:254
+#: admin/admin.strings.js:17 src/control/Control.StatusBar.js:256
 #: src/control/jsdialog/Widget.NewSlideLayoutEntry.ts:36
 msgid "Overview"
 msgstr "Panoramica"
@@ -147,8 +147,8 @@ msgid "Network Graph"
 msgstr "Grafico di rete"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:880
-#: admin/src/integrator/AdminIntegratorSettings.ts:1850
+#: admin/src/integrator/AdminIntegratorSettings.ts:887
+#: admin/src/integrator/AdminIntegratorSettings.ts:1861
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
 #: src/canvas/sections/CommentListSection.ts:603
 #: src/canvas/sections/CommentSection.ts:183
@@ -231,7 +231,7 @@ msgid "Channel Filter:"
 msgstr "Filtro del canale:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:526
-#: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:203
+#: src/control/Control.StatusBar.js:200 src/control/Control.StatusBar.js:205
 msgid "None"
 msgstr "Nessuno"
 
@@ -269,7 +269,7 @@ msgstr "Licenza"
 #: src/control/Control.Menubar.ts:747 src/control/Control.Menubar.ts:1045
 #: src/control/Control.Menubar.ts:1113 src/control/Control.Menubar.ts:1178
 #: src/control/Control.Menubar.ts:1233 src/control/Control.Menubar.ts:1308
-#: src/control/Control.NotebookbarWriter.js:568
+#: src/control/Control.NotebookbarWriter.js:569
 msgid "About"
 msgstr "Informazioni su"
 
@@ -306,8 +306,8 @@ msgstr "Attenzione"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1906 src/app/Debug.ts:1448
-#: src/canvas/sections/CommentListSection.ts:1553
+#: admin/src/integrator/AdminIntegratorSettings.ts:1917 src/app/Debug.ts:1448
+#: src/canvas/sections/CommentListSection.ts:1564
 #: src/control/Control.AboutDialog.ts:280
 #: src/control/Control.AlertDialog.js:56
 #: src/control/Control.DocumentRepair.js:77
@@ -343,8 +343,8 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:114
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1996 src/control/Control.UIManager.ts:2077
-#: src/control/Control.UIManager.ts:2231 src/control/Control.UIManager.ts:2409
+#: src/control/Control.UIManager.ts:2013 src/control/Control.UIManager.ts:2094
+#: src/control/Control.UIManager.ts:2248 src/control/Control.UIManager.ts:2426
 #: src/control/Control.Zotero.js:360 src/app/Socket.ts:1441
 #: src/map/handler/Map.Settings.ts:87
 msgid "Cancel"
@@ -399,23 +399,23 @@ msgstr ""
 "Si è verificato un problema nel caricamento del file di configurazione. "
 "Prova a ricaricare la pagina."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:334
+#: admin/src/integrator/AdminIntegratorSettings.ts:341
 msgid "Signature Certificate"
 msgstr "Certificato di firma"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:335
+#: admin/src/integrator/AdminIntegratorSettings.ts:342
 msgid "Signature Key"
 msgstr "Chiave di firma"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:336
+#: admin/src/integrator/AdminIntegratorSettings.ts:343
 msgid "Signature CA"
 msgstr "CA di firma"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:339
+#: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid "In-document Screen Reader"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:340
+#: admin/src/integrator/AdminIntegratorSettings.ts:347
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
 #: src/control/Control.Menubar.ts:663 src/control/Control.Menubar.ts:810
 #: src/control/Control.Menubar.ts:1097 src/control/Control.Menubar.ts:1150
@@ -423,160 +423,160 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1624
 #: src/control/Control.NotebookbarDraw.js:556
 #: src/control/Control.NotebookbarImpress.js:696
-#: src/control/Control.NotebookbarWriter.js:1751
+#: src/control/Control.NotebookbarWriter.js:1752
 msgid "Dark Mode"
 msgstr "Modalità scura"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:341
+#: admin/src/integrator/AdminIntegratorSettings.ts:348
 msgid "Compact layout"
 msgstr "Layout compatto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:342
+#: admin/src/integrator/AdminIntegratorSettings.ts:349
 msgid "Show status bar"
 msgstr "Mostra barra di stato"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:343
+#: admin/src/integrator/AdminIntegratorSettings.ts:350
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:496
 msgid "Show Ruler"
 msgstr "Mostra righello"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:344
+#: admin/src/integrator/AdminIntegratorSettings.ts:351
 msgid "Accessibility Checker"
 msgstr "Verifica accessibilità"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:345
-#: src/control/Control.NavigatorPanel.ts:285
+#: admin/src/integrator/AdminIntegratorSettings.ts:352
+#: src/control/Control.NavigatorPanel.ts:286
 #, fuzzy
 msgid "Navigator"
 msgstr "Navigatore"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:346
+#: admin/src/integrator/AdminIntegratorSettings.ts:353
 #, fuzzy
 msgid "Show Sidebar"
 msgstr "Mostra barra laterale"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:347
+#: admin/src/integrator/AdminIntegratorSettings.ts:354
 msgid "Custom Animation"
 msgstr "Animazione personalizzata"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:350
+#: admin/src/integrator/AdminIntegratorSettings.ts:357
 #, fuzzy
 msgid "Style List"
 msgstr "Lista degli stili"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:353
+#: admin/src/integrator/AdminIntegratorSettings.ts:360
 #: src/control/Control.NotebookbarCalc.js:1150
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:667
 msgid "Grid"
 msgstr "Griglia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:354
+#: admin/src/integrator/AdminIntegratorSettings.ts:361
 #: src/control/Control.BackstageView.ts:328
 msgid "Print"
 msgstr "Stampa"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:355
+#: admin/src/integrator/AdminIntegratorSettings.ts:362
 msgid "Other"
 msgstr "Altro"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:356
+#: admin/src/integrator/AdminIntegratorSettings.ts:363
 #: src/control/Control.NotebookbarImpress.js:676
 msgid "Show Grid"
 msgstr "Mostra Griglia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:357
+#: admin/src/integrator/AdminIntegratorSettings.ts:364
 msgid "Snap to grid"
 msgstr "Allinea alla Griglia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:358
-#: admin/src/integrator/AdminIntegratorSettings.ts:364
+#: admin/src/integrator/AdminIntegratorSettings.ts:365
+#: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid "Size to grid"
 msgstr "Dimensiona alla griglia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:359
+#: admin/src/integrator/AdminIntegratorSettings.ts:366
 msgid "Synchronize axes"
 msgstr "Sincronizza assi"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:360
+#: admin/src/integrator/AdminIntegratorSettings.ts:367
 msgid "Snap grid"
 msgstr "Griglia di allineamento"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:361
+#: admin/src/integrator/AdminIntegratorSettings.ts:368
 msgid "Empty Pages"
 msgstr "Pagine vuote"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:362
+#: admin/src/integrator/AdminIntegratorSettings.ts:369
 msgid "Force Breaks"
 msgstr "Forza interruzioni"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:363
+#: admin/src/integrator/AdminIntegratorSettings.ts:370
 #: src/control/Control.Menubar.ts:779 src/control/Control.TopToolbar.js:139
 #: src/control/jsdialog/Definitions.Menu.ts:1587
 msgid "All Sheets"
 msgstr "Tutti i fogli"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:365
+#: admin/src/integrator/AdminIntegratorSettings.ts:372
 msgid "Content"
 msgstr "Contenuto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:366
+#: admin/src/integrator/AdminIntegratorSettings.ts:373
 #: src/control/Control.BackstageView.ts:937
 msgid "Drawing"
 msgstr "Disegno"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:367
+#: admin/src/integrator/AdminIntegratorSettings.ts:374
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
-#: src/control/Control.NotebookbarWriter.js:1209
+#: src/control/Control.NotebookbarWriter.js:1210
 msgid "Page"
 msgstr "Pagina"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:368
+#: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Fit to page"
 msgstr "Adatta alla pagina"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:369
+#: admin/src/integrator/AdminIntegratorSettings.ts:376
 msgid "Tile pages"
 msgstr "Affianca pagine"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:370
+#: admin/src/integrator/AdminIntegratorSettings.ts:377
 msgid "Booklet"
 msgstr "Libretto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:371
+#: admin/src/integrator/AdminIntegratorSettings.ts:378
 msgid "Booklet front"
 msgstr "Fronte libretto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:372
+#: admin/src/integrator/AdminIntegratorSettings.ts:379
 msgid "Booklet back"
 msgstr "Retro libretto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:373
+#: admin/src/integrator/AdminIntegratorSettings.ts:380
 msgid "Page name"
 msgstr "Nome pagina"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:374
+#: admin/src/integrator/AdminIntegratorSettings.ts:381
 #: src/control/Control.NotebookbarCalc.js:781
-#: src/control/Control.NotebookbarWriter.js:1612
+#: src/control/Control.NotebookbarWriter.js:1613
 #: src/control/Control.Zotero.js:1153 src/control/Control.Zotero.js:1605
 msgid "Date"
 msgstr "Data"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:375
+#: admin/src/integrator/AdminIntegratorSettings.ts:382
 #: src/control/Control.NotebookbarCalc.js:782
 msgid "Time"
 msgstr "Ora"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:376
+#: admin/src/integrator/AdminIntegratorSettings.ts:383
 msgid "Hidden pages"
 msgstr "Pagine nascoste"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:377
+#: admin/src/integrator/AdminIntegratorSettings.ts:384
 msgid "From printer setup"
 msgstr "Dalle impostazioni stampante"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:378
+#: admin/src/integrator/AdminIntegratorSettings.ts:385
 #: src/control/Control.BackstageView.ts:936 templates/templates.js:80
 #: templates/templates.js:90 templates/templates.js:100
 #: templates/templates.js:110 templates/templates.js:120
@@ -592,85 +592,85 @@ msgstr "Dalle impostazioni stampante"
 msgid "Presentation"
 msgstr "Presentazione"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:379
+#: admin/src/integrator/AdminIntegratorSettings.ts:386
 #: src/control/Control.Zotero.js:1341 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr "Note"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:380
+#: admin/src/integrator/AdminIntegratorSettings.ts:387
 msgid "Handouts"
 msgstr "Handouts"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:381
-#: src/control/Control.NavigatorPanel.ts:208
+#: admin/src/integrator/AdminIntegratorSettings.ts:388
+#: src/control/Control.NavigatorPanel.ts:209
 msgid "Outline"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:382
+#: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid "Handout horizontal"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:383
+#: admin/src/integrator/AdminIntegratorSettings.ts:390
 msgid "Images"
 msgstr "Immagini"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:384
+#: admin/src/integrator/AdminIntegratorSettings.ts:391
 msgid "Tables"
 msgstr "Tabelle"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:385
+#: admin/src/integrator/AdminIntegratorSettings.ts:392
 msgid "Controls"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:386
+#: admin/src/integrator/AdminIntegratorSettings.ts:393
 msgid "Background"
 msgstr "Sfondo"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:387
+#: admin/src/integrator/AdminIntegratorSettings.ts:394
 msgid "Print Black"
 msgstr "Stampa in nero"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:388
+#: admin/src/integrator/AdminIntegratorSettings.ts:395
 msgid "Hidden text"
 msgstr "Testo nascosto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:389
+#: admin/src/integrator/AdminIntegratorSettings.ts:396
 msgid "Placeholders"
 msgstr "Segnaposti"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:390
+#: admin/src/integrator/AdminIntegratorSettings.ts:397
 msgid "Left pages"
 msgstr "Pagine sinistre"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:391
+#: admin/src/integrator/AdminIntegratorSettings.ts:398
 msgid "Right pages"
 msgstr "Pagine destre"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:392
+#: admin/src/integrator/AdminIntegratorSettings.ts:399
 msgid "Brochure"
 msgstr "Brochure"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:393
+#: admin/src/integrator/AdminIntegratorSettings.ts:400
 msgid "Brochure Right to Left"
 msgstr "Brochure da destra a sinistra"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:394
+#: admin/src/integrator/AdminIntegratorSettings.ts:401
 msgid "Images and Objects"
 msgstr "Immagini e oggetti"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:491
+#: admin/src/integrator/AdminIntegratorSettings.ts:498
 msgid "Invalid JSON file"
 msgstr "JSON file non valido"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:495
+#: admin/src/integrator/AdminIntegratorSettings.ts:502
 msgid "Error reading file"
 msgstr "Errore nella lettura del file"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:507
+#: admin/src/integrator/AdminIntegratorSettings.ts:514
 msgid "Autotext"
 msgstr "Testo automatico"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:509
+#: admin/src/integrator/AdminIntegratorSettings.ts:516
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -678,15 +678,15 @@ msgstr ""
 "Carica porzioni di testo riutilizzabili (.bau). Per inserire il testo nel "
 "documento, digita la scorciatoia per una voce di testo automatico e premi F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:515
+#: admin/src/integrator/AdminIntegratorSettings.ts:522
 msgid "Upload Autotext"
 msgstr "Carica testo automatico"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:520
+#: admin/src/integrator/AdminIntegratorSettings.ts:527
 msgid "Custom dictionaries"
 msgstr "Dizionari personalizzati"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:522
+#: admin/src/integrator/AdminIntegratorSettings.ts:529
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -695,28 +695,28 @@ msgstr ""
 "parole nel tuo dizionario personale (.dic) saranno disponibili per i "
 "controlli ortografici."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:528
+#: admin/src/integrator/AdminIntegratorSettings.ts:535
 msgid "Upload Wordbook"
 msgstr "Carica dizionario"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:533
+#: admin/src/integrator/AdminIntegratorSettings.ts:540
 msgid "Document settings"
 msgstr "Impostazioni documento"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:534
+#: admin/src/integrator/AdminIntegratorSettings.ts:541
 #: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
 msgstr "Modifica il modo in cui i documenti di Office si comportano."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:540
+#: admin/src/integrator/AdminIntegratorSettings.ts:547
 msgid "Upload Xcu"
 msgstr "Carica xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:596
+#: admin/src/integrator/AdminIntegratorSettings.ts:603
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Si è verificato un problema. Aggiorna la pagina."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:727
+#: admin/src/integrator/AdminIntegratorSettings.ts:734
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
@@ -724,63 +724,63 @@ msgstr ""
 "Si è verificato un problema durante il caricamento del dizionario. Aggiorna "
 "la pagina."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:737
+#: admin/src/integrator/AdminIntegratorSettings.ts:744
 msgid "Interface Settings"
 msgstr "Impostazioni interfaccia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:739
+#: admin/src/integrator/AdminIntegratorSettings.ts:746
 msgid "Set default interface preferences."
 msgstr "Imposta le preferenze predefinite dell'interfaccia."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:847
+#: admin/src/integrator/AdminIntegratorSettings.ts:854
 msgid "Select a tab to browser settings."
 msgstr "Seleziona una scheda per navigare nelle impostazioni."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:860
+#: admin/src/integrator/AdminIntegratorSettings.ts:867
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
 msgstr "Ripristina le impostazioni predefinite del documento"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:864
+#: admin/src/integrator/AdminIntegratorSettings.ts:871
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
 msgstr ""
 "Sei sicuro di voler ripristinare le impostazioni predefinite del documento?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:881
+#: admin/src/integrator/AdminIntegratorSettings.ts:888
 #: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
 msgstr "Salva impostazioni documento"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1155
+#: admin/src/integrator/AdminIntegratorSettings.ts:1162
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 "(Attenzione: l'accessibilità server deve essere abilitata per cambiare stato)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1237
+#: admin/src/integrator/AdminIntegratorSettings.ts:1244
 msgid "Notebookbar view"
 msgstr "Modalità Notebookbar"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1244
+#: admin/src/integrator/AdminIntegratorSettings.ts:1251
 #: src/control/Control.NotebookbarCalc.js:1585
 #: src/control/Control.NotebookbarDraw.js:481
 #: src/control/Control.NotebookbarImpress.js:598
-#: src/control/Control.NotebookbarWriter.js:1704
+#: src/control/Control.NotebookbarWriter.js:1705
 msgid "Compact view"
 msgstr "Vista compatta"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1300
+#: admin/src/integrator/AdminIntegratorSettings.ts:1306
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Si è verificato un problema durante il caricamento del file. Riprova."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1376
+#: admin/src/integrator/AdminIntegratorSettings.ts:1382
 #: src/canvas/sections/CommentSection.ts:1132
 #: src/canvas/sections/CommentSection.ts:1137
 #: src/control/Control.ContextMenu.js:176 src/docdispatcher.ts:581
 msgid "Delete"
 msgstr "Elimina"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1387
+#: admin/src/integrator/AdminIntegratorSettings.ts:1393
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
@@ -788,24 +788,24 @@ msgstr ""
 "Si è verificato un problema durante l'eliminazione del file. Aggiorna la "
 "pagina."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1402
+#: admin/src/integrator/AdminIntegratorSettings.ts:1408
 #: src/control/Control.BackstageView.ts:953
 msgid "Edit"
 msgstr "Modifica"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1428
+#: admin/src/integrator/AdminIntegratorSettings.ts:1434
 msgid "View Settings"
 msgstr "Impostazioni visualizzazione"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1429
+#: admin/src/integrator/AdminIntegratorSettings.ts:1435
 msgid "Adjust view settings."
 msgstr "Modifica impostazioni visualizzazione."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1439
+#: admin/src/integrator/AdminIntegratorSettings.ts:1445
 msgid "Option"
 msgstr "Opzione"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1459
+#: admin/src/integrator/AdminIntegratorSettings.ts:1465
 msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
@@ -813,15 +813,15 @@ msgstr ""
 "Per usare Zotero, specifica la tua chiave API qui. Puoi creare la tua chiave "
 "API nel tuo "
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1467
+#: admin/src/integrator/AdminIntegratorSettings.ts:1473
 msgid "Zotero account API settings"
 msgstr "Impostazioni API account Zotero"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1476
+#: admin/src/integrator/AdminIntegratorSettings.ts:1482
 msgid "Document Signing"
 msgstr "Firma documento"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1480
+#: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
@@ -829,7 +829,7 @@ msgstr ""
 "Per usare la firma del documento, specifica qui il tuo certificato di firma, "
 "la chiave e la catena CA."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1894
+#: admin/src/integrator/AdminIntegratorSettings.ts:1905
 #: src/map/handler/Map.WOPI.js:745
 msgid "Error"
 msgstr "Errore"
@@ -966,75 +966,75 @@ msgstr "Ctrl+Shift+Alt+D per uscire"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "La gestione dell'evento ha subito un ritardo imprevisto: {0}ms"
 
-#: src/canvas/sections/CommentListSection.ts:1249
+#: src/canvas/sections/CommentListSection.ts:1260
 msgid "Modify"
 msgstr "Modifica"
 
-#: src/canvas/sections/CommentListSection.ts:1255
+#: src/canvas/sections/CommentListSection.ts:1266
 #: src/canvas/sections/CommentSection.ts:186
 #: src/canvas/sections/CommentSection.ts:505
 #: src/canvas/sections/CommentSection.ts:1219
 msgid "Reply"
 msgstr "Rispondi"
 
-#: src/canvas/sections/CommentListSection.ts:1261
+#: src/canvas/sections/CommentListSection.ts:1272
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: src/canvas/sections/CommentListSection.ts:1267
+#: src/canvas/sections/CommentListSection.ts:1278
 msgid "Remove Thread"
 msgstr "Rimuovi il thread"
 
-#: src/canvas/sections/CommentListSection.ts:1273
+#: src/canvas/sections/CommentListSection.ts:1284
 msgid "Resolve"
 msgstr "Risolvi"
 
-#: src/canvas/sections/CommentListSection.ts:1273
+#: src/canvas/sections/CommentListSection.ts:1284
 msgid "Unresolve"
 msgstr "Irrisolto"
 
-#: src/canvas/sections/CommentListSection.ts:1279
+#: src/canvas/sections/CommentListSection.ts:1290
 msgid "Unresolve Thread"
 msgstr "Risolvi il thread"
 
-#: src/canvas/sections/CommentListSection.ts:1279
+#: src/canvas/sections/CommentListSection.ts:1290
 msgid "Resolve Thread"
 msgstr "Risolvi il thread"
 
-#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:1296
 msgid "Promote to top comment"
 msgstr "Promuovi come miglior commento"
 
-#: src/canvas/sections/CommentListSection.ts:1291
+#: src/canvas/sections/CommentListSection.ts:1302
 msgid "Show on the side"
 msgstr "Mostra lateralmente"
 
-#: src/canvas/sections/CommentListSection.ts:1291
+#: src/canvas/sections/CommentListSection.ts:1302
 msgid "Open in full view"
 msgstr "Visualizza a schermo intero"
 
-#: src/canvas/sections/CommentListSection.ts:1297
+#: src/canvas/sections/CommentListSection.ts:1308
 msgid "Show in navigator"
 msgstr "Mostra nel navigatore"
 
-#: src/canvas/sections/CommentListSection.ts:1325
+#: src/canvas/sections/CommentListSection.ts:1336
 #: src/control/Control.JSDialogBuilder.js:1642
-#: src/layer/tile/CanvasTileLayer.js:3365
-#: src/layer/tile/CanvasTileLayer.js:3376
+#: src/layer/tile/CanvasTileLayer.js:3372
+#: src/layer/tile/CanvasTileLayer.js:3383
 msgid "Comment"
 msgstr "Commento"
 
-#: src/canvas/sections/CommentListSection.ts:1551
-#: src/canvas/sections/CommentListSection.ts:1564
+#: src/canvas/sections/CommentListSection.ts:1562
+#: src/canvas/sections/CommentListSection.ts:1575
 msgid "Comments Updated"
 msgstr "Commenti Aggiornati"
 
-#: src/canvas/sections/CommentListSection.ts:1552
+#: src/canvas/sections/CommentListSection.ts:1563
 msgid "Another user has removed this comment."
 msgstr "Questo commento è stato rimosso da un altro utente."
 
-#: src/canvas/sections/CommentListSection.ts:1565
+#: src/canvas/sections/CommentListSection.ts:1576
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -1042,11 +1042,11 @@ msgstr ""
 "Questo commento è stato aggiornato da un altro utente. Vuoi sovrascrivere "
 "tali modifiche?"
 
-#: src/canvas/sections/CommentListSection.ts:1566 src/app/Socket.ts:1445
+#: src/canvas/sections/CommentListSection.ts:1577 src/app/Socket.ts:1445
 msgid "Overwrite"
 msgstr "Sovrascrivi"
 
-#: src/canvas/sections/CommentListSection.ts:1567
+#: src/canvas/sections/CommentListSection.ts:1578
 msgid "Update"
 msgstr "Aggiorna"
 
@@ -1156,11 +1156,15 @@ msgstr "Fuso orario:"
 msgid "Copy all version information in English"
 msgstr "Copia tutte le informazioni sulla versione in inglese"
 
-#: src/control/Control.AboutDialog.ts:467
+#: src/control/Control.AboutDialog.ts:430
+msgid "Version information has been copied"
+msgstr ""
+
+#: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
 msgstr "Versione COOLWSD:"
 
-#: src/control/Control.AboutDialog.ts:487
+#: src/control/Control.AboutDialog.ts:490
 msgid "LOKit version:"
 msgstr "Versione LOKit:"
 
@@ -1276,7 +1280,7 @@ msgstr "Informazioni"
 #: src/control/Control.NotebookbarImpress.js:218
 #: src/control/Control.NotebookbarImpress.js:363
 #: src/control/Control.NotebookbarWriter.js:178
-#: src/control/Control.NotebookbarWriter.js:322
+#: src/control/Control.NotebookbarWriter.js:323
 msgid "Save As"
 msgstr "Salva Come"
 
@@ -1290,7 +1294,7 @@ msgstr "Esporta"
 #: src/control/Control.NotebookbarCalc.js:383
 #: src/control/Control.NotebookbarDraw.js:406
 #: src/control/Control.NotebookbarImpress.js:440
-#: src/control/Control.NotebookbarWriter.js:414
+#: src/control/Control.NotebookbarWriter.js:415
 #: src/map/handler/Map.Settings.ts:83
 msgid "Options"
 msgstr "Opzioni"
@@ -1342,8 +1346,8 @@ msgstr "Esporta i tuoi documenti in diversi formati"
 #: src/control/Control.NotebookbarCalc.js:336
 #: src/control/Control.NotebookbarDraw.js:356
 #: src/control/Control.NotebookbarImpress.js:393
-#: src/control/Control.NotebookbarWriter.js:352
-#: src/control/Control.NotebookbarWriter.js:1620
+#: src/control/Control.NotebookbarWriter.js:353
+#: src/control/Control.NotebookbarWriter.js:1621
 msgid "Properties"
 msgstr "Proprietà"
 
@@ -1370,7 +1374,7 @@ msgid "Sheets"
 msgstr "Fogli"
 
 #: src/control/Control.BackstageView.ts:936
-#: src/control/Control.NavigatorPanel.ts:187
+#: src/control/Control.NavigatorPanel.ts:188
 #: src/control/Control.NotebookbarImpress.js:1415
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
@@ -1499,7 +1503,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:304
 #: src/control/Control.NotebookbarDraw.js:298
 #: src/control/Control.NotebookbarImpress.js:361
-#: src/control/Control.NotebookbarWriter.js:320
+#: src/control/Control.NotebookbarWriter.js:321
 msgid "Download"
 msgstr "Scarica"
 
@@ -1509,7 +1513,7 @@ msgstr "Scarica il contenuto copiato"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
-#: src/control/Control.PartsPreview.js:313
+#: src/control/Control.PartsPreview.js:313 src/map/Clipboard.js:1503
 msgid "Copy"
 msgstr "Copia"
 
@@ -1863,7 +1867,7 @@ msgstr "Seleziona funzione"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
-#: src/control/Control.NotebookbarWriter.js:1552
+#: src/control/Control.NotebookbarWriter.js:1553
 msgid "Formula"
 msgstr "Formula"
 
@@ -1950,7 +1954,7 @@ msgstr "Dimensione carattere"
 #: src/control/Control.NotebookbarCalc.js:2794
 #: src/control/Control.NotebookbarDraw.js:1754
 #: src/control/Control.NotebookbarImpress.js:1316
-#: src/control/Control.NotebookbarWriter.js:1049
+#: src/control/Control.NotebookbarWriter.js:1050
 msgid "Style"
 msgstr "Stile"
 
@@ -1975,7 +1979,7 @@ msgid "Dialog dropdown"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1960
-#: src/control/Control.NotebookbarWriter.js:1596
+#: src/control/Control.NotebookbarWriter.js:1597
 msgid "Dropdown"
 msgstr "Dropdown"
 
@@ -2004,7 +2008,7 @@ msgstr "Inserisci tabella"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:397
 #: src/control/Control.Menubar.ts:399 src/control/Control.Menubar.ts:401
 #: src/control/Control.Menubar.ts:596 src/control/Control.Menubar.ts:738
-#: src/control/Control.Menubar.ts:1032 src/control/Control.StatusBar.js:554
+#: src/control/Control.Menubar.ts:1032 src/control/Control.StatusBar.js:573
 msgid "None (Do not check spelling)"
 msgstr "Nessuno (non eseguire il controllo ortografico)"
 
@@ -2058,7 +2062,7 @@ msgstr "Testo formattato (.rtf)"
 #: src/control/Control.Menubar.ts:1241 src/control/Control.Menubar.ts:1251
 #: src/control/Control.NotebookbarCalc.js:305
 #: src/control/Control.NotebookbarImpress.js:362
-#: src/control/Control.NotebookbarWriter.js:321
+#: src/control/Control.NotebookbarWriter.js:322
 msgid "Export as"
 msgstr "Esporta come"
 
@@ -2088,7 +2092,7 @@ msgstr "Documento PDF (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.ts:109 src/control/Control.UIManager.ts:334
+#: src/control/Control.Menubar.ts:109 src/control/Control.UIManager.ts:350
 msgid "Rename Document"
 msgstr "Rinomina documento"
 
@@ -2129,7 +2133,7 @@ msgstr "file HTML (.html)"
 
 #: src/control/Control.Menubar.ts:126 src/control/Control.Menubar.ts:466
 #: src/control/Control.Menubar.ts:633 src/control/Control.Menubar.ts:781
-#: src/control/Control.Toolbar.js:1160
+#: src/control/Control.Toolbar.js:1167
 msgid "Close document"
 msgstr "Chiudi il documento"
 
@@ -2140,7 +2144,7 @@ msgstr "Chiudi il documento"
 #: src/control/Control.NotebookbarCalc.js:321
 #: src/control/Control.NotebookbarDraw.js:342
 #: src/control/Control.NotebookbarImpress.js:378
-#: src/control/Control.NotebookbarWriter.js:337
+#: src/control/Control.NotebookbarWriter.js:338
 msgid "Repair"
 msgstr "Ripara"
 
@@ -2155,7 +2159,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1545
 #: src/control/Control.NotebookbarDraw.js:441
 #: src/control/Control.NotebookbarImpress.js:558
-#: src/control/Control.StatusBar.js:258
+#: src/control/Control.StatusBar.js:260
 msgid "Reset zoom"
 msgstr "Azzera ingrandimento"
 
@@ -2185,13 +2189,13 @@ msgstr "Nascondi barra del menu"
 #: src/control/Control.NotebookbarCalc.js:1631
 #: src/control/Control.NotebookbarDraw.js:563
 #: src/control/Control.NotebookbarImpress.js:703
-#: src/control/Control.NotebookbarWriter.js:1758
+#: src/control/Control.NotebookbarWriter.js:1759
 msgid "Invert Background"
 msgstr "Inverti colore di sfondo"
 
 #: src/control/Control.Menubar.ts:178 src/control/Control.Menubar.ts:814
 #: src/control/Control.NotebookbarCalc.js:2821
-#: src/control/Control.NotebookbarWriter.js:1076
+#: src/control/Control.NotebookbarWriter.js:1077
 msgid "Style list"
 msgstr "Lista degli stili"
 
@@ -2212,7 +2216,7 @@ msgstr "Tutto"
 #: src/control/Control.NotebookbarCalc.js:1999
 #: src/control/Control.NotebookbarDraw.js:1585
 #: src/control/Control.NotebookbarImpress.js:1606
-#: src/control/Control.NotebookbarWriter.js:1332
+#: src/control/Control.NotebookbarWriter.js:1333
 msgid "Smart Picker"
 msgstr "Raccoglitore intelligente"
 
@@ -2287,30 +2291,30 @@ msgid "Insert Date"
 msgstr "Inserisci data"
 
 #: src/control/Control.Menubar.ts:405 src/control/Control.Menubar.ts:1102
-#: src/control/Control.NotebookbarWriter.js:475
+#: src/control/Control.NotebookbarWriter.js:476
 msgid "Screen Reading"
 msgstr "Lettura dello Schermo"
 
 #: src/control/Control.Menubar.ts:418
-#: src/control/Control.NotebookbarWriter.js:439
+#: src/control/Control.NotebookbarWriter.js:440
 msgid "Forum"
 msgstr "Forum"
 
 #: src/control/Control.Menubar.ts:419 src/control/Control.Menubar.ts:602
 #: src/control/Control.Menubar.ts:741 src/control/Control.Menubar.ts:1039
-#: src/control/Control.NotebookbarWriter.js:451
+#: src/control/Control.NotebookbarWriter.js:452
 msgid "Online Help"
 msgstr "Aiuto in linea"
 
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:603
 #: src/control/Control.Menubar.ts:742 src/control/Control.Menubar.ts:1040
-#: src/control/Control.NotebookbarWriter.js:464
+#: src/control/Control.NotebookbarWriter.js:465
 msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
 #: src/control/Control.Menubar.ts:421 src/control/Control.Menubar.ts:604
 #: src/control/Control.Menubar.ts:743 src/control/Control.Menubar.ts:1041
-#: src/control/Control.NotebookbarWriter.js:527
+#: src/control/Control.NotebookbarWriter.js:528
 msgid "Report an issue"
 msgstr "Segnala un problema"
 
@@ -2318,7 +2322,7 @@ msgstr "Segnala un problema"
 #: src/control/Control.Menubar.ts:744 src/control/Control.Menubar.ts:1042
 #: src/control/Control.Menubar.ts:1111 src/control/Control.Menubar.ts:1176
 #: src/control/Control.Menubar.ts:1231 src/control/Control.Menubar.ts:1306
-#: src/control/Control.NotebookbarWriter.js:541
+#: src/control/Control.NotebookbarWriter.js:542
 msgid "Latest Updates"
 msgstr "Ultimi aggiornamenti"
 
@@ -2326,13 +2330,13 @@ msgstr "Ultimi aggiornamenti"
 #: src/control/Control.Menubar.ts:745 src/control/Control.Menubar.ts:1043
 #: src/control/Control.Menubar.ts:1112 src/control/Control.Menubar.ts:1177
 #: src/control/Control.Menubar.ts:1232 src/control/Control.Menubar.ts:1307
-#: src/control/Control.NotebookbarWriter.js:555
+#: src/control/Control.NotebookbarWriter.js:556
 msgid "Send Feedback"
 msgstr "Invia suggerimenti"
 
 #: src/control/Control.Menubar.ts:424 src/control/Control.Menubar.ts:607
 #: src/control/Control.Menubar.ts:746 src/control/Control.Menubar.ts:1044
-#: src/control/Control.NotebookbarWriter.js:511
+#: src/control/Control.NotebookbarWriter.js:512
 #: src/control/Control.ServerAuditDialog.ts:299
 #: src/control/Control.ServerAuditDialog.ts:300
 msgid "Server audit"
@@ -2565,14 +2569,14 @@ msgstr "Inferiori alla media..."
 #: src/control/Control.Menubar.ts:1051 src/control/Control.Menubar.ts:1117
 #: src/control/Control.Menubar.ts:1182 src/control/Control.Menubar.ts:1237
 #: src/control/Control.MobileSearchBar.ts:30
-#: src/control/Control.NavigatorPanel.ts:487
+#: src/control/Control.NavigatorPanel.ts:490
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:1173
 #: src/control/Control.NotebookbarDraw.js:1186
 #: src/control/Control.NotebookbarImpress.js:1271
 #: src/control/Control.NotebookbarImpress.js:1284
-#: src/control/Control.NotebookbarWriter.js:1004
-#: src/control/Control.NotebookbarWriter.js:1017
+#: src/control/Control.NotebookbarWriter.js:1005
+#: src/control/Control.NotebookbarWriter.js:1018
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:503
 #: src/control/Toolbar.js:504
 msgid "Search"
@@ -2580,7 +2584,7 @@ msgstr "Cerca"
 
 #: src/control/Control.Menubar.ts:1104
 #: src/control/Control.NotebookbarCalc.js:1101
-#: src/control/Control.NotebookbarWriter.js:1786
+#: src/control/Control.NotebookbarWriter.js:1787
 msgid "Page Setup"
 msgstr "Configurazione della pagina"
 
@@ -2592,7 +2596,7 @@ msgstr "Definire l'area di stampa"
 msgid "Remove print area"
 msgstr "Rimuovere l'area di stampa"
 
-#: src/control/Control.Menubar.ts:1609 src/control/Control.StatusBar.js:553
+#: src/control/Control.Menubar.ts:1609 src/control/Control.StatusBar.js:572
 msgid "Reset to Default Language"
 msgstr "Ripristina la lingua predefinita"
 
@@ -2661,19 +2665,19 @@ msgstr "Fine sfumatura"
 msgid "Navigation Panel"
 msgstr ""
 
-#: src/control/Control.NavigatorPanel.ts:110
+#: src/control/Control.NavigatorPanel.ts:111
 msgid "Navigation"
 msgstr "Navigazione"
 
-#: src/control/Control.NavigatorPanel.ts:131
+#: src/control/Control.NavigatorPanel.ts:132
 msgid "Close Navigation"
 msgstr "Chiudi navigazione"
 
-#: src/control/Control.NavigatorPanel.ts:225
+#: src/control/Control.NavigatorPanel.ts:226
 msgid "Results"
 msgstr "Risultati"
 
-#: src/control/Control.NavigatorPanel.ts:473
+#: src/control/Control.NavigatorPanel.ts:476
 #: src/control/jsdialog/Widget.TreeView.ts:1674
 msgid "Search..."
 msgstr "Cerca..."
@@ -2803,8 +2807,8 @@ msgstr "File"
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarImpress.js:2024
 #: src/control/Control.NotebookbarWriter.js:50
-#: src/control/Control.NotebookbarWriter.js:953
-#: src/control/Control.NotebookbarWriter.js:2437
+#: src/control/Control.NotebookbarWriter.js:954
+#: src/control/Control.NotebookbarWriter.js:2439
 msgid "Insert"
 msgstr "Inserisci"
 
@@ -2848,7 +2852,7 @@ msgstr "Forme"
 #: src/control/Control.NotebookbarDraw.js:108
 #: src/control/Control.NotebookbarImpress.js:136
 #: src/control/Control.NotebookbarWriter.js:95
-#: src/control/Control.NotebookbarWriter.js:1604
+#: src/control/Control.NotebookbarWriter.js:1605
 msgid "Picture"
 msgstr "Immagine"
 
@@ -2898,28 +2902,28 @@ msgstr "Vedi la cronologia"
 #: src/control/Control.NotebookbarCalc.js:349
 #: src/control/Control.NotebookbarDraw.js:370
 #: src/control/Control.NotebookbarImpress.js:406
-#: src/control/Control.NotebookbarWriter.js:365
+#: src/control/Control.NotebookbarWriter.js:366
 msgid "Signature"
 msgstr "Firma"
 
 #: src/control/Control.NotebookbarCalc.js:365
 #: src/control/Control.NotebookbarDraw.js:387
 #: src/control/Control.NotebookbarImpress.js:422
-#: src/control/Control.NotebookbarWriter.js:381
-#: src/control/Control.UIManager.ts:334
+#: src/control/Control.NotebookbarWriter.js:382
+#: src/control/Control.UIManager.ts:350
 msgid "Rename"
 msgstr "Rinomina"
 
 #: src/control/Control.NotebookbarCalc.js:419
 #: src/control/Control.NotebookbarDraw.js:613
 #: src/control/Control.NotebookbarImpress.js:746
-#: src/control/Control.NotebookbarWriter.js:606
+#: src/control/Control.NotebookbarWriter.js:607
 msgid "Clipboard"
 msgstr "Appunti"
 
 #: src/control/Control.NotebookbarCalc.js:480
 #: src/control/Control.NotebookbarDraw.js:673
-#: src/control/Control.NotebookbarWriter.js:665
+#: src/control/Control.NotebookbarWriter.js:666
 msgid "Font"
 msgstr "Carattere"
 
@@ -2966,12 +2970,12 @@ msgstr "Valore booleano"
 #: src/control/Control.NotebookbarCalc.js:2243
 #: src/control/Control.NotebookbarDraw.js:1668
 #: src/control/Control.NotebookbarImpress.js:1716
-#: src/control/Control.NotebookbarWriter.js:1481
+#: src/control/Control.NotebookbarWriter.js:1482
 msgid "Text"
 msgstr "Testo"
 
 #: src/control/Control.NotebookbarCalc.js:792
-#: src/control/Control.NotebookbarWriter.js:2682
+#: src/control/Control.NotebookbarWriter.js:2684
 msgid "Number Format"
 msgstr "Formato numero"
 
@@ -3012,17 +3016,17 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1047
 #: src/control/Control.NotebookbarDraw.js:1197
 #: src/control/Control.NotebookbarImpress.js:1295
-#: src/control/Control.NotebookbarWriter.js:1028
+#: src/control/Control.NotebookbarWriter.js:1029
 msgid "Replace"
 msgstr "Sostituisci"
 
 #: src/control/Control.NotebookbarCalc.js:1111
-#: src/control/Control.NotebookbarWriter.js:1796
+#: src/control/Control.NotebookbarWriter.js:1797
 msgid "Margin"
 msgstr "Margine"
 
 #: src/control/Control.NotebookbarCalc.js:1118
-#: src/control/Control.NotebookbarWriter.js:1803
+#: src/control/Control.NotebookbarWriter.js:1804
 msgid "Size"
 msgstr "Dimensione"
 
@@ -3065,9 +3069,9 @@ msgstr "Elimina colonne"
 #: src/control/Control.NotebookbarImpress.js:2319
 #: src/control/Control.NotebookbarImpress.js:2526
 #: src/control/Control.NotebookbarImpress.js:2830
-#: src/control/Control.NotebookbarWriter.js:2027
-#: src/control/Control.NotebookbarWriter.js:2899
-#: src/control/Control.NotebookbarWriter.js:3222
+#: src/control/Control.NotebookbarWriter.js:2028
+#: src/control/Control.NotebookbarWriter.js:2909
+#: src/control/Control.NotebookbarWriter.js:3232
 msgid "Align"
 msgstr "Allinea"
 
@@ -3078,9 +3082,9 @@ msgstr "Allinea"
 #: src/control/Control.NotebookbarImpress.js:2386
 #: src/control/Control.NotebookbarImpress.js:2593
 #: src/control/Control.NotebookbarImpress.js:2897
-#: src/control/Control.NotebookbarWriter.js:2098
-#: src/control/Control.NotebookbarWriter.js:2958
-#: src/control/Control.NotebookbarWriter.js:3281
+#: src/control/Control.NotebookbarWriter.js:2099
+#: src/control/Control.NotebookbarWriter.js:2968
+#: src/control/Control.NotebookbarWriter.js:3291
 msgid "Arrange"
 msgstr "Organizza"
 
@@ -3115,28 +3119,28 @@ msgstr "Blocca"
 #: src/control/Control.NotebookbarCalc.js:1524
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:544
-#: src/control/Control.NotebookbarWriter.js:1650
+#: src/control/Control.NotebookbarWriter.js:1651
 msgid "Zoom"
 msgstr "Zoom"
 
 #: src/control/Control.NotebookbarCalc.js:1531
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:465
-#: src/control/Control.NotebookbarWriter.js:1636
+#: src/control/Control.NotebookbarWriter.js:1637
 msgid "Read mode"
 msgstr "Modalità di lettura"
 
 #: src/control/Control.NotebookbarCalc.js:1598
 #: src/control/Control.NotebookbarDraw.js:520
 #: src/control/Control.NotebookbarImpress.js:637
-#: src/control/Control.NotebookbarWriter.js:1743
+#: src/control/Control.NotebookbarWriter.js:1744
 msgid "Collapse Tabs"
 msgstr "Chiudi tutte le pagine"
 
 #: src/control/Control.NotebookbarCalc.js:1611
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:625
-#: src/control/Control.NotebookbarWriter.js:1731
+#: src/control/Control.NotebookbarWriter.js:1732
 msgid "Status Bar"
 msgstr "Barra di stato"
 
@@ -3183,8 +3187,8 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:3534
 #: src/control/Control.NotebookbarImpress.js:2646
 #: src/control/Control.NotebookbarImpress.js:2950
-#: src/control/Control.NotebookbarWriter.js:3007
-#: src/control/Control.NotebookbarWriter.js:3330
+#: src/control/Control.NotebookbarWriter.js:3017
+#: src/control/Control.NotebookbarWriter.js:3340
 msgid "Group"
 msgstr "Raggruppa"
 
@@ -3202,7 +3206,7 @@ msgstr "Tabella pivot"
 #: src/control/Control.NotebookbarImpress.js:122
 #: src/control/Control.NotebookbarImpress.js:1509
 #: src/control/Control.NotebookbarWriter.js:81
-#: src/control/Control.NotebookbarWriter.js:1232
+#: src/control/Control.NotebookbarWriter.js:1233
 msgid "Table"
 msgstr "Tabella"
 
@@ -3211,7 +3215,7 @@ msgstr "Tabella"
 #: src/control/Control.NotebookbarDraw.js:1472
 #: src/control/Control.NotebookbarImpress.js:1182
 #: src/control/Control.NotebookbarImpress.js:1462
-#: src/control/Control.NotebookbarWriter.js:1240
+#: src/control/Control.NotebookbarWriter.js:1241
 msgid "Illustrations"
 msgstr "Illustrazioni"
 
@@ -3220,14 +3224,14 @@ msgstr "Illustrazioni"
 #: src/control/Control.NotebookbarDraw.js:1523
 #: src/control/Control.NotebookbarImpress.js:1196
 #: src/control/Control.NotebookbarImpress.js:1540
-#: src/control/Control.NotebookbarWriter.js:1285
+#: src/control/Control.NotebookbarWriter.js:1286
 msgid "Shapes"
 msgstr "Forme"
 
 #: src/control/Control.NotebookbarCalc.js:2007
 #: src/control/Control.NotebookbarDraw.js:1593
 #: src/control/Control.NotebookbarImpress.js:1627
-#: src/control/Control.NotebookbarWriter.js:1353
+#: src/control/Control.NotebookbarWriter.js:1354
 msgid "Assistant"
 msgstr "Assistente"
 
@@ -3283,7 +3287,7 @@ msgstr "Filtra"
 
 #: src/control/Control.NotebookbarCalc.js:2725
 #: src/control/Control.NotebookbarImpress.js:1987
-#: src/control/Control.NotebookbarWriter.js:2226
+#: src/control/Control.NotebookbarWriter.js:2228
 msgid "Comments"
 msgstr "Commenti"
 
@@ -3298,16 +3302,16 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2990
 #: src/control/Control.NotebookbarCalc.js:3347
-#: src/control/Control.NotebookbarWriter.js:1929
-#: src/control/Control.NotebookbarWriter.js:2844
-#: src/control/Control.NotebookbarWriter.js:3167
+#: src/control/Control.NotebookbarWriter.js:1930
+#: src/control/Control.NotebookbarWriter.js:2854
+#: src/control/Control.NotebookbarWriter.js:3177
 #, fuzzy
 msgid "Wrap"
 msgstr "A capo"
 
 #: src/control/Control.NotebookbarCalc.js:3229
 #: src/control/Control.NotebookbarImpress.js:2706
-#: src/control/Control.NotebookbarWriter.js:3053
+#: src/control/Control.NotebookbarWriter.js:3063
 msgid "Image Controls"
 msgstr "Controlli immagine"
 
@@ -3322,15 +3326,15 @@ msgstr "Documento PDF (.pdf) - Esperto"
 
 #: src/control/Control.NotebookbarDraw.js:495
 #: src/control/Control.NotebookbarImpress.js:612
-#: src/control/Control.NotebookbarWriter.js:1718
+#: src/control/Control.NotebookbarWriter.js:1719
 msgid "Ruler"
 msgstr "Righello"
 
 #: src/control/Control.NotebookbarDraw.js:901
 #: src/control/Control.NotebookbarImpress.js:996
 #: src/control/Control.NotebookbarImpress.js:2199
-#: src/control/Control.NotebookbarWriter.js:810
-#: src/control/Control.NotebookbarWriter.js:2610
+#: src/control/Control.NotebookbarWriter.js:811
+#: src/control/Control.NotebookbarWriter.js:2612
 msgid "Paragraph"
 msgstr "Paragrafo"
 
@@ -3419,7 +3423,7 @@ msgid "Merge & Split"
 msgstr "Unisci e dividi"
 
 #: src/control/Control.NotebookbarImpress.js:2130
-#: src/control/Control.NotebookbarWriter.js:2560
+#: src/control/Control.NotebookbarWriter.js:2562
 msgid "Select"
 msgstr "Seleziona"
 
@@ -3431,64 +3435,64 @@ msgstr "Effetti"
 msgid "Form"
 msgstr "Modulo"
 
-#: src/control/Control.NotebookbarWriter.js:397
+#: src/control/Control.NotebookbarWriter.js:398
 msgid "Go Online"
 msgstr "Vai Online"
 
-#: src/control/Control.NotebookbarWriter.js:397
+#: src/control/Control.NotebookbarWriter.js:398
 msgid "Go Offline"
 msgstr "Vai Offline"
 
-#: src/control/Control.NotebookbarWriter.js:490
+#: src/control/Control.NotebookbarWriter.js:491
 msgid "Validate Sidebar"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:497
+#: src/control/Control.NotebookbarWriter.js:498
 msgid "Validate Dialog"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:940
+#: src/control/Control.NotebookbarWriter.js:941
 #: src/control/Control.Zotero.js:828
 msgid "Styles"
 msgstr "Stili"
 
-#: src/control/Control.NotebookbarWriter.js:1086
+#: src/control/Control.NotebookbarWriter.js:1087
 msgid "Lists/Bullets"
 msgstr "Elenchi/Punti elenco"
 
-#: src/control/Control.NotebookbarWriter.js:1373
+#: src/control/Control.NotebookbarWriter.js:1374
 msgid "Header & Footer"
 msgstr "Intestazione e piè di pagina"
 
-#: src/control/Control.NotebookbarWriter.js:1442
+#: src/control/Control.NotebookbarWriter.js:1443
 msgid "Section"
 msgstr "Sezione"
 
-#: src/control/Control.NotebookbarWriter.js:1527
+#: src/control/Control.NotebookbarWriter.js:1528
 msgid "Symbols"
 msgstr "Simboli"
 
-#: src/control/Control.NotebookbarWriter.js:1580
+#: src/control/Control.NotebookbarWriter.js:1581
 msgid "Rich Text"
 msgstr "Rich Text"
 
-#: src/control/Control.NotebookbarWriter.js:1588
+#: src/control/Control.NotebookbarWriter.js:1589
 msgid "Checkbox"
 msgstr "Checkbox"
 
-#: src/control/Control.NotebookbarWriter.js:1664
+#: src/control/Control.NotebookbarWriter.js:1665
 msgid "Page Width"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:2301
+#: src/control/Control.NotebookbarWriter.js:2303
 msgid "Tracking"
 msgstr "Tracciamento"
 
-#: src/control/Control.NotebookbarWriter.js:2322
+#: src/control/Control.NotebookbarWriter.js:2324
 msgid "View Changes"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:2498
+#: src/control/Control.NotebookbarWriter.js:2500
 msgid "Split"
 msgstr "Dividi"
 
@@ -3504,7 +3508,7 @@ msgstr "Diapositiva %1"
 msgid "Paste Slide"
 msgstr "Incolla diapositiva"
 
-#: src/control/Control.PartsPreview.js:326
+#: src/control/Control.PartsPreview.js:326 src/map/Clipboard.js:1503
 msgid "Paste"
 msgstr "Incolla"
 
@@ -3666,61 +3670,61 @@ msgstr "Inserisci foglio"
 msgid "Show sheet list"
 msgstr "Mostra elenco fogli"
 
-#: src/control/Control.StatusBar.js:156
+#: src/control/Control.StatusBar.js:158
 #, fuzzy
 msgid "On"
 msgstr "On"
 
-#: src/control/Control.StatusBar.js:158
+#: src/control/Control.StatusBar.js:160
 #: src/control/jsdialog/Definitions.Menu.ts:1787
 #, fuzzy
 msgid "Off"
 msgstr "Off"
 
-#: src/control/Control.StatusBar.js:191
+#: src/control/Control.StatusBar.js:193
 #: src/control/jsdialog/Definitions.Menu.ts:175
 msgid "Average"
 msgstr "Media"
 
-#: src/control/Control.StatusBar.js:192
+#: src/control/Control.StatusBar.js:194
 msgid "CountA"
 msgstr "Conta valori"
 
-#: src/control/Control.StatusBar.js:193
+#: src/control/Control.StatusBar.js:195
 #: src/control/jsdialog/Definitions.Menu.ts:178
 msgid "Count"
 msgstr "Conteggio"
 
-#: src/control/Control.StatusBar.js:194
+#: src/control/Control.StatusBar.js:196
 msgid "Maximum"
 msgstr "Massimo"
 
-#: src/control/Control.StatusBar.js:195
+#: src/control/Control.StatusBar.js:197
 msgid "Minimum"
 msgstr "Minimo"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:198
 #: src/control/jsdialog/Definitions.Menu.ts:174
 msgid "Sum"
 msgstr "Somma"
 
-#: src/control/Control.StatusBar.js:197
+#: src/control/Control.StatusBar.js:199
 msgid "Selection count"
 msgstr "Conteggio selezione"
 
-#: src/control/Control.StatusBar.js:250
+#: src/control/Control.StatusBar.js:252
 msgid "Multi Page View"
 msgstr "Vista multi-pagina"
 
-#: src/control/Control.StatusBar.js:257
+#: src/control/Control.StatusBar.js:259
 msgid "Zoom to Fit Page Width"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:415
+#: src/control/Control.StatusBar.js:417
 msgid "The document is probably locked and has been opened as view-only"
 msgstr "Il documento è probabilmente bloccato ed è stato aperto in sola lettura"
 
-#: src/control/Control.StatusBar.js:424
+#: src/control/Control.StatusBar.js:426
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
@@ -3728,23 +3732,23 @@ msgstr ""
 "Per prevenire modifiche accidentali, il file è stato aperto in sola lettura "
 "su indicazione dell'autore"
 
-#: src/control/Control.StatusBar.js:475
+#: src/control/Control.StatusBar.js:494
 msgid "Select multiple cells"
 msgstr "Seleziona più celle"
 
-#: src/control/Control.StatusBar.js:492
+#: src/control/Control.StatusBar.js:511
 msgid "Selection mode: inactive"
 msgstr "Modalità di selezione: non attiva"
 
-#: src/control/Control.StatusBar.js:570
+#: src/control/Control.StatusBar.js:589
 msgid "Set Language for All text"
 msgstr "Imposta lingua per tutti i testi"
 
-#: src/control/Control.StatusBar.js:573
+#: src/control/Control.StatusBar.js:592
 msgid "Set Language for Paragraph"
 msgstr "Imposta lingua per il paragrafo"
 
-#: src/control/Control.StatusBar.js:574
+#: src/control/Control.StatusBar.js:593
 msgid "Set Language for Selection"
 msgstr "Imposta lingua per la selezione"
 
@@ -3780,7 +3784,7 @@ msgstr "Rinomina foglio"
 msgid "Enter new sheet name"
 msgstr "Inserisci il nuovo nome del foglio"
 
-#: src/control/Control.Toolbar.js:992
+#: src/control/Control.Toolbar.js:999
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
@@ -3808,15 +3812,15 @@ msgstr "Inserisci forme"
 msgid "Insert connectors"
 msgstr "Inserisci i connettori"
 
-#: src/control/Control.UIManager.ts:334
+#: src/control/Control.UIManager.ts:350
 msgid "Enter new name"
 msgstr "Inserisci nuovo nome"
 
-#: src/control/Control.UIManager.ts:1269
+#: src/control/Control.UIManager.ts:1286
 msgid "Hide Menu"
 msgstr "Nascondi menu"
 
-#: src/control/Control.UIManager.ts:1296
+#: src/control/Control.UIManager.ts:1313
 msgid "Show Menu"
 msgstr "Mostra il Menu"
 
@@ -4019,6 +4023,11 @@ msgstr "Aggiornamento citazioni non riuscito"
 msgid "Updating citations"
 msgstr "Aggiornando citazioni"
 
+#: src/control/Control.Zotero.js:1528
+#, fuzzy
+msgid "Unlinked citations"
+msgstr "Scollega citazioni"
+
 #: src/control/Control.Zotero.js:1533
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
@@ -4035,11 +4044,11 @@ msgstr "Margine sinistro"
 msgid "Right Margin"
 msgstr "Margine destro"
 
-#: src/control/HRuler.ts:1106
+#: src/control/HRuler.ts:1133
 msgid "Insert tabstop"
 msgstr "Inserisci tabulazione"
 
-#: src/control/HRuler.ts:1113
+#: src/control/HRuler.ts:1140
 msgid "Delete tabstop"
 msgstr "Elimina tabulazione"
 
@@ -5155,7 +5164,7 @@ msgstr "Funzioni"
 msgid "Named Range"
 msgstr "Intervallo con nome"
 
-#: src/layer/tile/CanvasTileLayer.js:3393
+#: src/layer/tile/CanvasTileLayer.js:3400
 msgid "No Comments"
 msgstr "Nessun commento"
 
@@ -5188,6 +5197,16 @@ msgid ""
 msgstr ""
 "L'accesso agli appunti da parte del browser è limitato; utilizza i pulsanti "
 "Incolla della tastiera virtuale."
+
+#: src/map/Clipboard.js:1469
+msgid ""
+"Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:"
+msgstr ""
+
+#: src/map/Clipboard.js:1503
+msgid "Cut"
+msgstr ""
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5261,6 +5280,10 @@ msgstr "Caricamento del file sul server non riuscito con stato: {0}"
 msgid "Failed to read the selected file."
 msgstr ""
 
+#: src/map/handler/Map.Keyboard.js:649
+msgid "You are currently in View mode"
+msgstr ""
+
 #: src/map/handler/Map.Print.js:44
 #, fuzzy
 msgid "Print dialog"
@@ -5270,6 +5293,11 @@ msgstr "Finestra di dialogo Stampa"
 #: src/slideshow/SlideShowPresenter.ts:1250
 msgid "Empty Slide Show"
 msgstr "Presentazione vuota"
+
+#: src/map/handler/Map.SlideShow.js:60
+#: src/slideshow/SlideShowPresenter.ts:1251
+msgid "All slides are hidden!"
+msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
