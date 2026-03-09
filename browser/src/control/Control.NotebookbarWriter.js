@@ -2188,7 +2188,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					'id': 'review-translate',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Translate', 'text'),
-					'command': '.uno:Translate'
+					'command': '.uno:Translate',
+					'accessibility': { focusBack: false, combination: 'ZT', de: null }
 				}: {},
 			{
 				'type': 'container',
