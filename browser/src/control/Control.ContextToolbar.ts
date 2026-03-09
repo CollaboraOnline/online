@@ -169,6 +169,53 @@ class ContextToolbar extends JSDialogComponent {
 						type: 'container',
 						children: [
 							{
+								id: 'home-cut',
+								type: 'toolitem',
+								text: _UNO('.uno:Cut'),
+								command: '.uno:Cut',
+							} as ToolItemWidgetJSON,
+							{
+								id: 'home-format-paintbrush',
+								type: 'toolitem',
+								text: _UNO('.uno:FormatPaintbrush'),
+								command: '.uno:FormatPaintbrush',
+							} as ToolItemWidgetJSON,
+						],
+						vertical: false,
+					} as ContainerWidgetJSON,
+					{
+						type: 'container',
+						children: [
+							{
+								id: 'home-copy',
+								type: 'toolitem',
+								text: _UNO('.uno:copy'),
+								command: '.uno:copy',
+							} as ToolItemWidgetJSON,
+							{
+								id: 'home-reset-attributes',
+								type: 'toolitem',
+								text: _UNO('.uno:ResetAttributes'),
+								command: '.uno:ResetAttributes',
+							} as ToolItemWidgetJSON,
+						],
+						vertical: false,
+					} as ContainerWidgetJSON,
+				],
+				vertical: true,
+			} as ContainerWidgetJSON,
+			{
+				type: 'separator',
+				id: 'home-fontcombobox-break',
+				orientation: 'vertical',
+			} as SeparatorWidgetJSON,
+			{
+				type: 'container',
+				children: [
+					{
+						type: 'container',
+						children: [
+							{
 								id: 'fontnamecombobox',
 								type: 'combobox',
 								text: currentFontName,
@@ -285,7 +332,7 @@ class ContextToolbar extends JSDialogComponent {
 			} as ContainerWidgetJSON,
 			{
 				type: 'separator',
-				id: 'home-fontcombobox-break',
+				id: 'home-paragraph',
 				orientation: 'vertical',
 			} as SeparatorWidgetJSON,
 			{
