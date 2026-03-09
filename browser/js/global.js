@@ -2198,9 +2198,8 @@ function showWelcomeSVG() {
 
 			global.app.console.log('Connecting to collab endpoint: ' + wsUrl);
 
-			var ws;
 			try {
-				ws = new WebSocket(wsUrl);
+				global.collabWs = new WebSocket(wsUrl);
 			} catch (err) {
 				reject(new Error('Failed to create WebSocket: ' + err.message));
 				return;
@@ -2208,18 +2207,18 @@ function showWelcomeSVG() {
 
 			var authenticated = false;
 			var timeoutId = setTimeout(function() {
-				if (ws.readyState !== WebSocket.CLOSED) {
-					ws.close();
+				if (global.collabWs.readyState !== WebSocket.CLOSED) {
+					global.collabWs.close();
 				}
 				reject(new Error('Collab fetch timeout'));
 			}, 30000); // 30 second timeout
 
-			ws.onopen = function() {
+			global.collabWs.onopen = function() {
 				global.app.console.log('Collab WebSocket connected, sending access_token');
-				ws.send('access_token ' + accessToken);
+				global.collabWs.send('access_token ' + accessToken);
 			};
 
-			ws.onmessage = function(event) {
+			global.collabWs.onmessage = function(event) {
 				var data = event.data;
 				global.app.console.log('Collab message received: ' + data.substring(0, 100));
 
@@ -2229,45 +2228,45 @@ function showWelcomeSVG() {
 					if (msg.type === 'authenticated') {
 						authenticated = true;
 						// Request file contents
-						ws.send(JSON.stringify({
+						global.collabWs.send(JSON.stringify({
 							type: 'fetch',
 							stream: 'contents',
 							requestId: 'wasm-init'
 						}));
 					} else if (msg.type === 'fetch_url' && msg.requestId === 'wasm-init') {
 						clearTimeout(timeoutId);
-						ws.close();
 						if (msg.url) {
 							global.app.console.log('Collab fetch URL: ' + msg.url);
 							resolve(msg.url);
 						} else {
+							global.collabWs.close();
 							reject(new Error('Collab fetch response missing URL'));
 						}
 					} else if (msg.type === 'fetch_error') {
 						clearTimeout(timeoutId);
-						ws.close();
+						global.collabWs.close();
 						reject(new Error('Collab fetch error: ' + (msg.error || 'Unknown error')));
 					} else if (msg.type === 'error') {
 						clearTimeout(timeoutId);
-						ws.close();
+						global.collabWs.close();
 						reject(new Error('Collab error: ' + (msg.message || msg.error || 'Unknown error')));
 					}
 				} catch (e) {
 					// Not JSON, might be a text message
 					if (data.startsWith('error:')) {
 						clearTimeout(timeoutId);
-						ws.close();
+						global.collabWs.close();
 						reject(new Error('Collab error: ' + data));
 					}
 				}
 			};
 
-			ws.onerror = function() {
+			global.collabWs.onerror = function() {
 				clearTimeout(timeoutId);
 				reject(new Error('Collab WebSocket error'));
 			};
 
-			ws.onclose = function() {
+			global.collabWs.onclose = function() {
 				clearTimeout(timeoutId);
 				if (!authenticated) {
 					reject(new Error('Collab WebSocket closed before authentication'));
