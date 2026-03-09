@@ -86,16 +86,27 @@ function makeFocusCycle(container, failedToFindFocusFunc) {
 	container.appendChild(endMarker);
 
 	container.addEventListener('focusin', function(event) {
+		let target;
 		if (event.target == endMarker) {
-			var focusables = getFocusableElements(container);
-			if (focusables && focusables.length) {
-				focusables[0].focus();
+			if (event.relatedTarget && container.contains(event.relatedTarget)) {
+				target = findFocusable(container, beginMarker, container, false);
+			} else {
+				target = findFocusable(container, endMarker, container, true);
+			}
+
+			if (target) {
+				target.focus();
 				return;
 			}
 		} else if (event.target == beginMarker) {
-			var focusables = getFocusableElements(container);
-			if (focusables && focusables.length) {
-				focusables[focusables.length - 1].focus();
+			if (event.relatedTarget && container.contains(event.relatedTarget)) {
+				target = findFocusable(container, endMarker, container, true);
+			} else {
+				target = findFocusable(container, beginMarker, container, false);
+			}
+
+			if (target) {
+				target.focus();
 				return;
 			}
 		}
@@ -158,6 +169,66 @@ function findFocusableParent(container, currentElement, element, arrowUp) {
 	}
 	else
 		return null;
+}
+
+function isFocusable2(element) {
+	if (typeof element.checkVisibility === 'function' && !element.checkVisibility()) {
+		return false;
+	}
+
+	const style = window.getComputedStyle(element);
+	if (style.display === 'none' ||
+	    style.visibility === 'hidden' ||
+	    style.opacity === '0' ||
+	    element.hasAttribute('disabled') ||
+	    element.hasAttribute('aria-hidden') ||
+	    element.getAttribute('tabindex') === '-1'
+	   ) {
+		return false;
+	}
+
+	const tag = element.tagName.toLowerCase();
+	const defaultFocus = (tag === 'a' && element.hasAttribute('href')) ||
+	      tag === 'button' ||
+	      (tag === 'input' && element.type !== 'hidden' && element.type !== 'file') ||
+	      tag === 'select' ||
+	      tag === 'textarea' ||
+	      tag === 'summary' ||
+	      (element.hasAttribute('contenteditable') && element.getAttribute('contenteditable') !== 'false');
+
+	const tabindex = element.getAttribute('tabindex');
+	return defaultFocus || tabindex !== null && tabindex !== '-1';
+}
+
+function findFocusable(container, currentElement, element, reverse = false) {
+	if (!element || element.nodeType !== Node.ELEMENT_NODE) {
+		return null;
+	}
+
+	if (!container.contains(element)) {
+		return null;
+	}
+
+	if (element !== currentElement && isFocusable2(element)) {
+		return element;
+	}
+
+	const children = reverse
+	      ? Array.from(element.childNodes).reverse()
+	      : element.childNodes;
+
+	for (const child of children) {
+		if (child.nodeType !== Node.ELEMENT_NODE) {
+			continue;
+		}
+
+		const found = findFocusable(container, currentElement, child, reverse);
+		if (found) {
+			return found;
+		}
+	}
+
+	return null;
 }
 
 // Ray cast to find next element in a given direction
