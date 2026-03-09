@@ -246,21 +246,16 @@ inline std::pair<std::int32_t, StrToState> parseStrToInt32(const std::string_vie
 /// const auto [number, success] = NumUtil::i32FromString(portString);
 inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
 {
-    const char* str = input.data();
-    char* endptr = nullptr;
-    errno = 0;
-    const auto value = std::strtol(str, &endptr, 10);
-    return std::make_pair(value, endptr > str && errno != ERANGE &&
-                                     value >= std::numeric_limits<std::int32_t>::min() &&
-                                     value <= std::numeric_limits<std::int32_t>::max());
+    std::size_t offset = 0;
+    const auto [value, status] = parseStrTo<std::int32_t>(input, offset);
+    return { value, status <= StrToState::Partial };
 }
 
-/// Convert a string to 64-bit unsigned int. On failure, returns the default value.
+/// Convert a string to 32-bit signed int. On failure, returns the default value.
 /// Used where there is no interest in knowing whether the input was valid or not.
 inline std::int32_t i32FromString(const std::string_view input, const std::int32_t def)
 {
-    const auto pair = i32FromString(input);
-    return pair.second ? pair.first : def;
+    return strTo<std::int32_t>(input, def);
 }
 
 /// Parse a string to unsigned 32-bit int.
@@ -293,19 +288,16 @@ inline std::pair<std::uint64_t, StrToState> parseStrToUint64(const std::string_v
 /// Returns the parsed value and a boolean indicating success or failure.
 inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input)
 {
-    const char* str = input.data();
-    char* endptr = nullptr;
-    errno = 0;
-    const auto value = std::strtoul(str, &endptr, 10);
-    return std::make_pair(value, endptr > str && errno != ERANGE);
+    std::size_t offset = 0;
+    const auto [value, status] = parseStrTo<std::uint64_t>(input, offset);
+    return { value, status <= StrToState::Partial };
 }
 
 /// Convert a string to 64-bit unsigned int. On failure, returns the default value.
 /// Used where there is no interest in knowing whether the input was valid or not.
 inline std::uint64_t u64FromString(const std::string_view input, const std::uint64_t def)
 {
-    const auto pair = u64FromString(input);
-    return pair.second ? pair.first : def;
+    return strTo<std::uint64_t>(input, def);
 }
 
 /**
