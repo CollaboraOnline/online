@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0100\n"
-"PO-Revision-Date: 2026-03-04 07:00+0000\n"
+"PO-Revision-Date: 2026-03-05 08:09+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.17-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1944,7 +1944,7 @@ msgstr "Preklopi spustni meni"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Spustni meni pogovornega okna"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1596
@@ -1953,7 +1953,7 @@ msgstr "Spustni meni"
 
 #: src/control/Control.JSDialogBuilder.js:1962
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "Spustni meni uveljavitve dejanja"
 
 #: src/control/Control.JSDialogBuilder.js:1989
 msgid "Open {name}"
@@ -5319,7 +5319,7 @@ msgstr "Naslednja prosojnica"
 #: src/slideshow/PresenterConsole.js:35
 #: src/slideshow/SlideShowPresenter.ts:871
 msgid "Exchange"
-msgstr ""
+msgstr "Zamenjaj"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Pause"
@@ -5376,7 +5376,7 @@ msgstr "Ste na prvi prosojnici"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
-msgstr ""
+msgstr "Čakanje na govorca, da se pomakne naprej"
 
 #: src/slideshow/SlideShowPresenter.ts:805
 msgid "End Show"
