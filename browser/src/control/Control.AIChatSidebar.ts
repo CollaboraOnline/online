@@ -864,7 +864,7 @@ namespace cool {
 
 		private buildApiMessages(): { role: string; content: string }[] {
 			const apiMessages: { role: string; content: string }[] = [];
-			const textMessages = this.messages.filter((m) => !m.imageData);
+			const textMessages = this.messages.filter((m) => !m.imageData && !m.isError);
 			const recent = textMessages.slice(-this.MAX_API_MESSAGES);
 			for (const msg of recent) {
 				apiMessages.push({ role: msg.role, content: msg.content });
