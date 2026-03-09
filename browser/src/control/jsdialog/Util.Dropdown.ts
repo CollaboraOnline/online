@@ -264,6 +264,9 @@ JSDialog.OpenDropdown = function (
 
 			if (eventType === 'selected') JSDialog.CloseAllDropdowns();
 
+			// we want to send render request to the default callback -> no warn
+			if (eventType === 'render_entry') return;
+
 			app.console.warn(
 				'Dropdown: unhandled action: "' +
 					eventType +
