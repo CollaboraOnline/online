@@ -77,16 +77,20 @@ public:
         assert(_initialized);
 
         // Don't incur a high cost in release builds.
-#if ENABLE_DEBUG
-        if (_initialized)
+
+        if constexpr (Util::isDebugEnabled())
+        {
+            if (_initialized)
+            {
+                return _value;
+            }
+
+            throw std::runtime_error("RuntimeConstant instance read before being initialized.");
+        }
+        else
         {
             return _value;
         }
-
-        throw std::runtime_error("RuntimeConstant instance read before being initialized.");
-#else // ENABLE_DEBUG
-        return _value;
-#endif // !ENABLE_DEBUG
     }
 
     void set(const T& value)
