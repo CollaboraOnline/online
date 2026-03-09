@@ -445,11 +445,8 @@ namespace FileUtil
         }
 
         // we should be able to run just OK with 5GB for production or 1GB for development
-#if ENABLE_DEBUG
-        constexpr int64_t gb(1);
-#else
-        constexpr int64_t gb(5);
-#endif
+        constexpr int64_t gb = Util::isDebugEnabled() ? 1 : 5;
+
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
 
         return platformDependentCheckDiskSpace(path, ENOUGH_SPACE);
