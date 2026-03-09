@@ -15,10 +15,12 @@
 
 #include <config.h>
 
+#include <test/UnitWSDClient.hpp>
 #include <Unit.hpp>
 #include <common/Util.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
+#include <common/Log.hpp>
 #include <JailUtil.hpp>
 #include <helpers.hpp>
 #include <common/StringVector.hpp>
@@ -36,6 +38,72 @@ using namespace std::literals;
 
 constexpr auto StampFileCheckPeriodMs = 100ms;
 
+/// Base class for Save Torture test cases.
+class UnitSaveTortureBase : public UnitWSDClient
+{
+    bool _forceAutosave;
+
+protected:
+    UnitSaveTortureBase(const std::string& name)
+        : UnitWSDClient(name)
+        , _forceAutosave(false)
+    {
+        setHasKitHooks();
+        // Double of the default.
+        constexpr std::chrono::minutes timeout_minutes(1);
+        setTimeout(timeout_minutes);
+    }
+
+    void modifyDocument()
+    {
+        TST_LOG("Modifying");
+
+        // move to another cell?
+        WSD_CMD("key type=input char=13 key=1280");
+        WSD_CMD("key type=up char=0 key=1280");
+        // enter - some text.
+        WSD_CMD("textinput id=0 text=foo");
+        // enter - commit to a cell in calc eg.
+        WSD_CMD("key type=input char=13 key=1280");
+        WSD_CMD("key type=up char=0 key=1280");
+    }
+
+    std::string getJailRootPath(const std::string& name)
+    {
+        return FileUtil::buildLocalPathToJail(JailUtil::isMountNamespacesEnabled(), getJailRoot(),
+                                              "/tmp/" + name);
+    }
+
+    void createStamp(const std::string& name)
+    {
+        const auto path = getJailRootPath(name);
+        TST_LOG("create stamp " << name << ": " << path);
+        std::ofstream stamp(path);
+        stamp.close();
+        std::this_thread::sleep_for(StampFileCheckPeriodMs);
+        sync(); // Flush the filesystem as sometimes the kit doesn't see the stamp file.
+        std::this_thread::sleep_for(StampFileCheckPeriodMs);
+    }
+
+    void removeStamp(const std::string& name)
+    {
+        FileUtil::removeFile(getJailRootPath(name));
+        TST_LOG("removed stamp " << name);
+    }
+
+    // Force background autosave when saving the modified document
+    bool isAutosave() override { return _forceAutosave; }
+    void forceAutosave() { _forceAutosave = true; }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        UnitWSD::configure(config);
+
+        // Force much faster auto-saving
+        config.setBool("per_document.background_autosave", true);
+    }
+};
+
 /// Save torture testcase.
 class UnitSaveTorture : public UnitWSD
 {
@@ -45,7 +113,6 @@ class UnitSaveTorture : public UnitWSD
 
     void testModified();
     void testTileCombineRace();
-    void testBgSaveCrash();
     void testSaveTorture();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -236,69 +303,123 @@ void UnitSaveTorture::testTileCombineRace()
     poll->joinThread();
 }
 
-void UnitSaveTorture::testBgSaveCrash()
+class UnitBgSaveCrash : public UnitSaveTortureBase
 {
-    std::string name = "testBgSaveCrash";
-    std::string docName = "empty.ods";
-    std::chrono::seconds timeout = 10s;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose) _phase;
+    STATE_ENUM(Case, Background, Foreground) _case;
 
-    std::string documentPath, documentURL;
-    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
-
-    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
-
-    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
-    poll->startThread();
-
-    Poco::URI uri(helpers::getTestServerURI());
-    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
-
-    TST_LOG("modify document");
-    modifyDocument(wsSession);
-    LOK_ASSERT(waitForModifiedStatus(name, wsSession, timeout));
-
-    createStamp("crashkitonsave");
-
-    forceAutosave = true;
-    // force a crashing save ...
-    TST_LOG("Sending save request");
-    wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
-
-    std::vector<char> message;
-    while (!SigUtil::getShutdownRequestFlag())
+public:
+    UnitBgSaveCrash()
+        : UnitSaveTortureBase("UnitBgSaveCrash")
+        , _phase(Phase::Load)
+        , _case(Case::Background)
     {
-        message = wsSession->waitForMessage("unocommandresult:", timeout, name);
-        LOK_ASSERT(message.size() > 0);
-        bool success;
-        if (getSaveResult(message, success))
-        {
-            LOK_ASSERT(!success); // bg save should crash and burn
-            break;
-        }
     }
 
-    TST_LOG("Background save exited early as expected");
-
-    // Leave the crashing stamp - we should learn and save non-background now
-    wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
-
-    while (!SigUtil::getShutdownRequestFlag())
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
     {
-        message = wsSession->waitForMessage("unocommandresult:", timeout, name);
-        LOK_ASSERT(message.size() > 0);
-        bool success;
-        if (getSaveResult(message, success))
-        {
-            // non-bg save has no crash hook & should be fine.
-            LOK_ASSERT(success);
-            break;
-        }
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        modifyDocument();
+
+        return true;
     }
 
-    TST_LOG("(non)-background save succeeded on 2nd attempt");
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
 
-    poll->joinThread();
-}
+        // When the BG save fails, we get the unmodified state again.
+        if (_case == Case::Background)
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+            TRANSITION_STATE(_phase, Phase::WaitDocClose);
+        }
+        else
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+        }
+
+        createStamp("crashkitonsave");
+
+        forceAutosave();
+
+        // force a crashing save ...
+        TST_LOG("Sending save request");
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        return true;
+    }
+
+    bool onDocumentSaved(const std::string& message, bool success,
+                         const std::string& result) override
+    {
+        TST_LOG("Save result: " << result);
+        switch (_case)
+        {
+            case Case::Background:
+                if (success)
+                {
+                    TST_LOG("Document failed to save");
+                    failTest("Failed to save the document (Core is out-of-date or it has a "
+                             "regression: " +
+                             message);
+                }
+                else
+                {
+                    TST_LOG("Background save exited early as expected");
+                    TRANSITION_STATE(_case, Case::Foreground);
+
+                    TST_LOG("Sending save request to verify that foreground-saving is now used");
+                    WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+                }
+                break;
+            case Case::Foreground:
+                if (success)
+                {
+                    TST_LOG("(non)-background save succeeded on 2nd attempt");
+                    passTest("Saved using foreground succeeded");
+                }
+                else
+                {
+                    TST_LOG("Document failed to save");
+                    failTest("Failed to save the document (Core is out-of-date or it has a "
+                             "regression: " +
+                             message);
+                }
+                break;
+        }
+
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                const std::string docName = "empty.ods";
+                TST_LOG("Loading document: " << docName);
+                connectAndLoadLocalDocument(docName);
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
+            case Phase::WaitDocClose:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
 
 void UnitSaveTorture::saveTortureOne(
     const std::string& name, const std::string& docName)
@@ -426,8 +547,6 @@ void UnitSaveTorture::invokeWSDTest()
 {
     testModified();
 
-    testBgSaveCrash();
-
     testTileCombineRace();
 
     testSaveTorture();
@@ -507,7 +626,10 @@ public:
     }
 };
 
-UnitBase* unit_create_wsd(void) { return new UnitSaveTorture(); }
+UnitBase** unit_create_wsd_multi(void)
+{
+    return new UnitBase*[3]{ new UnitBgSaveCrash(), new UnitSaveTorture(), nullptr };
+}
 
 UnitBase *unit_create_kit(void) { return new UnitKitSaveTorture(); }
 
