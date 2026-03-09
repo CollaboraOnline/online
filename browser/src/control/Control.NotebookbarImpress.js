@@ -1810,8 +1810,18 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'type': 'iconviewlist',
 						'children': [
 							{
+								'id': 'masterpagecurrent_label',
+								'type': 'fixedtext',
+								'text': _('This Presentation'),
+							},
+							{
 								'id': 'masterpagecurrent_icons', // has to match core id
 								'type': 'iconview',
+							},
+							{
+								'id': 'masterpageall_label',
+								'type': 'fixedtext',
+								'text': _('Presentation Templates'),
 							},
 							{
 								'id': 'masterpageall_icons', // has to match core id
