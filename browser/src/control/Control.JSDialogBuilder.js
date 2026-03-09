@@ -1732,7 +1732,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		controls['container'] = div;
-		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
+		if (data.tabIndex !== undefined) {
+			div.tabIndex = data.tabIndex;
+		}
 
 		if (data.index)
 			div.setAttribute('index', data.index);
@@ -2598,6 +2600,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			&& data.type !== 'pushbutton'
 			&& data.type !== 'iconview'
 			&& data.type !== 'overflowgroup'
+			&& data.type !== 'toolitem'
+			&& data.type !== 'customtoolitem'
+			&& data.type !== 'bigtoolitem'
+			&& data.type !== 'bigcustomtoolitem'
+			&& data.type !== 'menubutton'
 			)
 			control.setAttribute('tabIndex', '0');
 	},
