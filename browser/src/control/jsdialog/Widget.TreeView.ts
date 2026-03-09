@@ -1837,7 +1837,9 @@ class TreeViewControl {
 		return (
 			!data.noSearchField &&
 			!TreeViewControl.isMenu(data) &&
-			TreeViewControl.isListbox(data)
+			TreeViewControl.isListbox(data) &&
+			data.entries &&
+			data.entries.length > 25
 		);
 	}
 
