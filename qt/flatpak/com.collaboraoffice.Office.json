@@ -659,7 +659,6 @@
       "buildsystem": "autotools",
       "config-opts": [
         "--prefix=/run/build/libreoffice/inst",
-        "--disable-community-flavor",
         "--disable-dbus",
         "--disable-dconf",
         "--disable-epm",
