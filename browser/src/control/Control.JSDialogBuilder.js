@@ -2311,7 +2311,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (!control && data.control)
 			control = this._getItemById(container, this._removeMenuId(data.control.id));
 		if (!control) {
-			window.app.console.warn('executeAction: not found control with id: "' + data.control_id + '"');
+			window.app.console.warn('executeAction: not found control with id: "' + data.control_id +
+				'" to perform action: "' + data.action_type + '"');
 			return;
 		}
 
