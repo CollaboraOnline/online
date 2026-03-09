@@ -66,7 +66,7 @@ public:
 class UnitWSDClient : public UnitWSD
 {
 public:
-    UnitWSDClient(const std::string& name)
+    explicit UnitWSDClient(const std::string& name)
         : UnitWSD(name)
     {
     }
