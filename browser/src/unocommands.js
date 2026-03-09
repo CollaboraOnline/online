@@ -211,6 +211,7 @@ var unoCommandsArray = {
 	'DrawText':{global:{context:_('Insert Text Box'),menu:_('~Text Box'),},},
 	'DuplicatePage':{presentation:{menu:_('Duplicate Page'),},},
 	'DuplicateSlide':{presentation:{menu:_('Duplicate ~Slide'),},},
+	'EditCurIndex':{text:{menu:_('Edit index'),},},
 	'EditCurrentRegion':{text:{menu:_('Edit Section...'),},},
 	'EditHeaderAndFooter':{spreadsheet:{menu:_('~Headers and Footers...'),},},
 	'EditHyperlink':{global:{context:_('Edit Hyperlink...'),menu:_('~Hyperlink'),},},
@@ -692,9 +693,6 @@ var unoCommandsArray = {
 	'ZTestDialog':{spreadsheet:{menu:_('~Z-test...'),},},
 	'ZoomMinus':{global:{menu:_('Zoom Out'),},},
 	'ZoomPlus':{global:{menu:_('Zoom In'),},},
-	'CharFontName':{label:{context:_('Font'),},},
-	'FontHeight':{label:{context:_('Size'),},},
-	'StyleApply':{label:{context:_('Style'),},},
 };
 
 window._UNO = function(string, component, isContext) {

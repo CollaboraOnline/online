@@ -71,7 +71,7 @@ const MenuCommands: MenuCommandsInterface = {
 			   'TableDeleteMenu', 'SetObjectToBackground', 'SetObjectToForeground',
 			   'DeleteRows', 'DeleteColumns', 'DeleteTable', 'EditCurrentRegion',
 			   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
-			   'UpdateCurIndex','RemoveTableOf',
+			   'UpdateCurIndex','RemoveTableOf','EditCurIndex',
 			   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
 			   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
 			   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',

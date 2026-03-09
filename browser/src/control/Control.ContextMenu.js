@@ -252,7 +252,8 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				if (commandName == 'None' && !item.text)
 					continue;
 
-				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete' || commandName == 'PasteSpecial') {
+				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete' || commandName == 'PasteSpecial'
+					|| commandName === 'UpdateCurIndex' || commandName === 'RemoveTableOf' || commandName === 'EditCurIndex') {
 					// These commands have a custom item.text, don't overwrite
 					// that with a label based on 'item.command'.
 					itemName = window.removeAccessKey(item.text);
