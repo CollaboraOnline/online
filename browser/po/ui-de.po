@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 08:24+0100\n"
-"PO-Revision-Date: 2026-03-03 14:38+0000\n"
+"PO-Revision-Date: 2026-03-09 16:34+0000\n"
 "Last-Translator: alxhu <hosted.weblate.org@alxhu.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2863,7 +2863,7 @@ msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Tabellengestaltung"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -3170,7 +3170,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
-msgstr ""
+msgstr "Tabellenstile"
 
 #: src/control/Control.NotebookbarCalc.js:1805
 #: src/control/Control.NotebookbarCalc.js:2553
@@ -3703,7 +3703,7 @@ msgstr "Mehrseitenansicht"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Auf Seitenbreite zoomen"
 
 #: src/control/Control.StatusBar.js:415
 msgid "The document is probably locked and has been opened as view-only"
@@ -4660,7 +4660,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.TreeView.ts:1672
 msgid "Search items"
-msgstr ""
+msgstr "Elemente suchen"
 
 #: src/app/Socket.ts:262
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -5158,7 +5158,7 @@ msgstr "das Menü Ansicht"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Online-Editor"
 
 #: src/layer/tile/CanvasTileLayer.js:1459
 msgid "Functions"
@@ -5277,7 +5277,7 @@ msgstr ""
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "Ausgewählte Datei konnte nicht gelesen werden."
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5359,7 +5359,7 @@ msgstr "Neue Datei aus Vorlage erzeugen …"
 
 #: src/map/handler/Map.WOPI.js:232
 msgid "Compare Document..."
-msgstr ""
+msgstr "Dokument vergleichen..."
 
 #: src/map/handler/Map.WOPI.js:745
 msgid "File name should contain an extension."
@@ -5441,7 +5441,7 @@ msgstr "Klicken Sie hier, um die Präsentation zu beenden..."
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "Sie sind auf der ersten Folie"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
@@ -5467,19 +5467,19 @@ msgstr "Nicht mehr folgen"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "Moderner Geschäftsbrief (sans-serif)"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "Geschäftsbrief"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
-msgstr ""
+msgstr "Moderner Geschäftsbrief (serif)"
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "Lebenslauf"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
@@ -5487,11 +5487,11 @@ msgstr ""
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "Moderner Stil"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "Einfacher Stil"
 
 #: templates/templates.js:76
 msgid "Beehive"
@@ -5499,23 +5499,23 @@ msgstr ""
 
 #: templates/templates.js:86
 msgid "Blue Curve"
-msgstr ""
+msgstr "Blaue Kurve"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
-msgstr ""
+msgstr "Blaupause-Pläne"
 
 #: templates/templates.js:106
 msgid "Candy"
-msgstr ""
+msgstr "Süßigkeiten"
 
 #: templates/templates.js:116
 msgid "DNA"
-msgstr ""
+msgstr "DNS"
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "Fokus"
 
 #: templates/templates.js:136
 msgid "Forestbird"
@@ -5535,11 +5535,11 @@ msgstr ""
 
 #: templates/templates.js:176
 msgid "Inspiration"
-msgstr ""
+msgstr "Inspiration"
 
 #: templates/templates.js:186
 msgid "Lights"
-msgstr ""
+msgstr "Lichter"
 
 #: templates/templates.js:196
 msgid "Metropolis"
@@ -5547,7 +5547,7 @@ msgstr ""
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
-msgstr ""
+msgstr "Mitternachtsblau"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
@@ -5555,7 +5555,7 @@ msgstr ""
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "Bleistift"
 
 #: templates/templates.js:236
 msgid "Piano"
@@ -5571,7 +5571,7 @@ msgstr ""
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "Sonnenuntergang"
 
 #: templates/templates.js:276
 msgid "Vintage"
