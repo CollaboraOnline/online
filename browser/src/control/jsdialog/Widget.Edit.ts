@@ -93,6 +93,12 @@ class EditWidget {
 			edit.setAttribute('placeholder', data.placeholder);
 		}
 
+		if (data.widthInChars && data.widthInChars > 0) {
+			var widthValue = data.widthInChars + 2 + 'ch';
+			edit.style.width = widthValue;
+			container.style.width = 'fit-content';
+		}
+
 		data.aria = data.aria || {};
 		if (!data.aria.label) data.aria.label = data.placeholder;
 
