@@ -2580,6 +2580,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		if (control) {
 			this._setGridStyles(control, data);
+
+			if (data.tooltip) {
+				control.setAttribute('data-cooltip', this._cleanText(data.tooltip));
+				window.L.control.attachTooltipEventListener(control, this.map);
+			}
 		}
 
 		// natural tab-order when using keyboard navigation
