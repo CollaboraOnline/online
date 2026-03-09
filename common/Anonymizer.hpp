@@ -39,9 +39,11 @@
 /// will have a different prefix counter.
 class Anonymizer
 {
-    explicit Anonymizer(const std::uint64_t salt, bool highStrength)
+    explicit Anonymizer(const std::uint64_t salt, [[maybe_unused]] bool highStrength)
         : _salt(salt)
+#if !MOBILEAPP
         , _highStrength(highStrength)
+#endif
     {
     }
 
@@ -227,8 +229,10 @@ private:
     /// The salt used to hash.
     const std::uint64_t _salt;
 
+#if !MOBILEAPP
     /// Whether to use PBKDF2-HMAC-SHA512 (high-strength) instead of FNV-1a.
     const bool _highStrength;
+#endif
 
     /// The prefix counter.
     std::atomic<unsigned> _prefix;
