@@ -1077,13 +1077,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			contentDivs.forEach(function(tabPage)
 			{
 				tabPage.addEventListener('keydown', function(e) {
+					let key = e.key;
 					// Determine key direction
-					let key;
-					if (e.key === 'Tab') {
-						key = e.shiftKey ? 'ArrowLeft' : 'ArrowRight'; // Reverse if Shift+Tab
-					} else {
-						key = e.key;
-					}
 					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
 						var currentElement = e.srcElement;
 						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
