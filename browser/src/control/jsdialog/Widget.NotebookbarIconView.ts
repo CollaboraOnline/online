@@ -66,9 +66,6 @@ function _createButtonForNotebookbarIconview(
 function _getDropdownContent(data: IconViewListJSON, builder: JSBuilder) {
 	const dropdownContent: Array<MenuDefinition> = [];
 	for (const child of data.children) {
-		// only first was visible in the notebookbar
-		child.visible = true;
-
 		// get up-to-date copy from model, TODO: more clean way to do that
 		const childData = (
 			builder?.options?.mobileWizard as any
@@ -189,7 +186,7 @@ JSDialog.notebookbarIconViewList = function (
 	const expanderCallback = () => {
 		JSDialog.OpenDropdown(
 			data.id,
-			commonContainer,
+			rootNode,
 			_getDropdownContent(data, builder),
 			notebookbarIconViewCallback,
 		);
@@ -227,7 +224,7 @@ JSDialog.notebookbarIconViewList = function (
 		true /* opensPopup */,
 	);
 
-	commonContainer._onDropDown = function (opened: boolean) {
+	rootNode._onDropDown = function (opened: boolean) {
 		if (opened) {
 			app.layoutingService.appendLayoutingTask(() => {
 				app.layoutingService.appendLayoutingTask(() => {
@@ -241,7 +238,19 @@ JSDialog.notebookbarIconViewList = function (
 					const overlay = expander.parentNode;
 					overlay.style.position = 'fixed';
 					overlay.style.zIndex = '20000';
-					commonContainer.appendChild(overlay);
+					rootNode.appendChild(overlay);
+
+					// setup correct callbacks for rendering actions for fresh instance
+					// both in notebookbar and inside dropdown
+					const currentIconView = commonContainer.firstChild as IconViewElement;
+					currentIconView.updateRenders = (pos: number) => {
+						currentIconView.updateRendersImpl(
+							pos,
+							iconViewData.id,
+							currentIconView,
+						);
+						currentIconView.updateRendersImpl(pos, iconViewData.id, expander);
+					};
 				});
 			});
 		}
@@ -288,50 +297,5 @@ JSDialog.notebookbarIconViewList = function (
 		iconview.scrollTop = offsetTop;
 	}
 
-	rootNode.updateRenders = iconview.updateRenders = (pos: number) => {
-		iconview.updateRendersImpl(pos, iconViewData.id, iconview);
-
-		// also update the dropdown (if any);
-		const dropdownContainer = JSDialog.GetDropdown(data.id);
-		if (dropdownContainer)
-			iconview.updateRendersImpl(pos, iconViewData.id, dropdownContainer);
-	};
-
-	rootNode.updateSelection = (position: number) => {
-		iconview.updateSelectionImpl(position, iconViewData);
-	};
-
-	/*
-		we need to override `iconview.requestRenders` because `iconview` is created
-		with an `id = data.id + '-iconview'` which core doesn't recoganize. so
-		we pass the original widget's id while requesting icons.
-	*/
-	iconview.requestRenders = (
-		entry: IconViewEntry,
-		placeholder: Element,
-		entryContainer: Element,
-	) => {
-		iconview.requestRendersImpl(
-			iconViewData.id,
-			entry,
-			placeholder,
-			entryContainer,
-		);
-	};
-
-	/*
-		we override this for the same reason for which we
-		override `iconview.requestRenders` above.
-	*/
-	iconview.builderCallback = (
-		objectType: string,
-		eventType: string,
-		entry: any,
-		builder: JSBuilder,
-	) => {
-		builder.callback(objectType, eventType, iconViewData, entry, builder);
-	};
-
-	commonContainer.onSelect = iconview.onSelect;
 	return false;
 };
