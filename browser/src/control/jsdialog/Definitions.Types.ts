@@ -450,6 +450,7 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+	widthInChars: number; // width hint in characters
 }
 
 // type: 'checkbox'
