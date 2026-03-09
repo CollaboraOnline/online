@@ -101,20 +101,9 @@ const onMessage = (e) => {
 			if (data.MessageId === 'settings-ready')
 				window.parent.postMessage('{"MessageId":"settings-show"}', '*');
 			else if (data.MessageId === 'settings-save-all') {
-				const saveButtons = [
-					'xcu-save-button',
-					'browser-settings-save-button',
-					'document-settings-save-button',
-					'viewsettings-save-button',
-				];
-				for (const id of saveButtons) {
-					const button = document.getElementById(id);
-					button?.click();
-				}
-				// Notify parent with current viewsettings so server can update in-memory state
 				const settingIframe = (window as any).settingIframe as SettingIframe;
 				if (settingIframe) {
-					setTimeout(() => {
+					settingIframe.saveAll().then(() => {
 						window.parent.postMessage(
 							JSON.stringify({
 								MessageId: 'settings-save-complete',
@@ -122,7 +111,7 @@ const onMessage = (e) => {
 							}),
 							'*',
 						);
-					}, 500);
+					});
 				}
 			}
 		}
@@ -526,6 +515,44 @@ class SettingIframe {
 
 	getViewSettings(): ViewSettings {
 		return this._viewSetting;
+	}
+
+	public async saveAll(): Promise<void> {
+		const saves: Promise<void>[] = [];
+
+		// Browser settings
+		const browserSettingEl = document.getElementById('browser-setting');
+		if (browserSettingEl) {
+			saves.push(
+				(async () => {
+					this.collectBrowserSettingsFromUI(browserSettingEl);
+					const file = new File(
+						[JSON.stringify(this.browserSettingOptions)],
+						'browsersetting.json',
+						{ type: 'application/json', lastModified: Date.now() },
+					);
+					await this.uploadFile(this.PATH.browserSettingsUpload(), file);
+					if ((window as any).parent?.mode?.isCODesktop()) {
+						(window.parent as any).postMobileMessage('SYNCSETTINGS');
+					}
+				})(),
+			);
+		}
+
+		// Document settings (XCU)
+		if (this.xcuEditor) {
+			saves.push(this.xcuEditor.generateXcuAndUpload());
+		}
+
+		// View settings
+		saves.push(
+			this.uploadViewSettingFile(
+				'viewsetting.json',
+				JSON.stringify(this._viewSetting),
+			),
+		);
+
+		await Promise.all(saves);
 	}
 
 	init(): void {
