@@ -12,6 +12,7 @@
 #pragma once
 
 #include <common/StringVector.hpp>
+#include <common/Log.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -1350,13 +1351,13 @@ int main(int argc, char**argv)
     }
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo);
+    void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER_DECLARATION);
 
 #ifndef ASSERT_CORRECT_THREAD
-#define ASSERT_CORRECT_THREAD() assertCorrectThread(__FILE__, __LINE__)
+#define ASSERT_CORRECT_THREAD() assertCorrectThread()
 #endif
 #ifndef ASSERT_CORRECT_THREAD_OWNER
-#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER, __FILE__, __LINE__)
+#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER)
 #endif
 
     /// Sleep based on count of seconds in env. var

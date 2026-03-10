@@ -283,9 +283,9 @@ static std::chrono::seconds getLimitLoadSecs()
     return value;
 }
 
-void DocumentBroker::assertCorrectThread(const char* filename, int line) const
+void DocumentBroker::assertCorrectThread(LOG_CAPTURE_CALLER) const
 {
-    _poll->assertCorrectThread(filename, line);
+    _poll->assertCorrectThread(LOG_PASS_PARENT_CALLER);
 }
 
 void DocumentBroker::clearCaches()
