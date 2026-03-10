@@ -58,11 +58,6 @@ class ServerConnectionService {
 
 			zoteroPlugin.updateUserID();
 		}
-
-		if (viewSetting.accessibilityState) {
-			app.console.debug('ServerConnectionService: initialize accessibility');
-			app.map.lockAccessibilityOn();
-		}
 	}
 
 	public onSpecializedUI(docType: string) {
