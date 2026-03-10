@@ -859,9 +859,10 @@ public:
 
 #if !MOBILEAPP
     // Resets the forkit process object
-    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc)
+    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc,
+                          LOG_CAPTURE_CALLER_DECLARATION)
     {
-        assertCorrectThread(__FILE__, __LINE__);
+        assertCorrectThread(LOG_PASS_PARENT_CALLER);
         _forKitProc = forKitProc;
         if (forKitProc && !_queuedSendMessages.empty())
         {

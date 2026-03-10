@@ -842,7 +842,7 @@ void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,
     bool transferred = false;
 
     // Important we're not blocking the fromPoll thread.
-    toPoll->assertCorrectThread(__FILE__, __LINE__);
+    ASSERT_CORRECT_SOCKET_THREAD(toPoll);
 
     int socketFD = inSocket->getFD();
 

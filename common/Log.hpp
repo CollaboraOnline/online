@@ -12,7 +12,6 @@
 #pragma once
 
 #include <common/StateEnum.hpp>
-#include <common/Util.hpp>
 
 #include <array>
 #include <cerrno>
@@ -509,5 +508,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ASSERT_MSG(condition, message) LOG_ASSERT_INTERNAL(condition, message, LOG_ERR)
 #define LOG_ASSERT(condition) LOG_ASSERT_MSG(condition, "Precondition failed")
 #endif
+
+// Must be included at the _end_ of this file, since it (Util.hpp)
+// includes us (Log.hpp) and that would break the build.
+#include <common/Util.hpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
