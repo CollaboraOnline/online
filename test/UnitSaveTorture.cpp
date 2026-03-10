@@ -111,7 +111,6 @@ class UnitSaveTorture : public UnitWSD
 
     void saveTortureOne(const std::string& name, const std::string& docName);
 
-    void testModified();
     void testSaveTorture();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -220,40 +219,78 @@ namespace {
     }
 }
 
-void UnitSaveTorture::testModified()
+class UnitModified : public UnitSaveTortureBase
 {
-    std::string name = "testModified";
-    std::string docName = "empty.ods";
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus) _phase;
+    int _modifyCycleCount; ///< Number of times to modify.
 
-    std::string documentPath, documentURL;
-    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
-
-    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
-
-    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
-    poll->startThread();
-
-    Poco::URI uri(helpers::getTestServerURI());
-    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
-
-    // It is vital that we can change the modified status successfully
-    // and also get correct notifications from the core for bgsave to work.
-    for (size_t i = 0; i < 4; ++i)
+public:
+    UnitModified()
+        : UnitSaveTortureBase("UnitModified")
+        , _phase(Phase::Load)
+        , _modifyCycleCount(4)
     {
-        TST_LOG("modify document");
-        modifyDocument(wsSession);
-        LOK_ASSERT(waitForModifiedStatus(name, wsSession, 3s));
-
-        std::string args = "{ \"Modified\": { \"type\": \"boolean\", \"value\": \"false\" } }";
-        TST_LOG("post force modified command: .uno:Modified " << args);
-        wsSession->sendMessage(std::string("uno .uno:Modified ") + args);
-
-        TST_LOG("wait for confirmation of (non-)modification:");
-        LOK_ASSERT(!waitForModifiedStatus(name, wsSession, 3s));
     }
 
-    poll->joinThread();
-}
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        modifyDocument();
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+
+        if (--_modifyCycleCount == 0)
+        {
+            passTest("Force-modified successfully multiple times");
+        }
+        else
+        {
+            // It is vital that we can change the modified status successfully
+            // and also get correct notifications from the core for bgsave to work.
+            const std::string args =
+                "{ \"Modified\": { \"type\": \"boolean\", \"value\": \"false\" } }";
+            TST_LOG("post force modified command: .uno:Modified " << args);
+            WSD_CMD("uno .uno:Modified " + args);
+
+            modifyDocument();
+        }
+
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                const std::string docName = "empty.ods";
+                TST_LOG("Loading document: " << docName);
+                connectAndLoadLocalDocument(docName);
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
 
 class UnitTileCombineRace : public UnitSaveTortureBase
 {
@@ -567,8 +604,6 @@ UnitSaveTorture::UnitSaveTorture()
 
 void UnitSaveTorture::invokeWSDTest()
 {
-    testModified();
-
     testSaveTorture();
 
     exitTest(TestResult::Ok);
@@ -648,7 +683,7 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase*[4]{ new UnitBgSaveCrash(), new UnitTileCombineRace(),
+    return new UnitBase*[5]{ new UnitBgSaveCrash(), new UnitTileCombineRace(), new UnitModified(),
                              /*new UnitSaveTorture(),*/ nullptr };
 }
 
