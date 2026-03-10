@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-05 08:09+0000\n"
+"PO-Revision-Date: 2026-03-10 18:10+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
-"n>6 && n<11) ? 3 : 4;\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>"
+"6 && n<11) ? 3 : 4;\n"
 "X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1139,7 +1139,7 @@ msgstr "Cóipeáil gach eolas faoin leagan i mBéarla"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Tá faisnéis an leagain cóipeáilte"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3999,9 +3999,8 @@ msgid "Updating citations"
 msgstr "Luanna a nuashonrú"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Dícheangail Lua"
+msgstr "Sleachta neamhnasctha"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -5187,10 +5186,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Tá rochtain an-teoranta ag do bhrabhsálaí ar an ngearrthaisce, mar sin bain "
+"úsáid as na haicearraí méarchláir seo:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Gearr"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5268,7 +5269,7 @@ msgstr "Theip ar an gcomhad roghnaithe a léamh."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Tá tú i mód Amhairc faoi láthair"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5282,7 +5283,7 @@ msgstr "Taispeántas Sleamhnán Folamh"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Tá na sleamhnáin go léir i bhfolach!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
