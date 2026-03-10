@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-01-02 21:01+0000\n"
+"PO-Revision-Date: 2026-03-10 18:09+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1059,15 +1059,15 @@ msgstr "Saved"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Last edited by %1 on %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Initial Version"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Current Version"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
@@ -3972,9 +3972,8 @@ msgid "Updating citations"
 msgstr "Updating citations"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Unlink Citations"
+msgstr "Unlinked citations"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -5340,9 +5339,8 @@ msgid "Resume"
 msgstr "Resume"
 
 #: src/slideshow/PresenterConsole.js:39
-#, fuzzy
 msgid "Present to all"
-msgstr "Present to All"
+msgstr "Present to all"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Go Back"
@@ -5399,9 +5397,8 @@ msgid "Enable Animations"
 msgstr "Enable Animations"
 
 #: src/slideshow/SlideShowPresenter.ts:1479
-#, fuzzy
 msgid "Stop Following"
-msgstr "Stop following"
+msgstr "Stop Following"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
