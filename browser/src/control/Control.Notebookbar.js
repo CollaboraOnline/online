@@ -447,13 +447,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		if (!id) return;
 
 		this.builder.executeAction(this.container, {
-			id: this.builder.windowId,
-			action: 'action',
-			jsontype: 'notebookbar',
-			data: {
-				control_id: id,
-				action_type: show ? 'show' : 'hide',
-			}
+			control_id: id,
+			action_type: show ? 'show' : 'hide',
 		});
 
 		JSDialog.RefreshScrollables();

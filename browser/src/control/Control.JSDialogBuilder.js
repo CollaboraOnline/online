@@ -2314,6 +2314,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			return;
 		}
 
+		console.assert(data.action_type);
+
 		switch (data.action_type) {
 		case 'grab_focus':
 			if (typeof control.onFocus === 'function')
