@@ -1894,6 +1894,11 @@ button.menubutton.sidebar > span {
 	height: var(--btn-img-size);
 }
 
+button.has-img img {
+	min-width: 16px;
+	min-height: 16px;
+}
+
 .menubutton .arrow {
 	display: table-cell !important;
 	float: right;
