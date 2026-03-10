@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-06 18:10+0000\n"
-"Last-Translator: J A <jokkels@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-03-10 18:10+0000\n"
+"Last-Translator: Laust Rud Jacobsen <laust@object.io>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -637,11 +637,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:397
 msgid "Left pages"
-msgstr ""
+msgstr "Venstre sider"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:398
 msgid "Right pages"
-msgstr ""
+msgstr "Højre sider"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:399
 msgid "Brochure"
@@ -649,7 +649,7 @@ msgstr "Brochure"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:400
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Brochure højre til venstre"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:401
 msgid "Images and Objects"
@@ -661,7 +661,7 @@ msgstr "Ugyldig JSON-fil"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:502
 msgid "Error reading file"
-msgstr ""
+msgstr "Fejl ved læsning af fil"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:514
 msgid "Autotext"
