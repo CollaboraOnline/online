@@ -28,8 +28,17 @@ interface TableStyleInfo {
 }
 
 // from state change
+type TableStyleElementType =
+	| 'WholeTable'
+	| 'FirstColumnStripe'
+	| 'FirstRowStripe'
+	| 'LastColumn'
+	| 'FirstColumn'
+	| 'HeaderRow'
+	| 'TotalRow';
+
 interface TableStyleElement {
-	Type: string;
+	Type: TableStyleElementType;
 	FillColor: string; // hex value
 }
 
@@ -115,43 +124,57 @@ class TableStylesService {
 		} as IconViewJSON;
 	}
 
+	private styleHasElement(
+		style: TableStyleEntry,
+		elementType: TableStyleElementType,
+	) {
+		for (const element of style.Elements)
+			if (element.Type === elementType) return true;
+
+		return false;
+	}
+
 	public applyStyle(newStyleNumber: number) {
-		const tableStyle = app.map['stateChangeHandler'].getItemValue(
-			'.uno:DatabaseSettings',
-		) as TableStyleInfo;
+		const tableStyle = this.styles[newStyleNumber];
+		if (!tableStyle) {
+			app.console.error(
+				'TableStylesService: not found style with id: ' + newStyleNumber,
+			);
+			return;
+		}
 
 		// PoolItem names ae different than ones from state handler
 		const args = {} as any;
 		args['DatabaseSettings.HeaderRow'] = {
 			type: 'boolean',
-			value: tableStyle.ContainsHeader,
+			value: this.styleHasElement(tableStyle, 'HeaderRow'),
 		};
 		args['DatabaseSettings.TotalRow'] = {
 			type: 'boolean',
-			value: tableStyle.TotalsRow,
+			value: this.styleHasElement(tableStyle, 'TotalRow'),
 		};
 		args['DatabaseSettings.FirstCol'] = {
 			type: 'boolean',
-			value: tableStyle.UseFirstColumnFormatting,
+			value: this.styleHasElement(tableStyle, 'FirstColumn'),
 		};
 		args['DatabaseSettings.LastCol'] = {
 			type: 'boolean',
-			value: tableStyle.UseLastColumnFormatting,
+			value: this.styleHasElement(tableStyle, 'LastColumn'),
 		};
-		args['DatabaseSettings.StrippedRows'] = {
+		args['DatabaseSettings.StripedRows'] = {
 			type: 'boolean',
-			value: tableStyle.UseRowStripes,
+			value: this.styleHasElement(tableStyle, 'FirstRowStripe'),
 		};
-		args['DatabaseSettings.StrippedCols'] = {
+		args['DatabaseSettings.StripedCols'] = {
 			type: 'boolean',
-			value: tableStyle.UseColStripes,
+			value: this.styleHasElement(tableStyle, 'FirstColumnStripe'),
 		};
 		args['DatabaseSettings.ShowFilters'] = {
 			type: 'boolean',
-			value: tableStyle.AutoFilter,
+			value: true, // not present in style data
 		};
 
-		const newStyleId = this.styles[newStyleNumber]?.Name;
+		const newStyleId = tableStyle.Name;
 		args['DatabaseSettings.StyleID'] = { type: 'string', value: newStyleId };
 
 		app.map.sendUnoCommand('.uno:DatabaseSettings', args);
