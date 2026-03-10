@@ -449,6 +449,7 @@ label.notebookbar.ui-checkbox-label {
 .has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
+	color: var(--color-main-text);
 }
 
 /* adding focus to tab in notebookbar */
