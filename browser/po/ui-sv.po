@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-05 08:10+0000\n"
+"PO-Revision-Date: 2026-03-10 18:09+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1132,7 +1132,7 @@ msgstr "Kopiera all versionsinformation på engelska"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Versionsinformation har kopierats"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3978,9 +3978,8 @@ msgid "Updating citations"
 msgstr "Uppdaterar citat"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Avlänka citat"
+msgstr "Olänkade citeringar"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -5142,10 +5141,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Din webbläsare har mycket begränsad tillgång till urklipp, så använd dessa "
+"tangentbordsgenvägar:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Klipp ut"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5220,7 +5221,7 @@ msgstr "Kunde inte läsa den valda filen."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Du är för närvarande i visningsläge"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5234,7 +5235,7 @@ msgstr "Tomt bildspel"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Alla bilder är dolda"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
