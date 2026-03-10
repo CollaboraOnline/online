@@ -193,35 +193,6 @@ function _iconViewEntry(
 		}
 		builder._preventDocumentLosingFocusOnClick(entryContainer);
 
-		const getUNOKeyCodeWithModifiers = function (
-			e: KeyboardEvent,
-			builder: any,
-			app: any,
-		): number {
-			let keyCode = e.keyCode;
-
-			const shift =
-				keyCode === builder.map.keyboard.keyCodes.SHIFT
-					? app.UNOModifier.SHIFT
-					: 0;
-			const ctrl =
-				keyCode === builder.map.keyboard.keyCodes.CTRL || e.metaKey
-					? app.UNOModifier.CTRL
-					: 0;
-			const alt =
-				keyCode === builder.map.keyboard.keyCodes.ALT ? app.UNOModifier.ALT : 0;
-
-			const modifier = shift | ctrl | alt;
-
-			if (modifier) {
-				keyCode = e.key.toUpperCase().charCodeAt(0);
-				keyCode = builder.map.keyboard._toUNOKeyCode(keyCode);
-				keyCode |= modifier;
-			}
-
-			return keyCode;
-		};
-
 		entryContainer.addEventListener('keydown', function (e: KeyboardEvent) {
 			if (e.key === ' ' || e.code === 'Space')
 				parentContainer.builderCallback(
@@ -241,7 +212,7 @@ function _iconViewEntry(
 				parentContainer.builderCallback(
 					'iconview',
 					'keypress',
-					getUNOKeyCodeWithModifiers(e, builder, app),
+					JSDialog.getUNOKeyCodeWithModifiers(e, builder, app),
 					builder,
 				);
 			}
@@ -251,7 +222,7 @@ function _iconViewEntry(
 			parentContainer.builderCallback(
 				'iconview',
 				'keyrelease',
-				getUNOKeyCodeWithModifiers(e, builder, app),
+				JSDialog.getUNOKeyCodeWithModifiers(e, builder, app),
 				builder,
 			);
 		});
