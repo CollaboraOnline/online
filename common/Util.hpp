@@ -11,15 +11,14 @@
 
 #pragma once
 
-#include <Poco/Net/HTTPRequest.h>
+#include <common/StringVector.hpp>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-#include <common/StringVector.hpp>
-
 #include <Poco/File.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Path.h>
-#include <regex>
 
 #include <algorithm>
 #include <cassert>

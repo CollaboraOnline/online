@@ -20,9 +20,10 @@
 #include <cstddef>
 #include <functional>
 #include <iostream>
-#include <thread>
+#include <map>
 #include <sstream>
 #include <string>
+#include <thread>
 
 #ifdef __ANDROID__
 #include <android/log.h>
