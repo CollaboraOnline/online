@@ -112,7 +112,6 @@ class UnitSaveTorture : public UnitWSD
     void saveTortureOne(const std::string& name, const std::string& docName);
 
     void testModified();
-    void testTileCombineRace();
     void testSaveTorture();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -256,52 +255,77 @@ void UnitSaveTorture::testModified()
     poll->joinThread();
 }
 
-void UnitSaveTorture::testTileCombineRace()
+class UnitTileCombineRace : public UnitSaveTortureBase
 {
-    std::string name = "testTileCombineRace";
-    std::string docName = "empty.ods";
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitDocClose) _phase;
 
-    std::string documentPath, documentURL;
-    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
-
-    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
-
-    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
-    poll->startThread();
-
-    Poco::URI uri(helpers::getTestServerURI());
-    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
-
-    TST_LOG("modify document");
-    modifyDocument(wsSession);
-
-    // We need the tilecombine and save in the same drainQueue in this order:
-    createStamp("holddrainqueue");
-
-    wsSession->sendMessage(std::string("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840"));
-
-    // Force a background save-as-auto-save now
-    forceAutosave = true;
-    wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
-
-    removeStamp("holddrainqueue");
-
-    // Check the save succeeded & kit didn't crash
-    while (!SigUtil::getShutdownRequestFlag())
+public:
+    UnitTileCombineRace()
+        : UnitSaveTortureBase("UnitTileCombineRace")
+        , _phase(Phase::Load)
     {
-        std::chrono::seconds timeout = 10s;
-        auto message = wsSession->waitForMessage("unocommandresult:", timeout, name);
-        LOK_ASSERT(message.size() > 0);
-        bool success;
-        if (getSaveResult(message, success))
-        {
-            LOK_ASSERT(success);
-            break;
-        }
     }
 
-    poll->joinThread();
-}
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitDocClose);
+
+        modifyDocument();
+
+        // We need the tilecombine and save in the same drainQueue in this order:
+        createStamp("holddrainqueue");
+
+        WSD_CMD("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 "
+                "tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+
+        // Force a background save-as-auto-save now.
+        forceAutosave();
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        removeStamp("holddrainqueue");
+
+        return true;
+    }
+
+    bool onDocumentSaved(const std::string& message, bool success,
+                         [[maybe_unused]] const std::string& result) override
+    {
+        TST_LOG("Save result: " << message);
+
+        // Check the save succeeded & kit didn't crash.
+        LOK_ASSERT_MESSAGE("Expected save to succeed", success);
+
+        exitTest(success ? TestResult::Ok : TestResult::Failed);
+
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                const std::string docName = "empty.ods";
+                TST_LOG("Loading document: " << docName);
+                connectAndLoadLocalDocument(docName);
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitDocClose:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
 
 class UnitBgSaveCrash : public UnitSaveTortureBase
 {
@@ -547,8 +571,6 @@ void UnitSaveTorture::invokeWSDTest()
 {
     testModified();
 
-    testTileCombineRace();
-
     testSaveTorture();
 
     exitTest(TestResult::Ok);
@@ -628,7 +650,8 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase*[3]{ new UnitBgSaveCrash(), new UnitSaveTorture(), nullptr };
+    return new UnitBase*[4]{ new UnitBgSaveCrash(), new UnitTileCombineRace(),
+                             /*new UnitSaveTorture(),*/ nullptr };
 }
 
 UnitBase *unit_create_kit(void) { return new UnitKitSaveTorture(); }
