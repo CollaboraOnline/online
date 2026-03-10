@@ -78,6 +78,73 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	if (data.horizontal.policy === 'always')
 		scrollwindow.style.overflowX = 'scroll';
 
+	// "External" horizontal scrolling: policy is "never" (no scrollbar) but content
+	// may be wider than the viewport. The browser determines actual overflow.
+	// Allow content to extend and handle scrolling via sibling scroll buttons.
+	if (noHorizontal) {
+		content.style.width = 'max-content';
+		content.style.minWidth = '100%';
+		scrollwindow.style.overflowX = 'hidden';
+
+		var setupExternalScroll = function() {
+			if (scrollwindow._externalScrollSetup)
+				return;
+
+			var hasOverflow = scrollwindow.scrollWidth > scrollwindow.clientWidth;
+			if (!hasOverflow)
+				return;
+
+			// Find sibling scroll buttons - deferred so all siblings exist in DOM
+			var prevSibling = scrollwindow.previousElementSibling;
+			var nextSibling = scrollwindow.nextElementSibling;
+			var leftBtn = prevSibling ? prevSibling.querySelector('button') : null;
+			var rightBtn = nextSibling ? nextSibling.querySelector('button') : null;
+
+			if (!leftBtn && !rightBtn)
+				return;
+
+			scrollwindow._externalScrollSetup = true;
+
+			var updateBtnState = function() {
+				var overflow = scrollwindow.scrollWidth > scrollwindow.clientWidth;
+				if (leftBtn)
+					leftBtn.disabled = !overflow || scrollwindow.scrollLeft <= 0;
+				if (rightBtn)
+					rightBtn.disabled = !overflow || scrollwindow.scrollLeft + scrollwindow.clientWidth >= scrollwindow.scrollWidth - 1;
+			};
+
+			var scrollStep = function() { return Math.max(50, scrollwindow.clientWidth * 0.75); };
+
+			if (leftBtn) {
+				leftBtn.addEventListener('click', function() {
+					scrollwindow.scrollLeft = Math.max(0, scrollwindow.scrollLeft - scrollStep());
+					updateBtnState();
+				});
+			}
+			if (rightBtn) {
+				rightBtn.addEventListener('click', function() {
+					scrollwindow.scrollLeft = Math.min(
+						scrollwindow.scrollWidth - scrollwindow.clientWidth,
+						scrollwindow.scrollLeft + scrollStep());
+					updateBtnState();
+				});
+			}
+
+			updateBtnState();
+		};
+
+		// Use ResizeObserver to detect overflow when content changes
+		// (e.g. token widgets added to the grid after initial render)
+		var observer = new ResizeObserver(function() {
+			setupExternalScroll();
+		});
+		observer.observe(content);
+
+		// Also try after initial build completes (all siblings available)
+		setTimeout(setupExternalScroll, 0);
+		setTimeout(setupExternalScroll, 200);
+	}
+
 	var realContentHeight = scrollwindow.scrollHeight;
 	var realContentWidth = scrollwindow.scrollwidth;
 
