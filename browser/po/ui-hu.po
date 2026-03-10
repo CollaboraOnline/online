@@ -8,16 +8,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-05 08:10+0000\n"
+"PO-Revision-Date: 2026-03-10 23:21+0100\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-online/ui/hu/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -188,8 +186,8 @@ msgstr ""
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
-"A dokumentumfeldolgozáshoz használt veremmemória maximális mennyisége (KB) – "
-"csak csökkenthető"
+"A dokumentumfeldolgozáshoz használt veremmemória maximális mennyisége (KB) –"
+" csak csökkenthető"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -286,8 +284,8 @@ msgstr "Várjon, amíg a kubernetes klaszter skálázódik..."
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
-"Nem lehetett beállítani a jwt hitelesítő sütit a nem biztonságos kapcsolaton "
-"keresztül"
+"Nem lehetett beállítani a jwt hitelesítő sütit a nem biztonságos kapcsolaton"
+" keresztül"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
@@ -678,8 +676,8 @@ msgstr "Egyéni szótárak"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:529
 msgid ""
-"Add or edit words in a spell check dictionary. Words in your wordbook (."
-"dic) will be available for spelling checks."
+"Add or edit words in a spell check dictionary. Words in your wordbook (.dic)"
+" will be available for spelling checks."
 msgstr ""
 "Adjon hozzá vagy szerkesszen szavakat a helyesírás-ellenőrző szótárban. A "
 "szótárban (.dic) levő szavakat használni fogja a helyesírás-ellenőrző."
@@ -792,11 +790,11 @@ msgstr "Beállítás"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1465
 msgid ""
-"To use Zotero specify your API key here. You can create your API key in "
-"your "
+"To use Zotero specify your API key here. You can create your API key in your"
+" "
 msgstr ""
-"A Zotero használatához adja meg az API-kulcsot. Az API-kulcsot létrehozhatja "
-"a "
+"A Zotero használatához adja meg az API-kulcsot. Az API-kulcsot létrehozhatja"
+" a "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1473
 msgid "Zotero account API settings"
@@ -921,8 +919,8 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
-"A rendszer jelenleg az erőforrások szabályozását végzi. Várjon egy kicsit, a "
-"betöltést nemsokára újra próbáljuk..."
+"A rendszer jelenleg az erőforrások szabályozását végzi. Várjon egy kicsit, a"
+" betöltést nemsokára újra próbáljuk..."
 
 #: js/global.js:1764
 msgid "The document is being migrated to a new server. Retrying shortly..."
@@ -1079,14 +1077,12 @@ msgid "%1: Current Version"
 msgstr "%1: Jelenlegi verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
-#, fuzzy
 msgid "Initial Version"
-msgstr "%1: Kezdeti verzió"
+msgstr "Kezdeti verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
-#, fuzzy
 msgid "Current Version"
-msgstr "%1: Jelenlegi verzió"
+msgstr "Jelenlegi verzió"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1138,7 +1134,7 @@ msgstr "Összes verzióinformáció másolása angolul"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "A verzióinformáció másolva"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -1175,8 +1171,8 @@ msgid ""
 "it into the document instead."
 msgstr ""
 "A külső erőforrások letöltése tiltva van, de a kép beillesztése ettől még "
-"lehetséges. Kattintson a jobb egérgombbal a képen, válassza a „Kép másolása” "
-"lehetőséget, és illessze be így a dokumentumba."
+"lehetséges. Kattintson a jobb egérgombbal a képen, válassza a „Kép másolása”"
+" lehetőséget, és illessze be így a dokumentumba."
 
 #: src/control/Control.AlertDialog.js:74
 msgid "External data source not allowed"
@@ -1199,7 +1195,8 @@ msgstr "Ne jelenjen meg újra"
 
 #: src/control/Control.AlertDialog.js:107
 msgid "The server encountered a {0} error while parsing the {1} command."
-msgstr "A kiszolgáló {0} hibába ütközött a(z) {1} parancs feldolgozása közben."
+msgstr ""
+"A kiszolgáló {0} hibába ütközött a(z) {1} parancs feldolgozása közben."
 
 #: src/control/Control.BackstageView.ts:179
 #: src/control/Control.BackstageView.ts:180
@@ -1859,12 +1856,14 @@ msgstr "Képlet eszköztár összecsukása"
 #: src/control/Control.IdleHandler.ts:45
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
-"Inaktív dokumentum – kattintson az újratöltéshez és szerkesztés folytatásához"
+"Inaktív dokumentum – kattintson az újratöltéshez és szerkesztés "
+"folytatásához"
 
 #: src/control/Control.IdleHandler.ts:47
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
-"Inaktív dokumentum – tappantson az újratöltéshez és szerkesztés folytatásához"
+"Inaktív dokumentum – tappantson az újratöltéshez és szerkesztés "
+"folytatásához"
 
 #: src/control/Control.JSDialog.js:395
 msgid "Close dialog"
@@ -1950,11 +1949,11 @@ msgstr "Megjegyzés beszúrása"
 
 #: src/control/Control.JSDialogBuilder.js:1956
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "Legördülő menü megjelenítése/elrejtése"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Párbeszédablak legördülő menü"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1597
@@ -1963,7 +1962,7 @@ msgstr "Legördülő lista"
 
 #: src/control/Control.JSDialogBuilder.js:1962
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "Művelet alkalmazása legördülő menü"
 
 #: src/control/Control.JSDialogBuilder.js:1989
 msgid "Open {name}"
@@ -3532,8 +3531,8 @@ msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
-"A kiszolgáló nem felel meg a minimális hardverkövetelményeknek, ezért gyenge "
-"teljesítmény várható."
+"A kiszolgáló nem felel meg a minimális hardverkövetelményeknek, ezért gyenge"
+" teljesítmény várható."
 
 #: src/control/Control.ServerAuditDialog.ts:101
 msgid "Hardware resources are sufficient for optimal performance"
@@ -3992,9 +3991,8 @@ msgid "Updating citations"
 msgstr "Hivatkozások frissítése"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Hivatkozások véglegesítése"
+msgstr "Leválasztott hivatkozások"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -4690,7 +4688,8 @@ msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
-"A dokumentum megváltozott a tárhelyen. Mi legyen a nem mentett változásokkal?"
+"A dokumentum megváltozott a tárhelyen. Mi legyen a nem mentett "
+"változásokkal?"
 
 #: src/app/Socket.ts:1627
 msgid "Server is now reachable. We have to refresh the page now."
@@ -4814,8 +4813,8 @@ msgstr ""
 #: src/errormessages.js:24
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when"
+" more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
 "Ez a {productname} nem támogatott verziója. Elkerülendő azt a benyomást, "
@@ -4895,8 +4894,8 @@ msgstr "Érvénytelen hivatkozás: „{url}”"
 
 #: src/errormessages.js:35
 msgid ""
-"You are leaving the document. The following web page will open in a new "
-"tab: "
+"You are leaving the document. The following web page will open in a new tab:"
+" "
 msgstr "Elhagyja a dokumentumot. A következő weboldal új lapon nyílik meg: "
 
 #: src/errormessages.js:36
@@ -4923,14 +4922,14 @@ msgstr ""
 #: src/errormessages.js:39
 msgid ""
 "Your {productname} cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may "
-"result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId {0} for routeToken "
-"{1} but connected to serverId {2}"
+"please contact your system administrator. Continuing with editing may result"
+" in multiple users not seeing each other, conflicts in the document storage "
+"and/or copy/paste problems. Expected serverId {0} for routeToken {1} but "
+"connected to serverId {2}"
 msgstr ""
 "A {productname}-klaszter rosszul van konfigurálva vagy gyorsan skálázódik – "
-"vegye fel a kapcsolatot a rendszergazdával. Ha folytatja a szerkesztést, azt "
-"kockáztatja, hogy a felhasználók nem fogják egymás szerkesztéseit látni, a "
+"vegye fel a kapcsolatot a rendszergazdával. Ha folytatja a szerkesztést, azt"
+" kockáztatja, hogy a felhasználók nem fogják egymás szerkesztéseit látni, a "
 "dokumentum-tárhelyen ütközések lehetnek és/vagy problémák lesznek a vágólap "
 "használatával. A {1} routeToken-hez várt serverId {0} volt, de a serverId "
 "valójában {2}."
@@ -4939,8 +4938,8 @@ msgstr ""
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly. The reverse proxy might be misconfigured, please contact the "
-"administrator. For more info on proxy configuration please checkout https://"
-"sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
+"administrator. For more info on proxy configuration please checkout "
+"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
 "A socket kapcsolat létrehozása sikertelen, illetve a socket kapcsolat "
 "váratlanul bezárult. Talán a reverse proxy beállítása hibás, vegye fel a "
@@ -4960,7 +4959,8 @@ msgid "Failed to load document."
 msgstr "A dokumentum betöltése meghiúsult."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. The document will now be read-only."
+msgid ""
+"Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "A mentés nem sikerült, mert nincs hely a lemezen. A dokumentum mostantól "
 "csak olvasható."
@@ -4998,8 +4998,8 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. The document will now be read-only. "
-"Please make sure enough disk space is available and try to save again."
+"Save failed due to no storage space left. The document will now be read-"
+"only. Please make sure enough disk space is available and try to save again."
 msgstr ""
 "A mentés nem sikerült, mert nincs hely a tárhelyen. A dokumentum mostantól "
 "csak olvasható. Intézze el, hogy legyen elég hely a tárhelyen, és próbálja "
@@ -5008,8 +5008,8 @@ msgstr ""
 #: src/errormessages.js:55
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still "
-"download it now to preserve a copy locally."
+"storage space. The document will now be read-only but you may still download"
+" it now to preserve a copy locally."
 msgstr ""
 "A mentés nem sikerült, mert a dokumentum túl nagy, vagy meghaladja a "
 "fennmaradó tárhelyet. A dokumentum mostantól csak olvasható lesz, de "
@@ -5165,13 +5165,15 @@ msgstr ""
 
 #: src/map/Clipboard.js:1469
 msgid ""
-"Your browser has very limited access to the clipboard, so use these "
-"keyboard shortcuts:"
+"Your browser has very limited access to the clipboard, so use these keyboard"
+" shortcuts:"
 msgstr ""
+"A böngészője nagyon korlátozott hozzáféréssel rendelkezik a vágólaphoz, "
+"ezért használja ezeket a billentyűparancsokat:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Kivágás"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5224,7 +5226,8 @@ msgid ""
 "The file of type: {0} cannot be uploaded to server since the file has no "
 "name"
 msgstr ""
-"A fájltípus ({0}) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs neve."
+"A fájltípus ({0}) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs "
+"neve."
 
 #: src/map/handler/Map.FileInserter.js:193
 #, javascript-format
@@ -5242,11 +5245,11 @@ msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, állapot: {0}"
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "A kijelölt fájl olvasása sikertelen."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Jelenleg Megtekintő módban van"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5260,7 +5263,7 @@ msgstr "Üres bemutató"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Minden dia rejtett!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
@@ -5275,8 +5278,8 @@ msgid ""
 "sharing."
 msgstr ""
 "A bemutató blokkolva lett. Engedélyezze a felugró ablakokat a böngészőben. "
-"Így lehetségessé válik a bemutató megjelenítése egy új ablakban, ami például "
-"a képernyő megosztásakor lehet hasznos, egy videohívás során."
+"Így lehetségessé válik a bemutató megjelenítése egy új ablakban, ami például"
+" a képernyő megosztásakor lehet hasznos, egy videohívás során."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:1057
@@ -5376,7 +5379,6 @@ msgid "Resume"
 msgstr "Folytatás"
 
 #: src/slideshow/PresenterConsole.js:39
-#, fuzzy
 msgid "Present to all"
 msgstr "Prezentálás mindenkinek"
 
@@ -5435,7 +5437,6 @@ msgid "Enable Animations"
 msgstr "Animációk engedélyezése"
 
 #: src/slideshow/SlideShowPresenter.ts:1479
-#, fuzzy
 msgid "Stop Following"
 msgstr "Követés megszüntetése"
 
@@ -5477,87 +5478,87 @@ msgstr "Kék görbe"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
-msgstr ""
+msgstr "Tervrajzok"
 
 #: templates/templates.js:106
 msgid "Candy"
-msgstr ""
+msgstr "Cukorka"
 
 #: templates/templates.js:116
 msgid "DNA"
-msgstr ""
+msgstr "DNS"
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "Fókusz"
 
 #: templates/templates.js:136
 msgid "Forestbird"
-msgstr ""
+msgstr "Erdei madár"
 
 #: templates/templates.js:146
 msgid "Freshes"
-msgstr ""
+msgstr "Frissesség"
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
-msgstr ""
+msgstr "Elegáns szürke"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
-msgstr ""
+msgstr "Növekvő szabadság"
 
 #: templates/templates.js:176
 msgid "Inspiration"
-msgstr ""
+msgstr "Inspiráció"
 
 #: templates/templates.js:186
 msgid "Lights"
-msgstr ""
+msgstr "Fények"
 
 #: templates/templates.js:196
 msgid "Metropolis"
-msgstr ""
+msgstr "Metropolisz"
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
-msgstr ""
+msgstr "Éjfélkék"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
-msgstr ""
+msgstr "Természeti illusztráció"
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "Ceruza"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "Zongora"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "Portfólió"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "Folyamat"
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "Napnyugta"
 
 #: templates/templates.js:276
 msgid "Vintage"
-msgstr ""
+msgstr "Régiség"
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "Élénk"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "Sárga ötlet"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
@@ -5576,14 +5577,15 @@ msgstr "Collabora Online Development Edition"
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
-"solutions/collabora-office-android-ios/\">apps</a> are also available for "
-"mobile."
+"target=\"_blank\" rel=\"noopener\" "
+"href=\"https://www.collaboraonline.com/solutions/collabora-office-android-"
+"ios/\">apps</a> are also available for mobile."
 msgstr ""
-"Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt "
-"a böngészőben futó szoftvert önállóan vagy másokkal közösen. Mobileszközökre "
-"is elérhető az <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
-"collaboraonline.com/solutions/collabora-office-android-ios/\">alkalmazás</a>."
+"Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt"
+" a böngészőben futó szoftvert önállóan vagy másokkal közösen. "
+"Mobileszközökre is elérhető az <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://www.collaboraonline.com/solutions/collabora-office-android-"
+"ios/\">alkalmazás</a>."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -5591,15 +5593,16 @@ msgstr "Fedezze fel az összes újdonságot"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
-"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
-"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
-"all about: The latest Collabora Online Development Edition, aimed at home "
-"users and small teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://www.collaboraonline.com/code-25-04-release-notes/\">release "
+"notes</a> and learn all about: The latest Collabora Online Development "
+"Edition, aimed at home users and small teams."
 msgstr ""
-"Olvassa el az <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
-"collaboraonline.com/code-25-04-release-notes/\">angol „release notes”-ot</"
-"a>, ahol részletezzük az otthoni felhasználók és kis munkacsoportok számára "
-"készített Collabora Online Development Edition újdonságait."
+"Olvassa el az <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://www.collaboraonline.com/code-25-04-release-notes/\">angol "
+"„release notes”-ot</a>, ahol részletezzük az otthoni felhasználók és kis "
+"munkacsoportok számára készített Collabora Online Development Edition "
+"újdonságait."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5612,22 +5615,23 @@ msgstr "https://collaboraonline.github.io/"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
-"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
-"from scratch. You can also help out with <a target=\"_blank\" "
-"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
-"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
+"to the <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/build-code/\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/translate/\">translations</a> "
+"or by <a target=\"_blank\" rel=\"noopener\" "
 "href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Szeretne hozzájárulni, de nem tudja, hol kezdje? Lépésről lépésre leírtuk, "
-"hogyan kell <a target=\"_blank\" rel=\"noopener\" href=\"https"
-"://collaboraonline.github.io/post/build-code/\">összeépíteni a CODE-ot "
-"forráskódból</a>. Segíthet a <a target=\"_blank\" rel=\"noopener\" href="
-"\"https://collaboraonline.github.io/post/translate/\">fordításban</a> vagy a "
-"<a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline.github."
-"io/post/filebugs/\">hibabejelentésben</a>, ha megadja a hiba "
-"reprodukálásához szükséges lépéseket."
+"hogyan kell <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/build-code/\">összeépíteni a "
+"CODE-ot forráskódból</a>. Segíthet a <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/translate/\">fordításban</a> "
+"vagy a <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">hibabejelentésben</a>,"
+" ha megadja a hiba reprodukálásához szükséges lépéseket."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -6233,7 +6237,6 @@ msgstr ""
 #~ "We are sorry, the information about the latest updates is not available."
 #~ msgstr "Sajnáljuk, de nem tudunk új hírekkel szolgálni."
 
-#, fuzzy
 #~ msgid ""
 #~ "The host URL is empty. The loolwsd server is probably misconfigured, please "
 #~ "contact the administrator."
