@@ -157,8 +157,8 @@ interface PropertyGetterSetter {
 	type: PropertyValueType;
 	get: string;
 	set: string;
-	getmod?: string;
-	setmod?: string;
+	getmod?: (nWidth: number, nHeight: number) => (v: number) => number;
+	setmod?: (nWidth: number, nHeight: number) => (v: number) => number;
 }
 
 const aPropertyGetterSetterMap = {
@@ -166,8 +166,8 @@ const aPropertyGetterSetterMap = {
 		type: PropertyValueType.Number,
 		get: 'getHeight',
 		set: 'setHeight',
-		getmod: 'makeScaler( 1/nHeight )',
-		setmod: 'makeScaler( nHeight)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nHeight),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nHeight),
 	},
 
 	opacity: {
@@ -210,24 +210,24 @@ const aPropertyGetterSetterMap = {
 		type: PropertyValueType.Number,
 		get: 'getWidth',
 		set: 'setWidth',
-		getmod: 'makeScaler( 1/nWidth )',
-		setmod: 'makeScaler( nWidth)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nWidth),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nWidth),
 	},
 
 	x: {
 		type: PropertyValueType.Number,
 		get: 'getX',
 		set: 'setX',
-		getmod: 'makeScaler( 1/nWidth )',
-		setmod: 'makeScaler( nWidth)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nWidth),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nWidth),
 	},
 
 	y: {
 		type: PropertyValueType.Number,
 		get: 'getY',
 		set: 'setY',
-		getmod: 'makeScaler( 1/nHeight )',
-		setmod: 'makeScaler( nHeight)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nHeight),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nHeight),
 	},
 
 	visibility: {
