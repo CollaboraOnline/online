@@ -1090,10 +1090,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							if (e.key === 'Tab')
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
+							// Try DOM order for left/right — ray-casting misses
+							// small vertically-stacked buttons between large ones.
 							let elementToFocus;
 							if (key === 'ArrowLeft' || key === 'ArrowRight') {
-								// Use DOM order for left/right — ray-casting misses
-								// small vertically-stacked buttons between large ones.
 								var focusables = Array.from(container[0].querySelectorAll('button.unobutton:not([disabled]):not(.hidden)'))
 									.filter(function(el) { return el.checkVisibility(); });
 								var idx = focusables.indexOf(currentElement);
@@ -1103,9 +1103,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 									else if (next < 0) next = focusables.length - 1;
 									elementToFocus = focusables[next];
 								}
-							} else {
-								elementToFocus = JSDialog.FindNextElementInContainer(container[0], currentElement, key);
 							}
+							if (!elementToFocus)
+								elementToFocus = JSDialog.FindNextElementInContainer(container[0], currentElement, key);
 							if (elementToFocus && elementToFocus.tagName !== 'NAV')
 								elementToFocus.focus();
 							else if (elementToFocus)
