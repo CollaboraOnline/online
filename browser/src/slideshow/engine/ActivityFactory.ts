@@ -10,6 +10,148 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+// Evaluate an anim:formula expression per the grammar in ODF 1.2 section 19.6.
+const animFormulaFns: Record<string, (...a: number[]) => number> =
+	Object.assign(Object.create(null), {
+		abs: Math.abs,
+		sqrt: Math.sqrt,
+		sin: Math.sin,
+		cos: Math.cos,
+		tan: Math.tan,
+		asin: Math.asin,
+		acos: Math.acos,
+		atan: Math.atan,
+		exp: Math.exp,
+		log: Math.log,
+		min: Math.min,
+		max: Math.max,
+	});
+
+function evalAnimFormula(expr: string, vars: Record<string, number>): number {
+	let p = 0;
+	function ws() {
+		while (p < expr.length && expr[p] === ' ') p++;
+	}
+
+	// number
+	function number_literal(): number {
+		const s = p;
+		while (
+			p < expr.length &&
+			((expr[p] >= '0' && expr[p] <= '9') || expr[p] === '.')
+		)
+			p++;
+		return parseFloat(expr.substring(s, p));
+	}
+
+	// identifier
+	function read_identifier(): string {
+		if (expr[p] === '$') {
+			p++;
+			return '$';
+		}
+		const s = p;
+		while (p < expr.length && expr[p] >= 'a' && expr[p] <= 'z') p++;
+		return expr.substring(s, p);
+	}
+
+	function identifier_value(id: string): number {
+		if (id === '$') return vars['$'] || 0;
+		if (id === 'pi') return Math.PI;
+		if (id === 'e') return Math.E;
+		if (id in vars) return vars[id];
+		throw new Error('Unknown identifier in animation expression: ' + id);
+	}
+
+	function expect(ch: string): void {
+		if (expr[p] !== ch)
+			throw new Error(
+				'Expected ' + ch + ' in animation expression at position ' + p,
+			);
+		p++;
+	}
+
+	// function '(' additive_expression ')'
+	// binary_function '(' additive_expression ',' additive_expression ')'
+	function function_call(name: string): number {
+		expect('(');
+		const a = additive_expression();
+		ws();
+		if (expr[p] === ',') {
+			p++;
+			const b = additive_expression();
+			ws();
+			expect(')');
+			return animFormulaFns[name](a, b);
+		}
+		expect(')');
+		return animFormulaFns[name](a);
+	}
+
+	function basic_expression(): number {
+		ws();
+		// '(' additive_expression ')'
+		if (expr[p] === '(') {
+			p++;
+			const v = additive_expression();
+			ws();
+			expect(')');
+			return v;
+		}
+		// number
+		if ((expr[p] >= '0' && expr[p] <= '9') || expr[p] === '.')
+			return number_literal();
+		// function / binary_function / identifier
+		const id = read_identifier();
+		ws();
+		if (id in animFormulaFns && expr[p] === '(') return function_call(id);
+		return identifier_value(id);
+	}
+
+	// unary_expression
+	function unary_expression(): number {
+		ws();
+		if (expr[p] === '-') {
+			p++;
+			return -basic_expression();
+		}
+		return basic_expression();
+	}
+
+	// multiplicative_expression
+	function multiplicative_expression(): number {
+		let v = unary_expression();
+		ws();
+		while (expr[p] === '*' || expr[p] === '/') {
+			const op = expr[p++];
+			v = op === '*' ? v * unary_expression() : v / unary_expression();
+			ws();
+		}
+		return v;
+	}
+
+	// additive_expression
+	function additive_expression(): number {
+		let v = multiplicative_expression();
+		ws();
+		while (expr[p] === '+' || expr[p] === '-') {
+			const op = expr[p++];
+			v =
+				op === '+'
+					? v + multiplicative_expression()
+					: v - multiplicative_expression();
+			ws();
+		}
+		return v;
+	}
+
+	const result = additive_expression();
+	ws();
+	if (p < expr.length)
+		throw new Error('Unexpected character in animation expression: ' + expr[p]);
+	return result;
+}
+
 function createActivity(
 	aActivityParamSet: ActivityParamSet,
 	aAnimationNode: AnimationBaseNode3,
@@ -39,27 +181,19 @@ function createActivity(
 		);
 
 	if (aAnimationNode.getFormula()) {
-		let sFormula: string = aAnimationNode.getFormula();
-		const reMath = /abs|sqrt|asin|acos|atan|sin|cos|tan|exp|log|min|max/g;
-		sFormula = sFormula.replace(reMath, 'Math.$&');
-		sFormula = sFormula.replace(/pi(?!\w)/g, 'Math.PI');
-		sFormula = sFormula.replace(/e(?!\w)/g, 'Math.E');
-		sFormula = sFormula.replace(/\$/g, '__PARAM0__');
-
+		const sFormula: string = aAnimationNode.getFormula();
 		const aAnimatedElement = aAnimationNode.getAnimatedElement();
 		const aBBox = aAnimatedElement.getBaseBBox();
-
-		// the following variable are used for evaluating sFormula
-		/* eslint-disable no-unused-vars */
-		const width = aBBox.width / aActivityParamSet.nSlideWidth;
-		const height = aBBox.height / aActivityParamSet.nSlideHeight;
-		const x = (aBBox.x + aBBox.width / 2) / aActivityParamSet.nSlideWidth;
-		const y = (aBBox.y + aBBox.height / 2) / aActivityParamSet.nSlideHeight;
-
-		aActivityParamSet.aFormula = function (__PARAM0__: any) {
-			return eval(sFormula);
+		const formulaVars: Record<string, number> = {
+			width: aBBox.width / aActivityParamSet.nSlideWidth,
+			height: aBBox.height / aActivityParamSet.nSlideHeight,
+			x: (aBBox.x + aBBox.width / 2) / aActivityParamSet.nSlideWidth,
+			y: (aBBox.y + aBBox.height / 2) / aActivityParamSet.nSlideHeight,
 		};
-		/* eslint-enable no-unused-vars */
+		aActivityParamSet.aFormula = function (param: any) {
+			formulaVars['$'] = param;
+			return evalAnimFormula(sFormula, formulaVars);
+		};
 	}
 
 	aActivityParamSet.aDiscreteTimes = aAnimationNode.getKeyTimes();
@@ -319,24 +453,14 @@ function evalValuesAttribute(
 	nSlideWidth: number,
 	nSlideHeight: number,
 ) {
-	// the following variables are used for evaluating sValue later
-	/* eslint-disable no-unused-vars */
-	const width = aBBox.width / nSlideWidth;
-	const height = aBBox.height / nSlideHeight;
-	const x = (aBBox.x + aBBox.width / 2) / nSlideWidth;
-	const y = (aBBox.y + aBBox.height / 2) / nSlideHeight;
-	/* eslint-enable no-unused-vars */
-
-	const reMath = /abs|sqrt|asin|acos|atan|sin|cos|tan|exp|log|min|max/g;
-
+	const vars: Record<string, number> = {
+		width: aBBox.width / nSlideWidth,
+		height: aBBox.height / nSlideHeight,
+		x: (aBBox.x + aBBox.width / 2) / nSlideWidth,
+		y: (aBBox.y + aBBox.height / 2) / nSlideHeight,
+	};
 	for (let i = 0; i < aValueSet.length; ++i) {
-		let sValue: string = aValueSet[i];
-		if (sValue) {
-			sValue = sValue.replace(reMath, 'Math.$&');
-			sValue = sValue.replace(/pi(?!\w)/g, 'Math.PI');
-			sValue = sValue.replace(/e(?!\w)/g, 'Math.E');
-		}
-		const aValue = eval(sValue);
-		aValueList.push(aValue);
+		const sValue: string = aValueSet[i];
+		aValueList.push(sValue ? evalAnimFormula(sValue, vars) : Number(sValue));
 	}
 }
