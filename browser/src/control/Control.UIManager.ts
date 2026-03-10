@@ -429,7 +429,7 @@ class UIManager extends window.L.Control {
 		this.map.addControl(window.L.control.languageDialog());
 		this.map.dialog = window.L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
-		this.map.addControl(window.L.control.contextMenu());
+		this.map.addControl(new ContextMenuControl());
 		this.map.userList = window.L.control.userList();
 		this.map.addControl(this.map.userList);
 		this.map.aboutDialog = JSDialog.aboutDialog(this.map);
@@ -1905,11 +1905,15 @@ class UIManager extends window.L.Control {
 	 * Returns whether any context menu is currently open.
 	 */
 	isAnyContextMenuOpened(): boolean {
-		const contextMenu = document.querySelector(
+		const jqContextMenu = document.querySelector(
 			'.context-menu-root:not([style*="display: none"])',
 		);
 
-		return contextMenu !== null;
+		const jsdContextMenu = document.querySelector(
+			'#jsd-context-menu-dropdown-overlay:not([style*="display: none"])',
+		);
+
+		return (jqContextMenu !== null) || (jsdContextMenu !== null);
 	}
 
 	// TODO: remove and use JSDialog.generateModalId directly

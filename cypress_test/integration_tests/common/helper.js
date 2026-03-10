@@ -1333,6 +1333,15 @@ function waitForMapState(command, expectedValue) {
 	cy.log('<< waitForMapState - end');
 }
 
+// Useful to get an item in the context-menu (currently only for document-area
+// context menus). This context menu uses jsdialog dropdown as the
+// implementation.
+function getContextMenuItem(menuItemText) {
+	return cy.cGet('#jsd-context-menu-dropdown-overlay')
+		.contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 
+			menuItemText);
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1389,3 +1398,4 @@ module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
 module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
+module.exports.getContextMenuItem = getContextMenuItem;

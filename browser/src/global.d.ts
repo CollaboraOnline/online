@@ -427,6 +427,9 @@ interface Window {
 	getAccessibilityState(): boolean;
 	makeClientVisibleArea(): string;
 	postMobileDebug(msg: string): void;
+
+	removeAccessKey(text: string): string;
+	contextMenuWizard: boolean;
 }
 
 // For localization
