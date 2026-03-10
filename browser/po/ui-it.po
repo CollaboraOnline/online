@@ -4991,7 +4991,7 @@ msgid "Failed to load document."
 msgstr "Caricamento del documento non riuscito."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "Il salvataggio non è riuscito a causa di mancanza di spazio. Il documento "
 "ora sarà disponibile in sola lettura."
@@ -5029,7 +5029,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "Impossibile salvare il documento a causa di spazio su disco esaurito. Il "

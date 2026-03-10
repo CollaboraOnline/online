@@ -4974,7 +4974,7 @@ msgid "Failed to load document."
 msgstr "ஆவணத்தை ஏற்றுவதில் தோல்வி."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "வட்டு இடம் எஞ்சியிருப்பதால் தோல்வியுற்றது. ஆவணம் இப்போது படிக்க மட்டுமே "
 "இருக்கும்."
@@ -5012,7 +5012,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "சேமிப்பு இடம் இல்லாததால் சேமி தோல்வியுற்றது. ஆவணம் இப்போது படிக்க மட்டுமே "

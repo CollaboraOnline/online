@@ -4962,7 +4962,7 @@ msgid "Failed to load document."
 msgstr "Kunne ikke indlæse dokumentet."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "Lagring mislykkedes, da der ikke er mere diskplads. Dokumentet er nu "
 "skrivebeskyttet."
@@ -4999,7 +4999,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "Der er ikke plads nok til at gemme. Dokumentet bliver nu skrivebeskyttet. "

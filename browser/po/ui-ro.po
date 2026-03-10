@@ -4962,7 +4962,7 @@ msgid "Failed to load document."
 msgstr "Nu s-a putut încărca documentul."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "Salvarea nu a reușit din cauza lipsei de spațiu pe disc. Documentul va fi "
 "acum doar pentru citire."
@@ -5000,7 +5000,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "Salvarea nu a reușit din cauza lipsei spațiului de stocare. Documentul va fi "

@@ -4953,7 +4953,7 @@ msgid "Failed to load document."
 msgstr "Gagal memuat dokumen."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "Gagal menyimpan karena tidak ada ruang diska tersisa. Dokumen saat ini hanya "
 "baca."
@@ -4989,7 +4989,7 @@ msgstr "Gagal membaca dokumen dari penyimpanan, harap coba muat dokumen lagi."
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "Penyimpanan gagal karena tidak tersedianya ruang. Dokumen akan menjadi hanya "

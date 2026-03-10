@@ -4946,7 +4946,7 @@ msgid "Failed to load document."
 msgstr "Nepodařilo se načíst dokument."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "Kvůli nedostatku místa na disku se dokument nepodařilo uložit. Dokument se "
 "zobrazí v režimu pouze pro čtení."
@@ -4982,7 +4982,7 @@ msgstr "Nepodařilo se načíst dokument z úložiště, zkuste to znovu."
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "Uložení se nezdařilo kvůli nedostatku místa v úložišti. Dokument bude nyní "

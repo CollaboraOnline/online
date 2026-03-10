@@ -4963,7 +4963,7 @@ msgid "Failed to load document."
 msgstr "Laden van het document mislukt."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "Opslaan mislukt omdat er geen diskruimte meer is. Het document wordt nu "
 "'alleen lezen'."
@@ -5001,7 +5001,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "Opslaan mislukt omdat er geen opslagruimte meer is. Het document is nu "

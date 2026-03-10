@@ -51,7 +51,7 @@ if (window.ThisIsAMobileApp) {
 } else {
 	errorMessages.storage = {
 		loadfailed: _('Failed to read document from storage, please try to load the document again.'),
-		savediskfull: _('Save failed due to no storage space left. Document will now be read-only. Please make sure enough disk space is available and try to save again.'),
+		savediskfull: _('Save failed due to no storage space left. The document will now be read-only. Please make sure enough disk space is available and try to save again.'),
 		savetoolarge: _('Save failed because the document is too large or exceeds the remaining storage space. The document will now be read-only but you may still download it now to preserve a copy locally.'),
 		saveunauthorized: _('Document cannot be saved due to expired session, please reload the page to continue.'),
 		savefailed: _('Document cannot be saved, please check your permissions.'),

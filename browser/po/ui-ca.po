@@ -4937,7 +4937,7 @@ msgid "Failed to load document."
 msgstr "No s'ha pogut carregar el document."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "El desament ha fallat per manca d'espai lliure en el disc. El document ara "
 "serà de només lectura."
@@ -4973,7 +4973,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "El desament ha fallat perquè no queda espai. El document ara serà de només "

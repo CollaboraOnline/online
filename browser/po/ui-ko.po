@@ -4916,7 +4916,7 @@ msgid "Failed to load document."
 msgstr "문서 열기 실패하였음."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr "디스크 용량이 부족하여 저장이 실패하였습니다. 문서는 바로 읽기전용으로 "
 "전환합니다."
 
@@ -4947,7 +4947,7 @@ msgstr ""
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 

@@ -4909,7 +4909,7 @@ msgid "Failed to load document."
 msgstr "ドキュメントの読み込みに失敗しました。"
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr "disk spaceが足りないので保存できませんでした。現在ドキュメントが読み込みがで"
 "きます。"
 
@@ -4941,7 +4941,7 @@ msgstr "ドキュメントの読み込みが失敗しました、再接続して
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr "ストレージが足りないので保存できません。現在ドキュメントは読み込みできます。"
 "ストレージを確認してから保存してください。"

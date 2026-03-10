@@ -4864,7 +4864,7 @@ msgid "Failed to load document."
 msgstr "無法載入文件。"
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr "因磁碟空間不足而儲存失敗。文件現在為唯讀模式。"
 
 #: src/errormessages.js:46
@@ -4894,7 +4894,7 @@ msgstr "無法從儲存空間讀取文件，請重試載入文件。"
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr "因無剩餘的儲存空間，儲存失敗。文件現在為唯讀模式。請確保磁碟空間足夠並重新嘗"
 "試儲存。"

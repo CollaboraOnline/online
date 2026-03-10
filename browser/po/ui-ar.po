@@ -4932,7 +4932,7 @@ msgid "Failed to load document."
 msgstr "فشل تحميل المستند."
 
 #: src/errormessages.js:45
-msgid "Save failed due to no disk space left. Document will now be read-only."
+msgid "Save failed due to no disk space left. The document will now be read-only."
 msgstr ""
 "فشل الحفظ بسبب عدم وجود مساحة على القرص. سيكون المستند الآن في وضع القراءة "
 "فقط."
@@ -4968,7 +4968,7 @@ msgstr "فشلت قراءة المستند من وحدة التخزين، يرج
 
 #: src/errormessages.js:54
 msgid ""
-"Save failed due to no storage space left. Document will now be read-only. "
+"Save failed due to no storage space left. The document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 "فشل الحفظ بسبب عدم وجود مساحة تخزين متبقية. سيصبح المستند الآن للقراءة فقط. "
