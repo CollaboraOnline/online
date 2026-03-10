@@ -647,6 +647,12 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 				let viewModeBtn = permissionMode && (permissionMode.viewModeDropdown || permissionMode.viewModeContainer);
 				if (viewModeBtn && map.uiManager && map.uiManager.showTimedTooltip) {
 					map.uiManager.showTimedTooltip(viewModeBtn, _('You are currently in View mode'), 5000);
+					if (!viewModeBtn.classList.contains('attention')) {
+						viewModeBtn.classList.add('attention');
+						viewModeBtn.addEventListener('animationend', function() {
+							viewModeBtn.classList.remove('attention');
+						}, { once: true });
+					}
 				}
 			}
 		}
