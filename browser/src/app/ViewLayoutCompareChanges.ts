@@ -124,7 +124,9 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		this.sendClientVisibleArea();
 
 		this.refreshCurrentCoordList();
+		TileManager.beginTransaction();
 		TileManager.checkRequestTiles(this.currentCoordList);
+		TileManager.endTransaction(null);
 	}
 
 	private getDeflectionX(mode: TileMode): number {
