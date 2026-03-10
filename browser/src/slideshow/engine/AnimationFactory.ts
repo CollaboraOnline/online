@@ -183,9 +183,12 @@ function createPropertyAnimation(
 		return null;
 	}
 
-	// nWidth, nHeight are used here
-	const aGetModifier = eval(aFunctorSet.getmod);
-	const aSetModifier = eval(aFunctorSet.setmod);
+	const aGetModifier = aFunctorSet.getmod
+		? aFunctorSet.getmod(nWidth, nHeight)
+		: null;
+	const aSetModifier = aFunctorSet.setmod
+		? aFunctorSet.setmod(nWidth, nHeight)
+		: null;
 
 	const aGetValueMethod =
 		aAnimatedElement[sGetValueMethod as keyof typeof aAnimatedElement];
