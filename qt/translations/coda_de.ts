@@ -6,7 +6,7 @@
     <message>
         <location filename="../DocumentOperations.cpp" line="49"/>
         <source>ODF text document (.odt)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF-Textdokument (.odt)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="50"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../DocumentOperations.cpp" line="51"/>
         <source>Word Document (.docx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Word-Dokument (.docx)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="52"/>
@@ -41,12 +41,12 @@
     <message>
         <location filename="../DocumentOperations.cpp" line="66"/>
         <source>ODF presentation (.odp)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF-Präsentation (.odp)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="67"/>
         <source>PowerPoint Presentation (.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>PowerPoint-Präsentation (.pptx)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="68"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../DocumentOperations.cpp" line="74"/>
         <source>ODF drawing (.odg)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF-Zeichnung (.odg)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="106"/>
@@ -164,13 +164,13 @@
     <message>
         <location filename="../WebView.cpp" line="156"/>
         <source>Presentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Präsentation</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="161"/>
         <location filename="../WebView.cpp" line="177"/>
         <source>Text Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Textdokument</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="166"/>
@@ -180,7 +180,7 @@
     <message>
         <location filename="../WebView.cpp" line="171"/>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnung</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="317"/>

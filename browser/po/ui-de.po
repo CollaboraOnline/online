@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-09 16:34+0000\n"
-"Last-Translator: alxhu <hosted.weblate.org@alxhu.de>\n"
+"PO-Revision-Date: 2026-03-10 21:46+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1150,7 +1150,7 @@ msgstr "Alle Versionsinformationen auf Englisch kopieren"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Versionsinformationen wurden kopiert"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3360,7 +3360,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:508
 msgid "Present to All"
-msgstr ""
+msgstr "An alle präsentieren"
 
 #: src/control/Control.NotebookbarImpress.js:516
 #: src/slideshow/SlideShowPresenter.ts:1484
@@ -3437,11 +3437,11 @@ msgstr "Online Modus"
 
 #: src/control/Control.NotebookbarWriter.js:491
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Seitenleiste validieren"
 
 #: src/control/Control.NotebookbarWriter.js:498
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dialog validieren"
 
 #: src/control/Control.NotebookbarWriter.js:941
 #: src/control/Control.Zotero.js:828
@@ -5220,7 +5220,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Ausschneiden"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5314,7 +5314,7 @@ msgstr "Leere Diashow"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Alle Folien sind ausgeblendet!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
@@ -5432,7 +5432,7 @@ msgstr "Fortsetzen"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Present to all"
-msgstr ""
+msgstr "An alle präsentieren"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Go Back"
@@ -5547,7 +5547,7 @@ msgstr "Fokus"
 
 #: templates/templates.js:136
 msgid "Forestbird"
-msgstr ""
+msgstr "Waldvogel"
 
 #: templates/templates.js:146
 msgid "Freshes"
@@ -5555,7 +5555,7 @@ msgstr ""
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
-msgstr ""
+msgstr "Grau Elegant"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
@@ -5571,7 +5571,7 @@ msgstr "Lichter"
 
 #: templates/templates.js:196
 msgid "Metropolis"
-msgstr ""
+msgstr "Metropolis"
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
@@ -5579,7 +5579,7 @@ msgstr "Mitternachtsblau"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
-msgstr ""
+msgstr "Naturillustration"
 
 #: templates/templates.js:226
 msgid "Pencil"
@@ -5587,15 +5587,15 @@ msgstr "Bleistift"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "Piano"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "Portfolio"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "Fortschritt"
 
 #: templates/templates.js:266
 msgid "Sunset"
@@ -5603,15 +5603,15 @@ msgstr "Sonnenuntergang"
 
 #: templates/templates.js:276
 msgid "Vintage"
-msgstr ""
+msgstr "Vintage"
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "Lebhaft"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "Gelbe Idee"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
