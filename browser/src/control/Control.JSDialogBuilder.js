@@ -1370,8 +1370,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		} else if (data.symbol) {
 			window.L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			image = window.L.DomUtil.create('img', '', pushbutton);
-			image.style.width = '16px';
-			image.style.height = '16px';
 			app.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map);
 		} else {
 			pushbutton.innerText = pushbuttonText;
