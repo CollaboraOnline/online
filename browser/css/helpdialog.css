@@ -151,4 +151,8 @@
 	[data-theme='dark'] span.cool-annotation-menu {
 		filter: invert(1);
 	}
+
+	#keyboard-shortcuts-content:focus-visible {
+		outline: none;
+	}
 }
