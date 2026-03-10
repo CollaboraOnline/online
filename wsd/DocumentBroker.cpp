@@ -5169,18 +5169,26 @@ std::string DocumentBroker::applyBrowserAccessibility(const std::string& message
                                                    const std::string& viewId)
 {
     bool accessibilityEnabled = false;
+    bool lockAccessibilityOn = false;
     const auto it = _sessions.find(viewId);
     if (it != _sessions.end())
     {
         auto session = it->second;
         auto json = session->getBrowserSettingJSON();
         JsonUtil::findJSONValue(json, "accessibilityState", accessibilityEnabled);
+        JsonUtil::findJSONValue(json, "lockAccessibilityOn", lockAccessibilityOn);
     }
     else
         LOG_WRN("Cannot lock accessibility on for ClientSession [" << viewId << ']');
 
     if (!accessibilityEnabled)
         return message;
+
+    if(lockAccessibilityOn)
+    {
+        auto session = it->second;
+        session->sendTextFrame("lockaccessibilityon");
+    }
 
     // Ensure accessibilityState=true is enabled. Overwrite accessibilityState=
     // if it exists, append otherwise.
