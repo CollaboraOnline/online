@@ -8,9 +8,10 @@
 #pragma once
 
 #include <array>
+#include <cassert>
 #include <iosfwd>
-#include <type_traits>
 #include <string_view>
+#include <type_traits>
 
 /// Enum macro specifically for state-machines.
 /// Has several limitations, some intentional. For example,
