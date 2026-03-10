@@ -1534,6 +1534,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-iconview-entry img {
 	vertical-align: middle;
+	justify-self: center;
 }
 
 .ui-iconview-separator {
