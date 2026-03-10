@@ -629,6 +629,16 @@ window.L.Map.include({
 				}
 			});
 		});
+
+		if (id === 'keyboard-shortcuts-content') {
+			app.layoutingService.appendLayoutingTask(() => {
+				var contentContainer = document.getElementById('keyboard-shortcuts-content');
+				if (contentContainer) {
+					contentContainer.setAttribute('tabindex', '-1');
+					contentContainer.focus();
+				}
+			});
+		}
 	},
 
 
