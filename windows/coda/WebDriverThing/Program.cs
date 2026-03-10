@@ -44,15 +44,19 @@ namespace WebDriverThing
             return driver;
         }
 
+        static void FindAndClick(EdgeDriver driver, OpenQA.Selenium.By what)
+        {
+            var button = driver.FindElement(what);
+            // The above line will throw an exception if the element is not found, so checking for
+            // null is pointless.
+            button.Click();
+        }
+
         static void openFile(string pathname)
         {
             var driver = connectToWebView2();
 
-            var openButton = driver.FindElement(OpenQA.Selenium.By.Id("backstage-open"));
-            if (openButton == null)
-                fatal("Could not find the 'Open' button on the initial backstage");
-
-            openButton.Click();
+            FindAndClick(driver, OpenQA.Selenium.By.Id("backstage-open"));
 
             // The File Open dialog is a native one so we need to use the System.Windows.Automation
             // API to manipulate it.
@@ -160,13 +164,7 @@ namespace WebDriverThing
             var driver = connectToWebView2();
 
             // At first, click the button to enable editing.
-            var editButton = driver.FindElement(OpenQA.Selenium.By.Id("mobile-edit-button"));
-
-            if (editButton == null)
-                fatal("No mobile-edit-button");
-
-            Thread.Sleep(1000);
-            editButton.Click();
+            FindAndClick(driver, OpenQA.Selenium.By.Id("mobile-edit-button"));
 
             // Paste text from clipboard with shortcut
             RunOnSTA(() => Clipboard.SetText("hello"));
@@ -190,6 +188,15 @@ namespace WebDriverThing
             RunOnSTA(() => Clipboard.SetData("PNG", new MemoryStream(imageData)));
             Thread.Sleep(500);
             new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
+
+            // Use the "backstage"
+            FindAndClick(driver, OpenQA.Selenium.By.Id("File-tab-label"));
+
+            FindAndClick(driver, OpenQA.Selenium.By.Id("backstage-info"));
+
+            FindAndClick(driver, OpenQA.Selenium.By.ClassName("backstage-property-button"));
+
+            FindAndClick(driver, OpenQA.Selenium.By.Id("cancel-button"));
 
             // Save the document
             Thread.Sleep(500);
