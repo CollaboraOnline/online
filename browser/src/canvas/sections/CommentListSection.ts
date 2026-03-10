@@ -121,6 +121,11 @@ export class CommentSection extends CanvasSectionObject {
 	// To associate comment id with its index in commentList array.
 	private idIndexMap: Map<any, number>;
 
+	// Dirty flag: set by onNewDocumentTopLeft, consumed by onDraw.
+	// Collapses multiple onNewDocumentTopLeft calls into a single layout
+	// pass and avoids the extra requestReDraw that updateDOM would trigger.
+	private _commentPositionDirty: boolean = false;
+
 	private annotationMinSize: number;
 	private annotationMaxSize: number;
 	escapeListener: (e: KeyboardEvent) => void;
@@ -1397,10 +1402,17 @@ export class CommentSection extends CanvasSectionObject {
 				this.sectionProperties.selectedComment.hide();
 		}
 
-		var previousAnimationState = this.disableLayoutAnimation;
-		this.disableLayoutAnimation = true;
-		this.update(false);
-		this.disableLayoutAnimation = previousAnimationState;
+		this._commentPositionDirty = true;
+	}
+
+	public onDraw (frameCount?: number, elapsedTime?: number): void {
+		if (this._commentPositionDirty) {
+			this._commentPositionDirty = false;
+			var previousAnimationState = this.disableLayoutAnimation;
+			this.disableLayoutAnimation = true;
+			this.update(false);
+			this.disableLayoutAnimation = previousAnimationState;
+		}
 	}
 
 	private showHideComments (): void {
