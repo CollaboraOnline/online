@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-08 21:09+0000\n"
+"PO-Revision-Date: 2026-03-10 18:09+0000\n"
 "Last-Translator: Sebastiaan Veld <notify@virtfields.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1142,7 +1142,7 @@ msgstr "Kopieer alle versie informatie in het Engels"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Versie informatie is gekopieerd"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3996,9 +3996,8 @@ msgid "Updating citations"
 msgstr "Citaten worden bijgewerkt"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Ontkoppel citaten"
+msgstr "Niet gekoppelde citaten"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -5175,10 +5174,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Uw browser heeft zeer beperkte toegang tot het klembord, dus gebruik deze "
+"sneltoetsen:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Knippen"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5255,7 +5256,7 @@ msgstr "Het geselecteerde bestand kan niet worden gelezen."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "U bevindt zich momenteel in de weergavemodus"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5269,7 +5270,7 @@ msgstr "Lege diapresentatie"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Alle dia's zijn verborgen!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
