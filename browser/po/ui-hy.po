@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-04 07:01+0000\n"
+"PO-Revision-Date: 2026-03-09 17:10+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
-"Language-Team: Armenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hy/>\n"
-"Language: \n"
+"Language-Team: Armenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hy/>\n"
+"Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1139,7 +1139,7 @@ msgstr "Պատճենեք բոլոր տարբերակների տեղեկությ�
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Տարբերակի տեղեկատվությունը պատճենվել է"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3993,9 +3993,8 @@ msgid "Updating citations"
 msgstr "Մեջբերումների թարմացում"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Անջատել վկայակոչումները"
+msgstr "Անհղում վկայակոչումներ"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -5169,10 +5168,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Ձեր դիտարկիչը շատ սահմանափակ մուտք ունի սեղմատախտակին, ուստի օգտագործեք այս "
+"ստեղնաշարի դյուրանցումները:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Կտրել"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5244,7 +5245,7 @@ msgstr "Ընտրված նիշքը կարդալը չհաջողվեց։"
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Դուք ներկայումս գտնվում եք դիտման ռեժիմում"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5258,7 +5259,7 @@ msgstr "Դատարկ սահիկացուցադրություն"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Բոլոր սահիկները թաքնված են։"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278

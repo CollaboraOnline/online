@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0200\n"
-"PO-Revision-Date: 2026-03-04 07:01+0000\n"
+"PO-Revision-Date: 2026-03-09 17:10+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
-"Language-Team: Armenian <https://hosted.weblate.org/projects/"
-"collabora-online/help/hy/>\n"
+"Language-Team: Armenian <https://hosted.weblate.org/projects/collabora-"
+"online/help/hy/>\n"
 "Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -510,8 +510,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Arrow Left</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ձախ ստեղն</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -526,8 +526,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Arrow Left</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ձախ ստեղն</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
@@ -543,9 +543,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Arrow Left</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Ձախ "
+"ստեղն</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -572,8 +572,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Arrow Right</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Աջ ստեղն</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -1441,8 +1441,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Down Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Down Arrow</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ներքև ստեղն</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
