@@ -31,6 +31,7 @@
 #include <test/lokassert.hpp>
 #include <Poco/Util/LayeredConfiguration.h>
 
+#include <chrono>
 #include <string>
 #include <thread>
 
@@ -103,121 +104,6 @@ protected:
         config.setBool("per_document.background_autosave", true);
     }
 };
-
-/// Save torture testcase.
-class UnitSaveTorture : public UnitWSD
-{
-    bool forceAutosave;
-
-    void saveTortureOne(const std::string& name, const std::string& docName);
-
-    void testSaveTorture();
-
-    void configure(Poco::Util::LayeredConfiguration& config) override
-    {
-        UnitWSD::configure(config);
-
-        // Force much faster auto-saving
-        config.setBool("per_document.background_autosave", true);
-    }
-
-    // Force background autosave when saving the modified document
-    bool isAutosave() override
-    {
-        TST_LOG("isAutosave returns " << forceAutosave);
-        return forceAutosave;
-    }
-
-    std::string getJailRootPath(const std::string &name)
-    {
-        return FileUtil::buildLocalPathToJail(JailUtil::isMountNamespacesEnabled(), getJailRoot(), "/tmp/" + name);
-    }
-
-    void createStamp(const std::string &name)
-    {
-        const auto path = getJailRootPath(name);
-        TST_LOG("create stamp " << name << ": " << path);
-        std::ofstream stamp(path);
-        stamp.close();
-        std::this_thread::sleep_for(StampFileCheckPeriodMs);
-        sync(); // Flush the filesystem as sometimes the kit doesn't see the stamp file.
-        std::this_thread::sleep_for(StampFileCheckPeriodMs);
-    }
-
-    void removeStamp(const std::string &name)
-    {
-        FileUtil::removeFile(getJailRootPath(name));
-        TST_LOG("removed stamp " << name);
-    }
-
-    bool getSaveResult(const std::vector<char> &message, bool &success)
-    {
-        success = false;
-        if (message.size() == 0)
-            return false;
-
-        Poco::JSON::Object::Ptr object;
-        if (!JsonUtil::parseJSON(std::string(message.data(), message.size()), object))
-            return false;
-
-        // We can get .uno:Modified and other unocommandresults.
-        if (JsonUtil::getJSONValue<std::string>(object, "commandName") == ".uno:Save")
-        {
-            success = JsonUtil::getJSONValue<bool>(object, "success");
-            return true;
-        }
-
-        return false;
-    }
-
-public:
-    UnitSaveTorture();
-    void invokeWSDTest() override;
-};
-
-namespace {
-    void modifyDocument(const std::shared_ptr<http::WebSocketSession> &wsSession)
-    {
-        // move to another cell?
-        wsSession->sendMessage(std::string("key type=input char=13 key=1280"));
-        wsSession->sendMessage(std::string("key type=up char=0 key=1280"));
-        // enter - some text.
-        wsSession->sendMessage(std::string("textinput id=0 text=foo"));
-        // enter - commit to a cell in calc eg.
-        wsSession->sendMessage(std::string("key type=input char=13 key=1280"));
-        wsSession->sendMessage(std::string("key type=up char=0 key=1280"));
-    }
-
-    bool waitForModifiedStatus(const std::string& name,
-                               const std::shared_ptr<http::WebSocketSession>& wsSession,
-                               std::chrono::seconds timeout = 10s)
-    {
-        const auto testname = __func__;
-
-        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        while (!SigUtil::getShutdownRequestFlag())
-        {
-            if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
-                                                                 start) > timeout)
-            {
-                LOK_ASSERT_FAIL("Timed out waiting for modified status change");
-                return false; // arbitrary but why not.
-            }
-            std::vector<char> message
-                = wsSession->waitForMessage("statechanged:", timeout, name);
-            if (message.empty())
-                continue; // fail above more helpfully
-
-            auto tokens = StringVector::tokenize(message.data(), message.size());
-            if (tokens[1] == ".uno:ModifiedStatus=false")
-                return false;
-            else if (tokens[1] == ".uno:ModifiedStatus=true")
-                return true;
-        }
-
-        return false;
-    }
-}
 
 class UnitModified : public UnitSaveTortureBase
 {
@@ -480,134 +366,156 @@ public:
     }
 };
 
-void UnitSaveTorture::saveTortureOne(
-    const std::string& name, const std::string& docName)
+class UnitSaveTortureOne : public UnitSaveTortureBase
 {
-    auto timeout = 10s;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitFirstModifiedStatus, WaitAfterSaveModifiedStatus,
+               WaitSaveStatus, WaitNoModifiedStatus)
+    _phase;
 
-    std::string documentPath, documentURL;
-    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
+    Util::Stopwatch _stopwatch;
+    const bool _modifyFirst;
+    const bool _modifyAfterSaveStarts;
 
-    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
-
-    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
-    poll->startThread();
-
-    Poco::URI uri(helpers::getTestServerURI());
-    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
-
-    // ----------------- simple load/modify/bgsave  -----------------
-    // ----------------- load/modify/bgsave+modify  -----------------
-    // Next: Modify, force an autosave, and while saving, modify again ...
-
-    static struct {
-        bool modifyFirst;
-        bool modifyAfterSaveStarts;
-        const char *description;
-    } options[] = {
-        { true, false,  "simple load/modify/bgsave" },
-        { true, true,   "load/modify/bgsave-start + modify + bgsave-end" },
-//        { false, false, "un-modified, just save and lets see" }
-    };
-
-    // Tests assume all are background save
-    createStamp("abortonsyncsave");
-
-    for (size_t i = 0; i < std::size(options); ++i)
+    void saveAndModifyDocument()
     {
-        TST_LOG("saveTorture test stage " << i << " " << options[i].description);
-
-        if (options[i].modifyFirst)
-        {
-            modifyDocument(wsSession);
-
-            TST_LOG("wait for first modified status");
-            LOK_ASSERT(waitForModifiedStatus(name, wsSession));
-        }
-
+        TST_LOG("Hold saving");
         createStamp("holdsave");
 
-        // Force a background save-as-auto-save now
-        forceAutosave = true;
-        wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
+        if (!_modifyAfterSaveStarts)
+        {
+            TRANSITION_STATE(_phase, Phase::WaitSaveStatus);
+        }
 
-        if (options[i].modifyAfterSaveStarts)
+        // Force a background save-as-auto-save now.
+        forceAutosave();
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        if (_modifyAfterSaveStarts)
         {
             TST_LOG("Modify after saving starts");
-            modifyDocument(wsSession);
-
-            LOK_ASSERT(waitForModifiedStatus(name, wsSession, 10s));
+            TRANSITION_STATE(_phase, Phase::WaitAfterSaveModifiedStatus);
+            modifyDocument();
+            TST_LOG("Wait for modified status");
         }
-
-        TST_LOG("Allow saving to continue");
-        removeStamp("holdsave");
-
-        std::vector<char> message;
-
-        // Check the save succeeded
-        while (!SigUtil::getShutdownRequestFlag())
+        else
         {
-            message = wsSession->waitForMessage("unocommandresult:", timeout, name);
-            LOK_ASSERT(message.size() > 0);
-            if (message.size() == 0)
-                break;
-            bool success;
-            if (getSaveResult(message, success))
-            {
-                LOK_ASSERT(success);
-                break;
-            }
+            TST_LOG("Allow saving to continue");
+            removeStamp("holdsave");
+            TRANSITION_STATE(_phase, Phase::WaitSaveStatus);
+        }
+    }
+
+public:
+    UnitSaveTortureOne(bool modifyFirst, bool modifyAfterSaveStarts, const std::string& description)
+        : UnitSaveTortureBase("UnitSaveTortureOne_" + description)
+        , _phase(Phase::Load)
+        , _modifyFirst(modifyFirst)
+        , _modifyAfterSaveStarts(modifyAfterSaveStarts)
+    {
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Phase: [" << name(_phase) << "] got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        // Tests assume all are background save.
+        createStamp("abortonsyncsave");
+
+        if (_modifyFirst)
+        {
+            TST_LOG("Modify First");
+            TRANSITION_STATE(_phase, Phase::WaitFirstModifiedStatus);
+            modifyDocument();
+            TST_LOG("wait for first modified status");
+        }
+        else
+        {
+            TST_LOG("Save First");
+            saveAndModifyDocument();
         }
 
-        if (!options[i].modifyAfterSaveStarts)
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Phase: [" << name(_phase) << "] got: [" << message << ']');
+
+        if (_phase == Phase::WaitFirstModifiedStatus)
+        {
+            TST_LOG("Save and modify after first modify");
+            saveAndModifyDocument();
+        }
+        else if (_phase == Phase::WaitAfterSaveModifiedStatus)
+        {
+            TST_LOG("Allow saving to continue");
+            removeStamp("holdsave");
+            TRANSITION_STATE(_phase, Phase::WaitSaveStatus);
+        }
+
+        return true;
+    }
+
+    bool onDocumentSaved(const std::string& message, bool success,
+                         [[maybe_unused]] const std::string& result) override
+    {
+        TST_LOG("Phase: [" << name(_phase) << "] got: [" << message << ']');
+
+        LOK_ASSERT_MESSAGE("Expected to be in WaitSaveStatus or WaitAfterSaveModifiedStatus or "
+                           "WaitNoModifiedStatus",
+                           _phase == Phase::WaitSaveStatus ||
+                               _phase == Phase::WaitAfterSaveModifiedStatus ||
+                               _phase == Phase::WaitNoModifiedStatus);
+
+        LOK_ASSERT_MESSAGE("Saved successfully", success);
+
+        if (!_modifyAfterSaveStarts)
         {
             TST_LOG("wait for modified status");
-
-            // Autosaves and synthetically notifies us of clean modification state
-            LOK_ASSERT(!waitForModifiedStatus(name, wsSession));
         }
-        else // we don't get this - it is still modified
+        else
         {
             // Restore the document un-modified state
-            wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
+            WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
             TST_LOG("wait for cleanup of modified state before end of test");
-            LOK_ASSERT(!waitForModifiedStatus(name, wsSession));
+        }
+
+        _stopwatch.restart();
+        TRANSITION_STATE(_phase, Phase::WaitNoModifiedStatus);
+
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                const std::string docName = "empty.ods";
+                TST_LOG("Loading document: " << docName);
+                connectAndLoadLocalDocument(docName);
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitFirstModifiedStatus:
+            case Phase::WaitAfterSaveModifiedStatus:
+            case Phase::WaitSaveStatus:
+                break;
+
+            case Phase::WaitNoModifiedStatus:
+                if (_stopwatch.elapsed(std::chrono::seconds(5)))
+                {
+                    passTest();
+                }
+                break;
         }
     }
-
-    // Last save is non-sync as we cleanup.
-    removeStamp("abortonsyncsave");
-
-    poll->joinThread();
-}
-
-void UnitSaveTorture::testSaveTorture()
-{
-    std::vector<std::string> docNames = { "empty.odt", "empty.ods" };
-    // TODO: "empty.odp", "empty.odg" - modification method needs tweaking.
-    for (const auto& docName : docNames)
-    {
-        const auto name = "saveTorture_" + docName + ' ';
-        saveTortureOne(name, docName);
-    }
-}
-
-UnitSaveTorture::UnitSaveTorture()
-    : UnitWSD("UnitSaveTorture"),
-      forceAutosave(false)
-{
-    setHasKitHooks();
-    // Double of the default.
-    constexpr std::chrono::minutes timeout_minutes(1);
-    setTimeout(timeout_minutes);
-}
-
-void UnitSaveTorture::invokeWSDTest()
-{
-    testSaveTorture();
-
-    exitTest(TestResult::Ok);
-}
+};
 
 // Inside the forkit & kit processes
 class UnitKitSaveTorture : public UnitKit
@@ -683,8 +591,13 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase*[5]{ new UnitBgSaveCrash(), new UnitTileCombineRace(), new UnitModified(),
-                             /*new UnitSaveTorture(),*/ nullptr };
+    return new UnitBase* []
+    {
+        new UnitBgSaveCrash(), new UnitTileCombineRace(), new UnitModified(),
+            new UnitSaveTortureOne(true, false, "simple_load-modify-bgsave"),
+            new UnitSaveTortureOne(true, true, "load-modify-bgsave-start+modify+bgsave-end"),
+            new UnitSaveTortureOne(false, false, "un-modified-just-save-and-lets-see"), nullptr
+    };
 }
 
 UnitBase *unit_create_kit(void) { return new UnitKitSaveTorture(); }
