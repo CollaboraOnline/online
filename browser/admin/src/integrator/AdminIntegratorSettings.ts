@@ -112,6 +112,7 @@ const defaultBrowserSetting: Record<string, any> = {
 	},
 	darkTheme: false,
 	accessibilityState: false,
+	lockAccessibilityOn: false,
 	spreadsheet: {
 		ShowStatusbar: false,
 		A11yCheckDeck: false,
@@ -336,7 +337,7 @@ class SettingIframe {
 		signatureCa: _('Signature CA'),
 	};
 	private readonly settingLabels: Record<string, string> = {
-		accessibilityState: _('In-document Screen Reader'),
+		lockAccessibilityOn: _('In-document Screen Reader'),
 		darkTheme: _('Dark Mode'),
 		compactMode: _('Compact layout'),
 		ShowStatusbar: _('Show status bar'),
@@ -999,6 +1000,9 @@ class SettingIframe {
 			return container;
 		}
 		for (const key in data) {
+			// skip accessibilityState as it's only used for determining existing state of Help -> screen reader toggle button
+			if (key === 'accessibilityState') continue;
+
 			if (Object.prototype.hasOwnProperty.call(data, key)) {
 				const value = data[key];
 				const uniqueId = pathPrefix ? `${pathPrefix}-${key}` : key;
@@ -1148,7 +1152,7 @@ class SettingIframe {
 		let isDisabled = false;
 		let warningText: string | null = null;
 
-		if (key === 'accessibilityState') {
+		if (key === 'lockAccessibilityOn') {
 			isDisabled = !window.enableAccessibility;
 			if (isDisabled) {
 				warningText = _(
@@ -1190,6 +1194,9 @@ class SettingIframe {
 
 			if (sectionRaw === 'common') {
 				this.browserSettingOptions[settingKey] = value;
+
+				if (settingKey === 'lockAccessibilityOn')
+					this.browserSettingOptions['accessibilityState'] = value;
 			} else {
 				(this.browserSettingOptions[sectionRaw] as Record<string, boolean>)[
 					settingKey
