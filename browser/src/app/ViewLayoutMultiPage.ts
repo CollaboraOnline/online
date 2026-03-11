@@ -26,7 +26,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		this.reset();
 	}
 
-	public adjustViewZoomLevel() {
+	public override adjustViewZoomLevel() {
 		Util.ensureValue(app.activeDocument);
 
 		const min = 0.1;
@@ -244,7 +244,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		if (app.UI.horizontalRuler) app.UI.horizontalRuler.fixOffset();
 	}
 
-	public documentToViewX(point: cool.SimplePoint): number {
+	public override documentToViewX(point: cool.SimplePoint): number {
 		const index = this.getClosestRectangleIndex(point);
 		return (
 			this.viewRectangles[index].pX1 +
@@ -254,7 +254,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		);
 	}
 
-	public documentToViewY(point: cool.SimplePoint): number {
+	public override documentToViewY(point: cool.SimplePoint): number {
 		const index = this.getClosestRectangleIndex(point);
 		return (
 			this.viewRectangles[index].pY1 +
@@ -264,7 +264,9 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		);
 	}
 
-	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
+	public override canvasToDocumentPoint(
+		point: cool.SimplePoint,
+	): cool.SimplePoint {
 		point.pX += this.scrollProperties.viewX;
 		point.pY += this.scrollProperties.viewY;
 
@@ -282,7 +284,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		return result;
 	}
 
-	public scroll(pX: number, pY: number): boolean {
+	public override scroll(pX: number, pY: number): boolean {
 		const scrolled = super.scroll(pX, pY);
 
 		if (scrolled) {
@@ -293,7 +295,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		return scrolled;
 	}
 
-	public scrollTo(pX: number, pY: number): void {
+	public override scrollTo(pX: number, pY: number): void {
 		const point = cool.SimplePoint.fromCorePixels([pX, pY]);
 		if (!this.viewedRectangle.containsPoint(point.toArray())) {
 			const index = this.getClosestRectangleIndex(point);
