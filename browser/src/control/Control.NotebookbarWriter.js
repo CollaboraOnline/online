@@ -2318,16 +2318,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true, combination: 'TC', de: null }
 					},
 					{
-						'id': 'review-show-tracked-changes',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:ShowTrackedChanges', 'text'),
-						'command': '.uno:ShowTrackedChanges',
-						'accessibility': { focusBack: true, combination: 'SC', de: null }
-					},
-					{
-						'id': 'compare-tracked-change',
-						'type': 'bigcustomtoolitem',
+						'id': 'compare-tracked-change:ViewChangesMenu',
+						'type': 'menubutton',
 						'text': _('View Changes'),
+						'applyCallback': 'comparechanges',
 						'command': 'comparechanges',
 						'accessibility': { focusBack: true, combination: 'CC' }
 					},
