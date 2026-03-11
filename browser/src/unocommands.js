@@ -567,6 +567,7 @@ var unoCommandsArray = {
 	'SetObjectToForeground':{global:{menu:_('To Foreground'),},},
 	'SetOptimalColumnWidth':{presentation:{menu:_('Optimal Column Width'),},spreadsheet:{menu:_('~Optimal Width...'),},text:{menu:_('Optimal Column Width'),},},
 	'SetOptimalRowHeight':{presentation:{menu:_('Optimal Row Height'),},spreadsheet:{menu:_('~Optimal Height...'),},text:{menu:_('Optimal Row Height'),},},
+	'SidebarDeck.A11yCheckDeck':{text:{menu:_('~Accessibility Check...'),},},
 	'Shadowed':{global:{context:_('Toggle Shadow'),menu:_('Shadow'),},},
 	'ShapesMenu':{global:{menu:_('~Shape'),},},
 	'SheetMenu':{spreadsheet:{menu:_('~Sheet'),},},
