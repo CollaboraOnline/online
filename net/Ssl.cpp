@@ -93,7 +93,8 @@ static const char* getCABundleFile()
         "/etc/pki/tls/certs/ca-bundle.trust.crt",
         "/etc/ssl/certs/ca-certificates.crt",
         "/var/lib/ca-certificates/ca-bundle.pem",
-        "/etc/ssl/cert.pem"
+        "/etc/ssl/cert.pem",
+        "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
     };
     for (const char* location : locations)
     {
