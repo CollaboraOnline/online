@@ -60,13 +60,26 @@ abstract class JSDialogComponent {
 
 		if (!this.builder) return false;
 
+		// Use the model's preserved type for building: the model's
+		// widgetUpdate preserves the client-side type even when the
+		// server reports a different native widget type.
+		var controlData = data.control;
+		if (this.model) {
+			var modelWidget = this.model.getById(controlData.id);
+			if (modelWidget && modelWidget.type !== controlData.type) {
+				controlData = Object.assign({}, controlData, {
+					type: modelWidget.type,
+				});
+			}
+		}
+
 		app.console.debug(
 			'Component ' + this.name + ' handles update message: ' + JSDialog.verbose
-				? this.model.safeStringify(data.control)
-				: data.control.id,
+				? this.model.safeStringify(controlData)
+				: controlData.id,
 		);
 
-		this.builder.updateWidget(this.container, data.control);
+		this.builder.updateWidget(this.container, controlData);
 
 		return true;
 	}
