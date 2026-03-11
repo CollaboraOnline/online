@@ -33,6 +33,8 @@ class Bridge : public QObject
     std::thread _app2js;
     // the state of the document modified status as reported by the core
     bool _modified;
+    // true between sending a copy/cut command and receiving its COMMANDRESULT
+    bool _copyInProgress = false;
 
     void promptSaveLocation(std::function<void(const std::string&, const std::string&)> callback);
     void saveDocumentAs();
