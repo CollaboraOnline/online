@@ -228,6 +228,7 @@ function _iconViewEntry(
 			return keyCode;
 		};
 
+		const isInNotebookbar = builder.options.cssClass === 'notebookbar';
 		entryContainer.addEventListener('keydown', function (e: KeyboardEvent) {
 			if (e.key === ' ' || e.code === 'Space')
 				parentContainer.builderCallback(
@@ -243,7 +244,12 @@ function _iconViewEntry(
 					entry.row,
 					builder,
 				);
-			else {
+			else if (
+				isInNotebookbar &&
+				['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
+			) {
+				// In a notebookbar, arrows navigate the toolbar — don't send to core.
+			} else {
 				parentContainer.builderCallback(
 					'iconview',
 					'keypress',
@@ -425,8 +431,14 @@ JSDialog.iconView = function (
 		iconview.updateRendersImpl(pos, data.id, iconview);
 	};
 
-	if (isMultiSelect) JSDialog.KeyboardListNavigation(iconview);
-	else JSDialog.KeyboardRadioGroupNavigation(iconview);
+	// In a notebookbar (toolbar), arrow keys are handled by the toolbar's
+	// own navigation — radio group entries are navigated like any other
+	// toolbar item, without changing selection (WAI-ARIA APG radio-in-toolbar).
+	const inNotebookbar = builder.options.cssClass === 'notebookbar';
+	if (!inNotebookbar) {
+		if (isMultiSelect) JSDialog.KeyboardListNavigation(iconview);
+		else JSDialog.KeyboardRadioGroupNavigation(iconview);
+	}
 
 	iconview.addEventListener('focusin', function (e: FocusEvent) {
 		const target = e.target as HTMLElement;
