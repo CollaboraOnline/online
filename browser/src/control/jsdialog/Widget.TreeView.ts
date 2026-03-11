@@ -368,6 +368,7 @@ class TreeViewControl {
 		);
 		this._rows.set(String(entry.row), tr);
 		tr.setAttribute('level', String(level));
+		(tr as any)._row = entry.row;
 		const rowRole =
 			this._containerRole === 'tree'
 				? 'treeitem'
@@ -1356,6 +1357,8 @@ class TreeViewControl {
 		listElements: Array<HTMLElement>,
 		fromIndex: number,
 		toIndex: number,
+		builder: JSBuilder,
+		data: TreeWidgetJSON,
 	) {
 		var nextElement = listElements.at(toIndex);
 		nextElement.tabIndex = 0;
@@ -1381,6 +1384,14 @@ class TreeViewControl {
 			) as Array<HTMLElement>;
 			if (oldInput && oldInput.length) oldInput.at(0).tabIndex = -1;
 		}
+
+		(builder as any).callback(
+			'treeview',
+			'select',
+			data,
+			(nextElement as any)._row,
+			builder,
+		);
 	}
 
 	getCurrentEntry(listElements: Array<HTMLElement>) {
@@ -1429,7 +1440,8 @@ class TreeViewControl {
 		var currIndex = this.getCurrentEntry(listElements);
 
 		if (event.key === 'ArrowDown') {
-			if (currIndex < 0) this.changeFocusedRow(listElements, currIndex, 0);
+			if (currIndex < 0)
+				this.changeFocusedRow(listElements, currIndex, 0, builder, data);
 			else {
 				var nextIndex = currIndex + 1;
 				while (
@@ -1438,18 +1450,36 @@ class TreeViewControl {
 				)
 					nextIndex++;
 				if (nextIndex < treeLength)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
+					this.changeFocusedRow(
+						listElements,
+						currIndex,
+						nextIndex,
+						builder,
+						data,
+					);
 			}
 			preventDef = true;
 		} else if (event.key === 'ArrowUp') {
 			if (currIndex < 0)
-				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
+				this.changeFocusedRow(
+					listElements,
+					currIndex,
+					treeLength - 1,
+					builder,
+					data,
+				);
 			else {
 				var nextIndex = currIndex - 1;
 				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
 					nextIndex--;
 				if (nextIndex >= 0)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
+					this.changeFocusedRow(
+						listElements,
+						currIndex,
+						nextIndex,
+						builder,
+						data,
+					);
 			}
 
 			preventDef = true;
