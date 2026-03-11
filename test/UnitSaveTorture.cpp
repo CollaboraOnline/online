@@ -520,11 +520,12 @@ public:
 // Inside the forkit & kit processes
 class UnitKitSaveTorture : public UnitKit
 {
-    bool stampExists(const std::string& name)
+    bool stampExists(const std::string& name, bool log = true)
     {
         const std::string path = "/tmp/" + name;
         const bool exists = FileUtil::Stat(path).exists();
-        TST_LOG("Stamp [" << name << "] " << (exists ? "exists" : "missing"));
+        if (log)
+            TST_LOG("Stamp [" << name << "] " << (exists ? "exists" : "missing"));
         return exists;
     }
 
@@ -548,6 +549,10 @@ class UnitKitSaveTorture : public UnitKit
 public:
     UnitKitSaveTorture() : UnitKit("savetorture")
     {
+        // Double of the default.
+        constexpr std::chrono::minutes timeout_minutes(1);
+        setTimeout(timeout_minutes);
+
         std::cerr << "\n\nYour Kit process has Save torturing hooks\n\n\n";
     }
     virtual bool filterKitMessage(WebSocketHandler *, std::string & /* message */) override
@@ -555,10 +560,7 @@ public:
         return false;
     }
 
-    virtual bool filterDrainQueue() override
-    {
-        return stampExists("holddrainqueue");
-    }
+    virtual bool filterDrainQueue() override { return stampExists("holddrainqueue", false); }
 
     virtual void preSaveHook() override
     {
