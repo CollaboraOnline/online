@@ -1781,6 +1781,21 @@ menuDefinitions.set('PasteMenu', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('ViewChangesMenu', [
+	{
+		id: 'review-show-tracked-changes',
+		img: 'showtrackedchanges',
+		text: _('Inline'),
+		uno: '.uno:ShowTrackedChanges',
+	},
+	{
+		id: 'compare-tracked-change',
+		img: 'comparechanges',
+		text: _('Side by Side'),
+		action: 'comparechanges',
+	},
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('RecordTrackedChangesMenu', [
 	{
 		id: 'review-track-changes-off',
