@@ -1100,7 +1100,8 @@ class SlideShowPresenter {
 			true,
 		);
 
-		this._windowCloseInterval = setInterval(
+		this._windowCloseInterval = app.timerRegistry.setInterval(
+			'slideshowwindowclose',
 			function () {
 				if (!slideShowWindow.isConnected) this.slideshowWindowCleanUp();
 			}.bind(this),
@@ -1115,7 +1116,7 @@ class SlideShowPresenter {
 	}
 
 	slideshowWindowCleanUp = () => {
-		clearInterval(this._windowCloseInterval);
+		app.timerRegistry.clearInterval(this._windowCloseInterval);
 		this._slideShowNavigator.quit();
 		this._map.uiManager.closeSnackbar();
 		this._slideShowCanvas = null;

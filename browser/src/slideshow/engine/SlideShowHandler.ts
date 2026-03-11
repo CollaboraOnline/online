@@ -987,7 +987,11 @@ class SlideShowHandler {
 			}
 
 			this.bIsIdle = false;
-			setTimeout(this.update.bind(this), nNextTimeout * 1000);
+			app.timerRegistry.setTimeout(
+				'slideshowupdate',
+				this.update.bind(this),
+				nNextTimeout * 1000,
+			);
 		} else {
 			this.bIsIdle = true;
 		}
