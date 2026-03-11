@@ -11,6 +11,8 @@
 
 #include <config.h>
 
+#include <unistd.h>
+
 #include <common/Log.hpp>
 #include <common/Util.hpp>
 
