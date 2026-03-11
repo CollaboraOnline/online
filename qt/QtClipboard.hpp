@@ -12,10 +12,11 @@
 #pragma once
 
 #include <atomic>
+#include <functional>
 
 extern std::atomic<unsigned> sClipboardSourceDocId;
 
-void getClipboard(unsigned appDocId);
+void getClipboard(unsigned appDocId, std::function<void()> onDone);
 void setClipboard(unsigned appDocId);
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
