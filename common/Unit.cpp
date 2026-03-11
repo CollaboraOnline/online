@@ -490,7 +490,8 @@ void UnitBase::endTest([[maybe_unused]] const std::string& reason)
     if (TimeoutThread.joinable())
         TimeoutThread.join();
 
-    TST_LOG("==================== Finished [" << getTestname() << "] ====================");
+    TST_LOG("==================== Finished [" << getTestname() << "] " << name(_result) << " - "
+                                              << reason << " ====================");
 }
 
 UnitWSD::UnitWSD(const std::string& name)
