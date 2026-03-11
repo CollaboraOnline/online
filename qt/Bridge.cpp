@@ -45,6 +45,7 @@
 #include <QMainWindow>
 #include <QMetaObject>
 #include <QObject>
+#include <QPointer>
 #include <QString>
 #include <QTimer>
 #include <QUrl>
@@ -495,10 +496,15 @@ QVariant Bridge::cool(const QString& messageStr)
             isAutosave = object->get("isAutosave").convert<bool>();
         }
 
-        // Sync LOKit clipboard to system clipboard after copy or cut.
         if (commandName == ".uno:Copy" || commandName == ".uno:Cut"
             || commandName == ".uno:CopySlide")
-            getClipboard(_document._appDocId);
+        {
+            getClipboard(_document._appDocId, [this]() {
+                evalJS("if (window.app && window.app.map && window.app.map.uiManager) "
+                              "window.app.map.uiManager.closeSnackbar();");
+                _copyInProgress = false;
+            });
+        }
 
         // only handle successful .uno:Save commands
         // let manually triggered saves through even if the document is not modified.
@@ -566,26 +572,32 @@ QVariant Bridge::cool(const QString& messageStr)
         QString text = QString::fromStdString(message.substr(14));
         QApplication::clipboard()->setText(text);
     }
-    else if (message == "COPY")
+    else if (message == "COPY" || message == "COPYSLIDE" || message == "CUT")
     {
-        // Forward to Kit; clipboardchanged: response will trigger getClipboard() in send2JS.
-        static const std::string copyCmd = "uno .uno:Copy";
-        fakeSocketWriteQueue(_document._fakeClientFd, copyCmd.c_str(), copyCmd.size());
-    }
-    else if (message == "COPYSLIDE")
-    {
-        // CopySlide is used from the slide sorter; send the correct UNO command.
-        static const std::string copySlideCmd = "uno .uno:CopySlide";
-        fakeSocketWriteQueue(_document._fakeClientFd, copySlideCmd.c_str(), copySlideCmd.size());
-    }
-    else if (message == "CUT")
-    {
-        // Forward to Kit; clipboardchanged: response will trigger getClipboard() in send2JS.
-        static const std::string cutCmd = "uno .uno:Cut";
-        fakeSocketWriteQueue(_document._fakeClientFd, cutCmd.c_str(), cutCmd.size());
+        _copyInProgress = true;
+
+        // show a progress/snackbar while copy is in progress.
+        evalJS("if (window.app && window.app.map && window.app.map.uiManager) "
+               "window.app.map.uiManager.showProgressBar("
+               "window._(''), null, null, -1, false, true);");
+
+        std::string unoCmd;
+        if (message == "CUT")
+            unoCmd = "uno .uno:Cut";
+        else if (message == "COPYSLIDE")
+            unoCmd = "uno .uno:CopySlide";
+        else
+            unoCmd = "uno .uno:Copy";
+
+        fakeSocketWriteQueue(_document._fakeClientFd, unoCmd.c_str(), unoCmd.size());
     }
     else if (message == "PASTE")
     {
+        if (_copyInProgress)
+        {
+            LOG_DBG("Ignoring PASTE while copy is still in progress");
+            return {};
+        }
         // Sync system clipboard → LOKit internal clipboard only if an external app
         // wrote the clipboard since our last copy (same logic as Windows do_paste_or_read).
         if (!QApplication::clipboard()->ownsClipboard() ||
@@ -596,6 +608,11 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "PASTESPECIAL")
     {
+        if (_copyInProgress)
+        {
+            LOG_DBG("Ignoring PASTESPECIAL while copy is still in progress");
+            return {};
+        }
         if (!QApplication::clipboard()->ownsClipboard() ||
             sClipboardSourceDocId.load() != _document._appDocId)
             setClipboard(_document._appDocId);
