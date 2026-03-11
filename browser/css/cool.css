@@ -2,13 +2,6 @@
 	/*All used fonts (except w2ui)
 	----------------------------------*/
 	--cool-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
-	/*investigate what are the drawback in consisntly use --cool-fonts
-	for jquery-ui and perhaps mobile*/
-	--mobile-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-	--jquery-ui-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-
-	--docs-font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	--docs--pre-font: 'Consolas', 'Menlo', 'Lucida Console', 'Courier New', monospace;
 
 	/* Shared color for cell and selection border */
 	--cell-cursor-selection-border-color: var(--color-primary);
@@ -206,7 +199,7 @@ body {
 	padding: 0 14px 0 4px;
 	height: 28px;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 #toolbar-wrapper.readonly {
@@ -1362,7 +1355,7 @@ body {
 	position: absolute;
 	text-align: center;
 	z-index: 11;
-	font-family: var(--docs-font);
+	font-family: var(--cool-font);
 	font-size: var(--default-font-size);
 	border-radius: var(--border-radius-large);
 	box-shadow: 0 0 2px 1px var(--color-box-shadow);

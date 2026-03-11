@@ -444,7 +444,7 @@ textarea.cool-annotation-textarea {
 	box-sizing: border-box;
 	border-radius: var(--border-radius);
 	border: 1px solid var(--color-border-lighter);
-	font-family: var(--mobile-font);
+	font-family: var(--cool-font);
 	font-size: 16px;
 	font-weight: normal;
 	/*hide for now*/
