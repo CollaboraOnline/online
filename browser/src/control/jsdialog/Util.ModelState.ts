@@ -104,9 +104,15 @@ class JSDialogModelState {
 		const found = this.getById(data.control.id);
 		if (found) {
 			const id = found.id;
+			const originalType = found.type;
 			const before = this.safeStringify(found);
 			// data will no longer be used, we don't need deep copy
 			Object.assign(found, data.control);
+
+			// Preserve the client-side widget type: server updates may
+			// report a different native type (e.g. "treelistbox") than
+			// the client uses (e.g. "iconview") for handler selection.
+			if (originalType) found.type = originalType;
 
 			if (JSDialog.verbose) {
 				app.console.debug(
