@@ -1094,8 +1094,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							// small vertically-stacked buttons between large ones.
 							let elementToFocus;
 							if (key === 'ArrowLeft' || key === 'ArrowRight') {
-								var focusables = Array.from(container[0].querySelectorAll('button.unobutton:not([disabled]):not(.hidden)'))
-									.filter(function(el) { return el.checkVisibility(); });
+								var allFocusables = Array.from(container[0].querySelectorAll('*'))
+									.filter(function(el) { return el.checkVisibility() && JSDialog.IsFocusable(el); });
+								// Skip containers that are ancestors of other focusables —
+								// only leaf-level focusable elements are navigation targets.
+								var focusables = allFocusables.filter(function(el) {
+									return !allFocusables.some(function(other) { return other !== el && el.contains(other); });
+								});
 								var idx = focusables.indexOf(currentElement);
 								if (idx !== -1) {
 									var next = key === 'ArrowRight' ? idx + 1 : idx - 1;
