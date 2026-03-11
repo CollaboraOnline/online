@@ -545,6 +545,10 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
         // Check if we have more tests, but keep the current index if it's the last.
         if (haveMoreTests())
         {
+            // Get the current UnitWSDInterface to pass to the next one.
+            UnitWSD* currentWSD = getMaybeNull();
+            UnitWSDInterface* unitWsdInterface = currentWSD ? currentWSD->_wsd : nullptr;
+
             // We have more tests.
             ++GlobalIndex;
             filter();
@@ -556,7 +560,11 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
                                           << GlobalArray[GlobalIndex]->getTestname());
                 UnitWSD* globalWSD = getMaybeNull();
                 if (globalWSD)
+                {
+                    globalWSD->setWSD(unitWsdInterface);
                     globalWSD->configure(Poco::Util::Application::instance().config());
+                }
+
                 GlobalArray[GlobalIndex]->initialize();
             }
 
