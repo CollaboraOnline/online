@@ -472,6 +472,13 @@ void CollabSocketHandler::handleFetch(const std::string& stream, const std::stri
     if (!requestId.empty())
         oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
     oss << ",\"url\":\"" << JsonUtil::escapeJSONValue(downloadUrl.str()) << "\"";
+    if (stream == "contents" && _wopiInfo)
+    {
+        const std::string filename =
+            _wopiInfo->optValue<std::string>("BaseFileName", std::string());
+        if (!filename.empty())
+            oss << ",\"filename\":\"" << JsonUtil::escapeJSONValue(filename) << "\"";
+    }
     oss << "}";
 
     sendTextMessage(oss.str());
