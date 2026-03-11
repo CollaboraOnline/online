@@ -1095,25 +1095,32 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							// small vertically-stacked buttons between large ones.
 							let elementToFocus;
 							if (key === 'ArrowLeft' || key === 'ArrowRight') {
-								var isTextInput = function(el) {
-									return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
-								};
 								var allFocusables = Array.from(container[0].querySelectorAll('*'))
 									.filter(function(el) { return el.checkVisibility() && JSDialog.IsFocusable(el); });
-								// Skip containers that are ancestors of other focusables —
-								// only leaf-level focusable elements are navigation targets.
-								// Arrow keys skip text inputs (cursor movement conflict),
-								// but Tab can land on them.
+								// Only leaf-level focusable elements are navigation targets.
 								var focusables = allFocusables.filter(function(el) {
-									return (!isTextInput(el) || isTab) &&
-										!allFocusables.some(function(other) { return other !== el && el.contains(other); });
+									return !allFocusables.some(function(other) { return other !== el && el.contains(other); });
 								});
 								var idx = focusables.indexOf(currentElement);
 								if (idx !== -1) {
-									var next = key === 'ArrowRight' ? idx + 1 : idx - 1;
-									if (next >= focusables.length) next = 0;
-									else if (next < 0) next = focusables.length - 1;
-									elementToFocus = focusables[next];
+									var forward = key === 'ArrowRight';
+									// Arrow keys skip text inputs (cursor movement conflict).
+									// Tab treats each iconview as one stop (skips non-selected entries).
+									var shouldSkip = function(el) {
+										if (!isTab && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'))
+											return true;
+										if (isTab && el.classList.contains('ui-iconview-entry') && !el.classList.contains('selected'))
+											return true;
+										return false;
+									};
+									var next = idx;
+									do {
+										next = forward ? next + 1 : next - 1;
+										if (next >= focusables.length) next = 0;
+										else if (next < 0) next = focusables.length - 1;
+									} while (next !== idx && shouldSkip(focusables[next]));
+									if (next !== idx)
+										elementToFocus = focusables[next];
 								}
 							}
 							if (!elementToFocus)
