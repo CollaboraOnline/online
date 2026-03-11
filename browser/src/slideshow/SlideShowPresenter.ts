@@ -1018,22 +1018,17 @@ class SlideShowPresenter {
 	}
 
 	_closeSlideShowWindow() {
+		const proxy = this._slideShowWindowProxy;
 		setTimeout(
 			function () {
-				if (
-					!this._slideShowWindowProxy ||
-					!this._slideShowWindowProxy.isConnected
-				) {
+				if (!proxy || !proxy.isConnected) {
 					return;
 				}
 
-				if (this._slideShowWindowProxy) {
-					this._slideShowWindowProxy.parentElement.removeChild(
-						this._slideShowWindowProxy,
-					);
-					this._map.fire('presentinwindowclose');
+				proxy.parentElement.removeChild(proxy);
+				this._map.fire('presentinwindowclose');
+				if (this._slideShowWindowProxy === proxy)
 					this._slideShowWindowProxy = null;
-				}
 				// enable present in console on closeSlideShowWindow
 				this._enablePresenterConsole(false);
 				this._map.uiManager.closeSnackbar();
