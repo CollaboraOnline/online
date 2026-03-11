@@ -77,6 +77,9 @@ var map = window.L.map('map', {
 
 ////// Controls /////
 
+window.L.Map.THIS = map;
+app.map = map;
+
 map.uiManager = new UIManager();
 map.addControl(map.uiManager);
 if (!window.L.Browser.cypressTest)
@@ -91,8 +94,6 @@ if (host === '' && !window.ThisIsAMobileApp) {
 	map.uiManager.showInfoModal('empty-host-url-modal', '', errorMessages.emptyhosturl, '', _('OK'), null, false);
 }
 
-window.L.Map.THIS = map;
-app.map = map;
 app.idleHandler.map = map;
 
 if (window.ThisIsTheEmscriptenApp) {
