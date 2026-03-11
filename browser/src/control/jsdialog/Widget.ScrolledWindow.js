@@ -100,37 +100,16 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			var leftBtn = prevSibling ? prevSibling.querySelector('button') : null;
 			var rightBtn = nextSibling ? nextSibling.querySelector('button') : null;
 
-			if (!leftBtn && !rightBtn)
-				return;
-
 			scrollwindow._externalScrollSetup = true;
 
-			var updateBtnState = function() {
-				var overflow = scrollwindow.scrollWidth > scrollwindow.clientWidth;
-				if (leftBtn)
-					leftBtn.disabled = !overflow || scrollwindow.scrollLeft <= 0;
-				if (rightBtn)
-					rightBtn.disabled = !overflow || scrollwindow.scrollLeft + scrollwindow.clientWidth >= scrollwindow.scrollWidth - 1;
-			};
+			// Hide sibling scroll buttons and show a native browser
+			// scrollbar instead - the browser handles overflow better
+			if (leftBtn)
+				leftBtn.parentElement.style.display = 'none';
+			if (rightBtn)
+				rightBtn.parentElement.style.display = 'none';
 
-			var scrollStep = function() { return Math.max(50, scrollwindow.clientWidth * 0.75); };
-
-			if (leftBtn) {
-				leftBtn.addEventListener('click', function() {
-					scrollwindow.scrollLeft = Math.max(0, scrollwindow.scrollLeft - scrollStep());
-					updateBtnState();
-				});
-			}
-			if (rightBtn) {
-				rightBtn.addEventListener('click', function() {
-					scrollwindow.scrollLeft = Math.min(
-						scrollwindow.scrollWidth - scrollwindow.clientWidth,
-						scrollwindow.scrollLeft + scrollStep());
-					updateBtnState();
-				});
-			}
-
-			updateBtnState();
+			scrollwindow.style.overflowX = 'auto';
 		};
 
 		// Use ResizeObserver to detect overflow when content changes
