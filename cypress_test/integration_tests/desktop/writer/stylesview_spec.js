@@ -6,8 +6,8 @@ var desktopHelper = require('../../common/desktop_helper');
 describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 	// check expand button visibility and click on it
 	const openExpander = () => {
-		cy.cGet('#stylesview-expand-button').should('exist').should('be.visible');
-		cy.cGet('#stylesview-expand-button').click();
+		cy.cGet('#format-style-list-dialog-stylesview-button').should('exist').should('be.visible');
+		cy.cGet('#format-style-list-dialog-stylesview-button').click();
 		desktopHelper.getDropdown('stylesview').should('exist');
 		cy.cGet('.jsdialog #stylesview').should('exist').should('be.visible');
 	}
@@ -21,13 +21,13 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 	});
 
 	it('Scroll Up/Down Buttons', function() {
-		cy.cGet('#stylesview-scroll-up').should('exist').should('be.visible');
-		cy.cGet('#stylesview-scroll-down').should('exist').should('be.visible');
+		cy.cGet('#scroll-up-stylesview-button').should('exist').should('be.visible');
+		cy.cGet('#scroll-down-stylesview-button').should('exist').should('be.visible');
 		cy.cGet('#stylesview-iconview_0').should('exist').should('be.visible');
 
-		cy.cGet('#stylesview-scroll-down').click();
+		cy.cGet('#scroll-down-stylesview-button').click();
 		cy.cGet('#stylesview-iconview_0').should('exist').should('not.be.visible');
-		cy.cGet('#stylesview-scroll-up').click();
+		cy.cGet('#scroll-up-stylesview-button').click();
 		cy.cGet('#stylesview-iconview_0').should('exist').should('be.visible');
 	});
 
