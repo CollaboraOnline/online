@@ -138,7 +138,7 @@ export class ContentControlSection extends CanvasSectionObject {
 			var startX: number = x - this.position[0] + 5;
 			var startY: number = y - this.position[1];
 			var padding: number = 10;
-			var fontStyle = getComputedStyle(document.body).getPropertyValue('--docs-font').split(',')[0].replace(/'/g, '');
+			var fontStyle = getComputedStyle(document.body).getPropertyValue('--cool-font').split(',')[0].replace(/'/g, '');
 			var fontSize = getComputedStyle(document.body).getPropertyValue('--default-font-size');
 			var font = fontSize + ' ' + fontStyle;
 			var textWidth: number = app.util.getTextWidth(text, font) + padding;

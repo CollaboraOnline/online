@@ -167,7 +167,7 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	max-height: calc( 90vh - 34px);
 	overflow-y: auto !important;
 	background-color: var(--color-background-lighter) !important;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	line-height: 1.5;
 	scrollbar-color: var(--scrollbar-color);
 	scrollbar-width: var(--scrollbar-width);
@@ -545,7 +545,7 @@ algned to the bottom */
 }
 
 .ui-expander-label.jsdialog {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .ui-expander-label::before,
@@ -1216,7 +1216,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 1.5rem;
 	line-height: normal;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
@@ -1225,7 +1225,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-combobox-label {
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .jsdialog-window .ui-listbox,
@@ -1377,7 +1377,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: block;
 	width: 100%;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	color: var(--color-text-dark);
 }
 
@@ -1495,7 +1495,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 
 .ui-overflow-group-label {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	font-size: var(--overflow-group-font-size);
 	color: var(--color-text-lighter);
 	flex-grow: 1;
@@ -1538,7 +1538,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	text-wrap: nowrap;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .ui-iconview-entry.selected {
@@ -1593,7 +1593,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	position: absolute;
 	z-index: 1105;
 	padding: 0;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .autofilter-container > .root-container,
@@ -1865,7 +1865,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	box-sizing: border-box;
 	line-height: normal;
 	font-size: calc(var(--default-font-size)*1.2);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	padding: 8px 10px;

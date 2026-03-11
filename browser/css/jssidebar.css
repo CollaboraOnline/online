@@ -1,7 +1,7 @@
 /* general */
 
 .sidebar * {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	text-transform: none !important;
 	color: var(--color-main-text);
 }
