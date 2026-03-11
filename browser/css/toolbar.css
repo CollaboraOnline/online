@@ -462,6 +462,9 @@ button.leaflet-control-search-next
 #toolbar-up .ui-combobox-button {
 	padding-left: 10px;
 }
+#fontsizecombobox-input-context-toolbar {
+	width: 55px !important;
+}
 #toolbar-up #fontnamecombobox {
 	width: 170px;
 	max-width: 170px;
