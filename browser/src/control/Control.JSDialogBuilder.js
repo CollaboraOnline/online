@@ -1092,10 +1092,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							if (isTab)
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
-							// Try DOM order for left/right — ray-casting misses
-							// small vertically-stacked buttons between large ones.
 							let elementToFocus;
-							if (key === 'ArrowLeft' || key === 'ArrowRight') {
+							// Use DOM order for left/right (ray-casting misses small
+							// vertically-stacked buttons) and also for up/down when
+							// inside an iconview widget.
+							const useDomOrder = key === 'ArrowLeft' || key === 'ArrowRight'
+								|| currentElement.closest('.ui-iconview-root');
+							if (useDomOrder) {
 								var allFocusables = Array.from(container[0].querySelectorAll('*'))
 									.filter(function(el) { return el.checkVisibility() && JSDialog.IsFocusable(el); });
 								// Only leaf-level focusable elements are navigation targets.
@@ -1104,7 +1107,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 								});
 								var idx = focusables.indexOf(currentElement);
 								if (idx !== -1) {
-									var forward = key === 'ArrowRight';
+									var forward = key === 'ArrowRight' || key === 'ArrowDown';
 									// Arrow keys skip text inputs (cursor movement conflict).
 									// Tab treats each iconview as one stop (skips non-selected entries).
 									var shouldSkip = function(el) {
