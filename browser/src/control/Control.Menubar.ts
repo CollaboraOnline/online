@@ -403,7 +403,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:WordCountDialog'},
 				window.enableAccessibility ?
 					{name: _('Screen Reading'), id: 'togglea11ystate', type: 'action'} : {},
-				{uno: '.uno:AccessibilityCheck'},
+				{uno: '.uno:SidebarDeck.A11yCheckDeck'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:OnlineAutoFormat'}]},
