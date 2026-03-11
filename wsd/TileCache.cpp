@@ -436,7 +436,11 @@ bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int mode, int
     if (part != -1 && tileDesc.getPart() != part)
         return false;
 
-    if (mode != tileDesc.getEditMode())
+    // Mode 0 (unspecified) invalidations apply to all modes.
+    // Modes 1 & 2 are left/right sides in compare-change view;
+    // an invalidation of either must also invalidate the other.
+    if (mode != tileDesc.getEditMode() && mode != 0 &&
+        !(mode >= 1 && mode <= 2 && tileDesc.getEditMode() >= 1 && tileDesc.getEditMode() <= 2))
         return false;
 
     if (canonicalViewId != tileDesc.getCanonicalViewId())
