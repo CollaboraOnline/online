@@ -16,6 +16,8 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+#include <typeinfo>
+
 #include <Poco/File.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Path.h>
