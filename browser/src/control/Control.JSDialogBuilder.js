@@ -1080,7 +1080,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tabPage.addEventListener('keydown', function(e) {
 					// Determine key direction
 					let key;
-					if (e.key === 'Tab') {
+					let isTab = e.key === 'Tab';
+					if (isTab) {
 						key = e.shiftKey ? 'ArrowLeft' : 'ArrowRight'; // Reverse if Shift+Tab
 					} else {
 						key = e.key;
@@ -1088,19 +1089,25 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
 						var currentElement = e.srcElement;
 						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
-							if (e.key === 'Tab')
+							if (isTab)
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
 							// Try DOM order for left/right — ray-casting misses
 							// small vertically-stacked buttons between large ones.
 							let elementToFocus;
 							if (key === 'ArrowLeft' || key === 'ArrowRight') {
+								var isTextInput = function(el) {
+									return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
+								};
 								var allFocusables = Array.from(container[0].querySelectorAll('*'))
 									.filter(function(el) { return el.checkVisibility() && JSDialog.IsFocusable(el); });
 								// Skip containers that are ancestors of other focusables —
 								// only leaf-level focusable elements are navigation targets.
+								// Arrow keys skip text inputs (cursor movement conflict),
+								// but Tab can land on them.
 								var focusables = allFocusables.filter(function(el) {
-									return !allFocusables.some(function(other) { return other !== el && el.contains(other); });
+									return (!isTextInput(el) || isTab) &&
+										!allFocusables.some(function(other) { return other !== el && el.contains(other); });
 								});
 								var idx = focusables.indexOf(currentElement);
 								if (idx !== -1) {
