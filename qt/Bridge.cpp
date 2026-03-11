@@ -26,12 +26,9 @@
 #include <qt/qt.hpp>
 #include <common/Util.hpp>
 #include <qt/WebView.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/SettingsStorage.hpp>
 #include <common/StringVector.hpp>
-
-#include <Poco/Dynamic/Var.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 
@@ -55,28 +52,6 @@ static const int SHOW_JS_MAXLEN = 300;
 
 namespace
 {
-    // Helper to extract JSON object from message (finds '{' and parses from there)
-    Poco::JSON::Object::Ptr parseJsonFromMessage(const std::string& message, size_t prefixLen)
-    {
-        std::string jsonPart = message.substr(prefixLen);
-        size_t jsonStart = jsonPart.find('{');
-        if (jsonStart == std::string::npos)
-            return nullptr;
-
-        jsonPart = jsonPart.substr(jsonStart);
-        try
-        {
-            Poco::JSON::Parser parser;
-            Poco::Dynamic::Var result = parser.parse(jsonPart);
-            return result.extract<Poco::JSON::Object::Ptr>();
-        }
-        catch (const std::exception& e)
-        {
-            LOG_ERR("Failed to parse JSON: " << e.what());
-            return nullptr;
-        }
-    }
-
     void closeStarterScreen()
     {
         WebView* starterScreen = WebView::findStarterScreen();
@@ -322,24 +297,14 @@ void Bridge::saveDocumentAs()
 
 QVariant Bridge::cool(const QString& messageStr)
 {
-    constexpr std::string_view DOWNLOADAS = "downloadas ";
-    constexpr std::string_view HYPERLINK = "HYPERLINK ";
-    constexpr std::string_view COMMANDSTATECHANGED = "COMMANDSTATECHANGED ";
-    constexpr std::string_view COMMANDRESULT = "COMMANDRESULT ";
-    constexpr std::string_view NEWDOC = "newdoc ";
-    constexpr std::string_view OPENDOC = "opendoc file=";
-    constexpr std::string_view FULLSCREENPRESENTATION = "FULLSCREENPRESENTATION ";
-    constexpr std::string_view UPLOADSETTINGS = "UPLOADSETTINGS ";
-    constexpr std::string_view FETCHSETTINGSFILE = "FETCHSETTINGSFILE ";
-    constexpr std::string_view FETCHSETTINGSCONFIG = "FETCHSETTINGSCONFIG";
-    constexpr std::string_view SYNCSETTINGS = "SYNCSETTINGS";
-    constexpr std::string_view PROCESSINTEGRATORADMINFILE = "PROCESSINTEGRATORADMINFILE ";
-    constexpr std::string_view LOADDOCUMENT = "loaddocument ";
-
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
 
-    if (message == "HULLO")
+    const StringVector tokens = StringVector::tokenize(message);
+    if (tokens.empty())
+        return {};
+
+    if (tokens.equals(0, "HULLO"))
     {
         // Skip for starter screen (no document connection needed)
         if (_document._fakeClientFd == -1) {
@@ -355,27 +320,16 @@ QVariant Bridge::cool(const QString& messageStr)
         createAndStartMessagePumpThread();
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
-        std::string message(_document._fileURL.toString() +
+        std::string initMsg(_document._fileURL.toString() +
                             (" " + std::to_string(_document._appDocId)));
-        fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
+        fakeSocketWriteQueue(_document._fakeClientFd, initMsg.c_str(), initMsg.size());
     }
-    else if (message.starts_with(LOADDOCUMENT))
+    else if (tokens.equals(0, "loaddocument"))
     {
         // loaddocument url=file:///path/to/file.odt
-        // Parse the URL from the message
-        std::string args = message.substr(LOADDOCUMENT.size());
         std::string newFileUrl;
-
-        size_t urlPos = args.find("url=");
-        if (urlPos != std::string::npos) {
-            size_t urlStart = urlPos + 4;
-            size_t urlEnd = args.find(' ', urlStart);
-            if (urlEnd == std::string::npos)
-                urlEnd = args.size();
-            newFileUrl = args.substr(urlStart, urlEnd - urlStart);
-        }
-
-        if (newFileUrl.empty()) {
+        if (!COOLProtocol::getTokenString(tokens, "url", newFileUrl))
+        {
             LOG_ERR("loaddocument: no url= specified");
             return {};
         }
@@ -429,7 +383,7 @@ QVariant Bridge::cool(const QString& messageStr)
         LOG_TRC_NOFILE("loaddocument: sent initial message with new appDocId");
         return {};
     }
-    else if (message == "WELCOME")
+    else if (tokens.equals(0, "WELCOME"))
     {
         const std::string welcomePath = getDataDir() + "/browser/dist/welcome/welcome-slideshow.odp";
         struct stat st;
@@ -447,7 +401,7 @@ QVariant Bridge::cool(const QString& messageStr)
             LOG_TRC_NOFILE("Welcome slideshow not found at: " << welcomePath);
         }
     }
-    else if (message == "LICENSE")
+    else if (tokens.equals(0, "LICENSE"))
     {
         const std::string licensePath = LO_PATH "/LICENSE.html";
         struct stat st;
@@ -462,10 +416,10 @@ QVariant Bridge::cool(const QString& messageStr)
             LOG_TRC_NOFILE("LICENSE.html not found at: " << licensePath);
         }
     }
-    else if (message.starts_with(COMMANDSTATECHANGED))
+    else if (tokens.equals(0, "COMMANDSTATECHANGED"))
     {
-        const auto object = parseJsonFromMessage(message, COMMANDSTATECHANGED.size());
-        if (!object)
+        Poco::JSON::Object::Ptr object;
+        if (!JsonUtil::parseJSON(tokens.substrFromToken(1), object))
             return {};
 
         const std::string commandName = object->get("commandName").toString();
@@ -476,10 +430,10 @@ QVariant Bridge::cool(const QString& messageStr)
 
         LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
     }
-    else if (message.starts_with(COMMANDRESULT))
+    else if (tokens.equals(0, "COMMANDRESULT"))
     {
-        const auto object = parseJsonFromMessage(message, COMMANDRESULT.size());
-        if (!object)
+        Poco::JSON::Object::Ptr object;
+        if (!JsonUtil::parseJSON(tokens.substrFromToken(1), object))
             return {};
 
         const std::string commandName = object->get("commandName").toString();
@@ -511,16 +465,14 @@ QVariant Bridge::cool(const QString& messageStr)
         if (commandName != ".uno:Save" || !success || (!wasModified && isAutosave))
             return {};
     }
-    else if (message.starts_with(UPLOADSETTINGS))
+    else if (tokens.equals(0, "UPLOADSETTINGS"))
     {
-        const std::string payload = message.substr(UPLOADSETTINGS.size());
-        Desktop::uploadSettings(payload);
+        Desktop::uploadSettings(tokens.substrFromToken(1));
         return {};
     }
-    else if (message.starts_with(FETCHSETTINGSFILE))
+    else if (tokens.equals(0, "FETCHSETTINGSFILE"))
     {
-        const std::string relPath = message.substr(FETCHSETTINGSFILE.size());
-        auto result = Desktop::fetchSettingsFile(relPath);
+        auto result = Desktop::fetchSettingsFile(tokens.substrFromToken(1));
         if (result.content.empty())
             return {};
 
@@ -531,24 +483,23 @@ QVariant Bridge::cool(const QString& messageStr)
 
         return resultMap;
     }
-    else if (message == FETCHSETTINGSCONFIG)
+    else if (tokens.equals(0, "FETCHSETTINGSCONFIG"))
     {
         return QString::fromStdString(Desktop::fetchSettingsConfig());
     }
-    else if (message.starts_with(SYNCSETTINGS))
+    else if (tokens.equals(0, "SYNCSETTINGS"))
     {
         Desktop::syncSettings([this](const std::vector<char>& data) {
             send2JS(data);
         });
         return {};
     }
-    else if (message.starts_with(PROCESSINTEGRATORADMINFILE))
+    else if (tokens.equals(0, "PROCESSINTEGRATORADMINFILE"))
     {
-        std::string payload = message.substr(PROCESSINTEGRATORADMINFILE.size());
-        Desktop::processIntegratorAdminFile(payload);
+        Desktop::processIntegratorAdminFile(tokens.substrFromToken(1));
         return {};
     }
-    else if (message == "BYE")
+    else if (tokens.equals(0, "BYE"))
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
@@ -567,12 +518,12 @@ QVariant Bridge::cool(const QString& messageStr)
             }
         });
     }
-    else if (message.starts_with("TEXTCLIPBOARD "))
+    else if (tokens.equals(0, "TEXTCLIPBOARD"))
     {
-        QString text = QString::fromStdString(message.substr(14));
+        QString text = QString::fromStdString(tokens.substrFromToken(1));
         QApplication::clipboard()->setText(text);
     }
-    else if (message == "COPY" || message == "COPYSLIDE" || message == "CUT")
+    else if (tokens.equals(0, "COPY") || tokens.equals(0, "COPYSLIDE") || tokens.equals(0, "CUT"))
     {
         _copyInProgress = true;
 
@@ -582,16 +533,16 @@ QVariant Bridge::cool(const QString& messageStr)
                "window._(''), null, null, -1, false, true);");
 
         std::string unoCmd;
-        if (message == "CUT")
+        if (tokens.equals(0, "CUT"))
             unoCmd = "uno .uno:Cut";
-        else if (message == "COPYSLIDE")
+        else if (tokens.equals(0, "COPYSLIDE"))
             unoCmd = "uno .uno:CopySlide";
         else
             unoCmd = "uno .uno:Copy";
 
         fakeSocketWriteQueue(_document._fakeClientFd, unoCmd.c_str(), unoCmd.size());
     }
-    else if (message == "PASTE")
+    else if (tokens.equals(0, "PASTE"))
     {
         if (_copyInProgress)
         {
@@ -606,7 +557,7 @@ QVariant Bridge::cool(const QString& messageStr)
         static const std::string pasteCmd = "uno .uno:Paste";
         fakeSocketWriteQueue(_document._fakeClientFd, pasteCmd.c_str(), pasteCmd.size());
     }
-    else if (message == "PASTESPECIAL")
+    else if (tokens.equals(0, "PASTESPECIAL"))
     {
         if (_copyInProgress)
         {
@@ -619,18 +570,17 @@ QVariant Bridge::cool(const QString& messageStr)
         static const std::string pasteCmd = "uno .uno:PasteSpecial";
         fakeSocketWriteQueue(_document._fakeClientFd, pasteCmd.c_str(), pasteCmd.size());
     }
-    else if (message == "GETRECENTDOCS")
+    else if (tokens.equals(0, "GETRECENTDOCS"))
     {
         QString result = QString::fromStdString(Application::getRecentFiles().serialise());
         LOG_TRC_NOFILE("GETRECENTDOCS: returning recent documents");
         return result;
     }
-    else if (message.starts_with(FULLSCREENPRESENTATION))
+    else if (tokens.equals(0, "FULLSCREENPRESENTATION"))
     {
         if (_webView)
         {
-            std::string content = message.substr(FULLSCREENPRESENTATION.size());
-            if (content == "true")
+            if (tokens.equals(1, "true"))
                 _webView->createPresentationFS();
             else
                 _webView->destroyPresentationFS();
@@ -704,39 +654,25 @@ QVariant Bridge::cool(const QString& messageStr)
             _webView->window()->close();
         }
     }
-    else if (message == "PRINT")
+    else if (tokens.equals(0, "PRINT"))
     {
         printDocument(_document._appDocId, _webView);
     }
-    else if (message == "EXCHANGEMONITORS")
+    else if (tokens.equals(0, "EXCHANGEMONITORS"))
     {
         if (_webView)
             _webView->exchangeMonitors();
     }
-    else if (message.starts_with(DOWNLOADAS))
+    else if (tokens.equals(0, "downloadas"))
     {
         // Parse "format=" argument and handle "direct-" prefix
-        const std::string args = message.substr(DOWNLOADAS.size());
-
         std::string format;
-        {
-            size_t start = 0;
-            while (start < args.size())
-            {
-                size_t end = args.find(' ', start);
-                if (end == std::string::npos) end = args.size();
-                const std::string_view tok(args.c_str() + start, end - start);
-                if (tok.rfind("format=", 0) == 0)
-                    format = std::string(tok.substr(strlen("format=")));
-                start = end + 1;
-            }
-        }
-        if (format.empty())
+        if (!COOLProtocol::getTokenString(tokens, "format", format))
         {
             LOG_ERR("downloadas: no format= specified");
             return {};
         }
-        if (format.rfind("direct-", 0) == 0)
+        if (format.starts_with("direct-"))
             format.erase(0, strlen("direct-"));
 
         // Build a suggested filename from the current document
@@ -789,16 +725,21 @@ QVariant Bridge::cool(const QString& messageStr)
 
         dialog->open();
     }
-    else if (message.starts_with(HYPERLINK))
+    else if (tokens.equals(0, "HYPERLINK"))
     {
-        QString qurl = QString::fromStdString(message.substr(HYPERLINK.size()));
+        QString qurl = QString::fromStdString(tokens.substrFromToken(1));
         QDesktopServices::openUrl(QUrl::fromUserInput(qurl));
     }
-    else if (message.starts_with(OPENDOC))
+    else if (tokens.equals(0, "opendoc"))
     {
         // e.g. "opendoc file=%2Fhome%2F...something.odt"
-        std::string fileArg = message.substr(OPENDOC.size());
-        QString decodedUri = QUrl::fromPercentEncoding(QByteArray(fileArg.data(), fileArg.size()));
+        std::string fileArg;
+        if (!COOLProtocol::getTokenString(tokens, "file", fileArg))
+        {
+            LOG_ERR("opendoc: no file= specified");
+            return {};
+        }
+        QString decodedUri = QUrl::fromPercentEncoding(QByteArray::fromStdString(fileArg));
 
         QUrl url(decodedUri);
         QString localPath = url.isLocalFile() ? url.toLocalFile() : decodedUri;
@@ -816,11 +757,9 @@ QVariant Bridge::cool(const QString& messageStr)
         LOG_INF("opendoc: opened file: " << absolutePath.toStdString());
         return {};
     }
-    else if (message.starts_with(NEWDOC))
+    else if (tokens.equals(0, "newdoc"))
     {
         // e.g."newdoc type=writer template=%2Fhome%2F...something.ott basename=Cool%20Text%20CV"
-        auto const tokens = StringVector::tokenize(message);
-
         std::string typeToken, templateToken, basenameToken;
         if (!COOLProtocol::getTokenString(tokens, "type", typeToken))
         {
