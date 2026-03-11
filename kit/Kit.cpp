@@ -24,7 +24,7 @@
 #include <csignal>
 #include <limits>
 
-#if !MOBILEAPP
+#if !MOBILEAPP || defined(QTAPP)
 #include <dlfcn.h>
 #endif
 
@@ -4270,6 +4270,57 @@ std::string anonymizeUrl(const std::string& url)
 #endif
 }
 
+#if !MOBILEAPP || defined(QTAPP)
+
+void* preloadCoreLibrary(const std::string& loTemplate, std::string *loadedLibrary)
+{
+    // we deliberately don't dlclose handle on success, make it
+    // static so static analysis doesn't see this as a leak
+    static void *handle;
+#ifndef __APPLE__
+    std::string libMerged = loTemplate + "/program/libmergedlo.so";
+#else
+    std::string libMerged = loTemplate + "/Contents/Frameworks/libmergedlo.dylib";
+#endif
+    if (File(libMerged).exists())
+    {
+        LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
+        handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
+        if (!handle)
+        {
+            LOG_FTL("Failed to load " << libMerged << ": " << dlerror());
+            return nullptr;
+        }
+        if (loadedLibrary)
+            *loadedLibrary = std::move(libMerged);
+        return handle;
+    }
+
+#ifndef __APPLE__
+    std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
+#else
+    std::string libSofficeapp = loTemplate + "/Contents/Frameworks/libsofficeapp.dylib";
+#endif
+    if (File(libSofficeapp).exists())
+    {
+        LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
+        handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
+        if (!handle)
+        {
+            LOG_FTL("Failed to load " << libSofficeapp << ": " << dlerror());
+            return nullptr;
+        }
+        if (loadedLibrary)
+            *loadedLibrary = std::move(libSofficeapp);
+        return handle;
+    }
+
+    LOG_FTL("Neither " << libSofficeapp << " or " << libMerged << " exist.");
+    return nullptr;
+}
+
+#endif // !MOBILEAPP || QTAPP
+
 #if !MOBILEAPP
 
 static int receiveURPData(void* context, const signed char* buffer, size_t bytesToWrite)
@@ -4344,49 +4395,9 @@ bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
 bool globalPreinit(const std::string &loTemplate)
 {
     std::string loadedLibrary;
-    // we deliberately don't dlclose handle on success, make it
-    // static so static analysis doesn't see this as a leak
-    static void *handle;
-#ifndef __APPLE__
-    std::string libMerged = loTemplate + "/program/libmergedlo.so";
-#else
-    std::string libMerged = loTemplate + "/Contents/Frameworks/libmergedlo.dylib";
-#endif
-    if (File(libMerged).exists())
-    {
-        LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
-        handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
-        if (!handle)
-        {
-            LOG_FTL("Failed to load " << libMerged << ": " << dlerror());
-            return false;
-        }
-        loadedLibrary = std::move(libMerged);
-    }
-    else
-    {
-#ifndef __APPLE__
-        std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
-#else
-        std::string libSofficeapp = loTemplate + "/Contents/Frameworks/libsofficeapp.dylib";
-#endif
-        if (File(libSofficeapp).exists())
-        {
-            LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
-            handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
-            if (!handle)
-            {
-                LOG_FTL("Failed to load " << libSofficeapp << ": " << dlerror());
-                return false;
-            }
-            loadedLibrary = std::move(libSofficeapp);
-        }
-        else
-        {
-            LOG_FTL("Neither " << libSofficeapp << " or " << libMerged << " exist.");
-            return false;
-        }
-    }
+    static void *handle = preloadCoreLibrary(loTemplate, &loadedLibrary);
+    if (!handle)
+        return false;
 
     LokHookPreInit2* preInit = reinterpret_cast<LokHookPreInit2 *>(dlsym(handle, "lok_preinit_2"));
     if (!preInit)

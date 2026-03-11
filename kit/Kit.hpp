@@ -60,6 +60,7 @@ void lokit_main(
 #endif
     std::size_t numericIdentifier);
 
+void* preloadCoreLibrary(const std::string& loTemplate, std::string *loadedLibrary = nullptr);
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(int type, const char* p, void* data);

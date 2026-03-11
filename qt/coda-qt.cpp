@@ -38,6 +38,8 @@
 
 #include <unistd.h>
 
+void* preloadCoreLibrary(const std::string& loTemplate, std::string *loadedLibrary = nullptr);
+
 const char* user_name = nullptr;
 
 int coolwsd_server_socket_fd = -1;
@@ -129,6 +131,10 @@ namespace
 
 int main(int argc, char** argv)
 {
+    // Load core's bundled libraries early, before QApplication
+    // pulls in the system's potentially older NSS via Qt's stack.
+    preloadCoreLibrary(LO_PATH);
+
     QApplication app(argc, argv);
 
     user_name = getUserName();
