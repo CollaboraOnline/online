@@ -66,13 +66,8 @@ const buggyCalcDialogs = [
     '.uno:DataFilterStandardFilter',
     '.uno:DefineName',
     '.uno:DefineDBName',
-    '.uno:Delete',
-    '.uno:EditHeaderAndFooter',
     '.uno:EditPrintArea',
-    '.uno:EditStyle?Param:string=Heading&Family:short=2',
-    '.uno:FormatCellDialog',
     '.uno:FunctionDialog',
-    '.uno:InsertObjectChart',
     '.uno:PageFormatDialog',
     '.uno:Validation',
 ];
