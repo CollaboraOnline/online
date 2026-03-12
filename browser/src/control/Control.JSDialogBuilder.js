@@ -1108,11 +1108,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 								var idx = focusables.indexOf(currentElement);
 								if (idx !== -1) {
 									var forward = key === 'ArrowRight' || key === 'ArrowDown';
-									// Tab treats each iconview as one stop (skips non-selected entries).
+									// When entering an iconview from outside, skip to the selected
+									// entry (per WAI-ARIA toolbar radio group pattern). When already
+									// inside the iconview, arrows move between entries normally.
+									var inIconview = !isTab && currentElement.classList.contains('ui-iconview-entry');
 									var shouldSkip = function(el) {
-										if (isTab && el.classList.contains('ui-iconview-entry') && !el.classList.contains('selected'))
-											return true;
-										return false;
+										if (inIconview)
+											return false;
+										return el.classList.contains('ui-iconview-entry') && !el.classList.contains('selected');
 									};
 									var next = idx;
 									do {
