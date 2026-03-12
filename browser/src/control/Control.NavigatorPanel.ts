@@ -36,6 +36,7 @@ class NavigatorPanel extends SidebarBase {
 		this.map.on('focussearch', this.focusSearch, this);
 		this.navigationPanel = document.getElementById(`navigation-sidebar`);
 		this.navigationPanel.setAttribute('aria-label', _('Navigation Panel'));
+		this.navigationPanel.setAttribute('tabindex', '-1');
 
 		this.floatingNavIcon = document.getElementById(`navigator-floating-icon`);
 		this.presentationControlsWrapper = this.navigationPanel.querySelector(
@@ -69,7 +70,7 @@ class NavigatorPanel extends SidebarBase {
 			!window.mode.isMobile()
 		) {
 			// Navigator panel should be visible and by default we should open slide sorter in case of impress/draw
-			this.showNavigationPanel();
+			this.showNavigationPanel(false);
 		}
 	}
 
@@ -311,7 +312,7 @@ class NavigatorPanel extends SidebarBase {
 		this.floatingNavIcon.addEventListener(
 			'click',
 			function () {
-				this.showNavigationPanel();
+				this.showNavigationPanel(true);
 				if (app.map.isPresentationOrDrawing()) {
 					this.switchNavigationTab('tab-slide-sorter');
 				} else {
@@ -339,7 +340,7 @@ class NavigatorPanel extends SidebarBase {
 			this.builder.build(this.container, [navigatorData], false);
 			// There is case where user can directly click navigator from notebookbar view option
 			// in that case we first show the navigation panel and then switch to tab view
-			this.showNavigationPanel();
+			this.showNavigationPanel(false);
 			// TODO: remove jQuery animation
 			$('#navigator-dock-wrapper').show(200);
 			app.showNavigator = true;
@@ -425,12 +426,14 @@ class NavigatorPanel extends SidebarBase {
 		}
 	}
 
-	showNavigationPanel() {
+	showNavigationPanel(setFocus: boolean) {
 		app.layoutingService.appendLayoutingTask(() => {
 			this.navigationPanel.classList.add('visible');
 			this.floatingNavIcon.classList.remove('visible');
 			// this will update the indentation marks for elements like ruler
 			app.map.fire('fixruleroffset');
+
+			if (setFocus) this.navigationPanel.focus();
 		});
 	}
 
