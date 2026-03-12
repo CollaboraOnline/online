@@ -488,7 +488,7 @@ public:
         const auto now = std::chrono::steady_clock::now();
 
         os << indent << "StorageBase:";
-        os << indent << "uri: " << _uri.toString();
+        os << indent << "uri: " << COOLWSD::anonymizeUrl(_uri.toString());
         os << indent << "isDownloaded: " << _isDownloaded;
         os << indent << "localStorePath: " << _localStorePath;
         os << indent << "jailPath: " << _jailPath;
