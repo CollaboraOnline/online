@@ -195,14 +195,14 @@ public:
     ~FileServerRequestHandler();
 
     /// Evaluate if the cookie exists and returns it when it does.
-    static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, std::string& jwtToken);
+    static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, std::string& jwtTokenNoLog);
 
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, http::Response& response);
 
     /// Authenticate the admin.
     static bool authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
-                                  http::Response& response, std::string& jwtToken);
+                                  http::Response& response, std::string& jwtTokenNoLog);
 
     bool handleRequest(const Poco::Net::HTTPRequest& request,
                        const RequestDetails& requestDetails,

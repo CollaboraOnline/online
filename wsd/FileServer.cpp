@@ -278,7 +278,7 @@ FileServerRequestHandler::~FileServerRequestHandler()
 }
 
 bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& request,
-                                               std::string& jwtToken)
+                                               std::string& jwtTokenNoLog)
 {
     assert(COOLWSD::AdminEnabled);
 
@@ -286,10 +286,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& req
     {
         NameValueCollection cookies;
         request.getCookies(cookies);
-        jwtToken = cookies.get("jwt");
-        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtToken));
+        jwtTokenNoLog = cookies.get("jwt");
+        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtTokenNoLog));
         JWTAuth authAgent("admin", "admin", "admin");
-        if (authAgent.verify(jwtToken))
+        if (authAgent.verify(jwtTokenNoLog))
         {
             LOG_TRC("JWT token is valid");
             return true;
@@ -306,7 +306,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& req
 }
 
 bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
-                                                 http::Response& response, std::string& jwtToken)
+                                                 http::Response& response, std::string& jwtTokenNoLog)
 {
     assert(COOLWSD::AdminEnabled);
 
@@ -338,9 +338,9 @@ bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCrede
 
     // authentication passed, generate and set the cookie
     JWTAuth authAgent("admin", "admin", "admin");
-    jwtToken = authAgent.getAccessToken();
+    jwtTokenNoLog = authAgent.getAccessToken();
 
-    Poco::Net::HTTPCookie cookie("jwt", jwtToken);
+    Poco::Net::HTTPCookie cookie("jwt", jwtTokenNoLog);
     // bundlify appears to add an extra /dist -> dist/dist/admin
     cookie.setPath(COOLWSD::ServiceRoot + "/browser/dist/");
     cookie.setSecure(ConfigUtil::isSslEnabled());
@@ -351,9 +351,9 @@ bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCrede
 
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http::Response& response)
 {
-    std::string jwtToken;
-    return isAdminLoggedIn(request, jwtToken) ||
-           authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtToken);
+    std::string jwtTokenNoLog;
+    return isAdminLoggedIn(request, jwtTokenNoLog) ||
+           authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtTokenNoLog);
 }
 
 static std::string getRequestPath(const HTTPRequest& request)
@@ -2015,11 +2015,11 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     if (!COOLWSD::AdminEnabled)
         throw Poco::FileAccessDeniedException("Admin console disabled");
 
-    std::string jwtToken;
-    if (!isAdminLoggedIn(request, jwtToken))
+    std::string jwtTokenNoLog;
+    if (!isAdminLoggedIn(request, jwtTokenNoLog))
     {
         // Not logged in, so let's log in now.
-        if (!authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtToken))
+        if (!authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtTokenNoLog))
         {
             throw Poco::Net::NotAuthenticatedException("Invalid admin login");
         }
@@ -2043,7 +2043,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
         Poco::Path(relPath).setFileName("admintemplate.html").toString();
     std::string templateFile = *getUncompressedFile(templatePath);
 
-    const std::string escapedJwtToken = Uri::encode(jwtToken, "'");
+    const std::string escapedJwtToken = Uri::encode(jwtTokenNoLog, "'");
     Poco::replaceInPlace(templateFile, std::string("%JWT_TOKEN%"), escapedJwtToken);
     if (relPath == "/browser/dist/admin/adminClusterOverview.html" ||
         relPath == "/browser/dist/admin/adminClusterOverviewAbout.html")
