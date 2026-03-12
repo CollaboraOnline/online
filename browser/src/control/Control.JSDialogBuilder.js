@@ -1994,7 +1994,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (shouldArrowbackgroundButton) {
 				// Arrow should be a real button (user can interact with it)
 				arrowbackground = window.L.DomUtil.create('button', 'arrowbackground', div);
-				arrowbackground.tabIndex = '0'; // Make arrow focusable
 
 				const buttonText = data.aria && data.aria.label ? data.aria.label : builder._cleanText(data.text);
 				const dropdownAriaLabelText = _('Open {name}').replace('{name}', buttonText);
