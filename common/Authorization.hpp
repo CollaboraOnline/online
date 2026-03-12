@@ -62,10 +62,10 @@ public:
     static Authorization create(const Poco::URI& uri);
     static Authorization create(const std::string& uri);
 
-    void resetAccessToken(std::string accessToken)
+    void resetAccessToken(std::string accessTokenNoLog)
     {
         _type = Type::Token;
-        _data = std::move(accessToken);
+        _data = std::move(accessTokenNoLog);
     }
 
     /// Expire the Authorization data.

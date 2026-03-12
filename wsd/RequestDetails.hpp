@@ -207,14 +207,14 @@ public:
     /// This is a per-document, per-user request key.
     /// If a user makes two requests on the same document at the same time,
     /// they will have the same request-key and we won't differentiate between them.
-    static std::string getRequestKey(const std::string& wopiSrc, const std::string& accessToken)
+    static std::string getRequestKey(const std::string& wopiSrc, const std::string& accessTokenNoLog)
     {
         const std::string decodedWopiSrc = Uri::decode(wopiSrc);
         const Poco::URI wopiSrcSanitized = RequestDetails::sanitizeURI(decodedWopiSrc);
 
         std::string requestKey = RequestDetails::getDocKeyNoLog(wopiSrcSanitized);
         requestKey += '_';
-        requestKey += accessToken;
+        requestKey += accessTokenNoLog;
 
         return requestKey;
     }
@@ -225,10 +225,10 @@ public:
         const std::string wopiSrc = getField(RequestDetails::Field::WOPISrc);
         if (!wopiSrc.empty())
         {
-            std::string accessToken;
-            getParamByName("access_token", accessToken);
+            std::string accessTokenNoLog;
+            getParamByName("access_token", accessTokenNoLog);
 
-            return getRequestKey(wopiSrc, accessToken);
+            return getRequestKey(wopiSrc, accessTokenNoLog);
         }
 
         return std::string();

@@ -1037,13 +1037,13 @@ public:
         // to the embedded document URI. Here we extract those params
         // from the GET URI and set them in the generated html (see cool.html.m4).
 
-        const std::string accessToken = extractVariable(form, "access_token", ACCESS_TOKEN);
+        const std::string accessTokenNoLog = extractVariable(form, "access_token", ACCESS_TOKEN);
         const std::string accessTokenTtl =
             extractVariable(form, "access_token_ttl", ACCESS_TOKEN_TTL);
         const std::string noAuthHeader = extractVariable(form, "no_auth_header", NO_AUTH_HEADER);
 
         unsigned long tokenTtl = 0;
-        if (!accessToken.empty())
+        if (!accessTokenNoLog.empty())
         {
             if (!accessTokenTtl.empty())
             {
@@ -1625,12 +1625,12 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     Poco::Net::HTMLForm form(request, message);
 
     const std::string& sharedConfigUrl = form.get("sharedConfigUrl", std::string());
-    const std::string& accessToken = form.get("accessToken", std::string());
+    const std::string& accessTokenNoLog = form.get("accessToken", std::string());
     const std::string& type = form.get("type", std::string());
     bool noAuthHeader = !form.get("noAuthHeader", std::string()).empty();
 
     const std::string& shortMessage = "Failed to fetch wopi setting config";
-    if (sharedConfigUrl.empty() || accessToken.empty() || type.empty())
+    if (sharedConfigUrl.empty() || accessTokenNoLog.empty() || type.empty())
     {
         sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
                   "Missing sharedConfigUrl or accessToken or type in the payload");
@@ -1638,7 +1638,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     }
 
     Poco::URI sharedUri(sharedConfigUrl);
-    sharedUri.addQueryParameter("access_token", accessToken);
+    sharedUri.addQueryParameter("access_token", accessTokenNoLog);
     sharedUri.addQueryParameter("fileId", "-1");
     sharedUri.addQueryParameter("type", type);
     if (noAuthHeader)
@@ -1648,7 +1648,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
 
     const std::string& uriAnonym = COOLWSD::anonymizeUrl(sharedUri.toString());
 
-    Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
+    Authorization auth(Authorization::Type::Token, accessTokenNoLog, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
     httpRequest.setVerb(http::Request::VERB_GET);
     httpRequest.set("Content-Type", "application/json");
@@ -1706,10 +1706,10 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     Poco::Net::HTMLForm form(request, message);
 
     const std::string& fileUrl = form.get("fileUrl", std::string());
-    const std::string& accessToken = form.get("accessToken", std::string());
+    const std::string& accessTokenNoLog = form.get("accessToken", std::string());
     bool noAuthHeader = !form.get("noAuthHeader", std::string()).empty();
 
-    if (fileUrl.empty() || accessToken.empty())
+    if (fileUrl.empty() || accessTokenNoLog.empty())
     {
         sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, "Failed to fetch setting file",
                   "Missing fileUrl or accessToken in the payload");
@@ -1730,7 +1730,7 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     }
     if (!hasAccessToken)
     {
-        dicUrl.addQueryParameter("access_token", accessToken);
+        dicUrl.addQueryParameter("access_token", accessTokenNoLog);
     }
     if (noAuthHeader)
     {
@@ -1738,7 +1738,7 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     }
 
     const std::string& uriAnonym = COOLWSD::anonymizeUrl(dicUrl.toString());
-    Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
+    Authorization auth(Authorization::Type::Token, accessTokenNoLog, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(dicUrl, auth);
     httpRequest.setVerb(http::Request::VERB_GET);
     httpRequest.set("Content-Type", "text/plain");
@@ -1771,12 +1771,12 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     Poco::Net::HTMLForm form(request, message);
 
     const std::string& sharedConfigUrl = form.get("sharedConfigUrl", std::string());
-    const std::string& accessToken = form.get("accessToken", std::string());
+    const std::string& accessTokenNoLog = form.get("accessToken", std::string());
     const std::string& fileId = form.get("fileId", std::string());
     bool noAuthHeader = !form.get("noAuthHeader", std::string()).empty();
 
     const std::string& shortMessage = "Failed to delete presetfile";
-    if (sharedConfigUrl.empty() || accessToken.empty() || fileId.empty())
+    if (sharedConfigUrl.empty() || accessTokenNoLog.empty() || fileId.empty())
     {
         sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
                   "Missing sharedConfigUrl or accessToken or fileId in the payload");
@@ -1784,7 +1784,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     }
 
     Poco::URI sharedUri(sharedConfigUrl);
-    sharedUri.addQueryParameter("access_token", accessToken);
+    sharedUri.addQueryParameter("access_token", accessTokenNoLog);
     sharedUri.addQueryParameter("fileId", fileId);
     if (noAuthHeader)
     {
@@ -1792,7 +1792,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     }
     const std::string& uriAnonym = COOLWSD::anonymizeUrl(sharedUri.toString());
 
-    Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
+    Authorization auth(Authorization::Type::Token, accessTokenNoLog, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
 
     httpRequest.setVerb("DELETE");

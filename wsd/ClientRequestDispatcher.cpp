@@ -685,14 +685,14 @@ void launchAsyncCheckFileInfo(
     const std::size_t highWatermark)
 {
     const std::string requestKey = RequestDetails::getRequestKey(
-        accessDetails.wopiSrc(), accessDetails.accessToken());
+        accessDetails.wopiSrc(), accessDetails.accessTokenNoLog());
     LOG_DBG("RequestKey: [" << requestKey << "], wopiSrc: ["
             << Anonymizer::anonymizeUrl(accessDetails.wopiSrc()) << "], accessToken: ["
-            << Anonymizer::anonymize(accessDetails.accessToken()) << "], noAuthHeader: ["
+            << Anonymizer::anonymize(accessDetails.accessTokenNoLog()) << "], noAuthHeader: ["
             << accessDetails.noAuthHeader() << ']');
 
     std::vector<std::string> options = {
-        "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
+        "access_token=" + accessDetails.accessTokenNoLog(), "access_token_ttl=0"
     };
 
     if (!accessDetails.noAuthHeader().empty())
