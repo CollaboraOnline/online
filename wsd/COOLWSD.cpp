@@ -446,7 +446,7 @@ void COOLWSD::cleanupDocBrokers()
         {
             LastSubForKitBrokerExitTimes[docBroker->getConfigId()] = now;
             LOG_INF("Removing DocumentBroker for docKey ["
-                    << it->first << "], " << docBroker.use_count() << " references");
+                    << Anonymizer::anonymize(it->first) << "], " << docBroker.use_count() << " references");
             docBroker->dispose();
             it = DocBrokers.erase(it);
             continue;
@@ -3043,13 +3043,13 @@ private:
             const bool unexpected = !docBroker->isUnloading() && !SigUtil::getShutdownRequestFlag();
             if (unexpected)
             {
-                LOG_WRN("DocBroker [" << docBroker->getDocKey()
+                LOG_WRN("DocBroker [" << Anonymizer::anonymize(docBroker->getDocKey())
                                       << "] got disconnected from its Kit (" << child->getPid()
                                       << ") unexpectedly. Closing");
             }
             else
             {
-                LOG_DBG("DocBroker [" << docBroker->getDocKey() << "] disconnected from its Kit ("
+                LOG_DBG("DocBroker [" << Anonymizer::anonymize(docBroker->getDocKey()) << "] disconnected from its Kit ("
                                       << child->getPid() << ") as expected");
             }
 

@@ -18,6 +18,7 @@
 
 #include "ClientSession.hpp"
 
+#include <common/Anonymizer.hpp>
 #include <common/Clipboard.hpp>
 #include <common/CommandControl.hpp>
 #include <common/Common.hpp>
@@ -969,7 +970,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (!UnitWSD::isUnitTesting() && canonicalViewId < 1000)
         {
             LOG_WRN("Got tile request for session ["
-                    << getId() << "] on document [" << docBroker->getDocKey()
+                    << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKey())
                     << "] with invalid view ID [" << canonicalViewId << ']');
         }
         return sendTile(buffer, length, tokens, docBroker);
@@ -980,7 +981,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (!UnitWSD::isUnitTesting() && canonicalViewId < 1000)
         {
             LOG_WRN("Got tilecombine request for session ["
-                    << getId() << "] on document [" << docBroker->getDocKey()
+                    << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKey())
                     << "] with invalid view ID [" << canonicalViewId << ']');
         }
         return sendCombinedTiles(buffer, length, tokens, docBroker);
@@ -990,7 +991,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // If we can't write to Storage, there is no point in saving.
         if (!isWritable())
         {
-            LOG_WRN("Session [" << getId() << "] on document [" << docBroker->getDocKey()
+            LOG_WRN("Session [" << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKey())
                                 << "] has no write permissions in Storage and cannot save.");
             sendTextFrameAndLogError("error: cmd=save kind=savefailed");
         }
@@ -3170,7 +3171,7 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
 {
     assert(_isConvertTo && "Expected convert-to context");
 
-    LOG_DBG("Conversion request of [" << docBroker->getDocKey() << "] failed: " << errorKind);
+    LOG_DBG("Conversion request of [" << Anonymizer::anonymize(docBroker->getDocKey()) << "] failed: " << errorKind);
     if (!saveAsSocket)
         LOG_ERR("Error saveas socket missing in isConvertTo mode");
     else if (errorKind == "passwordrequired:to-view" ||
@@ -3463,7 +3464,7 @@ void ClientSession::onDisconnect()
     try
     {
         // Connection terminated. Destroy session.
-        LOG_DBG("on docKey [" << docKey << "] terminated. Cleaning up");
+        LOG_DBG("on docKey [" << Anonymizer::anonymize(docKey) << "] terminated. Cleaning up");
 
         docBroker->removeSession(session);
     }
@@ -3505,7 +3506,7 @@ void ClientSession::onDisconnect()
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
+        LOG_ERR("Exception while closing socket for docKey [" << Anonymizer::anonymize(docKey) << "]: " << exc.what());
     }
 }
 

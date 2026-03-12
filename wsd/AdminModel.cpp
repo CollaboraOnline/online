@@ -18,6 +18,7 @@
 
 #include "AdminModel.hpp"
 
+#include <common/Anonymizer.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
@@ -572,7 +573,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     ret.first->second.setProcSMapsFp(smapsFp);
     ret.first->second.takeSnapshot();
     ret.first->second.addView(sessionId, userName, userId, isViewReadOnly);
-    LOG_DBG("Added admin document [" << docKey << "].");
+    LOG_DBG("Added admin document [" << Anonymizer::anonymize(docKey) << "].");
 
     std::string memoryAllocated;
     std::string encodedUsername;
@@ -666,7 +667,7 @@ void AdminModel::removeDocument(const std::string& docKey)
             docIt->second.expireView(pair.first);
         }
 
-        LOG_DBG("Removed admin document [" << docKey << "].");
+        LOG_DBG("Removed admin document [" << Anonymizer::anonymize(docKey) << "].");
         doRemove(docIt);
     }
 }
@@ -799,7 +800,7 @@ void AdminModel::cleanupResourceConsumingDocs()
                 const size_t badBehaviorDuration = now - doc.getBadBehaviorDetectionTime();
                 if (!doc.getBadBehaviorDetectionTime())
                 {
-                    LOG_WRN("Detected resource consuming doc [" << doc.getDocKey() << "]: idle="
+                    LOG_WRN("Detected resource consuming doc [" << Anonymizer::anonymize(doc.getDocKey()) << "]: idle="
                             << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
                     doc.setBadBehaviorDetectionTime(now);
                 }
@@ -813,9 +814,9 @@ void AdminModel::cleanupResourceConsumingDocs()
                     // could be dumped. If the process is still alive then, at next
                     // iteration, try to SIGKILL it.
                     if (SigUtil::killChild(doc.getPid(), doc.getAbortTime() ? SIGKILL : SIGABRT))
-                        LOG_ERR((doc.getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << doc.getDocKey() << "]");
+                        LOG_ERR((doc.getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << Anonymizer::anonymize(doc.getDocKey()) << "]");
                     else
-                        LOG_ERR("Cannot " << (doc.getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << doc.getDocKey() << "]");
+                        LOG_ERR("Cannot " << (doc.getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << Anonymizer::anonymize(doc.getDocKey()) << "]");
                     if (!doc.getAbortTime())
                         doc.setAbortTime(std::time(nullptr));
                 }
@@ -823,7 +824,7 @@ void AdminModel::cleanupResourceConsumingDocs()
             else if (doc.getBadBehaviorDetectionTime())
             {
                 doc.setBadBehaviorDetectionTime(0);
-                LOG_WRN("Removed doc [" << doc.getDocKey() << "] from resource consuming monitoring list: idle="
+                LOG_WRN("Removed doc [" << Anonymizer::anonymize(doc.getDocKey()) << "] from resource consuming monitoring list: idle="
                         << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
             }
         }
@@ -1329,7 +1330,7 @@ bool AdminModel::isDocSaved(const std::string& docKey)
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
         return !doc->second.getModifiedStatus();
-    LOG_DBG("cannot find document with docKey " << docKey);
+    LOG_DBG("cannot find document with docKey " << Anonymizer::anonymize(docKey));
     return false;
 }
 
@@ -1349,7 +1350,7 @@ bool AdminModel::isDocReadOnly(const std::string& docKey)
         }
         return isReadOnly;
     }
-    LOG_DBG("cannot find document with docKey " << docKey);
+    LOG_DBG("cannot find document with docKey " << Anonymizer::anonymize(docKey));
     return false;
 }
 
