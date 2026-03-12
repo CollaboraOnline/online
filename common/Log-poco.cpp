@@ -59,13 +59,13 @@ bool AreasDisabled[Log::AreaMax] = { false, };
 /// Wrapper to expose protected 'log' and genericise
 class GenericLogger : public Poco::Logger
 {
-public:
     GenericLogger(const std::string& name,
                   Poco::AutoPtr<Poco::Channel> chan, int lvl)
         : Poco::Logger(name, std::move(chan), lvl)
     {
     }
 
+public:
     static GenericLogger& create(const std::string& name,
                                  Poco::AutoPtr<Poco::Channel> chan, int lvl)
     {
