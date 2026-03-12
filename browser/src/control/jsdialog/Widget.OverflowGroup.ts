@@ -276,22 +276,19 @@ function setupOverflowMenu(
 									elementToFocus.focus();
 								} else {
 									// When ray-casting reaches container boundaries
-									const focusables = Array.from(
-										menu.querySelectorAll('[tabindex="-1"]:not([disabled])'),
-									);
-									if (focusables.length) {
-										let targetIndex;
-										if (key === 'ArrowRight' || key === 'ArrowDown') {
-											// Moving forward but hit boundary - cycle to first
-											targetIndex = 0;
-										} else if (key === 'ArrowLeft' || key === 'ArrowUp') {
-											// Moving backward but hit boundary - cycle to last
-											targetIndex = focusables.length - 1;
-										}
+									const forwardDir =
+										key === 'ArrowRight' || key === 'ArrowDown';
+									const focusables = JSDialog.GetFocusableElements(menu);
+									if (focusables.length > 0) {
+										const currentIndex = focusables.indexOf(currentElement);
+										let targetIndex = forwardDir
+											? currentIndex + 1
+											: currentIndex - 1;
 
-										if (targetIndex !== undefined) {
-											(focusables[targetIndex] as HTMLElement).focus();
-										}
+										if (targetIndex < 0) targetIndex = focusables.length - 1;
+										else if (targetIndex >= focusables.length) targetIndex = 0;
+
+										(focusables[targetIndex] as HTMLElement).focus();
 									}
 								}
 								// If we handled the event here, stop propagation and prevent default
