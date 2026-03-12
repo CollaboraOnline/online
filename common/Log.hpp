@@ -274,23 +274,20 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         }                                                                                          \
     } while (false)
 
-#define LOG_BODY_(LVL, X, PREFIX, END)                                                             \
-    std::ostringstream oss_(Log::prefix(#LVL).data(), std::ostringstream::ate);                    \
-    PREFIX(oss_);                                                                                  \
-    oss_ << std::boolalpha << X;                                                                   \
-    END(oss_);                                                                                     \
-    LOG_LOG(LVL, oss_.str())
-
-/// Unconditionally log. LVL can be anything converted to string.
-#define LOG_UNCONDITIONAL(LVL, X)                                                                  \
+#define LOG_BODY_IMPL_(LEVEL_DISPLAY_NAME, LEVEL, X, PREFIX, END)                                  \
     do                                                                                             \
     {                                                                                              \
-        std::ostringstream oss_(Log::prefix(#LVL).data(), std::ostringstream::ate);                \
-        logPrefix(oss_);                                                                           \
+        std::ostringstream oss_(Log::prefix(#LEVEL_DISPLAY_NAME).data(), std::ostringstream::ate); \
+        PREFIX(oss_);                                                                              \
         oss_ << std::boolalpha << X;                                                               \
-        LOG_END(oss_);                                                                             \
-        Log::log(Log::Level::FTL, oss_.str());                                                     \
+        END(oss_);                                                                                 \
+        LOG_LOG(LEVEL, oss_.str());                                                                \
     } while (false)
+
+#define LOG_BODY_(LVL, X, PREFIX, END) LOG_BODY_IMPL_(LVL, LVL, X, PREFIX, END)
+
+/// Unconditionally log. LVL can be anything converted to string.
+#define LOG_UNCONDITIONAL(LVL, X) LOG_BODY_IMPL_(LVL, FTL, X, logPrefix, LOG_END)
 
 /// Unconditionally log at ANY level.
 #define LOG_ANY(X) LOG_UNCONDITIONAL(ANY, X)
