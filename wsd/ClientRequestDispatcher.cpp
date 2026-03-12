@@ -686,8 +686,9 @@ void launchAsyncCheckFileInfo(
 {
     const std::string requestKey = RequestDetails::getRequestKey(
         accessDetails.wopiSrc(), accessDetails.accessToken());
-    LOG_DBG("RequestKey: [" << requestKey << "], wopiSrc: [" << accessDetails.wopiSrc()
-            << "], accessToken: [" << accessDetails.accessToken() << "], noAuthHeader: ["
+    LOG_DBG("RequestKey: [" << requestKey << "], wopiSrc: ["
+            << Anonymizer::anonymizeUrl(accessDetails.wopiSrc()) << "], accessToken: ["
+            << Anonymizer::anonymize(accessDetails.accessToken()) << "], noAuthHeader: ["
             << accessDetails.noAuthHeader() << ']');
 
     std::vector<std::string> options = {
