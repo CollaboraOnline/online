@@ -18,6 +18,7 @@
 #include <TraceEvent.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <Exceptions.hpp>
+#include <common/Anonymizer.hpp>
 #include <common/Log.hpp>
 #include <DocumentBroker.hpp>
 #include <ClientSession.hpp>
@@ -36,7 +37,7 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
     const auto startTime = std::chrono::steady_clock::now();
 
     LOG_TRC("WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n"
-                                                           << httpRequest.header());
+                                                           << Anonymizer::anonymize((std::ostringstream() << httpRequest.header()).str()));
 
     http::Session::FinishedCallback finishedCallback =
         [selfWeak = weak_from_this(), this, startTime,
