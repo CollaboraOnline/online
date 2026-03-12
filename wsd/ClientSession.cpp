@@ -116,7 +116,7 @@ ClientSession::ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws
     , _isConvertTo(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
-    LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
+    LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << Anonymizer::anonymizeUrl(_uriPublic.toString())
                                    << "], current number of connections: " << curConnections);
 
     // populate with random values.

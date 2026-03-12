@@ -45,15 +45,15 @@ std::map<std::string, std::string> getParams(const std::string& uri)
         // getQueryParameters() decodes the values. Compare with the URI.
         if (param.first == "WOPISrc" && uri.find(param.second) != std::string::npos)
         {
-            LOG_WRN("WOPISrc validation error: unencoded WOPISrc [" << param.second
-                                                                    << "] in URL: " << uri);
+            LOG_WRN("WOPISrc validation error: unencoded WOPISrc [" << Anonymizer::anonymizeUrl(param.second)
+                                                                    << "] in URL: " << Anonymizer::anonymizeUrl(uri));
             if constexpr (Util::isDebugEnabled())
             {
                 throw std::runtime_error("WOPISrc must be URI-encoded");
             }
         }
 
-        LOG_TRC("Found param [" << param.first << "] = [" << param.second << ']');
+        LOG_TRC("Found param [" << param.first << "] = [" << Anonymizer::anonymize(param.second) << ']');
         result.emplace(param);
     }
 
@@ -339,7 +339,7 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 
     uriPublic.setQueryParameters(queryParams);
 
-    LOG_DBG("Sanitized URI [" << uri << "] to [" << uriPublic.toString() << ']');
+    LOG_DBG("Sanitized URI [" << Anonymizer::anonymizeUrl(uri) << "] to [" << Anonymizer::anonymizeUrl(uriPublic.toString()) << ']');
     return uriPublic;
 }
 
@@ -383,7 +383,7 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
     const std::string newUri = HostUtil::getNewUri(uri);
     if (newUri != uri.toString())
     {
-        LOG_TRC("Canonicalized URI [" << uri.toString() << "] to [" << newUri << ']');
+        LOG_TRC("Canonicalized URI [" << Anonymizer::anonymizeUrl(uri.toString()) << "] to [" << Anonymizer::anonymizeUrl(newUri) << ']');
     }
 #else
     const std::string& newUri = uri.getPath();

@@ -1448,7 +1448,7 @@ bool ChildSession::downloadAs(const StringVector& tokens)
 
     if (!success)
     {
-        LOG_ERR("SaveAs Failed for id=" << id << " [" << url << "]. error= " << getLOKitLastError());
+        LOG_ERR("SaveAs Failed for id=" << id << " [" << Anonymizer::anonymizeUrl(url) << "]. error= " << getLOKitLastError());
         sendTextFrameAndLogError("error: cmd=downloadas kind=saveasfailed");
         return false;
     }

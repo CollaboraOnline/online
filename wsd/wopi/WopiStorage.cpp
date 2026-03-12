@@ -880,7 +880,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
             [this, asyncUploadCallback,
              uri=uriObject.toString()](const std::shared_ptr<http::Session>& /* httpSession */)
             {
-                LOG_ERR("Cannot connect to [" << uri << "] for uploading to wopi storage");
+                LOG_ERR("Cannot connect to [" << Anonymizer::anonymizeUrl(uri) << "] for uploading to wopi storage");
                 // Retire.
                 _uploadHttpSession.reset();
                 asyncUploadCallback(
