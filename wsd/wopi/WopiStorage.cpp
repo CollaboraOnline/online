@@ -510,7 +510,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
     _lockHttpSession->setFinishedHandler(std::move(finishedCallback));
 
-    LOG_DBG("Async " << wopiLog << " request: " << httpRequest.header());
+    LOG_DBG("Async " << wopiLog << " request: " << Anonymizer::anonymize((std::ostringstream() << httpRequest.header()).str()));
 
     // Notify client via callback that the request is in progress...
     scopedInvokeCallback.setArg(AsyncLockUpdate(
@@ -615,8 +615,8 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         throw StorageSpaceLowException("Low disk space for " + getRootFilePathAnonym());
     }
 
-    LOG_TRC("Downloading from [" << uriAnonym << "] to [" << getRootFilePath()
-                                 << "]: " << httpRequest.header());
+    LOG_TRC("Downloading from [" << uriAnonym << "] to [" << getRootFilePathAnonym()
+                                 << "]: " << Anonymizer::anonymize((std::ostringstream() << httpRequest.header()).str()));
 
     std::string wopiCert;
     std::string subjectHash;
@@ -874,7 +874,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
 
         _uploadHttpSession->setFinishedHandler(std::move(finishedCallback));
 
-        LOG_DBG(wopiLog << " async upload request: " << httpRequest.header());
+        LOG_DBG(wopiLog << " async upload request: " << Anonymizer::anonymize((std::ostringstream() << httpRequest.header()).str()));
 
         _uploadHttpSession->setConnectFailHandler(
             [this, asyncUploadCallback,
