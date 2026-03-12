@@ -197,6 +197,10 @@ namespace WebDriverThing
 
             FindAndClick(driver, OpenQA.Selenium.By.Id("cancel-button"));
 
+            FindAndClick(driver, OpenQA.Selenium.By.Id("File-tab-label"));
+            Thread.Sleep(500);
+            FindAndClick(driver, OpenQA.Selenium.By.ClassName("backstage-sidebar-back"));
+
             // Save the document
             Thread.Sleep(500);
             new Actions(driver).KeyDown(Keys.Control).SendKeys("s").KeyUp(Keys.Control).Perform();
