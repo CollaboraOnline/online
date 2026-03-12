@@ -1939,8 +1939,8 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
 
     const auto docKey = RequestDetails::getDocKey(WOPISrc);
     LOG_TRC_S("Looking up DocBroker with docKey [" << Anonymizer::anonymize(docKey) << "] referenced in WOPISrc ["
-                                                   << WOPISrc
-                                                   << "] in media URL: " + request.getURI());
+                                                   << Anonymizer::anonymizeUrl(WOPISrc)
+                                                   << "] in media URL: " + Anonymizer::anonymizeUrl(request.getURI()));
 
     std::shared_ptr<DocumentBroker> docBroker;
     {
@@ -1949,8 +1949,8 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         if (it == DocBrokers.end())
         {
             LOG_ERR_S("Unknown DocBroker with docKey [" << Anonymizer::anonymize(docKey) << "] referenced in WOPISrc ["
-                                                        << WOPISrc
-                                                        << "] in media URL: " + request.getURI());
+                                                        << Anonymizer::anonymizeUrl(WOPISrc)
+                                                        << "] in media URL: " + Anonymizer::anonymizeUrl(request.getURI()));
 
             http::Response httpResponse(http::StatusCode::BadRequest);
             httpResponse.setContentLength(0);
@@ -2503,7 +2503,7 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     // cf. RequestVettingStation::handleRequest ...
     const std::string url = requestDetails.getDocumentURI();
 
-    LOG_INF("URL [" << url << "] for Proxy request.");
+    LOG_INF("URL [" << Anonymizer::anonymizeUrl(url) << "] for Proxy request.");
     auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKey));

@@ -39,7 +39,7 @@ void WopiProxy::handleRequest(std::istream & message,
         url = url.substr(6);
     }
 
-    LOG_INF("URL [" << url << "] for WS Request.");
+    LOG_INF("URL [" << Anonymizer::anonymizeUrl(url) << "] for WS Request.");
 
     std::shared_ptr<StreamSocket> socket = _socket.lock();
     if (!socket)

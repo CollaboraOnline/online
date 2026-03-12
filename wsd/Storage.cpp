@@ -31,6 +31,7 @@
 
 #endif // !MOBILEAPP
 
+#include <common/Anonymizer.hpp>
 #include <common/CommandControl.hpp>
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
@@ -177,7 +178,7 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
             if (!path.isAbsolute() || !path.isFile() ||
                 !path.makeAbsolute().toString().starts_with(COOLWSD::ChildRoot))
             {
-                LOG_ERR("Invalid path to document to convert [" << uri.toString() << ']');
+                LOG_ERR("Invalid path to document to convert [" << Anonymizer::anonymizeUrl(uri.toString()) << ']');
                 return StorageBase::StorageType::Unsupported;
             }
 
