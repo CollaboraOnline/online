@@ -1087,7 +1087,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					}
 					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
 						var currentElement = e.srcElement;
-						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
+						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA') || isTab) {
 							if (isTab)
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
@@ -1107,11 +1107,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 								var idx = focusables.indexOf(currentElement);
 								if (idx !== -1) {
 									var forward = key === 'ArrowRight' || key === 'ArrowDown';
-									// Arrow keys skip text inputs (cursor movement conflict).
 									// Tab treats each iconview as one stop (skips non-selected entries).
 									var shouldSkip = function(el) {
-										if (!isTab && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'))
-											return true;
 										if (isTab && el.classList.contains('ui-iconview-entry') && !el.classList.contains('selected'))
 											return true;
 										return false;
