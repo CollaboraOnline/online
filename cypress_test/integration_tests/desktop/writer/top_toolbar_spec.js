@@ -570,7 +570,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it.skip('Scroll', function() {
 		// Start all the way on the left side of the toolbar
-		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
+		cy.cGet('#Home-container #home-do').should('be.visible');
 		// TODO: Cypress thinks buttons are visible even though they are not
 		//cy.cGet('#Home-container #home-search-dialog').should('not.be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-left').should('not.be.visible');
@@ -588,7 +588,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// Now we are all the way on the right side of the toolbar
 		// TODO: Cypress thinks buttons are visible even though they are not
-		//cy.cGet('#Home-container #home-undo-redo').should('not.be.visible');
+		//cy.cGet('#Home-container #home-do').should('not.be.visible');
 		cy.cGet('#Home-container #home-search-dialog').should('be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-left').should('be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-right').should('not.be.visible');
@@ -604,7 +604,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		});
 
 		// Now back on the left side of the toolbar
-		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
+		cy.cGet('#Home-container #home-do').should('be.visible');
 		// TODO: Cypress thinks buttons are visible even though they are not
 		//cy.cGet('#Home-container #home-search-dialog').should('not.be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-left').should('not.be.visible');
