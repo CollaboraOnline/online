@@ -1117,12 +1117,20 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 											return false;
 										return el.classList.contains('ui-iconview-entry') && !el.classList.contains('selected');
 									};
+									var advance = function(i) {
+										i = forward ? i + 1 : i - 1;
+										if (i >= focusables.length) i = 0;
+										else if (i < 0) i = focusables.length - 1;
+										return i;
+									};
 									var next = idx;
 									do {
-										next = forward ? next + 1 : next - 1;
-										if (next >= focusables.length) next = 0;
-										else if (next < 0) next = focusables.length - 1;
+										next = advance(next);
 									} while (next !== idx && shouldSkip(focusables[next]));
+									// If skip logic found nothing (e.g. iconview with no
+									// selected entry), just move to the next element.
+									if (next === idx)
+										next = advance(next);
 									if (next !== idx)
 										elementToFocus = focusables[next];
 								}
