@@ -580,7 +580,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	getHomeTab: function() {
 		var content = [
 			{
-				'id': 'home-undo-redo',
+				'id': 'home-do',
 				'type': 'container',
 				'children': [
 					{
