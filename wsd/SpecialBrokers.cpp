@@ -86,16 +86,16 @@ static std::pair<std::string, std::string> splitInFilterOptions(const std::strin
 }
 
 ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic,
-                                 const std::string& docKey, const std::string& format,
+                                 const std::string& docKeyNoLog, const std::string& format,
                                  const std::string& options, const std::string& lang)
-    : StatelessBatchBroker(uri, uriPublic, docKey)
+    : StatelessBatchBroker(uri, uriPublic, docKeyNoLog)
     , _format(format)
     , _options(splitInFilterOptions(options).first)
     , _inFilterOptions(splitInFilterOptions(options).second)
     , _lang(lang)
 {
     LOG_TRC("Created ConvertToBroker: uri: ["
-            << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
+            << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKeyNoLog
             << "], format: [" << format << "], options: [" << _options << "], infilterOptions: ["
             << _inFilterOptions << "], lang: [" << lang << "].");
 
@@ -259,13 +259,13 @@ std::size_t RenderSearchResultBroker::getInstanceCount()
 }
 
 RenderSearchResultBroker::RenderSearchResultBroker(
-    std::string const& uri, Poco::URI const& uriPublic, std::string const& docKey,
+    std::string const& uri, Poco::URI const& uriPublic, std::string const& docKeyNoLog,
     std::shared_ptr<std::vector<char>> const& searchResultContent)
-    : StatelessBatchBroker(uri, uriPublic, docKey)
+    : StatelessBatchBroker(uri, uriPublic, docKeyNoLog)
     , _searchResultContent(searchResultContent)
 {
     LOG_TRC("Created RenderSearchResultBroker: uri: ["
-            << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
+            << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKeyNoLog
             << "].");
     convertToBrokerInstanceCounter++;
 }

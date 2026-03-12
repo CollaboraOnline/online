@@ -196,10 +196,10 @@ public:
 
     /// Returns a document-specific key, based
     /// on the URI of the document (aka the wopiSrc).
-    static std::string getDocKey(const Poco::URI& uri);
+    static std::string getDocKeyNoLog(const Poco::URI& uri);
 
     /// Sanitize the URI and return the document-specific key.
-    static std::string getDocKey(const std::string& uri) { return getDocKey(sanitizeURI(uri)); }
+    static std::string getDocKeyNoLog(const std::string& uri) { return getDocKeyNoLog(sanitizeURI(uri)); }
 
     /// Returns false if the WOPISrc is not encoded correctly.
     static bool validateWOPISrc(const std::string& uri) { return !Uri::needsEncoding(uri); }
@@ -212,7 +212,7 @@ public:
         const std::string decodedWopiSrc = Uri::decode(wopiSrc);
         const Poco::URI wopiSrcSanitized = RequestDetails::sanitizeURI(decodedWopiSrc);
 
-        std::string requestKey = RequestDetails::getDocKey(wopiSrcSanitized);
+        std::string requestKey = RequestDetails::getDocKeyNoLog(wopiSrcSanitized);
         requestKey += '_';
         requestKey += accessToken;
 
@@ -238,9 +238,9 @@ public:
     [[nodiscard]] std::string getDocumentURI() const { return getField(Field::DocumentURI); }
 
     /// Returns the document-specific key from the DocumentURI.
-    [[nodiscard]] std::string getDocKey() const
+    [[nodiscard]] std::string getDocKeyNoLog() const
     {
-        return RequestDetails::getDocKey(RequestDetails::sanitizeURI(getDocumentURI()));
+        return RequestDetails::getDocKeyNoLog(RequestDetails::sanitizeURI(getDocumentURI()));
     }
 
     /// The DocumentURI, decoded and sanitized. Doesn't contain WOPISrc or any other appendages.

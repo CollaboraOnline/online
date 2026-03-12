@@ -226,11 +226,11 @@ public:
 
     static void checkSessionLimitsAndWarnClients();
 
-    /// Close document with @docKey and a @message
-    static void closeDocument(const std::string& docKey, const std::string& message);
+    /// Close document with @docKeyNoLog and a @message
+    static void closeDocument(const std::string& docKeyNoLog, const std::string& message);
 
     /// Autosave a given document (currently only called from Admin).
-    static void autoSave(const std::string& docKey);
+    static void autoSave(const std::string& docKeyNoLog);
 
     /// Sets the log level of current kits.
     static void setLogLevelsOfKits(const std::string& level);
@@ -249,7 +249,7 @@ public:
     }
     static void alertAllUsersInternal(const std::string& msg);
     static void alertUserInternal(const std::string& dockey, const std::string& msg);
-    static void setMigrationMsgReceived(const std::string& docKey);
+    static void setMigrationMsgReceived(const std::string& docKeyNoLog);
     static void setAllMigrationMsgReceived();
 #if !MOBILEAPP
     static void syncUsersBrowserSettings(const std::string& userId, pid_t childPid,

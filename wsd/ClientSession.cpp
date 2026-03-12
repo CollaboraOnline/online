@@ -970,7 +970,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (!UnitWSD::isUnitTesting() && canonicalViewId < 1000)
         {
             LOG_WRN("Got tile request for session ["
-                    << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKey())
+                    << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKeyNoLog())
                     << "] with invalid view ID [" << canonicalViewId << ']');
         }
         return sendTile(buffer, length, tokens, docBroker);
@@ -981,7 +981,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (!UnitWSD::isUnitTesting() && canonicalViewId < 1000)
         {
             LOG_WRN("Got tilecombine request for session ["
-                    << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKey())
+                    << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKeyNoLog())
                     << "] with invalid view ID [" << canonicalViewId << ']');
         }
         return sendCombinedTiles(buffer, length, tokens, docBroker);
@@ -991,7 +991,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // If we can't write to Storage, there is no point in saving.
         if (!isWritable())
         {
-            LOG_WRN("Session [" << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKey())
+            LOG_WRN("Session [" << getId() << "] on document [" << Anonymizer::anonymize(docBroker->getDocKeyNoLog())
                                 << "] has no write permissions in Storage and cannot save.");
             sendTextFrameAndLogError("error: cmd=save kind=savefailed");
         }
@@ -2828,7 +2828,7 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
 
 #if !MOBILEAPP
             Admin::instance().setViewLoadDuration(
-                docBroker->getDocKey(), getId(),
+                docBroker->getDocKeyNoLog(), getId(),
                 std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::steady_clock::now() - _viewLoadStart));
 #endif
@@ -3171,7 +3171,7 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
 {
     assert(_isConvertTo && "Expected convert-to context");
 
-    LOG_DBG("Conversion request of [" << Anonymizer::anonymize(docBroker->getDocKey()) << "] failed: " << errorKind);
+    LOG_DBG("Conversion request of [" << Anonymizer::anonymize(docBroker->getDocKeyNoLog()) << "] failed: " << errorKind);
     if (!saveAsSocket)
         LOG_ERR("Error saveas socket missing in isConvertTo mode");
     else if (errorKind == "passwordrequired:to-view" ||
@@ -3456,7 +3456,7 @@ void ClientSession::onDisconnect()
     const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
     docBroker->ASSERT_CORRECT_THREAD();
-    const std::string docKey = docBroker->getDocKey();
+    const std::string docKeyNoLog = docBroker->getDocKeyNoLog();
 
     // Keep self alive, so that our own dtor runs only at the end of this function. Without this,
     // removeSession() may destroy us and then we can't call our own member functions anymore.
@@ -3464,7 +3464,7 @@ void ClientSession::onDisconnect()
     try
     {
         // Connection terminated. Destroy session.
-        LOG_DBG("on docKey [" << Anonymizer::anonymize(docKey) << "] terminated. Cleaning up");
+        LOG_DBG("on docKey [" << Anonymizer::anonymize(docKeyNoLog) << "] terminated. Cleaning up");
 
         docBroker->removeSession(session);
     }
@@ -3506,7 +3506,7 @@ void ClientSession::onDisconnect()
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Exception while closing socket for docKey [" << Anonymizer::anonymize(docKey) << "]: " << exc.what());
+        LOG_ERR("Exception while closing socket for docKey [" << Anonymizer::anonymize(docKeyNoLog) << "]: " << exc.what());
     }
 }
 

@@ -376,7 +376,7 @@ std::string RequestDetails::getLineModeKey(const std::string& /*access_token*/) 
 }
 
 #if !defined(BUILDING_TESTS)
-std::string RequestDetails::getDocKey(const Poco::URI& uri)
+std::string RequestDetails::getDocKeyNoLog(const Poco::URI& uri)
 {
     // resolve aliases
 #if !MOBILEAPP
@@ -389,9 +389,9 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
     const std::string& newUri = uri.getPath();
 #endif
 
-    std::string docKey = Uri::encode(newUri);
-    LOG_INF("DocKey from URI [" << uri.toString() << "] => [" << Anonymizer::anonymize(docKey) << ']');
-    return docKey;
+    std::string docKeyNoLog = Uri::encode(newUri);
+    LOG_INF("DocKey from URI [" << uri.toString() << "] => [" << Anonymizer::anonymize(docKeyNoLog) << ']');
+    return docKeyNoLog;
 }
 #endif // !defined(BUILDING_TESTS)
 

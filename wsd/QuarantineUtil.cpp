@@ -54,13 +54,13 @@ std::size_t Quarantine::MaxAgeSecs;
 std::size_t Quarantine::MaxVersions;
 
 Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
-    : _docKey(docBroker.getDocKey())
+    : _docKeyNoLog(docBroker.getDocKeyNoLog())
     , _docName(Uri::encode(docName, std::string(",/?:@&=+$#") + Delimiter))
     , _quarantinedFilename(Delimiter + std::to_string(docBroker.getPid()) + Delimiter + _docName)
 {
     std::string anonymizedFilename = _quarantinedFilename;
     Util::replaceAllSubStr(anonymizedFilename, _docName, COOLWSD::anonymizeUsername(_docName));
-    LOG_DBG("Quarantine ctor for [" << Anonymizer::anonymize(_docKey) << "], filename: [" << anonymizedFilename << ']');
+    LOG_DBG("Quarantine ctor for [" << Anonymizer::anonymize(_docKeyNoLog) << "], filename: [" << anonymizedFilename << ']');
 }
 
 void Quarantine::initialize(const std::string& path)
@@ -141,7 +141,7 @@ void Quarantine::initialize(const std::string& path)
         {
             // Directories are always DocKeys.
             Poco::Path filePath = file.path();
-            const std::string& docKey = filePath.directory(filePath.depth());
+            const std::string& docKeyNoLog = filePath.directory(filePath.depth());
             const std::string fullPath = file.path();
 
             std::vector<Poco::File> newFiles;
@@ -160,14 +160,14 @@ void Quarantine::initialize(const std::string& path)
             {
                 if (newFile.isFile())
                 {
-                    entries.emplace_back(path, docKey, Poco::Path(newFile.path()).getFileName());
+                    entries.emplace_back(path, docKeyNoLog, Poco::Path(newFile.path()).getFileName());
                 }
             }
 
-            LOG_TRC("Found " << entries.size() << " quarantine file for DocKey [" << Anonymizer::anonymize(docKey) << ']');
+            LOG_TRC("Found " << entries.size() << " quarantine file for DocKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
             if (!entries.empty())
             {
-                QuarantineMap[docKey] = std::move(entries);
+                QuarantineMap[docKeyNoLog] = std::move(entries);
             }
         }
     }
@@ -177,7 +177,7 @@ void Quarantine::initialize(const std::string& path)
     {
         Entry entry(path, Poco::Path(legacyFile.path()).getFileName());
 
-        QuarantineMap[entry.docKey()].emplace_back(entry);
+        QuarantineMap[entry.docKeyNoLog()].emplace_back(entry);
     }
 
     // Now we need to sort the files for each DocKey from oldest to newest.
@@ -284,7 +284,7 @@ void Quarantine::makeQuarantineSpace(std::size_t headroomBytes)
         // Remove the first entry of the first container.
         assert(!(*entries[0]).empty() && "Unexpected empty Quarantine Entries");
         Entry& entry = *entries[0]->begin();
-        LOG_DBG("Removing quarantined file [" << entry.filename() << "] for [" << Anonymizer::anonymize(entry.docKey())
+        LOG_DBG("Removing quarantined file [" << entry.filename() << "] for [" << Anonymizer::anonymize(entry.docKeyNoLog())
                                               << "] with " << entry.size() << " bytes");
         FileUtil::removeFile(entry.fullPath());
         entries[0]->erase(entries[0]->begin());
@@ -317,14 +317,14 @@ void Quarantine::makeQuarantineSpace(std::size_t headroomBytes)
     }
 }
 
-void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::size_t oldestTimestamp)
+void Quarantine::deleteOldQuarantineVersions(const std::string& docKeyNoLog, std::size_t oldestTimestamp)
 {
     LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
 
     if (!isEnabled())
         return;
 
-    auto& container = QuarantineMap[docKey];
+    auto& container = QuarantineMap[docKeyNoLog];
 
     // Check for excessive versions.
     const std::size_t excessVersions =
@@ -345,7 +345,7 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
 
     if (excessAge > 0)
     {
-        LOG_DBG("Removing " << excessAge << " excess quarantined-file versions for [" << Anonymizer::anonymize(docKey)
+        LOG_DBG("Removing " << excessAge << " excess quarantined-file versions for [" << Anonymizer::anonymize(docKeyNoLog)
                             << "] from current " << container.size() << " versions, "
                             << excessVersions << " due to exceeding MaxVersions (" << MaxVersions
                             << ") including " << excessAge << " due to being older than "
@@ -355,7 +355,7 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
         {
             const std::string& path = container[i].fullPath();
             LOG_TRC("Removing excess quarantined-file version #" << (i + 1) << " [" << path
-                                                                 << "] for [" << Anonymizer::anonymize(docKey) << ']');
+                                                                 << "] for [" << Anonymizer::anonymize(docKeyNoLog) << ']');
 
             FileUtil::removeFile(path);
         }
@@ -369,18 +369,18 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 {
     try
     {
-        return quarantineFile(_docKey, docPath, _quarantinedFilename);
+        return quarantineFile(_docKeyNoLog, docPath, _quarantinedFilename);
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN("Failed to quarantine [" << docPath << "] for docKey [" << Anonymizer::anonymize(_docKey)
+        LOG_WRN("Failed to quarantine [" << docPath << "] for docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                          << "]: " << exc.what());
     }
 
     return false;
 }
 
-bool Quarantine::quarantineFile(const std::string& docKey, const std::string& docPath,
+bool Quarantine::quarantineFile(const std::string& docKeyNoLog, const std::string& docPath,
                                 const std::string& quarantinedFilename)
 {
     if (!isEnabled())
@@ -393,9 +393,9 @@ bool Quarantine::quarantineFile(const std::string& docKey, const std::string& do
         return false;
     }
 
-    Entry entry(QuarantinePath, docKey, getSecondsSinceEpoch(), quarantinedFilename,
+    Entry entry(QuarantinePath, docKeyNoLog, getSecondsSinceEpoch(), quarantinedFilename,
                 sourceStat.size());
-    Poco::File(Poco::Path(QuarantinePath, docKey)).createDirectories();
+    Poco::File(Poco::Path(QuarantinePath, docKeyNoLog)).createDirectories();
 
     const std::string linkedFilePath = entry.fullPath();
     LOG_TRC("Quarantining [" << docPath << "] to [" << linkedFilePath << ']');
@@ -403,7 +403,7 @@ bool Quarantine::quarantineFile(const std::string& docKey, const std::string& do
     std::lock_guard<std::mutex> lock(Mutex);
 
     // Check if we have a duplicate or a new version.
-    auto& fileList = QuarantineMap[docKey];
+    auto& fileList = QuarantineMap[docKeyNoLog];
     if (!fileList.empty())
     {
         const std::string lastFile = fileList[fileList.size() - 1].fullPath();
@@ -440,7 +440,7 @@ std::string Quarantine::lastQuarantinedFilePath() const
 
     std::lock_guard<std::mutex> lock(Mutex);
 
-    const auto& fileList = QuarantineMap[_docKey];
+    const auto& fileList = QuarantineMap[_docKeyNoLog];
     return fileList.empty() ? std::string() : fileList[fileList.size() - 1].fullPath();
 }
 
@@ -462,7 +462,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
             NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0);
 
         // Note: this is unreliable since both the dockey and filename can (and often do) contain the Delimiter '_'.
-        _docKey = filename.substr(tokens[2]._index,
+        _docKeyNoLog = filename.substr(tokens[2]._index,
                                   tokens[tokens.size() - 1]._index - tokens[2]._index - 1);
 
         _filename =
@@ -472,19 +472,19 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
         _size = f.good() ? f.size() : 0;
     }
 
-    LOG_TRC("Legacy quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: "
+    LOG_TRC("Legacy quarantine file for [" << Anonymizer::anonymize(_docKeyNoLog) << "], name: [" << _filename << "], size: "
                                            << _size << ", created: " << _secondsSinceEpoch);
 }
 
-Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
+Quarantine::Entry::Entry(const std::string& root, const std::string& docKeyNoLog,
                          const std::string& filename)
 {
-    _fullPath = Poco::Path(Poco::Path(root, docKey), filename).toString();
-    _docKey = docKey;
+    _fullPath = Poco::Path(Poco::Path(root, docKeyNoLog), filename).toString();
+    _docKeyNoLog = docKeyNoLog;
 
     std::vector<StringToken> tokens;
     StringVector::tokenize(filename.c_str(), filename.size(), Delimiter, tokens);
-    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << filename
+    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKeyNoLog) << "], name: [" << filename
                                     << "]: " << tokens.size());
     if (tokens.size() >= 3)
     {
@@ -500,16 +500,16 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
         _size = f.good() ? f.size() : 0;
     }
 
-    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: " << _size
+    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKeyNoLog) << "], name: [" << _filename << "], size: " << _size
                                     << ", created: " << _secondsSinceEpoch);
 }
 
-Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
+Quarantine::Entry::Entry(const std::string& root, const std::string& docKeyNoLog,
                          uint64_t secondsSinceEpoch, const std::string& filename, uint64_t size)
 {
     const std::string newFilename = std::to_string(secondsSinceEpoch) + filename;
-    _fullPath = Poco::Path(Poco::Path(root, docKey), newFilename).toString();
-    _docKey = docKey;
+    _fullPath = Poco::Path(Poco::Path(root, docKeyNoLog), newFilename).toString();
+    _docKeyNoLog = docKeyNoLog;
 
     _secondsSinceEpoch = secondsSinceEpoch;
 
@@ -519,7 +519,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
 
     _size = size; // The file isn't quarantined yet, so we use the size of the source.
 
-    LOG_TRC("New quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: "
+    LOG_TRC("New quarantine file for [" << Anonymizer::anonymize(_docKeyNoLog) << "], name: [" << _filename << "], size: "
                                         << _size << ", created: " << _secondsSinceEpoch);
 }
 

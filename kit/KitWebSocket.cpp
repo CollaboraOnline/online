@@ -84,9 +84,9 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
     else if (tokens.equals(0, "session"))
     {
         const std::string& sessionId = tokens[1];
-        _docKey = tokens[2];
+        _docKeyNoLog = tokens[2];
         const std::string& docId = tokens[3];
-        const std::string url = Uri::decode(_docKey);
+        const std::string url = Uri::decode(_docKeyNoLog);
         const std::string fileId = Uri::getFilenameFromURL(url);
         Anonymizer::mapAnonymized(fileId,
                                   fileId); // Identity mapping, since fileId is already obfuscated
@@ -97,7 +97,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
             _document = std::make_shared<Document>(
-                _loKit, _jailId, _docKey, docId, url,
+                _loKit, _jailId, _docKeyNoLog, docId, url,
                 std::static_pointer_cast<WebSocketHandler>(shared_from_this()), _mobileAppDocId);
             _ksPoll->setDocument(_document);
 
@@ -210,7 +210,7 @@ void KitWebSocketHandler::onDisconnect()
     {
         //FIXME: We could try to recover.
         LOG_ERR("Kit for DocBroker ["
-                << _docKey
+                << _docKeyNoLog
                 << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
     }

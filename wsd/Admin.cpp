@@ -784,33 +784,33 @@ void Admin::pollingThread()
         COOLWSD::setAllMigrationMsgReceived();
 }
 
-void Admin::modificationAlert(const std::string& docKey, pid_t pid, bool value){
-    addCallback([this, docKey, pid, value] { _model.modificationAlert(docKey, pid, value); });
+void Admin::modificationAlert(const std::string& docKeyNoLog, pid_t pid, bool value){
+    addCallback([this, docKeyNoLog, pid, value] { _model.modificationAlert(docKeyNoLog, pid, value); });
 }
 
-void Admin::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
+void Admin::uploadedAlert(const std::string& docKeyNoLog, pid_t pid, bool value)
 {
-    addCallback([this, docKey, pid, value] { _model.uploadedAlert(docKey, pid, value); });
+    addCallback([this, docKeyNoLog, pid, value] { _model.uploadedAlert(docKeyNoLog, pid, value); });
 }
 
-void Admin::addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
+void Admin::addDoc(const std::string& docKeyNoLog, pid_t pid, const std::string& filename,
                    const std::string& sessionId, const std::string& userName, const std::string& userId,
                    const std::weak_ptr<FILE>& smapsFp, const std::string& wopiSrc, bool readOnly)
 {
-    addCallback([this, docKey, pid, filename, sessionId, userName, userId, smapsFp, wopiSrc, readOnly] {
-        _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFp, Poco::URI(wopiSrc), readOnly);
+    addCallback([this, docKeyNoLog, pid, filename, sessionId, userName, userId, smapsFp, wopiSrc, readOnly] {
+        _model.addDocument(docKeyNoLog, pid, filename, sessionId, userName, userId, smapsFp, Poco::URI(wopiSrc), readOnly);
     });
 }
 
-void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
+void Admin::rmDoc(const std::string& docKeyNoLog, const std::string& sessionId)
 {
-    addCallback([this, docKey, sessionId] { _model.removeDocument(docKey, sessionId); });
+    addCallback([this, docKeyNoLog, sessionId] { _model.removeDocument(docKeyNoLog, sessionId); });
 }
 
-void Admin::rmDoc(const std::string& docKey)
+void Admin::rmDoc(const std::string& docKeyNoLog)
 {
-    LOG_INF("Removing complete doc [" << Anonymizer::anonymize(docKey) << "] from Admin.");
-    addCallback([this, docKey]{ _model.removeDocument(docKey); });
+    LOG_INF("Removing complete doc [" << Anonymizer::anonymize(docKeyNoLog) << "] from Admin.");
+    addCallback([this, docKeyNoLog]{ _model.removeDocument(docKeyNoLog); });
 }
 
 void Admin::rescheduleMemTimer(unsigned interval)
@@ -962,30 +962,30 @@ AdminModel& Admin::getModel()
     return _model;
 }
 
-void Admin::updateLastActivityTime(const std::string& docKey)
+void Admin::updateLastActivityTime(const std::string& docKeyNoLog)
 {
-    addCallback([this, docKey]{ _model.updateLastActivityTime(docKey); });
+    addCallback([this, docKeyNoLog]{ _model.updateLastActivityTime(docKeyNoLog); });
 }
 
 
-void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
+void Admin::addBytes(const std::string& docKeyNoLog, uint64_t sent, uint64_t recv)
 {
-    addCallback([this, docKey, sent, recv] { _model.addBytes(docKey, sent, recv); });
+    addCallback([this, docKeyNoLog, sent, recv] { _model.addBytes(docKeyNoLog, sent, recv); });
 }
 
-void Admin::setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
+void Admin::setViewLoadDuration(const std::string& docKeyNoLog, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
 {
-    addCallback([this, docKey, sessionId, viewLoadDuration]{ _model.setViewLoadDuration(docKey, sessionId, viewLoadDuration); });
+    addCallback([this, docKeyNoLog, sessionId, viewLoadDuration]{ _model.setViewLoadDuration(docKeyNoLog, sessionId, viewLoadDuration); });
 }
 
-void Admin::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration)
+void Admin::setDocWopiDownloadDuration(const std::string& docKeyNoLog, std::chrono::milliseconds wopiDownloadDuration)
 {
-    addCallback([this, docKey, wopiDownloadDuration]{ _model.setDocWopiDownloadDuration(docKey, wopiDownloadDuration); });
+    addCallback([this, docKeyNoLog, wopiDownloadDuration]{ _model.setDocWopiDownloadDuration(docKeyNoLog, wopiDownloadDuration); });
 }
 
-void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration)
+void Admin::setDocWopiUploadDuration(const std::string& docKeyNoLog, const std::chrono::milliseconds uploadDuration)
 {
-    addCallback([this, docKey, uploadDuration]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
+    addCallback([this, docKeyNoLog, uploadDuration]{ _model.setDocWopiUploadDuration(docKeyNoLog, uploadDuration); });
 }
 
 void Admin::addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
@@ -1063,16 +1063,16 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
 
     for (const auto& doc : docList)
     {
-        LOG_TRC("OOM Document: DocKey: [" << Anonymizer::anonymize(doc.getDocKey()) << "], Idletime: ["
+        LOG_TRC("OOM Document: DocKey: [" << Anonymizer::anonymize(doc.getDocKeyNoLog()) << "], Idletime: ["
                                           << doc.getIdleTime() << "]," << " Saved: ["
                                           << doc.getSaved() << "], Mem: [" << doc.getMem() << ']');
         if (doc.getSaved())
         {
             // Kill the saved documents first.
             LOG_WRN("OOM: Killing saved document with DocKey ["
-                    << Anonymizer::anonymize(doc.getDocKey()) << "], Idletime: [" << doc.getIdleTime() << "] using "
+                    << Anonymizer::anonymize(doc.getDocKeyNoLog()) << "], Idletime: [" << doc.getIdleTime() << "] using "
                     << doc.getMem() << " KB");
-            COOLWSD::closeDocument(doc.getDocKey(), "oom");
+            COOLWSD::closeDocument(doc.getDocKeyNoLog(), "oom");
             memToFreeKb -= doc.getMem();
             if (memToFreeKb <= MinMemToFreeKB)
                 break;
@@ -1080,8 +1080,8 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
         else
         {
             // Save unsaved documents.
-            LOG_DBG("Saving document: DocKey [" << Anonymizer::anonymize(doc.getDocKey()) << ']');
-            COOLWSD::autoSave(doc.getDocKey());
+            LOG_DBG("Saving document: DocKey [" << Anonymizer::anonymize(doc.getDocKeyNoLog()) << ']');
+            COOLWSD::autoSave(doc.getDocKeyNoLog());
         }
     }
 }

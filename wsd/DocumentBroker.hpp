@@ -255,14 +255,14 @@ public:
     };
 
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                   const std::string& docKey, const std::string& configId,
+                   const std::string& docKeyNoLog, const std::string& configId,
                    unsigned mobileAppDocId);
 
 protected:
     /// Used by derived classes.
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                   const std::string& docKey, const std::string& configId)
-        : DocumentBroker(type, uri, uriPublic, docKey, configId, /*mobileAppDocId=*/0)
+                   const std::string& docKeyNoLog, const std::string& configId)
+        : DocumentBroker(type, uri, uriPublic, docKeyNoLog, configId, /*mobileAppDocId=*/0)
     {
     }
 
@@ -370,7 +370,7 @@ public:
     Poco::URI getPublicUri() const { return _uriPublic; }
     const AdditionalFilePaths& getAdditionalFileUrisJailed() const { return _additionalFileUrisJailed; }
     const std::string& getJailId() const { return _jailId; }
-    const std::string& getDocKey() const { return _docKey; }
+    const std::string& getDocKeyNoLog() const { return _docKeyNoLog; }
     // id of wopi shared config
     const std::string& getConfigId() const { return _configId; }
     const std::string& getFilename() const { return _filename; };
@@ -1787,7 +1787,7 @@ private:
     StorageBase::Attributes _lastStorageAttrs;
 
     /// URL-based key. May be repeated during the lifetime of WSD.
-    const std::string _docKey;
+    const std::string _docKeyNoLog;
     /// Short numerical ID. Unique during the lifetime of WSD.
     const std::string _docId;
     std::string _uriJailed;

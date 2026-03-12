@@ -223,7 +223,7 @@ class Document final : public std::enable_shared_from_this<Document>, private Ti
 {
 public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
-             const std::string& docKey, const std::string& docId, const std::string& url,
+             const std::string& docKeyNoLog, const std::string& docId, const std::string& url,
              const std::shared_ptr<WebSocketHandler>& websocketHandler, unsigned mobileAppDocId);
     ~Document() final;
 
@@ -482,7 +482,7 @@ private:
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
     /// URL-based key. May be repeated during the lifetime of WSD.
-    const std::string _docKey;
+    const std::string _docKeyNoLog;
     /// Short numerical ID. Unique during the lifetime of WSD.
     const std::string _docId;
     const std::string _url;

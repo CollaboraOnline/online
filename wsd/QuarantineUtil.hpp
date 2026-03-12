@@ -34,22 +34,22 @@ class Quarantine
         Entry(const std::string& root, const std::string& filename);
 
         /// This parses the new filename, which is shorter and more reliable.
-        Entry(const std::string& root, const std::string& docKey, const std::string& filename);
+        Entry(const std::string& root, const std::string& docKeyNoLog, const std::string& filename);
 
         /// This creates an entry when quarantining a new file.
-        Entry(const std::string& root, const std::string& docKey, uint64_t secondsSinceEpoch,
+        Entry(const std::string& root, const std::string& docKeyNoLog, uint64_t secondsSinceEpoch,
               const std::string& filename, uint64_t size);
 
         const std::string& fullPath() const { return _fullPath; }
         uint64_t secondsSinceEpoch() const { return _secondsSinceEpoch; }
         int pid() const { return _pid; }
-        const std::string& docKey() const { return _docKey; }
+        const std::string& docKeyNoLog() const { return _docKeyNoLog; }
         const std::string& filename() const { return _filename; }
         uint64_t size() const { return _size; }
 
     private:
         std::string _fullPath; ///< The full path, including the quarantine directory and filename.
-        std::string _docKey; ///< The DocKey the file belongs to.
+        std::string _docKeyNoLog; ///< The DocKey the file belongs to.
         std::string _filename; ///< The filename, without the path or other components.
         uint64_t _secondsSinceEpoch = 0; ///< The timestamp in the filename.
         uint64_t _size = 0; ///< The size of the file in bytes.
@@ -74,7 +74,7 @@ private:
     static std::size_t quarantineSize();
 
     /// Quarantines a new version of the document; the implementation.
-    static bool quarantineFile(const std::string& docKey, const std::string& docPath,
+    static bool quarantineFile(const std::string& docKeyNoLog, const std::string& docPath,
                                const std::string& quarantinedFilename);
 
     /// Cleans up quarantined files to make sure we don't exceed MaxSizeBytes.
@@ -82,13 +82,13 @@ private:
 
     /// Removes old quarantined files for the given DocKey based on MaxVersions and @oldestTimestamp.
     /// Doesn't remove the DocKey from QuarantineMap if it's empty nor does it remove the DocKey directory.
-    static void deleteOldQuarantineVersions(const std::string& docKey, std::size_t oldestTimestamp);
+    static void deleteOldQuarantineVersions(const std::string& docKeyNoLog, std::size_t oldestTimestamp);
 
     /// Parses the given Old quarantine-filename into its components, which includes the DocKey.
     static Entry parseOldFilename(const std::string& filename);
 
     /// Parses the given New quarantine-filename into its components, which doesn't include the DocKey.
-    static Entry parseNewFilename(const std::string& filename, const std::string& docKey);
+    static Entry parseNewFilename(const std::string& filename, const std::string& docKeyNoLog);
 
 private:
     /// DocKey to Quarantine Entries map.
@@ -103,10 +103,10 @@ private:
     /// The delimiter used in the quarantine filename.
     static constexpr char Delimiter = '_';
 
-    const std::string _docKey;
+    const std::string _docKeyNoLog;
     const std::string _docName;
     /// The quarantined filename is a multi-part string, formed
-    /// from the timestamp, pid, docKey, and document filename.
+    /// from the timestamp, pid, docKeyNoLog, and document filename.
     /// The Delimiter is used to join and later tokenize it.
     /// The document filename is encoded to ensure tokenization.
     const std::string _quarantinedFilename;
