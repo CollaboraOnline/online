@@ -837,11 +837,11 @@ label.notebookbar.ui-checkbox-label {
 
 /* Table Tab */
 
-.notebookbar #tablestyles_design-iconview,
+#tablestyles_design.notebookbar,
 #tablestyles_design.jsdialog {
-	grid-template-columns: repeat(5, 1fr);
-	grid-gap: 20px;
-	padding: 5px 20px;
+	grid-template-columns: repeat(7, 1fr);
+	grid-gap: 10px;
+	padding: 5px 10px;
 }
 
 /* Draw Tab */
