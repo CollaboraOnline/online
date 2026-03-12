@@ -79,7 +79,7 @@ void RequestVettingStation::handleRequest(const std::string& id)
 
     LOG_INF("URL [" << COOLWSD::anonymizeUrl(url)
                     << "] will be proactively vetted. Sanitized uriPublic: ["
-                    << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << docKey
+                    << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << Anonymizer::anonymize(docKey)
                     << "], session: [" << _id << "], fileId: [" << fileId << "] "
                     << (isReadOnly ? "(readonly)" : "(writable)"));
 
@@ -105,20 +105,20 @@ void RequestVettingStation::handleRequest(const std::string& id)
 
         case StorageBase::StorageType::Conversion:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a document conversion");
+                            << Anonymizer::anonymize(docKey) << "] is for a document conversion");
             break;
 
 #if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a FileSystem document");
+                            << Anonymizer::anonymize(docKey) << "] is for a FileSystem document");
             break;
 #endif // ENABLE_LOCAL_FILESYSTEM
 
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a WOPI document");
+                            << Anonymizer::anonymize(docKey) << "] is for a WOPI document");
 
             // CheckFileInfo asynchronously.
             checkFileInfo(uriPublic, HTTP_REDIRECTION_LIMIT);
@@ -245,7 +245,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
     const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
 
     LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] for WS Request. Sanitized uriPublic: ["
-                    << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << docKey
+                    << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << Anonymizer::anonymize(docKey)
                     << "], session: [" << _id << "], fileId: [" << fileId << "] "
                     << (isReadOnly ? "(readonly)" : "(writable)"));
 
@@ -271,11 +271,11 @@ void RequestVettingStation::handleRequest(const std::string& id,
 
         case StorageBase::StorageType::Conversion:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a document conversion");
+                            << Anonymizer::anonymize(docKey) << "] is for a document conversion");
 
             LOG_TRC("Dissociating client socket from "
                     "ClientRequestDispatcher and creating DocBroker for ["
-                    << docKey << ']');
+                    << Anonymizer::anonymize(docKey) << ']');
 
             // Create the DocBroker.
             if (std::shared_ptr<DocumentBroker> docBroker =
@@ -288,11 +288,11 @@ void RequestVettingStation::handleRequest(const std::string& id,
 #if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a FileSystem document");
+                            << Anonymizer::anonymize(docKey) << "] is for a FileSystem document");
 
             LOG_TRC("Dissociating client socket from "
                              "ClientRequestDispatcher and creating DocBroker for ["
-                          << docKey << ']');
+                          << Anonymizer::anonymize(docKey) << ']');
 
             // Create the DocBroker.
             if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
@@ -306,11 +306,11 @@ void RequestVettingStation::handleRequest(const std::string& id,
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a WOPI document");
+                            << Anonymizer::anonymize(docKey) << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             LOG_TRC("Dissociating client socket from "
                              "ClientRequestDispatcher and invoking CheckFileInfo for ["
-                          << docKey << "], "
+                          << Anonymizer::anonymize(docKey) << "], "
                           << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
                                              : "no CheckFileInfo"));
 
@@ -343,7 +343,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                 assert(_checkFileInfo && !_checkFileInfo->wopiInfo() &&
                        "Unexpected to have wopiInfo");
 
-                LOG_ERR("CheckFileInfo failed for [" << docKey
+                LOG_ERR("CheckFileInfo failed for [" << Anonymizer::anonymize(docKey)
                           << "], "
                           << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
                                              : "no CheckFileInfo"));
@@ -364,7 +364,7 @@ void RequestVettingStation::transferToDocBroker(const std::string& url,
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
-            << docKey << "] now with URL: [" << url << ']');
+            << Anonymizer::anonymize(docKey) << "] now with URL: [" << url << ']');
     if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, configId, url, uriPublic))
     {
         launchInstallPresets();
@@ -384,7 +384,7 @@ void RequestVettingStation::transferToDocBroker(const std::string& url,
         if (!sslVerifyResult.empty())
         {
             LOG_WRN("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
-                    << docKey << "]");
+                    << Anonymizer::anonymize(docKey) << "]");
 #if !WASMAPP
             docBroker->setCertAuditWarning();
 #endif
@@ -445,12 +445,12 @@ std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
             _ws->sendMessage(statusConnect);
         }
 
-        LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
+        LOG_DBG("DocBroker [" << Anonymizer::anonymize(docKey) << "] acquired for [" << url << ']');
         return docBroker;
     }
 
     // Failed.
-    LOG_ERR("Failed to create DocBroker [" << docKey << "]: " << error);
+    LOG_ERR("Failed to create DocBroker [" << Anonymizer::anonymize(docKey) << "]: " << error);
     sendErrorAndShutdown(error, WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
 
     return nullptr;
@@ -477,7 +477,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     if (docBroker->isUnloadingUnrecoverably())
     {
         LOG_INF("Cannot create client session to DocBroker ["
-                << docKey << "] while it's unloading unrecoverably");
+                << Anonymizer::anonymize(docKey) << "] while it's unloading unrecoverably");
         sendErrorAndShutdown("error: cmd=load kind=docunloading",
                              WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
         return;
@@ -500,7 +500,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     const auto docBrokerPoll = docBroker->getPoll().lock();
     assert(docBrokerPoll && "Must have DocBroker SocketPoll");
 
-    LOG_TRC("Transfering DocBroker [" << docKey << "] from vetting station to own thread ["
+    LOG_TRC("Transfering DocBroker [" << Anonymizer::anonymize(docKey) << "] from vetting station to own thread ["
                                       << docBrokerPoll->name() << ']');
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
@@ -512,7 +512,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
         {
             try
             {
-                LOG_DBG_S("Transfering docBroker [" << docBroker->getDocKey() << ']');
+                LOG_DBG_S("Transfering docBroker [" << Anonymizer::anonymize(docBroker->getDocKey()) << ']');
 
                 auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
@@ -529,14 +529,14 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
                 {
                     // createNewClientSession() has sent the error to the client WebSocket.
                     LOG_ERR_S(logPrefix << "Failed to create Client Session [" << id
-                                        << "] on docKey [" << docKey << ']');
+                                        << "] on docKey [" << Anonymizer::anonymize(docKey) << ']');
                     return;
                 }
 
                 LOG_DBG_S(logPrefix << "handler is " << clientSession->getName());
 
                 LOG_DBG_S(logPrefix << "ClientSession [" << clientSession->getName() << "] for ["
-                                    << docKey << "] acquired for [" << url << ']');
+                                    << Anonymizer::anonymize(docKey) << "] acquired for [" << url << ']');
 
                 // Add and load the session.
                 // Will download synchronously, but in own docBroker thread.
@@ -552,7 +552,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
             catch (const UnauthorizedRequestException& exc)
             {
                 LOG_ERR_S("Unauthorized Request while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << Anonymizer::anonymize(docBroker->getDocKey()) << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
                 sendErrorAndShutdownWS(ws, "error: cmd=internal kind=unauthorized",
                                        WebSocketHandler::StatusCodes::POLICY_VIOLATION);
@@ -560,7 +560,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
             catch (const StorageConnectionException& exc)
             {
                 LOG_ERR_S("Storage error while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << Anonymizer::anonymize(docBroker->getDocKey()) << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
                 sendErrorAndShutdownWS(ws, "error: cmd=storage kind=loadfailed",
                                        WebSocketHandler::StatusCodes::POLICY_VIOLATION);
@@ -568,7 +568,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
             catch (const StorageSpaceLowException& exc)
             {
                 LOG_ERR_S("Disk-Full error while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << Anonymizer::anonymize(docBroker->getDocKey()) << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
                 sendErrorAndShutdownWS(ws, "error: cmd=internal kind=diskfull",
                                        WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
@@ -576,7 +576,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
             catch (const std::exception& exc)
             {
                 LOG_ERR_S("Error while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << Anonymizer::anonymize(docBroker->getDocKey()) << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
                 sendErrorAndShutdownWS(ws, "error: cmd=storage kind=loadfailed",
                                        WebSocketHandler::StatusCodes::POLICY_VIOLATION);

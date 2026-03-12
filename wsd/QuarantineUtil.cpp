@@ -18,6 +18,7 @@
 
 #include "QuarantineUtil.hpp"
 
+#include <common/Anonymizer.hpp>
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
@@ -59,7 +60,7 @@ Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
 {
     std::string anonymizedFilename = _quarantinedFilename;
     Util::replaceAllSubStr(anonymizedFilename, _docName, COOLWSD::anonymizeUsername(_docName));
-    LOG_DBG("Quarantine ctor for [" << _docKey << "], filename: [" << anonymizedFilename << ']');
+    LOG_DBG("Quarantine ctor for [" << Anonymizer::anonymize(_docKey) << "], filename: [" << anonymizedFilename << ']');
 }
 
 void Quarantine::initialize(const std::string& path)
@@ -163,7 +164,7 @@ void Quarantine::initialize(const std::string& path)
                 }
             }
 
-            LOG_TRC("Found " << entries.size() << " quarantine file for DocKey [" << docKey << ']');
+            LOG_TRC("Found " << entries.size() << " quarantine file for DocKey [" << Anonymizer::anonymize(docKey) << ']');
             if (!entries.empty())
             {
                 QuarantineMap[docKey] = std::move(entries);
@@ -192,7 +193,7 @@ void Quarantine::initialize(const std::string& path)
     for (auto& pair : QuarantineMap)
     {
         LOG_TRC("BC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
-                            << pair.first << ']');
+                            << Anonymizer::anonymize(pair.first) << ']');
     }
 
     // Clean up.
@@ -201,7 +202,7 @@ void Quarantine::initialize(const std::string& path)
     for (auto& pair : QuarantineMap)
     {
         LOG_TRC("AC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
-                            << pair.first << ']');
+                            << Anonymizer::anonymize(pair.first) << ']');
     }
 
     LOG_DBG("Found " << QuarantineMap.size() << " DocKey quarantines with total "
@@ -283,7 +284,7 @@ void Quarantine::makeQuarantineSpace(std::size_t headroomBytes)
         // Remove the first entry of the first container.
         assert(!(*entries[0]).empty() && "Unexpected empty Quarantine Entries");
         Entry& entry = *entries[0]->begin();
-        LOG_DBG("Removing quarantined file [" << entry.filename() << "] for [" << entry.docKey()
+        LOG_DBG("Removing quarantined file [" << entry.filename() << "] for [" << Anonymizer::anonymize(entry.docKey())
                                               << "] with " << entry.size() << " bytes");
         FileUtil::removeFile(entry.fullPath());
         entries[0]->erase(entries[0]->begin());
@@ -344,7 +345,7 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
 
     if (excessAge > 0)
     {
-        LOG_DBG("Removing " << excessAge << " excess quarantined-file versions for [" << docKey
+        LOG_DBG("Removing " << excessAge << " excess quarantined-file versions for [" << Anonymizer::anonymize(docKey)
                             << "] from current " << container.size() << " versions, "
                             << excessVersions << " due to exceeding MaxVersions (" << MaxVersions
                             << ") including " << excessAge << " due to being older than "
@@ -354,7 +355,7 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
         {
             const std::string& path = container[i].fullPath();
             LOG_TRC("Removing excess quarantined-file version #" << (i + 1) << " [" << path
-                                                                 << "] for [" << docKey << ']');
+                                                                 << "] for [" << Anonymizer::anonymize(docKey) << ']');
 
             FileUtil::removeFile(path);
         }
@@ -372,7 +373,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN("Failed to quarantine [" << docPath << "] for docKey [" << _docKey
+        LOG_WRN("Failed to quarantine [" << docPath << "] for docKey [" << Anonymizer::anonymize(_docKey)
                                          << "]: " << exc.what());
     }
 
@@ -471,7 +472,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
         _size = f.good() ? f.size() : 0;
     }
 
-    LOG_TRC("Legacy quarantine file for [" << _docKey << "], name: [" << _filename << "], size: "
+    LOG_TRC("Legacy quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: "
                                            << _size << ", created: " << _secondsSinceEpoch);
 }
 
@@ -483,7 +484,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
 
     std::vector<StringToken> tokens;
     StringVector::tokenize(filename.c_str(), filename.size(), Delimiter, tokens);
-    LOG_TRC("Quarantine file for [" << _docKey << "], name: [" << filename
+    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << filename
                                     << "]: " << tokens.size());
     if (tokens.size() >= 3)
     {
@@ -499,7 +500,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
         _size = f.good() ? f.size() : 0;
     }
 
-    LOG_TRC("Quarantine file for [" << _docKey << "], name: [" << _filename << "], size: " << _size
+    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: " << _size
                                     << ", created: " << _secondsSinceEpoch);
 }
 
@@ -518,7 +519,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
 
     _size = size; // The file isn't quarantined yet, so we use the size of the source.
 
-    LOG_TRC("New quarantine file for [" << _docKey << "], name: [" << _filename << "], size: "
+    LOG_TRC("New quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: "
                                         << _size << ", created: " << _secondsSinceEpoch);
 }
 

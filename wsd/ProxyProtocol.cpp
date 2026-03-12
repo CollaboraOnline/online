@@ -22,6 +22,7 @@
 
 #include "ProxyProtocol.hpp"
 
+#include <common/Anonymizer.hpp>
 #include <common/Util.hpp>
 #include <net/Socket.hpp>
 #include <wsd/COOLWSD.hpp>
@@ -46,7 +47,7 @@ void DocumentBroker::handleProxyRequest(
     }
 
     const std::string sessionId = requestDetails.getField(RequestDetails::Field::SessionId);
-    LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
+    LOG_TRC("proxy: find session for " << Anonymizer::anonymize(_docKey) << " with id " << sessionId);
     for (const auto& it : _sessions)
     {
         if (it.second->getOrCreateProxyAccess() == sessionId)
@@ -94,7 +95,7 @@ void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socke
     if (!isLocal)
         throw BadRequestException("invalid host - only connect from localhost");
 
-    LOG_TRC("proxy: Create session for " << _docKey);
+    LOG_TRC("proxy: Create session for " << Anonymizer::anonymize(_docKey));
     clientSession = createNewClientSession(std::make_shared<ProxyProtocolHandler>(), id,
                                             uriPublic, isReadOnly, requestDetails);
     if (!clientSession)

@@ -815,7 +815,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _duringLoad(0)
     , _bgSavesOngoing(0)
 {
-    LOG_INF("Document ctor for [" << _docKey <<
+    LOG_INF("Document ctor for [" << Anonymizer::anonymize(_docKey) <<
             "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
             "] and id [" << _docId << "].");
     assert(_loKit);
@@ -832,7 +832,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
 
 Document::~Document()
 {
-    LOG_INF("~Document dtor for [" << _docKey <<
+    LOG_INF("~Document dtor for [" << Anonymizer::anonymize(_docKey) <<
             "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
             "] and id [" << _docId << "]. There are " <<
             _sessions.size() << " views.");
@@ -2648,8 +2648,8 @@ std::shared_ptr<lok::Document> Document::getLOKitDocument()
 {
     if (!_loKitDocument)
     {
-        LOG_ERR("Document [" << _docKey << "] is not loaded.");
-        throw std::runtime_error("Document " + _docKey + " is not loaded.");
+        LOG_ERR("Document [" << Anonymizer::anonymize(_docKey) << "] is not loaded.");
+        throw std::runtime_error("Document " + Anonymizer::anonymize(_docKey) + " is not loaded.");
     }
 
     return _loKitDocument;

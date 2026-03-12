@@ -59,7 +59,7 @@ void WopiProxy::handleRequest(std::istream & message,
 
     LOG_INF("Sanitized URI [" << COOLWSD::anonymizeUrl(url) << "] to ["
                               << COOLWSD::anonymizeUrl(uriPublic.toString())
-                              << "] and mapped to docKey [" << docKey << "] for session [" << _id
+                              << "] and mapped to docKey [" << Anonymizer::anonymize(docKey) << "] for session [" << _id
                               << "].");
 
     // Before we create DocBroker with a SocketPoll thread, a ClientSession, and a Kit process,
@@ -94,7 +94,7 @@ void WopiProxy::handleRequest(std::istream & message,
         case StorageBase::StorageType::FileSystem:
         {
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a FileSystem document");
+                            << Anonymizer::anonymize(docKey) << "] is for a FileSystem document");
 
             // Send the file contents.
             std::unique_ptr<std::vector<char>> data = FileUtil::readFile(uriPublic.getPath());
@@ -116,7 +116,7 @@ void WopiProxy::handleRequest(std::istream & message,
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
-                            << docKey << "] is for a WOPI document");
+                            << Anonymizer::anonymize(docKey) << "] is for a WOPI document");
             std::optional<std::string> postBody;
             if (_requestDetails.isPost()) {
                 postBody = std::string(std::istreambuf_iterator<char>(message), {});
@@ -129,7 +129,7 @@ void WopiProxy::handleRequest(std::istream & message,
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
                                      "ClientRequestDispatcher and invoking CheckFileInfo for ["
-                                  << docKey << ']');
+                                  << Anonymizer::anonymize(docKey) << ']');
 
                     // CheckFileInfo and only when it's good create DocBroker.
                     checkFileInfo(poll, uriPublic, postBody, HTTP_REDIRECTION_LIMIT);

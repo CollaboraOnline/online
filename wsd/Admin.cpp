@@ -809,7 +809,7 @@ void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 
 void Admin::rmDoc(const std::string& docKey)
 {
-    LOG_INF("Removing complete doc [" << docKey << "] from Admin.");
+    LOG_INF("Removing complete doc [" << Anonymizer::anonymize(docKey) << "] from Admin.");
     addCallback([this, docKey]{ _model.removeDocument(docKey); });
 }
 
@@ -1063,14 +1063,14 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
 
     for (const auto& doc : docList)
     {
-        LOG_TRC("OOM Document: DocKey: [" << doc.getDocKey() << "], Idletime: ["
+        LOG_TRC("OOM Document: DocKey: [" << Anonymizer::anonymize(doc.getDocKey()) << "], Idletime: ["
                                           << doc.getIdleTime() << "]," << " Saved: ["
                                           << doc.getSaved() << "], Mem: [" << doc.getMem() << ']');
         if (doc.getSaved())
         {
             // Kill the saved documents first.
             LOG_WRN("OOM: Killing saved document with DocKey ["
-                    << doc.getDocKey() << "], Idletime: [" << doc.getIdleTime() << "] using "
+                    << Anonymizer::anonymize(doc.getDocKey()) << "], Idletime: [" << doc.getIdleTime() << "] using "
                     << doc.getMem() << " KB");
             COOLWSD::closeDocument(doc.getDocKey(), "oom");
             memToFreeKb -= doc.getMem();
@@ -1080,7 +1080,7 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
         else
         {
             // Save unsaved documents.
-            LOG_DBG("Saving document: DocKey [" << doc.getDocKey() << ']');
+            LOG_DBG("Saving document: DocKey [" << Anonymizer::anonymize(doc.getDocKey()) << ']');
             COOLWSD::autoSave(doc.getDocKey());
         }
     }
