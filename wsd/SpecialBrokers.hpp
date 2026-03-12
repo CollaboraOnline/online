@@ -37,8 +37,8 @@ protected:
 
 public:
     StatelessBatchBroker(const std::string& uri, const Poco::URI& uriPublic,
-                         const std::string& docKey)
-        : DocumentBroker(ChildType::Batch, uri, uriPublic, docKey, /*configId=*/std::string())
+                         const std::string& docKeyNoLog)
+        : DocumentBroker(ChildType::Batch, uri, uriPublic, docKeyNoLog, /*configId=*/std::string())
     {
     }
 
@@ -56,8 +56,8 @@ class ConvertToBroker : public StatelessBatchBroker
     const std::string _lang;
 
 public:
-    /// Construct DocumentBroker with URI and docKey
-    ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic, const std::string& docKey,
+    /// Construct DocumentBroker with URI and docKeyNoLog
+    ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic, const std::string& docKeyNoLog,
                     const std::string& format, const std::string& options,
                     const std::string& lang);
     virtual ~ConvertToBroker();
@@ -91,10 +91,10 @@ protected:
 class ExtractLinkTargetsBroker final : public ConvertToBroker
 {
 public:
-    /// Construct DocumentBroker with URI and docKey
+    /// Construct DocumentBroker with URI and docKeyNoLog
     ExtractLinkTargetsBroker(const std::string& uri, const Poco::URI& uriPublic,
-                             const std::string& docKey, const std::string& lang)
-        : ConvertToBroker(uri, uriPublic, docKey, "", "", lang)
+                             const std::string& docKeyNoLog, const std::string& lang)
+        : ConvertToBroker(uri, uriPublic, docKeyNoLog, "", "", lang)
     {
     }
 
@@ -107,11 +107,11 @@ class ExtractDocumentStructureBroker final : public ConvertToBroker
 {
 public:
     const std::string _filter;
-    /// Construct DocumentBroker with URI and docKey
+    /// Construct DocumentBroker with URI and docKeyNoLog
     ExtractDocumentStructureBroker(const std::string& uri, const Poco::URI& uriPublic,
-                                   const std::string& docKey, const std::string& lang,
+                                   const std::string& docKeyNoLog, const std::string& lang,
                                    const std::string& filter)
-        : ConvertToBroker(uri, uriPublic, docKey, Poco::Path(uri).getExtension(), "", lang)
+        : ConvertToBroker(uri, uriPublic, docKeyNoLog, Poco::Path(uri).getExtension(), "", lang)
         , _filter(filter)
     {
     }
@@ -125,11 +125,11 @@ class TransformDocumentStructureBroker final : public ConvertToBroker
 {
 public:
     const std::string _transformJSON;
-    /// Construct DocumentBroker with URI and docKey
+    /// Construct DocumentBroker with URI and docKeyNoLog
     TransformDocumentStructureBroker(const std::string& uri, const Poco::URI& uriPublic,
-                                     const std::string& docKey, const std::string& format,
+                                     const std::string& docKeyNoLog, const std::string& format,
                                      const std::string& lang, const std::string& transformJSON)
-        : ConvertToBroker(uri, uriPublic, docKey, format, "", lang)
+        : ConvertToBroker(uri, uriPublic, docKeyNoLog, format, "", lang)
         , _transformJSON(transformJSON)
     {
     }
@@ -146,11 +146,11 @@ class GetThumbnailBroker final : public ConvertToBroker
     std::string _target;
 
 public:
-    /// Construct DocumentBroker with URI and docKey
+    /// Construct DocumentBroker with URI and docKeyNoLog
     GetThumbnailBroker(const std::string& uri, const Poco::URI& uriPublic,
-                       const std::string& docKey, const std::string& lang,
+                       const std::string& docKeyNoLog, const std::string& lang,
                        const std::string& target)
-        : ConvertToBroker(uri, uriPublic, docKey, std::string(), std::string(), lang)
+        : ConvertToBroker(uri, uriPublic, docKeyNoLog, std::string(), std::string(), lang)
         , _target(target)
     {
     }
@@ -171,7 +171,7 @@ class RenderSearchResultBroker final : public StatelessBatchBroker
 
 public:
     RenderSearchResultBroker(std::string const& uri, Poco::URI const& uriPublic,
-                             std::string const& docKey,
+                             std::string const& docKeyNoLog,
                              std::shared_ptr<std::vector<char>> const& searchResultContent);
 
     virtual ~RenderSearchResultBroker();

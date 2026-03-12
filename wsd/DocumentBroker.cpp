@@ -130,7 +130,7 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 
     if (UnitWSD::isUnitTesting())
     {
-        UNITWSD_CALL(onDocBrokerAttachKitProcess(docBroker->getDocKey(), getPid()));
+        UNITWSD_CALL(onDocBrokerAttachKitProcess(docBroker->getDocKeyNoLog(), getPid()));
     }
 }
 
@@ -179,7 +179,7 @@ public:
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
 DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                               const std::string& docKey, const std::string& configId,
+                               const std::string& docKeyNoLog, const std::string& configId,
                                unsigned mobileAppDocId)
     : _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
     , _uriOrig(uri)
@@ -197,7 +197,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                        "per_document.min_time_between_saves_ms", 500))
     , _storageManager(ConfigUtil::getConfigValue<std::chrono::milliseconds>(
           "per_document.min_time_between_uploads_ms", 5000))
-    , _docKey(docKey)
+    , _docKeyNoLog(docKeyNoLog)
     , _docId(Util::encodeId(DocBrokerId++, 3))
     , _configId(configId)
     , _poll(
@@ -229,7 +229,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _backgroundManualSave(
           ConfigUtil::getConfigValue<bool>("per_document.background_manualsave", true))
 {
-    assert(!_docKey.empty());
+    assert(!_docKeyNoLog.empty());
     assert(!COOLWSD::ChildRoot.empty());
 
     if constexpr (!Util::isMobileApp())
@@ -239,10 +239,10 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 #endif
 
     LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString())
-                               << "] created with docKey [" << Anonymizer::anonymize(_docKey)
+                               << "] created with docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                << "], always_save_on_exit: " << _alwaysSaveOnExit);
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerCreate(_docKey));
+    UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerCreate(_docKeyNoLog));
 }
 
 pid_t DocumentBroker::getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
@@ -300,7 +300,7 @@ void DocumentBroker::pollThread()
 {
     std::chrono::steady_clock::time_point threadStart = std::chrono::steady_clock::now();
 
-    LOG_INF("Starting docBroker polling thread for docKey [" << Anonymizer::anonymize(_docKey) << ']' << " and configId [" << _configId << ']');
+    LOG_INF("Starting docBroker polling thread for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << ']' << " and configId [" << _configId << ']');
 
     // Request a kit process for this doc.
     do
@@ -335,13 +335,13 @@ void DocumentBroker::pollThread()
         // Async cleanup.
         COOLWSD::doHousekeeping();
 
-        LOG_INF("Finished docBroker polling thread for docKey [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_INF("Finished docBroker polling thread for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
         return;
     }
 
     // We have a child process.
     _childProcess->setDocumentBroker(shared_from_this());
-    LOG_INF("Doc [" << Anonymizer::anonymize(_docKey) << "] attached to child [" << _childProcess->getPid() << ']');
+    LOG_INF("Doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] attached to child [" << _childProcess->getPid() << ']');
 
     setupPriorities();
 
@@ -394,7 +394,7 @@ void DocumentBroker::pollThread()
 
         if (_stop)
         {
-            LOG_DBG("Doc [" << Anonymizer::anonymize(_docKey) << "] is flagged to stop after returning from poll.");
+            LOG_DBG("Doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] is flagged to stop after returning from poll.");
             break;
         }
 
@@ -430,7 +430,7 @@ void DocumentBroker::pollThread()
 
         if (!isLoaded() && (limit_load_secs > std::chrono::seconds::zero()) && (now > loadDeadline))
         {
-            LOG_ERR("Doc [" << Anonymizer::anonymize(_docKey) << "] is taking too long to load. Will kill process ["
+            LOG_ERR("Doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] is taking too long to load. Will kill process ["
                     << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
                     << limit_load_secs << " secs.");
             broadcastMessage("error: cmd=load kind=docloadtimeout");
@@ -447,7 +447,7 @@ void DocumentBroker::pollThread()
         if (_limitLifeSeconds > std::chrono::seconds::zero() &&
             (now - threadStart) > _limitLifeSeconds)
         {
-            LOG_WRN("Doc [" << Anonymizer::anonymize(_docKey) << "] is taking too long to convert. Will kill process ["
+            LOG_WRN("Doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] is taking too long to convert. Will kill process ["
                             << _childProcess->getPid()
                             << "]. per_document.limit_convert_secs set to "
                             << _limitLifeSeconds.count() << " secs.");
@@ -480,10 +480,10 @@ void DocumentBroker::pollThread()
                 deltaRecv = recv - adminRecv;
                 adminRecv = recv;
             }
-            LOG_TRC("Doc [" << Anonymizer::anonymize(_docKey) << "] added stats sent: +" << deltaSent << ", recv: +" << deltaRecv << " bytes to totals.");
+            LOG_TRC("Doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] added stats sent: +" << deltaSent << ", recv: +" << deltaRecv << " bytes to totals.");
 
             // send change since last notification.
-            _admin.addBytes(getDocKey(), deltaSent, deltaRecv);
+            _admin.addBytes(getDocKeyNoLog(), deltaSent, deltaRecv);
         }
 
         if (_storage && !_lockStateUpdateRequest && _lockCtx->needsRefresh(now))
@@ -540,7 +540,7 @@ void DocumentBroker::pollThread()
                     {
                         LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for "
                                 "docKey ["
-                                << Anonymizer::anonymize(getDocKey()) << ']');
+                                << Anonymizer::anonymize(getDocKeyNoLog()) << ']');
                         continue;
                     }
 
@@ -562,14 +562,14 @@ void DocumentBroker::pollThread()
                             timeNow - migrationMsgStartTime);
                     if (elapsedMicroS > migrationMsgTimeout)
                     {
-                        LOG_WRN("Timeout waiting for migration message for docKey[" << Anonymizer::anonymize(_docKey)
+                        LOG_WRN("Timeout waiting for migration message for docKey[" << Anonymizer::anonymize(_docKeyNoLog)
                                                                                     << ']');
                         _migrateMsgReceived = true;
                         break;
                     }
                     LOG_DBG("Waiting for migration message to arrive before closing the document "
                             "for docKey["
-                            << Anonymizer::anonymize(_docKey) << ']');
+                            << Anonymizer::anonymize(_docKeyNoLog) << ']');
                 }
                 else if (_docState.isUnloadRequested() || SigUtil::getShutdownRequestFlag() ||
                          _docState.isCloseRequested())
@@ -705,14 +705,14 @@ void DocumentBroker::pollThread()
     }
 
     LOG_INF("Finished polling doc ["
-            << Anonymizer::anonymize(_docKey) << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
+            << Anonymizer::anonymize(_docKeyNoLog) << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
             << ", CloseReason: [" << _closeReason << ']'
             << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
             << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
     if (_childProcess && _sessions.empty())
     {
-        LOG_INF("Requesting termination of child [" << getPid() << "] for doc [" << Anonymizer::anonymize(_docKey)
+        LOG_INF("Requesting termination of child [" << getPid() << "] for doc [" << Anonymizer::anonymize(_docKeyNoLog)
                                                     << "] as there are no sessions");
         _childProcess->requestTermination();
     }
@@ -738,7 +738,7 @@ void DocumentBroker::pollThread()
                                                             : "not uploaded to storage";
 
             // The test may override (if it was expected).
-            if (_unitWsd && !_unitWsd->onDataLoss("Data-loss detected while exiting [" + _docKey +
+            if (_unitWsd && !_unitWsd->onDataLoss("Data-loss detected while exiting [" + _docKeyNoLog +
                                                   "]: " + reason))
                 reason.clear();
         }
@@ -747,7 +747,7 @@ void DocumentBroker::pollThread()
     if (!reason.empty() || (_unitWsd && _unitWsd->isFinished() && _unitWsd->failed()))
     {
         std::ostringstream state(Util::makeDumpStateStream());
-        state << "DocBroker [" << _docKey << "] stopped "
+        state << "DocBroker [" << _docKeyNoLog << "] stopped "
               << (reason.empty() ? "because of test failure" : ("although " + reason));
         if (!UnitWSD::isUnitTesting())
         {
@@ -761,7 +761,7 @@ void DocumentBroker::pollThread()
 
     if (_lockCtx && _lockCtx->supportsLocks() && _lockCtx->isLocked())
     {
-        LOG_DBG("Document [" << Anonymizer::anonymize(_docKey) << "] is locked and needs unlocking before unloading");
+        LOG_DBG("Document [" << Anonymizer::anonymize(_docKeyNoLog) << "] is locked and needs unlocking before unloading");
         const std::shared_ptr<ClientSession> session = getWriteableSession();
         if (!session)
         {
@@ -781,7 +781,7 @@ void DocumentBroker::pollThread()
             std::string error;
             if (!updateStorageLockState(*session, StorageBase::LockState::UNLOCK, error))
             {
-                LOG_ERR("Failed to unlock docKey [" << Anonymizer::anonymize(_docKey) << "] with session ["
+                LOG_ERR("Failed to unlock docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] with session ["
                                                     << unlockSessionId << "]: " << error);
             }
         }
@@ -793,7 +793,7 @@ void DocumentBroker::pollThread()
     if (_poll->getSocketCount())
     {
         constexpr std::chrono::microseconds flushTimeoutMicroS(std::chrono::seconds(2));
-        LOG_INF("Flushing " << _poll->getSocketCount() << " sockets for doc [" << Anonymizer::anonymize(_docKey)
+        LOG_INF("Flushing " << _poll->getSocketCount() << " sockets for doc [" << Anonymizer::anonymize(_docKeyNoLog)
                             << "] for " << flushTimeoutMicroS);
 
         const auto flushStartTime = std::chrono::steady_clock::now();
@@ -816,7 +816,7 @@ void DocumentBroker::pollThread()
             processBatchUpdates();
         }
 
-        LOG_INF("Finished flushing socket for doc [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_INF("Finished flushing socket for doc [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
     }
 
     // Terminate properly while we can.
@@ -831,7 +831,7 @@ void DocumentBroker::pollThread()
     {
         // Quarantine the last copy, if different.
         LOG_WRN((dataLoss ? "Data loss " : "Crash ")
-                << "detected on [" << Anonymizer::anonymize(getDocKey()) << ']'
+                << "detected on [" << Anonymizer::anonymize(getDocKeyNoLog()) << ']'
                 << (_storage && _quarantine && _quarantine->isEnabled()
                         ? ". Will quarantine the last version. "
                         : ", but Quarantine is disabled. ")
@@ -868,7 +868,7 @@ void DocumentBroker::pollThread()
 
     clearCaches();
 
-    LOG_INF("Finished docBroker polling thread for docKey [" << Anonymizer::anonymize(_docKey) << ']');
+    LOG_INF("Finished docBroker polling thread for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
 }
 
 bool DocumentBroker::isAlive() const
@@ -890,7 +890,7 @@ DocumentBroker::~DocumentBroker()
 {
     ASSERT_CORRECT_THREAD();
 
-    LOG_INF("~DocumentBroker [" << Anonymizer::anonymize(_docKey) << "] destroyed with " << _sessions.size()
+    LOG_INF("~DocumentBroker [" << Anonymizer::anonymize(_docKeyNoLog) << "] destroyed with " << _sessions.size()
                                 << " sessions left");
 
     // Do this early - to avoid operating on _childProcess from two threads.
@@ -901,14 +901,14 @@ DocumentBroker::~DocumentBroker()
         if (session->isLive())
         {
             LOG_WRN("Destroying DocumentBroker ["
-                    << Anonymizer::anonymize(_docKey) << "] while having " << _sessions.size()
+                    << Anonymizer::anonymize(_docKeyNoLog) << "] while having " << _sessions.size()
                     << " unremoved sessions, at least one is still live");
             break;
         }
 
         if (session.use_count() > 1)
         {
-            LOG_WRN("Destroying DocumentBroker [" << Anonymizer::anonymize(_docKey) << "] while having session [" << id
+            LOG_WRN("Destroying DocumentBroker [" << Anonymizer::anonymize(_docKeyNoLog) << "] while having session [" << id
                                                   << "] with " << session.use_count()
                                                   << " references");
         }
@@ -922,10 +922,10 @@ DocumentBroker::~DocumentBroker()
 
 #if !MOBILEAPP
     // Remove from the admin last, to avoid racing the next test.
-    _admin.rmDoc(_docKey);
+    _admin.rmDoc(_docKeyNoLog);
 #endif
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, DocBrokerDestroy(_docKey));
+    UNITWSD_CALL_INSTANCE(_unitWsd, DocBrokerDestroy(_docKeyNoLog));
 }
 
 void DocumentBroker::joinThread()
@@ -937,13 +937,13 @@ void DocumentBroker::stop(const std::string& reason)
 {
     if (_closeReason.empty() || _closeReason == reason)
     {
-        LOG_DBG("Stopping DocumentBroker for docKey [" << Anonymizer::anonymize(_docKey) << "] with reason: " << reason);
+        LOG_DBG("Stopping DocumentBroker for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] with reason: " << reason);
         _closeReason = reason; // used later in the polling loop
     }
     else
     {
         LOG_DBG("Stopping DocumentBroker for docKey ["
-                << Anonymizer::anonymize(_docKey) << "] with existing close reason: " << _closeReason
+                << Anonymizer::anonymize(_docKeyNoLog) << "] with existing close reason: " << _closeReason
                 << " (ignoring requested reason: " << reason << ')');
     }
 
@@ -960,7 +960,7 @@ bool DocumentBroker::download(
     ASSERT_CORRECT_THREAD();
 
     const std::string sessionId = session ? session->getId() : "000";
-    LOG_INF("Loading [" << Anonymizer::anonymize(_docKey) << "] for session [" << sessionId << "] in jail [" << jailId
+    LOG_INF("Loading [" << Anonymizer::anonymize(_docKeyNoLog) << "] for session [" << sessionId << "] in jail [" << jailId
                         << "] from URI [" << uriPublic.toString() << ']');
 
     if (_unitWsd)
@@ -973,7 +973,7 @@ bool DocumentBroker::download(
     if (_docState.isMarkedToDestroy())
     {
         // Tearing down.
-        LOG_WRN("Will not load document marked to destroy. DocKey: [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_WRN("Will not load document marked to destroy. DocKey: [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
         return false;
     }
 
@@ -986,7 +986,7 @@ bool DocumentBroker::download(
     const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, Util::rng::getFilename(16));
     const std::string jailRoot = getJailRoot();
 
-    LOG_INF("JailPath for docKey [" << Anonymizer::anonymize(_docKey) << "]: [" << jailPath.toString() << "], jailRoot: ["
+    LOG_INF("JailPath for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "]: [" << jailPath.toString() << "], jailRoot: ["
                                     << jailRoot << ']');
 
     bool firstInstance = false;
@@ -1017,7 +1017,7 @@ bool DocumentBroker::download(
         if (_storage == nullptr)
         {
             // We should get an exception, not null.
-            LOG_ERR("Failed to create Storage instance for [" << Anonymizer::anonymize(_docKey) << "] in "
+            LOG_ERR("Failed to create Storage instance for [" << Anonymizer::anonymize(_docKeyNoLog) << "] in "
                                                               << jailPath.toString());
             return false;
         }
@@ -1036,7 +1036,7 @@ bool DocumentBroker::download(
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        LOG_DBG("CheckFileInfo for docKey [" << Anonymizer::anonymize(_docKey) << "] "
+        LOG_DBG("CheckFileInfo for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] "
                                              << (wopiFileInfo ? "already exists" : "is missing"));
         if (!wopiFileInfo)
         {
@@ -1157,7 +1157,7 @@ bool DocumentBroker::download(
             if (_uploadRequest)
             {
                 LOG_DBG("Document ["
-                        << Anonymizer::anonymize(_docKey) << "] timestamp checked for a match during an up-load (started "
+                        << Anonymizer::anonymize(_docKeyNoLog) << "] timestamp checked for a match during an up-load (started "
                         << Util::getTimeForLog(std::chrono::steady_clock::now(),
                                                _uploadRequest->startTime())
                         << ", " << (_uploadRequest->isComplete() ? "" : "in")
@@ -1168,7 +1168,7 @@ bool DocumentBroker::download(
             }
             else
             {
-                LOG_WRN("Document [" << Anonymizer::anonymize(_docKey) << "] has been modified behind our back. "
+                LOG_WRN("Document [" << Anonymizer::anonymize(_docKeyNoLog) << "] has been modified behind our back. "
                                      << "Informing all clients. Expected: "
                                      << _storageManager.getLastModifiedServerTimeString()
                                      << ", Actual: " << fileInfo.getLastModifiedServerTimeString());
@@ -1218,7 +1218,7 @@ bool DocumentBroker::download(
     if (session && !userSettingsUri.empty())
     {
         LOG_DBG("browsersetting for docKey ["
-                << Anonymizer::anonymize(_docKey) << "] for session #" << session->getId()
+                << Anonymizer::anonymize(_docKeyNoLog) << "] for session #" << session->getId()
                 << (session->getSentBrowserSetting() ? " already exists" : " is missing"));
         if (!session->getSentBrowserSetting())
         {
@@ -1250,7 +1250,7 @@ void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session
     // as well as the WOPI Info that we got above.
     if (!session->isReadOnly())
     {
-        LOG_DBG("Locking docKey [" << Anonymizer::anonymize(_docKey)
+        LOG_DBG("Locking docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                    << "] asynchronously, which is editable, with session ["
                                    << session->getId() << ']');
         //TODO: Convert to Async. Unfortunately, that complicates
@@ -1259,7 +1259,7 @@ void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session
         if (!updateStorageLockState(*session, StorageBase::LockState::LOCK, error))
         {
             LOG_ERR("Failed to lock docKey ["
-                    << Anonymizer::anonymize(_docKey) << "] with session [" << session->getId()
+                    << Anonymizer::anonymize(_docKeyNoLog) << "] with session [" << session->getId()
                     << "] before downloading. Session will be read-only: " << error);
             session->setWritable(false);
         }
@@ -1277,7 +1277,7 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 {
     assert(_storage && !_storage->isDownloaded());
 
-    LOG_DBG("Download file for docKey [" << Anonymizer::anonymize(_docKey) << ']');
+    LOG_DBG("Download file for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
     std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
     AdditionalFilePaths additionalFileLocalPaths;
     std::string localPath = _storage->downloadStorageFileToLocal(auth, *_lockCtx, templateSource, additionalFileLocalPaths);
@@ -1309,7 +1309,7 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
     Poco::DigestOutputStream dos(sha1);
     Poco::StreamCopier::copyStream(istr, dos);
     dos.close();
-    LOG_INF("SHA1 for DocKey [" << Anonymizer::anonymize(_docKey) << "] of [" << COOLWSD::anonymizeUrl(localPath)
+    LOG_INF("SHA1 for DocKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] of [" << COOLWSD::anonymizeUrl(localPath)
                                 << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
 
     std::string localPathEncoded;
@@ -2257,7 +2257,7 @@ void DocumentBroker::startRenameFileCommand()
     const auto it = _sessions.find(_renameSessionId);
     if (it == _sessions.end())
     {
-        LOG_ERR("Session [" << _renameSessionId << "] not found to save docKey [" << Anonymizer::anonymize(_docKey)
+        LOG_ERR("Session [" << _renameSessionId << "] not found to save docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                             << "] before renaming. The document will not be renamed.");
         broadcastSaveResult(false, "Renaming session not found");
         endRenameFileCommand();
@@ -2286,7 +2286,7 @@ void DocumentBroker::endRenameFileCommand()
 bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase::LockState lock,
                                             std::string& error)
 {
-    LOG_TRC("Requesting async " << StorageBase::nameShort(lock) << "ing of [" << Anonymizer::anonymize(_docKey)
+    LOG_TRC("Requesting async " << StorageBase::nameShort(lock) << "ing of [" << Anonymizer::anonymize(_docKeyNoLog)
                                 << "] by session #" << session.getId());
 
     if (session.getAuthorization().isExpired())
@@ -2317,7 +2317,7 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
 bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSession>& session,
                                                  StorageBase::LockState lock, std::string& error)
 {
-    LOG_TRC("Requesting async " << StorageBase::nameShort(lock) << "ing of [" << Anonymizer::anonymize(_docKey)
+    LOG_TRC("Requesting async " << StorageBase::nameShort(lock) << "ing of [" << Anonymizer::anonymize(_docKeyNoLog)
                                 << "] by session #" << session->getId());
 
     if (session->getAuthorization().isExpired())
@@ -2352,7 +2352,7 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
 
         if (asyncLock.state() == StorageBase::AsyncLockUpdate::State::Running)
         {
-            LOG_TRC("Async locking of [" << Anonymizer::anonymize(_docKey) << "] is in progress during "
+            LOG_TRC("Async locking of [" << Anonymizer::anonymize(_docKeyNoLog) << "] is in progress during "
                                          << DocumentState::name(_docState.activity()));
             return;
         }
@@ -2386,21 +2386,21 @@ bool DocumentBroker::handleLockResult(ClientSession& session,
     switch (result.getStatus())
     {
         case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
-            LOG_DBG("Locks on docKey [" << Anonymizer::anonymize(_docKey) << "] are unsupported while trying to "
+            LOG_DBG("Locks on docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] are unsupported while trying to "
                                         << StorageBase::nameShort(requestedLock));
             return true; // Not an error.
             break;
 
         case StorageBase::LockUpdateResult::Status::OK:
             LOG_DBG(StorageBase::nameShort(requestedLock)
-                    << "ed docKey [" << Anonymizer::anonymize(_docKey) << "] successfully");
+                    << "ed docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] successfully");
             _lockCtx->setState(requestedLock);
             return true;
             break;
 
         case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
         {
-            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << Anonymizer::anonymize(_docKey)
+            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                  << "]. Invalid or expired access token. Notifying client and "
                                     "invalidating the authorization token of session ["
                                  << session.getId() << "]. This session will now be read-only");
@@ -2415,7 +2415,7 @@ bool DocumentBroker::handleLockResult(ClientSession& session,
 
         case StorageBase::LockUpdateResult::Status::FAILED:
         {
-            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << Anonymizer::anonymize(_docKey)
+            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                  << "] with reason [" << reason
                                  << "]. Notifying client and making session [" << session.getId()
                                  << "] read-only");
@@ -2613,7 +2613,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     // Let the clients know of any save failures.
     if (!success && result != "unmodified")
     {
-        LOG_INF("Failed to save docKey [" << Anonymizer::anonymize(_docKey)
+        LOG_INF("Failed to save docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                           << "] as .uno:Save has failed in LOK. Notifying clients");
         session->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         broadcastSaveResult(false, "Could not save the document");
@@ -2650,7 +2650,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
                 if (it == _sessions.end())
                 {
                     LOG_ERR("Session [" << _renameSessionId << "] not found to rename docKey ["
-                                        << Anonymizer::anonymize(_docKey) << "]. The document will not be renamed.");
+                                        << Anonymizer::anonymize(_docKeyNoLog) << "]. The document will not be renamed.");
                     broadcastSaveResult(false, "Renaming session not found");
                     endRenameFileCommand();
                 }
@@ -2705,7 +2705,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
         {
             // We are unloading but have possible modifications. Save again (done in poll).
             LOG_DBG(
-                "Document [" << Anonymizer::anonymize(getDocKey())
+                "Document [" << Anonymizer::anonymize(getDocKeyNoLog())
                              << "] is unloading, but was possibly modified during saving. Skipping "
                                 "upload to save again before unloading");
 
@@ -2803,20 +2803,20 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     const std::string sessionId = session->getId();
     if (!session->isEditable())
     {
-        LOG_WRN("Session [" << sessionId << "] is read-only and cannot upload docKey [" << Anonymizer::anonymize(_docKey)
+        LOG_WRN("Session [" << sessionId << "] is read-only and cannot upload docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                             << ']');
         return;
     }
 
-    LOG_DBG("Uploading to storage docKey [" << Anonymizer::anonymize(_docKey) << "] for session [" << sessionId
+    LOG_DBG("Uploading to storage docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] for session [" << sessionId
                                             << "]. Force: " << force);
 
     const bool isSaveAs = !saveAsPath.empty();
     const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
-    // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
+    // Map the FileId from the docKeyNoLog to the new filename to anonymize the new filename as the FileId.
     const std::string newFilename = Uri::getFilenameFromURL(uri);
-    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(_docKey));
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(_docKeyNoLog));
     if (COOLWSD::AnonymizeUserData)
     {
         LOG_DBG("New filename [" << COOLWSD::anonymizeUrl(newFilename)
@@ -2847,7 +2847,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         // which would leave the lastUplaodSuccessful() as false permanently, we upload.
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         LOG_WRN("Uploading to URI ["
-                << uriAnonym << "] with docKey [" << Anonymizer::anonymize(_docKey)
+                << uriAnonym << "] with docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                 << "] even though it's unnecessary as the file lastModifiedTime [].  File "
                    "lastModifiedTime ["
                 << Util::getTimeForLog(now, newFileModifiedTime)
@@ -2858,7 +2858,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                 << ']');
     }
 
-    LOG_DBG("Uploading [" << Anonymizer::anonymize(_docKey) << "] after saving to URI [" << uriAnonym << ']');
+    LOG_DBG("Uploading [" << Anonymizer::anonymize(_docKeyNoLog) << "] after saving to URI [" << uriAnonym << ']');
 
     _uploadRequest = std::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
                                                      isSaveAs, isExport, isRename);
@@ -2876,13 +2876,13 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         switch (asyncUp.state())
         {
             case StorageBase::AsyncUpload::State::Running:
-                LOG_TRC("Async upload of [" << Anonymizer::anonymize(_docKey) << "] is in progress during "
+                LOG_TRC("Async upload of [" << Anonymizer::anonymize(_docKeyNoLog) << "] is in progress during "
                                             << DocumentState::name(_docState.activity()));
                 return;
 
             case StorageBase::AsyncUpload::State::Complete:
             {
-                LOG_TRC("Finished uploading [" << Anonymizer::anonymize(_docKey) << "] during "
+                LOG_TRC("Finished uploading [" << Anonymizer::anonymize(_docKeyNoLog) << "] during "
                                                << DocumentState::name(_docState.activity())
                                                << ", processing results.");
                 _uploadRequest->setComplete();
@@ -2897,7 +2897,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                 // [[fallthrough]]
         }
 
-        LOG_WRN("Failed to upload [" << Anonymizer::anonymize(_docKey) << "] asynchronously. "
+        LOG_WRN("Failed to upload [" << Anonymizer::anonymize(_docKeyNoLog) << "] asynchronously. "
                                      << DocumentState::name(_docState.activity()));
         _storageManager.setLastUploadResult(false);
 
@@ -2962,7 +2962,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
 #if !MOBILEAPP
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
-        _admin.setDocWopiUploadDuration(_docKey, wopiStorage->getWopiSaveDuration());
+        _admin.setDocWopiUploadDuration(_docKeyNoLog, wopiStorage->getWopiSaveDuration());
 #endif
 
     if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
@@ -2984,7 +2984,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
         _lastStorageAttrs.reset();
 
         LOG_DBG("Uploaded docKey ["
-                << Anonymizer::anonymize(_docKey) << "] to URI [" << _uploadRequest->uriAnonym()
+                << Anonymizer::anonymize(_docKeyNoLog) << "] to URI [" << _uploadRequest->uriAnonym()
                 << "] and updated timestamps. Document modified timestamp: "
                 << _storageManager.getLastModifiedServerTimeString()
                 << ", newFileModifiedTime: " << _uploadRequest->newFileModifiedLocalTime()
@@ -2999,7 +2999,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
                 if (it == _sessions.end())
                 {
                     LOG_ERR("Session [" << _renameSessionId << "] not found to rename docKey ["
-                                        << Anonymizer::anonymize(_docKey) << "]. The document will not be renamed.");
+                                        << Anonymizer::anonymize(_docKeyNoLog) << "]. The document will not be renamed.");
                     broadcastSaveResult(false, "Renaming session not found");
                     endRenameFileCommand();
                 }
@@ -3073,7 +3073,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
         const auto session = _uploadRequest->session();
         if (session)
         {
-            LOG_DBG("Uploaded SaveAs docKey [" << Anonymizer::anonymize(_docKey) << "] to URI ["
+            LOG_DBG("Uploaded SaveAs docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] to URI ["
                                                << COOLWSD::anonymizeUrl(url) << "] with name ["
                                                << filenameAnonym << "] successfully.");
 
@@ -3093,7 +3093,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
         else
         {
             LOG_DBG("Uploaded SaveAs docKey ["
-                    << Anonymizer::anonymize(_docKey) << "] to URI [" << COOLWSD::anonymizeUrl(url) << "] with name ["
+                    << Anonymizer::anonymize(_docKeyNoLog) << "] to URI [" << COOLWSD::anonymizeUrl(url) << "] with name ["
                     << filenameAnonym << "] successfully, but the client session is closed.");
         }
     }
@@ -3148,9 +3148,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         // But only when isModified() == false because it might happen
         // by the time we finish uploading there is further modification
         // to the document.
-        _admin.uploadedAlert(_docKey, getPid(), lastUploadSuccessful);
+        _admin.uploadedAlert(_docKeyNoLog, getPid(), lastUploadSuccessful);
     }
-    _admin.getModel().sendMigrateMsgAfterSave(lastUploadSuccessful, _docKey);
+    _admin.getModel().sendMigrateMsgAfterSave(lastUploadSuccessful, _docKeyNoLog);
 #endif
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
@@ -3166,7 +3166,7 @@ void DocumentBroker::reportUploadToStorageFailed()
     const auto session = _uploadRequest->session();
     if (session)
     {
-        LOG_ERR("Failed to upload docKey [" << Anonymizer::anonymize(_docKey) << "] to URI [" << _uploadRequest->uriAnonym()
+        LOG_ERR("Failed to upload docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] to URI [" << _uploadRequest->uriAnonym()
                                             << "]. Notifying client.");
         const std::string msg = std::string("error: cmd=storage kind=")
                                 + (_uploadRequest->isRename() ? "renamefailed" : "savefailed");
@@ -3174,7 +3174,7 @@ void DocumentBroker::reportUploadToStorageFailed()
     }
     else
     {
-        LOG_ERR("Failed to upload docKey [" << Anonymizer::anonymize(_docKey) << "] to URI [" << _uploadRequest->uriAnonym()
+        LOG_ERR("Failed to upload docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] to URI [" << _uploadRequest->uriAnonym()
                                             << "]. The client session is closed.");
     }
 }
@@ -3194,7 +3194,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         endRenameFileCommand();
         if (it == _sessions.end() || it->second == nullptr)
         {
-            LOG_WRN("Session [" << _renameSessionId << "] not found to rename docKey [" << Anonymizer::anonymize(_docKey)
+            LOG_WRN("Session [" << _renameSessionId << "] not found to rename docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                 << "]. The document will not be renamed.");
         }
         else
@@ -3207,7 +3207,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     {
         LOG_WRN(
             "Got Entitity Too Large while uploading docKey ["
-            << Anonymizer::anonymize(_docKey) << "] to URI [" << _uploadRequest->uriAnonym() << "] of "
+            << Anonymizer::anonymize(_docKeyNoLog) << "] to URI [" << _uploadRequest->uriAnonym() << "] of "
             << _storageManager.getSizeAsUploaded()
             << " bytes. If a reverse-proxy is used, it might be misconfigured. Alternatively, the "
                "WOPI host might be low on disk or hitting a quota limit. Making all sessions "
@@ -3225,7 +3225,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
         LOG_WRN("Disk full while uploading docKey ["
-                << Anonymizer::anonymize(_docKey) << "] to URI [" << _uploadRequest->uriAnonym() << "] of "
+                << Anonymizer::anonymize(_docKeyNoLog) << "] to URI [" << _uploadRequest->uriAnonym() << "] of "
                 << _storageManager.getSizeAsUploaded()
                 << " bytes. Making all sessions on doc read-only and notifying clients.");
 
@@ -3246,7 +3246,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         {
             LOG_ERR(
                 "Cannot upload docKey ["
-                << Anonymizer::anonymize(_docKey) << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                << Anonymizer::anonymize(_docKeyNoLog) << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
                 << _storageManager.getSizeAsUploaded()
                 << " bytes. Invalid or expired access token. Notifying client and invalidating the "
                    "authorization token of session ["
@@ -3257,7 +3257,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         else
         {
             LOG_ERR("Cannot upload docKey ["
-                    << Anonymizer::anonymize(_docKey) << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                    << Anonymizer::anonymize(_docKeyNoLog) << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
                     << _storageManager.getSizeAsUploaded()
                     << " bytes. Invalid or expired access token. The client session is closed.");
         }
@@ -3267,7 +3267,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
         // Likely timed out.
-        LOG_INF("Failed to upload docKey [" << Anonymizer::anonymize(_docKey) << "] to storage URI ["
+        LOG_INF("Failed to upload docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] to storage URI ["
                                             << _uploadRequest->uriAnonym() << "] of "
                                             << _storageManager.getSizeAsUploaded()
                                             << " bytes with reason: " << uploadResult.getReason());
@@ -3287,7 +3287,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
              || uploadResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
     {
         LOG_ERR("PutFile failed for docKey ["
-                << Anonymizer::anonymize(_docKey) << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                << Anonymizer::anonymize(_docKeyNoLog) << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
                 << _storageManager.getSizeAsUploaded() << " bytes because it's changed in storage");
         broadcastSaveResult(false, "Conflict: Document changed in storage",
                             uploadResult.getReason());
@@ -3316,7 +3316,7 @@ void DocumentBroker::handleDocumentConflict()
     {
         // No clients were contacted; we will never resolve this conflict.
         LOG_WRN(
-            "The document [" << Anonymizer::anonymize(_docKey)
+            "The document [" << Anonymizer::anonymize(_docKeyNoLog)
                              << "] could not be uploaded to storage because there is a newer "
                                 "version there, and no active clients exist to resolve the conflict"
 #if !MOBILEAPP
@@ -3357,9 +3357,9 @@ void DocumentBroker::setLoaded()
         const auto minTimeoutSecs = ((_loadDuration * 4).count() + 500) / 1000;
         _saveManager.setSavingTimeout(
             std::max(std::chrono::seconds(minTimeoutSecs), std::chrono::seconds(5)));
-        LOG_INF("Document [" << Anonymizer::anonymize(_docKey) << "] loaded in " << _loadDuration
+        LOG_INF("Document [" << Anonymizer::anonymize(_docKeyNoLog) << "] loaded in " << _loadDuration
                              << ", saving-timeout set to " << _saveManager.getSavingTimeout());
-        LOG_DBG("Document [" << Anonymizer::anonymize(_docKey)
+        LOG_DBG("Document [" << Anonymizer::anonymize(_docKeyNoLog)
                              << "] PSS: " << Util::getMemoryUsagePSS(_childProcess->getPid())
                              << " KB, total PSS: " << Util::getProcessTreePss(Util::getProcessId())
                              << " KB");
@@ -3385,7 +3385,7 @@ void DocumentBroker::onViewLoaded(const std::shared_ptr<ClientSession>& session)
     // A view loaded.
     if (UnitWSD::isUnitTesting())
     {
-        UNITWSD_CALL(onDocBrokerViewLoaded(getDocKey(), session));
+        UNITWSD_CALL(onDocBrokerViewLoaded(getDocKeyNoLog(), session));
     }
 }
 
@@ -3458,7 +3458,7 @@ void DocumentBroker::refreshLock()
         std::string error;
         if (!updateStorageLockStateAsync(session, StorageBase::LockState::LOCK, error))
         {
-            LOG_ERR("Failed to refresh lock of docKey [" << Anonymizer::anonymize(_docKey) << "] with session ["
+            LOG_ERR("Failed to refresh lock of docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] with session ["
                                                          << savingSessionId << "]: " << error);
         }
     }
@@ -3502,12 +3502,12 @@ bool DocumentBroker::manualSave(const std::shared_ptr<ClientSession>& session,
     // If we aren't saving already.
     if (_docState.activity() != DocumentState::Activity::Save)
     {
-        LOG_DBG("Manual save by " << session->getName() << " on docKey [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_DBG("Manual save by " << session->getName() << " on docKey [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
         return sendUnoSave(session, dontTerminateEdit, dontSaveIfUnmodified,
                            /*isAutosave=*/false, /*finalWrite=*/false, extendedData);
     }
 
-    LOG_DBG("Document [" << Anonymizer::anonymize(_docKey) << "] is currently saving and cannot issue another save");
+    LOG_DBG("Document [" << Anonymizer::anonymize(_docKeyNoLog) << "] is currently saving and cannot issue another save");
     return false;
 }
 
@@ -3519,7 +3519,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
     // If we aren't saving already.
     if (_docState.activity() == DocumentState::Activity::Save)
     {
-        LOG_DBG("Document [" << Anonymizer::anonymize(_docKey)
+        LOG_DBG("Document [" << Anonymizer::anonymize(_docKeyNoLog)
                              << "] is currently saving and cannot issue another save for autosave");
         return true; // We are saving, wait for the results.
     }
@@ -3540,7 +3540,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
     if (!isModified() && !force)
     {
         // Nothing to do.
-        LOG_TRC("Nothing to autosave [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_TRC("Nothing to autosave [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
         return false;
     }
 
@@ -3563,12 +3563,12 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
     const std::string savingSessionId = savingSession->getId();
 
     // Remember the last save time, since this is the predicate.
-    LOG_TRC("Checking to autosave [" << Anonymizer::anonymize(_docKey) << "] using session [" << savingSessionId << ']');
+    LOG_TRC("Checking to autosave [" << Anonymizer::anonymize(_docKeyNoLog) << "] using session [" << savingSessionId << ']');
 
     bool sent = false;
     if (force)
     {
-        LOG_TRC("Sending forced save command for [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_TRC("Sending forced save command for [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
         // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
         // Flag isAutosave=false so the WOPI host wouldn't think this is a regular checkpoint and
         // potentially optimize it away. This is as good as user-issued save, since this is
@@ -3584,7 +3584,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
         const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
                                                 _storageManager.timeSinceLastUploadResponse());
-        LOG_TRC("DocKey [" << Anonymizer::anonymize(_docKey) << "] is modified. It has been " << timeSinceLastSave
+        LOG_TRC("DocKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] is modified. It has been " << timeSinceLastSave
                            << " since last save and the most recent activity was " << inactivityTime
                            << " ago. Idle save is "
                            << (_saveManager.isIdleSaveEnabled() ? "" : "not ")
@@ -3606,7 +3606,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
 
         if (save)
         {
-            LOG_TRC("Sending timed save command for [" << Anonymizer::anonymize(_docKey) << ']');
+            LOG_TRC("Sending timed save command for [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
             sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
                                /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true,
                                finalWrite);
@@ -3618,18 +3618,18 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
 
 void DocumentBroker::autoSaveAndStop(const std::string& reason)
 {
-    LOG_TRC("autoSaveAndStop for docKey [" << Anonymizer::anonymize(getDocKey()) << "]: " << reason);
+    LOG_TRC("autoSaveAndStop for docKey [" << Anonymizer::anonymize(getDocKeyNoLog()) << "]: " << reason);
 
     if (_saveManager.isSaving() || isAsyncUploading())
     {
-        LOG_TRC("Async saving/uploading in progress for docKey [" << Anonymizer::anonymize(getDocKey()) << ']');
+        LOG_TRC("Async saving/uploading in progress for docKey [" << Anonymizer::anonymize(getDocKeyNoLog()) << ']');
         return;
     }
 
     const NeedToSave needToSave = needToSaveToDisk();
     const NeedToUpload needToUpload = needToUploadToStorage();
     bool canStop = (needToSave == NeedToSave::No && needToUpload == NeedToUpload::No);
-    LOG_TRC("autoSaveAndStop for docKey [" << Anonymizer::anonymize(getDocKey()) << "]: " << name(needToSave) << ", "
+    LOG_TRC("autoSaveAndStop for docKey [" << Anonymizer::anonymize(getDocKeyNoLog()) << "]: " << name(needToSave) << ", "
                                            << name(needToUpload) << ", canStop: " << canStop);
 
     if (!canStop && needToSave == NeedToSave::No && !isStorageOutdated())
@@ -3654,7 +3654,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         else
         {
             LOG_TRC("autoSaveAndStop for docKey ["
-                    << Anonymizer::anonymize(getDocKey())
+                    << Anonymizer::anonymize(getDocKeyNoLog())
                     << "] has nothing to save and Storage is up-to-date, canStop: true");
             canStop = true;
         }
@@ -3688,26 +3688,26 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
             {
                 if (_saveManager.timeSinceLastSaveResponse() < std::chrono::seconds(2))
                 {
-                    LOG_INF("Can stop " << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKey())
+                    LOG_INF("Can stop " << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKeyNoLog())
                                         << "] but will wait for isModified to clear.");
                     return;
                 }
 
-                LOG_WRN("Will stop " << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKey())
+                LOG_WRN("Will stop " << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKeyNoLog())
                                      << "] even with isModified, which is not clearing.");
             }
 
             // Nothing to upload and last save was successful; stop.
             canStop = true;
             LOG_TRC("autoSaveAndStop for docKey ["
-                    << Anonymizer::anonymize(getDocKey()) << "]: no modifications since last successful save. Stopping.");
+                    << Anonymizer::anonymize(getDocKeyNoLog()) << "]: no modifications since last successful save. Stopping.");
         }
         else if (needToSave == NeedToSave::No)
         {
             // Nothing to upload and no modifications; stop.
             LOG_ASSERT_MSG(!isPossiblyModified(), "Unexpected isPossiblyModified with NeedToSave::No");
             canStop = true;
-            LOG_TRC("autoSaveAndStop for docKey [" << Anonymizer::anonymize(getDocKey()) << "]: not modified. Stopping.");
+            LOG_TRC("autoSaveAndStop for docKey [" << Anonymizer::anonymize(getDocKeyNoLog()) << "]: not modified. Stopping.");
         }
     }
 
@@ -3717,7 +3717,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         // Stop if there is nothing to save.
         const bool possiblyModified = isPossiblyModified();
         const bool lastSaveSuccessful = _saveManager.lastSaveSuccessful();
-        LOG_INF("Autosaving " << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKey())
+        LOG_INF("Autosaving " << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKeyNoLog())
                               << "] before terminating. isPossiblyModified: "
                               << (possiblyModified ? "yes" : "no")
                               << ", lastSaveSuccessful: " << (lastSaveSuccessful ? "yes" : "no")
@@ -3742,7 +3742,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                 if (isStorageOutdated())
                 {
                     LOG_WRN("The document ["
-                            << Anonymizer::anonymize(_docKey)
+                            << Anonymizer::anonymize(_docKeyNoLog)
                             << "] could not be uploaded to storage because there are no writable "
                                "sessions, or no authorization tokens, to upload. The document "
                                "should be recoverable from the quarantine. Stopping.");
@@ -3755,7 +3755,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     else if (!canStop)
     {
         LOG_TRC("Too soon to issue another save on ["
-                << Anonymizer::anonymize(getDocKey()) << "], need at least " << _saveManager.timeToNextSave(isUnloading())
+                << Anonymizer::anonymize(getDocKeyNoLog()) << "], need at least " << _saveManager.timeToNextSave(isUnloading())
                 << ": " << _saveManager.timeSinceLastSaveRequest() << " since last save request, "
                 << _saveManager.timeSinceLastSaveResponse()
                 << " since last save response, and last save took "
@@ -3767,7 +3767,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     {
         // Nothing to save, nothing to upload, and no modifications. Stop.
         LOG_INF("Nothing to save or upload. Terminating "
-                << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKey()) << ']');
+                << reason << " DocumentBroker for docKey [" << Anonymizer::anonymize(getDocKeyNoLog()) << ']');
         stop(reason);
     }
 }
@@ -3782,7 +3782,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     LOG_ASSERT_MSG(session, "Got null ClientSession");
     const std::string sessionId = session->getId();
 
-    LOG_INF("Saving doc [" << Anonymizer::anonymize(_docKey) << "] using session [" << sessionId << ']');
+    LOG_INF("Saving doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] using session [" << sessionId << ']');
 
     // Invalidate the timestamp to force persisting.
     _saveManager.setLastModifiedLocalTime(std::chrono::system_clock::time_point());
@@ -3833,7 +3833,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     const auto command = std::string("save background=") + (background ? "true " : " ") + saveArgs;
     if (forwardToChild(session, command))
     {
-        LOG_DBG("Saving [" << Anonymizer::anonymize(_docKey) << "] using [" << sessionId << "]: " << command);
+        LOG_DBG("Saving [" << Anonymizer::anonymize(_docKeyNoLog) << "] using [" << sessionId << "]: " << command);
 
         _saveManager.markLastSaveRequestTime();
         if (_docState.activity() == DocumentState::Activity::None)
@@ -3847,7 +3847,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     }
 
     LOG_ERR("Failed to save doc ["
-            << Anonymizer::anonymize(_docKey) << "]: Failed to forward .uno:Save command to session [" << sessionId
+            << Anonymizer::anonymize(_docKeyNoLog) << "]: Failed to forward .uno:Save command to session [" << sessionId
             << ']');
     return false;
 }
@@ -3874,7 +3874,7 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
 
     const std::string id = session->getId();
     LOG_TRC("Adding " << (session->isReadOnly() ? "readonly" : "non-readonly") << " session [" << id
-                      << "] to docKey [" << Anonymizer::anonymize(_docKey) << ']');
+                      << "] to docKey [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
 
     try
     {
@@ -3889,7 +3889,7 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
         }
 
         // Request a new session from the child kit.
-        const std::string message = "session " + id + ' ' + _docKey + ' ' + _docId;
+        const std::string message = "session " + id + ' ' + _docKeyNoLog + ' ' + _docId;
         _childProcess->sendTextFrame(message);
 
 #if !MOBILEAPP
@@ -3897,9 +3897,9 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
         const Poco::URI& uri = _storage->getUri();
         // Create uri without query parameters
         const std::string wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
-        _admin.addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
+        _admin.addDoc(_docKeyNoLog, getPid(), getFilename(), id, session->getUserName(),
                       session->getUserId(), _childProcess->getSMapsFp(), wopiSrc, session->isReadOnly());
-        _admin.setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
+        _admin.setDocWopiDownloadDuration(_docKeyNoLog, _wopiDownloadDuration);
 #endif
 
         // Add and attach the session.
@@ -3909,9 +3909,9 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
         const std::size_t count = _sessions.size();
         LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
                 " session [" << id << "] to docKey [" <<
-                Anonymizer::anonymize(_docKey) << "] to have " << count << " sessions.");
+                Anonymizer::anonymize(_docKeyNoLog) << "] to have " << count << " sessions.");
 
-        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerAddSession(_docKey, session));
+        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerAddSession(_docKeyNoLog, session));
 
         return count;
     }
@@ -3929,10 +3929,10 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to add session to [" << Anonymizer::anonymize(_docKey) << "] with URI [" << COOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
+        LOG_ERR("Failed to add session to [" << Anonymizer::anonymize(_docKeyNoLog) << "] with URI [" << COOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
         if (_sessions.empty())
         {
-            LOG_INF("Doc [" << Anonymizer::anonymize(_docKey) << "] has no more sessions. Marking to destroy.");
+            LOG_INF("Doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] has no more sessions. Marking to destroy.");
             _docState.markToDestroy();
         }
         throw;
@@ -3957,7 +3957,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         // auto-save and expect Core has the correct modified flag.
         constexpr bool dontSaveIfUnmodified = true;
 
-        LOG_INF("Removing session [" << id << "] on docKey [" << Anonymizer::anonymize(_docKey) << "]. Have "
+        LOG_INF("Removing session [" << id << "] on docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "]. Have "
                                      << _sessions.size() << " sessions (" << activeSessionCount
                                      << " active). IsLive: " << session->isLive()
                                      << ", IsReadOnly: " << session->isReadOnly()
@@ -4069,7 +4069,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
     try
     {
 #if !MOBILEAPP
-        _admin.rmDoc(_docKey, id);
+        _admin.rmDoc(_docKeyNoLog, id);
         COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
         if (_docState.isUnloadRequested())
@@ -4093,7 +4093,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
         if (lastEditableSession && _lockCtx->isLocked() && _storage &&
             !updateStorageLockState(*session, StorageBase::LockState::UNLOCK, error))
         {
-            LOG_ERR("Failed to unlock docKey [" << Anonymizer::anonymize(_docKey)
+            LOG_ERR("Failed to unlock docKey [" << Anonymizer::anonymize(_docKeyNoLog)
                                                 << "] before disconnecting last editable session ["
                                                 << session->getName() << "]: " << error);
         }
@@ -4130,7 +4130,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 // csv import dialogs), it will wait for their dismissal indefinitely.
                 // Neither would our load-timeout kick in, since we would be gone.
                 LOG_INF("Session [" << session->getName() << "] disconnected but DocKey ["
-                                    << Anonymizer::anonymize(_docKey)
+                                    << Anonymizer::anonymize(_docKeyNoLog)
                                     << "] isn't loaded yet. Terminating the child roughly");
                 if (_childProcess)
                     _childProcess->terminate();
@@ -4158,7 +4158,7 @@ void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& se
     try
     {
         // Notify test code before removal.
-        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerRemoveSession(_docKey, session));
+        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerRemoveSession(_docKeyNoLog, session));
 
         const bool readonly = session->isReadOnly();
         session->dispose();
@@ -4168,7 +4168,7 @@ void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& se
         _sessions.erase(sessionId);
 
         LOG_TRC("Removed " << (readonly ? "" : "non-") << "readonly session [" << sessionId
-                           << "] from docKey [" << Anonymizer::anonymize(_docKey) << "] to have " << _sessions.size()
+                           << "] from docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] to have " << _sessions.size()
                            << " session(s): " <<
                 [&](auto& log)
                 {
@@ -4193,13 +4193,13 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
 
     LOG_TRC("Creating new client session " << (isReadOnly ? "readonly" : "non-readonly")
                                            << " session [" << id << "] to docKey ["
-                                           << Anonymizer::anonymize(requestDetails.getDocKey()) << ']');
+                                           << Anonymizer::anonymize(requestDetails.getDocKeyNoLog()) << ']');
 
     try
     {
         if (isMarkedToDestroy() || _docState.isCloseRequested())
         {
-            LOG_WRN("DocBroker [" << Anonymizer::anonymize(getDocKey())
+            LOG_WRN("DocBroker [" << Anonymizer::anonymize(getDocKeyNoLog())
                                   << "] is unloading. Rejecting client request to load session ["
                                   << id << ']');
             if (ws)
@@ -4275,7 +4275,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
-    LOG_DBG("Alerting all users of [" << Anonymizer::anonymize(_docKey) << "]: " << msg);
+    LOG_DBG("Alerting all users of [" << Anonymizer::anonymize(_docKeyNoLog) << "]: " << msg);
     for (auto& it : _sessions)
     {
         if (!it.second->inWaitDisconnected())
@@ -5109,11 +5109,11 @@ void DocumentBroker::setModified(const bool value)
 {
 #if !MOBILEAPP
     // Flag the document as modified in the admin console.
-    _admin.modificationAlert(_docKey, getPid(), value);
+    _admin.modificationAlert(_docKeyNoLog, getPid(), value);
 
     // Flag the document as uploaded in the admin console.
     _admin.uploadedAlert(
-        _docKey, getPid(), !isAsyncUploading() && needToUploadToStorage() == NeedToUpload::No);
+        _docKeyNoLog, getPid(), !isAsyncUploading() && needToUploadToStorage() == NeedToUpload::No);
 #endif
 
     LOG_DBG("Modified state set to " << value << " for Doc [" << _docId << ']');
@@ -5342,7 +5342,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 void DocumentBroker::shutdownClients(const std::string& closeReason)
 {
     ASSERT_CORRECT_THREAD();
-    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << Anonymizer::anonymize(_docKey) << "] with reason: " << closeReason);
+    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] with reason: " << closeReason);
 
     // First copy into local container, since removeSession
     // will erase from _sessions, but will leave the last.
@@ -5375,14 +5375,14 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 {
     ASSERT_CORRECT_THREAD();
 
-    LOG_INF("Terminating doc [" << Anonymizer::anonymize(_docKey) << "] with reason: " << closeReason);
+    LOG_INF("Terminating doc [" << Anonymizer::anonymize(_docKeyNoLog) << "] with reason: " << closeReason);
 
     // Close all running sessions first.
     shutdownClients(closeReason);
 
     if (_childProcess)
     {
-        LOG_INF("Terminating child [" << getPid() << "] of doc [" << Anonymizer::anonymize(_docKey) << ']');
+        LOG_INF("Terminating child [" << getPid() << "] of doc [" << Anonymizer::anonymize(_docKeyNoLog) << ']');
 
         _childProcess->close();
     }
@@ -5414,12 +5414,12 @@ void DocumentBroker::closeDocument(const std::string& reason)
     {
         // Discarding changes in the face of conflict in storage.
         LOG_DBG("Closing DocumentBroker for docKey ["
-                << Anonymizer::anonymize(_docKey) << "] and discarding changes with reason: " << reason);
+                << Anonymizer::anonymize(_docKeyNoLog) << "] and discarding changes with reason: " << reason);
         stop(reason);
     }
     else
     {
-        LOG_DBG("Closing DocumentBroker for docKey [" << Anonymizer::anonymize(_docKey) << "] with reason: " << reason);
+        LOG_DBG("Closing DocumentBroker for docKey [" << Anonymizer::anonymize(_docKeyNoLog) << "] with reason: " << reason);
     }
 }
 
@@ -5433,12 +5433,12 @@ void DocumentBroker::disconnectedFromKit(bool unexpected)
     if (_closeReason.empty())
     {
         // If we have a reason to close, no advantage in clobbering it.
-        LOG_INF("DocBroker [" << Anonymizer::anonymize(_docKey) << "] Disconnected from Kit. Flagging to close");
+        LOG_INF("DocBroker [" << Anonymizer::anonymize(_docKeyNoLog) << "] Disconnected from Kit. Flagging to close");
         closeDocument("docdisconnected");
     }
     else
     {
-        LOG_INF("DocBroker [" << Anonymizer::anonymize(_docKey) << "] Disconnected from Kit while closing with reason ["
+        LOG_INF("DocBroker [" << Anonymizer::anonymize(_docKeyNoLog) << "] Disconnected from Kit while closing with reason ["
                               << _closeReason << ']');
     }
 
@@ -5502,7 +5502,7 @@ void DocumentBroker::processBatchUpdates()
 #if !MOBILEAPP
     if ((_lastActivityTime - _lastNotifiedActivityTime) > 250ms)
     {
-        _admin.updateLastActivityTime(_docKey);
+        _admin.updateLastActivityTime(_docKeyNoLog);
         _lastNotifiedActivityTime = _lastActivityTime;
     }
 #endif
@@ -5568,7 +5568,7 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
             if (_storageManager.getSizeAsUploaded() == size || _storageManager.getSizeOnServer())
             {
                 LOG_INF("After failing to upload ["
-                        << Anonymizer::anonymize(_docKey) << "], the size on WOPI host matches "
+                        << Anonymizer::anonymize(_docKeyNoLog) << "], the size on WOPI host matches "
                         << (_storageManager.getSizeAsUploaded() == size ? "our uploaded"
                                                                         : "the old size before our")
                         << " last uploaded size: " << size
@@ -5601,7 +5601,7 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
                     // Got some response, but not positive. This is an expired session.
                     LOG_WRN("CheckFileInfo on ["
                             << failedSession->getId()
-                            << "] failed because it has invalid access_token for [" << Anonymizer::anonymize(_docKey)
+                            << "] failed because it has invalid access_token for [" << Anonymizer::anonymize(_docKeyNoLog)
                             << "], resetting the authorization token");
                     failedSession->invalidateAuthorizationToken();
                 }
@@ -5615,7 +5615,7 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
                 assert(checkFileInfo.state() == CheckFileInfo::State::Timedout ||
                        checkFileInfo.state() == CheckFileInfo::State::Fail);
                 LOG_INF("CheckFileInfo on ["
-                        << Anonymizer::anonymize(_docKey) << "] for session #"
+                        << Anonymizer::anonymize(_docKeyNoLog) << "] for session #"
                         << (failedSession ? failedSession->getId() : "<expired>") << " timed-out");
             }
         }
@@ -5648,7 +5648,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     const auto now = std::chrono::steady_clock::now();
 
-    os << "\nDocumentBroker [" << _docId << "] Dump: [" << getDocKey() << "], pid: " << getPid();
+    os << "\nDocumentBroker [" << _docId << "] Dump: [" << getDocKeyNoLog() << "], pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
     else
@@ -5667,7 +5667,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  filename: " << COOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
     os << "\n  jailed uri: " << COOLWSD::anonymizeUrl(_uriJailed);
-    os << "\n  doc key: " << _docKey;
+    os << "\n  doc key: " << _docKeyNoLog;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  createTime: " << Util::getTimeForLog(now, _createTime);

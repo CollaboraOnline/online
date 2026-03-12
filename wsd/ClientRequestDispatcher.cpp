@@ -120,17 +120,17 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 
 } // end anonymous namespace
 
-/// Find the DocumentBroker for the given docKey, if one exists.
+/// Find the DocumentBroker for the given docKeyNoLog, if one exists.
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// Returns the error message, if any, when no DocBroker is created/found.
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& configId, const std::string& id,
+                      const std::string& docKeyNoLog, const std::string& configId, const std::string& id,
                       const Poco::URI& uriPublic, unsigned mobileAppDocId)
 {
     LOG_INF("Find or create DocBroker for docKey ["
-            << Anonymizer::anonymize(docKey) << "] for session [" << id << "] on url ["
+            << Anonymizer::anonymize(docKeyNoLog) << "] for session [" << id << "] on url ["
             << COOLWSD::anonymizeUrl(uriPublic.toString()) << ']'
             << " with configid " << configId);
 
@@ -142,7 +142,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
     {
         // TerminationFlag implies ShutdownRequested.
         LOG_WRN((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
-                << " set. Not loading new session [" << id << "] for docKey [" << Anonymizer::anonymize(docKey) << ']');
+                << " set. Not loading new session [" << id << "] for docKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
 
         return std::make_pair(nullptr, "error: cmd=load kind=recycling");
     }
@@ -150,17 +150,17 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
     std::shared_ptr<DocumentBroker> docBroker;
 
     // Lookup this document.
-    const auto it = DocBrokers.find(docKey);
+    const auto it = DocBrokers.find(docKeyNoLog);
     if (it != DocBrokers.end() && it->second)
     {
         // Get the DocumentBroker from the Cache.
-        LOG_DBG("Found DocumentBroker with docKey [" << Anonymizer::anonymize(docKey) << ']');
+        LOG_DBG("Found DocumentBroker with docKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
         docBroker = it->second;
 
         // Destroying the document? Let the client reconnect.
         if (docBroker->isUnloadingUnrecoverably())
         {
-            LOG_WRN("DocBroker [" << Anonymizer::anonymize(docKey)
+            LOG_WRN("DocBroker [" << Anonymizer::anonymize(docKeyNoLog)
                                   << "] is unloading. Rejecting client request to load session ["
                                   << id << ']');
 
@@ -169,7 +169,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
     }
     else
     {
-        LOG_DBG("No DocumentBroker with docKey [" << Anonymizer::anonymize(docKey)
+        LOG_DBG("No DocumentBroker with docKey [" << Anonymizer::anonymize(docKeyNoLog)
                                                   << "] found. Creating new Child and Document");
     }
 
@@ -177,7 +177,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
     {
         // TerminationFlag implies ShutdownRequested.
         LOG_ERR((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
-                << " set. Not loading new session [" << id << "] for docKey [" << Anonymizer::anonymize(docKey) << ']');
+                << " set. Not loading new session [" << id << "] for docKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
 
         return std::make_pair(nullptr, "error: cmd=load kind=recycling");
     }
@@ -189,7 +189,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
         {
             LOG_WRN("Maximum number of open documents of "
                     << COOLWSD::MaxDocuments << " reached while loading new session [" << id
-                    << "] for docKey [" << Anonymizer::anonymize(docKey) << ']');
+                    << "] for docKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
             if constexpr (ConfigUtil::isSupportKeyEnabled())
             {
                 std::ostringstream oss;
@@ -200,11 +200,11 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
         }
 
         // Set the one we just created.
-        LOG_DBG("New DocumentBroker for docKey [" << Anonymizer::anonymize(docKey) << ']');
-        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey,
+        LOG_DBG("New DocumentBroker for docKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
+        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKeyNoLog,
                                                      configId, mobileAppDocId);
-        DocBrokers.emplace(docKey, docBroker);
-        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << Anonymizer::anonymize(docKey) << ']');
+        DocBrokers.emplace(docKeyNoLog, docBroker);
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << Anonymizer::anonymize(docKeyNoLog) << ']');
     }
 
     return std::make_pair(docBroker, std::string());
@@ -407,33 +407,33 @@ public:
 /// Constructs ConvertToBroker implamentation based on request type
 static std::shared_ptr<ConvertToBroker>
 getConvertToBrokerImplementation(const std::string& requestType, const std::string& fromPath,
-                                 const Poco::URI& uriPublic, const std::string& docKey,
+                                 const Poco::URI& uriPublic, const std::string& docKeyNoLog,
                                  const std::string& format, const std::string& options,
                                  const std::string& lang, const std::string& target,
                                  const std::string& filter, const std::string& transformJSON)
 {
     if (requestType == "convert-to")
-        return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options,
+        return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKeyNoLog, format, options,
                                                  lang);
 
     if (requestType == "extract-link-targets")
-        return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, lang);
+        return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKeyNoLog, lang);
 
     if (requestType == "extract-document-structure")
-        return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKey, lang,
+        return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKeyNoLog, lang,
                                                                 filter);
     if (requestType == "transform-document-structure")
     {
         if (format.empty())
             return std::make_shared<TransformDocumentStructureBroker>(
-                fromPath, uriPublic, docKey, Poco::Path(fromPath).getExtension(), lang,
+                fromPath, uriPublic, docKeyNoLog, Poco::Path(fromPath).getExtension(), lang,
                 transformJSON);
-        return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey,
+        return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKeyNoLog,
                                                                   format, lang, transformJSON);
     }
 
     if (requestType == "get-thumbnail")
-        return std::make_shared<GetThumbnailBroker>(fromPath, uriPublic, docKey, lang, target);
+        return std::make_shared<GetThumbnailBroker>(fromPath, uriPublic, docKeyNoLog, lang, target);
 
     return nullptr;
 }
@@ -1724,14 +1724,14 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         return false;
     }
 
-    const auto docKey = RequestDetails::getDocKey(WOPISrc);
+    const auto docKeyNoLog = RequestDetails::getDocKeyNoLog(WOPISrc);
     LOG_TRC_S("Clipboard request for us: [" << serverId << "] with tag [" << tag << "] on docKey ["
-                                            << Anonymizer::anonymize(docKey) << ']');
+                                            << Anonymizer::anonymize(docKeyNoLog) << ']');
 
     std::shared_ptr<DocumentBroker> docBroker;
     {
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto it = DocBrokers.find(docKey);
+        auto it = DocBrokers.find(docKeyNoLog);
         if (it != DocBrokers.end())
             docBroker = it->second;
     }
@@ -1786,7 +1786,7 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
             else
             {
                 LOG_ERR_S("Invalid zero size set clipboard content with tag ["
-                          << tag << "] on docKey [" << Anonymizer::anonymize(docKey) << ']');
+                          << tag << "] on docKey [" << Anonymizer::anonymize(docKeyNoLog) << ']');
                 clipFile.clear();
                 jailClipFile.clear();
             }
@@ -1810,7 +1810,7 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
     else if (!DocumentBroker::handlePersistentClipboardRequest(type, socket, tag, false))
     {
         LOG_ERR_S("Invalid clipboard request to server ["
-                  << serverId << "] with tag [" << tag << "] and broker [" << Anonymizer::anonymize(docKey)
+                  << serverId << "] with tag [" << tag << "] and broker [" << Anonymizer::anonymize(docKeyNoLog)
                   << "]: " << (docBroker ? "" : "not ") << "found");
 
         std::string errMsg = "Empty clipboard item / session tag " + tag;
@@ -1937,18 +1937,18 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         return false;
     }
 
-    const auto docKey = RequestDetails::getDocKey(WOPISrc);
-    LOG_TRC_S("Looking up DocBroker with docKey [" << Anonymizer::anonymize(docKey) << "] referenced in WOPISrc ["
+    const auto docKeyNoLog = RequestDetails::getDocKeyNoLog(WOPISrc);
+    LOG_TRC_S("Looking up DocBroker with docKey [" << Anonymizer::anonymize(docKeyNoLog) << "] referenced in WOPISrc ["
                                                    << Anonymizer::anonymizeUrl(WOPISrc)
                                                    << "] in media URL: " + Anonymizer::anonymizeUrl(request.getURI()));
 
     std::shared_ptr<DocumentBroker> docBroker;
     {
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto it = DocBrokers.find(docKey);
+        auto it = DocBrokers.find(docKeyNoLog);
         if (it == DocBrokers.end())
         {
-            LOG_ERR_S("Unknown DocBroker with docKey [" << Anonymizer::anonymize(docKey) << "] referenced in WOPISrc ["
+            LOG_ERR_S("Unknown DocBroker with docKey [" << Anonymizer::anonymize(docKeyNoLog) << "] referenced in WOPISrc ["
                                                         << Anonymizer::anonymizeUrl(WOPISrc)
                                                         << "] in media URL: " + Anonymizer::anonymizeUrl(request.getURI()));
 
@@ -2205,7 +2205,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
                 additionalFileUrisPublic[key] = RequestDetails::sanitizeLocalPath(it->second);
             }
-            const std::string docKey = RequestDetails::getDocKey(uriPublic);
+            const std::string docKeyNoLog = RequestDetails::getDocKeyNoLog(uriPublic);
 
             std::string options;
             if (form.has("options"))
@@ -2265,22 +2265,22 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             // In that case, we can use a pool and index by publicPath.
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-            LOG_DBG("New DocumentBroker for docKey [" << Anonymizer::anonymize(docKey) << "].");
+            LOG_DBG("New DocumentBroker for docKey [" << Anonymizer::anonymize(docKeyNoLog) << "].");
             auto docBroker = getConvertToBrokerImplementation(
-                requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target,
+                requestDetails[1], fromPath, uriPublic, docKeyNoLog, format, options, lang, target,
                 filter, encodedTransformJSON);
             handler.takeFiles();
 
             COOLWSD::cleanupDocBrokers();
 
-            DocBrokers.emplace(docKey, docBroker);
-            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << Anonymizer::anonymize(docKey)
+            DocBrokers.emplace(docKeyNoLog, docBroker);
+            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << Anonymizer::anonymize(docKeyNoLog)
                             << "].");
 
             if (!docBroker->startConversion(disposition, _id, additionalFileUrisPublic))
             {
                 LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey ["
-                                                                    << Anonymizer::anonymize(docKey) << "].");
+                                                                    << Anonymizer::anonymize(docKeyNoLog) << "].");
                 COOLWSD::cleanupDocBrokers();
             }
         }
@@ -2308,17 +2308,17 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             const std::string formChildid(form.get("childid"));
             const std::string formName(form.get("name"));
 
-            // Validate the docKey
+            // Validate the docKeyNoLog
             const std::string decodedUri = requestDetails.getDocumentURI();
-            const std::string docKey = RequestDetails::getDocKey(decodedUri);
+            const std::string docKeyNoLog = RequestDetails::getDocKeyNoLog(decodedUri);
 
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-            auto docBrokerIt = DocBrokers.find(docKey);
+            auto docBrokerIt = DocBrokers.find(docKeyNoLog);
 
             // Maybe just free the client from sending childid in form ?
             if (docBrokerIt == DocBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
             {
-                throw BadRequestException("DocKey [" + Anonymizer::anonymize(docKey) + "] or childid [" + formChildid +
+                throw BadRequestException("DocKey [" + Anonymizer::anonymize(docKeyNoLog) + "] or childid [" + formChildid +
                                           "] is invalid.");
             }
             docBrokersLock.unlock();
@@ -2367,13 +2367,13 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
         // 1. Validate the dockey
         const std::string decodedUri = requestDetails.getDocumentURI();
-        const std::string docKey = RequestDetails::getDocKey(decodedUri);
+        const std::string docKeyNoLog = RequestDetails::getDocKeyNoLog(decodedUri);
 
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto docBrokerIt = DocBrokers.find(docKey);
+        auto docBrokerIt = DocBrokers.find(docKeyNoLog);
         if (docBrokerIt == DocBrokers.end())
         {
-            throw BadRequestException("DocKey [" + Anonymizer::anonymize(docKey) + "] is invalid.");
+            throw BadRequestException("DocKey [" + Anonymizer::anonymize(docKeyNoLog) + "] is invalid.");
         }
 
         std::string downloadId = requestDetails[3];
@@ -2466,25 +2466,25 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             return false;
 
         Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
-        const std::string docKey = RequestDetails::getDocKey(uriPublic);
+        const std::string docKeyNoLog = RequestDetails::getDocKeyNoLog(uriPublic);
 
         // This lock could become a bottleneck.
         // In that case, we can use a pool and index by publicPath.
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-        LOG_DBG("New DocumentBroker for docKey [" << Anonymizer::anonymize(docKey) << "].");
+        LOG_DBG("New DocumentBroker for docKey [" << Anonymizer::anonymize(docKeyNoLog) << "].");
         auto docBroker = std::make_shared<RenderSearchResultBroker>(
-            fromPath, uriPublic, docKey, handler.getSearchResultContent());
+            fromPath, uriPublic, docKeyNoLog, handler.getSearchResultContent());
         handler.takeFile();
 
         COOLWSD::cleanupDocBrokers();
 
-        DocBrokers.emplace(docKey, docBroker);
-        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << Anonymizer::anonymize(docKey) << "].");
+        DocBrokers.emplace(docKeyNoLog, docBroker);
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << Anonymizer::anonymize(docKeyNoLog) << "].");
 
         if (!docBroker->executeCommand(disposition, _id))
         {
-            LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << Anonymizer::anonymize(docKey)
+            LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << Anonymizer::anonymize(docKeyNoLog)
                                                                 << "].");
             COOLWSD::cleanupDocBrokers();
         }
@@ -2505,8 +2505,8 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
 
     LOG_INF("URL [" << Anonymizer::anonymizeUrl(url) << "] for Proxy request.");
     auto uriPublic = RequestDetails::sanitizeURI(url);
-    const auto docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKey));
+    const auto docKeyNoLog = RequestDetails::getDocKeyNoLog(uriPublic);
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKeyNoLog));
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
 
@@ -2524,14 +2524,14 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
 
     // Request a kit process for this doc.
     std::pair<std::shared_ptr<DocumentBroker>, std::string> pair
-        = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, /*TODO*/ "",
+        = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKeyNoLog, /*TODO*/ "",
                               _id, uriPublic, /*mobileAppDocId=*/0);
     auto docBroker = pair.first;
 
     if (!docBroker)
     {
         const auto& errorMsg = pair.second;
-        LOG_ERR("Failed to find document [" << Anonymizer::anonymize(docKey) << "]: " << errorMsg);
+        LOG_ERR("Failed to find document [" << Anonymizer::anonymize(docKeyNoLog) << "]: " << errorMsg);
         // badness occurred:
         auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
@@ -2546,7 +2546,7 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
          requestDetails](const std::shared_ptr<Socket>& moveSocket)
         {
             // Now inside the document broker thread ...
-            LOG_TRC_S("In the docbroker thread for " << Anonymizer::anonymize(docBroker->getDocKey()));
+            LOG_TRC_S("In the docbroker thread for " << Anonymizer::anonymize(docBroker->getDocKeyNoLog()));
 
             const int fd = moveSocket->getFD();
             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
@@ -2559,19 +2559,19 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
             catch (const UnauthorizedRequestException& exc)
             {
                 LOG_ERR_S("Unauthorized Request while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << fd
+                          << docBroker->getDocKeyNoLog() << " for socket #" << fd
                           << ". Terminating connection. Error: " << exc.what());
             }
             catch (const StorageConnectionException& exc)
             {
                 LOG_ERR_S("Storage error while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << fd
+                          << docBroker->getDocKeyNoLog() << " for socket #" << fd
                           << ". Terminating connection. Error: " << exc.what());
             }
             catch (const std::exception& exc)
             {
                 LOG_ERR_S("Error while starting session on "
-                          << docBroker->getDocKey() << " for socket #" << fd
+                          << docBroker->getDocKeyNoLog() << " for socket #" << fd
                           << ". Terminating connection. Error: " << exc.what());
             }
             // badness occurred:

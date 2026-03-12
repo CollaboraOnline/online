@@ -133,21 +133,21 @@ private:
 /// Containing basic information about document
 class DocBasicInfo final
 {
-    std::string _docKey;
+    std::string _docKeyNoLog;
     std::time_t _idleTime;
     int _mem;
     bool _saved;
 
 public:
-    DocBasicInfo(std::string docKey, std::time_t idleTime, int mem, bool saved)
-        : _docKey(std::move(docKey))
+    DocBasicInfo(std::string docKeyNoLog, std::time_t idleTime, int mem, bool saved)
+        : _docKeyNoLog(std::move(docKeyNoLog))
         , _idleTime(idleTime)
         , _mem(mem)
         , _saved(saved)
     {
     }
 
-    const std::string& getDocKey() const { return _docKey; }
+    const std::string& getDocKeyNoLog() const { return _docKeyNoLog; }
 
     std::time_t getIdleTime() const { return _idleTime; }
 
@@ -160,11 +160,11 @@ public:
 class AdminDocument final
 {
 public:
-    AdminDocument(const std::string& docKey, pid_t pid, const std::string& filename,
+    AdminDocument(const std::string& docKeyNoLog, pid_t pid, const std::string& filename,
                   const Poco::URI& wopiSrc)
         : _wopiSrc(wopiSrc.toString())
         , _hostName(wopiSrc.getHost())
-        , _docKey(docKey)
+        , _docKeyNoLog(docKeyNoLog)
         , _filename(filename)
         , _memoryDirty(0)
         , _lastJiffy(0)
@@ -188,7 +188,7 @@ public:
     {
     }
 
-    std::string getDocKey() const { return _docKey; }
+    std::string getDocKeyNoLog() const { return _docKeyNoLog; }
 
     pid_t getPid() const { return _pid; }
 
@@ -261,7 +261,7 @@ private:
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
     std::vector<std::string> _snapshots;
-    std::string _docKey;
+    std::string _docKeyNoLog;
     /// Hosted filename
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
@@ -363,9 +363,9 @@ public:
 
     void unsubscribe(int sessionId, const std::string& command);
 
-    void modificationAlert(const std::string& docKey, pid_t pid, bool value);
+    void modificationAlert(const std::string& docKeyNoLog, pid_t pid, bool value);
 
-    void uploadedAlert(const std::string& docKey, pid_t pid, bool value);
+    void uploadedAlert(const std::string& docKeyNoLog, pid_t pid, bool value);
 
     void clearMemStats() { _memStats.clear(); }
 
@@ -387,18 +387,18 @@ public:
 
     void notify(const std::string& message);
 
-    void addDocument(const std::string& docKey, pid_t pid, const std::string& filename,
+    void addDocument(const std::string& docKeyNoLog, pid_t pid, const std::string& filename,
                      const std::string& sessionId, const std::string& userName,
                      const std::string& userId, const std::weak_ptr<FILE>& smapsFp,
                      const Poco::URI& wopiSrc, bool readOnly);
 
-    void removeDocument(const std::string& docKey, const std::string& sessionId);
-    void removeDocument(const std::string& docKey);
+    void removeDocument(const std::string& docKeyNoLog, const std::string& sessionId);
+    void removeDocument(const std::string& docKeyNoLog);
 
-    void updateLastActivityTime(const std::string& docKey);
+    void updateLastActivityTime(const std::string& docKeyNoLog);
     std::time_t getLastActivityTime() const { return _lastActivity; }
 
-    void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
+    void addBytes(const std::string& docKeyNoLog, uint64_t sent, uint64_t recv);
 
     uint64_t getSentBytesTotal() const { return _sentBytesTotal; }
     uint64_t getRecvBytesTotal() const { return _recvBytesTotal; }
@@ -409,9 +409,9 @@ public:
     std::vector<DocBasicInfo> getDocumentsSortedByIdle() const;
     void cleanupResourceConsumingDocs();
 
-    void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
-    void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
-    void setDocWopiUploadDuration(const std::string& docKey,
+    void setViewLoadDuration(const std::string& docKeyNoLog, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
+    void setDocWopiDownloadDuration(const std::string& docKeyNoLog, std::chrono::milliseconds wopiDownloadDuration);
+    void setDocWopiUploadDuration(const std::string& docKeyNoLog,
                                   std::chrono::milliseconds wopiUploadDuration);
     void addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
                               unsigned oomKilledCount);
@@ -433,12 +433,12 @@ public:
     static void getKitPidsFromSystem(std::vector<int> *pids);
     bool isDocSaved(const std::string&);
     bool isDocReadOnly(const std::string&);
-    void setMigratingInfo(const std::string& docKey, const std::string& routeToken, const std::string& serverId);
+    void setMigratingInfo(const std::string& docKeyNoLog, const std::string& routeToken, const std::string& serverId);
     void resetMigratingInfo();
     std::string getCurrentMigDoc() const { return _currentMigDoc; }
     std::string getCurrentMigToken() const { return _currentMigToken; }
     std::string getTargetMigServerId() const { return _targetMigServerId; }
-    void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
+    void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKeyNoLog);
     std::string getWopiSrcMap() const;
     std::string getFilename(int pid) const;
     void routeTokenSanityCheck();

@@ -129,7 +129,7 @@ const std::string AdminDocument::getHistory() const
 {
     std::ostringstream oss;
     oss << "{";
-    oss << "\"docKey\"" << ":\"" << _docKey << "\",";
+    oss << "\"docKey\"" << ":\"" << _docKeyNoLog << "\",";
     oss << "\"filename\"" << ":\"" << COOLWSD::anonymizeUrl(getFilename()) << "\",";
     oss << "\"start\"" << ':' << _start << ',';
     oss << "\"end\"" << ':' << _end << ',';
@@ -521,11 +521,11 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
-void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
+void AdminModel::addBytes(const std::string& docKeyNoLog, uint64_t sent, uint64_t recv)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    auto doc = _documents.find(docKey);
+    auto doc = _documents.find(docKeyNoLog);
     if(doc != _documents.end())
         doc->second.addBytes(sent, recv);
 
@@ -533,11 +533,11 @@ void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t rec
     _recvBytesTotal += recv;
 }
 
-void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool value)
+void AdminModel::modificationAlert(const std::string& docKeyNoLog, pid_t pid, bool value)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    auto doc = _documents.find(docKey);
+    auto doc = _documents.find(docKeyNoLog);
     if (doc != _documents.end())
         doc->second.setModified(value);
 
@@ -549,11 +549,11 @@ void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool va
     notify(oss.str());
 }
 
-void AdminModel::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
+void AdminModel::uploadedAlert(const std::string& docKeyNoLog, pid_t pid, bool value)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    auto doc = _documents.find(docKey);
+    auto doc = _documents.find(docKeyNoLog);
     if (doc != _documents.end())
         doc->second.setUploaded(value);
 
@@ -562,18 +562,18 @@ void AdminModel::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
     notify(oss.str());
 }
 
-void AdminModel::addDocument(const std::string& docKey, pid_t pid,
+void AdminModel::addDocument(const std::string& docKeyNoLog, pid_t pid,
                              const std::string& filename, const std::string& sessionId,
                              const std::string& userName, const std::string& userId,
                              const std::weak_ptr<FILE>& smapsFp, const Poco::URI& wopiSrc, bool isViewReadOnly)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
     const auto ret =
-        _documents.emplace(docKey, AdminDocument(docKey, pid, filename, wopiSrc));
+        _documents.emplace(docKeyNoLog, AdminDocument(docKeyNoLog, pid, filename, wopiSrc));
     ret.first->second.setProcSMapsFp(smapsFp);
     ret.first->second.takeSnapshot();
     ret.first->second.addView(sessionId, userName, userId, isViewReadOnly);
-    LOG_DBG("Added admin document [" << Anonymizer::anonymize(docKey) << "].");
+    LOG_DBG("Added admin document [" << Anonymizer::anonymize(docKeyNoLog) << "].");
 
     std::string memoryAllocated;
     std::string encodedUsername;
@@ -613,7 +613,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
 
     const std::string& wopiHost = wopiSrc.getHost();
     oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString()
-        << ' ' << docKey;
+        << ' ' << docKeyNoLog;
 
     CONFIG_STATIC const bool log = ConfigUtil::getConfigValue<bool>("logging.docstats", false);
     if (log)
@@ -626,11 +626,11 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     notify(oss.str());
 }
 
-void AdminModel::removeDocument(const std::string& docKey, const std::string& sessionId)
+void AdminModel::removeDocument(const std::string& docKeyNoLog, const std::string& sessionId)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    auto docIt = _documents.find(docKey);
+    auto docIt = _documents.find(docKeyNoLog);
     if (docIt != _documents.end() && !docIt->second.isExpired())
     {
         // Notify the subscribers
@@ -648,11 +648,11 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
     }
 }
 
-void AdminModel::removeDocument(const std::string& docKey)
+void AdminModel::removeDocument(const std::string& docKeyNoLog)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    auto docIt = _documents.find(docKey);
+    auto docIt = _documents.find(docKeyNoLog);
     if (docIt != _documents.end())
     {
         std::ostringstream oss;
@@ -667,7 +667,7 @@ void AdminModel::removeDocument(const std::string& docKey)
             docIt->second.expireView(pair.first);
         }
 
-        LOG_DBG("Removed admin document [" << Anonymizer::anonymize(docKey) << "].");
+        LOG_DBG("Removed admin document [" << Anonymizer::anonymize(docKeyNoLog) << "].");
         doRemove(docIt);
     }
 }
@@ -761,7 +761,7 @@ std::vector<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
     docs.reserve(_documents.size());
     for (const auto& it: _documents)
     {
-        docs.emplace_back(it.second.getDocKey(),
+        docs.emplace_back(it.second.getDocKeyNoLog(),
                           it.second.getIdleTime(),
                           it.second.getMemoryDirty(),
                           !it.second.getModifiedStatus());
@@ -800,7 +800,7 @@ void AdminModel::cleanupResourceConsumingDocs()
                 const size_t badBehaviorDuration = now - doc.getBadBehaviorDetectionTime();
                 if (!doc.getBadBehaviorDetectionTime())
                 {
-                    LOG_WRN("Detected resource consuming doc [" << Anonymizer::anonymize(doc.getDocKey()) << "]: idle="
+                    LOG_WRN("Detected resource consuming doc [" << Anonymizer::anonymize(doc.getDocKeyNoLog()) << "]: idle="
                             << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
                     doc.setBadBehaviorDetectionTime(now);
                 }
@@ -814,9 +814,9 @@ void AdminModel::cleanupResourceConsumingDocs()
                     // could be dumped. If the process is still alive then, at next
                     // iteration, try to SIGKILL it.
                     if (SigUtil::killChild(doc.getPid(), doc.getAbortTime() ? SIGKILL : SIGABRT))
-                        LOG_ERR((doc.getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << Anonymizer::anonymize(doc.getDocKey()) << "]");
+                        LOG_ERR((doc.getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << Anonymizer::anonymize(doc.getDocKeyNoLog()) << "]");
                     else
-                        LOG_ERR("Cannot " << (doc.getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << Anonymizer::anonymize(doc.getDocKey()) << "]");
+                        LOG_ERR("Cannot " << (doc.getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << Anonymizer::anonymize(doc.getDocKeyNoLog()) << "]");
                     if (!doc.getAbortTime())
                         doc.setAbortTime(std::time(nullptr));
                 }
@@ -824,7 +824,7 @@ void AdminModel::cleanupResourceConsumingDocs()
             else if (doc.getBadBehaviorDetectionTime())
             {
                 doc.setBadBehaviorDetectionTime(0);
-                LOG_WRN("Removed doc [" << Anonymizer::anonymize(doc.getDocKey()) << "] from resource consuming monitoring list: idle="
+                LOG_WRN("Removed doc [" << Anonymizer::anonymize(doc.getDocKeyNoLog()) << "] from resource consuming monitoring list: idle="
                         << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
             }
         }
@@ -846,7 +846,7 @@ std::string AdminModel::getDocuments() const
             Poco::URI::encode(it.second.getFilename(), " ", encodedFilename); // Is encoded name needed?
             oss << separator1 << '{' << ' '
                 << "\"pid\"" << ':' << it.second.getPid() << ','
-                << "\"docKey\"" << ':' << '"' << it.second.getDocKey() << '"' << ','
+                << "\"docKey\"" << ':' << '"' << it.second.getDocKeyNoLog() << '"' << ','
                 << "\"fileName\"" << ':' << '"' << encodedFilename << '"' << ','
                 << "\"wopiHost\"" << ':' << '"' << it.second.getHostName() << '"' << ','
                 << "\"activeViews\"" << ':' << it.second.getActiveViews() << ','
@@ -880,13 +880,13 @@ std::string AdminModel::getDocuments() const
     return oss.str();
 }
 
-void AdminModel::updateLastActivityTime(const std::string& docKey)
+void AdminModel::updateLastActivityTime(const std::string& docKeyNoLog)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     _lastActivity = std::time(nullptr);
 
-    auto docIt = _documents.find(docKey);
+    auto docIt = _documents.find(docKeyNoLog);
     if (docIt != _documents.end())
     {
         if (docIt->second.getIdleTime() >= 10)
@@ -906,23 +906,23 @@ double AdminModel::getServerUptimeSecs()
     return uptime.count() / 1000.0; // Convert to seconds and fractions.
 }
 
-void AdminModel::setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
+void AdminModel::setViewLoadDuration(const std::string& docKeyNoLog, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
 {
-    auto it = _documents.find(docKey);
+    auto it = _documents.find(docKeyNoLog);
     if (it != _documents.end())
         it->second.setViewLoadDuration(sessionId, viewLoadDuration);
 }
 
-void AdminModel::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration)
+void AdminModel::setDocWopiDownloadDuration(const std::string& docKeyNoLog, std::chrono::milliseconds wopiDownloadDuration)
 {
-    auto it = _documents.find(docKey);
+    auto it = _documents.find(docKeyNoLog);
     if (it != _documents.end())
         it->second.setWopiDownloadDuration(wopiDownloadDuration);
 }
 
-void AdminModel::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration)
+void AdminModel::setDocWopiUploadDuration(const std::string& docKeyNoLog, const std::chrono::milliseconds wopiUploadDuration)
 {
-    auto it = _documents.find(docKey);
+    auto it = _documents.find(docKeyNoLog);
     if (it != _documents.end())
         it->second.setWopiUploadDuration(wopiUploadDuration);
 }
@@ -1275,7 +1275,7 @@ void AdminModel::getMetrics(std::ostream& oss) const
         std::string encodedFilename;
         Poco::URI::encode(doc.getFilename(), " ", encodedFilename);
         oss << "doc_info{host=\"" << doc.getHostName() << "\","
-               "key=\"" << doc.getDocKey() << "\","
+               "key=\"" << doc.getDocKeyNoLog() << "\","
                "filename=\"" << encodedFilename << "\","
                "pid=\"" << pid << "\"} 1\n";
 
@@ -1325,18 +1325,18 @@ void AdminModel::notifyDocsMemDirtyChanged()
     }
 }
 
-bool AdminModel::isDocSaved(const std::string& docKey)
+bool AdminModel::isDocSaved(const std::string& docKeyNoLog)
 {
-    auto doc = _documents.find(docKey);
+    auto doc = _documents.find(docKeyNoLog);
     if (doc != _documents.end())
         return !doc->second.getModifiedStatus();
-    LOG_DBG("cannot find document with docKey " << Anonymizer::anonymize(docKey));
+    LOG_DBG("cannot find document with docKey " << Anonymizer::anonymize(docKeyNoLog));
     return false;
 }
 
-bool AdminModel::isDocReadOnly(const std::string& docKey)
+bool AdminModel::isDocReadOnly(const std::string& docKeyNoLog)
 {
-    auto doc = _documents.find(docKey);
+    auto doc = _documents.find(docKeyNoLog);
     if (doc != _documents.end())
     {
         bool isReadOnly = true;
@@ -1350,13 +1350,13 @@ bool AdminModel::isDocReadOnly(const std::string& docKey)
         }
         return isReadOnly;
     }
-    LOG_DBG("cannot find document with docKey " << Anonymizer::anonymize(docKey));
+    LOG_DBG("cannot find document with docKey " << Anonymizer::anonymize(docKeyNoLog));
     return false;
 }
 
-void AdminModel::sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey)
+void AdminModel::sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKeyNoLog)
 {
-    if (getCurrentMigDoc() != docKey)
+    if (getCurrentMigDoc() != docKeyNoLog)
     {
         return;
     }
@@ -1377,7 +1377,7 @@ void AdminModel::sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::str
         oss << '}';
         resetMigratingInfo();
     }
-    COOLWSD::alertUserInternal(docKey, oss.str());
+    COOLWSD::alertUserInternal(docKeyNoLog, oss.str());
 }
 
 std::string AdminModel::getWopiSrcMap() const
@@ -1403,9 +1403,9 @@ std::string AdminModel::getWopiSrcMap() const
     return oss.str();
 }
 
-void AdminModel::setMigratingInfo(const std::string& docKey, const std::string& routeToken, const std::string& serverId)
+void AdminModel::setMigratingInfo(const std::string& docKeyNoLog, const std::string& routeToken, const std::string& serverId)
 {
-    _currentMigDoc = docKey;
+    _currentMigDoc = docKeyNoLog;
     _currentMigToken = routeToken;
     _targetMigServerId = serverId;
 }

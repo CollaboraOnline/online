@@ -327,7 +327,7 @@ void COOLWSD::alertUserInternal(const std::string& dockey, const std::string& ms
     for (auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
-        if (docBroker->getDocKey() == dockey)
+        if (docBroker->getDocKeyNoLog() == dockey)
             docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
     }
 }
@@ -2737,10 +2737,10 @@ void COOLWSD::doHousekeeping()
     }
 }
 
-void COOLWSD::closeDocument(const std::string& docKey, const std::string& message)
+void COOLWSD::closeDocument(const std::string& docKeyNoLog, const std::string& message)
 {
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    auto docBrokerIt = DocBrokers.find(docKey);
+    auto docBrokerIt = DocBrokers.find(docKeyNoLog);
     if (docBrokerIt != DocBrokers.end())
     {
         std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
@@ -2750,10 +2750,10 @@ void COOLWSD::closeDocument(const std::string& docKey, const std::string& messag
     }
 }
 
-void COOLWSD::autoSave(const std::string& docKey)
+void COOLWSD::autoSave(const std::string& docKeyNoLog)
 {
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    auto docBrokerIt = DocBrokers.find(docKey);
+    auto docBrokerIt = DocBrokers.find(docKeyNoLog);
     if (docBrokerIt != DocBrokers.end())
     {
         std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
@@ -2762,10 +2762,10 @@ void COOLWSD::autoSave(const std::string& docKey)
     }
 }
 
-void COOLWSD::setMigrationMsgReceived(const std::string& docKey)
+void COOLWSD::setMigrationMsgReceived(const std::string& docKeyNoLog)
 {
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    auto docBrokerIt = DocBrokers.find(docKey);
+    auto docBrokerIt = DocBrokers.find(docKeyNoLog);
     if (docBrokerIt != DocBrokers.end())
     {
         std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
@@ -3043,13 +3043,13 @@ private:
             const bool unexpected = !docBroker->isUnloading() && !SigUtil::getShutdownRequestFlag();
             if (unexpected)
             {
-                LOG_WRN("DocBroker [" << Anonymizer::anonymize(docBroker->getDocKey())
+                LOG_WRN("DocBroker [" << Anonymizer::anonymize(docBroker->getDocKeyNoLog())
                                       << "] got disconnected from its Kit (" << child->getPid()
                                       << ") unexpectedly. Closing");
             }
             else
             {
-                LOG_DBG("DocBroker [" << Anonymizer::anonymize(docBroker->getDocKey()) << "] disconnected from its Kit ("
+                LOG_DBG("DocBroker [" << Anonymizer::anonymize(docBroker->getDocKeyNoLog()) << "] disconnected from its Kit ("
                                       << child->getPid() << ") as expected");
             }
 

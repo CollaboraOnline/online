@@ -788,15 +788,15 @@ namespace
 } // namespace
 
 Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
-                   const std::string& docKey, const std::string& docId, const std::string& url,
+                   const std::string& docKeyNoLog, const std::string& docId, const std::string& url,
                    const std::shared_ptr<WebSocketHandler>& websocketHandler,
                    unsigned mobileAppDocId)
     : _loKit(loKit)
     , _jailId(jailId)
-    , _docKey(docKey)
+    , _docKeyNoLog(docKeyNoLog)
     , _docId(docId)
     , _url(url)
-    , _obfuscatedFileId(Uri::getFilenameFromURL(Uri::decode(docKey)))
+    , _obfuscatedFileId(Uri::getFilenameFromURL(Uri::decode(docKeyNoLog)))
     , _queue(new KitQueue(*this))
     , _websocketHandler(websocketHandler)
     , _modified(ModifiedState::UnModified)
@@ -815,7 +815,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _duringLoad(0)
     , _bgSavesOngoing(0)
 {
-    LOG_INF("Document ctor for [" << Anonymizer::anonymize(_docKey) <<
+    LOG_INF("Document ctor for [" <<Anonymizer::anonymize(_docKeyNoLog) <<
             "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
             "] and id [" << _docId << "].");
     assert(_loKit);
@@ -832,7 +832,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
 
 Document::~Document()
 {
-    LOG_INF("~Document dtor for [" << Anonymizer::anonymize(_docKey) <<
+    LOG_INF("~Document dtor for [" <<Anonymizer::anonymize(_docKeyNoLog) <<
             "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
             "] and id [" << _docId << "]. There are " <<
             _sessions.size() << " views.");
@@ -2091,7 +2091,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         _loKitDocumentForAndroidOnly = _loKitDocument;
         {
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-            auto docBrokerIt = DocBrokers.find(_docKey);
+            auto docBrokerIt = DocBrokers.find(_docKeyNoLog);
             assert(docBrokerIt != DocBrokers.end());
             _documentBrokerForAndroidOnly = docBrokerIt->second;
         }
@@ -2103,7 +2103,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
         {
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-            auto docBrokerIt = DocBrokers.find(_docKey);
+            auto docBrokerIt = DocBrokers.find(_docKeyNoLog);
             assert(docBrokerIt != DocBrokers.end());
             DocumentData::get(_mobileAppDocId).docBroker = docBrokerIt->second;
         }
@@ -2648,8 +2648,8 @@ std::shared_ptr<lok::Document> Document::getLOKitDocument()
 {
     if (!_loKitDocument)
     {
-        LOG_ERR("Document [" << Anonymizer::anonymize(_docKey) << "] is not loaded.");
-        throw std::runtime_error("Document " + Anonymizer::anonymize(_docKey) + " is not loaded.");
+        LOG_ERR("Document [" <<Anonymizer::anonymize(_docKeyNoLog) << "] is not loaded.");
+        throw std::runtime_error("Document " +Anonymizer::anonymize(_docKeyNoLog) + " is not loaded.");
     }
 
     return _loKitDocument;
@@ -2775,7 +2775,7 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tpid: " << Util::getProcessId()
         << "\n\tstop: " << _stop
         << "\n\tjailId: " << _jailId
-        << "\n\tdocKey: " << _docKey
+        << "\n\tdocKey: " << _docKeyNoLog
         << "\n\tdocId: " << _docId
         << "\n\turl: " << _url
         << "\n\tobfuscatedFileId: " << _obfuscatedFileId

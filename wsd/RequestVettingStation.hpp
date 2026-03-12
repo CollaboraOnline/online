@@ -89,13 +89,13 @@ public:
     }
 
 private:
-    std::shared_ptr<DocumentBroker> createDocBroker(const std::string& docKey,
+    std::shared_ptr<DocumentBroker> createDocBroker(const std::string& docKeyNoLog,
                                                     const std::string& configId,
                                                     const std::string& url,
                                                     const Poco::URI& uriPublic);
 
     void createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
-                             const std::string& docKey, const std::string& url,
+                             const std::string& docKeyNoLog, const std::string& url,
                              const Poco::URI& uriPublic);
 
     /// Send unauthorized error to the client and disconnect the socket.

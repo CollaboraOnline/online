@@ -122,16 +122,16 @@ public:
     void update(const std::string& message);
 
     /// Calls with same pid will increment view count, if pid already exists
-    void addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
+    void addDoc(const std::string& docKeyNoLog, pid_t pid, const std::string& filename,
                 const std::string& sessionId, const std::string& userName,
                 const std::string& userId, const std::weak_ptr<FILE>& smapsFD,
                 const std::string& wopiSrc, bool readOnly);
 
     /// Decrement view count till becomes zero after which doc is removed
-    void rmDoc(const std::string& docKey, const std::string& sessionId);
+    void rmDoc(const std::string& docKeyNoLog, const std::string& sessionId);
 
     /// Remove the document with all views. Used on termination or catastrophic failure.
-    void rmDoc(const std::string& docKey);
+    void rmDoc(const std::string& docKeyNoLog);
 
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; _model.setForKitPid(forKitPid);}
 
@@ -156,8 +156,8 @@ public:
 
     void rescheduleCpuTimer(unsigned interval);
 
-    void updateLastActivityTime(const std::string& docKey);
-    void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
+    void updateLastActivityTime(const std::string& docKeyNoLog);
+    void addBytes(const std::string& docKeyNoLog, uint64_t sent, uint64_t recv);
 
     void dumpState(std::ostream& os) const override;
 
@@ -177,9 +177,9 @@ public:
     void sendMetrics(const std::shared_ptr<StreamSocket>& socket,
                      const std::shared_ptr<http::Response>& response) const;
 
-    void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
-    void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
-    void setDocWopiUploadDuration(const std::string& docKey,
+    void setViewLoadDuration(const std::string& docKeyNoLog, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
+    void setDocWopiDownloadDuration(const std::string& docKeyNoLog, std::chrono::milliseconds wopiDownloadDuration);
+    void setDocWopiUploadDuration(const std::string& docKeyNoLog,
                                   std::chrono::milliseconds uploadDuration);
     void addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
                               unsigned oomKilledCount);

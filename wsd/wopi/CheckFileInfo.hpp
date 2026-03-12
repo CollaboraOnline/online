@@ -41,7 +41,7 @@ public:
         : _url(url)
         , _profileZone("WopiStorage::getWOPIFileInfo", { { "url", url.toString() } })
         , _poll(poll)
-        , _docKey(RequestDetails::getDocKey(url))
+        , _docKeyNoLog(RequestDetails::getDocKeyNoLog(url))
         , _onFinishCallback(std::move(onFinishCallback))
         , _state(State::None)
     {
@@ -58,7 +58,7 @@ public:
     const Poco::URI& url() const { return _url; }
 
     /// Returns our unique DocKey.
-    const std::string& docKey() const { return _docKey; }
+    const std::string& docKeyNoLog() const { return _docKeyNoLog; }
 
     /// Returns the parsed response JSON, if any.
     Poco::JSON::Object::Ptr wopiInfo() const { return _wopiInfo; }
@@ -97,7 +97,7 @@ private:
     ProfileZone _profileZone;
     std::shared_ptr<http::Session> _httpSession;
     std::shared_ptr<TerminatingPoll> _poll;
-    const std::string _docKey; ///< Unique DocKey.
+    const std::string _docKeyNoLog; ///< Unique DocKey.
     std::function<void(CheckFileInfo&)> _onFinishCallback;
     Poco::JSON::Object::Ptr _wopiInfo;
     std::atomic<State> _state;
