@@ -184,7 +184,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             if (!JsonUtil::parseJSON(_userPrivateInfo, userPrivateInfoObject))
             {
                 LOG_ERR("signatureconfig: Failed to parse user private info as JSON: "
-                        << _userPrivateInfo);
+                        << Anonymizer::anonymize(_userPrivateInfo));
                 ++offset;
                 continue;
             }
