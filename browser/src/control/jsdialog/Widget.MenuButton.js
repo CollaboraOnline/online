@@ -145,8 +145,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 		// make it possible to setup separate callbacks for split button
 		if (isSplitButton) {
 			JSDialog.AddOnClick(control.button, applyCallback);
-			if (control.arrow)
-				control.arrow.tabIndex = 0;
 		} else {
 			JSDialog.AddOnClick(control.button, clickFunction);
 			if (control.label)
