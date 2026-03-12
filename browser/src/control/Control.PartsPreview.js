@@ -271,7 +271,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
 						isHtmlName: true,
 						callback: function(key, options) {
-								if (!nPos)
+								if (nPos === undefined)
 									nPos = that._findClickedPart(options.$trigger[0]);
 								if (that.copiedSlide) {
 									// Same-tab paste: use duplicate allows insertion at a position
