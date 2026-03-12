@@ -1078,13 +1078,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			contentDivs.forEach(function(tabPage)
 			{
 				tabPage.addEventListener('keydown', function(e) {
+					let key = e.key;
 					// Determine key direction
-					let key;
-					if (e.key === 'Tab') {
-						key = e.shiftKey ? 'ArrowLeft' : 'ArrowRight'; // Reverse if Shift+Tab
-					} else {
-						key = e.key;
-					}
 					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
 						var currentElement = e.srcElement;
 						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
@@ -1733,7 +1728,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		controls['container'] = div;
-		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
+		if (data.tabIndex !== undefined) {
+			div.tabIndex = data.tabIndex;
+		}
 
 		if (data.index)
 			div.setAttribute('index', data.index);
@@ -2613,6 +2610,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			&& data.type !== 'pushbutton'
 			&& data.type !== 'iconview'
 			&& data.type !== 'overflowgroup'
+			&& data.type !== 'toolitem'
+			&& data.type !== 'customtoolitem'
+			&& data.type !== 'bigtoolitem'
+			&& data.type !== 'bigcustomtoolitem'
+			&& data.type !== 'menubutton'
 			)
 			control.setAttribute('tabIndex', '0');
 	},
