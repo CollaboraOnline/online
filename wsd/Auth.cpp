@@ -90,10 +90,10 @@ const std::string JWTAuth::getAccessToken()
 
     LOG_INF("Sig generated is : " << encodedSig);
 
-    std::string jwtToken = encodedBody + '.' + encodedSig;
-    LOG_INF("JWT token generated: " << Anonymizer::anonymize(jwtToken));
+    std::string jwtTokenNoLog = encodedBody + '.' + encodedSig;
+    LOG_INF("JWT token generated: " << Anonymizer::anonymize(jwtTokenNoLog));
 
-    return jwtToken;
+    return jwtTokenNoLog;
 }
 
 bool JWTAuth::verify(const std::string& accessToken)

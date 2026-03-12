@@ -78,21 +78,21 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             ignoreInput();
             return;
         }
-        std::string jwtToken;
-        COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
+        std::string jwtTokenNoLog;
+        COOLProtocol::getTokenString(tokens[1], "jwt", jwtTokenNoLog);
 
         bool decoded = true;
         try
         {
-            jwtToken = Uri::decode(jwtToken);
+            jwtTokenNoLog = Uri::decode(jwtTokenNoLog);
         }
         catch (const Poco::URISyntaxException&)
         {
             decoded = false;
         }
-        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtToken));
+        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtTokenNoLog));
         JWTAuth authAgent("admin", "admin", "admin");
-        if (decoded && authAgent.verify(jwtToken))
+        if (decoded && authAgent.verify(jwtTokenNoLog))
         {
             LOG_TRC("JWT token is valid");
             _isAuthenticated = true;
@@ -399,22 +399,22 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             LOG_DBG("Auth command without any token");
             sendTextFrame("InvalidAuthToken");
         }
-        std::string jwtToken, id;
-        COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
+        std::string jwtTokenNoLog, id;
+        COOLProtocol::getTokenString(tokens[1], "jwt", jwtTokenNoLog);
         COOLProtocol::getTokenString(tokens[2], "id", id);
 
         try
         {
-            jwtToken = Uri::decode(jwtToken);
+            jwtTokenNoLog = Uri::decode(jwtTokenNoLog);
         }
         catch (const Poco::URISyntaxException& exception)
         {
             LOG_DBG("Invalid URI syntax: " << exception.what());
         }
 
-        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtToken));
+        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtTokenNoLog));
         JWTAuth authAgent("admin", "admin", "admin");
-        if (authAgent.verify(jwtToken))
+        if (authAgent.verify(jwtTokenNoLog))
         {
             LOG_TRC("JWT token is valid");
             sendTextFrame("ValidAuthToken " + id);
