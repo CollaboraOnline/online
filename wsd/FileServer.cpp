@@ -19,6 +19,7 @@
 
 #include "FileServer.hpp"
 
+#include <common/Anonymizer.hpp>
 #include <common/Authorization.hpp>
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
@@ -286,7 +287,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& req
         NameValueCollection cookies;
         request.getCookies(cookies);
         jwtToken = cookies.get("jwt");
-        LOG_INF("Verifying JWT token: " << jwtToken);
+        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtToken));
         JWTAuth authAgent("admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
         {

@@ -18,6 +18,7 @@
 
 #include "Auth.hpp"
 
+#include <common/Anonymizer.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
@@ -90,7 +91,7 @@ const std::string JWTAuth::getAccessToken()
     LOG_INF("Sig generated is : " << encodedSig);
 
     std::string jwtToken = encodedBody + '.' + encodedSig;
-    LOG_INF("JWT token generated: " << jwtToken);
+    LOG_INF("JWT token generated: " << Anonymizer::anonymize(jwtToken));
 
     return jwtToken;
 }

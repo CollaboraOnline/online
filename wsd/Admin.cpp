@@ -16,6 +16,7 @@
 
 #include <config.h>
 
+#include <common/Anonymizer.hpp>
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -89,7 +90,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         {
             decoded = false;
         }
-        LOG_INF("Verifying JWT token: " << jwtToken);
+        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtToken));
         JWTAuth authAgent("admin", "admin", "admin");
         if (decoded && authAgent.verify(jwtToken))
         {
@@ -411,7 +412,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             LOG_DBG("Invalid URI syntax: " << exception.what());
         }
 
-        LOG_INF("Verifying JWT token: " << jwtToken);
+        LOG_INF("Verifying JWT token: " << Anonymizer::anonymize(jwtToken));
         JWTAuth authAgent("admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
         {
