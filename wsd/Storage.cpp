@@ -346,8 +346,8 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
     const std::string publicFilePath = getUri().getPath();
     if (!Poco::File(publicFilePath).exists())
     {
-        LOG_ERR("Local file URI [" << publicFilePath << "] invalid or doesn't exist.");
-        throw BadRequestException("Invalid URI: " + getUri().toString());
+        LOG_ERR("Local file URI [" << COOLWSD::anonymizeUrl(publicFilePath) << "] invalid or doesn't exist.");
+        throw BadRequestException("Invalid URI: " + COOLWSD::anonymizeUrl(getUri().toString()));
     }
     AdditionalFilePaths additionalFilePublicFilePaths;
     for (const auto& it : getAdditionalFileUris())

@@ -97,7 +97,7 @@ public:
 
         virtual void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
-            os << indent << "filename: [" << _filename << ']';
+            os << indent << "filename: [" << COOLWSD::anonymizeUrl(_filename) << ']';
             os << indent << "size: " << _size;
             os << indent << "ownerId: [" << _ownerId << ']';
             os << indent << "modifiedTime: [" << _modifiedTime << ']';
@@ -492,11 +492,10 @@ public:
         os << indent << "isDownloaded: " << _isDownloaded;
         os << indent << "localStorePath: " << _localStorePath;
         os << indent << "jailPath: " << _jailPath;
-        os << indent << "jailedFilePath: " << _jailedFilePath;
-        os << indent << "jailedFilePathAnonym: " << _jailedFilePathAnonym;
+        os << indent << "jailedFilePath: " << _jailedFilePathAnonym;
 
         const auto st = FileUtil::Stat(getRootFilePathUploading());
-        os << indent << "rootFilePathUploading: [" << getRootFilePathUploading() << "], "
+        os << indent << "rootFilePathUploading: [" << COOLWSD::anonymizeUrl(getRootFilePathUploading()) << "], "
            << (st.exists() ? Util::getTimeForLog(now, st.modifiedTimepoint()) : "<missing>");
 
         os << indent << "fileInfo: ";

@@ -855,7 +855,7 @@ void DocumentBroker::pollThread()
                 else
                 {
                     // Fallback to quarantining the original document.
-                    LOG_WRN("Quarantining the original document file: " << _filename);
+                    LOG_WRN("Quarantining the original document file: " << COOLWSD::anonymizeUrl(_filename));
                     _quarantine->quarantineFile(_storage->getRootFilePath());
                 }
             }
@@ -2490,7 +2490,7 @@ bool DocumentBroker::isStorageOutdated() const
     const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
     if (!st.exists())
     {
-        LOG_TRC("File to upload to storage [" << _storage->getRootFilePathUploading()
+        LOG_TRC("File to upload to storage [" << COOLWSD::anonymizeUrl(_storage->getRootFilePathUploading())
                                               << "] does not exist");
         return false;
     }
@@ -2500,7 +2500,7 @@ bool DocumentBroker::isStorageOutdated() const
         _storageManager.getLastUploadedFileModifiedLocalTime();
 
     LOG_TRC("File to upload to storage ["
-            << _storage->getRootFilePathUploading() << "] was modified at " << currentModifiedTime
+            << COOLWSD::anonymizeUrl(_storage->getRootFilePathUploading()) << "] was modified at " << currentModifiedTime
             << " and the last uploaded file was modified at " << lastModifiedTime << ", which are "
             << (currentModifiedTime == lastModifiedTime ? "identical" : "different"));
 

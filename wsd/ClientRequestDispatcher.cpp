@@ -348,7 +348,7 @@ public:
     {
         if (!_filename.empty())
         {
-            LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
+            LOG_TRC("Remove un-handled temporary file '" << COOLWSD::anonymizeUrl(_filename) << '\'');
             StatelessBatchBroker::removeFile(_filename);
         }
     }

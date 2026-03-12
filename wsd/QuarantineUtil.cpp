@@ -284,7 +284,7 @@ void Quarantine::makeQuarantineSpace(std::size_t headroomBytes)
         // Remove the first entry of the first container.
         assert(!(*entries[0]).empty() && "Unexpected empty Quarantine Entries");
         Entry& entry = *entries[0]->begin();
-        LOG_DBG("Removing quarantined file [" << entry.filename() << "] for [" << Anonymizer::anonymize(entry.docKey())
+        LOG_DBG("Removing quarantined file [" << COOLWSD::anonymizeUrl(entry.filename()) << "] for [" << Anonymizer::anonymize(entry.docKey())
                                               << "] with " << entry.size() << " bytes");
         FileUtil::removeFile(entry.fullPath());
         entries[0]->erase(entries[0]->begin());
@@ -373,7 +373,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN("Failed to quarantine [" << docPath << "] for docKey [" << Anonymizer::anonymize(_docKey)
+        LOG_WRN("Failed to quarantine [" << COOLWSD::anonymizeUrl(docPath) << "] for docKey [" << Anonymizer::anonymize(_docKey)
                                          << "]: " << exc.what());
     }
 
@@ -446,13 +446,13 @@ std::string Quarantine::lastQuarantinedFilePath() const
 
 Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
 {
-    LOG_TRC("Quarantine file name: [" << filename << ']');
+    LOG_TRC("Quarantine file name: [" << COOLWSD::anonymizeUrl(filename) << ']');
 
     _fullPath = Poco::Path(root, filename).toString();
 
     std::vector<StringToken> tokens;
     StringVector::tokenize(filename.c_str(), filename.size(), Delimiter, tokens);
-    LOG_TRC("Quarantine file name: [" << filename << "]: " << tokens.size());
+    LOG_TRC("Quarantine file name: [" << COOLWSD::anonymizeUrl(filename) << "]: " << tokens.size());
     if (tokens.size() > 3)
     {
         _secondsSinceEpoch =
@@ -472,7 +472,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
         _size = f.good() ? f.size() : 0;
     }
 
-    LOG_TRC("Legacy quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: "
+    LOG_TRC("Legacy quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << COOLWSD::anonymizeUrl(_filename) << "], size: "
                                            << _size << ", created: " << _secondsSinceEpoch);
 }
 
@@ -484,7 +484,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
 
     std::vector<StringToken> tokens;
     StringVector::tokenize(filename.c_str(), filename.size(), Delimiter, tokens);
-    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << filename
+    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << COOLWSD::anonymizeUrl(filename)
                                     << "]: " << tokens.size());
     if (tokens.size() >= 3)
     {
@@ -500,7 +500,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
         _size = f.good() ? f.size() : 0;
     }
 
-    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: " << _size
+    LOG_TRC("Quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << COOLWSD::anonymizeUrl(_filename) << "], size: " << _size
                                     << ", created: " << _secondsSinceEpoch);
 }
 
@@ -519,7 +519,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
 
     _size = size; // The file isn't quarantined yet, so we use the size of the source.
 
-    LOG_TRC("New quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << _filename << "], size: "
+    LOG_TRC("New quarantine file for [" << Anonymizer::anonymize(_docKey) << "], name: [" << COOLWSD::anonymizeUrl(_filename) << "], size: "
                                         << _size << ", created: " << _secondsSinceEpoch);
 }
 
