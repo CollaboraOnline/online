@@ -37,7 +37,7 @@ if [ -d "$AT_SPI_VENV/bin" ]; then
 fi
 
 check_cmd() { command -v "$1" >/dev/null 2>&1 || { echo "ERROR: $1 not found. $2"; exit 1; }; }
-check_cmd kwin_wayland  "Install kwin-wayland."
+check_cmd weston        "Install weston."
 check_cmd qtpaths6      "Install Qt 6 development tools (qt6-qtbase-devel)."
 check_cmd flask         "Run: pip install flask (inside the AT-SPI venv)."
 check_cmd node          "Install Node.js >= 18."
@@ -53,10 +53,10 @@ if [ "${_CODA_QT_TEST_ISOLATED:-}" != "1" ]; then
 fi
 
 WAYLAND_SOCKET="coda-qt-test-$$"
-KWIN_PID=""
+WESTON_PID=""
 
 cleanup() {
-    [ -n "$KWIN_PID" ] && kill "$KWIN_PID" 2>/dev/null && wait "$KWIN_PID" 2>/dev/null || true
+    [ -n "$WESTON_PID" ] && kill "$WESTON_PID" 2>/dev/null && wait "$WESTON_PID" 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -65,13 +65,13 @@ run_tests() {
     export QT_QPA_PLATFORM=wayland
     export XKB_DEFAULT_LAYOUT=us
 
-    local kwin_args=(--no-lockscreen --no-global-shortcuts --socket "$WAYLAND_SOCKET")
-    [ -z "${CODA_QT_TEST_GUI:-}" ] && kwin_args+=(--virtual)
+    local weston_args=(--no-config --socket="$WAYLAND_SOCKET")
+    [ -z "${CODA_QT_TEST_GUI:-}" ] && weston_args+=(--backend=headless)
 
-    kwin_wayland "${kwin_args[@]}" &>/dev/null &
-    KWIN_PID=$!
+    weston "${weston_args[@]}" &>/dev/null &
+    WESTON_PID=$!
 
-    # Wait for kwin to create the wayland socket.
+    # Wait for weston to create the wayland socket.
     local socket_path="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/$WAYLAND_SOCKET"
     for _i in {1..30}; do
         [ -S "$socket_path" ] && break
@@ -89,7 +89,7 @@ run_tests() {
 if [ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
     run_tests
 else
-    # run_tests needs access to KWIN_PID for cleanup, so exec into
+    # run_tests needs access to WESTON_PID for cleanup, so exec into
     # dbus-run-session rather than spawning a subprocess.
     exec dbus-run-session -- "$0" "$@"
 fi
