@@ -14,6 +14,7 @@
  */
 
 declare var JSDialog: any;
+declare var UNOKey: any;
 
 type DialogModificationCallback = (instance: any) => void;
 
@@ -86,7 +87,7 @@ dialogModifications.set('TocDialog', function (instance: any) {
 		if (!tokenWrapper.classList.contains('checked')) {
 			sendAction(tokenWrapper.id, 'toggle', '');
 		}
-		sendAction(tokenWrapper.id, 'keypress', '1286');
+		sendAction(tokenWrapper.id, 'keypress', String(UNOKey.DELETE));
 	}
 
 	// Forward focus events from edit inputs so core tracks the active control.
