@@ -15,6 +15,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include "Socket.hpp"
 
@@ -1933,13 +1934,13 @@ std::string WebSocketHandler::generateKey()
 // Required by Android and iOS apps.
 namespace http
 {
-std::string getAgentString() { return "COOLWSD HTTP Agent " + Util::getCoolVersion(); }
+std::string getAgentString() { return "COOLWSD HTTP Agent " COOLWSD_VERSION; }
 
 std::string getServerString()
 {
     CONFIG_STATIC const bool sig = ConfigUtil::getBool("security.server_signature", false);
     if (sig)
-        return "COOLWSD HTTP Server " + Util::getCoolVersion();
+        return "COOLWSD HTTP Server " COOLWSD_VERSION;
 
     return " ";
 }
