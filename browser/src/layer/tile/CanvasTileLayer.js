@@ -1637,9 +1637,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		app.definitions.otherViewGraphicSelectionSection.addOrUpdateGraphicSelectionIndicator(viewId, strTwips, parseInt(obj.part), obj.mode !== undefined ? parseInt(obj.mode): 0);
 
-		if (this.isCalc()) {
-			this._saveMessageForReplay(textMsg, viewId);
+		if (app.getFollowedViewId() === viewId && app.isFollowingUser()) {
+			if (this.isImpress() || this.isDraw() || this.isWriter()) {
+				this.goToOtherUserView(viewId);
+			}
 		}
+
+		this._saveMessageForReplay(textMsg, viewId);
 	},
 
 	_onCellCursorMsg: function (textMsg) {
@@ -1867,7 +1871,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TextCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
-			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
+			if (this.isWriter() || this.isImpress() || this.isDraw()) {
 				this.goToViewCursor(viewId);
 			}
 			else if (this._map.getDocType() === 'spreadsheet') {
@@ -3021,6 +3025,19 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
+	// Jump to view of user with given *viewId*
+	goToOtherUserView: function(viewId) {
+		const graphicSection = OtherViewGraphicSelectionSection.getViewSection(viewId);
+
+		if (graphicSection) {
+			if (this._selectedPart !== graphicSection.sectionProperties.part) {
+				this._map.deselectAll();
+				this._map.setPart(graphicSection.sectionProperties.part);
+			}
+			graphicSection.goToSection();
+		}
+	},
+
 	goToViewCursor: function(viewId) {
 		if (viewId === this._viewId) {
 			this._onUpdateCursor();
@@ -3029,12 +3046,16 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		const section = TextCursorSection.getViewCursorSection(viewId);
 
-		if (section && section.showSection) {
-			const point = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
-			var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
-			if (!isNewCursorVisible)
-				this.scrollToPos(point);
-			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
+		if (section) {
+			if ((this.isImpress() || this.isDraw()) && this._selectedPart !== section.sectionProperties.part) {
+				this._map.deselectAll();
+				this._map.setPart(section.sectionProperties.part);
+			}
+
+			if (section.showSection) {
+				section.goToSection();
+				app.definitions.cursorHeaderSection.showCursorHeader(viewId);
+			}
 		}
 	},
 
@@ -3462,7 +3483,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				'graphicviewselection',
 			] : [
 				'textviewselection',
-				'invalidateviewcursor'
+				'invalidateviewcursor',
+				'graphicviewselection'
 			];
 
 			this._printTwipsMessagesForReplay = new window.L.MessageStore(ownViewTypes, otherViewTypes);
