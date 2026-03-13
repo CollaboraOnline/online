@@ -2419,11 +2419,13 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port_number"));
 
-#if ENABLE_DEBUG
-    optionSet.addOption(Option("find-free-port", "", "Find a free port to listen on, starting from the default.")
-                        .required(false)
-                        .repeatable(false));
-#endif
+    if constexpr (Util::isDebugEnabled())
+    {
+        optionSet.addOption(Option("find-free-port", "",
+                                   "Find a free port to listen on, starting from the default.")
+                                .required(false)
+                                .repeatable(false));
+    }
 
     optionSet.addOption(Option("disable-ssl", "", "Disable SSL security layer.")
                         .required(false)
@@ -2471,25 +2473,28 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                             .required(false)
                             .repeatable(false));
 
-#if ENABLE_DEBUG
-    optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("unitlib"));
+    if constexpr (Util::isDebugEnabled())
+    {
+        optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
+                                .required(false)
+                                .repeatable(false)
+                                .argument("unitlib"));
 
-    optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("seconds"));
+        optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
+                                .required(false)
+                                .repeatable(false)
+                                .argument("seconds"));
 
-    optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
-                        .required(false)
-                        .repeatable(false));
+        optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
+                                .required(false)
+                                .repeatable(false));
 
-    optionSet.addOption(Option("forcecaching", "", "Force HTML & asset caching even in debug mode: accelerates cypress.")
-                        .required(false)
-                        .repeatable(false));
-#endif
+        optionSet.addOption(
+            Option("forcecaching", "",
+                   "Force HTML & asset caching even in debug mode: accelerates cypress.")
+                .required(false)
+                .repeatable(false));
+    }
 }
 
 void COOLWSD::handleOption(const std::string& optionName,
