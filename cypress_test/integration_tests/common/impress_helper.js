@@ -161,7 +161,9 @@ function triggerNewSVGForShapeInTheCenter() {
 
 	// If we click too fast on the shape again
 	// then it steps into edit mode, might be a bug
-	cy.wait(200);
+	cy.getFrameWindow().then((win) => {
+		helper.processToIdle(win);
+	});
 
 	// Select text shape again which will retrigger a new SVG from core
 	selectTextShapeInTheCenter();
