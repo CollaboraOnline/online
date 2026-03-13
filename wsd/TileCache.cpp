@@ -549,14 +549,15 @@ size_t TileCache::itemCacheSize(const Tile &tile)
 
 void TileCache::assertCacheSize()
 {
-#if ENABLE_DEBUG
-    size_t recalcSize = 0;
-    for (const auto& it : _cache)
+    if constexpr (Util::isDebugEnabled())
     {
-        recalcSize += itemCacheSize(it.second);
+        size_t recalcSize = 0;
+        for (const auto& it : _cache)
+        {
+            recalcSize += itemCacheSize(it.second);
+        }
+        assert(recalcSize == _cacheSize);
     }
-    assert(recalcSize == _cacheSize);
-#endif
 }
 
 void TileCache::ensureCacheSize()
