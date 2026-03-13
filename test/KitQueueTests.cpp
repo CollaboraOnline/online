@@ -71,6 +71,7 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileDeduplicationOnPush);
     CPPUNIT_TEST(testMultiViewTileQueues);
     CPPUNIT_TEST(testGetCallbackBoolOverload);
+    CPPUNIT_TEST(testCallbackInvalidationEmptyMode);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -114,6 +115,7 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     void testTileDeduplicationOnPush();
     void testMultiViewTileQueues();
     void testGetCallbackBoolOverload();
+    void testCallbackInvalidationEmptyMode();
 
     // Compat helper for tests
     std::string popHelper(KitQueue &queue)
@@ -1226,6 +1228,34 @@ void KitQueueTests::testGetCallbackBoolOverload()
 
     // Queue is empty again.
     LOK_ASSERT(!queue.getCallback(cb));
+}
+
+void KitQueueTests::testCallbackInvalidationEmptyMode()
+{
+    // Given a mode=1 and a mode=2 partial invalidation in the queue:
+    constexpr std::string_view testname = __func__;
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+    KitQueue::Callback item;
+    putCallback(queue, "callback all 0 284, 1418, 11105, 275, 0, 1");
+    putCallback(queue, "callback all 0 284, 1418, 11105, 275, 0, 2");
+    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.callbackSize()));
+
+    // When putting mode=1 and mode=2 full invalidations in the queue:
+    putCallback(queue, "callback all 0 EMPTY, 0, 1");
+    putCallback(queue, "callback all 0 EMPTY, 0, 2");
+
+    // Then make sure deduplication results in two full invalidations:
+    // Without the accompanying fix in place, this test would have failed with:
+    // - Expected: 2
+    // - Actual  : 3
+    // i.e. the queue had "284, 1418, 11105, 275, 0, 1", "284, 1418, 11105, 275, 0, 2" and "EMPTY,
+    // 0, 2", which means the EMPTY invalidate for mode=1 was lost.
+    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.callbackSize()));
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("EMPTY, 0, 1", item._payload);
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("EMPTY, 0, 2", item._payload);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(KitQueueTests);
