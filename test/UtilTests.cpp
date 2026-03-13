@@ -42,6 +42,9 @@ class UtilTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testEliminatePrefix);
     CPPUNIT_TEST(testStreamMatch);
+    CPPUNIT_TEST(testBase64Encode);
+    CPPUNIT_TEST(testBase64EncodeRemovingNewLines);
+    CPPUNIT_TEST(testBase64Decode);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -53,6 +56,9 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     void testUtf8();
     void testEliminatePrefix();
     void testStreamMatch();
+    void testBase64Encode();
+    void testBase64EncodeRemovingNewLines();
+    void testBase64Decode();
 };
 
 void UtilTests::testStringifyHexLine()
@@ -262,6 +268,57 @@ void UtilTests::testStreamMatch()
     Util::copyToMatch(is, os, "nomatch");
     std::string final = "Lorem ipsum dolor sit adipiscing elit";
     LOK_ASSERT_EQUAL_STR(final, os.str());
+}
+
+void UtilTests::testBase64Encode()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Simple string.
+    LOK_ASSERT_EQUAL(std::string("SGVsbG8="), Util::base64Encode("Hello"));
+
+    // Input with newlines is encoded as-is (newlines become part of the encoding).
+    std::string withNewLines = "Hello\nWorld\n";
+    std::string encoded = Util::base64Encode(withNewLines);
+    LOK_ASSERT_EQUAL(withNewLines, Util::base64Decode(encoded));
+
+    // Round-trip with longer content.
+    std::string longer = "The quick brown fox jumps over the lazy dog";
+    LOK_ASSERT_EQUAL(longer, Util::base64Decode(Util::base64Encode(longer)));
+}
+
+void UtilTests::testBase64EncodeRemovingNewLines()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Input without newlines is encoded normally.
+    LOK_ASSERT_EQUAL(std::string("SGVsbG8="),
+                     Util::base64EncodeRemovingNewLines("Hello"));
+
+    // Newlines (\n) in input are stripped before encoding.
+    LOK_ASSERT_EQUAL(Util::base64Encode("HelloWorld"),
+                     Util::base64EncodeRemovingNewLines("Hello\nWorld\n"));
+
+    // Carriage returns (\r\n) in input are stripped before encoding.
+    LOK_ASSERT_EQUAL(Util::base64Encode("HelloWorld"),
+                     Util::base64EncodeRemovingNewLines("Hello\r\nWorld\r\n"));
+
+    // Vector<unsigned char> overload.
+    std::vector<unsigned char> vec = {'H', 'i', '\n'};
+    LOK_ASSERT_EQUAL(Util::base64Encode("Hi"),
+                     Util::base64EncodeRemovingNewLines(vec));
+}
+
+void UtilTests::testBase64Decode()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Simple round-trip.
+    LOK_ASSERT_EQUAL(std::string("Hello"), Util::base64Decode("SGVsbG8="));
+
+    // Decode longer string.
+    LOK_ASSERT_EQUAL(std::string("Hello World!"),
+                     Util::base64Decode("SGVsbG8gV29ybGQh"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UtilTests);
