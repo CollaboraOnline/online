@@ -163,11 +163,12 @@ class ShortcutDescriptor {
     }
 }
 
-class KeyboardShortcuts {
+class KeyboardShortcuts extends CypressValidator {
     map: any;
     definitions: Map<string, Array<ShortcutDescriptor>>;
 
     constructor() {
+        super();
         this.definitions = new Map<string, Array<ShortcutDescriptor>>();
     }
 
@@ -255,7 +256,7 @@ class KeyboardShortcuts {
         this.map = map;
 
         // in cypress it can fail on load to not allow for duplicated shortcuts
-        if (window.L.Browser.cypressTest) {
+        if (this.isValidatorActive()) {
             this.map.on('docloaded', () => { keyboardShortcuts.verifyShortcuts(); });
         }
     }
