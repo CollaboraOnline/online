@@ -1310,11 +1310,42 @@ function waitUntilLayoutingIsIdle(win) {
 	});
 }
 
+// Wait for any pending ResizeObserver callbacks to fire.  After a UI
+// mode switch the document-container div changes size via CSS; the
+// ResizeObserver in CanvasTileLayer (which calls _syncTileContainerSize
+// and then sectionContainer.onResize) will fire asynchronously, and
+// we want to wait until the onResize has fired and sectionContainer
+// is updated.
+//
+// Two requestAnimationFrame calls are needed because of the order
+// within a single rendering frame:
+//   1. Run requestAnimationFrame callbacks
+//   2. Recalculate styles / layout
+//   3. Run ResizeObserver callbacks
+//   4. Paint
+// The first RAF runs at step 1 - before the ResizeObserver callback
+// at step 3.  From there it schedules a second RAF which runs at
+// step 1 of the next frame, by which time step 3 of the previous
+// frame has completed and sectionContainer.onResize has executed.
+function waitForResizeObserver(win) {
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.requestAnimationFrame(function() {
+				win.requestAnimationFrame(function() {
+					resolve();
+				});
+			});
+		});
+	});
+}
+
 function processToIdle(win) {
 	return waitUntilCoreIsIdle(win).then(function() {
 		return waitForTimers(win, 'jsdialog-deferred');
 	}).then(function() {
 		return waitUntilLayoutingIsIdle(win);
+	}).then(function() {
+		return waitForResizeObserver(win);
 	});
 }
 
