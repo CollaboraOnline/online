@@ -71,13 +71,13 @@ dialogModifications.set('TocDialog', function (instance: any) {
 		const message =
 			'dialogevent ' +
 			instance.id +
-			' {"id":"' +
-			tokenId +
-			'", "cmd": "' +
-			cmd +
-			'", "data": "' +
-			data +
-			'", "type": "pushbutton"}';
+			' ' +
+			JSON.stringify({
+				id: tokenId,
+				cmd: cmd,
+				data: data,
+				type: 'pushbutton',
+			});
 		(window as any).app.socket.sendMessage(message);
 	}
 
@@ -102,11 +102,13 @@ dialogModifications.set('TocDialog', function (instance: any) {
 		const message =
 			'dialogevent ' +
 			instance.id +
-			' {"id":"' +
-			container.id +
-			'", "cmd": "grab_focus"' +
-			', "data": ""' +
-			', "type": "edit"}';
+			' ' +
+			JSON.stringify({
+				id: container.id,
+				cmd: 'grab_focus',
+				data: '',
+				type: 'edit',
+			});
 		(window as any).app.socket.sendMessage(message);
 	});
 
