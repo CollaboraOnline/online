@@ -11,8 +11,6 @@
 
 describe('Rectangle', function() {
 
-var assert = require('assert').strict;
-
 interface ExpectedRectangle {
 	x1?: number,
 	x2?: number,
@@ -92,14 +90,14 @@ const eps = 0.01;
 describe('Validity of Rectangle', function () {
 	it('Invalid rectangle', function () {
 		let invalidRect = new cool.Rectangle(3, 4, -1, 10);
-		assert.ok(!invalidRect.isValid(), 'Rectangle should be invalid');
+		nodeassert.ok(!invalidRect.isValid(), 'Rectangle should be invalid');
 		invalidRect = new cool.Rectangle(3, 4, 1, -10);
-		assert.ok(!invalidRect.isValid(), 'Rectangle should be invalid');
+		nodeassert.ok(!invalidRect.isValid(), 'Rectangle should be invalid');
 	});
 
 	it('Valid rectangle', function () {
 		const validRect = new cool.Rectangle(3, 4, 1, 10);
-		assert.ok(validRect.isValid(), 'Rectangle should be valid');
+		nodeassert.ok(validRect.isValid(), 'Rectangle should be valid');
 	});
 });
 
