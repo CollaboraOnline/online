@@ -7,6 +7,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/sidebar.odp');
+		cy.getFrameWindow().then(function(win) {
+			this.win = win;
+		});
 	});
 
 	it('Set gradient background color', function() {
@@ -36,6 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 	it('Sidebar menubutton visual test', function() {
 		cy.cGet('#fillstyle select').select('Color');
 		cy.cGet('#fillattr').should('be.visible');
+		helper.processToIdle(this.win);
 		cy.cGet('#fillattr').compareSnapshot('sidebar_menubutton_color', 0.1);
 	});
 });
