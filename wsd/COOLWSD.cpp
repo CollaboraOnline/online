@@ -2078,6 +2078,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #endif
     {
         LOG_DBG("net::Defaults: Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
+                << ", wsInactivityTimeout " << net::Defaults.wsInactivityTimeout
                 << ", maxExtConnections " << net::Defaults.maxExtConnections << "]");
     }
 

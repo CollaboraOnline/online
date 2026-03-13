@@ -1323,6 +1323,24 @@ public:
         int events = _socketHandler->getPollEvents(now, timeoutMaxMicroS);
         if (!_outBuffer.empty() || _shutdownSignalled)
             events |= POLLOUT;
+
+        // Ensure ppoll wakes in time to enforce inactivity timeout on IP sockets.
+        if (isIPType())
+        {
+            const auto& timeout = isWebSocket() ? net::Defaults.wsInactivityTimeout
+                                                 : net::Defaults.inactivityTimeout;
+            if (timeout > std::chrono::microseconds::zero())
+            {
+                const auto remaining = std::chrono::duration_cast<std::chrono::microseconds>(
+                    timeout - (now - getLastSeenTime()));
+                const int64_t remainUs = remaining.count();
+                if (remainUs > 0)
+                    timeoutMaxMicroS = std::min(timeoutMaxMicroS, remainUs);
+                else
+                    timeoutMaxMicroS = 0; // Already expired, wake immediately.
+            }
+        }
+
         return events;
     }
 
@@ -1693,8 +1711,6 @@ public:
         if (!events && _inBuffer.empty())
             return;
 
-        setLastSeenTime(now);
-
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
 
         if (events & POLLIN)
@@ -1713,11 +1729,16 @@ public:
 #endif
             );
 
-            if (read > 0 && closed)
+            if (read > 0)
             {
-                // We might have outstanding data to read, wait until readIncomingData returns closed state.
-                LOG_DBG("Closed but will drain incoming data per POLLIN");
-                closed = false;
+                setLastSeenTime(now); // Mark active only on actual data received.
+
+                if (closed)
+                {
+                    // We might have outstanding data to read, wait until readIncomingData returns closed state.
+                    LOG_DBG("Closed but will drain incoming data per POLLIN");
+                    closed = false;
+                }
             }
             else if (read < 0 && closed && (last_errno == EAGAIN || last_errno == EINTR))
             {
@@ -1761,6 +1782,7 @@ public:
                 return;
         }
 
+        const size_t outSizeBefore = _outBuffer.size();
         do
         {
             // If we have space for writing and that was requested
@@ -1800,6 +1822,10 @@ public:
                 }
             }
         } while (oldSize != _outBuffer.size());
+
+        // Mark active only when data was actually written to the socket.
+        if (_outBuffer.size() != outSizeBefore)
+            setLastSeenTime(now);
 
         if (closed)
         {
