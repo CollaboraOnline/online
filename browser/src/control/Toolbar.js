@@ -611,6 +611,7 @@ window.L.Map.include({
 			}
 			else {
 				this.filterResults(searchTerm, isAnyMatchingContent, id);
+				this.focusContainer(id + '-box');
 			}
 		}.bind(this));
 
@@ -630,17 +631,18 @@ window.L.Map.include({
 			});
 		});
 
-		if (id === 'keyboard-shortcuts-content') {
+		this.focusContainer(id + '-box');
+	},
+
+	focusContainer: function(id) {
 			app.layoutingService.appendLayoutingTask(() => {
-				var contentContainer = document.getElementById('keyboard-shortcuts-content');
+			var contentContainer = document.getElementById(id);
 				if (contentContainer) {
 					contentContainer.setAttribute('tabindex', '-1');
 					contentContainer.focus();
 				}
 			});
-		}
 	},
-
 
 	filterResults: function (searchTerm, isAnyMatchingContent, id) {
 
