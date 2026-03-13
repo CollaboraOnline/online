@@ -1329,7 +1329,6 @@ class Socket {
 		// imageElement.onerror expects a different type of handler according to tsc.
 		// (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error): any;
 		// So use addEventListener() for 'error' event.
-		imageElement.onerror;
 		imageElement.addEventListener(
 			'error',
 			function (this: Socket, err: ErrorEvent) {
