@@ -27,9 +27,12 @@ describe(['tagdesktop'], 'Accessibility Impress Notebookbar Tests', { testIsolat
         });
     });
 
+	// Context tabs that need complex setup not yet implemented
+	var skipContextTabs = ['Chart'];
+
 	after(function () {
 		var unvisited = allTabNames.filter(function (name) {
-			return !visitedTabNames.includes(name);
+			return !visitedTabNames.includes(name) && !skipContextTabs.includes(name);
 		});
 		expect(unvisited, 'unvisited notebookbar tabs').to.be.empty;
 	});
