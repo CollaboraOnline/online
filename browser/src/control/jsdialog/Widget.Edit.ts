@@ -95,7 +95,7 @@ class EditWidget {
 
 		if (data.widthInChars && data.widthInChars > 0) {
 			var widthValue = data.widthInChars + 2 + 'ch';
-			edit.style.width = widthValue;
+			edit.style.maxWidth = widthValue;
 			container.style.width = 'fit-content';
 		}
 
