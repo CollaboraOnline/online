@@ -152,7 +152,18 @@
 		filter: invert(1);
 	}
 
-	#keyboard-shortcuts-content:focus-visible {
-		outline: none;
+	#online-help-search-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 5px;
+		margin: 0;
+		width: 32px;
+		height: 32px;
 	}
+}
+
+#online-help-content-box:focus-visible,
+#keyboard-shortcuts-content-box:focus-visible {
+	outline: none;
 }

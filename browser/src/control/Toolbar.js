@@ -506,7 +506,8 @@ window.L.Map.include({
 		var helpContentParent = document.getElementsByClassName('ui-dialog-content')[0];
 		var startFilter = false;
 		var isAnyMatchingContent = false;
-		searchInput.addEventListener('input', function () {
+
+		const performSearch = function() {
 			// Hide all elements within the #online-help-content on first key stroke/at start of filter content
 			if (!startFilter || !isAnyMatchingContent) {
 				helpContentParent.style.backgroundColor = 'var(--color-background-dark) !important';
@@ -528,9 +529,23 @@ window.L.Map.include({
 			}
 			else {
 				this.filterResults(searchTerm, isAnyMatchingContent, id);
+				this._focusContainer(id + '-box');
 			}
-		}.bind(this));
+		}.bind(this);
 
+		searchInput.addEventListener('keydown', function (e) {
+			if (e.key === 'Enter') {
+				performSearch();
+			}
+		});
+
+		const searchButton = document.getElementById('online-help-search-button');
+		searchButton.addEventListener('click', performSearch);
+		searchButton.addEventListener('keydown', function (e) {
+			if (e.key === 'Enter') {
+				performSearch();
+			}
+		});
 
 		const onlineHelpContent = document.getElementById('online-help-content');
 		const buttons = onlineHelpContent.querySelectorAll('.scroll-button');
@@ -547,17 +562,18 @@ window.L.Map.include({
 			});
 		});
 
-		if (id === 'keyboard-shortcuts-content') {
-			app.layoutingService.appendLayoutingTask(() => {
-				var contentContainer = document.getElementById('keyboard-shortcuts-content');
-				if (contentContainer) {
-					contentContainer.setAttribute('tabindex', '-1');
-					contentContainer.focus();
-				}
-			});
-		}
+		this._focusContainer(id + '-box');
 	},
 
+	_focusContainer: function(id) {
+		app.layoutingService.appendLayoutingTask(() => {
+			var contentContainer = document.getElementById(id);
+			if (contentContainer) {
+				contentContainer.setAttribute('tabindex', '-1');
+				contentContainer.focus();
+			}
+		});
+	},
 
 	filterResults: function (searchTerm, isAnyMatchingContent, id) {
 
