@@ -112,16 +112,12 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			scrollwindow.style.overflowX = 'auto';
 		};
 
-		// Use ResizeObserver to detect overflow when content changes
-		// (e.g. token widgets added to the grid after initial render)
+		// Use ResizeObserver to detect when content overflows the
+		// viewport and enable a native horizontal scrollbar.
 		var observer = new ResizeObserver(function() {
 			setupExternalScroll();
 		});
 		observer.observe(content);
-
-		// Also try after initial build completes (all siblings available)
-		setTimeout(setupExternalScroll, 0);
-		setTimeout(setupExternalScroll, 200);
 	}
 
 	var realContentHeight = scrollwindow.scrollHeight;
