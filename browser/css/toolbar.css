@@ -583,7 +583,8 @@ button.leaflet-control-search-next
 #toolbar-up #fontnamecombobox .select2-container {
 	margin-left: 5px;
 	margin-right: 5px;
-	width: 150px !important;
+	width: 170px !important;
+	max-width: 170px
 }
 #fontnamecombobox.select2 {
 	border-color: transparent;
@@ -592,7 +593,8 @@ button.leaflet-control-search-next
 	padding-right: 8px;
 }
 #toolbar-up #fontsizecombobox .select2-container {
-	min-width: 55px !important;
+	min-width: 90px !important;
+	width: 90px;
 	margin: 0px 4px;
 }
 #fontsizecombobox-input-notebookbar,
