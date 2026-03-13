@@ -3651,6 +3651,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         if (payload == ".uno:NotesMode=true" || payload == ".uno:NotesMode=false" ||
             payload == ".uno:RedlineRenderMode=true" || payload == ".uno:RedlineRenderMode=false")
         {
+            getLOKitDocument()->setView(_viewId);
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("statusupdate: " + status);
         }
