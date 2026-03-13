@@ -11,6 +11,7 @@
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { execSync } from 'child_process';
+import { existsSync } from 'fs';
 
 import { CodaQtServiceLauncher } from './lib/coda-qt.service.js';
 
@@ -38,6 +39,17 @@ try {
 		.toString()
 		.trim();
 	QT_WEBENGINE_DRIVER = join(qtLibExecDir, 'webenginedriver');
+	// In flatpak, the SDK qtpaths6 points to /usr but webenginedriver is
+	// in /app (from the BaseApp). Fall back to the /app prefix path.
+	if (!existsSync(QT_WEBENGINE_DRIVER)) {
+		const appPath = '/app/lib/libexec/webenginedriver';
+		if (!existsSync(appPath)) {
+			throw new Error(
+				`webenginedriver not found at ${QT_WEBENGINE_DRIVER} or ${appPath}`,
+			);
+		}
+		QT_WEBENGINE_DRIVER = appPath;
+	}
 } catch (e) {
 	console.error(
 		'Failed to find Qt installation. Make sure qtpaths6 is in your PATH.',

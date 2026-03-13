@@ -13,11 +13,11 @@ Setup
 1. Install system packages (Node.js and Qt 6 with qtpaths6 in PATH also required):
 
   Fedora:
-    dnf install kwin-wayland at-spi2-core python3-pyatspi \
+    dnf install weston at-spi2-core python3-pyatspi \
         python3-gobject python3-lxml python3-numpy
 
   Ubuntu/Debian:
-    apt install kwin-wayland at-spi2-core python3-pyatspi \
+    apt install weston at-spi2-core python3-pyatspi \
         python3-gi python3-lxml python3-numpy
 
 2. Clone and set up selenium-webdriver-at-spi somewhere you prefer:
