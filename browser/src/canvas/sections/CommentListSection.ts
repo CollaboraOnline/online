@@ -107,8 +107,7 @@ export class CommentSection extends CanvasSectionObject {
 		show: boolean;
 		showResolved: boolean;
 		[key: string]: any;
-		canvasContainerTop: number; // The top pixel of the document container. Added to positions of comments.
-		canvasContainerLeft: number;
+		canvasContainerBounds: DOMRect;
 	};
 	disableLayoutAnimation: boolean = false;
 
@@ -956,6 +955,10 @@ export class CommentSection extends CanvasSectionObject {
 				selectedComment.updateThreadInfoIndicator();
 			}
 
+			if (app.map._docLayer._docType !== 'spreadsheet') {
+				this.sectionProperties.selectedComment.setContainerPos(true, this.sectionProperties.canvasContainerBounds);
+			}
+
 			this.update();
 		}
 	}
@@ -1027,7 +1030,12 @@ export class CommentSection extends CanvasSectionObject {
 				this.setThreadPopup(this.sectionProperties.selectedComment, false);
 				this.sectionProperties.showSelectedBigger = false;
 			}
+			
+			const previouslySelectedComment = this.sectionProperties.selectedComment;
 			this.sectionProperties.selectedComment = null;
+			if (app.map._docLayer._docType !== 'spreadsheet') {
+				previouslySelectedComment.setContainerPos(true, this.sectionProperties.canvasContainerBounds); // Must be done after we clear the selection since as it resets the z-index based on this...
+			}
 
 			this.update();
 		}
@@ -1991,8 +1999,12 @@ export class CommentSection extends CanvasSectionObject {
 			height = subList[i].getCommentHeight(relayout);
 			lastY = subList[i].sectionProperties.data.anchorSPoint.vY + height < lastY ? subList[i].sectionProperties.data.anchorSPoint.vY: lastY - (height * app.dpiScale);
 
-			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale) + this.sectionProperties.canvasContainerLeft) + 'px';
-			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
+			subList[i].setContainerPos(
+				false,
+				this.sectionProperties.canvasContainerBounds,
+				actualPosition[0] / app.dpiScale,
+				lastY / app.dpiScale
+			);
 
 			if (this.sectionProperties.show != false && !subList[i].isEdit())
 				subList[i].show();
@@ -2053,12 +2065,10 @@ export class CommentSection extends CanvasSectionObject {
 					posX = documentCanvasWidth - commentWidth;
 				}
 
-				subList[i].sectionProperties.container.style.left = String(posX + this.sectionProperties.canvasContainerLeft) + 'px';
-				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
+				subList[i].setContainerPos(false, this.sectionProperties.canvasContainerBounds, posX, lastY / app.dpiScale);
 			}
 			else {
-				subList[i].sectionProperties.container.style.left = String(this.sectionProperties.canvasContainerLeft + Math.round(actualPosition[0] / app.dpiScale)) + 'px';
-				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
+				subList[i].setContainerPos(false, this.sectionProperties.canvasContainerBounds, actualPosition[0] / app.dpiScale, lastY / app.dpiScale);
 			}
 
 			lastY += (subList[i].getCommentHeight(relayout) * app.dpiScale);
@@ -2151,8 +2161,7 @@ export class CommentSection extends CanvasSectionObject {
 			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.
 		}
 
-		this.sectionProperties.canvasContainerLeft = document.getElementById('document-container').getBoundingClientRect().left;
-		this.sectionProperties.canvasContainerTop = document.getElementById('document-container').getBoundingClientRect().top;
+		this.sectionProperties.canvasContainerBounds = document.getElementById('document-container').getBoundingClientRect();
 
 		const availableSpace = this.calculateAvailableSpace();
 		if (!this.commentsHiddenOrNotPresent()) {
@@ -2200,6 +2209,10 @@ export class CommentSection extends CanvasSectionObject {
 			}
 			else {
 				lastY = this.loopDown(0, x, topRight[1], relayout);
+			}
+		} else {
+			for (const comment of this.sectionProperties.commentList) {
+				comment.setContainerPos(false, this.sectionProperties.canvasContainerBounds);
 			}
 		}
 		if (relayout)
@@ -2431,8 +2444,7 @@ export class CommentSection extends CanvasSectionObject {
 								// move up
 								const posX = this.sectionProperties.commentList[i].getContainerPosX();
 								const posY = this.sectionProperties.commentList[i].getContainerPosY() - moveUp;
-								this.sectionProperties.commentList[i].sectionProperties.container.style.left = Math.round(posX) + 'px';
-								this.sectionProperties.commentList[i].sectionProperties.container.style.top = Math.round(posY) + 'px';
+								this.sectionProperties.commentList[i].setContainerPos(false, this.sectionProperties.canvasContainerBounds, posX, posY);
 								// increase comment height
 								maxSize += moveUp;
 							}
