@@ -58,16 +58,22 @@ function clickOnFirstCell(firstClick = true, dblClick = false, expectedCell = 'A
 		helper.processToIdle(win);
 	});
 
-	// Use the tile's edge to find the first cell's position
-	cy.cGet('#canvas-container').then(function(items) {
-			expect(items).to.have.lengthOf(1);
-			const XPos = items[0].getBoundingClientRect().left + 60;
-			const YPos = items[0].getBoundingClientRect().top + 30;
-			if (dblClick)
-				cy.cGet('body').dblclick(XPos, YPos);
-			else
-				cy.cGet('body').click(XPos, YPos);
-		});
+	// Compute the screen position of the centre of the first cell
+	cy.getFrameWindow().then(function(win) {
+		var anchor = win.app.sectionContainer.getDocumentAnchor();
+		var dpiScale = win.app.dpiScale;
+		var cellRect = win.app.map._docLayer.sheetGeometry.getCellRect(0, 0);
+		var cellWidth = cellRect.max.x - cellRect.min.x;
+		var cellHeight = cellRect.max.y - cellRect.min.y;
+		var container = win.document.getElementById('canvas-container');
+		var bcr = container.getBoundingClientRect();
+		var XPos = bcr.left + (anchor[0] + cellWidth / 2) / dpiScale;
+		var YPos = bcr.top + (anchor[1] + cellHeight / 2) / dpiScale;
+		if (dblClick)
+			cy.cGet('body').dblclick(XPos, YPos);
+		else
+			cy.cGet('body').click(XPos, YPos);
+	});
 
 	if (firstClick && !dblClick) {
 		cy.cGet('#test-div-OwnCellCursor').should('exist');
