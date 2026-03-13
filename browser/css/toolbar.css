@@ -1221,7 +1221,7 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.cellverttop { background: url('images/dark/lc_cellverttop.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.cellvertcenter { background: url('images/dark/lc_cellvertcenter.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.cellvertbottom { background: url('images/dark/lc_cellvertbottom.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara15 { background: url('images/dark/lc_linespacing.svg') no-repeat center; }
+[data-theme='dark'] .w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara115, .w2ui-icon.spacepara15 { background: url('images/dark/lc_linespacing.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.spacepara2 { background: url('images/dark/lc_spacepara2.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.paraspaceincrease { background: url('images/dark/lc_paraspaceincrease.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.paraspacedecrease { background: url('images/dark/lc_paraspacedecrease.svg') no-repeat center; }

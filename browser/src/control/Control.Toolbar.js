@@ -928,8 +928,8 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 
-	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
-		|| commandName === '.uno:SpacePara2') {
+	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara115'
+		|| commandName === '.uno:SpacePara15' || commandName === '.uno:SpacePara2') {
 		// TODO
 		//if (toolbar) toolbar.refresh();
 	}
