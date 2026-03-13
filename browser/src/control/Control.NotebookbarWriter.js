@@ -25,6 +25,7 @@ var formTabName = 'Form';
 var tableTabName = 'Table';
 var shapeTabName = 'Shape';
 var pictureTabName = 'Picture';
+var chartTabName = 'Chart';
 var viewTabName = 'View';
 var helpTabName = 'Help';
 var formulaTabName = 'Formula';
@@ -99,6 +100,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: true, combination: 'PI', de: 'PI' }
 			},
 			{
+				'text': _('Chart'),
+				'id': chartTabName + '-tab-label',
+				'name': chartTabName,
+				'context': 'Chart|Series|ErrorBar|Axis|Grid|ChartElements|Trendline|ChartTitle|ChartLegend|ChartLabel',
+				'accessibility': { focusBack: true, combination: 'CH', de: 'CH' }
+			},
+			{
 				'text': _('View'),
 				'id': viewTabName + '-tab-label',
 				'name': viewTabName,
@@ -133,6 +141,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			this.getTableTab(),
 			this.getShapeTab(),
 			this.getPictureTab(),
+			this.getChartTab(),
 			this.getViewTab(),
 			this.getHelpTab(),
 			this.getFormulaTab()
@@ -3422,6 +3431,198 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		];
 
 		return this.getTabPage(pictureTabName, content);
+	},
+
+	getChartTab: function() {
+		var content = [
+			{
+				'id': 'chart-type',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DiagramType'),
+				'command': '.uno:DiagramType',
+				'accessibility': { focusBack: true, combination: 'CT', de: null }
+			},
+			{ type: 'separator', id: 'chart-type-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-data-ranges',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataRanges'),
+								'command': '.uno:DataRanges',
+								'accessibility': { focusBack: true, combination: 'DR', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-diagram-data',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DiagramData'),
+								'command': '.uno:DiagramData',
+								'accessibility': { focusBack: true, combination: 'DD', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'chart-data-break', orientation: 'vertical' },
+			{
+				'id': 'chart-format-selection',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatSelection'),
+				'command': '.uno:FormatSelection',
+				'accessibility': { focusBack: true, combination: 'FS', de: null }
+			},
+			{ type: 'separator', id: 'chart-format-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-insert-titles',
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertMenuTitles'),
+								'command': '.uno:InsertMenuTitles',
+								'accessibility': { focusBack: true, combination: 'TI', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-legend',
+								'type': 'toolitem',
+								'text': _UNO('.uno:Legend'),
+								'command': '.uno:Legend',
+								'accessibility': { focusBack: true, combination: 'LG', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'chart-toggle-legend',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ToggleLegend'),
+				'command': '.uno:ToggleLegend',
+				'accessibility': { focusBack: true, combination: 'TL', de: null }
+			},
+			{ type: 'separator', id: 'chart-legend-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-toggle-grid-horizontal',
+								'type': 'toolitem',
+								'text': _UNO('.uno:ToggleGridHorizontal'),
+								'command': '.uno:ToggleGridHorizontal',
+								'accessibility': { focusBack: true, combination: 'GH', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-toggle-grid-vertical',
+								'type': 'toolitem',
+								'text': _UNO('.uno:ToggleGridVertical'),
+								'command': '.uno:ToggleGridVertical',
+								'accessibility': { focusBack: true, combination: 'GV', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'chart-grid-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-diagram-axis-x',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DiagramAxisX'),
+								'command': '.uno:DiagramAxisX',
+								'accessibility': { focusBack: true, combination: 'AX', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-diagram-axis-y',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DiagramAxisY'),
+								'command': '.uno:DiagramAxisY',
+								'accessibility': { focusBack: true, combination: 'AY', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'chart-axis-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-diagram-area',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DiagramArea'),
+								'command': '.uno:DiagramArea',
+								'accessibility': { focusBack: true, combination: 'CA', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chart-diagram-wall',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DiagramWall'),
+								'command': '.uno:DiagramWall',
+								'accessibility': { focusBack: true, combination: 'CW', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'chart-area-break', orientation: 'vertical' },
+			{
+				'id': 'chart-view-3d',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:View3D'),
+				'command': '.uno:View3D',
+				'accessibility': { focusBack: true, combination: 'V3', de: null }
+			},
+		];
+
+		return this.getTabPage(chartTabName, content);
 	},
 
 	getNotebookbar: function(tabPages, selectedPage) {
