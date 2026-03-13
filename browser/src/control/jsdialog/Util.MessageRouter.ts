@@ -51,7 +51,11 @@ class JSDialogMessageRouter {
 				(msgData.jsontype === 'addressinputfield' &&
 					!app.socket._map.addressInputField)
 			) {
-				setTimeout(fireJSDialogEvent, 1000);
+				app.timerRegistry.setTimeout(
+					'jsdialog-deferred',
+					fireJSDialogEvent,
+					1000,
+				);
 				return;
 			} else if (fireJSDialogEvent() === true) {
 				return;
