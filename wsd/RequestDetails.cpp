@@ -271,7 +271,7 @@ void RequestDetails::processURI()
             first = false;
         }
 
-        _fields[Field::DocumentURI] = docUri;
+        _fields[Field::DocumentURI] = std::move(docUri);
     }
 
     // &compat=
