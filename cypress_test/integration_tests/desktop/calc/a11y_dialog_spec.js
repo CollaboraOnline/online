@@ -64,7 +64,6 @@ const excludedCommonDialogs = [
 const buggyCalcDialogs = [
     '.uno:DataFilterSpecialFilter',
     '.uno:DataFilterStandardFilter',
-    '.uno:DefineName',
     '.uno:DefineDBName',
     '.uno:EditPrintArea',
     '.uno:FunctionDialog',
