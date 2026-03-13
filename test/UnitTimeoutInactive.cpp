@@ -183,7 +183,7 @@ UnitBase::TestResult UnitTimeoutInactivity::testWS(bool forceInactivityTO)
         LOK_ASSERT_EQUAL(true, session->isConnected());
 
         if (forceInactivityTO) {
-            std::this_thread::sleep_for( net::Defaults.inactivityTimeout * 2 );
+            pollDisconnected(net::Defaults.inactivityTimeout * 20, *session);
         }
         TST_LOG("Test: XX2: connected " << session->isConnected());
         session->sendMessage("ping");
