@@ -139,6 +139,13 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: false, combination: 'I', de: null }
 			},
 			{
+				'id': 'Chart-tab-label',
+				'text': _('Chart'),
+				'name': 'Chart',
+				'context': 'Chart|Series|ErrorBar|Axis|Grid|ChartElements|Trendline|ChartTitle|ChartLegend|ChartLabel',
+				'accessibility': { focusBack: false, combination: 'CH', de: null }
+			},
+			{
 				'id': 'MasterPage-tab-label',
 				'text': _('Master'),
 				'name': 'MasterPage',
@@ -174,6 +181,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			this.getTableTab(),
 			this.getShapeTab(),
 			this.getPictureTab(),
+			this.getChartTab(),
 			this.getMasterTab(),
 			this.getViewTab(),
 			this.getHelpTab()

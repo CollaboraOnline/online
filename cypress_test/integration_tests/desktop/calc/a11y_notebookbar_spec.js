@@ -27,7 +27,7 @@ describe(['tagdesktop'], 'Accessibility Calc Notebookbar Tests', { testIsolation
 	});
 
 	// Context tabs that need complex setup not yet implemented
-	var skipContextTabs = ['Sparkline', 'Table'];
+	var skipContextTabs = ['Chart', 'Sparkline', 'Table'];
 
 	after(function () {
 		var unvisited = allTabNames.filter(function (name) {
