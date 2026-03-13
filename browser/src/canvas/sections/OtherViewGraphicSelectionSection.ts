@@ -111,6 +111,19 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
         else return false;
     }
 
+    public static doesViewExist(viewId: number): boolean {
+        const name = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
+        return app.sectionContainer.doesSectionExist(name);
+    }
+
+    public static getViewSection(viewId: number): OtherViewGraphicSelectionSection | null {
+        if (OtherViewGraphicSelectionSection.doesViewExist(viewId)) {
+            const name = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
+            return app.sectionContainer.getSectionWithName(name) as OtherViewGraphicSelectionSection;
+        }
+        return null;
+    }
+
     public static updateVisibilities() {
         for (let i = 0; i < OtherViewGraphicSelectionSection.sectionPointers.length; i++) {
             const section = OtherViewGraphicSelectionSection.sectionPointers[i];
