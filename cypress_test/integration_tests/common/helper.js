@@ -1309,6 +1309,8 @@ function waitUntilLayoutingIsIdle(win) {
 
 function processToIdle(win) {
 	return waitUntilCoreIsIdle(win).then(function() {
+		return waitForTimers(win, 'jsdialog-deferred');
+	}).then(function() {
 		return waitUntilLayoutingIsIdle(win);
 	});
 }

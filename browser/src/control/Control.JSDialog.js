@@ -298,12 +298,16 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			let timeoutId = null;
 			const finallyClose = () => {
 				instance.that.close(instance.id, false);
-				clearTimeout(timeoutId);
+				app.timerRegistry.clearTimeout(timeoutId);
 			};
 
 			container.onanimationend = finallyClose;
 			// be sure it will be removed if onanimationend will not be executed
-			timeoutId = setTimeout(finallyClose, 700);
+			timeoutId = app.timerRegistry.setTimeout(
+				'jsdialog-deferred',
+				finallyClose,
+				700,
+			);
 		});
 	},
 
