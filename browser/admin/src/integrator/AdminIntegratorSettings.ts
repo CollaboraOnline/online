@@ -1422,84 +1422,127 @@ class SettingIframe {
 			return;
 		}
 
-		let viewContainer = document.getElementById('view-section');
-		if (viewContainer) {
-			viewContainer.remove();
+		let zoteroContainer = document.getElementById('zotero-section');
+		if (zoteroContainer) {
+			zoteroContainer.remove();
 		}
 
-		viewContainer = document.createElement('div');
-		viewContainer.id = 'view-section';
-		viewContainer.classList.add('section');
+		let docSigningContainer = document.getElementById('doc-signing-section');
+		if (docSigningContainer) {
+			docSigningContainer.remove();
+		}
 
-		viewContainer.appendChild(this.createHeading(_('View Settings')));
-		viewContainer.appendChild(this.createParagraph(_('Adjust view settings.')));
+		// Zotero Section
+		zoteroContainer = document.createElement('div');
+		zoteroContainer.id = 'zotero-section';
+		zoteroContainer.classList.add('section');
 
-		const divContainer = document.createElement('div');
-		divContainer.id = 'view-editor';
-		viewContainer.appendChild(divContainer);
+		zoteroContainer.appendChild(this.createHeading('Zotero'));
+		const zoteroDescription = this.createParagraph(
+			_(
+				'To use Zotero specify your API key here. You can create your API key in your ',
+			),
+		);
+		zoteroDescription.className = 'view-setting-description';
 
-		const fieldset = document.createElement('fieldset');
-		fieldset.classList.add('view-settings-fieldset');
-		divContainer.appendChild(fieldset);
+		const zoteroAccountLink = document.createElement('a');
+		zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+		zoteroAccountLink.target = '_blank';
+		zoteroAccountLink.textContent = _('Zotero account API settings');
 
-		fieldset.appendChild(this.createLegend(_('Option')));
+		zoteroDescription.appendChild(zoteroAccountLink);
+		zoteroContainer.appendChild(zoteroDescription);
 
-		const allViewSettingsKeys: (keyof ViewSettings)[] = [
-			'zoteroAPIKey',
-			'signatureCert',
-			'signatureKey',
-			'signatureCa',
-		];
+		const zoteroDivContainer = document.createElement('div');
+		zoteroDivContainer.id = 'zotero-editor';
+		zoteroContainer.appendChild(zoteroDivContainer);
 
-		for (const key of allViewSettingsKeys) {
-			const label = this._viewSettingLabels[key];
-			if (!label) {
-				continue;
-			}
+		const zoteroFieldset = document.createElement('fieldset');
+		zoteroFieldset.classList.add('view-settings-fieldset');
+		zoteroDivContainer.appendChild(zoteroFieldset);
 
-			// Add Zotero section with description
-			if (key === 'zoteroAPIKey') {
-				fieldset.appendChild(this.createHeading('Zotero'));
-				const zoteroDescription = this.createParagraph(
-					_(
-						'To use Zotero specify your API key here. You can create your API key in your ',
+		zoteroFieldset.appendChild(this.createLegend(_('Option')));
+		zoteroFieldset.appendChild(
+			this.createViewSettingsTextBox('zoteroAPIKey', data, true),
+		);
+
+		zoteroContainer.appendChild(
+			this.createSettingsActions(
+				'zotero',
+				'Zotero Settings',
+				'viewsetting.json',
+				() => {
+					const defaultSettings = this.getDefaultViewSettings();
+					return {
+						...this._viewSetting,
+						zoteroAPIKey: defaultSettings.zoteroAPIKey,
+					};
+				},
+				() => this._viewSetting,
+				(settings) =>
+					this.uploadViewSettingFile(
+						'viewsetting.json',
+						JSON.stringify(settings),
 					),
-				);
-				zoteroDescription.className = 'view-setting-description';
+			),
+		);
+		settingsContainer.appendChild(zoteroContainer);
 
-				const zoteroAccountLink = document.createElement('a');
-				zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
-				zoteroAccountLink.target = '_blank';
-				zoteroAccountLink.textContent = _('Zotero account API settings');
+		// Document Signing Section
+		docSigningContainer = document.createElement('div');
+		docSigningContainer.id = 'doc-signing-section';
+		docSigningContainer.classList.add('section');
 
-				zoteroDescription.appendChild(zoteroAccountLink);
+		docSigningContainer.appendChild(this.createHeading(_('Document Signing')));
+		const signingDesc = document.createElement('p');
+		signingDesc.className = 'view-setting-description';
+		signingDesc.textContent = _(
+			'To use document signing, specify your signing certificate, key and CA chain here.',
+		);
+		docSigningContainer.appendChild(signingDesc);
 
-				fieldset.appendChild(zoteroDescription);
-				fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
-			}
-			// Add Document Signing section with description (only once for first field)
-			else if (key === 'signatureCert') {
-				fieldset.appendChild(this.createHeading(_('Document Signing')));
-				const signingDesc = document.createElement('p');
-				signingDesc.className = 'view-setting-description';
-				signingDesc.textContent = _(
-					'To use document signing, specify your signing certificate, key and CA chain here.',
-				);
-				fieldset.appendChild(signingDesc);
-				fieldset.appendChild(
-					this.createViewSettingsTextBox(key, data, false, true),
-				);
-			}
-			// Add remaining signature fields with smaller labels
-			else if (key === 'signatureKey' || key === 'signatureCa') {
-				fieldset.appendChild(
-					this.createViewSettingsTextBox(key, data, false, true),
-				);
-			}
-		}
+		const docSigningDivContainer = document.createElement('div');
+		docSigningDivContainer.id = 'doc-signing-editor';
+		docSigningContainer.appendChild(docSigningDivContainer);
 
-		viewContainer.appendChild(this.createViewSettingActions());
-		settingsContainer.appendChild(viewContainer);
+		const docSigningFieldset = document.createElement('fieldset');
+		docSigningFieldset.classList.add('view-settings-fieldset');
+		docSigningDivContainer.appendChild(docSigningFieldset);
+
+		docSigningFieldset.appendChild(this.createLegend(_('Option')));
+		docSigningFieldset.appendChild(
+			this.createViewSettingsTextBox('signatureCert', data, false, true),
+		);
+		docSigningFieldset.appendChild(
+			this.createViewSettingsTextBox('signatureKey', data, false, true),
+		);
+		docSigningFieldset.appendChild(
+			this.createViewSettingsTextBox('signatureCa', data, false, true),
+		);
+
+		docSigningContainer.appendChild(
+			this.createSettingsActions(
+				'document-signing',
+				'Document Signing Settings',
+				'viewsetting.json',
+				() => {
+					const defaultSettings = this.getDefaultViewSettings();
+					return {
+						...this._viewSetting,
+						signatureCert: defaultSettings.signatureCert,
+						signatureKey: defaultSettings.signatureKey,
+						signatureCa: defaultSettings.signatureCa,
+					};
+				},
+				() => this._viewSetting,
+				(settings) =>
+					this.uploadViewSettingFile(
+						'viewsetting.json',
+						JSON.stringify(settings),
+					),
+			),
+		);
+		settingsContainer.appendChild(docSigningContainer);
 	}
 
 	private createLegend(text: string): HTMLLegendElement {
@@ -1524,21 +1567,6 @@ class SettingIframe {
 			data,
 			skipHeading,
 			isSmallHeading,
-		);
-	}
-
-	private createViewSettingActions(): HTMLDivElement {
-		return this.createSettingsActions(
-			'viewsettings',
-			'View Settings',
-			'viewsetting.json',
-			() => this.getDefaultViewSettings(),
-			() => this._viewSetting,
-			(settings) =>
-				this.uploadViewSettingFile(
-					'viewsetting.json',
-					JSON.stringify(settings),
-				),
 		);
 	}
 
@@ -1835,9 +1863,9 @@ class SettingIframe {
 		const actionsContainer = document.createElement('div');
 		actionsContainer.classList.add('xcu-editor-actions');
 
-		const resetButton = this.createButtonWithIcon(
+		const resetButton = this.createButtonWithText(
 			`${prefix}-reset-button`,
-			'reset',
+			_('Reset'),
 			_(`Reset to default ${settingsName}`),
 			['button--vue-secondary', `${prefix}-reset-icon`],
 			async (button) => {
@@ -1852,7 +1880,6 @@ class SettingIframe {
 				await uploadSettings(defaultSettings);
 				button.disabled = false;
 			},
-			true,
 		);
 		actionsContainer.appendChild(resetButton);
 
