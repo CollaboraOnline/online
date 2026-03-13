@@ -15,6 +15,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		cy.cGet('#toolbar-down').should('exist');
 
 		calcHelper.clickOnFirstCell();
+
+		cy.getFrameWindow().then(function(win) {
+			this.win = win;
+		});
 	});
 
 	function getTextEndPosForFirstCell() {
@@ -29,6 +33,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply bold.', function() {
 		helper.setDummyClipboardForCopy();
+		helper.processToIdle(this.win);
 		mobileHelper.getCompactIcon('Bold').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -37,6 +42,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
+		helper.processToIdle(this.win);
 		mobileHelper.getCompactIcon('Italic').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -45,6 +51,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
+		helper.processToIdle(this.win);
 		mobileHelper.getCompactIcon('Underline').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -59,6 +66,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
+		helper.processToIdle(this.win);
 		cy.cGet('#toolbar-down #fontcolor').should('not.be.disabled').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
@@ -68,6 +76,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
+		helper.processToIdle(this.win);
 		cy.cGet('#toolbar-down #backcolor').should('not.be.disabled').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
