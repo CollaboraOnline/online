@@ -1666,22 +1666,43 @@ fi
 AC_SUBST(ENABLE_EMSCRIPTENAPP)
 
 has_simd=no
-if test "$mobile_app" != "true"; then
-    # Check for SIMD / AVX2 acceleration compile-time goodness
-    SIMD_CFLAGS="-mavx2 -O3"
-    AC_MSG_CHECKING([whether $CC has AVX2 SIMD support])
+# Check for SIMD / AVX2 acceleration compile-time goodness
+SIMD_CFLAGS="-mavx2 -O3"
+AC_MSG_CHECKING([whether $CC has AVX2 SIMD support])
 
+save_CFLAGS=$CFLAGS
+AC_LANG_PUSH([C])
+CFLAGS="$CFLAGS $SIMD_CFLAGS"
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+    #include <immintrin.h>
+    int main () {
+        __builtin_cpu_init();
+        __m256i vec = _mm256_set1_epi32(0);
+        (void)vec;
+        return __builtin_cpu_supports ("avx2");
+    }])],
+    [has_simd=yes],
+    [has_simd=no])
+
+AC_LANG_POP([C])
+CFLAGS=$save_CFLAGS
+
+AC_MSG_RESULT([${has_simd}])
+
+if test "$has_simd" = "no"; then
+    # Check for ARM64 NEON (always available on aarch64)
+    SIMD_CFLAGS="-O3"
+    AC_MSG_CHECKING([whether $CC has ARM64 NEON SIMD support])
     save_CFLAGS=$CFLAGS
     AC_LANG_PUSH([C])
     CFLAGS="$CFLAGS $SIMD_CFLAGS"
-
     AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-        #include <immintrin.h>
-        int main () {
-            __builtin_cpu_init();
-            __m256i vec = _mm256_set1_epi32(0);
-            (void)vec;
-            return __builtin_cpu_supports ("avx2");
+        #include <arm_neon.h>
+        int main() {
+            uint32x4_t v = vdupq_n_u32(0);
+            (void)v;
+            return 0;
         }])],
         [has_simd=yes],
         [has_simd=no])
