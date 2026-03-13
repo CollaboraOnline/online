@@ -1713,8 +1713,10 @@ window.L.Map = window.L.Evented.extend({
 
 		if (this.getDocType() === 'spreadsheet') {
 			this._docLayer.goToCellViewCursor(id);
-		} else if (this.getDocType() === 'text' || this.getDocType() === 'presentation') {
+		} else if (this.getDocType() === 'text') {
 			this._docLayer.goToViewCursor(id);
+		} else if (this.getDocType() === 'presentation') {
+			this._docLayer.goToOtherUserView(id);
 		}
 	},
 
