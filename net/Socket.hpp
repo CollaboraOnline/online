@@ -864,7 +864,7 @@ public:
     /// Executed inside the poll in case of a wakeup
     virtual void wakeupHook() {}
 
-    const std::thread::id &getThreadOwner()
+    const std::thread::id &getThreadOwner() const
     {
         return _owner;
     }
@@ -913,7 +913,7 @@ public:
     }
 
     /// Wakeup the main polling loop in another thread
-    void wakeup()
+    void wakeup() const
     {
         // There is a race when shutting down because
         // SocketPoll threads exit when shutting down.

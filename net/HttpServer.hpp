@@ -189,14 +189,14 @@ public:
                            startIsSuffix, http::StatusCode::PartialContent);
     }
 
-    int getStart()
+    int getStart() const
     {
         if (_startIsSuffix)
             return _size - _start;
         return _start;
     }
 
-    int getEnd()
+    int getEnd() const
     {
         if (_startIsSuffix)
             return _size;
@@ -209,7 +209,7 @@ public:
     }
 
     /// Calculate how much we're going to send based on the file size and the range
-    int getSendSize()
+    int getSendSize() const
     {
         int end = getEnd();
         int start = getStart();
@@ -220,7 +220,7 @@ public:
         return end - start;
     }
 
-    void asyncShutdown()
+    void asyncShutdown() const
     {
         LOG_TRC("asyncShutdown");
         std::shared_ptr<StreamSocket> socket = _socket.lock();

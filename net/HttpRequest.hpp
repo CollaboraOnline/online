@@ -1592,7 +1592,7 @@ public:
         }
     }
 
-    std::string getSslVerifyMessage()
+    std::string getSslVerifyMessage() const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1604,7 +1604,7 @@ public:
 #endif
     }
 
-    long getSslVerifyResult()
+    long getSslVerifyResult() const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1616,7 +1616,7 @@ public:
 #endif
     }
 
-    std::string getSslCert(std::string& subjectHash)
+    std::string getSslCert(std::string& subjectHash) const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1628,7 +1628,7 @@ public:
         return std::string();
     }
 
-    net::AsyncConnectResult connectionResult()
+    net::AsyncConnectResult connectionResult() const
     {
         return _result;
     }
