@@ -1871,7 +1871,18 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			else if (hasImage !== false){
 				if (data.icon) {
 					buttonImage = window.L.DomUtil.create('img', '', button);
-					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : app.LOUtil.setImage(buttonImage, data.icon, builder.map);
+					if (this._isStringCloseToURL(data.icon)) {
+						buttonImage.src = data.icon;
+					} else {
+						app.LOUtil.setImage(buttonImage, data.icon, builder.map);
+						// Fall back to base64 PNG if the SVG is not available
+						if (data.image) {
+							buttonImage.onerror = function() {
+								buttonImage.onerror = null;
+								buttonImage.src = data.image;
+							};
+						}
+					}
 				}
 				else if (data.image) {
 					buttonImage = window.L.DomUtil.create('img', '', button);
