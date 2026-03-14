@@ -363,12 +363,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 /// Log an FTL (fatal) entry with errno appended.
 /// NOTE: Must be called immediately after an API that sets errno.
-#define LOG_SFL(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        const auto onrre = errno; /* Save errno immediately while avoiding name clashes*/          \
-        LOG_FTL(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
-    } while (false)
+#define LOG_SFL(X) LOG_ERRNO_(LOG_FTL, errno, X)
 
 /// No-prefix versions:
 #define LOG_TRC_S(X) LOG_MESSAGE_(TRC, Generic, X, (void), LOG_END)
