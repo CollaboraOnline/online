@@ -808,6 +808,11 @@ algned to the bottom */
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
 }
 
+/* ChartDataDialog uses subgrid so headers align with data columns */
+#ChartDataDialog .ui-treeview-headers {
+	grid-template-columns: subgrid;
+}
+
 #ServerAuditDialog .ui-treeview-headers {
 	display: grid;
 	grid-column-end: 4 !important;
@@ -828,8 +833,23 @@ algned to the bottom */
 	width: 100%;
 }
 
+.ui-treeview-header-color {
+	height: 4px;
+	width: 100%;
+	border-radius: 1px;
+}
+
 .ui-treeview-header-text {
 	font-weight: bold;
+}
+
+.ui-treeview-rowheader {
+	font-weight: bold;
+	text-align: center;
+	background-color: var(--color-background-dark);
+	width: 100% !important;
+	min-width: 3em;
+	box-sizing: border-box;
 }
 
 .ui-treeview-entry > div {
@@ -891,6 +911,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	line-height: 40px;
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+#ChartDataDialog .ui-treeview-entry:focus-visible {
+	outline: none;
 }
 
 .ui-treeview-entry.selected {
@@ -3175,4 +3199,88 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 
 #ManageStylePage #box1 #desc {
 	display: block;
+}
+
+/* Chart Data Table dialog */
+
+/* Hide the fragment-based series header boxes — these are VCL child widgets
+   that get serialized as part of the dialog tree; headers are rendered
+   inside the TreeView column headers instead. */
+#ChartDataDialog #columns,
+#ChartDataDialog #colorcolumns {
+	display: none !important;
+}
+#ChartDataDialog .ui-scrollwindow:has(#columns),
+#ChartDataDialog .ui-scrollwindow:has(#colorcolumns) {
+	display: none !important;
+}
+
+/* Let the datagridwin scrollwindow not constrain width — TreeView handles scrolling */
+#ChartDataDialog #datagridwin.ui-scrollwindow {
+	max-width: none;
+	overflow-x: hidden;
+}
+
+#ChartDataDialog #datagrid.ui-treeview {
+	overflow-x: auto;
+	grid-auto-columns: minmax(80px, auto);
+}
+
+/* Align header text (e.g. "Categories") to bottom, matching columns with series names */
+#ChartDataDialog .ui-treeview-header {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--color-background-dark);
+}
+
+#ChartDataDialog .ui-treeview-header .ui-treeview-header-text {
+	margin-top: auto;
+}
+
+/* Editable series name input in TreeView column headers */
+#ChartDataDialog .ui-treeview-header-name {
+	display: block;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+	border: 1px solid var(--color-border);
+	border-radius: 2px;
+	padding: 1px 3px;
+	font-size: var(--default-font-size);
+	background: var(--color-background-lighter);
+	box-sizing: border-box;
+}
+/* Inline cell editing input */
+#ChartDataDialog .ui-treeview-inline-edit {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	font: inherit;
+	padding: 2px;
+	margin: 0;
+	border: 1px solid var(--color-primary, #005da0);
+	border-radius: 2px;
+	outline: none;
+	background: var(--color-background-lighter, white);
+}
+
+/* Highlight selected column header */
+#ChartDataDialog .ui-treeview-header.selected {
+	background-color: var(--color-background-darker);
+}
+/* Make cell text spans fill their gridcells so empty cells are clickable and editable */
+#ChartDataDialog .ui-treeview-entry .ui-treeview-cell-text {
+	display: block;
+	width: 100%;
+	min-height: 1.4em;
+}
+#ChartDataDialog .ui-treeview-entry .ui-treeview-cell-text-content {
+	display: inline-block;
+	width: 100%;
+	min-height: inherit;
 }

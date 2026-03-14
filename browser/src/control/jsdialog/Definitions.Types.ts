@@ -396,6 +396,8 @@ interface TreeHeaderJSON {
 	text: string;
 	sortable: boolean; // can be sorted by column
 	arrow?: 'up' | 'down'; // sorting arrow to show
+	color?: string; // series color as hex string (RRGGBB) for color bar indicator
+	headerName?: string; // series name for chart data table headers
 }
 
 interface TreeWidgetJSON extends WidgetJSON {
