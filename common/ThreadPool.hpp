@@ -11,13 +11,12 @@
 
 #pragma once
 
+#include <atomic>
 #include <cassert>
-#include <memory>
+#include <condition_variable>
+#include <functional>
 #include <queue>
 #include <thread>
-#include <condition_variable>
-#include <fstream>
-#include <unordered_map>
 #include <vector>
 
 #include <common/Util.hpp>
