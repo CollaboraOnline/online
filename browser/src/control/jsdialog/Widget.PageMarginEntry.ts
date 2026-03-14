@@ -181,8 +181,10 @@ JSDialog.PageMarginEntry = function (
 	custom.className = 'margin-item custom-margins-link';
 	custom.id = 'customMarginsLink';
 	custom.textContent = _('Custom Margins…');
-	custom.setAttribute('role', 'button');
-	custom.setAttribute('tabindex', '0');
+	custom.setAttribute('aria-selected', 'false');
+	custom.setAttribute('aria-haspopup', 'dialog');
+	custom.setAttribute('role', 'option');
+	custom.setAttribute('tabindex', '-1');
 
 	const customClickEventHdl = () => {
 		map.sendUnoCommand(isCalc ? '.uno:PageFormatDialog' : '.uno:PageDialog');
