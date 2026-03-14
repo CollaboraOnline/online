@@ -75,18 +75,26 @@ class Socket {
 		this.socket = undefined;
 		this.traceEvents = new TraceEvents(this);
 
-		if (window.Worker && (!(window as any).ThisIsAMobileApp || (window as any).mode.isCODesktop())) {
+		if (
+			window.Worker &&
+			(!(window as any).ThisIsAMobileApp || (window as any).mode.isCODesktop())
+		) {
 			window.app.console.info('Creating TaskWorkers');
 			for (let i = 0; i < 4; ++i) {
-				this.workers.push(
-					new Worker(app.LOUtil.getURL('/src/app/TaskWorker.js')),
-				);
-				this.workers[i].addEventListener('message', (e: any) =>
-					this.onWorkerMessage(e),
-				);
-				this.workers[i].addEventListener('error', (e: any) =>
-					this.onWorkerError(e),
-				);
+				try {
+					this.workers.push(
+						new Worker(app.LOUtil.getURL('/src/app/TaskWorker.js')),
+					);
+					this.workers[i].addEventListener('message', (e: any) =>
+						this.onWorkerMessage(e),
+					);
+					this.workers[i].addEventListener('error', (e: any) =>
+						this.onWorkerError(e),
+					);
+				} catch (e) {
+					this.onWorkerError(e);
+					break;
+				}
 			}
 		}
 	}
