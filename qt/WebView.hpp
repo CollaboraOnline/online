@@ -60,7 +60,7 @@ private:
 class WebView
 {
 public:
-    explicit WebView(QWebEngineProfile* profile, bool isWelcome = false);
+    explicit WebView(QWebEngineProfile* profile, bool isWelcome = false, QMainWindow* parentWindow = nullptr);
     ~WebView();
     CODAWebEngineView* webEngineView() { return _webView.get(); }
     QMainWindow* mainWindow() { return _mainWindow; }

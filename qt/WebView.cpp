@@ -439,8 +439,8 @@ CODAWebEngineView::~CODAWebEngineView()
         QObject::disconnect(_screenRemoved);
 }
 
-WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
-    : _mainWindow(new Window(nullptr, this))
+WebView::WebView(QWebEngineProfile* profile, bool isWelcome, QMainWindow* parentWindow)
+    : _mainWindow(new Window(parentWindow, this))
     , _webView(std::make_unique<CODAWebEngineView>(_mainWindow))
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
@@ -452,7 +452,8 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
 
     if (_isWelcome)
     {
-        _mainWindow->setWindowFlags(Qt::FramelessWindowHint);
+        _mainWindow->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+        _mainWindow->setWindowModality(Qt::WindowModal);
     }
     else
     {

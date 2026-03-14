@@ -435,8 +435,9 @@ QVariant Bridge::cool(const QString& messageStr)
         if (FileUtil::getStatOfFile(welcomePath, st) == 0)
         {
             Poco::URI fileURL{Poco::Path(welcomePath)};
-            QTimer::singleShot(0, [fileURL]() {
-                WebView* webViewInstance = new WebView(Application::getProfile(), /*isWelcome*/ true);
+            QMainWindow* window = _window;
+            QTimer::singleShot(0, [fileURL, window]() {
+                WebView* webViewInstance = new WebView(Application::getProfile(), /*isWelcome*/ true, window);
                 webViewInstance->load(fileURL);
             });
             LOG_TRC_NOFILE("Opening welcome slideshow: " << welcomePath);
