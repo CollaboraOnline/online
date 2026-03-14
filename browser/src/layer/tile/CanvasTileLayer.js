@@ -1130,7 +1130,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._map.fire('versionbar', obj);
 		}
 		else if (textMsg.startsWith('lockaccessibilityon')) {
-			// a11y forced on by DocumentBroker, from view settings overrides.
+			// a11y forced on by DocumentBroker, from interface settings overrides.
 			this._map.lockAccessibilityOn();
 		}
 		else if (textMsg.startsWith('a11y')) {
