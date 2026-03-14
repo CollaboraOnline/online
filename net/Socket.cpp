@@ -1272,7 +1272,7 @@ bool ServerSocket::bind([[maybe_unused]] Type type, [[maybe_unused]] int port)
 
 #if !MOBILEAPP
 
-bool ServerSocket::isUnrecoverableAcceptError(const int cause)
+bool ServerSocket::isUnrecoverableAcceptError(const int cause) const
 {
     constexpr const char * messagePrefix = "Failed to accept. (errno: ";
     switch(cause)

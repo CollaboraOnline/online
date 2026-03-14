@@ -150,10 +150,7 @@ class DeltaGenerator {
                 free(_rleData);
         }
 
-        size_t sizeBytes()
-        {
-            return sizeof(DeltaBitmapRow) + _rleSize * 4;
-        }
+        size_t sizeBytes() const { return sizeof(DeltaBitmapRow) + _rleSize * 4; }
 
         // <rle data size> (byte), <bitmask>, [<unique pixel data>]
         size_t packForNetwork(unsigned char *output,
@@ -191,7 +188,7 @@ class DeltaGenerator {
     private:
         void initPixRowCpu(const uint32_t *from, uint32_t *scratch,
                            size_t *scratchLen, uint64_t *rleMaskBlock,
-                           unsigned int width)
+                           unsigned int width) const
         {
             uint32_t lastPix = 0x00000000; // transparency
             unsigned int x = 0, outp = 0;
@@ -549,7 +546,7 @@ class DeltaGenerator {
         const DeltaData &prev,
         const DeltaData &cur,
         std::vector<char>& outStream,
-        LibreOfficeKitTileMode mode)
+        LibreOfficeKitTileMode mode) const
     {
         // TODO: should we split and compress alpha separately ?
         if (prev.getWidth() != cur.getWidth() || prev.getHeight() != cur.getHeight())
@@ -687,7 +684,7 @@ class DeltaGenerator {
         rebalanceDeltasT(true);
     }
 
-    void dumpState(std::ostream& oss)
+    void dumpState(std::ostream& oss) const
     {
         oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max "
             << _maxEntries << '\n';
