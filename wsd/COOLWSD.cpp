@@ -2187,11 +2187,15 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #if !WASMAPP && !defined(_WIN32)
     struct rlimit rlim;
-    ::getrlimit(RLIMIT_NOFILE, &rlim);
-    LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
-    // 4 fds per document are used for client connection, Kit process communication, and
-    // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
-    LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+    if (::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+    {
+        LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
+        // 4 fds per document are used for client connection, Kit process communication, and
+        // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
+        LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+    }
+    else
+        LOG_SYS("Failed to get RLIMIT_NOFILE");
 #endif
 
     LOG_INF("Maximum concurrent open Documents limit: " << COOLWSD::MaxDocuments);
