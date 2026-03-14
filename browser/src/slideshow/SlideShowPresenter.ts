@@ -491,6 +491,21 @@ class SlideShowPresenter {
 		}
 	}
 
+	private _configureCloseButtonStyles(
+		closeBtn: HTMLElement,
+		closeImg: HTMLImageElement,
+	) {
+		closeBtn.style.position = 'absolute';
+		closeBtn.style.top = '10px';
+		closeBtn.style.right = '10px';
+		closeBtn.style.width = '24px';
+		closeBtn.style.height = '24px';
+		closeBtn.style.cursor = 'pointer';
+		closeImg.style.width = '100%';
+		closeImg.style.height = '100%';
+		closeImg.style.pointerEvents = 'none';
+	}
+
 	private _createPresenterHTML(
 		parent: Element,
 		width: number,
@@ -516,6 +531,28 @@ class SlideShowPresenter {
 			height,
 			showSwitchMonitors,
 		);
+
+		if (this._isWelcomePresentation) {
+			const closeBtn = window.L.DomUtil.create(
+				'div',
+				'welcome-slideshow-close-btn',
+				presenterContainer,
+			);
+			const closeImg = window.L.DomUtil.create(
+				'img',
+				'',
+				closeBtn,
+			) as HTMLImageElement;
+			closeImg.src = app.LOUtil.getImageURL('closedoc.svg');
+
+			this._configureCloseButtonStyles(closeBtn, closeImg);
+
+			closeBtn.onclick = function (e: MouseEvent) {
+				e.stopPropagation();
+				app.dispatcher.dispatch('closeapp');
+			};
+		}
+
 		return presenterContainer;
 	}
 
