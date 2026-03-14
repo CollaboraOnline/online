@@ -439,8 +439,9 @@ CODAWebEngineView::~CODAWebEngineView()
         QObject::disconnect(_screenRemoved);
 }
 
-WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
+WebView::WebView(QWebEngineProfile* profile, bool isWelcome, QMainWindow* parentWindow)
     : _mainWindow(new Window(nullptr, this))
+    , _parentWindow(parentWindow)
     , _webView(std::make_unique<CODAWebEngineView>(_mainWindow))
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
@@ -629,6 +630,14 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         size.second = 1.5 * size.second;
     }
     _mainWindow->resize(size.first, size.second);
+
+    if (_isWelcome && _parentWindow) {
+        QRect parentGeometry = _parentWindow->geometry();
+        int x = parentGeometry.left() + (parentGeometry.width() - size.first) / 2;
+        int y = parentGeometry.top() + (parentGeometry.height() - size.second) / 2;
+        _mainWindow->move(x, y);
+    }
+
     _mainWindow->show();
 }
 
