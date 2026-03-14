@@ -143,6 +143,23 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#data-input').should('not.be.disabled');
 	});
 
+	it('JSDialog Help button opens online help', function() {
+		// Open Validation dialog (has a Help button)
+		cy.cGet('#Data-tab-label').click();
+		cy.cGet('.unoValidation').click();
+
+		// Click the Help button
+		cy.cGet('#help').click();
+
+		// The "External link" popup should appear with the help URL
+		cy.cGet('#modal-dialog-openlink-box').should('be.visible');
+		cy.cGet('#modal-dialog-openlink-box').should('contain.text', 'External link');
+		cy.cGet('#info-modal-label2').should('contain.text', 'help.collaboraoffice.com');
+
+		// Close it
+		cy.cGet('#openlink-response').click();
+	});
+
 	it('QuerySelector Syntax error', function(){
 
 		cy.getFrameWindow().then(function(win) {
