@@ -748,7 +748,7 @@ public:
         return true;
     }
 
-    void flush()
+    void flush() const
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
@@ -957,7 +957,7 @@ protected:
 
     bool isControlFrame(WSOpCode code) const { return code >= WSOpCode::Close; }
 
-    void readPayload(unsigned char *data, size_t dataLen, unsigned char* mask, std::vector<char>& payload)
+    void readPayload(unsigned char *data, size_t dataLen, unsigned char* mask, std::vector<char>& payload) const
     {
         if (dataLen == 0)
             return;
@@ -989,7 +989,7 @@ protected:
         return _socket;
     }
 
-    void ignoreInput()
+    void ignoreInput() const
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)

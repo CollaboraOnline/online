@@ -160,7 +160,7 @@ void SslContext::initECDH()
 #endif
 }
 
-std::string SslContext::getLastErrorMsg()
+std::string SslContext::getLastErrorMsg() const
 {
     const unsigned long errCode = ERR_get_error();
     if (errCode != 0)
