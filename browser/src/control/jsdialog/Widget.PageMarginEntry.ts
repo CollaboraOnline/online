@@ -29,16 +29,15 @@ interface PageMarginOptions {
 	[id: string]: PageMarginOption;
 }
 
-function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
+JSDialog.PageMarginEntry = function (
+	parentContainer: Element,
+	data: any,
+	builder: any,
+): boolean {
 	const inchesToHMM = (inches: number) => Math.round(inches * 25.4 * 100);
 	const options: PageMarginOptions = data.options;
-	const container = document.createElement('div');
 	const map = builder.map;
 	const isCalc = map._docLayer.isCalc();
-	container.className = 'margins-popup-container';
-	container.setAttribute('role', 'listbox');
-	container.setAttribute('aria-label', _('Page margin options'));
-	container.setAttribute('tabindex', '0');
 
 	const lang = window.coolParams.get('lang') || 'en-US';
 	const useImperial = lang === 'en-US' || lang === 'en'; // we need to consider both short form as some user can user lang=en-US using document URL
@@ -114,7 +113,6 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		if (isFirstItem) {
 			item.classList.add('selected');
 			item.setAttribute('aria-selected', 'true');
-			container.setAttribute('aria-activedescendant', item.id);
 
 			data.initialSelectedId = item.id;
 		}
@@ -172,12 +170,12 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 
 		item.appendChild(img);
 		item.appendChild(textWrap);
-		container.appendChild(item);
+		parentContainer.appendChild(item);
 	});
 
 	const hr = document.createElement('hr');
 	hr.className = 'jsdialog ui-separator horizontal';
-	container.appendChild(hr);
+	parentContainer.appendChild(hr);
 
 	const custom = document.createElement('div');
 	custom.className = 'margin-item custom-margins-link';
@@ -201,17 +199,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 			event.preventDefault();
 		}
 	});
-	container.appendChild(custom);
+	parentContainer.appendChild(custom);
 
-	return container;
-}
-
-JSDialog.pageMarginEntry = function (
-	parentContainer: Element,
-	data: any,
-	builder: any,
-): boolean {
-	const element = createPageMarginEntryWidget(data, builder);
-	parentContainer.appendChild(element);
 	return false;
 };
