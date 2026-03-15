@@ -336,8 +336,8 @@ JSDialog.iconView = function (
 			});
 
 		const entry =
-			position >= 0 && iconview?.children.length > position
-				? iconview?.children[position]
+			position >= 0 && iconview.children.length > position
+				? iconview.children[position]
 				: null;
 
 		iconview.updateSelection(position);
@@ -457,7 +457,7 @@ JSDialog.iconView = function (
 
 	app.layoutingService.appendLayoutingTask(() => {
 		const shouldSelectFirstEntry =
-			data?.entries?.length > 0
+			data.entries?.length > 0
 				? !data.entries.some((entry) => entry.selected === true)
 				: false;
 		if (shouldSelectFirstEntry) data.entries[0].selected = true;

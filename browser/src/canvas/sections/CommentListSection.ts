@@ -1913,7 +1913,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		const cellPos = comment.cellRange ? app.map._docLayer._cellRangeToTwipRect(comment.cellRange).toRectangle() : null;
 		const rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // Simple array of point arrays [x1, y1, x2, y2].
-		if (rectangles.length === 0 && cellPos.length) {
+		if (rectangles.length === 0 && cellPos?.length) {
 			rectangles.push(cellPos);
 		}
 		console.assert(rectangles.length, 'Found no rectangles in comment!');

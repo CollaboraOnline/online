@@ -1900,7 +1900,7 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 
     http::Session::FinishedCallback finishedCallback =
         [fileName, uriAnonym, socketWeak, requestPath = getRequestPath(request),
-         shortMessage, uploadedFileOwnership](const std::shared_ptr<http::Session>& wopiSession)
+         shortMessage, uploadedFileOwnership = std::move(uploadedFileOwnership)](const std::shared_ptr<http::Session>& wopiSession)
     {
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)

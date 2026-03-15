@@ -544,7 +544,7 @@ void asyncConnect(std::string host, const std::string& port, const bool isSSL,
     };
 
     std::string state = "asyncConnect: [" + host + ':' + port + ']';
-    net::AsyncDNS::DNSThreadDumpStateFn dumpState = [state]() -> std::string { return state; };
+    net::AsyncDNS::DNSThreadDumpStateFn dumpState = [state = std::move(state)]() -> std::string { return state; };
 
     AsyncDNS::lookup(std::move(host), std::move(callback), std::move(dumpState));
 }

@@ -242,9 +242,9 @@ function setupOverflowMenu(
 					}
 
 					overflowGroupContainer.appendChild(overflowNode);
-					menu?.replaceChildren();
-					menu?.classList.add('ui-toolbar');
-					menu?.classList.add('ui-overflow-group-popup');
+					menu.replaceChildren();
+					menu.classList.add('ui-toolbar');
+					menu.classList.add('ui-overflow-group-popup');
 
 					migrateItems(hiddenItems, menu);
 					menu.addEventListener('keydown', function (e: KeyboardEvent) {
@@ -279,7 +279,7 @@ function setupOverflowMenu(
 									const forwardDir =
 										key === 'ArrowRight' || key === 'ArrowDown';
 									const focusables = JSDialog.GetFocusableElements(menu);
-									if (focusables.length > 0) {
+									if (focusables && focusables.length > 0) {
 										const currentIndex = focusables.indexOf(currentElement);
 										let targetIndex = forwardDir
 											? currentIndex + 1
