@@ -456,9 +456,10 @@ std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
     return nullptr;
 }
 
-static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
-                                   const std::string& msg,
-                                   WebSocketHandler::StatusCodes statusCode)
+namespace
+{
+void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws, const std::string_view msg,
+                            WebSocketHandler::StatusCodes statusCode)
 {
     if (ws)
     {
@@ -466,6 +467,7 @@ static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
         ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
     }
 }
+} // namespace
 
 void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                                                 const std::string& docKey, const std::string& url,
@@ -584,7 +586,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
         });
 }
 
-void RequestVettingStation::sendErrorAndShutdown(const std::string& msg,
+void RequestVettingStation::sendErrorAndShutdown(const std::string_view msg,
                                                  WebSocketHandler::StatusCodes statusCode)
 {
     sendErrorAndShutdownWS(_ws, msg, statusCode);
