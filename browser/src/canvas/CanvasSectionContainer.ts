@@ -1207,7 +1207,9 @@ class CanvasSectionContainer {
 						this.sectionUnderMouse = section.name;
 						this.propagateOnMouseEnter(section, this.convertPositionToSectionLocale(section, this.mousePosition), e);
 					}
-					this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
+					// Prevent to dragging something without select.
+					if(this.sectionUnderMouse !== "selection-rectangle" && this.sectionUnderMouse !== "overlay")
+						this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
 				}
 				else if (this.sectionUnderMouse !== null) {
 					var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
