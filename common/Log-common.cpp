@@ -273,8 +273,9 @@ namespace Log
         return Prefix::Instance.update(level, tp);
     }
 
-    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp, char* buffer,
-                 const std::string_view level)
+#ifdef BUILDING_TESTS
+    char* prefixReference(const std::chrono::time_point<std::chrono::system_clock>& tp,
+                          char* buffer, const std::string_view level)
     {
 #if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always (or whatever the app
@@ -371,6 +372,7 @@ namespace Log
 
         return buffer;
     }
+#endif // BUILDING_TESTS
 
 } // namespace Log
 

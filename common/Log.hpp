@@ -12,15 +12,16 @@
 #pragma once
 
 #include <common/StateEnum.hpp>
-#include <common/Util.hpp>
 
 #include <array>
 #include <cerrno>
 #include <chrono>
 #include <cstddef>
+#include <cstring>
 #include <functional>
 #include <iostream>
 #include <map>
+#include <source_location>
 #include <sstream>
 #include <string>
 #include <thread>
@@ -125,11 +126,11 @@ namespace Log
         const std::string_view level,
         std::chrono::time_point<std::chrono::system_clock> tp = std::chrono::system_clock::now());
 
-    /// Generates log entry prefix. Example follows (without the vertical bars).
-    /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
-    /// This is fully signal-safe. Buffer must be at least 128 bytes.
-    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp, char* buffer,
-                 const std::string_view level);
+#ifdef BUILDING_TESTS
+    /// Generates the reference log entry prefix. Do *not* use, except for tests.
+    char* prefixReference(const std::chrono::time_point<std::chrono::system_clock>& tp,
+                          char* buffer, const std::string_view level);
+#endif
 
     /// is a certain level of logging enabled ?
     bool isEnabled(Level l, Area a = Area::Generic);
@@ -182,7 +183,61 @@ namespace Log
     static bool isDebuggerPresent;
 #endif
 
+    /// A helper class that captures an original location (the parent's) and a current location (actual).
+    /// Supports comparing them via the same() member.
+    class dummy_location : public std::source_location
+    {
+    public:
+        constexpr dummy_location(std::source_location orig_loc,
+                                 std::source_location cur_loc = std::source_location::current())
+            : std::source_location(orig_loc)
+            , _cur_loc(cur_loc)
+        {
+        }
+
+        constexpr bool same() const
+        {
+            return this->line() == _cur_loc.line() &&
+                   std::strcmp(this->file_name(), _cur_loc.file_name()) == 0;
+        }
+
+    private:
+        std::source_location _cur_loc;
+    };
+
+    /// Serialize a dummy_location, if it has an original location that is different from the current.
+    inline std::ostream& operator<<(std::ostream& lhs, const dummy_location loc)
+    {
+        if (!loc.same())
+        {
+            lhs << "(from " << loc.file_name() << ':' << loc.line() << ")|";
+        }
+
+        return lhs;
+    }
+
+    /// A callable object to mimick fetch_source_location but return that of the parent's.
+    class SourceLocationGetter : public std::source_location
+    {
+    public:
+        constexpr explicit SourceLocationGetter(
+            std::source_location loc = std::source_location::current())
+            : std::source_location(loc)
+        {
+        }
+        constexpr std::source_location operator()() const { return *this; }
+    };
+
 } // namespace Log
+
+/// A dummy fetch_source_location that returns the current location.
+/// This is the no-op version. Must be replaced via LOG_CAPTURE_CALLER
+/// to replace it with one that returns the parent's location.
+constexpr std::source_location
+fetch_source_location(std::source_location loc = std::source_location::current())
+{
+    return loc;
+}
 
 /// A default implementation that is a NOP.
 /// Any context can implement this to prefix its log entries.
@@ -252,7 +307,28 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 #define LOG_END_NOFILE(LOG) (void)0
 
-#define LOG_END(LOG) LOG << "| " << LOG_FILE_NAME(__FILE__) << ":" STRING(__LINE__)
+/// Used to pass the current function's call site to capture the
+/// grandparent's call location, rather than the parent's.
+/// The current function must have LOG_CAPTURE_CALL(_DECLARATION).
+/// Example: in function f(LOG_CAPTURE_CALL_DECLARATION) { child(LOG_PASS_PARENT_CALLER); }
+#define LOG_PASS_PARENT_CALLER fetch_source_location
+/// Used as the last parameter in the definition of a function that needs
+/// to capture the caller's source location (filename and line number).
+#define LOG_CAPTURE_CALLER [[maybe_unused]] const Log::SourceLocationGetter& LOG_PASS_PARENT_CALLER
+/// Used as the last parameter in the declaration of a function that needs
+/// to capture the caller's source location (filename and line number).
+/// Logs from this function will include the caller's location,
+/// which is helpful for generic helpers. Example:
+/// WRN  WOPISrc validation error|(from wsd/FileServer.cpp:1416)|net/HttpHelper.hpp:79
+#define LOG_CAPTURE_CALLER_DECLARATION LOG_CAPTURE_CALLER = Log::SourceLocationGetter()
+
+/// Add the log-suffix.
+/// Calls fetch_source_location(), which returns Log::dummy_location. If this is different
+/// from std::source_location::current(), we log that as the original local, like so:
+/// INF  Copying 7750 bytes from empty.ods to /tmp/empty.ods|(from ./common/FileUtil.hpp:180)|common/FileUtil.cpp:89
+#define LOG_END(LOG)                                                                               \
+    LOG << '|' << Log::dummy_location(fetch_source_location()) << LOG_FILE_NAME(__FILE__)          \
+        << ":" STRING(__LINE__)
 
 #define LOG_MESSAGE_(LVL, A, X, PREFIX, SUFFIX)  \
     do                                          \
@@ -274,23 +350,20 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         }                                                                                          \
     } while (false)
 
-#define LOG_BODY_(LVL, X, PREFIX, END)                                                             \
-    std::ostringstream oss_(Log::prefix(#LVL).data(), std::ostringstream::ate);                    \
-    PREFIX(oss_);                                                                                  \
-    oss_ << std::boolalpha << X;                                                                   \
-    END(oss_);                                                                                     \
-    LOG_LOG(LVL, oss_.str())
-
-/// Unconditionally log. LVL can be anything converted to string.
-#define LOG_UNCONDITIONAL(LVL, X)                                                                  \
+#define LOG_BODY_IMPL_(LEVEL_DISPLAY_NAME, LEVEL, X, PREFIX, END)                                  \
     do                                                                                             \
     {                                                                                              \
-        std::ostringstream oss_(Log::prefix(#LVL).data(), std::ostringstream::ate);                \
-        logPrefix(oss_);                                                                           \
+        std::ostringstream oss_(Log::prefix(#LEVEL_DISPLAY_NAME).data(), std::ostringstream::ate); \
+        PREFIX(oss_);                                                                              \
         oss_ << std::boolalpha << X;                                                               \
-        LOG_END(oss_);                                                                             \
-        Log::log(Log::Level::FTL, oss_.str());                                                     \
+        END(oss_);                                                                                 \
+        LOG_LOG(LEVEL, oss_.str());                                                                \
     } while (false)
+
+#define LOG_BODY_(LVL, X, PREFIX, END) LOG_BODY_IMPL_(LVL, LVL, X, PREFIX, END)
+
+/// Unconditionally log. LVL can be anything converted to string.
+#define LOG_UNCONDITIONAL(LVL, X) LOG_BODY_IMPL_(LVL, FTL, X, logPrefix, LOG_END)
 
 /// Unconditionally log at ANY level.
 #define LOG_ANY(X) LOG_UNCONDITIONAL(ANY, X)
@@ -313,7 +386,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ERR(X)        LOG_MESSAGE_(ERR, Generic, X, logPrefix, LOG_END)
 
 #define LOG_WRN_ONCE(X) LOG_MESSAGE_ONCE_(WRN, Generic, X, logPrefix, LOG_END)
+#define LOG_WRN_ONCE_S(X) LOG_MESSAGE_ONCE_(WRN, Generic, X, (void), LOG_END)
 #define LOG_ERR_ONCE(X) LOG_MESSAGE_ONCE_(ERR, Generic, X, logPrefix, LOG_END)
+#define LOG_ERR_ONCE_S(X) LOG_MESSAGE_ONCE_(ERR, Generic, X, (void), LOG_END)
 
 #define LOGA_TRC(A,X)        LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END)
 #define LOGA_TRC_NOFILE(A,X) LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END_NOFILE)
@@ -366,12 +441,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 /// Log an FTL (fatal) entry with errno appended.
 /// NOTE: Must be called immediately after an API that sets errno.
-#define LOG_SFL(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        const auto onrre = errno; /* Save errno immediately while avoiding name clashes*/          \
-        LOG_FTL(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
-    } while (false)
+#define LOG_SFL(X) LOG_ERRNO_(LOG_FTL, errno, X)
 
 /// No-prefix versions:
 #define LOG_TRC_S(X) LOG_MESSAGE_(TRC, Generic, X, (void), LOG_END)
@@ -433,5 +503,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ASSERT_MSG(condition, message) LOG_ASSERT_INTERNAL(condition, message, LOG_ERR)
 #define LOG_ASSERT(condition) LOG_ASSERT_MSG(condition, "Precondition failed")
 #endif
+
+// Must be included at the _end_ of this file, since it (Util.hpp)
+// includes us (Log.hpp) and that would break the build.
+#include <common/Util.hpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
