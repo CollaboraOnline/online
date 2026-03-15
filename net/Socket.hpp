@@ -648,7 +648,7 @@ public:
     /// Sends a binary message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    virtual int sendBinaryMessage(const char* data, size_t len, bool flush = false) const = 0;
+    virtual int sendBinaryMessage(std::string_view data, bool flush = false) const = 0;
 
     /// Shutdown the socket and specify if the endpoint is going away or not (useful for WS).
     /// Optionally provide a message sent in the close frame (useful for WS).
@@ -721,7 +721,7 @@ class SimpleSocketHandler : public ProtocolHandlerInterface
 public:
     SimpleSocketHandler() = default;
     int sendTextMessage(std::string_view, bool) const override { return 0; }
-    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendBinaryMessage(std::string_view, bool) const override { return 0; }
     void shutdown(bool, const std::string_view) override {}
     void getIOStats(uint64_t &, uint64_t &) override {}
 };

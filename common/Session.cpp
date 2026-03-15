@@ -85,7 +85,7 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
     }
 
     LOG_TRC("Send: " << std::to_string(length) << " binary bytes");
-    return _protocol->sendBinaryMessage(buffer, length) >= length;
+    return _protocol->sendBinaryMessage(std::string_view(buffer, length)) >= length;
 }
 
 void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp)
