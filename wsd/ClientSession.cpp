@@ -1442,9 +1442,16 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.equals(0, "slideshowfollow"))
         {
             if(tokens.equals(1, "newfollowmepresentation"))
+            {
                 docBroker->setIsFollowmeSlideShowOn(true);
+                docBroker->setLeaderSessionId(getId());
+                docBroker->setLeaderSlide(0);
+            }
             else if(tokens.equals(1, "endpresentation"))
+            {
                 docBroker->setIsFollowmeSlideShowOn(false);
+                docBroker->setLeaderSessionId(std::string());
+            }
             else if(tokens.equals(1, "effect")){
                 Poco::JSON::Parser parser;
                 auto result = parser.parse(tokens[2]);
@@ -1456,7 +1463,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 auto result = parser.parse(tokens[2]);
                 int slideNumber = JsonUtil::getJSONValue<int>(result.extract<Poco::JSON::Object::Ptr>(), "currentSlide");
                 docBroker->setLeaderSlide(slideNumber);
-                docBroker->setLeaderEffect(-1);
+                docBroker->setLeaderEffect(0);
             }
             docBroker->broadcastMessageToOthers(tokens.substrFromToken(0), client_from_this());
             return true;

@@ -4701,6 +4701,26 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
 void DocumentBroker::handleGetSlideRequest(const StringVector& tokens,
                                            const std::shared_ptr<ClientSession>& session)
 {
+    // do not allow followers to fetch slides beyond leader's current slide
+    std::string hash;
+    getTokenString(tokens[1], "hash", hash);
+    if (getIsFollowmeSlideShowOn() &&
+        !getLeaderSessionId().empty() &&
+        session->getId() != getLeaderSessionId())
+    {
+        int requestedPart = -1;
+        getTokenInteger(tokens, "part", requestedPart);
+        const int leaderSlide = getLeaderSlide();
+        if (requestedPart > leaderSlide)
+        {
+            LOG_INF("Slideshow: Blocking follower session ["
+                    << session->getId() << "] from fetching slide " << requestedPart
+                    << " (leader is on slide " << leaderSlide << ')');
+            session->sendTextFrame(R"(getslidestatus: {"hash": ")" + hash +  R"(", "status": "fail"})");
+            return;
+        }
+    }
+
     // cacheKey example:
     // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
     std::string cacheKey = tokens.substrFromToken(1);
@@ -4712,11 +4732,13 @@ void DocumentBroker::handleGetSlideRequest(const StringVector& tokens,
         {
             session->sendBinaryFrame(message->data().data(), message->size());
         }
+        session->sendTextFrame(R"(getslidestatus: {"hash": ")" + hash +  R"(", "status": "success"})");
         return;
     }
     LOG_INF("Slideshow: Cached slide layer not found, slides layer is freshely rendered by "
             "canonical view ID "
             << session->getCanonicalViewId());
+    session->sendTextFrame(R"(getslidestatus: {"hash": ")" + hash +  R"(", "status": "success"})");
     forwardToChild(session, tokens.substrFromToken(0));
 }
 

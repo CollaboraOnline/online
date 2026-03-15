@@ -243,13 +243,13 @@ class SlideShowPresenter {
 							? 0
 							: this._slideShowNavigator.getLeaderSlide(),
 					startEffectNumber:
-						this._slideShowNavigator.getLeaderEffect() === -1
+						this._slideShowNavigator.getLeaderEffect() === 0
 							? undefined
 							: this._slideShowNavigator.getLeaderEffect(),
 				});
 				break;
 			case 'dispatcheffect':
-				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
+				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect(false);
 				break;
 			case 'rewindeffect':
 				if (this.isFollowing()) this._slideShowNavigator.rewindEffect();
@@ -689,13 +689,6 @@ class SlideShowPresenter {
 
 	private _onNextSlide = (e: Event) => {
 		e.stopPropagation();
-		// Do not allow follower to go ahead of the leader
-		if (
-			this.isFollower() &&
-			this._slideShowNavigator.currentSlideIndex ===
-				this._slideShowNavigator.getLeaderSlide()
-		)
-			return;
 		if (this._navigateSkipTransition) this._slideShowNavigator.skipEffect();
 		else this._slideShowNavigator.dispatchEffect();
 	};
@@ -941,29 +934,29 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
+		app.console.debug('SlideShowPresenter.endPresentation');
+		if (this._pauseTimer) this._pauseTimer.stopTimer();
+
+		const settings = this._presentationInfo;
+		if (!force && !settings.isEndless && this.exitSlideshowWithWarning()) {
+			return;
+		}
+
 		this.sendSlideShowFollowMessage('endpresentation');
 		this.checkDarkMode(false);
 		this.setLeader(false);
 		this.setFollowing(false);
 
-		app.console.debug('SlideShowPresenter.endPresentation');
-		if (this._pauseTimer) this._pauseTimer.stopTimer();
-
-		const settings = this._presentationInfo;
 		if (force || !settings.isEndless) {
-			if (!force && this.exitSlideshowWithWarning()) {
-				return;
-			}
 			this._stopFullScreen();
 			this._closeSlideShowWindow();
 			if (window.mode.isCODesktop() && this._isWelcomePresentation) {
 				this._isWelcomePresentation = false;
 				app.dispatcher.dispatch('closeapp');
 			}
-			return;
+		} else {
+			this.startTimer(settings.loopAndRepeatDuration);
 		}
-
-		this.startTimer(settings.loopAndRepeatDuration);
 	}
 
 	public handleSlideShowProgressBar(event: { isVisible: boolean }): void {

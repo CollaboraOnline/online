@@ -122,12 +122,14 @@ class LayerDrawing {
 		this.map.on('slidelayer', this.onSlideLayerMsg, this);
 		this.map.on('sliderenderingcomplete', this.onSlideRenderingComplete, this);
 		this.map.on('compressedslide', this.onCompressSlide, this);
+		this.map.on('getslidestatus', this.onGetSlideStatus, this);
 	}
 
 	removeHooks() {
 		this.map.off('slidelayer', this.onSlideLayerMsg, this);
 		this.map.off('sliderenderingcomplete', this.onSlideRenderingComplete, this);
 		this.map.off('compressedslide', this.onCompressSlide, this);
+		this.map.off('getslidestatus', this.onGetSlideStatus, this);
 	}
 
 	public onCompressSlide(e: any) {
@@ -135,6 +137,19 @@ class LayerDrawing {
 			`CompressedCache: Storing compressed slide in LayerDrawing cache - slideHash: ${e.slideHash}, layers: ${e.layers.length}`,
 		);
 		this.compressedSlideCache.set(e.slideHash, e.layers);
+	}
+
+	public onGetSlideStatus(e: any) {
+		if (e.status === 'fail') {
+			const hash = e.hash;
+			// Since getslide request was not fulfilled, it will need to be requested again
+			if (this.requestedSlideHash === hash) this.requestedSlideHash = null;
+			if (this.prefetchedSlideHash === hash) this.prefetchedSlideHash = null;
+			if (this.nextRequestedSlideHash === hash)
+				this.nextRequestedSlideHash = null;
+			if (this.nextPrefetchedSlideHash === hash)
+				this.nextPrefetchedSlideHash = null;
+		}
 	}
 
 	public isDisposed() {

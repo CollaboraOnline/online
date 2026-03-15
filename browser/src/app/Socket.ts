@@ -1142,6 +1142,8 @@ class Socket {
 			// Switching modes.
 			// boolean argument is deprecated. false is default.
 			window.location.reload();
+		} else if (textMsg.startsWith('getslidestatus:')) {
+			this._onGetSlideStatus(textMsg);
 		} else if (textMsg.startsWith('slidelayer:')) {
 			this._onSlideLayerMsg(textMsg, e);
 			return;
@@ -2258,6 +2260,15 @@ class Socket {
 			);
 		else if (blockedInfo.errorKind === 'locked')
 			this._map.openUnlockPopup(blockedInfo.errorCmd as string);
+	}
+
+	// 'getslidestatus' message
+	private _onGetSlideStatus(textMsg: string): void {
+		const json = JSON.parse(textMsg.substring('getslidestatus:'.length + 1));
+		this._map.fire('getslidestatus', {
+			hash: json.hash,
+			status: json.status,
+		});
 	}
 
 	// 'slidelayer: ' message.
