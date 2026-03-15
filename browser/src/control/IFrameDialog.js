@@ -188,7 +188,7 @@ window.L.IFrameDialog = window.L.Class.extend({
 	},
 
 	postMessage: function (msg) {
-		this._iframe.contentWindow.postMessage(JSON.stringify(msg), '*');
+		this._iframe.contentWindow.postMessage(JSON.stringify(msg), window.origin);
 	},
 
 	isVisible: function () {
@@ -213,8 +213,8 @@ window.L.IFrameDialog = window.L.Class.extend({
 // Close when pressing Escape
 window.addEventListener('keyup', function iframeKeyupListener (e) {
 	if (e.keyCode === 27 || e.key === 'Escape') {
-		window.postMessage('{"MessageId":"welcome-close"}', '*');
-		window.postMessage('{"MessageId":"settings-cancel"}', '*');
+		window.postMessage('{"MessageId":"welcome-close"}', window.origin);
+		window.postMessage('{"MessageId":"settings-cancel"}', window.origin);
 	}
 });
 
