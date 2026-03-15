@@ -62,6 +62,7 @@ const char* startsWith(const char* line, const char* tag, std::size_t tagLen)
     return nullptr;
 }
 
+#ifdef __linux__
 std::size_t getFromCGroup(const std::string& group, const std::string& key)
 {
     std::size_t num = 0;
@@ -147,6 +148,7 @@ std::size_t getFromCGroupV2(const std::string& key)
     }
     return num;
 }
+#endif // __linux__
 } // namespace
 
 namespace Util

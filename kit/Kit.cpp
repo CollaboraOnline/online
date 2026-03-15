@@ -845,7 +845,7 @@ Document::~Document()
         session.second->resetDocManager();
     }
 
-#if defined(IOS) || defined(MACOS) || defined(_WIN32) || defined(QTAPP)
+#if MOBILEAPP
     DocumentData::deallocate(_mobileAppDocId);
 #endif
 
@@ -2099,7 +2099,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         const auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
         LOG_DBG("Returned lokit::documentLoad(" << anonymizeUrl(url) << ") in " << elapsed);
-#if defined(IOS) || defined(MACOS) || defined(_WIN32) || defined(QTAPP)
+#if MOBILEAPP
         DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
         {
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -2926,7 +2926,7 @@ static void addRecording(const std::string &recording, bool force)
     traceEventRecords[force ? 0 : 1].push_back(recording + "\n");
 }
 
-#if !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32) // ie. normal server
+#if !MOBILEAPP // ie. normal server
 void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
 {
     addRecording(recording, true);
@@ -2936,7 +2936,7 @@ void TraceEvent::emitOneRecording(const std::string &recording)
 {
     addRecording(recording, false);
 }
-#endif // !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
+#endif // !MOBILEAPP
 
 #else
 
@@ -2965,7 +2965,7 @@ std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly()
 
 KitSocketPoll::KitSocketPoll() : SocketPoll("kit")
 {
-#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+#if MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32))
     termination = std::make_shared<KitSocketPoll::TerminationData>();
     termination->flag = false;
 #endif
@@ -2998,7 +2998,7 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
 {
     std::shared_ptr<KitSocketPoll> result(new KitSocketPoll());
 
-#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+#if MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32))
     {
         std::unique_lock<std::mutex> lock(KSPollsMutex);
         KSPolls.push_back(result);
@@ -3147,7 +3147,7 @@ bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *
     return KitSocketPoll::pushToMainThread(cb, type, p, data);
 }
 
-#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+#if MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32))
 
 std::mutex KitSocketPoll::KSPollsMutex;
 std::condition_variable KitSocketPoll::KSPollsCV;
@@ -3173,7 +3173,7 @@ int pollCallback([[maybe_unused]] void* data, int timeoutUs)
 
     if (timeoutUs < 0)
         timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
-#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
+#if !(MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)))
     if (!data)
         return 0;
     else
@@ -3229,7 +3229,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 } // namespace
 
 bool KitSocketPoll::kitHasAnyInput([[maybe_unused]] int mostUrgentPriority) {
-#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
+#if !(MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)))
     const std::shared_ptr<Document>& document = getDocument();
 
     if (document)
@@ -3286,7 +3286,7 @@ void wakeCallback(void* data)
 } // namespace
 
 void KitSocketPoll::kitWakeup() {
-#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
+#if !(MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)))
     wakeup();
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
@@ -3382,7 +3382,7 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 
 #endif
 
-#if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+#if MOBILEAPP && (defined(QTAPP) || defined(MACOS) || defined(_WIN32))
 
 // with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
 // lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
@@ -3418,7 +3418,7 @@ std::future<LibreOfficeKit*> initKitRunLoopThread(const std::shared_ptr<KitSocke
             }).detach();
         return future;
 }
-#endif // QTAPP
+#endif // MOBILEAPP && (QTAPP || MACOS || _WIN32)
 void lokit_main(
 #if !MOBILEAPP
                 const std::string& childRoot,
@@ -3699,7 +3699,7 @@ void lokit_main(
                 return true;
             };
 
-#ifndef __FreeBSD__
+#ifdef __linux__
             const uid_t origuid = geteuid();
             const gid_t origgid = getegid();
 
@@ -4141,7 +4141,7 @@ void lokit_main(
         Log::setDisabledAreas(LogDisabledAreas);
 #endif
 
-#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
+#if !(MOBILEAPP && (defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)))
         startMainLoop(kit, loKit, mainKit);
 
         // Trap the signal handler, if invoked,
@@ -4150,7 +4150,7 @@ void lokit_main(
 
         // Let forkit handle the jail cleanup.
 
-#else // IOS or QTAPP or MACOS or _WIN32
+#else // MOBILEAPP CODA apps
         auto const termination = mainKit->termination;
 #if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
         // Release the mainKit KitSocketPoll instance early here, so that its destructor will

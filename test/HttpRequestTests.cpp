@@ -485,7 +485,7 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
     LOK_ASSERT_EQUAL_MESSAGE("hasContentLength", pocoResponse.hasContentLength(),
                              httpResponse.header().hasContentLength());
     if (checkBody && pocoResponse.hasContentLength())
-        LOK_ASSERT_EQUAL_MESSAGE("ContentLength", pocoResponse.getContentLength(),
+        LOK_ASSERT_EQUAL_MESSAGE("ContentLength", (int64_t)pocoResponse.getContentLength(),
                                  httpResponse.header().getContentLength());
 }
 

@@ -399,7 +399,7 @@ CLEANUP_COMMAND=if test -s ../coolwsd; then echo "Cleaning up..." && ../coolwsd 
 if HAVE_LO_PATH
 check-local:
 	@$(CLEANUP_COMMAND)
-	@UNITTEST=1 ./fakesockettest 2> test.log || (cat test.log && /bin/false)
+	@UNITTEST=1 ./fakesockettest 2> test.log || (cat test.log && false)
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo "Done test check-local"
 
@@ -426,7 +426,7 @@ all-local: unittest
 	@echo "Test output is in `pwd`/test.log and is displayed on failure."
 	@echo
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@UNITTEST=1 ${top_builddir}/test/unittest --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && /bin/false)
+	@UNITTEST=1 ${top_builddir}/test/unittest --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && false)
 	@echo "Done test all-local"
 	@$(CLEANUP_COMMAND)
 
