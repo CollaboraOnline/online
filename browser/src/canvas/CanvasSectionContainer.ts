@@ -653,6 +653,9 @@ class CanvasSectionContainer {
 		this.drawSections();
 		this.flushLayoutingTasks();
 		this.canvas.style.visibility = 'unset';
+
+		// need to check if we should continue animation
+		this.animate(timestamp);
 	}
 
 	public requestReDraw() {
@@ -2070,7 +2073,7 @@ class CanvasSectionContainer {
 		if (this.continueAnimating) {
 			if (section) section.onAnimate(this.frameCount, this.elapsedTime);
 			this.frameCount++;
-			requestAnimationFrame(this.animate.bind(this));
+			this.requestReDraw();
 		}
 		else {
 			if (section) {
