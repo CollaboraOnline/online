@@ -279,7 +279,7 @@ function setupOverflowMenu(
 									const forwardDir =
 										key === 'ArrowRight' || key === 'ArrowDown';
 									const focusables = JSDialog.GetFocusableElements(menu);
-									if (focusables.length > 0) {
+									if (focusables && focusables.length > 0) {
 										const currentIndex = focusables.indexOf(currentElement);
 										let targetIndex = forwardDir
 											? currentIndex + 1
