@@ -1843,6 +1843,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		const username = this._map._viewInfo[viewId].username;
 		const mode = obj.mode ? parseInt(obj.mode): 0;
+		const msgPart = parseInt(obj.part);
 
 		let rectangle;
 		if (obj.refpoint) {
@@ -1864,7 +1865,18 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
 		}
 
-		TextCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
+		// For presentations, cursor coordinates are page-relative, so only show
+		// the remote cursor if that user is on the same slide we are viewing.
+		// Pass an empty rectangle when they are on a different slide so any
+		// previously rendered cursor for that view is cleared.
+		if (this._map.getDocType() === 'presentation') {
+			TextCursorSection.addOrUpdateOtherViewCursor(
+				viewId, username,
+				msgPart === this._selectedPart ? rectangle : [0, 0, 0, 0],
+				msgPart, mode);
+		} else {
+			TextCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, msgPart, mode);
+		}
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
 			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
