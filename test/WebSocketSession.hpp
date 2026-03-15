@@ -385,7 +385,7 @@ private:
                 const auto size = item.size();
                 assert(size && "Zero-sized messages must never be queued for sending.");
 
-                sendTextMessage(item.data(), size);
+                sendTextMessage(std::string_view(item.data(), size));
 
                 wrote += size;
                 LOG_TRC("WebSocketSession: performing writes, wrote " << size << " bytes, " << wrote

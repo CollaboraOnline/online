@@ -72,7 +72,7 @@ bool Session::sendTextFrame(const char* buffer, const int length)
     }
 
     LOG_TRC("Send: [" << getAbbreviatedMessage(buffer, length) << ']');
-    return _protocol->sendTextMessage(buffer, length) >= length;
+    return _protocol->sendTextMessage(std::string_view(buffer, length)) >= length;
 }
 
 bool Session::sendBinaryFrame(const char *buffer, int length)
