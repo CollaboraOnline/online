@@ -24,6 +24,7 @@
 #include <Poco/URI.h>
 
 #include <string>
+#include <string_view>
 
 class CheckFileInfo;
 class PresetsInstallTask;
@@ -103,8 +104,7 @@ private:
     void sendUnauthorizedErrorAndShutdown();
 
     /// Send an error to the client and disconnect the socket.
-    void sendErrorAndShutdown(const std::string& msg,
-                              WebSocketHandler::StatusCodes statusCode);
+    void sendErrorAndShutdown(std::string_view msg, WebSocketHandler::StatusCodes statusCode);
 
 #if !MOBILEAPP
     void launchInstallPresets();
