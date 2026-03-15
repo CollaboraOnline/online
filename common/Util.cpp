@@ -1010,7 +1010,7 @@ namespace Util
         return oss.str();
     }
 
-    std::string base64EncodeRemovingNewLines(const std::string_view& input)
+    std::string base64EncodeRemovingNewLines(const std::string_view input)
     {
         std::ostringstream oss;
         // Use a line ending converter to remove these CRLF.

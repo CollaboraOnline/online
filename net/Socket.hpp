@@ -1354,7 +1354,7 @@ public:
     }
 
     /// Send a string to the socket peer.
-    void send(const std::string& str, const bool doFlush = true)
+    void send(const std::string_view str, const bool doFlush = true)
     {
         send(str.data(), str.size(), doFlush);
     }

@@ -49,9 +49,8 @@ std::ostream& print(std::ostream& oss, const std::string_view prefix, const std:
     return oss;
 }
 
-
-std::string concat(const std::string_view &prefix, const std::string_view name,
-                    const std::string_view suffix)
+std::string concat(const std::string_view prefix, const std::string_view name,
+                   const std::string_view suffix)
 {
     std::ostringstream oss;
     print(oss, prefix, name, suffix);

@@ -95,7 +95,7 @@ public:
         _buffer.insert(_buffer.end(), data, data + len);
     }
 
-    void append(const std::string& s) { append(s.c_str(), s.size()); }
+    void append(const std::string_view s) { append(s.data(), s.size()); }
 
     /// Append a literal string, with compile-time size capturing.
     template <std::size_t N> void append(const char (&s)[N])

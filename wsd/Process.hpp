@@ -128,13 +128,13 @@ public:
     pid_t getPid() const { return _pid; }
 
     /// Send a text payload to the child-process WS.
-    bool sendTextFrame(const std::string& data, bool flush = false)
+    bool sendTextFrame(const std::string_view data, bool flush = false)
     {
         return sendFrame(data, false, flush);
     }
 
     /// Send a payload to the child-process WS.
-    bool sendFrame(const std::string& data, bool binary = false, bool flush = false)
+    bool sendFrame(const std::string_view data, bool binary = false, bool flush = false)
     {
         try
         {
@@ -142,7 +142,7 @@ public:
             {
                 LOG_TRC("Send to " << _name << " message: ["
                                    << COOLProtocol::getAbbreviatedMessage(data) << ']');
-                _ws->sendMessage(data.c_str(), data.size(),
+                _ws->sendMessage(data.data(), data.size(),
                                  (binary ? WSOpCode::Binary : WSOpCode::Text), flush);
                 return true;
             }
@@ -216,7 +216,7 @@ public:
 
     ChildProcess(ChildProcess&& other) = delete;
 
-    bool sendUrpMessage(const std::string& message)
+    bool sendUrpMessage(const std::string_view message)
     {
         std::shared_ptr<StreamSocket> urpToKit(_urpToKit.lock());
         if (!urpToKit)
