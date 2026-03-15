@@ -163,7 +163,7 @@ namespace LOKitHelper
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
         int viewId = loKitDocument->pClass->getView(loKitDocument);
 
-        resultInfo["type"] = "\"" + documentTypeToString(type) + "\"";
+        resultInfo["type"] = '"' + documentTypeToString(type) + '"';
         resultInfo["partscount"] = std::to_string(partsCount);
         resultInfo["selectedpart"] = std::to_string(selectedPart);
         resultInfo["width"] = std::to_string(width);
