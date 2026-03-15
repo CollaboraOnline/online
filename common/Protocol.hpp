@@ -376,7 +376,7 @@ namespace COOLProtocol
         return std::string(message, spanLen);
     }
 
-    inline std::string getAbbreviatedMessage(const std::string& message)
+    inline std::string getAbbreviatedMessage(const std::string_view message)
     {
         const size_t spanLen = Util::getDelimiterPosition(message.data(),
             std::min<size_t>(message.size(), maxNonAbbreviatedMsgLen), '\n');
@@ -385,7 +385,7 @@ namespace COOLProtocol
         if (shouldEllipse(message.data(), message.size(), spanLen))
             return truncateUtf8(message.data(), message.size(), spanLen) + "...";
 
-        return message.substr(0, spanLen);
+        return std::string(message.substr(0, spanLen));
     }
 
     template <typename T>
