@@ -99,8 +99,6 @@ namespace Log
 #endif
     } // namespace
 
-    thread_local Prefix Prefix::Instance;
-
     Prefix::Prefix()
         : _last_tm({})
         , _last_time(0)

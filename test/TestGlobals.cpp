@@ -15,6 +15,7 @@
 
 #include <config.h>
 
+#include <common/Globals.hpp>
 #include <kit/KitGlobals.hpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
