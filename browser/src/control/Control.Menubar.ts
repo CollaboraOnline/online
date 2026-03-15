@@ -973,6 +973,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
+				{uno: '.uno:Shuffle'},
 				{uno: '.uno:Validation'},
 				{uno: '.uno:Calculate'},
 				{uno: '.uno:ConvertFormulaToValue'},
@@ -1292,6 +1293,7 @@ class Menubar extends window.L.Control {
 				{type: 'separator'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
+				{uno: '.uno:Shuffle'},
 				{type: 'separator'},
 				{name: _UNO('.uno:GroupOutlineMenu', 'spreadsheet'), id: 'groupoutlinemenu', type: 'menu', menu: [
 					{uno: '.uno:Group'},
