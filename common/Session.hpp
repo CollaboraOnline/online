@@ -166,13 +166,13 @@ public:
     virtual void disconnect();
 
     /// clean & normal shutdown
-    void shutdownNormal(const std::string& statusMessage = std::string())
+    void shutdownNormal(const std::string_view statusMessage = std::string_view())
     {
         shutdown(false, statusMessage);
     }
 
     /// abnormal / hash shutdown end-point going away
-    void shutdownGoingAway(const std::string& statusMessage = std::string())
+    void shutdownGoingAway(const std::string_view statusMessage = std::string_view())
     {
         shutdown(true, statusMessage);
     }
