@@ -653,7 +653,7 @@ public:
     /// Shutdown the socket and specify if the endpoint is going away or not (useful for WS).
     /// Optionally provide a message sent in the close frame (useful for WS).
     virtual void shutdown(bool goingAway = false,
-                          const std::string& statusMessage = std::string()) = 0;
+                          const std::string_view statusMessage = std::string_view()) = 0;
 
     virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
 
@@ -722,7 +722,7 @@ public:
     SimpleSocketHandler() = default;
     int sendTextMessage(std::string_view, bool) const override { return 0; }
     int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
-    void shutdown(bool, const std::string &) override {}
+    void shutdown(bool, const std::string_view) override {}
     void getIOStats(uint64_t &, uint64_t &) override {}
 };
 

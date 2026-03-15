@@ -345,7 +345,7 @@ int ProxyProtocolHandler::sendBinaryMessage(const char *data, const size_t len, 
     return const_cast<ProxyProtocolHandler *>(this)->sendMessage(data, len, false, flush);
 }
 
-void ProxyProtocolHandler::shutdown(bool goingAway, const std::string &statusMessage)
+void ProxyProtocolHandler::shutdown(bool goingAway, const std::string_view statusMessage)
 {
     LOG_TRC("ProxyHack - shutdown " << goingAway << ": " << statusMessage);
 }

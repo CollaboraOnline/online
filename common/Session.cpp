@@ -351,7 +351,7 @@ void Session::disconnect()
     }
 }
 
-void Session::shutdown(bool goingAway, const std::string& statusMessage)
+void Session::shutdown(bool goingAway, const std::string_view statusMessage)
 {
     LOG_TRC("Shutting down WS [" << getName() << "] " << (goingAway ? "going" : "normal")
                                  << " and reason [" << statusMessage << ']');
@@ -360,7 +360,7 @@ void Session::shutdown(bool goingAway, const std::string& statusMessage)
     if (_protocol)
     {
         // skip the queue; FIXME: should we flush SessionClient's queue ?
-        std::string closeMsg = "close: " + statusMessage;
+        const std::string closeMsg = "close: " + std::string(statusMessage);
         _protocol->sendTextMessage(closeMsg);
         _protocol->shutdown(goingAway, statusMessage);
     }

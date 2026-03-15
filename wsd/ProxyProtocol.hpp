@@ -64,7 +64,8 @@ public:
 
     int sendTextMessage(std::string_view msg, bool flush = false) const override;
     int sendBinaryMessage(const char* data, size_t len, bool flush = false) const override;
-    void shutdown(bool goingAway = false, const std::string &statusMessage = "") override;
+    void shutdown(bool goingAway = false,
+                  const std::string_view statusMessage = std::string_view()) override;
     void getIOStats(uint64_t &sent, uint64_t &recv) override;
     // don't duplicate ourselves for every socket
     void dumpState(std::ostream&, const std::string&) const override {}

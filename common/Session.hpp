@@ -322,7 +322,8 @@ protected:
                                     Poco::JSON::Object::Ptr& userPrivateInfoObject);
 
 private:
-    void shutdown(bool goingAway = false, const std::string& statusMessage = std::string());
+    void shutdown(bool goingAway = false,
+                  const std::string_view statusMessage = std::string_view());
 
     virtual bool _handleInput(const char* buffer, int length) = 0;
 
