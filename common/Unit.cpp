@@ -304,10 +304,10 @@ bool UnitBase::filterLOKitMessage(const std::shared_ptr<Message>& message)
     return onFilterLOKitMessage(message);
 }
 
-bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t len,
-                                          const WSOpCode code, const bool flush, int& unitReturn)
+bool UnitBase::filterSendWebSocketMessage(const std::string_view data, const WSOpCode code,
+                                          const bool flush, int& unitReturn)
 {
-    const std::string message(data, len);
+    const std::string message(data);
     if (message.starts_with("unocommandresult:"))
     {
         const std::size_t index = message.find_first_of('{');
@@ -385,7 +385,7 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
             return false;
     }
 
-    return onFilterSendWebSocketMessage(data, len, code, flush, unitReturn);
+    return onFilterSendWebSocketMessage(data, code, flush, unitReturn);
 }
 
 void UnitBase::exitTest(TestResult result, const std::string& reason)

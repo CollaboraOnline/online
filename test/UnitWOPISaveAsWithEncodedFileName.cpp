@@ -46,12 +46,9 @@ public:
         LOK_ASSERT(std::stoul(request.get("X-WOPI-Size")) > getFileContent().size());
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         if (message.find("saveas: url=") != std::string::npos &&
             message.find(helpers::getTestServerURI()) != std::string::npos &&
             message.find("filename=hello%20world%251.pdf") != std::string::npos)
