@@ -2633,9 +2633,9 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = R"(progress: { "id":"find" })";
+        static constexpr std::string_view status = R"(progress: { "id":"find" })";
         LOG_TRC("Sending to Client [" << status << ']');
-        ws->sendMessage(status);
+        ws->sendTextMessage(status);
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
@@ -2645,8 +2645,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
     catch (const std::exception& exc)
     {
         LOG_ERR("Error while handling Client WS Request: " << exc.what());
-        const std::string msg = "error: cmd=internal kind=load";
-        ws->sendMessage(msg);
+        constexpr std::string_view msg = "error: cmd=internal kind=load";
+        ws->sendTextMessage(msg);
         ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
         socket->ignoreInput();
         return true;

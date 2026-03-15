@@ -269,7 +269,7 @@ void BgSaveParentWebSocketHandler::terminateSave(const std::string &reason)
     LOG_TRC("terminating bgsave: " << reason);
 
     // Hard terminate the bgsave child
-    sendMessage("exit");
+    sendTextMessage("exit");
     shutdown(true, "unexpected jsdialog");
 
     reportFailedSave(reason);

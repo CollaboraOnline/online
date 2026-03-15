@@ -421,7 +421,7 @@ void cleanupChildren(const std::string& childRoot)
             stream << "segfaultcount=" << segFaultCount << ' ' << "killedcount=" << killedCount
                     << ' ' << "oomkilledcount=" << oomKilledCount << '\n';
 
-            int ret = WSHandler->sendMessage(stream.str());
+            const int ret = WSHandler->sendTextMessage(stream.str());
             if (ret == -1)
             {
                 LOG_WRN("Could not send 'segfaultcount' message through websocket");
