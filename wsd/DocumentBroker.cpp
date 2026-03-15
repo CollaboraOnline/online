@@ -933,7 +933,7 @@ void DocumentBroker::joinThread()
     _poll->joinThread();
 }
 
-void DocumentBroker::stop(const std::string& reason)
+void DocumentBroker::stop(const std::string_view reason)
 {
     if (_closeReason.empty() || _closeReason == reason)
     {
@@ -3616,7 +3616,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
     return sent;
 }
 
-void DocumentBroker::autoSaveAndStop(const std::string& reason)
+void DocumentBroker::autoSaveAndStop(const std::string_view reason)
 {
     LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "]: " << reason);
 
@@ -5339,7 +5339,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     return false;
 }
 
-void DocumentBroker::shutdownClients(const std::string& closeReason)
+void DocumentBroker::shutdownClients(const std::string_view closeReason)
 {
     ASSERT_CORRECT_THREAD();
     LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "] with reason: " << closeReason);
@@ -5371,7 +5371,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
     }
 }
 
-void DocumentBroker::terminateChild(const std::string& closeReason)
+void DocumentBroker::terminateChild(const std::string_view closeReason)
 {
     ASSERT_CORRECT_THREAD();
 
