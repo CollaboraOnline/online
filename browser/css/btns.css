@@ -1,11 +1,11 @@
 /* For btns hover status see device-desktop.css */
 
-.jsdialog:not(.sidebar) *[disabled] {
+.jsdialog:not(.sidebar) *[disabled]:not(.spinfieldbutton-up):not(.spinfieldbutton-down):not(.spinfield) {
 	color: var(--color-text-lighter) !important;
 	background: var(--color-background-lighter);
 }
 
-.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container):not(.ui-pushbutton-wrapper) {
+.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container):not(.ui-pushbutton-wrapper):not(.spinfieldbutton-up):not(.spinfieldbutton-down):not(.spinfield) {
 	border: 1px solid var(--color-border-lighter);
 }
 
@@ -144,7 +144,7 @@ button.jsdialog[disabled] img {
 
 :not(.main-nav) .button-secondary,
 :not(.main-nav) .button-secondary:not(.arrowbackground),
-:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander-btn):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button):not(.ui-linkbutton):not(.ui-treeview-header-button) {
+:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander-btn):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button):not(.ui-linkbutton):not(.ui-treeview-header-button):not(.spinfieldbutton-up):not(.spinfieldbutton-down) {
 	box-sizing: border-box;
 	height: 32px;
 	line-height: normal;

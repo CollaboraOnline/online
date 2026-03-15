@@ -1135,64 +1135,91 @@ img.context-menu-icon {
 /* spinfield */
 
 .spinfieldcontainer {
+	display: flex;
+	align-items: center;
 	margin-inline-end: 5px;
 	min-width: 70px;
 	width: 100%;
-}
-
-.spinfieldcontainer input {
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	background: var(--color-background-dark);
 	color: var(--color-text-dark);
+	box-sizing: border-box;
+	height: 28px;
 }
 
-.spinfieldcontainer input:not([disabled]):hover {
+.spinfieldcontainer:not([disabled]):hover {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
 }
 
-.jsdialog.spinfieldcontainer[disabled] input {
+.ui-dialog .spinfieldcontainer:has(.spinfield:focus-visible) {
+	outline: auto Highlight;
+	outline: auto -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+.jsdialog.spinfieldcontainer[disabled] {
 	border: 1px solid var(--color-border-lighter);
+	color: var(--color-text-lighter);
+	background: var(--color-background-lighter);
 }
 
 .spinfield {
-	padding: 4px 0 4px 4px;
-	height: 28px;
+	flex: 1;
+	width: 0;
+	min-width: 0;
+	padding: 0;
+	padding-inline-start: 4px;
+	height: 100%;
 	box-sizing: border-box;
-	margin-right: 1px;
-	min-width: 70px;
-	width: 100%;
+	border: none;
+	background: transparent;
+	color: inherit;
+	outline: none;
 }
 
-:dir(rtl) .spinfield {
-	padding: 4px 4px 4px 0;
+.spinfieldbuttons {
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+	flex-shrink: 0;
 }
 
-.spinfieldunit {
-	font-size: var(--default-font-size);
-	color: var(--color-text-dark);
-	margin: 5px;
-	margin-inline-start: calc(-50px);
-}
-/* spinfield (number) */
-input[type='number'] {
-	padding-top: 0 !important;
-	padding-bottom: 0 !important;
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-	opacity: 0.5;
-	height: 28px;
-	margin: 0;
-}
-
-input[type='number']:hover::-webkit-inner-spin-button,
-input[type='number']:hover::-webkit-outer-spin-button {
-	opacity: 1;
+.spinfieldbutton-up,
+.spinfieldbutton-down {
+	border: none;
+	background: none;
+	padding: 0 4px;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
+}
+
+.spinfieldbutton-up::after,
+.spinfieldbutton-down::after {
+	content: '';
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+}
+
+.spinfieldbutton-up::after {
+	border-bottom: 5px solid var(--color-text-lighter);
+}
+
+.spinfieldbutton-down::after {
+	border-top: 5px solid var(--color-text-lighter);
+}
+
+.spinfieldcontainer:not([disabled]):hover .spinfieldbutton-up::after {
+	border-bottom-color: var(--color-text-dark);
+}
+
+.spinfieldcontainer:not([disabled]):hover .spinfieldbutton-down::after {
+	border-top-color: var(--color-text-dark);
 }
 /* listbox */
 .ui-listbox-container,
