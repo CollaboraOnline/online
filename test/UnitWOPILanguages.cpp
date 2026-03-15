@@ -156,12 +156,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         if (message.starts_with("cellformula:"))
         {
             if (_currentUserId == 0)
@@ -292,12 +289,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         if (message.starts_with("cellformula:"))
         {
             if (_currentUserId == 0)

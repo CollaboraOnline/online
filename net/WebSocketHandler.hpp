@@ -738,7 +738,8 @@ public:
         if (UnitBase::isUnitTesting() && !Util::isFuzzing())
         {
             int unitReturn = -1;
-            if (_unit->filterSendWebSocketMessage(data, len, code, flush, unitReturn))
+            if (_unit->filterSendWebSocketMessage(std::string_view(data, len), code, flush,
+                                                  unitReturn))
                 return unitReturn;
         }
 

@@ -93,12 +93,9 @@ public:
         fileInfo->set("UserCanWrite", "true");
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         TST_LOG("onFilterSendWebSocketMessage:" << message);
 
         if (message.starts_with("session "))
@@ -192,12 +189,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         TST_LOG("onFilterSendWebSocketMessage:" << message);
 
         if (message.starts_with("error: cmd=internal kind=unauthorized"))

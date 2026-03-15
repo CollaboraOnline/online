@@ -46,12 +46,9 @@ public:
         LOK_ASSERT_EQUAL(std::string(FilenameUtf7), request.get("X-WOPI-RequestedName"));
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         const std::string expected("renamefile filename=" + Uri::encode(FilenameUtf8));
 
         TST_LOG("Got [" << message << "], expect: [" << expected << ']');

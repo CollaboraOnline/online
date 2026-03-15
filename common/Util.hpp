@@ -484,7 +484,7 @@ namespace Util
     }
 
     /// Trim spaces from both left and right and copy. Just spaces.
-    inline std::string trimmed(const std::string& s)
+    inline std::string_view trimmed(const std::string_view s)
     {
         const size_t first = s.find_first_not_of(' ');
         const size_t last = s.find_last_not_of(' ');
@@ -503,10 +503,16 @@ namespace Util
             return s.substr(0, last + 1);
         }
 
-        return std::string();
+        return std::string_view();
     }
 
     /// Trim spaces from left and right. Just spaces.
+    inline std::string trimmed(const std::string& s)
+    {
+        return std::string(trimmed(std::string_view(s)));
+    }
+
+    /// Trim spaces from left and right. Just spaces. FIXME: REMOVE!
     inline std::string trimmed(const char* s)
     {
         return trimmed(std::string(s));
