@@ -374,7 +374,9 @@ class DeltaGenerator {
             , _height(height)
             , _rows(new DeltaBitmapRow[height])
         {
+            assert(width > 0 && width <= 256);
             assert (startX + width <= (size_t)bufferWidth);
+            assert(height > 0 && height <= 256);
             assert (startY + height <= (size_t)bufferHeight);
 
             LOGA_TRC(Pixel, "Converting pixel data to delta data of size "
@@ -722,7 +724,7 @@ class DeltaGenerator {
             return false;
         }
 
-        if (width > 256 || height > 256)
+        if (width <= 0 || width > 256 || height <= 0 || height > 256)
         {
             LOG_TRC("Bad size << " << width << " x " << height << " to create deltas ");
             assert(false && "shouldn't be possible to get tiles > 256x256");
