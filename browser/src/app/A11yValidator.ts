@@ -320,6 +320,14 @@ class A11yValidator {
 		}
 	}
 
+	validateIframeDialog(container: HTMLElement): void {
+		const iframe = container.querySelector('iframe');
+		if (!iframe || !iframe.contentDocument || !iframe.contentDocument.body)
+			return;
+
+		this.validateDialog(iframe.contentDocument.body);
+	}
+
 	validateAllOpenDialogs(): void {
 		const jsdialog = app.map?.jsdialog;
 		if (!jsdialog || !jsdialog.dialogs) {

@@ -377,4 +377,22 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         a11yHelper.handleDialog(win, 1);
     });
 
+    it('Settings dialog', function () {
+        cy.then(() => {
+            win.app.map.settings.showSettingsDialog();
+        });
+
+        cy.cGet('.iframe-settings-wrap').should('be.visible').then(() => {
+            var spy = Cypress.sinon.spy(win.console, 'error');
+            var container = win.document.querySelector('.iframe-settings-wrap');
+            win.app.a11yValidator.validateIframeDialog(container);
+            a11yHelper.checkA11yErrors(win, spy);
+            spy.restore();
+        });
+
+        // Close the settings dialog
+        cy.cGet('.iframe-settings-wrap .ui-dialog-titlebar-close').click();
+        cy.cGet('.iframe-settings-wrap').should('not.exist');
+    });
+
 });
