@@ -652,10 +652,10 @@ public:
     const Header& header() const { return _header; }
 
     // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string& key) const { return _header.has(key); }
+    bool has(const std::string_view key) const { return _header.has(key); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    [[nodiscard]] std::string get(const std::string_view& key,
+    [[nodiscard]] std::string get(const std::string_view key,
                                   const std::string& def = std::string()) const
     {
         return _header.get(key, def);
