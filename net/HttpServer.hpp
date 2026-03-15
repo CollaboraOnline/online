@@ -290,7 +290,7 @@ private:
         }
     }
 
-    void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
+    void shutdown(bool /*goingAway*/, const std::string_view /*statusMessage*/) override
     {
         LOG_TRC("shutdown");
     }

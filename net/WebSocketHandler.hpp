@@ -200,7 +200,7 @@ protected:
 
     /// Sends WS Close frame to the peer.
     void sendCloseFrame(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
-                        const std::string& statusMessage = std::string())
+                        const std::string_view statusMessage = std::string_view())
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
@@ -237,7 +237,7 @@ protected:
         }
     }
 
-    void shutdown(bool goingAway, const std::string &statusMessage) override
+    void shutdown(bool goingAway, const std::string_view statusMessage) override
     {
         ASSERT_CORRECT_THREAD();
         shutdownImpl(_socket.lock(),
@@ -260,7 +260,7 @@ protected:
 
 public:
     void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
-                  const std::string& statusMessage = std::string(),
+                  const std::string_view statusMessage = std::string_view(),
                   bool hardShutdown = false)
     {
         shutdownImpl(_socket.lock(),
@@ -270,9 +270,8 @@ public:
     /// Don't wait for the remote Websocket to handshake with us; go down fast.
     void shutdownAfterWriting()
     {
-        shutdownImpl(_socket.lock(),
-                     WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
-                     true /* hard async shutdown & close */, false);
+        shutdownImpl(_socket.lock(), WebSocketHandler::StatusCodes::NORMAL_CLOSE,
+                     std::string_view(), true /* hard async shutdown & close */, false);
     }
 
     /// Returns true if the underlying socket is connected.
@@ -285,16 +284,12 @@ public:
 private:
     void shutdownSilent(const std::shared_ptr<StreamSocket>& socket)
     {
-        shutdownImpl(socket,
-                     WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
-                     std::string(), true /* hard async shutdown & close */, true);
+        shutdownImpl(socket, WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
+                     std::string_view(), true /* hard async shutdown & close */, true);
     }
 
-    void shutdownImpl(const std::shared_ptr<StreamSocket>& socket,
-                      const StatusCodes statusCode,
-                      const std::string& statusMessage,
-                      bool hardShutdown,
-                      bool silentShutdown)
+    void shutdownImpl(const std::shared_ptr<StreamSocket>& socket, const StatusCodes statusCode,
+                      const std::string_view statusMessage, bool hardShutdown, bool silentShutdown)
     {
         if (socket)
         {
