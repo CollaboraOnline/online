@@ -218,11 +218,11 @@ void UtilTests::testUtf8()
 {
 #if ENABLE_DEBUG
     constexpr std::string_view testname = __func__;
-    LOK_ASSERT(Util::isValidUtf8("foo"));
-    LOK_ASSERT(Util::isValidUtf8("©")); // 2 char
-    LOK_ASSERT(Util::isValidUtf8("→ ")); // 3 char
-    LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊."));
-    LOK_ASSERT(!Util::isValidUtf8("\xff\x03"));
+    LOK_ASSERT(Util::isValidUtf8("foo") > 3);
+    LOK_ASSERT(Util::isValidUtf8("©") > 2); // 2 char
+    LOK_ASSERT(Util::isValidUtf8("→ ") > 3); // 3 char
+    LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊.") > 11);
+    LOK_ASSERT(Util::isValidUtf8("\xff\x03") < 2);
 #endif
 }
 
