@@ -44,6 +44,7 @@ def shorten_tag(tag: str) -> str:
     return f"{{{short_ns}}}{local}"
 
 def read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts):
+    app_info = "Unknown"
     with zipfile.ZipFile(zip_path, "r") as zf:
         names = zf.namelist()
         for name in sorted(names):
@@ -58,6 +59,9 @@ def read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts):
                     tree = ET.parse(f)
                 root = tree.getroot()
 
+                if (name == "docProps/app.xml"):
+                    app_info = root.findtext("{*}Application", default="Unknown")
+
                 for elem in root.iter():
                     # Count element tag
                     element_counts[elem.tag] += 1
@@ -66,11 +70,13 @@ def read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts):
                         attribute_counts[attr_name] += 1
             except Exception as e:
                 print(f"  [!] Failed to parse {name}: {e}", file=sys.stderr)
+    return app_info
 
 def main(zip_paths: List[str]):
     file_counts = Counter()
     element_counts = Counter()
     attribute_counts = Counter()
+    app_info = ""
 
     for zip_path in zip_paths:
         zip_path = Path(zip_path)
@@ -78,7 +84,7 @@ def main(zip_paths: List[str]):
             print(f"Zip file not found: {zip_path}", file=sys.stderr)
             sys.exit(1)
         try:
-            read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts)
+            app_info = read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts)
         except Exception as e:
             print(f"  [!] Not a zip file {zip_path}: {e}", file=sys.stderr)
 
@@ -90,6 +96,7 @@ def main(zip_paths: List[str]):
             print(f"\t{short_key}\t{count}")
         print()
 
+    print("Application:", app_info)
     print_sorted_counter("File tag counts:", file_counts)
     print_sorted_counter("Element tag counts:", element_counts)
     print_sorted_counter("Attribute name counts:", attribute_counts)
@@ -99,10 +106,11 @@ def compare_files(before, after):
     file_counts = [ Counter(), Counter() ]
     element_counts = [ Counter(), Counter() ]
     attribute_counts = [ Counter(), Counter() ]
+    app_info = [ "", "" ]
 
     for i in range(0,2):
         try:
-            read_and_aggregate(names[i], file_counts[i], element_counts[i], attribute_counts[i])
+            app_info[i] = read_and_aggregate(names[i], file_counts[i], element_counts[i], attribute_counts[i])
         except Exception as e:
             print(f"  [!] Not a zip file {names[i]}: {e}", file=sys.stderr)
 
@@ -119,6 +127,7 @@ def compare_files(before, after):
         print(f"\t<identical>\t{same_count}")
         print()
 
+    print("Application: ", app_info[0])
     print_compare_counter("File tags:", file_counts[0], file_counts[1])
     print_compare_counter("Element tags:", element_counts[0], element_counts[1])
     print_compare_counter("Attribute names:", attribute_counts[0], attribute_counts[1])
@@ -162,7 +171,7 @@ if __name__ == "__main__":
             print(f"Usage: {app_name} --compare <before-path> <after-path>\n", file=sys.stderr)
             sys.exit(1)
         compare_files(sys.argv[2], sys.argv[3])
-    if sys.argv[1] == '--roundtrip':
+    elif sys.argv[1] == '--roundtrip':
         if len(sys.argv) != 3:
             print(f"Usage: {app_name} --roundtrip <file-path>\n", file=sys.stderr)
             sys.exit(1)
