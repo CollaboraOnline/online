@@ -23,6 +23,7 @@
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <net/Socket.hpp>
+#include <system_error>
 #include <test/WebSocketSession.hpp>
 #include <test/lokassert.hpp>
 #include <test/testlog.hpp>
@@ -186,10 +187,29 @@ inline std::string getTempFileCopyPath(const std::string& srcDir, const std::str
         try {
             std::filesystem::copy(srcPath, dstPath);
         }
+        catch (const std::filesystem::filesystem_error& ex)
+        {
+            if (ex.code() == std::errc::file_exists)
+            {
+                LOG_DBG("Failed to copy temp file and will retry: " << ex.what());
+                retry = true;
+                continue;
+            }
+
+            LOG_SYS("ERROR: " << ex.what());
+
+            // Permanent failure.
+            if (ex.code() == std::errc::no_such_file_or_directory ||
+                ex.code() == std::errc::filename_too_long ||
+                ex.code() == std::errc::invalid_argument)
+            {
+                throw;
+            }
+        }
         catch (const std::exception& ex)
         {
             LOG_SYS("ERROR: unexpected conflict creating file: " << ex.what());
-            retry = true;;
+            retry = true;
         }
     } while (retry);
 

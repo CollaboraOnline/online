@@ -249,7 +249,7 @@ public:
     bool isStringAtOffset(const std::vector<unsigned char> &data, size_t i,
                           uint32_t len, bool isUnicode, std::string &str)
     {
-        str = isUnicode ? "U_" : "S_";
+        str = std::string(isUnicode ? "U_" : "S_");
         int step = isUnicode ? 2 : 1;
         for (size_t j = i; j < i + len*step && j < data.size(); j += step)
         {
