@@ -711,16 +711,13 @@ public:
     }
 
     /// Sends a WebSocket Text message.
-    int sendMessage(const std::string_view msg) const
-    {
-        return sendTextMessage(msg.data(), msg.size());
-    }
+    int sendMessage(const std::string_view msg) const { return sendTextMessage(msg); }
 
     /// Implementation of the ProtocolHandlerInterface.
-    int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
+    int sendTextMessage(const std::string_view msg, bool flush = false) const override
     {
         ASSERT_CORRECT_THREAD();
-        return sendMessage(msg, len, WSOpCode::Text, flush);
+        return sendMessage(msg.data(), msg.size(), WSOpCode::Text, flush);
     }
 
     /// Implementation of the ProtocolHandlerInterface.

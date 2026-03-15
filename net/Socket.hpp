@@ -643,14 +643,7 @@ public:
     /// Sends a text message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    virtual int sendTextMessage(const char* msg, size_t len, bool flush = false) const = 0;
-
-    /// Convenience wrapper
-    int sendTextMessage(const std::string_view msg, bool flush = false) const
-    {
-        ASSERT_CORRECT_THREAD();
-        return sendTextMessage(msg.data(), msg.size(), flush);
-    }
+    virtual int sendTextMessage(std::string_view msg, bool flush = false) const = 0;
 
     /// Sends a binary message.
     /// Returns the number of bytes written (including frame overhead) on success,
@@ -727,7 +720,7 @@ class SimpleSocketHandler : public ProtocolHandlerInterface
 {
 public:
     SimpleSocketHandler() = default;
-    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendTextMessage(std::string_view, bool) const override { return 0; }
     int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
     void shutdown(bool, const std::string &) override {}
     void getIOStats(uint64_t &, uint64_t &) override {}

@@ -331,11 +331,11 @@ int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool te
     return len;
 }
 
-int ProxyProtocolHandler::sendTextMessage(const char *msg, const size_t len, bool flush) const
+int ProxyProtocolHandler::sendTextMessage(std::string_view msg, bool flush) const
 {
     ASSERT_CORRECT_THREAD();
-    LOG_TRC("ProxyHack - send text msg " << std::string(msg, len));
-    return const_cast<ProxyProtocolHandler *>(this)->sendMessage(msg, len, true, flush);
+    LOG_TRC("ProxyHack - send text msg " << msg);
+    return const_cast<ProxyProtocolHandler *>(this)->sendMessage(msg.data(), msg.size(), true, flush);
 }
 
 int ProxyProtocolHandler::sendBinaryMessage(const char *data, const size_t len, bool flush) const

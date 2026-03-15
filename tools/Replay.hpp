@@ -610,10 +610,10 @@ public:
     }
 
     /// override ProtocolHandlerInterface piece
-    int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
+    int sendTextMessage(std::string_view msg, bool flush = false) const override
     {
-        _stats->accumulateSend(msg, len, flush);
-        return WebSocketHandler::sendTextMessage(msg, len, flush);
+        _stats->accumulateSend(msg.data(), msg.size(), flush);
+        return WebSocketHandler::sendTextMessage(msg, flush);
     }
 
     static void addPollFor(SocketPoll& poll, const std::string& server, const std::string& filePath,
