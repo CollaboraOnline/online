@@ -713,10 +713,10 @@ public:
     }
 
     /// Implementation of the ProtocolHandlerInterface.
-    int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override
+    int sendBinaryMessage(const std::string_view data, bool flush = false) const override
     {
         ASSERT_CORRECT_THREAD();
-        return sendMessage(data, len, WSOpCode::Binary, flush);
+        return sendMessage(data.data(), data.size(), WSOpCode::Binary, flush);
     }
 
     /// Sends a WebSocket message of WPOpCode type.

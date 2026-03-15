@@ -338,11 +338,11 @@ int ProxyProtocolHandler::sendTextMessage(std::string_view msg, bool flush) cons
     return const_cast<ProxyProtocolHandler *>(this)->sendMessage(msg.data(), msg.size(), true, flush);
 }
 
-int ProxyProtocolHandler::sendBinaryMessage(const char *data, const size_t len, bool flush) const
+int ProxyProtocolHandler::sendBinaryMessage(const std::string_view data, bool flush) const
 {
     ASSERT_CORRECT_THREAD();
-    LOG_TRC("ProxyHack - send binary msg len " << len);
-    return const_cast<ProxyProtocolHandler *>(this)->sendMessage(data, len, false, flush);
+    LOG_TRC("ProxyHack - send binary msg len " << data.size());
+    return const_cast<ProxyProtocolHandler *>(this)->sendMessage(data.data(), data.size(), false, flush);
 }
 
 void ProxyProtocolHandler::shutdown(bool goingAway, const std::string_view statusMessage)

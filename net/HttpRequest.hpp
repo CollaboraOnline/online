@@ -2056,7 +2056,7 @@ private:
     }
 
     int sendTextMessage(std::string_view, bool) const override { return 0; }
-    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendBinaryMessage(std::string_view, bool) const override { return 0; }
 
 private:
     const std::string _host;
