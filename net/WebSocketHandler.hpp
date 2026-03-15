@@ -705,9 +705,6 @@ public:
             _msgHandler->onDisconnect();
     }
 
-    /// Sends a WebSocket Text message.
-    int sendMessage(const std::string_view msg) const { return sendTextMessage(msg); }
-
     /// Implementation of the ProtocolHandlerInterface.
     int sendTextMessage(const std::string_view msg, bool flush = false) const override
     {

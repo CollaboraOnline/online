@@ -500,7 +500,7 @@ public:
         if (!msg.empty())
         {
             LOG_TST(_logPre << "Send: '" << msg << "'");
-            sendMessage(msg);
+            sendTextMessage(msg);
         }
 
         if (!getNextRecord())
@@ -569,7 +569,7 @@ public:
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
 
-            sendMessage("tileprocessed tile=" + desc.generateID());
+            sendTextMessage("tileprocessed tile=" + desc.generateID());
             LOG_TST(_logPre << "Sent tileprocessed tile= " << desc.generateID());
         }
         else if (tokens.equals(0, "error:"))
@@ -583,7 +583,7 @@ public:
             else if (firstLine == "error: cmd=storage kind=documentconflict")
             {
                 LOG_TST("Document conflict - need to resolve it first ...");
-                sendMessage("closedocument");
+                sendTextMessage("closedocument");
                 reconnect = true;
             }
             else

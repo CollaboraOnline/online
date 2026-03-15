@@ -72,7 +72,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         if (tokens.size() < 2)
         {
             LOG_DBG("Auth command without any token");
-            sendMessage("InvalidAuthToken");
+            sendTextMessage("InvalidAuthToken");
             shutdown();
             ignoreInput();
             return;
@@ -100,7 +100,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         else
         {
             LOG_DBG("Invalid auth token");
-            sendMessage("InvalidAuthToken");
+            sendTextMessage("InvalidAuthToken");
             shutdown();
             ignoreInput();
             return;
@@ -111,7 +111,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     {
         LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
                 tokens.size() << " first: '" << tokens[0] << '\'');
-        sendMessage("NotAuthenticated");
+        sendTextMessage("NotAuthenticated");
         shutdown();
         ignoreInput();
         return;
@@ -462,7 +462,7 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
     if (_isAuthenticated)
     {
         LOG_TRC("send admin text frame '" << message << '\'');
-        sendMessage(message);
+        sendTextMessage(message);
     }
     else
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << '\'');

@@ -148,8 +148,8 @@ private:
             {
                 auto dumpHandler = std::make_shared<DumpSocketHandler>(_socket, request);
                 socket->setHandler(dumpHandler);
-                dumpHandler->sendMessage("version");
-                dumpHandler->sendMessage("documents");
+                dumpHandler->sendTextMessage("version");
+                dumpHandler->sendTextMessage("documents");
             }
             else
             {
