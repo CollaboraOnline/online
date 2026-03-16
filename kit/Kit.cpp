@@ -74,6 +74,7 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Poco/File.h>
 #include <Poco/Exception.h>
