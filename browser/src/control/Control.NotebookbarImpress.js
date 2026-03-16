@@ -777,6 +777,8 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 										'type': 'toolitem',
 										'text': _UNO('.uno:FormatPaintbrush'),
 										'command': '.uno:FormatPaintbrush',
+										'doubleClickCommand': '.uno:FormatPaintbrush',
+										'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
 										'accessibility': { focusBack: true, combination: 'FP', de: null }
 									}
 								]
