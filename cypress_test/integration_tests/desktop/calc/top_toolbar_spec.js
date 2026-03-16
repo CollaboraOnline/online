@@ -58,6 +58,28 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		});
 	});
 
+	it('Clone Formatting persistent mode via double-click.', function() {
+		// Move to A2 and apply bold.
+		helper.typeIntoDocument('{downarrow}');
+		desktopHelper.getCompactIcon('Bold').click();
+
+		// Double-click FormatPaintbrush for persistent mode.
+		desktopHelper.getCompactIcon('FormatPaintbrush').dblclick();
+
+		cy.cGet('#document-canvas').should('have.class', 'bucket-cursor');
+
+		// Apply formatting to A1.
+		calcHelper.clickOnFirstCell(true, false);
+		helper.processToIdle(this.win);
+
+		// Bucket cursor should remain - this is persistent mode.
+		cy.cGet('#document-canvas').should('have.class', 'bucket-cursor');
+
+		// Press Escape to exit persistent mode.
+		helper.typeIntoDocument('{esc}');
+		cy.cGet('#document-canvas').should('not.have.class', 'bucket-cursor');
+	});
+
 	it('Print', function() {
 		// A new window should be opened with the PDF.
 		cy.getFrameWindow()
