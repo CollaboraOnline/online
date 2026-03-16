@@ -565,9 +565,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		for (let i = 0; i < this.sectionProperties.subSections.length; i++)
 			this.sectionProperties.subSections[i].setShowSection(this.showSection);
 
-		if (this.showSection)
-			this.showSVG();
-		else
+		// Don't call showSVG() here: the SVG overlay may contain stale
+		// content from a previous render.  A new shapeselectioncontent
+		// message will arrive and setSVG() will set the up-to-date SVG.
+		// The overlay is only made visible on demand (e.g. during drag).
+		if (!this.showSection)
 			this.hideSVG();
 	}
 
