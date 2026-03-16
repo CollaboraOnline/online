@@ -56,6 +56,10 @@ function plugin(on, config) {
 				launchOptions.args.push('--enable-logging=stderr');
 				launchOptions.args.push('--v=2');
 			}
+			// https://www.cypress.io/blog/generate-high-resolution-videos-and-screenshots
+			if (process.env.CYPRESS_WINDOW_SIZE) {
+				launchOptions.args.push('--window-size=' + process.env.CYPRESS_WINDOW_SIZE);
+			}
 			launchOptions.args.push('--simulate-outdated-no-au=\'2099-12-31T23:59:59.000000+00:00\'');
 		}
 		prepareAudit(launchOptions);
