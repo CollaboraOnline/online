@@ -637,6 +637,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 										'id': 'home-format-paint-brush',
 										'type': 'toolitem',
 										'text': _UNO('.uno:FormatPaintbrush'),
+										'tooltip': _('Clone Formatting (double click to keep active)'),
 										'command': '.uno:FormatPaintbrush',
 										'doubleClickCommand': '.uno:FormatPaintbrush',
 										'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
