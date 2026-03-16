@@ -1389,3 +1389,49 @@ module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
 module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
+module.exports.getMatchedCSSRules = getMatchedCSSRules;
+
+// Find all author CSS rules that match an element, with the source
+// stylesheet filename and the full selector for each matching rule.
+// Usage:
+//   helper.getMatchedCSSRules('.spinfieldbutton-up').then(function(output) {
+//       console.error(output);
+//   });
+function getMatchedCSSRules(selector) {
+	return cy.cGet(selector).first().then(function($el) {
+		var el = $el[0];
+		var doc = el.ownerDocument;
+		var lines = [];
+
+		for (var s = 0; s < doc.styleSheets.length; s++) {
+			var sheet = doc.styleSheets[s];
+			var href = sheet.href || 'inline';
+			if (href !== 'inline') {
+				var parts = href.split('/');
+				href = parts[parts.length - 1];
+			}
+
+			var rules;
+			try { rules = sheet.cssRules; } catch (e) { continue; }
+
+			for (var r = 0; r < rules.length; r++) {
+				var rule = rules[r];
+				if (!rule.selectorText) continue;
+				try {
+					if (!el.matches(rule.selectorText)) continue;
+				} catch (e) { continue; }
+
+				var props = [];
+				for (var p = 0; p < rule.style.length; p++) {
+					var name = rule.style[p];
+					var val = rule.style.getPropertyValue(name);
+					var priority = rule.style.getPropertyPriority(name);
+					props.push('  ' + name + ': ' + val + (priority ? ' !' + priority : ''));
+				}
+				lines.push(href + ' | ' + rule.selectorText);
+				lines.push(props.join('\n'));
+			}
+		}
+		return lines.join('\n');
+	});
+}
