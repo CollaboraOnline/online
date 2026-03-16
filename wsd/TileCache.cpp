@@ -673,7 +673,7 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 void TileCache::dumpState(std::ostream& os)
 {
     os << "\n  TileCache:";
-    os << "\n    num: " << _cache.size() << ", size: " << _cacheSize << " (" << _maxCacheSize
+    os << "\n    num: " << _cache.size() << ", size: " << _cacheSize << " (max: " << _maxCacheSize
        << ") bytes\n";
     size_t totalSize = 0;
     size_t totalCapacity = 0;
