@@ -516,6 +516,7 @@ class LOUtil {
 			tabledeletemenu: 'deletetable',
 			insertcalctable: 'inserttable',
 			removecalctable: 'deletetable',
+			calculatedfieldrun: 'functiondialog',
 			databasesettings: 'tabledesign',
 			tracechangemode: 'trackchanges',
 			deleteallannotation: 'deleteallnotes',

@@ -78,7 +78,8 @@ const MenuCommands: MenuCommandsInterface = {
 			   'AddToWordbook'],
 
 		spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
-				  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'InsertCalcTable', 'RemoveCalcTable',
+				  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'CalculatedFieldRun',
+				  'InsertCalcTable', 'RemoveCalcTable',
 				  'DatabaseSettings', 'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
 				  'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
 				  'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines', 'AutoFill'],
@@ -112,7 +113,7 @@ const MenuCommands: MenuCommandsInterface = {
 		// text
 		'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 		// spreadsheet
-		'FormatCellDialog', 'DataDataPilotRun', 'InsertCalcTable',
+		'FormatCellDialog', 'DataDataPilotRun', 'CalculatedFieldRun', 'InsertCalcTable',
 		'GroupSparklines', 'UngroupSparklines', 'AutoFill'
 	],
 };
