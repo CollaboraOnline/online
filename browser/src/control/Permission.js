@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -48,7 +48,14 @@ window.L.Map.include({
 				});
 
 				// temporarily, before the user touches the floating action button
-				this._enterReadOnlyMode('readonly');
+
+				// At least for CODA no mobile-edit-button (a.k.a. floating action
+				// button) is displayed and we do not want to always start in
+				// "viewing" mode.
+				if (window.mode.isCODesktop)
+					this._enterEditMode(perm);
+				else
+					this._enterReadOnlyMode('readonly');
 			}
 			else if (this.options.canTryLock) {
 				// This is a success response to an attempt to lock using mobile-edit-button
