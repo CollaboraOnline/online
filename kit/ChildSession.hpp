@@ -123,7 +123,7 @@ public:
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Text);
+        return _docManager->sendFrame(msg, WSOpCode::Text);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
@@ -135,7 +135,7 @@ public:
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
+        return _docManager->sendFrame(msg, WSOpCode::Binary);
     }
 
     bool sendProgressFrame(const char* id, const std::string& jsonProps,

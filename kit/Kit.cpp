@@ -848,22 +848,24 @@ Document::~Document()
 }
 
 /// Post the message - in the unipoll world we're in the right thread anyway
-bool Document::postMessage(const char* data, int size, const WSOpCode code) const
+bool Document::postMessage(const std::string_view data, const WSOpCode code) const
 {
     if (_isBgSaveProcess)
     {
         auto socket = _saveProcessParent.lock();
         if (socket)
         {
-            LOG_TRC("postMessage forwarding to parent of save process: " << getAbbreviatedMessage(data, size));
+            LOG_TRC("postMessage forwarding to parent of save process: "
+                    << getAbbreviatedMessage(data));
             if (code != WSOpCode::Text)
             {
-                LOG_WRN("save process unexpectedly sending binary message to parent: " << getAbbreviatedMessage(data, size));
+                LOG_WRN("save process unexpectedly sending binary message to parent: "
+                        << getAbbreviatedMessage(data));
                 assert(false);
                 return false;
             }
 
-            return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
+            return socket->sendMessage(data.data(), data.size(), code, /*flush=*/true) > 0;
         }
 
         LOG_TRC("Failed to forward to parent of save process: connection closed");
@@ -872,12 +874,12 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
 
     if (!_websocketHandler)
     {
-        LOG_ERR("Child Doc: Bad socket while sending: " << getAbbreviatedMessage(data, size));
+        LOG_ERR("Child Doc: Bad socket while sending: " << getAbbreviatedMessage(data));
         return false;
     }
 
-    LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
-    _websocketHandler->sendMessage(data, size, code, /*flush=*/true);
+    LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data));
+    _websocketHandler->sendMessage(data.data(), data.size(), code, /*flush=*/true);
     return true;
 }
 
@@ -1036,9 +1038,8 @@ void Document::renderTiles(TileCombined &tileCombined)
                                            pixelWidth, pixelHeight, mode);
     };
 
-    const auto postMessageFunc = [&](const char* buffer, std::size_t length) {
-        postMessage(buffer, length, WSOpCode::Binary);
-    };
+    const auto postMessageFunc = [&](const char* buffer, std::size_t length)
+    { postMessage(std::string_view(buffer, length), WSOpCode::Binary); };
 
     if (!RenderTiles::doRender(_loKitDocument, *_deltaGen, tileCombined, _deltaPool,
                                blenderFunc, postMessageFunc, _mobileAppDocId,
@@ -1049,11 +1050,11 @@ void Document::renderTiles(TileCombined &tileCombined)
     }
 }
 
-bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode) const
+bool Document::sendFrame(const std::string_view data, WSOpCode opCode) const
 {
     try
     {
-        return postMessage(buffer, length, opCode);
+        return postMessage(data, opCode);
     }
     catch (const Exception& exc)
     {

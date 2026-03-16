@@ -233,7 +233,7 @@ public:
     const std::string& getUrl() const { return _url; }
 
     /// Post the message - in the unipoll world we're in the right thread anyway
-    bool postMessage(const char* data, int size, WSOpCode code) const;
+    bool postMessage(const std::string_view data, WSOpCode code) const;
 
     bool createSession(const std::string& sessionId);
 
@@ -246,12 +246,9 @@ public:
 
     void renderTiles(TileCombined& tileCombined);
 
-    bool sendTextFrame(const std::string& message) const
-    {
-        return sendFrame(message.data(), message.size());
-    }
+    bool sendTextFrame(const std::string_view message) const { return sendFrame(message); }
 
-    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) const;
+    bool sendFrame(std::string_view data, WSOpCode opCode = WSOpCode::Text) const;
 
     void alertNotAsync() const
     {
