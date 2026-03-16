@@ -214,6 +214,14 @@ class TableStylesService {
 		} as IconViewJSON;
 	}
 
+	public getNoneStyle(): TableStyleEntry {
+		return {
+			Name: 'None',
+			UIName: _('None'),
+			Elements: [],
+		} as TableStyleEntry;
+	}
+
 	private styleHasElement(
 		style: TableStyleEntry,
 		elementType: TableStyleElementType,
@@ -225,7 +233,8 @@ class TableStylesService {
 	}
 
 	public applyStyle(newStyleNumber: number) {
-		const tableStyleEntry = this.styles[newStyleNumber];
+		const tableStyleEntry =
+			newStyleNumber === -1 ? this.getNoneStyle() : this.styles[newStyleNumber];
 		if (!tableStyleEntry) {
 			app.console.error(
 				'TableStylesService: not found style with id: ' + newStyleNumber,
@@ -336,7 +345,10 @@ class TableStylesService {
 			image: 'images/lc_table_none.svg',
 			width: 50,
 			height: 50,
-			selected: !currentStyle || currentStyle.TableStyleName === '',
+			selected:
+				!currentStyle ||
+				currentStyle.TableStyleName === '' ||
+				currentStyle.TableStyleName === 'None',
 		} as IconViewEntry);
 
 		this.styles.forEach((element) => {
