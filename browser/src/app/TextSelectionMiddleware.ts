@@ -91,6 +91,9 @@ class TextSelections {
 	public static setEndRectangle(rectangle: cool.SimpleRectangle) {
 		this.endRectangle = rectangle;
 		this.updateMarkers();
+
+		// Schedule a redraw if there's not any.
+		app.sectionContainer.requestReDraw();
 	}
 
 	private static updateMarkers() {
