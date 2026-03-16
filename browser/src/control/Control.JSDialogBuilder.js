@@ -1809,16 +1809,23 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (data.visible === false)
 			div.classList.add('hidden');
 
+		let enabledTooltip = null;
 		const setDisabled = (disabled) => {
 			if (disabled) {
 				div.setAttribute('disabled', 'true');
 				if (button) {
 					button.setAttribute('aria-disabled', true);
 				}
+				if (data.disabledTooltip) {
+					div.setAttribute('data-cooltip', builder._cleanText(data.disabledTooltip));
+				}
 			} else {
 				div.removeAttribute('disabled');
 				if (button) {
 					button.removeAttribute('aria-disabled');
+				}
+				if (data.disabledTooltip && enabledTooltip) {
+					div.setAttribute('data-cooltip', enabledTooltip);
 				}
 			}
 		};
@@ -1916,6 +1923,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (data.command && (!tooltip || !tooltip.includes('('))) // Add shortcut to tooltip based on command
 				tooltip = JSDialog.ShortcutsUtil.getShortcut(tooltip, data.command);
 			div.setAttribute('data-cooltip', tooltip);
+			enabledTooltip = tooltip;
 
 			// Set aria-pressed only if:
 			// 1. A real toggle button

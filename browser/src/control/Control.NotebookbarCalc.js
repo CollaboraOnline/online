@@ -1756,6 +1756,12 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:InsertCalcTable', 'spreadsheet'),
 						'command': '.uno:InsertCalcTable',
+						'tooltip': app.LOUtil.isFileODF(this.map)
+							? _('Table styles are only available in .xlsx files')
+							: _('Insert a styled table'),
+						'disabledTooltip': app.LOUtil.isFileODF(this.map)
+							? _('Table styles are only available in .xlsx files')
+							: _('Select a cell range first to insert a styled table'),
 						'accessibility': { focusBack: true,	combination: 'IT', de: null }
 					}
 				]
