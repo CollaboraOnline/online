@@ -22,6 +22,14 @@ elif test `uname -s` = Darwin; then
     libtoolize || glibtoolize || failed "Can't find libtoolize or glibtoolize. Use lode or install it yourself."
 fi
 
+# On macOS with Homebrew, pkg.m4 and other m4 macros may live in a directory
+# that aclocal does not search by default. Add it so that PKG_CHECK_MODULES
+# and similar macros are found.
+if test `uname -s` = Darwin -a -d /opt/homebrew/share/aclocal; then
+    ACLOCAL_PATH="${ACLOCAL_PATH:+$ACLOCAL_PATH:}/opt/homebrew/share/aclocal"
+    export ACLOCAL_PATH
+fi
+
 aclocal || failed "aclocal"
 
 autoheader || failed "autoheader"

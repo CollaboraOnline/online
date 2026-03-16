@@ -15,8 +15,8 @@
 
 #pragma once
 
-// macOS can be both server and mobile, so let's include it here, too
-#if defined(MACOS)
+// macOS can be both server and mobile; macos.h is only for the MOBILEAPP case
+#if defined(MACOS) && MOBILEAPP
 #include "macos.h"
 #endif
 

@@ -343,7 +343,7 @@ void HttpWhiteBoxTests::testRequestParserValidPostIncomplete()
     {
         // Should return 0 to signify that data is incomplete.
         LOK_ASSERT_EQUAL(http::Request::Stage::RequestLine, req.stage());
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, int64_t(0),
                                  req.readData(data.c_str(), i));
     }
 
@@ -364,7 +364,7 @@ void HttpWhiteBoxTests::testRequestParserValidPostIncomplete()
     {
         // Should return 0 to signify that data is incomplete.
         LOK_ASSERT_EQUAL(http::Request::Stage::Header, req.stage());
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, int64_t(0),
                                  req.readData(data.c_str(), i));
     }
 
@@ -593,7 +593,7 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
         std::string fragment = data.substr(0, i);
         LOK_ASSERT_EQUAL_MESSAGE("At " << i << ": " << fragment
                                        << "\n----\nPart: " << multipartBody,
-                                 0L, multipart.readPart(fragment, multipartHeader, multipartBody));
+                                 int64_t(0), multipart.readPart(fragment, multipartHeader, multipartBody));
     }
 
     constexpr int64_t firstPartOffset = 435;
@@ -621,7 +621,7 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
         std::string fragment = data.substr(firstPartOffset, i);
         LOK_ASSERT_EQUAL_MESSAGE("At " << i << ": " << fragment
                                        << "\n----\nPart: " << multipartBody,
-                                 0L, multipart.readPart(fragment, multipartHeader, multipartBody));
+                                 int64_t(0), multipart.readPart(fragment, multipartHeader, multipartBody));
     }
 
     // Parse the second part.
