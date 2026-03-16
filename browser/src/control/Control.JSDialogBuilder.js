@@ -2135,6 +2135,16 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		$(controls.button).on('click', clickFunction);
 		$(controls.label).on('click', clickFunction);
+		if (data.doubleClickCommand) {
+			var doubleClickHandler = function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				if (div.hasAttribute('disabled')) return;
+				builder.map.sendUnoCommand(data.doubleClickCommand, data.doubleClickCommandArgs);
+			};
+			$(controls.button).on('dblclick', doubleClickHandler);
+			$(controls.label).on('dblclick', doubleClickHandler);
+		}
 		// We need a way to also handle the custom tooltip for any tool button like save in shortcut bar
 		if (data.isCustomTooltip) {
 			this._handleCustomTooltip(div, builder);
