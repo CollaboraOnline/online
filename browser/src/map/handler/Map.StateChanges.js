@@ -65,8 +65,9 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 		if (e.commandName === '.uno:FormatPaintbrush') {
 			if (state === 'true')
 				$('#document-canvas').addClass('bucket-cursor');
-			else
+			else {
 				$('#document-canvas').removeClass('bucket-cursor');
+			}
 		}
 
 		if (e.commandName === '.uno:StartWithPresentation' && (state === true || state === 'true')) {
