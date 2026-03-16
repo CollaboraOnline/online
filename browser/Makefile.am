@@ -1355,7 +1355,7 @@ DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
 check-local: $(MOCHA_JS_DIR)/main.js
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
-	@if npm test 2> ${MOCHA_TEST_LOG} 1>&2; then \
+	@if (cd $(srcdir) && PATH="$(abs_builddir)/node_modules/.bin:$$PATH" NODE_PATH="$(abs_builddir)/node_modules" npm test) 2> ${MOCHA_TEST_LOG} 1>&2; then \
 		echo "Mocha tests finished successfully. Results in ${MOCHA_TEST_LOG}"; \
 	else \
 		cat ${MOCHA_TEST_LOG}; \
@@ -1363,7 +1363,7 @@ check-local: $(MOCHA_JS_DIR)/main.js
 	fi
 
 	@echo > ${DUPLICATION_TEST_LOG}
-	$(QUIET_JSCPCD) if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
+	$(QUIET_JSCPCD) if (cd $(srcdir) && PATH="$(abs_builddir)/node_modules/.bin:$$PATH" NODE_PATH="$(abs_builddir)/node_modules" npm run duplication) 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
 		echo "Code duplication tests finished successfully."; \
 	else \
 		cat ${DUPLICATION_TEST_LOG}; \
