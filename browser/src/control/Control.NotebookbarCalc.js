@@ -1710,6 +1710,13 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'V', de: null }
 					},
 					{
+						'id': 'insert-calculated-field-run',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:CalculatedFieldRun', 'spreadsheet'),
+						'command': '.uno:CalculatedFieldRun',
+						'accessibility': { focusBack: true,	combination: 'CF', de: null }
+					},
+					{
 						'id': 'Insert-Section-PivotTable-Ext',
 						'type': 'container',
 						'children': [
