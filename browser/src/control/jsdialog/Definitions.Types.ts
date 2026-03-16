@@ -139,6 +139,7 @@ interface ActionData {
 	control_id: string;
 	action_type: string;
 	data: any;
+	new_id?: string;
 }
 
 // JSDialog message (full, update or action)

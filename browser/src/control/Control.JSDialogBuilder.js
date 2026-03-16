@@ -2553,6 +2553,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 			break;
 
+		case 'rename':
+			control.setAttribute('modelId', data.new_id);
+			control.id = JSDialog.MakeIdUnique(data.new_id);
+			break;
+
 		case 'rendered_entry':
 		case 'rendered_combobox_entry':
 		{
