@@ -477,6 +477,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		desktopHelper.getNbIcon('Bold').click();
 		desktopHelper.getNbIcon('FormatPaintbrush').click();
 
+		// Wait for the paintbrush to become active (single-click has a 250ms delay
+		// due to double-click detection).
+		cy.cGet('#document-canvas').should('have.class', 'bucket-cursor');
+
 		// Click at the blinking cursor position.
 		cy.cGet('.leaflet-cursor.blinking-cursor')
 			.then(function(cursor) {
