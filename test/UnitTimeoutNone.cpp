@@ -29,20 +29,22 @@
 
 #include <UnitTimeoutBase.hpp>
 
-static constexpr size_t ConnectionLimit = 9999;
-static constexpr size_t ConnectionCount = 9;
-
 /// Base test suite class for connection limit (no limits) using HTTP and WS sessions.
 class UnitTimeoutNone : public UnitTimeoutBase1
 {
+    const size_t _connectionLimit;
+    const size_t _connectionCount;
+
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
         // Keep original values -> No timeout
     }
 
 public:
-    UnitTimeoutNone()
+    UnitTimeoutNone(size_t connectionLimit, size_t connectionCount)
         : UnitTimeoutBase1("UnitTimeoutNone")
+        , _connectionLimit(connectionLimit)
+        , _connectionCount(connectionCount)
     {
     }
 
@@ -53,21 +55,21 @@ void UnitTimeoutNone::invokeWSDTest()
 {
     UnitBase::TestResult result;
 
-    result = testHttp(ConnectionLimit, ConnectionCount);
+    result = testHttp(_connectionLimit, _connectionCount);
     if (result != TestResult::Ok)
         exitTest(result);
 
-    result = testWSPing(ConnectionLimit, ConnectionCount);
+    result = testWSPing(_connectionLimit, _connectionCount);
     if (result != TestResult::Ok)
         exitTest(result);
 
-    result = testWSDChatPing(ConnectionLimit, ConnectionCount);
+    result = testWSDChatPing(_connectionLimit, _connectionCount);
     if (result != TestResult::Ok)
         exitTest(result);
 
     exitTest(TestResult::Ok);
 }
 
-UnitBase* unit_create_wsd(void) { return new UnitTimeoutNone(); }
+UnitBase* unit_create_wsd(void) { return new UnitTimeoutNone(9999, 9); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
