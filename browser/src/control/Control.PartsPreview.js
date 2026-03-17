@@ -651,6 +651,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 			// insert after selectedFrame
 			selectedFrame.parentNode.insertBefore(newFrame, selectedFrame.nextSibling);
+
+			this._onScroll(); // Load previews
 		}
 	},
 
