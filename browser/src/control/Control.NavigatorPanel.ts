@@ -344,9 +344,6 @@ class NavigatorPanel extends SidebarBase {
 			this.markNavigatorTreeView(navigatorData);
 
 			this.builder.build(this.container, [navigatorData], false);
-			// There is case where user can directly click navigator from notebookbar view option
-			// in that case we first show the navigation panel and then switch to tab view
-			this.showNavigationPanel(false);
 			// TODO: remove jQuery animation
 			$('#navigator-dock-wrapper').show(200);
 			app.showNavigator = true;
@@ -358,10 +355,13 @@ class NavigatorPanel extends SidebarBase {
 			} else {
 				this.switchNavigationTab('tab-navigator');
 			}
+
 			if (this.focusQuickFind) {
 				this.switchNavigationTab('tab-quick-find');
 				this.focusSearch();
 				this.focusQuickFind = false;
+			} else {
+				this.showNavigationPanel(true);
 			}
 		} else {
 			this.closeSidebar();
@@ -463,7 +463,13 @@ class NavigatorPanel extends SidebarBase {
 			// this will update the indentation marks for elements like ruler
 			app.map.fire('fixruleroffset');
 
-			if (setFocus) this.navigationPanel.focus();
+			const treeView = this.navigationPanel.querySelector('.ui-treeview-tree');
+			if (setFocus && treeView) {
+				const focusable = JSDialog.FindFocusableElement(treeView, 'next');
+				if (focusable) {
+					focusable.focus();
+				}
+			}
 		});
 	}
 
