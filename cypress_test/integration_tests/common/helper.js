@@ -1215,6 +1215,27 @@ function getSubFolder(filePath) {
 	return subFolder;
 }
 
+// Return the center of the shape SVG overlay in coordinates suitable for
+// clicking on #document-canvas.  The outer SVG (created by
+// ShapeHandlesSection.setSVG) carries left/top relative to
+// #canvas-container; width/height may be on the inner SVG (when a viewBox
+// is present) or on the outer SVG.
+function getShapeSVGCenter() {
+	return cy.cGet('#canvas-container > svg')
+		.then(function(outerSvg) {
+			var outer = outerSvg[0];
+			var inner = outer.querySelector('svg');
+			var width = parseInt(inner && inner.style.width) || parseInt(outer.style.width);
+			var height = parseInt(inner && inner.style.height) || parseInt(outer.style.height);
+			expect(width).to.be.greaterThan(0);
+			expect(height).to.be.greaterThan(0);
+			return {
+				x: parseInt(outer.style.left) + width / 2,
+				y: parseInt(outer.style.top) + height / 2,
+			};
+		});
+}
+
 /*
  * Assert image svg
  */
@@ -1457,6 +1478,7 @@ module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
 module.exports.getMatchedCSSRules = getMatchedCSSRules;
 module.exports.realPressInDialog = realPressInDialog;
+module.exports.getShapeSVGCenter = getShapeSVGCenter;
 
 // Find all author CSS rules that match an element, with the source
 // stylesheet filename and the full selector for each matching rule.
