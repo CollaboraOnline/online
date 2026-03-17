@@ -91,21 +91,28 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 		testUnitPersistence(',', 'cm');
 	});
 
-	function testButtonsAndArrowKeys(decimal) {
+	function testButtonsAndArrowKeys(decimal, altDecimal) {
 		openDialogAndSwitchToBorder();
 
 		var input = '#leftmf-input';
 		var upBtn = '#leftmf .spinfieldbutton-up';
 		var downBtn = '#leftmf .spinfieldbutton-down';
 
-		// Up button increments
+		// Up button increments and displays locale decimal separator
 		cy.cGet(input).invoke('val').then(function (val) {
 			var num = parseLocaleNumber(val, decimal);
 
 			cy.cGet(upBtn).click();
 
 			cy.cGet(input).should(function ($el) {
-				expect(parseLocaleNumber($el.val(), decimal)).to.be.greaterThan(num);
+				var newVal = $el.val();
+				var newNum = parseLocaleNumber(newVal, decimal);
+				expect(newNum).to.be.greaterThan(num);
+				// Fractional value must use the locale's decimal separator
+				if (newNum !== Math.floor(newNum)) {
+					expect(newVal).to.contain(decimal);
+					expect(newVal).to.not.contain(altDecimal);
+				}
 			});
 		});
 
@@ -145,7 +152,7 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 	}
 
 	it('Buttons and arrow keys increment and decrement the value', function () {
-		testButtonsAndArrowKeys('.');
+		testButtonsAndArrowKeys('.', ',');
 	});
 
 	it('Buttons and arrow keys work with German locale', function () {
@@ -154,7 +161,7 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 			win = w;
 		});
 
-		testButtonsAndArrowKeys(',');
+		testButtonsAndArrowKeys(',', '.');
 	});
 
 	it('Buttons enabled after re-enabling spinfield in columns dialog', function () {
