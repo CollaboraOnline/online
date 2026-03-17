@@ -164,6 +164,14 @@ namespace WebDriverThing
 
             var driver = connectToWebView2();
 
+            // Switch to Editing mode
+            Thread.Sleep(500);
+            FindAndClick(driver, OpenQA.Selenium.By.Id("viewModeDropdownButton"));
+            Thread.Sleep(500);
+            new Actions(driver).SendKeys(Keys.ArrowDown).Perform();
+            Thread.Sleep(500);
+            new Actions(driver).SendKeys(Keys.Enter).Perform();
+
             // Paste text from clipboard with shortcut
             RunOnSTA(() => Clipboard.SetText("hello"));
             Thread.Sleep(500);
