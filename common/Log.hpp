@@ -238,7 +238,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #elif defined __EMSCRIPTEN__
 
 // emscripten/console.h does not have emscripten_console_info (corresponding to JS console.info) nor
-// emsripten_console_debug (corresponding to JS console.debug), so use emscripten_console_log
+// emscripten_console_debug (corresponding to JS console.debug), so use emscripten_console_log
 // (corresponding to JS console.log) instead:
 #define LOG_LOG(LVL, STR) ( \
     Log::LVL <= Log::ERR ? emscripten_console_error((STR).c_str()) : \

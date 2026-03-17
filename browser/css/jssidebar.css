@@ -612,7 +612,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 #QuickFindPanel .ui-treeview-cell-text-content.page-divider {
-	/* TODO The treeview entry should have disabled listenners for these items */
+	/* TODO The treeview entry should have disabled listeners for these items */
 	color: var(--color-text-lighter);
 }
 

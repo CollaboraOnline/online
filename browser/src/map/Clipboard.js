@@ -414,7 +414,7 @@ window.L.Clipboard = window.L.Class.extend({
 		if (window.ThisIsTheQtApp || window.ThisIsTheWindowsApp) {
 			// To work around a qtwebchannel "Could not convert argument
 			// QJsonValue(object, QJsonObject()) to target type QString ." bug, send the
-			// playload as a base64-encoded string rather than as an ArrayBuffer blob
+			// payload as a base64-encoded string rather than as an ArrayBuffer blob
 			// (and decode it in ChildSession::paste in kit/ChildSession.cpp):
 			blob = header + window.btoa(
 				Array.from(new Uint8Array(fileBlob), (b) => String.fromCodePoint(b))

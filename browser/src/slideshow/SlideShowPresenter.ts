@@ -1197,7 +1197,7 @@ class SlideShowPresenter {
 				// new window for it, vs otherwise going full screen.
 				// b) It turns out that macOS appears to also do such a substitution
 				// automatically on going full-screen, so the window handle we have isn't
-				// that of the full screen window, and it seems impractiable to get access
+				// that of the full screen window, and it seems impracticable to get access
 				// to it, which we need to be able to swap it from one monitor to another
 				app.socket.sendMessage('FULLSCREENPRESENTATION true');
 				this._doInWindowPresentation(true);

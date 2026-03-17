@@ -11,7 +11,7 @@
 
 #pragma once
 
-// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Include <typeinfo> here.
 #include <typeinfo>
 
 #include <Poco/Util/XMLConfiguration.h>

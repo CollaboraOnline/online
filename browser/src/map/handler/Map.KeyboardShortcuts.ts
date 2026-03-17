@@ -90,7 +90,7 @@ class ShortcutDescriptor {
 
         On Mac, command is seen as Mod.CTRL and there is a separate Mod.MACCTRL to read control
 
-        If ommitted, no modifier will be required
+        If omitted, no modifier will be required
 
         @default Mod.NONE */
         modifier?: Mod,
@@ -112,15 +112,15 @@ class ShortcutDescriptor {
 
         If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
 
-        If ommitted, no uno command will be run when this keybind is pressed */
+        If omitted, no uno command will be run when this keybind is pressed */
         unoAction?: string,
         /** The action to dispatch when the keybind is pressed
 
         If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
 
-        If ommitted, no action will be dispatched when this keybind is pressed */
+        If omitted, no action will be dispatched when this keybind is pressed */
         dispatchAction?: string,
-        /** The optional data to pass to the sipatcher if dispatchAction is used*/
+        /** The optional data to pass to the dispatcher if dispatchAction is used*/
         dispatchData?: any,
         /** The view type (Edit or ReadOnly) to restrict this keybind to
 

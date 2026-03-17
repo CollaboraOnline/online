@@ -1032,7 +1032,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 		if (entryChanges) {
 			app.layoutingService.appendLayoutingTask(() => {
-				// After entry changes we might have bigger/smaller content and need to repositon the dialog.
+				// After entry changes we might have bigger/smaller content and need to reposition the dialog.
 				dialog.updatePos(dialog);
 			});
 		}

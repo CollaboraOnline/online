@@ -788,7 +788,7 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-export');
 		this.clearContent();
 
-		// extract list from notebookbar - incase need to add condition better to add there?
+		// extract list from notebookbar - in case need to add condition better to add there?
 		const exportOptions = this.getExportOptionsFromNotebookbar();
 
 		if (exportOptions.downloadAs.length > 0) {

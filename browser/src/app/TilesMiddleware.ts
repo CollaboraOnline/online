@@ -2274,7 +2274,7 @@ class TileManager {
 			else this.makeTileCurrent(tile);
 		}
 
-		// Prefetching algortihm etc doesn't need this function to send tile combine request.
+		// Prefetching algorithm etc doesn't need this function to send tile combine request.
 		if (sendTileCombine) TileManager.sendTileCombineRequest(tileCombineQueue);
 
 		return tileCombineQueue;

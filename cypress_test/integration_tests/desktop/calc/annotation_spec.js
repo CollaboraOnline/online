@@ -16,7 +16,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Insert',function() {
-		// Make sure we know the cell adress.
+		// Make sure we know the cell address.
 		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
 
 		desktopHelper.insertComment();

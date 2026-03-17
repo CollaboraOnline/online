@@ -594,7 +594,7 @@ body {
 	max-width: 95%;
 	max-height: 95%;
 	width: 66ch;
-	/* Centered align comment in TS, we cannot align it here with positon relative */
+	/* Centered align comment in TS, we cannot align it here with position relative */
 	z-index: 1000;
 }
 .cool-annotation.annotation-pop-up:not(.annotation-active) > .cool-annotation-content-wrapper {

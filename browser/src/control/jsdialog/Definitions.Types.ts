@@ -363,7 +363,7 @@ interface TreeColumnJSON {
 	link?: string;
 	collapsed?: string | boolean;
 	expanded?: string | boolean;
-	customEntryRenderer?: boolean; // has custome rendering enabled
+	customEntryRenderer?: boolean; // has custom rendering enabled
 	collapsedimage?: string;
 	expandedimage?: string;
 	editable?: boolean;
@@ -399,7 +399,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	highlightTerm?: string; // what, if any, entries are we highlighting?
 	customEntryRenderer?: boolean;
 	noSearchField?: boolean; // When true, the widget shouldn't have a search field added
-	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS isntead of callback (lists only)
+	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS instead of callback (lists only)
 	role?: string; // ARIA role from core: 'tree', 'treegrid', 'listbox', or 'grid'
 }
 

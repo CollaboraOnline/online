@@ -82,7 +82,7 @@ struct FilenameAndUri
     std::string uri;
 };
 
-// Various document window speficic data
+// Various document window specific data
 struct WindowData
 {
     HWND hWnd;

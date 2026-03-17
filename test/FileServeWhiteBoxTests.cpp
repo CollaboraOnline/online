@@ -50,7 +50,7 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
 
     void preProcessedFileSubstitution(const std::string_view testname,
                                       const std::unordered_map<std::string, std::string> variables);
-    // Helper replace each occurence of from in str to variables[to_key] except if to_key is not in variables
+    // Helper replace each occurrence of from in str to variables[to_key] except if to_key is not in variables
     std::string& replaceIfExist(std::string& str, const std::string& from,
                                 const std::string& to_key,
                                 const std::unordered_map<std::string, std::string> variables);

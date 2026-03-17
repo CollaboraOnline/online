@@ -309,8 +309,8 @@ function selectCellsInRange(range) {
 function openAutoFilterMenu(secondColumn) {
 	cy.log('>> openAutoFilterMenu - start');
 
-	// Get canvas contiainer first.
-	// Then get its coordinatates relative to window.
+	// Get canvas container first.
+	// Then get its coordinates relative to window.
 	// Then calculate the position of the autofilter easier.
 	cy.cGet('#canvas-container').then(function(items) {
 		const clientRect = items[0].getBoundingClientRect();

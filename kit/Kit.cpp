@@ -3385,7 +3385,7 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 // lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
 // and runLoop in the same thread.
 // note: at this point in time, it is unclear (to quwex) if lok_init_2 not being in the "main"
-// thread will distrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
+// thread will disrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
 // manually?
 std::future<LibreOfficeKit*> initKitRunLoopThread(const std::shared_ptr<KitSocketPoll>& mainKit)
 {

@@ -296,7 +296,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 	});
 
 	it('Apply master slide layout.', function() {
-		// We have white background by deafult checked by beforeEach() method
+		// We have white background by default checked by beforeEach() method
 		// Select a new master slide with a background color
 		cy.cGet('#masterslide .ui-header-left').should('have.text', 'Default');
 
