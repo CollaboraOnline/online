@@ -611,4 +611,37 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('.notebookbar#Insert').should('be.visible');
 		cy.cGet('#Insert-tab-label').should('have.class','selected');
 	});
+
+	it('Formatting shortcuts blocked in view mode.', function() {
+		// Verify baseline: no bold in edit mode.
+		helper.setDummyClipboardForCopy();
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p').should('exist');
+		cy.cGet('#copy-paste-container p b').should('not.exist');
+
+		// Switch from edit mode to view mode.
+		cy.getFrameWindow().its('app').then(function(app) {
+			app.map.setPermission('readonly');
+		});
+		cy.cGet('#viewModeDropdownButton-button').should('have.text', 'Viewing');
+
+		// Press Ctrl+B - should be blocked in view mode.
+		helper.typeIntoDocument('{ctrl}b');
+
+		cy.getFrameWindow().then(function(win) {
+			helper.processToIdle(win);
+		});
+
+		// Switch back to edit mode to verify bold was not applied.
+		cy.getFrameWindow().its('app').then(function(app) {
+			app.map.setPermission('edit');
+		});
+
+		helper.setDummyClipboardForCopy();
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p').should('exist');
+		cy.cGet('#copy-paste-container p b').should('not.exist');
+	});
 });
