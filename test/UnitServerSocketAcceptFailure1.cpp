@@ -9,46 +9,46 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/*
- * Unit test for server socket accept failure scenarios.
- */
-
 #include <config.h>
+
+#include <common/Unit.hpp>
+#include <net/HttpRequest.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <memory>
 #include <string>
 
-#include <HttpRequest.hpp>
-#include <Socket.hpp>
+/*
+ * Tests that ServerSocket::accept gracefully handles injected accept
+ * failures. The test overrides simulateExternalAcceptError to inject
+ * two kinds of errors: a recoverable one (like EAGAIN) on every 2nd
+ * accept call, and a fatal one (throwing an exception) on every 5th.
+ * It makes HTTP GET requests to /favicon.ico and verifies that the
+ * server recovers from EAGAIN errors transparently, while the fatal
+ * error on the last iteration causes the connection to fail.
+ */
 
-#include <Poco/Util/LayeredConfiguration.h>
-#include <test/lokassert.hpp>
-
-#include <Unit.hpp>
-#include <UserMessages.hpp>
-#include <common/Util.hpp>
-#include <helpers.hpp>
-
-#include <UnitTimeoutBase.hpp>
-
-/// Test suite class for injected ServerSocket accept failures
-class UnitServerSocketAcceptFailure1 : public UnitTimeoutBase0
+class UnitServerSocketAcceptFailure1 : public UnitWSD
 {
-    TestResult testHttp();
+    STATE_ENUM(Phase, Run, Done) _phase;
+
+    static constexpr size_t ExternalServerSocketAcceptSimpleErrorInterval = 2;
+    static constexpr size_t ExternalServerSocketAcceptFatalErrorInterval = 5;
+    std::atomic<size_t> _externalServerSocketAcceptCount = 0;
+    size_t _iteration = 1;
+    static constexpr size_t IterMax =
+        ExternalServerSocketAcceptFatalErrorInterval - ExternalServerSocketAcceptSimpleErrorInterval;
 
 public:
     UnitServerSocketAcceptFailure1()
-        : UnitTimeoutBase0("UnitServerSocketAcceptFailure1")
+        : UnitWSD("UnitServerSocketAcceptFailure1")
+        , _phase(Phase::Run)
     {
     }
 
     void invokeWSDTest() override;
     bool simulateExternalAcceptError() override;
-
-private:
-    static constexpr size_t ExternalServerSocketAcceptSimpleErrorInterval = 2;
-    static constexpr size_t ExternalServerSocketAcceptFatalErrorInterval =  5;
-    std::atomic<size_t> _externalServerSocketAcceptCount = 0;
 };
 
 bool UnitServerSocketAcceptFailure1::simulateExternalAcceptError()
@@ -70,100 +70,117 @@ bool UnitServerSocketAcceptFailure1::simulateExternalAcceptError()
         return false;
 }
 
-inline UnitBase::TestResult UnitServerSocketAcceptFailure1::testHttp()
-{
-    const size_t fatal_iter = ExternalServerSocketAcceptFatalErrorInterval - ExternalServerSocketAcceptSimpleErrorInterval;
-    setTestname(__func__);
-    TST_LOG("Starting Test: ServerSocketAcceptSimpleErrorInterval "
-            << ExternalServerSocketAcceptSimpleErrorInterval
-            << ", ServerSocketAcceptFatalErrorInterval "
-            << ExternalServerSocketAcceptFatalErrorInterval << ", fatal_iter (client) "
-            << fatal_iter);
-
-    const std::string documentURL = "/favicon.ico";
-
-    constexpr bool UseOwnPoller = true;
-    constexpr bool PollerOnClientThread = true;
-    std::shared_ptr<SocketPoll> socketPoller;
-    std::shared_ptr<http::Session> session;
-
-    for(size_t iteration = 1; iteration <= fatal_iter; ++iteration)
-    {
-        const bool expectFatalError = iteration == fatal_iter;
-        TST_LOG("Test[" << iteration << "]: expectFatalError " << expectFatalError);
-
-        if( UseOwnPoller )
-        {
-            socketPoller = std::make_shared<TerminatingPoll>(testname);
-            if( PollerOnClientThread )
-                socketPoller->runOnClientThread();
-            else
-                socketPoller->startThread();
-        } else
-            socketPoller = socketPoll();
-
-        session = http::Session::create(helpers::getTestServerURI());
-        bool connected00 = false;
-        {
-            TST_LOG("Test[" << iteration << "] Req1: `" << documentURL << "`");
-            http::Request request(documentURL, http::Request::VERB_GET);
-            const std::shared_ptr<const http::Response> response =
-                session->syncRequest(request, *socketPoller);
-            TST_LOG("Test[" << iteration << "] Connected: " << session->isConnected());
-            TST_LOG("Test[" << iteration << "] Response1: " << response->header().toString());
-            TST_LOG("Test[" << iteration << "] Response1 size: `" << documentURL
-                            << "`: " << response->header().getContentLength());
-            if( session->isConnected() ) {
-                connected00 = true;
-                LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-                LOK_ASSERT(http::Header::ConnectionToken::None ==
-                           response->header().getConnectionToken());
-                LOK_ASSERT(0 < response->header().getContentLength());
-            } else {
-                // connection limit hit
-                LOK_ASSERT_EQUAL(http::StatusCode::None, response->statusCode());
-            }
-        }
-        bool connected01 = false;
-        {
-            TST_LOG("Test[" << iteration << "] SessionA " << ": connected "
-                            << session->isConnected());
-            if( session->isConnected() )
-            {
-                connected01 = true;
-                session->asyncShutdown();
-            }
-            if( UseOwnPoller ) {
-                if( PollerOnClientThread )
-                {
-                    socketPoller->closeAllSockets();
-                } else {
-                    socketPoller->joinThread();
-                }
-            }
-        }
-        if( expectFatalError )
-        {
-            LOK_ASSERT(false == connected00);
-            LOK_ASSERT(false == connected01);
-        } else {
-            LOK_ASSERT(true  == connected00);
-            LOK_ASSERT(true  == connected01);
-        }
-    } // for iterations
-    TST_LOG("Ending Test: " << testname);
-    return TestResult::Ok;
-}
-
 void UnitServerSocketAcceptFailure1::invokeWSDTest()
 {
-    UnitBase::TestResult result;
+    switch (_phase)
+    {
+        case Phase::Run:
+        {
+            if (_iteration == 1)
+            {
+                TST_LOG("Starting Test: ServerSocketAcceptSimpleErrorInterval "
+                        << ExternalServerSocketAcceptSimpleErrorInterval
+                        << ", ServerSocketAcceptFatalErrorInterval "
+                        << ExternalServerSocketAcceptFatalErrorInterval << ", fatal_iter (client) "
+                        << IterMax);
+            }
 
-    result = testHttp();
-    if (result != TestResult::Ok)
-        exitTest(result);
+            if (_iteration > IterMax)
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+                break;
+            }
 
-    exitTest(TestResult::Ok);
+            const std::string documentURL = "/favicon.ico";
+            constexpr bool UseOwnPoller = true;
+            constexpr bool PollerOnClientThread = true;
+
+            const bool expectFatalError = _iteration == IterMax;
+            TST_LOG("Test[" << _iteration << "]: expectFatalError " << expectFatalError);
+
+            std::shared_ptr<SocketPoll> socketPoller;
+            if (UseOwnPoller)
+            {
+                socketPoller = std::make_shared<TerminatingPoll>(testname);
+                if (PollerOnClientThread)
+                    socketPoller->runOnClientThread();
+                else
+                    socketPoller->startThread();
+            }
+            else
+            {
+                socketPoller = socketPoll();
+            }
+
+            auto session = http::Session::create(helpers::getTestServerURI());
+            bool connected00 = false;
+            {
+                TST_LOG("Test[" << _iteration << "] Req1: `" << documentURL << "`");
+                http::Request request(documentURL, http::Request::VERB_GET);
+                const std::shared_ptr<const http::Response> response =
+                    session->syncRequest(request, *socketPoller);
+                TST_LOG("Test[" << _iteration << "] Connected: " << session->isConnected());
+                TST_LOG("Test[" << _iteration
+                                << "] Response1: " << response->header().toString());
+                TST_LOG("Test[" << _iteration << "] Response1 size: `" << documentURL
+                                << "`: " << response->header().getContentLength());
+                if (session->isConnected())
+                {
+                    connected00 = true;
+                    LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
+                    LOK_ASSERT(http::Header::ConnectionToken::None ==
+                               response->header().getConnectionToken());
+                    LOK_ASSERT(0 < response->header().getContentLength());
+                }
+                else
+                {
+                    // connection limit hit
+                    LOK_ASSERT_EQUAL(http::StatusCode::None, response->statusCode());
+                }
+            }
+
+            bool connected01 = false;
+            {
+                TST_LOG("Test[" << _iteration << "] SessionA: connected "
+                                << session->isConnected());
+                if (session->isConnected())
+                {
+                    connected01 = true;
+                    session->asyncShutdown();
+                }
+                if (UseOwnPoller)
+                {
+                    if (PollerOnClientThread)
+                    {
+                        socketPoller->closeAllSockets();
+                    }
+                    else
+                    {
+                        socketPoller->joinThread();
+                    }
+                }
+            }
+
+            if (expectFatalError)
+            {
+                LOK_ASSERT(false == connected00);
+                LOK_ASSERT(false == connected01);
+            }
+            else
+            {
+                LOK_ASSERT(true == connected00);
+                LOK_ASSERT(true == connected01);
+            }
+
+            ++_iteration;
+            break;
+        }
+        case Phase::Done:
+        {
+            passTest("All HTTP iterations completed successfully");
+            break;
+        }
+    }
 }
 
 UnitBase* unit_create_wsd(void) { return new UnitServerSocketAcceptFailure1(); }
