@@ -36,7 +36,10 @@
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/FileServer.hpp>
+#include <wsd/McpResponseUtil.hpp>
 #include <wsd/TileDesc.hpp>
+
+#include <common/base64.hpp>
 
 #include <Poco/JSON/Array.h>
 #include <Poco/JSON/Parser.h>
@@ -46,6 +49,7 @@
 #include <Poco/URI.h>
 
 #include <cctype>
+#include <fstream>
 #include <ios>
 #include <map>
 #include <memory>
@@ -3638,6 +3642,14 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
         LOG_TRC("Sending extracted link targets response.");
         if (!saveAsSocket)
             LOG_ERR("Error in extractedlinktargets: not in isConvertTo mode");
+        else if (_mcpContext)
+        {
+            std::string body = McpResponseUtil::wrapJsonResult(
+                _mcpContext->jsonRpcId, payload->jsonString());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody(body, "application/json");
+            saveAsSocket->sendAndShutdown(httpResponse);
+        }
         else
         {
             http::Response httpResponse(http::StatusCode::OK);
@@ -3657,6 +3669,14 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
         LOG_TRC("Sending extracted document structure response.");
         if (!saveAsSocket)
             LOG_ERR("Error in extracteddocumentstructure: not in isConvertTo mode");
+        else if (_mcpContext)
+        {
+            std::string body = McpResponseUtil::wrapJsonResult(
+                _mcpContext->jsonRpcId, payload->jsonString());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody(body, "application/json");
+            saveAsSocket->sendAndShutdown(httpResponse);
+        }
         else
         {
             http::Response httpResponse(http::StatusCode::OK);
@@ -3676,6 +3696,14 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
         LOG_TRC("Sending transformed document structure response.");
         if (!saveAsSocket)
             LOG_ERR("Error in transformeddocumentstructure: not in isConvertTo mode");
+        else if (_mcpContext)
+        {
+            std::string body = McpResponseUtil::wrapJsonResult(
+                _mcpContext->jsonRpcId, payload->jsonString());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody(body, "application/json");
+            saveAsSocket->sendAndShutdown(httpResponse);
+        }
         else
         {
             http::Response httpResponse(http::StatusCode::OK);
@@ -3907,17 +3935,65 @@ bool ClientSession::handleSaveAs(const std::shared_ptr<Message>& payload,
         {
             LOG_TRC("Sending file: " << resultURL.getPath());
 
-            const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
-            http::Response response(http::StatusCode::OK);
-            FileServerRequestHandler::hstsHeaders(response);
-            if (!fileName.empty())
-                response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
-            response.setContentType("application/octet-stream");
-
             if (!saveAsSocket)
+            {
                 LOG_ERR("Error saveas socket missing in isConvertTo mode");
+            }
+            else if (_mcpContext)
+            {
+                // MCP mode: read the file, base64-encode it, wrap in JSON-RPC.
+                std::ifstream ifs(resultURL.getPath(), std::ios::binary);
+                std::string fileData((std::istreambuf_iterator<char>(ifs)),
+                                     std::istreambuf_iterator<char>());
+
+                const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
+                std::string mimeType = "application/octet-stream";
+                // Set a more specific MIME type for common formats.
+                const std::string ext = Poco::Path(fileName).getExtension();
+                if (ext == "pdf")
+                    mimeType = "application/pdf";
+                else if (ext == "docx")
+                    mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                else if (ext == "xlsx")
+                    mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                else if (ext == "pptx")
+                    mimeType = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+                else if (ext == "odt")
+                    mimeType = "application/vnd.oasis.opendocument.text";
+                else if (ext == "ods")
+                    mimeType = "application/vnd.oasis.opendocument.spreadsheet";
+                else if (ext == "odp")
+                    mimeType = "application/vnd.oasis.opendocument.presentation";
+                else if (ext == "odg")
+                    mimeType = "application/vnd.oasis.opendocument.graphics";
+                else if (ext == "rtf")
+                    mimeType = "application/rtf";
+                else if (ext == "html")
+                    mimeType = "text/html";
+                else if (ext == "txt" || ext == "csv")
+                    mimeType = "text/plain";
+                else if (ext == "png")
+                    mimeType = "image/png";
+                else if (ext == "svg")
+                    mimeType = "image/svg+xml";
+
+                std::string body = McpResponseUtil::wrapBinaryResult(
+                    _mcpContext->jsonRpcId, fileData.data(), fileData.size(), mimeType);
+                http::Response response(http::StatusCode::OK);
+                response.setBody(body, "application/json");
+                saveAsSocket->sendAndShutdown(response);
+            }
             else
+            {
+                const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
+                http::Response response(http::StatusCode::OK);
+                FileServerRequestHandler::hstsHeaders(response);
+                if (!fileName.empty())
+                    response.set("Content-Disposition",
+                                 "attachment; filename=\"" + fileName + '"');
+                response.setContentType("application/octet-stream");
                 HttpHelper::sendFileAndShutdown(saveAsSocket, resultURL.getPath(), response);
+            }
         }
 
         // Conversion is done, cleanup this fake session.

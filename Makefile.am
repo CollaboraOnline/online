@@ -197,6 +197,7 @@ coolwsd_sources = \
                   wsd/FileServer.cpp \
                   wsd/FileServerUtil.cpp \
                   wsd/HostUtil.cpp \
+                  wsd/McpHandler.cpp \
                   wsd/ProofKey.cpp \
                   wsd/ProxyProtocol.cpp \
                   wsd/ProxyRequestHandler.cpp \
