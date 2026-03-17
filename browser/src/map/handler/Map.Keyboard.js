@@ -560,6 +560,10 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
 			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === this.keyCodes.SPACE && !app.file.textCursor.visible))) {
+				if (!this._map.isEditMode() && !this._isModifierNavigationKey(keyCode)) {
+					ev.preventDefault();
+					return;
+				}
 				if (keyEventFn) {
 					keyEventFn('input', charCode, unoKeyCode);
 					ev.preventDefault();
@@ -665,6 +669,14 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return e.metaKey;
 		else
 			return e.ctrlKey;
+	},
+
+	// Keys that should still be sent to core with modifiers in read-only mode.
+	_isModifierNavigationKey: function (keyCode) {
+		return (keyCode >= this.keyCodes.PAGEUP && keyCode <= this.keyCodes.DOWN) ||
+			keyCode === this.keyCodes.TAB ||
+			keyCode === this.keyCodes.A ||
+			(keyCode >= this.keyCodes.F1 && keyCode <= this.keyCodes.F12);
 	},
 
 	// Given a DOM keyboard event that happened while the Control key was depressed,
