@@ -220,6 +220,14 @@ class KeyboardShortcuts {
         const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
 
         if (shortcut) {
+            // In read-only mode, block shortcuts that send uno commands
+            // to core unless they are explicitly meant for read-only use.
+            if (!this.map.isEditMode() && shortcut.unoAction &&
+                shortcut.viewType !== ViewType.ReadOnly) {
+                event.preventDefault();
+                return true;
+            }
+
             let action = 'disabled';
             if (shortcut.unoAction) {
                 action = shortcut.unoAction;
