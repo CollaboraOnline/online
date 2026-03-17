@@ -571,9 +571,6 @@ noinst_HEADERS = \
                  test/testlog.hpp \
                  tools/COOLWebSocket.hpp
 
-GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
-GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
-
 dist-hook:
 	git log -1 --format=%h --abbrev=10 > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
 	$(QUIET_MKDIRP) mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
@@ -934,6 +931,8 @@ stress:
 		$(stress_file) $(trace_dir)/writer-quick.txt
 
 if ENABLE_CODE_COVERAGE
+GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
+GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
 GEN_COVERAGE_COMMAND=$(QUIET_MKDIRP) mkdir -p ${abs_top_srcdir}/gcov && \
 lcov --no-external --capture --rc 'lcov_excl_line=' --rc 'lcov_excl_br_line=LOG_|TST_|LOK_|WSD_|TRANSITION|assert' \
 --compat libtool=on --directory ${abs_top_srcdir}/. --output-file ${abs_top_srcdir}/gcov/cool.coverage.test.info && \
