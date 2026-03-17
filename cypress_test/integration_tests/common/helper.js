@@ -58,7 +58,7 @@ function setupDocument(filePath, copyCertificates = false) {
  *   document is loaded, such as clearing a warning about macros.
  * isMultiUser: Set to true for multiuser tests.
  */
-function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
+function loadDocument(filePath, skipDocumentChecks, isMultiUser, lang) {
 	cy.log('>> loadDocument - start');
 	cy.log('Param - filePath: ' + filePath);
 	if (skipDocumentChecks) {
@@ -88,7 +88,7 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadDocumentNextcloud(filePath);
 	} else {
-		loadDocumentNoIntegration(filePath, isMultiUser);
+		loadDocumentNoIntegration(filePath, isMultiUser, lang);
 	}
 
 	const isDraw = filePath.indexOf('draw') === 0;
@@ -114,14 +114,14 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
  * call setupDocument and loadDocument directly
  * filePath: test document path, for example: 'calc/hello-world.ods'
  */
-function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false) {
+function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false, lang = undefined) {
 	cy.log('>> setupAndLoadDocument - start');
 
 	var newFilePath = setupDocument(filePath, copyCertificates);
 	if (isMultiUser) {
-		loadDocument(newFilePath, undefined, isMultiUser);
+		loadDocument(newFilePath, undefined, isMultiUser, lang);
 	} else {
-		loadDocument(newFilePath);
+		loadDocument(newFilePath, undefined, undefined, lang);
 	}
 
 	cy.log('<< setupAndLoadDocument - end');
@@ -164,7 +164,7 @@ function logError(event) {
 /*
  * Loads the test document directly in Collabora Online.
  */
-function loadDocumentNoIntegration(filePath, isMultiUser) {
+function loadDocumentNoIntegration(filePath, isMultiUser, lang) {
 	cy.log('>> loadDocumentNoIntegration - start');
 
 	var URI = '';
@@ -174,7 +174,7 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 	}
 
 	URI += '/browser/' + Cypress.env('WSD_VERSION_HASH') + '/debug.html'
-		+ '?lang=en-US'
+		+ '?lang=' + (lang || 'en-US')
 		+ '&file_path=' + Cypress.env('DATA_WORKDIR') + filePath;
 
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
