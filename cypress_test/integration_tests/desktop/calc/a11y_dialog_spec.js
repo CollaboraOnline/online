@@ -62,16 +62,6 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyCalcDialogs = [
-    '.uno:DataFilterSpecialFilter',
-    '.uno:DataFilterStandardFilter',
-    '.uno:DefineName',
-    '.uno:DefineDBName',
-    '.uno:FunctionDialog',
-    '.uno:JumpToTable',
-    '.uno:PageFormatDialog',
-    '.uno:Protect',
-    '.uno:StyleNewByExample',
-    '.uno:Validation',
 ];
 
 describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: false }, function () {
