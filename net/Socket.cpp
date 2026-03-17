@@ -1319,7 +1319,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
     assert(_type != Socket::Type::Unix);
 
     UnitWSD* const unitWsd = UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr;
-    if (unitWsd && unitWsd->simulateExternalAcceptError())
+    if (UNITWSD_CALL_INSTANCE(unitWsd, simulateExternalAcceptError()))
         return nullptr; // Recoverable error, ignore to retry
 
     struct sockaddr_in6 clientInfo;
@@ -1368,15 +1368,14 @@ std::shared_ptr<Socket> ServerSocket::accept()
     try
     {
         // Create a socket object using the factory.
-        std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
-        if (unitWsd)
-            unitWsd->simulateExternalSocketCtorException(_socket);
+        std::shared_ptr<Socket> socket = createSocketFromAccept(rc, type);
+        UNITWSD_CALL_INSTANCE(unitWsd, simulateExternalSocketCtorException(socket));
 
-        _socket->setClientAddress(addrstr, clientInfo.sin6_port);
+        socket->setClientAddress(addrstr, clientInfo.sin6_port);
 
-        LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
-                                    << clientInfo.sin6_family << ", " << *_socket);
-        return _socket;
+        LOG_TRC("Accepted socket #" << socket->getFD() << " has family " << clientInfo.sin6_family
+                                    << ", " << *socket);
+        return socket;
     }
     catch (const std::exception& ex)
     {
