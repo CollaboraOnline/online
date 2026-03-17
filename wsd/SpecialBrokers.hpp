@@ -20,6 +20,7 @@
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
 
+#include <wsd/ClientSession.hpp>
 #include <wsd/DocumentBroker.hpp>
 
 #include <cstddef>
@@ -27,8 +28,6 @@
 #include <string>
 
 #include <Poco/URI.h>
-
-class ClientSession;
 
 class StatelessBatchBroker : public DocumentBroker
 {
@@ -55,6 +54,9 @@ class ConvertToBroker : public StatelessBatchBroker
     const std::string _inFilterOptions;
     const std::string _lang;
 
+    /// Optional MCP context to forward to the client session on conversion start.
+    std::optional<McpContext> _mcpContext;
+
 public:
     /// Construct DocumentBroker with URI and docKey
     ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic, const std::string& docKey,
@@ -64,6 +66,9 @@ public:
 
     /// _lang accessors
     const std::string& getLang() { return _lang; }
+
+    /// Set MCP context to forward to the client session on conversion start.
+    void setMcpContext(McpContext ctx) { _mcpContext = std::move(ctx); }
 
     /// Move socket to this broker for response & do conversion
     bool startConversion(SocketDisposition& disposition, const std::string& id, const AdditionalFilePocoUris& additionalFileUrisPublic);
@@ -193,5 +198,13 @@ public:
     /// How many instances are running.
     static std::size_t getInstanceCount();
 };
+
+/// Construct a ConvertToBroker subclass based on the request type string.
+std::shared_ptr<ConvertToBroker>
+getConvertToBrokerImplementation(const std::string& requestType, const std::string& fromPath,
+                                 const Poco::URI& uriPublic, const std::string& docKey,
+                                 const std::string& format, const std::string& options,
+                                 const std::string& lang, const std::string& target,
+                                 const std::string& filter, const std::string& transformJSON);
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
