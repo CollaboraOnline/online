@@ -371,7 +371,8 @@ export class Comment extends CanvasSectionObject {
 		for (let i = 0; i < this.sectionProperties.children.length; i++) {
 			if (this.sectionProperties.children[i].isContainerVisible())
 				childPositions.push({ id: this.sectionProperties.children[i].sectionProperties.data.id,
-									posY: this.getContainerPosY()});
+					posY: this.sectionProperties.children[i].getContainerPosY()
+				});
 		}
 		childPositions.sort((a, b) => { return a.posY - b.posY; });
 		let lastPosY = this.getContainerPosY() + this.getCommentHeight(false);
