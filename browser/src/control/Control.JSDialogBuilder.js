@@ -245,12 +245,15 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		return false;
 	},
 
+	_numericCharPattern: function() {
+		return new RegExp('[0-9\\' + this._decimal + '\\' + this._minusSign + ']');
+	},
+
 	_preventNonNumericalInput: function(e) {
 		e = e || window.event;
 		var charCode = (typeof e.which == 'undefined') ? e.keyCode : e.which;
 		var charStr = String.fromCharCode(charCode);
-		var regex = new RegExp('^[0-9\\' + this._decimal + '\\' + this._minusSign + ']+$');
-		if (!charStr.match(regex) && charCode !== 13)
+		if (!charStr.match(this._numericCharPattern()) && charCode !== 13)
 			return e.preventDefault();
 
 		var value = e.target.value;
