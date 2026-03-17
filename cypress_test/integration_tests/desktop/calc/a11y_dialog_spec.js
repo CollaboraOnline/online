@@ -35,11 +35,11 @@ const allCalcDialogs = [
     '.uno:InsertCell',
     '.uno:InsertObjectChart',
     '.uno:InsertSparkline',
-    // '.uno:JumpToTable',
+    '.uno:JumpToTable',
     '.uno:Move?FromContextMenu:bool=true&MoveOrCopySheetDialog:bool=true&ContextMenuIndex=0',
     '.uno:MovingAverageDialog',
     '.uno:PageFormatDialog',
-    // '.uno:Protect',
+    '.uno:Protect',
     '.uno:RegressionDialog',
     '.uno:RowHeight',
     '.uno:SamplingDialog',
@@ -62,13 +62,6 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyCalcDialogs = [
-    '.uno:DataFilterSpecialFilter',
-    '.uno:DataFilterStandardFilter',
-    '.uno:DefineDBName',
-    '.uno:EditPrintArea',
-    '.uno:FunctionDialog',
-    '.uno:PageFormatDialog',
-    '.uno:Validation',
 ];
 
 describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: false }, function () {
