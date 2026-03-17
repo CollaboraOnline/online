@@ -37,6 +37,7 @@
 #include <net/Uri.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/ClientSession.hpp>
+#include <wsd/McpHandler.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
@@ -2149,6 +2150,37 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             return true;
         }
         return false;
+    }
+
+    if (requestDetails.equals(1, "mcp"))
+    {
+        std::string configuredKey = ConfigUtil::getConfigValue<std::string>("net.mcp.api_key", "");
+        if (configuredKey.empty())
+        {
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::NotFound, socket);
+            return true;
+        }
+
+        std::string authHeader = request.get("Authorization", "");
+        const std::string prefix = "Bearer ";
+        bool valid = false;
+        if (authHeader.size() > prefix.size() && authHeader.compare(0, prefix.size(), prefix) == 0)
+        {
+            const std::string key = authHeader.substr(prefix.size());
+            // Constant-time comparison to prevent timing attacks.
+            valid = (key.size() == configuredKey.size());
+            for (std::size_t i = 0; i < configuredKey.size(); ++i)
+                valid &= (i < key.size() ? key[i] : '\0') == configuredKey[i];
+        }
+        if (!valid)
+        {
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket,
+                                             std::string_view(), "WWW-Authenticate: Bearer\r\n");
+            return true;
+        }
+
+        std::string body(std::istreambuf_iterator<char>(message), {});
+        return McpHandler::handleRequest(body, socket, disposition, _id);
     }
 
     if (requestDetails.equals(2, "insertfile"))
