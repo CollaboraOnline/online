@@ -440,111 +440,58 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasServerAudit = this.getHiddenItems() ? !this.getHiddenItems().includes('server-audit') : true;
 
 		var content = [
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'online-help',
-							'type': 'bigtoolitem',
-							'text': _('Online Help'),
-							'command': '.uno:OnlineHelp',
-							'accessibility': { focusBack: false, combination: 'H', de: null }
-						}
-					]
-				},
-				{ type: 'separator', id: 'help-onlinehelp-break', orientation: 'vertical' },
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'keyboard-shortcuts',
-							'type': 'bigtoolitem',
-							'text': _('Keyboard shortcuts'),
-							'command': '.uno:KeyboardShortcuts',
-							'accessibility': { focusBack: false, combination: 'SH', de: null }
-						}
-					]
-				},
-				{ type: 'separator', id: 'help-keyboardshortcuts-break', orientation: 'vertical' },
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'forum',
-							'type': 'bigtoolitem',
-							'text': _('Forum'),
-							'command': '.uno:ForumHelp',
-							'accessibility': { focusBack: true, combination: 'C', de: null }
-						}
-					]
-				},
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'report-an-issue',
-							'type': 'bigtoolitem',
-							'text': _('Report an issue'),
-							'command': '.uno:ReportIssue',
-							'accessibility': { focusBack: true, combination: 'K', de: null }
-						},
-					]
-				},
-				hasLatestUpdates ?
+			{
+				'type': 'overflowgroup',
+				'id': 'help-help',
+				'name': _('Help'),
+				'accessibility': { focusBack: false,	combination: 'HE',	de:	null },
+				'children': [
 					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'latestupdates',
-								'type': 'bigtoolitem',
-								'text': _('Latest Updates'),
-								'command': '.uno:LatestUpdates',
-								'accessibility': { focusBack: true,	combination: 'LU', de: null }
-
-							}
-						]
-					} : {},
-				hasFeedback ?
+						'id': 'online-help',
+						'type': 'bigtoolitem',
+						'text': _('Online Help'),
+						'command': '.uno:OnlineHelp',
+						'accessibility': { focusBack: false, combination: 'H', de: null }
+					},
 					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'feedback',
-								'type': 'bigtoolitem',
-								'text': _('Send Feedback'),
-								'command': '.uno:Feedback',
-								'accessibility': { focusBack: true,	combination: 'SF', de: null }
-							}
-						]
-					} : {},
-				hasServerAudit ?
+						'id': 'forum',
+						'type': 'bigtoolitem',
+						'text': _('Forum'),
+						'command': '.uno:ForumHelp',
+						'accessibility': { focusBack: true, combination: 'C', de: null }
+					},
 					{
-						'id': 'help-serveraudit-break',
-						'type': 'separator',
-						'orientation': 'vertical'
-					} : {},
-				hasServerAudit ?
+						'id': 'report-an-issue',
+						'type': 'bigtoolitem',
+						'text': _('Report an issue'),
+						'command': '.uno:ReportIssue',
+						'accessibility': { focusBack: true, combination: 'K', de: null }
+					},
+					hasFeedback ?
 					{
-						'id': 'server-audit',
-						'type': 'bigcustomtoolitem',
-						'text': _('Server audit'),
-						'command': 'serveraudit',
-						'accessibility': { focusBack: false, combination: 'SA', de: null }
-					} : {},
-				hasAccessibilitySupport || hasAccessibilityCheck ?
-					{
-						'id': 'help-accessibility-break',
-						'type': 'separator',
-						'orientation': 'vertical'
-					} : {},
-				hasAccessibilitySupport ?
+						'id': 'feedback',
+						'type': 'bigtoolitem',
+						'text': _('Send Feedback'),
+						'command': '.uno:Feedback',
+						'accessibility': { focusBack: true,	combination: 'SF', de: null }
+					} : {}
+				]
+			},
+			{ type: 'separator', id: 'help-help-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'help-accessibility',
+				'name': _('Acessibility'),
+				'accessibility': { focusBack: false,	combination: 'AA',	de:	null },
+				'children': [
+					hasAccessibilitySupport ?
 					{
 						'id':'togglea11ystate',
 						'type': 'bigcustomtoolitem',
 						'text': _('Screen Reading'),
 						'accessibility': { focusBack: true,	combination: 'SR', de: null }
 					} : {},
-				hasAccessibilityCheck ?
+					hasAccessibilityCheck ?
 					{
 						'id': 'accessibility-check',
 						'class': 'unoAccessibilityCheck',
@@ -552,6 +499,38 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'text': _UNO('.uno:AccessibilityCheck', 'text', true),
 						'command': '.uno:SidebarDeck.A11yCheckDeck',
 						'accessibility': { focusBack: false, combination: 'A', de: null }
+					} : {},
+					{
+						'id': 'keyboard-shortcuts',
+						'type': 'bigtoolitem',
+						'text': _('Keyboard shortcuts'),
+						'command': '.uno:KeyboardShortcuts',
+						'accessibility': { focusBack: false, combination: 'SH', de: null }
+					}
+				]
+			},
+			{ type: 'separator', id: 'help-accessibility-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'help-admin',
+				'name': _('Admin'),
+				'accessibility': { focusBack: false,	combination: 'AD',	de:	null },
+				'children': [
+					hasLatestUpdates ?
+					{
+						'id': 'latestupdates',
+						'type': 'bigtoolitem',
+						'text': _('Latest Updates'),
+						'command': '.uno:LatestUpdates',
+						'accessibility': { focusBack: true,	combination: 'LU', de: null }
+					} : {},
+					hasServerAudit ?
+					{
+						'id': 'server-audit',
+						'type': 'bigcustomtoolitem',
+						'text': _('Server audit'),
+						'command': 'serveraudit',
+						'accessibility': { focusBack: false, combination: 'SA', de: null }
 					} : {},
 					{
 						'id': 'validatesidebara11y',
@@ -566,28 +545,28 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'text': _('Validate Dialog'),
 						'visible': isDebugOn ? 'true' : 'false',
 						'accessibility': { focusBack: true,	combination: 'VD', de: null }
-					},
-				hasAbout ?
+					}
+				]
+			},
+			{ type: 'separator', id: 'help-admin-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'help-about',
+				'name': _('About'),
+				'nogroup': true,
+				'accessibility': { focusBack: false,	combination: 'AB',	de:	null },
+				'children': [
+					hasAbout ?
 					{
-						'id': 'help-about-break',
-						'type': 'separator',
-						'orientation': 'vertical'
-					} : {},
-				hasAbout ?
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'about',
-								'type': 'bigtoolitem',
-								'text': _('About'),
-								'command': '.uno:About',
-								'accessibility': { focusBack: false, combination: 'W', de: null }
-							}
-						]
+						'id': 'about',
+						'type': 'bigtoolitem',
+						'text': _('About'),
+						'command': '.uno:About',
+						'accessibility': { focusBack: false, combination: 'W', de: null }
 					} : {}
+				]
+			},
 		];
-
 		return this.getTabPage(helpTabName, content);
 	},
 
