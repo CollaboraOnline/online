@@ -39,6 +39,13 @@ class DocumentBroker;
 class AIChatSession;
 #endif
 
+/// Context for MCP (Model Context Protocol) JSON-RPC requests.
+/// When set on a ClientSession, response handlers wrap results in JSON-RPC envelopes.
+struct McpContext
+{
+    std::string jsonRpcId; // The JSON-RPC request id
+};
+
 /// Represents a session to a COOL client, in the WSD process.
 class ClientSession final : public Session
 {
@@ -177,6 +184,9 @@ public:
         _saveAsSocket = socket;
         _isConvertTo = static_cast<bool>(socket);
     }
+
+    /// Set MCP context so response handlers wrap results in JSON-RPC envelopes.
+    void setMcpContext(McpContext ctx) { _mcpContext = std::move(ctx); }
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
 
@@ -423,6 +433,16 @@ private:
                          const std::shared_ptr<StreamSocket>& saveAsSocket, std::string errorKind);
 
 #if !MOBILEAPP
+    /// Send a JSON payload as an MCP JSON-RPC result via the saveAs socket.
+    void sendMcpJsonResult(const std::shared_ptr<StreamSocket>& socket,
+                           const std::string& jsonPayload);
+
+    /// Send a JSON-RPC error via the saveAs socket for MCP mode.
+    void sendMcpError(const std::shared_ptr<StreamSocket>& socket, int code,
+                      const std::string& message);
+#endif // !MOBILEAPP
+
+#if !MOBILEAPP
 
     /// Handles saveas: and exportas: in handleKitToClientMessage.
     bool handleSaveAs(const std::shared_ptr<Message>& payload,
@@ -545,6 +565,9 @@ private:
 
     /// If Session is for convert-to
     bool _isConvertTo;
+
+    /// MCP context - when set, response handlers wrap results in JSON-RPC envelopes
+    std::optional<McpContext> _mcpContext;
 
     Poco::SharedPtr<Poco::JSON::Object> _viewSettingsJSON;
 

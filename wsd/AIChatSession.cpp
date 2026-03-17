@@ -208,7 +208,9 @@ Poco::JSON::Array::Ptr AIChatSession::buildToolDefinitions() const
             "Transform the currently-open document's structure using a JSON command "
             "sequence. Supports Impress slide operations, Writer/Calc content control "
             "updates, and arbitrary UNO commands.\n\n")
-            + DocumentToolDescriptions::TRANSFORM_PARAM_DESCRIPTION,
+            + DocumentToolDescriptions::TRANSFORM_PARAM_PRE_IMAGE
+            + DocumentToolDescriptions::TRANSFORM_PARAM_IMAGE_GEN
+            + DocumentToolDescriptions::TRANSFORM_PARAM_POST_IMAGE,
         makeParamSchema(
             {{"transform", {"string", "JSON transformation commands"}},
              {"summary", {"string",

@@ -37,6 +37,7 @@
 #include <net/Uri.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/ClientSession.hpp>
+#include <wsd/McpHandler.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
@@ -44,6 +45,7 @@
 #include <wsd/ProxyRequestHandler.hpp>
 #include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/ServerURL.hpp>
 #include <wsd/UserMessages.hpp>
 
 #if !MOBILEAPP
@@ -406,8 +408,8 @@ public:
     }
 };
 
-/// Constructs ConvertToBroker implamentation based on request type
-static std::shared_ptr<ConvertToBroker>
+/// Constructs ConvertToBroker implementation based on request type.
+std::shared_ptr<ConvertToBroker>
 getConvertToBrokerImplementation(const std::string& requestType, const std::string& fromPath,
                                  const Poco::URI& uriPublic, const std::string& docKey,
                                  const std::string& format, const std::string& options,
@@ -2244,6 +2246,106 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             return true;
         }
         return false;
+    }
+
+    if (requestDetails.equals(1, "mcp"))
+    {
+        std::string configuredKey = ConfigUtil::getConfigValue<std::string>("net.mcp.api_key", "");
+        if (configuredKey.empty())
+        {
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::NotFound, socket);
+            return true;
+        }
+
+        std::string authHeader = request.get("Authorization", "");
+        const std::string prefix = "Bearer ";
+        bool validMaster = false;
+        bool validToken = false;
+        if (authHeader.size() > prefix.size() && authHeader.compare(0, prefix.size(), prefix) == 0)
+        {
+            const std::string presented = authHeader.substr(prefix.size());
+            // Constant-time comparison against the master key to prevent timing attacks.
+            // The loop runs over max(lengths) regardless of size match.
+            const std::size_t maxLen = std::max(presented.size(), configuredKey.size());
+            validMaster = (presented.size() == configuredKey.size());
+            for (std::size_t i = 0; i < maxLen; ++i)
+            {
+                const char a = i < presented.size() ? presented[i] : '\0';
+                const char b = i < configuredKey.size() ? configuredKey[i] : '\0';
+                validMaster &= (a == b);
+            }
+
+            // Ephemeral upload tokens authenticate only /cool/mcp/upload.
+            // 128 bits of entropy makes map-lookup timing irrelevant.
+            if (!validMaster && requestDetails.equals(2, "upload"))
+                validToken = McpHandler::consumeUploadToken(presented);
+        }
+        if (!validMaster && !validToken)
+        {
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket,
+                                             std::string_view(), "WWW-Authenticate: Bearer\r\n");
+            return true;
+        }
+
+        // /cool/mcp/upload - file upload, returns a file_id for use in tool calls.
+        if (requestDetails.equals(2, "upload"))
+        {
+            ConvertToPartHandler handler;
+            Poco::Net::HTMLForm form(request, message, handler);
+
+            const auto& filenames = handler.getFilenames();
+            if (filenames.empty())
+            {
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                return true;
+            }
+
+            // Take the first uploaded file regardless of field name.
+            std::string fromPath = filenames.begin()->second;
+            handler.takeFiles(); // Prevent destructor from cleaning up the file.
+            std::string fileId = McpHandler::registerUpload(std::move(fromPath));
+
+            Poco::JSON::Object::Ptr resp = new Poco::JSON::Object;
+            resp->set("file_id", fileId);
+            std::ostringstream oss;
+            resp->stringify(oss);
+
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody(oss.str(), "application/json");
+            socket->sendAndShutdown(httpResponse);
+            return true;
+        }
+
+        // /cool/mcp - JSON-RPC endpoint.
+        const std::string contentType = request.getContentType();
+        if (contentType.find("application/json") == std::string::npos)
+        {
+            LOG_ERR("MCP: invalid Content-Type: " << contentType);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::UnsupportedMediaType, socket);
+            return true;
+        }
+
+        constexpr std::streamsize maxMcpBodySize = 100 * 1024 * 1024; // 100 MB
+        const auto contentLength = request.getContentLength();
+        if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH &&
+            contentLength > maxMcpBodySize)
+        {
+            LOG_ERR("MCP: request body too large: " << contentLength << " bytes");
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::PayloadTooLarge, socket);
+            return true;
+        }
+
+        std::string body(std::istreambuf_iterator<char>(message), {});
+        if (static_cast<std::streamsize>(body.size()) > maxMcpBodySize)
+        {
+            LOG_ERR("MCP: request body too large: " << body.size() << " bytes");
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::PayloadTooLarge, socket);
+            return true;
+        }
+
+        const std::string uploadUrl =
+            ServerURL(requestDetails).getSubURLForEndpoint("/cool/mcp/upload");
+        return McpHandler::handleRequest(body, socket, disposition, _id, uploadUrl);
     }
 
     if (requestDetails.equals(2, "insertfile"))
