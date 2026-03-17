@@ -128,6 +128,10 @@ bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std:
                                                      additionalFileUrisPublic);
     _clientSession->construct();
 
+    // Forward MCP context to the session if set.
+    if (_mcpContext)
+        _clientSession->setMcpContext(std::move(*_mcpContext));
+
     docBroker->setupTransfer(
         disposition,
         [docBroker](const std::shared_ptr<Socket>& moveSocket)
