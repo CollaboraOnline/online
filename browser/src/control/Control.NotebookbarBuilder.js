@@ -408,7 +408,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			if (!window.ThisIsTheAndroidApp)
 				submenuOpts.push({
 					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
 					'command': 'exportpdf'
 				});
 		} else if (docType === 'spreadsheet') {
@@ -442,7 +444,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			if (!window.ThisIsTheAndroidApp)
 				submenuOpts.push({
 					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
 					'command': 'exportpdf'
 				});
 		} else if (docType === 'presentation') {
@@ -476,7 +480,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			if (!window.ThisIsTheAndroidApp)
 				submenuOpts.push({
 					'action': 'exportpdf',
-					'text': _('PDF Document (.pdf) as...'),
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
 					'command': 'exportpdf'
 				});
 			if (window.extraExportFormats.includes('impress_swf'))
