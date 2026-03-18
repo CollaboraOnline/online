@@ -108,7 +108,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				}
 				if (!app.file.fileBasedView)
 					window.L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
-				this._onScroll(); // Load previews.
+				this._ensureVisiblePreviews(); // Load previews.
 				this._previewInitialized = true;
 			}
 			else
@@ -652,7 +652,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			// insert after selectedFrame
 			selectedFrame.parentNode.insertBefore(newFrame, selectedFrame.nextSibling);
 
-			this._onScroll(); // Load previews
+			this._ensureVisiblePreviews(); // Load previews
 		}
 	},
 
@@ -666,8 +666,9 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		}
 	},
 
-	_onScroll: function () {
-		setTimeout(window.L.bind(function () {
+	_ensureVisiblePreviews: function () {
+		if (this._previewTimer) clearTimeout(this._previewTimer);
+		this._previewTimer = setTimeout(window.L.bind(function () {
 			for (var i = 0; i < this._previewTiles.length; ++i) {
 				if (this._isPreviewVisible(i)) {
 					var img = this._previewTiles[i];
@@ -677,6 +678,10 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				}
 			}
 		}, this), 0);
+	},
+
+	_onScroll: function () {
+		this._ensureVisiblePreviews();
 	},
 
 	_isPreviewVisible: function(part) {
