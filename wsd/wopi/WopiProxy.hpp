@@ -41,7 +41,7 @@ public:
                        SocketDisposition& disposition);
 
 private:
-    inline void logPrefix(std::ostream& os) const { os << '#' << _logFD << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _logFD << ": "; }
 
     void checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, const Poco::URI& uri,
                        std::optional<std::string> const & postBody, int redirectionLimit);
