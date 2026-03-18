@@ -39,6 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 	it('Sidebar menubutton visual test', function() {
 		cy.cGet('#fillstyle select').select('Color');
 		cy.cGet('#fillattr').should('be.visible');
+		cy.cGet('#fillattr').should('contain.text', 'Light Blue');
 		helper.processToIdle(this.win);
 		cy.cGet('#fillattr').compareSnapshot('sidebar_menubutton_color', 0.1);
 	});
