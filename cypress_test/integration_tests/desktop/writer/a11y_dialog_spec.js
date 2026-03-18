@@ -373,6 +373,8 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
         });
+        // Wait for the section protection to be applied before trying to delete
+        cy.then(() => helper.processToIdle(win));
         helper.typeIntoDocument('{del}');
         a11yHelper.handleDialog(win, 1);
     });
