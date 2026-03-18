@@ -376,7 +376,8 @@ class A11yValidator {
 			return;
 		}
 
-		const errorCount = this.validateContainer(notebookbar.container);
+		let errorCount = this.validateContainer(notebookbar.container);
+		errorCount += this.checkTabContainerConsistency(notebookbar);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: notebookbar passed all checks');
@@ -385,6 +386,42 @@ class A11yValidator {
 				`A11yValidator: notebookbar has ${errorCount} accessibility issues`,
 			);
 		}
+	}
+
+	private checkTabContainerConsistency(notebookbar: any): number {
+		const selectedTab = document.querySelector(
+			'.ui-tab.notebookbar.selected',
+		) as HTMLElement;
+		if (!selectedTab || !selectedTab.id) return 0;
+
+		const tabName = selectedTab.id.split('-')[0];
+		const tabs = notebookbar.getTabs();
+		const tabDef = tabs?.find((t: any) => t.id === selectedTab.id);
+
+		let errorCount = 0;
+
+		if (tabDef && tabDef.name && tabDef.name !== tabName) {
+			console.error(
+				new A11yValidatorException(
+					`Tab '${tabDef.id}' has name '${tabDef.name}' which does not match its id prefix '${tabName}'. The name must match so that accessibility shortcuts are assigned to its buttons.`,
+				),
+			);
+			errorCount++;
+		}
+
+		const container = notebookbar.container.querySelector(
+			'#' + tabName + '-container',
+		);
+		if (!container) {
+			console.error(
+				new A11yValidatorException(
+					`Selected tab '${selectedTab.id}' has no matching container '#${tabName}-container' in the DOM. Accessibility shortcuts for this tab's buttons will not work.`,
+				),
+			);
+			errorCount++;
+		}
+
+		return errorCount;
 	}
 }
 
