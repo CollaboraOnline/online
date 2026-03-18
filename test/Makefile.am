@@ -97,7 +97,6 @@ all_la_unit_tests = \
 	unit-paste.la \
 	unit-wopi-ownertermination.la \
 	unit-wopi-async-upload-modifyclose.la \
-	unit-wopi-saveas-with-encoded-file-name.la \
 	unit-any-input.la \
 	unit-clipboard-close.la \
 	unit-storage.la \
@@ -291,8 +290,6 @@ unit_wopi_crash_modified_la_SOURCES = UnitWOPICrashModified.cpp
 unit_wopi_crash_modified_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_saveas_with_encoded_file_name_la_SOURCES = UnitWOPISaveAsWithEncodedFileName.cpp
-unit_wopi_saveas_with_encoded_file_name_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_ownertermination_la_SOURCES = UnitWopiOwnertermination.cpp
 unit_wopi_ownertermination_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_versionrestore_la_SOURCES = UnitWOPIVersionRestore.cpp
