@@ -33,9 +33,11 @@
 #include <common/Authorization.hpp>
 #include <common/LangUtil.hpp>
 #include <common/base64.hpp>
+#include <net/NetUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
+#include "HostUtil.hpp"
 #include <ContentSecurityPolicy.hpp>
 
 #include <Poco/DateTime.h>
@@ -222,6 +224,27 @@ std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& conf
                                     const std::string& propertyName, bool defaultValue)
 {
     return config.getBool(propertyName, defaultValue) ? "true" : "false";
+}
+
+/// Returns true if the host is allowed, false otherwise.
+bool isAllowedWopiHost(const Poco::URI& uri)
+{
+    if (!HostUtil::isWopiEnabled())
+        return false;
+
+    const std::string& targetHost = uri.getHost();
+    if (HostUtil::allowedWopiHost(targetHost))
+        return true;
+
+    // Check if a resolved IP address is in the allowlist.
+    const auto hostAddresses(net::resolveAddresses(targetHost));
+    for (const auto& address : hostAddresses)
+    {
+        if (HostUtil::allowedWopiHost(address))
+            return true;
+    }
+
+    return false;
 }
 
 } // namespace
@@ -2180,6 +2203,16 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     }
 
     Poco::URI sharedUri(sharedConfigUrl);
+
+    if (!isAllowedWopiHost(sharedUri))
+    {
+        LOG_WRN("Rejected settings config request to untrusted host ["
+                << COOLWSD::anonymizeUrl(sharedConfigUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket, shortMessage,
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     sharedUri.addQueryParameter("access_token", accessToken);
     sharedUri.addQueryParameter("fileId", "-1");
     sharedUri.addQueryParameter("type", type);
@@ -2259,6 +2292,17 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     }
 
     Poco::URI dicUrl(fileUrl);
+
+    if (!isAllowedWopiHost(dicUrl))
+    {
+        LOG_WRN("Rejected setting file request to untrusted host ["
+                << COOLWSD::anonymizeUrl(fileUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket,
+                  "Failed to fetch setting file",
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     const auto& queryParams = dicUrl.getQueryParameters();
     bool hasAccessToken = false;
     for (const auto& param : queryParams)
@@ -2326,6 +2370,16 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     }
 
     Poco::URI sharedUri(sharedConfigUrl);
+
+    if (!isAllowedWopiHost(sharedUri))
+    {
+        LOG_WRN("Rejected settings delete request to untrusted host ["
+                << COOLWSD::anonymizeUrl(sharedConfigUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket, shortMessage,
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     sharedUri.addQueryParameter("access_token", accessToken);
     sharedUri.addQueryParameter("fileId", fileId);
     if (noAuthHeader)
@@ -2423,6 +2477,16 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
     }
 
     Poco::URI wopiUri(wopiSettingBaseUrl + "/upload");
+
+    if (!isAllowedWopiHost(wopiUri))
+    {
+        LOG_WRN("Rejected upload request to untrusted host ["
+                << COOLWSD::anonymizeUrl(wopiSettingBaseUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket, shortMessage,
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     const std::string& fileId = filePath + fileName;
     wopiUri.addQueryParameter("fileId", fileId);
     wopiUri.addQueryParameter("access_token", token);
