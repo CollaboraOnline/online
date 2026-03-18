@@ -108,7 +108,6 @@ all_la_unit_tests = \
 	unit-kit-child-session.la \
 	unit-socket-failure.la \
 	unit-rendering-options.la \
-	unit-proxy-protocol.la \
 	unit-bad-doc-load.la \
 	unit-wopi-httpredirect.la \
 	unit-hosting.la \
@@ -375,8 +374,6 @@ unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
-unit_proxy_protocol_la_SOURCES = UnitProxyProtocol.cpp
-unit_proxy_protocol_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
