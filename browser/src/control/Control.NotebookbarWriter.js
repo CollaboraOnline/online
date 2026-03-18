@@ -1663,11 +1663,19 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					'command': 'closetablet',
 				} : {},
 			{
-				'id': 'view-control-codes',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ControlCodes', 'text'),
-				'command': '.uno:ControlCodes',
-				'accessibility': { focusBack: true, combination: 'CC', de: null }
+				'type': 'overflowgroup',
+				'id': 'view-control-codes-container',
+				'name':_('Marks'),
+				'accessibility': { focusBack: true, combination: 'CC', de: null },
+				'children' : [
+					{
+						'id': 'view-control-codes',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:ControlCodes', 'text'),
+						'command': '.uno:ControlCodes',
+						'accessibility': { focusBack: true, combination: 'CC', de: null }
+					}
+				]
 			},
 			{ type: 'separator', id: 'view-controlcodes-break', orientation: 'vertical' },
 			{
@@ -1724,88 +1732,121 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'view-zoomin-break', orientation: 'vertical' },
 			{
-				'id': 'toggleuimode',
-				'class': 'unotoggleuimode',
-				'type': 'bigcustomtoolitem',
-				'text': _('Compact view'),
-				'accessibility': { focusBack: false, combination: 'UI', de: null }
-			},
-			{
-				'type': 'container',
-				'children': [
+				'type': 'overflowgroup',
+				'id': 'view-layout',
+				'name':_('Look & Feel'),
+				'accessibility': { focusBack: false, combination: 'IF', de: null },
+				'children' : [
 					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'showruler',
-								'class': 'unoshowruler',
-								'type': 'checkbox',
-								'command': 'showruler',
-								'text': _('Ruler'),
-								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
-							}
-						]
+						'id': 'toggleuimode',
+						'class': 'unotoggleuimode',
+						'type': 'bigcustomtoolitem',
+						'text': _('Compact view'),
+						'accessibility': { focusBack: false, combination: 'UI', de: null }
 					},
 					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'showstatusbar',
-								'class': 'unoshowstatusbar',
-								'type': 'checkbox',
-								'command': 'showstatusbar',
-								'text': _('Status Bar'),
-								'accessibility': { focusBack: true, combination: 'AH', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'collapsenotebookbar',
-				'class': 'unocollapsenotebookbar',
-				'type': 'bigcustomtoolitem',
-				'text': _('Collapse Tabs'),
-				'accessibility': { focusBack: true, combination: 'CT', de: null }
-			},
-			{ type: 'separator', id: 'view-collapsenotebookbar-break', orientation: 'vertical' },
-			{
-				'id':'toggledarktheme',
-				'class': 'unotoggledarktheme',
-				'type': 'bigcustomtoolitem',
-				'text': _('Dark Mode'),
-				'accessibility': { focusBack: true, combination: 'D', de: null }
-			},
-			{
-			    'id':'invertbackground',
-			    'class': 'unoinvertbackground',
-			    'type': 'bigcustomtoolitem',
-			    'text': _('Invert Background'),
-			    'accessibility': { focusBack: true, combination: 'BG', de: null }
+						'id': 'collapsenotebookbar',
+						'class': 'unocollapsenotebookbar',
+						'type': 'bigcustomtoolitem',
+						'text': _('Collapse Tabs'),
+						'accessibility': { focusBack: true, combination: 'CT', de: null }
+					},
+					{
+						'id':'toggledarktheme',
+						'class': 'unotoggledarktheme',
+						'type': 'bigcustomtoolitem',
+						'text': _('Dark Mode'),
+						'accessibility': { focusBack: true, combination: 'D', de: null }
+					},
+					{
+						'id':'invertbackground',
+						'class': 'unoinvertbackground',
+						'type': 'bigcustomtoolitem',
+						'text': _('Invert Background'),
+						'accessibility': { focusBack: true, combination: 'BG', de: null }
+					},
+				]
 			},
 			{ type: 'separator', id: 'view-invertbackground-break', orientation: 'vertical' },
 			{
-				'id': 'view-sidebar-property-deck',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:SidebarDeck.PropertyDeck',
-				'accessibility': { focusBack: true, combination: 'SB', de: null }
-			},
-			{
-				'id': 'view-navigator',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator',
-				'accessibility': { focusBack: true, combination: 'K', de: 'V' }
+				'type': 'overflowgroup',
+				'id': 'view-elements',
+				'name':_('Panels'),
+				'accessibility': { focusBack: false, combination: 'UE', de: null },
+				'children' : [
+					{
+						'id': 'view-navigator',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:Navigator'),
+						'command': '.uno:Navigator',
+						'accessibility': { focusBack: true, combination: 'K', de: 'V' }
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'showruler',
+										'class': 'unoshowruler',
+										'type': 'checkbox',
+										'command': 'showruler',
+										'text': _('Ruler'),
+										'accessibility': { focusBack: true, combination: 'R', de: 'L' }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'showstatusbar',
+										'class': 'unoshowstatusbar',
+										'type': 'checkbox',
+										'command': 'showstatusbar',
+										'text': _('Status Bar'),
+										'accessibility': { focusBack: true, combination: 'AH', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+					{
+						'id': 'view-sidebar-property-deck',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:Sidebar'),
+						'command': '.uno:SidebarDeck.PropertyDeck',
+						'accessibility': { focusBack: true, combination: 'SB', de: null }
+					},
+					{
+						'id': 'format-style-dialog',
+						'type': 'bigtoolitem',
+						'text': _('Style list'),
+						'command': '.uno:SidebarDeck.StyleListDeck',
+						'accessibility': { focusBack: false, combination: 'SD', de: null }
+					},
+				]
 			},
 			!this.map['wopi'].DisableAISettings ? {
-				'id': 'view-ai-sidebar',
-				'type': 'bigcustomtoolitem',
-				'text': _('AI Assistant'),
-				'icon': 'lc_ai_sidebar.svg',
-				'command': 'aichat',
-				'accessibility': { focusBack: true, combination: 'AI', de: null }
+				type: 'separator', id: 'view-panels', orientation: 'vertical'
+			} : {},
+			!this.map['wopi'].DisableAISettings ? {
+				'type': 'overflowgroup',
+				'id': 'view-ai-assistant',
+				'name':_('AI'),
+				'accessibility': { focusBack: true, combination: 'AI', de: null },
+				'children' : [
+					{
+						'id': 'view-ai-sidebar',
+						'type': 'bigcustomtoolitem',
+						'text': _('AI Assistant'),
+						'icon': 'lc_ai_sidebar.svg',
+						'command': 'aichat',
+						'accessibility': { focusBack: true, combination: 'AI', de: null }
+					}
+				]
 			} : {},
 		];
 
