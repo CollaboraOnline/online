@@ -4,9 +4,14 @@ var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function() {
+	let win;
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/sidebar.odp');
+
+		cy.getFrameWindow().then(function (frameWindow) {
+			win = frameWindow;
+		});
 	});
 
 	it('Set gradient background color', function() {
@@ -36,6 +41,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 	it('Sidebar menubutton visual test', function() {
 		cy.cGet('#fillstyle select').select('Color');
 		cy.cGet('#fillattr').should('be.visible');
+		cy.cGet('#fillattr').should('contain.text', 'Light Blue');
+		helper.processToIdle(win);
 		cy.cGet('#fillattr').compareSnapshot('sidebar_menubutton_color', 0.1);
 	});
 });
