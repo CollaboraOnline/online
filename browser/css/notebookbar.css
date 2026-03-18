@@ -25,7 +25,8 @@
 }
 
 label.notebookbar,
-.notebookbar.ui-radiobutton label {
+.notebookbar.ui-radiobutton label,
+.static-label.notebookbar {
 	line-height: var(--default-font-size);
 	font-family: var(--cool-font);
 	font-size: var(--default-font-size);
