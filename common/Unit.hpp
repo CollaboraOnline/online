@@ -399,6 +399,7 @@ class UnitWSD : public UnitBase
 {
     UnitWSDInterface *_wsd;
     bool _hasKitHooks;
+    std::atomic_bool _hasDocBroker;
 
 public:
     explicit UnitWSD(const std::string& testname);
@@ -585,10 +586,6 @@ public:
 
     // ---------------- DocBroker events ----------------
 
-    /// Called when a DocumentBroker is created (from the constructor).
-    /// Useful to detect track the beginning of a document's life cycle.
-    virtual void onDocBrokerCreate(const std::string&) {}
-
     /// Called when the Kit process is attached to a DocBroker.
     virtual void onDocBrokerAttachKitProcess(const std::string&, int) {}
 
@@ -605,11 +602,20 @@ public:
     virtual void onDocBrokerPresetsInstallEnd(bool /*success*/) {}
 
 protected:
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect track the beginning of a document's life cycle.
+    virtual void onDocBrokerCreate(const std::string&) {}
+
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     virtual void onDocBrokerDestroy(const std::string&) {}
 
 public:
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect when a document was created at all.
+    /// Handle by overriding onDocBrokerCreate.
+    void DocBrokerCreate(const std::string&);
+
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     /// Handle by overriding onDocBrokerDestroy.
@@ -635,6 +641,7 @@ private:
     /// The actual test implementation.
     virtual void invokeWSDTest() {}
 
+    void startNextTest();
     void onExitTest(TestResult result, const std::string& reason = std::string()) override;
 };
 
