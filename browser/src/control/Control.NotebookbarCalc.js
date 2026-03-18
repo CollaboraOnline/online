@@ -53,7 +53,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'id': 'Formula-tab-label',
 				'text': _('Formulas'),
 				'name': 'Formulas',
-				'accessibility': { focusBack: true,	combination: 'Z', de: null }
+				'accessibility': { focusBack: true,	combination: 'M', de: null }
 			},
 			{
 				'id': 'Data-tab-label',
@@ -71,7 +71,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'id': 'Format-tab-label',
 				'text': _('Format'),
 				'name': 'Format',
-				'accessibility': { focusBack: true,	combination: 'M', de: null }
+				'accessibility': { focusBack: true,	combination: 'O', de: null }
 			},
 			{
 				'id': 'Shape-tab-label',
