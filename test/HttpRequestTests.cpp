@@ -528,19 +528,13 @@ void HttpRequestTests::test500GetStatuses()
         LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread, false));
 
         // Get via a separate internal HTTP session in parallel.
-        std::shared_ptr<const http::Response> altResponse;
-        if (statusCode > 100)
-            altResponse = helpers::httpGetRetry(_localUri + url);
+        const auto altResponse = helpers::httpGetRetry(_localUri + url);
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
-        std::shared_ptr<const http::Response> altResponseExt;
-        if (statusCode > 100)
-        {
 #if ENABLE_SSL
-            altResponseExt = helpers::httpGetRetry("https://httpbin.org:443" + url);
+        const auto altResponseExt = helpers::httpGetRetry("https://httpbin.org:443" + url);
 #else
-            altResponseExt = helpers::httpGetRetry("http://httpbin.org:80" + url);
+        const auto altResponseExt = helpers::httpGetRetry("http://httpbin.org:80" + url);
 #endif // ENABLE_SSL
-        }
 #endif
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -580,29 +574,25 @@ void HttpRequestTests::test500GetStatuses()
 
         if (statusCode % 100 == 0)
             ++curStatusCodeClass;
-        assert(curStatusCodeClass >= 0 && "statusCode starts as 100");
+        assert(curStatusCodeClass >= 0 && "statusCode starts at 101");
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == statusCodeClasses[curStatusCodeClass]);
 
         LOK_ASSERT_EQUAL(statusCode,
                          static_cast<unsigned>(httpResponse->statusLine().statusCode()));
 
-        // 1xx Status Codes don't have a full response to compare.
-        if (statusCode > 100)
-        {
-            compare(*altResponse, *httpResponse, true, true, testname);
+        compare(*altResponse, *httpResponse, true, true, testname);
 
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
-            // These Status Codes are not recognized by httpbin.org,
-            // so we get "unknown" and must skip comparing them.
-            const bool checkReasonPhrase
-                = (statusCode != 103 && statusCode != 208 && statusCode != 413 && statusCode != 414
-                   && statusCode != 416 && statusCode != 421 && statusCode != 425
-                   && statusCode != 440 && statusCode != 508 && statusCode != 511);
-            const bool checkBody = (statusCode != 402 && statusCode != 418);
-            compare(*altResponseExt, *httpResponse, checkReasonPhrase, checkBody, testname);
+        // These Status Codes are not recognized by httpbin.org,
+        // so we get "unknown" and must skip comparing them.
+        const bool checkReasonPhrase
+            = (statusCode != 103 && statusCode != 208 && statusCode != 413 && statusCode != 414
+               && statusCode != 416 && statusCode != 421 && statusCode != 425
+               && statusCode != 440 && statusCode != 508 && statusCode != 511);
+        const bool checkBody = (statusCode != 402 && statusCode != 418);
+        compare(*altResponseExt, *httpResponse, checkReasonPhrase, checkBody, testname);
 #endif
-        }
     }
 
     pollThread->joinThread();
