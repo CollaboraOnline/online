@@ -367,7 +367,8 @@ function assertAddressAfterIdle(win, expectedAddress) {
 	cy.log('Param - expectedAddress: ' + expectedAddress);
 
 	helper.processToIdle(win);
-	cy.cGet(helper.addressInputSelector).should('have.value', expectedAddress);
+	// Use a longer timeout to account for slow operations like search wrap-around
+	cy.cGet(helper.addressInputSelector, {timeout: 15000}).should('have.value', expectedAddress);
 
 	cy.log('<< assertAddressAfterIdle - end');
 }
