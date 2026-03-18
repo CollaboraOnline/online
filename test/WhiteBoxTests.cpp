@@ -1023,6 +1023,7 @@ void WhiteBoxTests::testLogCaptureCaller()
     LOK_ASSERT_MESSAGE("Unexpected to find the parent's source location",
                        withoutCaller.find("(from") == std::string::npos);
 
+#line __LINE__ "WhiteBoxTests.cpp"
     const auto logWithCaller = [](LOG_CAPTURE_CALLER_DECLARATION) -> std::string
     {
         std::ostringstream oss;
