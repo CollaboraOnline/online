@@ -52,7 +52,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'Formula-tab-label',
 				'text': _('Formulas'),
-				'name': 'Formulas',
+				'name': 'Formula',
 				'accessibility': { focusBack: true,	combination: 'M', de: null }
 			},
 			{
@@ -2300,7 +2300,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 		];
 
-		return this.getTabPage('Formulas', content);
+		return this.getTabPage('Formula', content);
 	},
 
 	getDataTab: function() {
