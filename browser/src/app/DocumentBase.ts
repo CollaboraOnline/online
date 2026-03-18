@@ -71,6 +71,10 @@ class DocumentBase {
 	private addSections() {
 		this.mouseControl = new MouseControl(app.CSections.MouseControl.name);
 		app.sectionContainer.addSection(this.mouseControl);
+
+		if (app.map._docLayer._docType === 'text') {
+			app.sectionContainer.addSection(new cool.RulerSpacerSection());
+		}
 	}
 
 	public get fileSize(): cool.SimplePoint {

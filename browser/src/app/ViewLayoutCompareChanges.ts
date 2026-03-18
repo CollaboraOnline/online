@@ -148,11 +148,20 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		// Default to right side.
 		if (point.mode === -1) point.mode = TileMode.RightSide;
 
-		return point.pX + this.getDeflectionX(point.mode);
+		return (
+			point.pX +
+			this.getDeflectionX(point.mode) +
+			this._documentAnchorPosition[0]
+		);
 	}
 
 	public override documentToViewY(point: cool.SimplePoint): number {
-		return point.pY + this.yStart - this.scrollProperties.viewY;
+		return (
+			point.pY +
+			this.yStart -
+			this.scrollProperties.viewY +
+			this._documentAnchorPosition[1]
+		);
 	}
 
 	public override canvasToDocumentPoint(
@@ -166,8 +175,12 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		// Remember which tile mode was used last.
 		this.lastTileMode = point.mode;
 
-		result.pX -= this.getDeflectionX(point.mode);
-		result.pY += this.scrollProperties.viewY - this.yStart;
+		result.pX -=
+			this.getDeflectionX(point.mode) + this._documentAnchorPosition[0];
+		result.pY +=
+			this.scrollProperties.viewY -
+			this.yStart -
+			this._documentAnchorPosition[1];
 
 		return result;
 	}
