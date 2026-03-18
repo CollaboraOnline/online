@@ -20,11 +20,11 @@ L10N_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_ALL_JS)
 L10N_ALL_JS_ENTRY = l10n-all.js
 
-$(L10N_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
+$(L10N_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.py
 	find $(srcdir)/po -name 'ui-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
 	find $(srcdir)/po -name 'help-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
 	@mkdir -p $(dir $@)
-	perl $(srcdir)/util/create-l10n-all-js.pl >$@
+	python3 $(srcdir)/util/create-l10n-all-js.py >$@
 	find $(srcdir)/po -name 'ui-*.po.json' -delete
 	find $(srcdir)/po -name 'help-*.po.json' -delete
 endif
