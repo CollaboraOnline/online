@@ -15,11 +15,12 @@
 
 #include <config.h>
 
-#include <WopiTestServer.hpp>
 #include <common/Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
-#include <helpers.hpp>
+#include <common/Unit.hpp>
+#include <test/UnitHTTP.hpp>
+#include <test/WopiTestServer.hpp>
+#include <test/helpers.hpp>
+
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
@@ -83,9 +84,74 @@ public:
     }
 };
 
-UnitBase *unit_create_wsd(void)
+class UnitWOPISaveAsWithEncodedFileName : public WopiTestServer
 {
-    return new UnitWOPISaveAs();
+    STATE_ENUM(Phase, LoadAndSaveAs, Done)
+    _phase;
+
+public:
+    UnitWOPISaveAsWithEncodedFileName()
+        : WopiTestServer("UnitWOPISaveAsWithEncodedFileName")
+        , _phase(Phase::LoadAndSaveAs)
+    {
+    }
+
+    void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        // spec says UTF-7...
+        LOK_ASSERT_EQUAL_STR("/path/to/hello+ACU-20world.pdf",
+                             request.get("X-WOPI-SuggestedTarget"));
+
+        // make sure it is a pdf - or at least that it is larger than what it
+        // used to be
+        LOK_ASSERT(std::stoul(request.get("X-WOPI-Size")) > getFileContent().size());
+    }
+
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
+    {
+        if (message.find("saveas: url=") != std::string::npos &&
+            message.find(helpers::getTestServerURI()) != std::string::npos &&
+            message.find("filename=hello%20world%251.pdf") != std::string::npos)
+        {
+            // successfully exit the test if we also got the outgoing message
+            // notifying about saving the file
+            exitTest(TestResult::Ok);
+        }
+
+        return false;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::LoadAndSaveAs:
+            {
+                initWebsocket("/wopi/files/0?access_token=anything");
+
+                WSD_CMD("load url=" + getWopiSrc());
+
+                // file name we want to save as is = hello%20world.pdf -> it is not encoded! and in the end we must expect like this.
+                // we would send it encoded like hello%2520world.pdf
+                WSD_CMD("saveas url=wopi:///path/to/hello%2520world.pdf");
+
+                TRANSITION_STATE(_phase, Phase::Done);
+                break;
+            }
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
+{
+    return new UnitBase* []
+    { new UnitWOPISaveAs(), new UnitWOPISaveAsWithEncodedFileName(), nullptr };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
