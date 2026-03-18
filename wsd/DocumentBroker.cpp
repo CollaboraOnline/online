@@ -242,7 +242,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                                << "] created with docKey [" << _docKey
                                << "], always_save_on_exit: " << _alwaysSaveOnExit);
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerCreate(_docKey));
+    UNITWSD_CALL_INSTANCE(_unitWsd, DocBrokerCreate(_docKey));
 }
 
 pid_t DocumentBroker::getPid() const { return _childProcess ? _childProcess->getPid() : 0; }

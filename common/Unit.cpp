@@ -498,6 +498,7 @@ UnitWSD::UnitWSD(const std::string& name)
     : UnitBase(name, UnitType::Wsd)
     , _wsd(nullptr)
     , _hasKitHooks(false)
+    , _hasDocBroker(false)
 {
 }
 
@@ -528,6 +529,16 @@ void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX
     }
 }
 
+void UnitWSD::DocBrokerCreate(const std::string& key)
+{
+    if (isUnitTesting())
+    {
+        onDocBrokerCreate(key);
+
+        _hasDocBroker = true;
+    }
+}
+
 void UnitWSD::DocBrokerDestroy(const std::string& key)
 {
     if (isUnitTesting())
@@ -546,6 +557,22 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
         // Check if we have more tests, but keep the current index if it's the last.
         if (haveMoreTests())
         {
+            startNextTest();
+        }
+    }
+}
+
+UnitWSD& UnitWSD::get()
+{
+    UnitWSD* globalWSD = getMaybeNull();
+    assert(globalWSD);
+    return *globalWSD;
+}
+
+UnitWSD* UnitWSD::getMaybeNull() { return static_cast<UnitWSD*>(GlobalArray[GlobalIndex]); }
+
+void UnitWSD::startNextTest()
+{
             // Get the current UnitWSDInterface to pass to the next one.
             UnitWSD* currentWSD = getMaybeNull();
             UnitWSDInterface* unitWsdInterface = currentWSD ? currentWSD->_wsd : nullptr;
@@ -571,18 +598,7 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
 
             // Wake-up so the previous test stops.
             SocketPoll::wakeupWorld();
-        }
-    }
 }
-
-UnitWSD& UnitWSD::get()
-{
-    UnitWSD* globalWSD = getMaybeNull();
-    assert(globalWSD);
-    return *globalWSD;
-}
-
-UnitWSD* UnitWSD::getMaybeNull() { return static_cast<UnitWSD*>(GlobalArray[GlobalIndex]); }
 
 void UnitWSD::onExitTest(TestResult result, const std::string&)
 {
@@ -601,7 +617,15 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
             return;
         }
 
-        TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        if (_hasDocBroker)
+        {
+            TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        }
+        else
+        {
+            startNextTest();
+        }
+
         return;
     }
 
