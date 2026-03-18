@@ -622,6 +622,7 @@ window.L.Map.include({
 		});
 
 		const searchButton = document.getElementById('online-help-search-button');
+		searchButton.setAttribute('aria-label', _('Search'));
 		searchButton.addEventListener('click', performSearch);
 		searchButton.addEventListener('keydown', function (e) {
 			if (e.key === 'Enter') {
