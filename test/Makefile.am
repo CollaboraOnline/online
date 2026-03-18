@@ -56,6 +56,7 @@ all_la_unit_tests = \
 	unit-user-presets.la \
 	unit-integration.la \
 	unit-initial-load-fail.la \
+	unit-timeout.la \
 	unit-wopi-save-on-exit.la \
 	unit-uno-command.la \
 	unit-quarantine.la \
@@ -67,18 +68,15 @@ all_la_unit_tests = \
 	unit-httpws.la \
 	unit-wopi-languages.la \
 	unit-load.la \
-	unit-timeout_conn.la \
 	unit-session.la \
 	unit-save-torture.la \
 	unit-wopi-fileurl.la \
 	unit-join-disconnect.la \
-	unit-timeout_inactive.la \
 	unit-multi-tenant.la \
 	unit-password-protected.la \
 	unit-calc.la \
 	unit-wopi-temp.la \
 	unit-convert.la \
-	unit-timeout.la \
 	unit-copy-paste-writer.la \
 	unit-render-shape.la \
 	unit-http.la \
@@ -102,7 +100,6 @@ all_la_unit_tests = \
 	unit-storage.la \
 	unit-convert-to-password-protected.la \
 	unit_wopi_renamefile.la \
-	unit-timeout_none.la \
 	unit-wopi-crash-modified.la \
 	unit-wopi-saveas.la \
 	unit-kit-child-session.la \
@@ -262,12 +259,6 @@ unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
 unit_join_disconnect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_timeout_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_inactive_la_SOURCES = UnitTimeoutInactive.cpp
-unit_timeout_inactive_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_conn_la_SOURCES = UnitTimeoutConnections.cpp
-unit_timeout_conn_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_none_la_SOURCES = UnitTimeoutNone.cpp
-unit_timeout_none_la_LIBADD = $(CPPUNIT_LIBS)
 unit_socket_failure_la_SOURCES = UnitSocketFailure.cpp
 unit_socket_failure_la_LIBADD = $(CPPUNIT_LIBS)
 unit_prefork_la_SOURCES = UnitPrefork.cpp
