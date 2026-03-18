@@ -91,7 +91,6 @@ class Sidebar extends SidebarBase {
 
 	onSidebar(data: FireEvent) {
 		var sidebarData = data.data;
-		$(this.container).empty();
 
 		if (
 			sidebarData.action === 'close' ||
@@ -141,13 +140,29 @@ class Sidebar extends SidebarBase {
 				}
 
 				this.model.fullUpdate(sidebarData as JSDialogJSON);
-				this.builder.build(this.container, [this.model.getSnapshot()], false);
 
-				if (!this.isVisible()) {
-					this.showSidebar();
+				const documentFragment = new DocumentFragment(); // do not modify dom yet
+				const tempContainer = window.L.DomUtil.create(
+					'div',
+					'',
+					documentFragment,
+				);
+
+				this.builder.build(tempContainer, [this.model.getSnapshot()], false);
+
+				if (!this.isVisible()) this.showSidebar();
+
+				this.map.uiManager.setDocTypePref('ShowSidebar', true);
+
+				// cache - check happens in task and we will update value later in this function
+				const wasUserRequest = this.isUserRequest;
+
+				app.layoutingService.appendLayoutingTask(() => {
+					// now attach to the DOM built content
+					this.container.replaceChildren(tempContainer.firstChild);
 
 					// schedule focus after animation so it will not shift the browser page
-					if (this.isUserRequest) {
+					if (wasUserRequest) {
 						app.timerRegistry.setTimeout(
 							'sidebarstealfocus',
 							() => {
@@ -163,14 +178,12 @@ class Sidebar extends SidebarBase {
 							250,
 						); // see animation time in #sidebar-dock-wrapper.visible
 					}
-				}
 
-				this.map.uiManager.setDocTypePref('ShowSidebar', true);
-
-				if (this.sidebarShownTheFirstTime) {
-					app.serverConnectionService.onShowSidebar();
-					this.sidebarShownTheFirstTime = false;
-				}
+					if (this.sidebarShownTheFirstTime) {
+						app.serverConnectionService.onShowSidebar();
+						this.sidebarShownTheFirstTime = false;
+					}
+				});
 			} else {
 				this.closeSidebar();
 			}
