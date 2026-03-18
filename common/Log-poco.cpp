@@ -144,7 +144,7 @@ namespace Log
         void close() override { flush(); }
 
         /// Write the given buffer to stderr directly.
-        static inline std::size_t writeRaw(const char* data, std::size_t count)
+        static std::size_t writeRaw(const char* data, std::size_t count)
         {
 #if WASMAPP
             // In WASM, stdout works best.
@@ -173,19 +173,19 @@ namespace Log
             return ptr - data;
         }
 
-        template <std::size_t N> inline void writeRaw(const char (&data)[N])
+        template <std::size_t N> void writeRaw(const char (&data)[N])
         {
             writeRaw(data, N - 1); // Minus the null.
         }
 
-        inline void writeRaw(const std::string& string) { writeRaw(string.data(), string.size()); }
+        void writeRaw(const std::string& string) { writeRaw(string.data(), string.size()); }
 
         /// Flush the stderr file data.
-        static inline bool flush() { return ::fflush(stderr) == 0; }
+        static bool flush() { return ::fflush(stderr) == 0; }
 
         /// Overloaded log function that takes a naked data pointer to log.
         /// Appends new-line to the given data.
-        inline void log(const char* data, std::size_t size)
+        void log(const char* data, std::size_t size)
         {
             char buffer[BufferSize];
             if (size < sizeof(buffer) - 1)
@@ -264,7 +264,7 @@ namespace Log
             std::size_t available() const { return BufferSize - _size; }
 
             /// Flush internal buffers, if any.
-            inline void flush()
+            void flush()
             {
                 if (_size)
                 {
@@ -274,7 +274,7 @@ namespace Log
                 }
             }
 
-            inline void log(const char* data, std::size_t size, bool force, std::int64_t ts)
+            void log(const char* data, std::size_t size, bool force, std::int64_t ts)
             {
                 if (_size + size > BufferSize - 1)
                 {
@@ -303,7 +303,7 @@ namespace Log
                 }
             }
 
-            inline void buffer(const char* data, std::size_t size)
+            void buffer(const char* data, std::size_t size)
             {
                 assert(_size + size <= BufferSize && "Buffer overflow");
 
@@ -320,12 +320,12 @@ namespace Log
         };
 
     protected:
-        inline std::size_t size() const { return _tlb.size(); }
-        inline std::size_t available() const { return _tlb.available(); }
+        std::size_t size() const { return _tlb.size(); }
+        std::size_t available() const { return _tlb.available(); }
 
-        inline void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
+        void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
 
-        inline void buffer(const std::string_view string) { buffer(string.data(), string.size()); }
+        void buffer(const std::string_view string) { buffer(string.data(), string.size()); }
 
     public:
         ~BufferedConsoleChannel() { flush(); }
@@ -333,7 +333,7 @@ namespace Log
         void close() override { flush(); }
 
         /// Flush buffers, if any.
-        static inline void flush() { _tlb.flush(); }
+        static void flush() { _tlb.flush(); }
 
         void log(const Poco::Message& msg) override
         {

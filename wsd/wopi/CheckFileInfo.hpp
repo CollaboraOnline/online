@@ -82,7 +82,7 @@ public:
     }
 
 private:
-    inline void logPrefix(std::ostream& os) const
+    void logPrefix(std::ostream& os) const
     {
         if (_httpSession)
         {

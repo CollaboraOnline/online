@@ -411,7 +411,7 @@ protected:
         init();
     }
 
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     /// Adds `len` sent bytes to statistic
     void notifyBytesSent(uint64_t len) { _bytesSent += len; }
@@ -568,7 +568,7 @@ protected:
     std::string getLogPrefix() const { return '#' + std::to_string(_fdSocket) + ": "; }
 
     /// Used by the logging macros to automatically log a context prefix.
-    inline void logPrefix(std::ostream& os) const { os << getLogPrefix(); }
+    void logPrefix(std::ostream& os) const { os << getLogPrefix(); }
 
 public:
     ProtocolHandlerInterface()
@@ -1382,7 +1382,7 @@ public:
 
     /// Safely attempt to write any outgoing data.
     /// Returns true iff no data is left in the buffer.
-    inline bool attemptWrites()
+    bool attemptWrites()
     {
         if (!_outBuffer.empty())
             writeOutgoingData();
@@ -1423,7 +1423,7 @@ public:
         int* fdsField = (int *)CMSG_DATA(cmsg);
         memcpy(fdsField, fds.data(), fds_size);
 
-        msg.msg_control = const_cast<char*>(adata);
+        msg.msg_control = adata;
         msg.msg_controllen = CMSG_LEN(fds_size);
         msg.msg_flags = 0;
 
@@ -2061,9 +2061,5 @@ enum class WSOpCode : unsigned char {
     Pong         = 0xa
     // ... reserved
 };
-
-namespace HttpHelper
-{
-}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
