@@ -18,8 +18,7 @@ namespace cool {
 
 export class TilesSection extends CanvasSectionObject {
 
-	// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-	anchor: any = [[app.CSections.ColumnHeader.name, 'bottom', 'top'], [app.CSections.RowHeader.name, 'right', 'left']];
+	anchor: any = [[app.CSections.RulerSpacer.name, 'bottom', app.CSections.ColumnHeader.name, 'bottom', 'top'], [app.CSections.RowHeader.name, 'right', 'left']];
 	expand: any = ['top', 'left', 'bottom', 'right'];
 	processingOrder: number = app.CSections.Tiles.processingOrder;
 	drawingOrder: number = app.CSections.Tiles.drawingOrder;
@@ -182,7 +181,7 @@ export class TilesSection extends CanvasSectionObject {
 			tilePos.pY = tile.coords.part * partHeightPixels + tile.coords.y;
 		}
 
-		this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
+		this.drawTileToCanvas(tile, this.context, tilePos.vX - this.myTopLeft[0], tilePos.vY - this.myTopLeft[1], TileManager.tileSize, TileManager.tileSize);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -391,12 +390,16 @@ export class TilesSection extends CanvasSectionObject {
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
 		if (app.activeDocument && app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+			this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 			this.drawPageBackgrounds(ctx);
 			this.drawForViewLayoutMultiPage();
+			this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 			return;
 		}
 		else if (app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges') {
+			this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 			this.drawForViewLayoutCompareChanges();
+			this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 			return;
 		}
 

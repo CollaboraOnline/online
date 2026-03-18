@@ -339,10 +339,12 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 
 		result.pX =
 			this.documentRectangles[index].pX1 +
-			(point.pX - this.viewRectangles[index].pX1);
+			(point.pX - this.viewRectangles[index].pX1) -
+			this._documentAnchorPosition[0];
 		result.pY =
 			this.documentRectangles[index].pY1 +
-			(point.pY - this.viewRectangles[index].pY1);
+			(point.pY - this.viewRectangles[index].pY1) -
+			this._documentAnchorPosition[1];
 
 		return result;
 	}
