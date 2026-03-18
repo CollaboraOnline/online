@@ -107,7 +107,6 @@ all_la_unit_tests = \
 	unit-wopi-saveas.la \
 	unit-kit-child-session.la \
 	unit-socket-failure.la \
-	unit-wopi-httpheaders.la \
 	unit-rendering-options.la \
 	unit-proxy-protocol.la \
 	unit-bad-doc-load.la \
@@ -316,8 +315,6 @@ unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fileurl_la_SOURCES = UnitWOPIFileUrl.cpp
 unit_wopi_fileurl_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_httpheaders_la_SOURCES = UnitWOPIHttpHeaders.cpp
-unit_wopi_httpheaders_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_httpredirect_la_SOURCES = UnitWOPIHttpRedirect.cpp
 unit_wopi_httpredirect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
