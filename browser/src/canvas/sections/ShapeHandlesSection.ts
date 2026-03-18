@@ -86,6 +86,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
 		this.sectionProperties.mathObjectBorderColor = 'red'; // Border color for Math objects.
 		this.sectionProperties.lastTapTime = 0;
+		this.sectionProperties.clickTimer = null;
 		this.sectionProperties.viewedRectangleOnMouseDown = new cool.SimpleRectangle(0, 0, 0, 0);
 		this.sectionProperties.initialPosition = this.position.slice();
 		this.sectionProperties.positionOnMouseDown = new cool.SimplePoint(0, 0);
@@ -1293,8 +1294,41 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 		var modifier = MouseControl.readModifier(e);
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, modifier);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, modifier);
+
+		// Capture position for the timer callback.
+		const clickX = point.x;
+		const clickY = point.y;
+
+		// Cancel any pending click timer from a previous click.
+		if (this.sectionProperties.clickTimer) {
+			app.timerRegistry.clearTimeout(this.sectionProperties.clickTimer);
+			this.sectionProperties.clickTimer = null;
+		}
+
+		// Delay the click so that a double-click can cancel it.
+		this.sectionProperties.clickTimer = app.timerRegistry.setTimeout(
+			'shapeClickTimer',
+			() => {
+				app.map._docLayer._postMouseEvent(
+					'buttondown',
+					clickX,
+					clickY,
+					1,
+					1,
+					modifier,
+				);
+				app.map._docLayer._postMouseEvent(
+					'buttonup',
+					clickX,
+					clickY,
+					1,
+					1,
+					modifier,
+				);
+				this.sectionProperties.clickTimer = null;
+			},
+			250,
+		);
 
 		// There is no native "double-click" event for touch devices. But we need to support double-tap.
 		if ((e as any).pointerType === 'touch') {
@@ -1319,6 +1353,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		// Cancel the pending click - a double-click replaces it.
+		if (this.sectionProperties.clickTimer) {
+			app.timerRegistry.clearTimeout(this.sectionProperties.clickTimer);
+			this.sectionProperties.clickTimer = null;
+		}
+
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 2, 1, 0);
