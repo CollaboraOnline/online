@@ -59,8 +59,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#stylesview').scrollTo('bottom') ;
-		cy.cGet('#stylesview .notebookbar.ui-iconview-entry img[title=Title]').click();
+		cy.cGet('#stylesview').scrollTo('bottom');
+		cy.cGet('#stylesview .notebookbar.ui-iconview-entry img[title=Title]').first().scrollIntoView().should('be.visible').click();
 		refreshCopyPasteContainer();
 		helper.copy();
 		cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
