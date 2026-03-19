@@ -26,7 +26,10 @@ function setupDocument(filePath, copyCertificates = false) {
 	} else {
 		// Rename and copy file to use a clean test document for every test case.
 		var randomText = (Math.random() + 1).toString(36).substring(2,7);
-		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.]/g, '-'); // replace slashes and spaces and dots
+		// The filename is used in a URI query string where characters like
+		// '/' and '+' have special meaning, and spaces are invalid. Replace
+		// these with hyphens so the path survives URL parsing unchanged.
+		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.+]/g, '-');
 
 		// Check for extension. The '.' has to be in fileName specifically, not earlier in filePath
 		if (getFileName(filePath).includes('.')) {
