@@ -1672,7 +1672,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'TI', de: null },
 				'children' : [
 					{
-						'id': 'insert-text',
+						'id': 'insert-insert-text',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Text'),
 						'command': '.uno:Text',
