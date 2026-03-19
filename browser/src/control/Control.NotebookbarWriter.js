@@ -365,7 +365,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -452,7 +452,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							'type': 'bigtoolitem',
 							'text': _('Keyboard shortcuts'),
 							'command': '.uno:KeyboardShortcuts',
-							'accessibility': { focusBack: false, combination: 'S', de: null }
+							'accessibility': { focusBack: false, combination: 'SH', de: null }
 						}
 					]
 				},
@@ -1121,7 +1121,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageDialog', 'text'),
 				'command': '.uno:PageDialog',
-				'accessibility': { focusBack: false, combination: 'D', de: null }
+				'accessibility': { focusBack: false, combination: 'PD', de: null }
 			},
 			{ type: 'separator', id: 'format-pagedialog-break', orientation: 'vertical' },
 			{
@@ -1136,7 +1136,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:EditRegion', 'text'),
 				'command': '.uno:EditRegion',
-				'accessibility': { focusBack: false, combination: 'F', de: null }
+				'accessibility': { focusBack: false, combination: 'RG', de: null }
 			},
 			{
 				'id': 'format-format-line',
@@ -1265,7 +1265,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 										'noLabel': true,
 										'text': _UNO('.uno:InsertGraphic'),
 										'command': '.uno:InsertGraphic',
-										'accessibility': { focusBack: true,	combination: 'P',	de:	'BI' }
+										'accessibility': { focusBack: true,	combination: 'PI',	de:	'BI' }
 									},
 								]
 							},
@@ -1821,7 +1821,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'menubutton',
 						'text': _UNO('.uno:Orientation', 'text'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true, combination: 'O', de: '4' }
+						'accessibility': { focusBack: true, combination: 'OI', de: '4' }
 					}
 				]
 			},
@@ -2253,7 +2253,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertAnnotation'),
 				'command': '.uno:InsertAnnotation',
-				'accessibility': { focusBack: false, combination: 'C', de: 'N' }
+				'accessibility': { focusBack: false, combination: 'CM', de: 'N' }
 			},
 			{ type: 'separator', id: 'review-comment-break', orientation: 'vertical' },
 			{

@@ -162,7 +162,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 							'type': 'bigtoolitem',
 							'text': _('Save'),
 							'command': '.uno:Save',
-							'accessibility': { focusBack: true, combination: 'SF', de: null }
+							'accessibility': { focusBack: true, combination: 'SV', de: null }
 						}
 					]
 				});
@@ -369,7 +369,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 							'type': 'bigtoolitem',
 							'text': _('Signature'),
 							'command': '.uno:Signature',
-							'accessibility': { focusBack: true, combination: 'SN' }
+							'accessibility': { focusBack: true, combination: 'GN' }
 						}
 					]
 				}
