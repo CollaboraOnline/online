@@ -422,13 +422,17 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		}
 		else if (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
 			if (ev.shiftKey && !ev.ctrlKey && !ev.altKey
-				&& (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP)
+				&& (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.HOME || ev.keyCode === this.keyCodes.END)
 				&& ev.type === 'keydown') {
 
 				if (ev.keyCode === this.keyCodes.UP)
 					this._map._docLayer._preview._modifySelectedPartRange("UP");
 				else if (ev.keyCode === this.keyCodes.DOWN)
 					this._map._docLayer._preview._modifySelectedPartRange("DOWN");
+				else if (ev.keyCode === this.keyCodes.HOME)
+					this._map._docLayer._preview._selectPartRange(undefined, 0);
+				else if (ev.keyCode === this.keyCodes.END)
+					this._map._docLayer._preview._selectPartRange(undefined, this._map._docLayer._parts - 1);
 
 				ev.preventDefault();
 			}
