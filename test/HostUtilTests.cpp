@@ -39,8 +39,9 @@ void HostUtilTests::testParseAlias()
     LOK_ASSERT_EQUAL_STR("test5\\.local", HostUtil::parseAlias("https://test5.local:8080/"));
     LOK_ASSERT_EQUAL_STR("test6\\.local", HostUtil::parseAlias("https://test6.local:8080/path"));
     LOK_ASSERT_EQUAL_STR("test7\\.local", HostUtil::parseAlias("test7.local/path"));
+    LOK_ASSERT_EQUAL_STR("test8-local", HostUtil::parseAlias("http://test8-local:8080"));
 
-    LOK_ASSERT_EQUAL_STR("test", HostUtil::parseAlias("test")); // invalid hostname, interpret as regex
+    LOK_ASSERT_EQUAL_STR("test", HostUtil::parseAlias("test"));
     LOK_ASSERT_EQUAL_STR("test[1-3]", HostUtil::parseAlias("test[1-3]"));
     LOK_ASSERT_EQUAL_STR("test[0-9].local", HostUtil::parseAlias("test[0-9].local"));
     LOK_ASSERT_EQUAL_STR("test[0-9]+.local", HostUtil::parseAlias("test[0-9]+.local"));
