@@ -3264,7 +3264,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	recalculateZoomOnResize: function() {
-		if (this.isWriter())
+		if (this.isWriter() || this.isImpress())
 			this._invalidateZoomFirstFit = true;
 	},
 
@@ -3318,10 +3318,31 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		const commentWidth = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).sectionProperties.commentWidth;
 		let documentWidth = app.activeDocument.fileSize.pX;
+		let documentHeight = app.activeDocument.fileSize.pY;
 		if (bringCommentsIntoView) documentWidth += commentWidth;
 
 		var ratio = newSize.x / documentWidth;
 		var zoom = this._map.getScaleZoom(ratio);
+
+		if (!this._firstFitDone && this.isImpress()) {
+			/* assume that this is the range of diagonal sizes we are going to get
+			 * for the window and find where the current window size lies in these,
+			 * clamping it between [0,1]. then find appropriate margin between 4-9%
+			 * based on the window size factor. */
+			const MAX_DIAGONAL = 2200;
+			const MIN_DIAGONAL = 1000;
+			const diagonal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight + window.innerHeight);
+			const factor = clamp((diagonal - MIN_DIAGONAL) / (MAX_DIAGONAL - MIN_DIAGONAL), 0, 1);
+
+			const percentMargin = 0.04 + factor * (0.09 - 0.04);
+			const availW = newSize.x * (1 - percentMargin);
+			const availH = newSize.y * (1 - percentMargin);
+
+			const xRatio = availW / documentWidth;
+			const yRatio = availH / documentHeight;
+			ratio = Math.min(xRatio, yRatio);
+			zoom = this._map.getScaleZoom(ratio);
+		}
 
 		if (maxZoom)
 			zoom = Math.min(maxZoom, Math.max(0.1, zoom));
