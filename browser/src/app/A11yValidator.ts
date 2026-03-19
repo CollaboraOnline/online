@@ -422,6 +422,118 @@ class A11yValidator {
 			errorCount++;
 		}
 
+		errorCount += this.checkDuplicateShortcuts(selectedTab.id);
+
+		return errorCount;
+	}
+
+	private collectAllCombinations(
+		node: any,
+		items: Array<{ id: string; combination: string }>,
+		language: string | null,
+	): void {
+		if (!node) return;
+
+		if (Array.isArray(node)) {
+			for (const child of node) {
+				this.collectAllCombinations(child, items, language);
+			}
+			return;
+		}
+
+		const isOverflow = node.type === 'overflowgroup';
+
+		if (!isOverflow && node.accessibility && node.accessibility.combination) {
+			const combo =
+				language && node.accessibility[language]
+					? node.accessibility[language]
+					: node.accessibility.combination;
+			const id = node.id || 'unknown';
+			items.push({ id: id, combination: combo });
+		}
+
+		if (node.children && Array.isArray(node.children)) {
+			for (const child of node.children) {
+				this.collectAllCombinations(child, items, language);
+			}
+		}
+	}
+
+	private checkDuplicateShortcuts(selectedTabId: string): number {
+		const notebookbar = (window as any).app?.map?.uiManager?.notebookbar;
+		if (!notebookbar) return 0;
+
+		const tabs = notebookbar.getTabs();
+		const rawDefinitions = notebookbar.getFullJSON();
+		if (!tabs || !rawDefinitions) return 0;
+
+		// Find the ContextContainer
+		let node = rawDefinitions;
+		let contextContainer = null;
+		while (
+			node.children &&
+			Array.isArray(node.children) &&
+			node.children[0] &&
+			!contextContainer
+		) {
+			if (node.children[0].id === 'ContextContainer')
+				contextContainer = node.children[0];
+			else node = node.children[0];
+		}
+		if (!contextContainer) return 0;
+
+		// Find the selected tab's raw content
+		const tabName = selectedTabId.split('-')[0];
+		let rawContentList = null;
+		for (const child of contextContainer.children) {
+			if (
+				child.children &&
+				child.children[0] &&
+				child.children[0].id === tabName + '-container'
+			) {
+				rawContentList = child.children[0].children;
+				break;
+			}
+		}
+		if (!rawContentList) return 0;
+
+		const NbaDefs = (window as any).NotebookbarAccessibilityDefinitions;
+		const language = NbaDefs ? new NbaDefs().getLanguage() : null;
+
+		const items: Array<{ id: string; combination: string }> = [];
+		this.collectAllCombinations(rawContentList, items, language);
+
+		let errorCount = 0;
+
+		for (let i = 0; i < items.length; i++) {
+			for (let j = i + 1; j < items.length; j++) {
+				const a = items[i];
+				const b = items[j];
+				if (a.combination === b.combination) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}' has duplicate shortcut '${a.combination}' on '${a.id}' and '${b.id}'. Each shortcut within a tab must be unique.`,
+						),
+					);
+					errorCount++;
+				} else if (a.combination.startsWith(b.combination)) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}': shortcut '${b.combination}' on '${b.id}' is a prefix of '${a.combination}' on '${a.id}', making '${a.id}' unreachable.`,
+						),
+					);
+					errorCount++;
+				} else if (b.combination.startsWith(a.combination)) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}': shortcut '${a.combination}' on '${a.id}' is a prefix of '${b.combination}' on '${b.id}', making '${b.id}' unreachable.`,
+						),
+					);
+					errorCount++;
+				}
+			}
+		}
+
 		return errorCount;
 	}
 
