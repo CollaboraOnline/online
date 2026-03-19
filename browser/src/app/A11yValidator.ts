@@ -368,6 +368,7 @@ class A11yValidator {
 
 		let errorCount = this.validateContainer(notebookbar.container);
 		errorCount += this.checkTabContainerConsistency(notebookbar);
+		errorCount += this.checkOverflowGroupChildIds(notebookbar);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: notebookbar passed all checks');
@@ -524,6 +525,77 @@ class A11yValidator {
 		}
 
 		return errorCount;
+	}
+
+	private checkOverflowGroupChildIds(notebookbar: any): number {
+		const selectedTab = document.querySelector(
+			'.ui-tab.notebookbar.selected',
+		) as HTMLElement;
+		if (!selectedTab || !selectedTab.id) return 0;
+
+		const tabName = selectedTab.id.split('-')[0];
+		const containerId = tabName + '-container';
+
+		const fullJSON = notebookbar.getFullJSON();
+		const tabJSON = this.findJSONNodeById(fullJSON, containerId);
+		if (!tabJSON) return 0;
+
+		let errorCount = 0;
+
+		const walk = (node: any): void => {
+			if (!node || !node.children || !Array.isArray(node.children)) return;
+
+			for (const child of node.children) {
+				if (child.type === 'overflowgroup' && child.id) {
+					this.findDuplicateIdInChildren(
+						child.id,
+						child.children,
+						(dupId: string) => {
+							console.error(
+								new A11yValidatorException(
+									`Overflow group '${dupId}' contains a child with the same id. This breaks accessibility shortcut resolution because querySelector matches the parent instead of the child.`,
+								),
+							);
+							errorCount++;
+						},
+					);
+				}
+				walk(child);
+			}
+		};
+
+		walk(tabJSON);
+		return errorCount;
+	}
+
+	private findJSONNodeById(node: any, id: string): any {
+		if (!node) return null;
+		if (node.id === id) return node;
+		if (node.children && Array.isArray(node.children)) {
+			for (const child of node.children) {
+				const found = this.findJSONNodeById(child, id);
+				if (found) return found;
+			}
+		}
+		return null;
+	}
+
+	private findDuplicateIdInChildren(
+		parentId: string,
+		children: any[],
+		onDuplicate: (id: string) => void,
+	): void {
+		if (!children || !Array.isArray(children)) return;
+
+		for (const child of children) {
+			if (child.id === parentId) {
+				onDuplicate(parentId);
+				return;
+			}
+			if (child.children) {
+				this.findDuplicateIdInChildren(parentId, child.children, onDuplicate);
+			}
+		}
 	}
 }
 
