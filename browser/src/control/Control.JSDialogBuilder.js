@@ -520,12 +520,23 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		});
 
 		spinfield.addEventListener('keydown', function(e) {
+			var ctrlKey = (window.L.Browser.mac || window.ThisIsTheiOSApp) ? e.metaKey : e.ctrlKey;
 			if (e.key === 'ArrowUp') {
 				e.preventDefault();
 				builder._spinFieldStep(div, spinfield, 1);
 			} else if (e.key === 'ArrowDown') {
 				e.preventDefault();
 				builder._spinFieldStep(div, spinfield, -1);
+			} else if (e.key === 'Home' && ctrlKey && div._min != undefined) {
+				e.preventDefault();
+				var unit = div._unit || '';
+				builder._setSpinFieldValue(spinfield, builder._formatSpinFieldValue(div._min, unit), div._min);
+				spinfield.dispatchEvent(new Event('change'));
+			} else if (e.key === 'End' && ctrlKey && div._max != undefined) {
+				e.preventDefault();
+				var unit = div._unit || '';
+				builder._setSpinFieldValue(spinfield, builder._formatSpinFieldValue(div._max, unit), div._max);
+				spinfield.dispatchEvent(new Event('change'));
 			}
 		});
 
