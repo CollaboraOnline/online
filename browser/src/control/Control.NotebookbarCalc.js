@@ -1131,7 +1131,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'menubutton',
 						'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true,	combination: 'R', de: 'H' }
+						'accessibility': { focusBack: true,	combination: 'PR', de: 'H' }
 					},
 				]
 			},
