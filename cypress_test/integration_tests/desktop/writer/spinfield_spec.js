@@ -164,6 +164,36 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 		testButtonsAndArrowKeys(',', '.');
 	});
 
+	it('Ctrl+Home sets minimum value', function () {
+		openDialogAndSwitchToBorder();
+
+		var input = '#leftmf-input';
+
+		cy.cGet(input).focus();
+		cy.cGet(input).type('{ctrl}{home}');
+
+		cy.cGet(input).should(function ($el) {
+			var min = parseFloat($el.closest('.spinfieldcontainer')[0]._min);
+			var num = parseFloat($el.val());
+			expect(num).to.equal(min);
+		});
+	});
+
+	it('Ctrl+End sets maximum value', function () {
+		openDialogAndSwitchToBorder();
+
+		var input = '#leftmf-input';
+
+		cy.cGet(input).focus();
+		cy.cGet(input).type('{ctrl}{end}');
+
+		cy.cGet(input).should(function ($el) {
+			var max = parseFloat($el.closest('.spinfieldcontainer')[0]._max);
+			var num = parseFloat($el.val());
+			expect(num).to.equal(max);
+		});
+	});
+
 	it('Buttons enabled after re-enabling spinfield in columns dialog', function () {
 		cy.then(function () {
 			win.app.map.sendUnoCommand('.uno:FormatColumns');
