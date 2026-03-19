@@ -2694,6 +2694,9 @@ class Menubar extends window.L.Control {
 
 			var liItem = window.L.DomUtil.create('li', '');
 			liItem.setAttribute('role', 'menuitem');
+			if (menu[i].type === 'separator') {
+				liItem.setAttribute('aria-hidden', 'true');
+			}
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
 				if (menu[i].id === 'closedocument' && isReadOnly) {
