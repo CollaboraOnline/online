@@ -765,6 +765,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				var headingLevel = Math.min(builder._expanderDepth + 2, 6);
 				var heading = window.L.DomUtil.create('h' + headingLevel, 'ui-expander-heading ' + builder.options.cssClass, expander);
 				var expanderBtn = window.L.DomUtil.create('button', 'ui-expander-btn ' + builder.options.cssClass, heading);
+				expanderBtn.id = prefix + '-button';
 				expanderBtn.tabIndex = '0';
 				expanderBtn.setAttribute('aria-controls', prefix + '-children');
 
