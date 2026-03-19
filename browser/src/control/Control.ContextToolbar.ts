@@ -66,58 +66,63 @@ class ContextToolbar extends JSDialogComponent {
 	showContextToolbarImpl(): void {
 		this.pendingShow = false;
 
-		if (!this.initialized) {
-			const contextToolbarItems = this.getWriterTextContext();
+		app.layoutingService.appendLayoutingTask(() => {
+			if (!this.initialized) {
+				const contextToolbarItems = this.getWriterTextContext();
 
-			for (const i in this.additionalContextButtons) {
-				const item = this.additionalContextButtons[i];
-				contextToolbarItems.push(item);
+				for (const i in this.additionalContextButtons) {
+					const item = this.additionalContextButtons[i];
+					contextToolbarItems.push(item);
+				}
+
+				this.builder?.build(this.container, contextToolbarItems, false);
+
+				this.initialized = true;
 			}
 
-			this.builder?.build(this.container, contextToolbarItems, false);
-
-			this.initialized = true;
-		}
-
-		document.addEventListener('pointermove', this.pointerMove);
-		this.changeOpacity(1);
-		this.showHideToolbar(true);
+			document.addEventListener('pointermove', this.pointerMove);
+			this.changeOpacity(1);
+			this.showHideToolbar(true);
+		});
 	}
 
 	hideContextToolbar(): void {
 		document.removeEventListener('pointermove', this.pointerMove);
-		this.showHideToolbar(false);
+
+		app.layoutingService.appendLayoutingTask(() => {
+			this.showHideToolbar(false);
+		});
 	}
 
 	private showHideToolbar(show: boolean): void {
+		if (!show) {
+			window.L.DomUtil.addClass(this.container, 'hidden');
+			return;
+		}
+
+		URLPopUpSection.closeURLPopUp();
+		let statRect;
+		if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
+			return;
+
+		Util.ensureValue(app.activeDocument);
+
+		// Go via SimplePoint(), which is aware of the active layout.
+		const point = new cool.SimplePoint(statRect.x1, statRect.y1);
+		const canvasRect = app.sectionContainer.getCanvasBoundingClientRect();
+		const pos = {
+			x: Math.round(point.vX / app.dpiScale) + canvasRect.x,
+			y: Math.round(point.vY / app.dpiScale) + canvasRect.y,
+		};
+
+		window.L.DomUtil.removeClass(this.container, 'hidden');
 		app.layoutingService.appendLayoutingTask(() => {
-			if (!show) {
-				window.L.DomUtil.addClass(this.container, 'hidden');
-				return;
+			const contextualMenu = this.container.getBoundingClientRect();
+			if (contextualMenu.width + pos.x > window.innerWidth) {
+				pos.x -= contextualMenu.width + pos.x - window.innerWidth + 5;
 			}
-			URLPopUpSection.closeURLPopUp();
-			let statRect;
-			if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
-				return;
-			Util.ensureValue(app.activeDocument);
-
-			// Go via SimplePoint(), which is aware of the active layout.
-			const point = new cool.SimplePoint(statRect.x1, statRect.y1);
-			const canvasRect = app.sectionContainer.getCanvasBoundingClientRect();
-			const pos = {
-				x: Math.round(point.vX / app.dpiScale) + canvasRect.x,
-				y: Math.round(point.vY / app.dpiScale) + canvasRect.y,
-			};
-
-			window.L.DomUtil.removeClass(this.container, 'hidden');
-			app.layoutingService.appendLayoutingTask(() => {
-				const contextualMenu = this.container.getBoundingClientRect();
-				if (contextualMenu.width + pos.x > window.innerWidth) {
-					pos.x -= contextualMenu.width + pos.x - window.innerWidth + 5;
-				}
-				this.container.style.top = pos.y + 'px';
-				this.container.style.left = pos.x + 'px';
-			});
+			this.container.style.top = pos.y + 'px';
+			this.container.style.left = pos.x + 'px';
 		});
 	}
 
