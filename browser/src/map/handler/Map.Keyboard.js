@@ -421,7 +421,18 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return;
 		}
 		else if (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
-			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
+			if (ev.shiftKey && !ev.ctrlKey && !ev.altKey
+				&& (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP)
+				&& ev.type === 'keydown') {
+
+				if (ev.keyCode === this.keyCodes.UP)
+					this._map._docLayer._preview._modifySelectedPartRange("UP");
+				else if (ev.keyCode === this.keyCodes.DOWN)
+					this._map._docLayer._preview._modifySelectedPartRange("DOWN");
+
+				ev.preventDefault();
+			}
+			else if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
 				               ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT ||
 				               ev.keyCode === this.keyCodes.PAGEDOWN || ev.keyCode === this.keyCodes.PAGEUP ||
 				               ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE)
@@ -454,7 +465,7 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 				app.map._clip.clearSelection();
 				app.map._clip.setTextSelectionType('slide');
 			}
-			else if (!ev.ctrlKey) {
+			else if (!ev.ctrlKey && !ev.shiftKey) {
 				this._map._docLayer._preview.partsFocused = false;
 				app.map._clip.clearSelection();
 				app.map.focus();

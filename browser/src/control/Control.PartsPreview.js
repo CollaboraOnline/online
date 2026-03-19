@@ -505,37 +505,58 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 			if (e.ctrlKey) {
 				this._map.selectPart(partId, 2, false); // Toggle selection on ctrl+click.
-				if (this.firstSelection === undefined)
-					this.firstSelection = this._map._docLayer._selectedPart;
 			} else if (e.altKey) {
 				window.app.console.log('alt');
 			} else if (e.shiftKey) {
-				if (this.firstSelection === undefined)
-					this.firstSelection = this._map._docLayer._selectedPart;
-
-				//deselect all slides
-				this._map.deselectAll();
-
-				//reselect the first original selection
-				this._map.setPart(this.firstSelection);
-				this._map.selectPart(this.firstSelection, 1, false);
-
-				if (this.firstSelection < partId) {
-					for (var id = this.firstSelection + 1; id <= partId; ++id) {
-						this._map.selectPart(id, 2, false);
-					}
-				} else if (this.firstSelection > partId) {
-					for (id = this.firstSelection - 1; id >= partId; --id) {
-						this._map.selectPart(id, 2, false);
-					}
-				}
+				this._selectPartRange(this._map._docLayer._selectedPart, partId);
 			} else {
 				this._map.deselectAll();
 				this._map.setPart(partId);
 				this._map.selectPart(partId, 1, false); // And select.
-				this.firstSelection = partId;
 			}
 		}
+	},
+
+	_selectPartRange: function (start, end) {
+		if (start === undefined || start === null)
+			start = this._map._docLayer._selectedPart;
+
+		var maxIndex = this._partsPreviewCont.children.length - 1;
+		start = Math.max(0, Math.min(start, maxIndex));
+		end = Math.max(0, Math.min(end, maxIndex));
+
+		//deselect all slides
+		this._map.deselectAll();
+
+		//reselect the first original selection
+		this._map.setPart(start);
+		this._map.selectPart(start, 1, false);
+
+		if (start < end) {
+			for (var id = start + 1; id <= end; ++id) {
+				this._map.selectPart(id, 1, false);
+			}
+		} else if (start > end) {
+			for (id = start - 1; id >= end; --id) {
+				this._map.selectPart(id, 1, false);
+			}
+		}
+		this._selectedPartRange = [start, end];
+	},
+
+	_modifySelectedPartRange: function (direction) {
+		var start, end;
+		if (this._selectedPartRange) {
+			start = this._selectedPartRange[0];
+			end = this._selectedPartRange[1];
+		} else {
+			start = end = this._map._docLayer._selectedPart;
+		}
+
+		if (direction === "UP")
+			this._selectPartRange(start, end - 1);
+		if (direction === "DOWN")
+			this._selectPartRange(start, end + 1);
 	},
 
 	_updatePart: function (e) {
