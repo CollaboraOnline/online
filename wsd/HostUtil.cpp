@@ -92,7 +92,7 @@ std::string HostUtil::parseAlias(const std::string& aliasPattern)
     // Must be a full match.
     // Group 2 captures the hostname.
     std::regex re(
-        "^(https?://)?(([a-z0-9\\-]+)(\\.[a-z0-9\\-]+)+)(:[0-9]{1,5})?(/[a-z0-9\\-&?_]*)*$",
+        "^(https?://)?(([a-z0-9\\-]+)(\\.[a-z0-9\\-]+)*)(:[0-9]{1,5})?(/[a-z0-9\\-&?_]*)*$",
         std::regex_constants::icase);
 
     std::smatch matches;
