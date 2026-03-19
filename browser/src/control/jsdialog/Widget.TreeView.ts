@@ -367,6 +367,9 @@ class TreeViewControl {
 			parent,
 		);
 		this._rows.set(String(entry.row), tr);
+
+		//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
+		tr.id = data.id + '_' + entry.row;
 		tr.setAttribute('level', String(level));
 		(tr as any)._row = entry.row;
 		const rowRole =
