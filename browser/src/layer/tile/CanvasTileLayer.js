@@ -3280,7 +3280,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		if (!maxZoom) {
-			if (this.isImpress()) maxZoom = 10;
+			if (this.isImpress()) maxZoom = 14;
 			else if (this.isWriter()) maxZoom = 13;
 		}
 
