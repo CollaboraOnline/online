@@ -22,6 +22,7 @@
 #include <ServerURL.hpp>
 #include <DocumentBroker.hpp>
 
+#include <Poco/JSON/Array.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
@@ -42,6 +43,34 @@ struct McpContext
 {
     std::string jsonRpcId; // The JSON-RPC request id
     std::string toolName;  // Which MCP tool was called
+};
+
+/// A single tool call from the LLM that is queued for execution.
+struct PendingToolCall
+{
+    std::string toolCallId;
+    std::string functionName;
+    std::string arguments;
+};
+
+/// State for the AI chat multi-round tool loop.
+/// The server drives the loop: LLM response -> tool execution -> LLM response -> ...
+struct AIToolLoopState
+{
+    std::string requestId;
+    Poco::JSON::Array::Ptr messages; // accumulated conversation
+    std::string model;
+    std::string requestUrl;
+    std::string apiKey;
+    int toolRoundsRemaining = 5;     // max rounds to prevent infinite loops
+    bool awaitingKitResponse = false;
+    bool awaitingApproval = false;
+    std::string pendingToolCallId;
+    std::string pendingToolName;
+    std::string pendingTransformArgs; // stored while awaiting approval
+    std::string pendingSummary;        // markdown summary for approval UI
+    std::string pendingForwardCommand; // command to forward to kit after approval
+    std::vector<PendingToolCall> pendingToolCalls; // queued tool calls
 };
 
 /// Represents a session to a COOL client, in the WSD process.
@@ -363,12 +392,27 @@ private:
 
     bool handleAIChatAction(const std::string& firstLine);
     bool handleAIChatCancel(const std::string& firstLine);
+    bool handleAIChatApprove(const std::string& firstLine);
     bool handleUpdateViewSettings(const std::string& firstLine);
     void sendAIChatResult(bool success, const std::string& text,
                           const std::string& requestId);
 
     bool handleAIImageGeneration(const std::string& prompt,
                                   const std::string& requestId);
+
+    Poco::JSON::Array::Ptr buildAIToolDefinitions() const;
+    void callLLMAPI();
+    void handleLLMResponse(const std::string& responseBody);
+    bool executeAIToolCall(const std::string& toolCallId,
+                           const std::string& fnName,
+                           const std::string& argsJson);
+    void processNextPendingToolCall();
+    void continueAIToolLoop(const std::string& toolCallId,
+                            const std::string& result);
+    void sendAIToolProgress(const std::string& toolName,
+                            const std::string& status);
+    void sendAIToolApproval(const std::string& toolName,
+                            const std::string& description);
 
     /// Map an HTTP status code from an AI API response to a user-facing error string.
     static std::string mapAIHttpStatusToError(http::StatusCode statusCode,
@@ -555,6 +599,9 @@ private:
 
     /// Active AI chat HTTP session for cancellation support
     std::shared_ptr<http::Session> _activeAIChatSession;
+
+    /// AI tool loop state for multi-round LLM tool calling
+    std::unique_ptr<AIToolLoopState> _aiToolLoop;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
