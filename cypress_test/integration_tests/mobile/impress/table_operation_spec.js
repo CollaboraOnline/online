@@ -10,6 +10,10 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 		helper.setupAndLoadDocument('impress/table_operation.odp');
 
 		mobileHelper.enableEditingMobile();
+
+		cy.getFrameWindow().then(function(win) {
+			this.win = win;
+		});
 	});
 
 	function retriggerNewSvgForTableInTheCenter() {
@@ -21,7 +25,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 	function selectFullTable() {
 		helper.typeIntoDocument('{ctrl}{a}');
 
-		impressHelper.selectTableInTheCenter();
+		impressHelper.selectTableInTheCenter(this.win);
 
 		cy.cGet('.table-row-resize-marker').should('have.length', 3);
 		cy.cGet('.table-column-resize-marker').should('have.length', 2);
