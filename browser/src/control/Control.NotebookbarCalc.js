@@ -149,7 +149,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Save'),
 						'command': '.uno:Save',
-						'accessibility': { focusBack: true,	combination: 'S', de: null }
+						'accessibility': { focusBack: true,	combination: 'SV', de: null }
 					}
 				]
 			});
@@ -346,7 +346,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -1064,7 +1064,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									'type': 'toolitem',
 									'text': _UNO('.uno:DataSort', 'spreadsheet'),
 									'command': '.uno:DataSort',
-									'accessibility': { focusBack: true,	combination: 'S', de: null }
+									'accessibility': { focusBack: true,	combination: 'SO', de: null }
 								}
 							]
 						},
@@ -1418,7 +1418,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 											'1'
 										],
 										'command': '.uno:SelectSheetView',
-										'accessibility': { focusBack: true,	combination: 'FS', de: null }
+										'accessibility': { focusBack: true,	combination: 'VS', de: null }
 									}
 								]
 							},
@@ -1641,7 +1641,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Navigator'),
 				'command': '.uno:Navigator',
-				'accessibility': { focusBack: true,	combination: 'N', de: null }
+				'accessibility': { focusBack: true,	combination: 'NV', de: null }
 			},
 
 		];
@@ -1897,7 +1897,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
                                 'type': 'toolitem',
                                 'text': _UNO('.uno:InsertCurrentTime', 'spreadsheet'),
                                 'command': '.uno:InsertCurrentTime',
-								'accessibility': { focusBack: true,	combination: 'IT', de: null }
+								'accessibility': { focusBack: true,	combination: 'CT', de: null }
                             }
                         ]
                     }
@@ -2187,7 +2187,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:AddName', 'spreadsheet'),
 								'command': '.uno:AddName',
-								'accessibility': { focusBack: true,	combination: 'ZD', de: null }
+								'accessibility': { focusBack: true,	combination: 'AN', de: null }
 							}
 						]
 					},
@@ -2264,7 +2264,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:ConvertFormulaToValue', 'spreadsheet'),
 								'command': '.uno:ConvertFormulaToValue',
-								'accessibility': { focusBack: true,	combination: 'R', de: null }
+								'accessibility': { focusBack: true,	combination: 'CV', de: null }
 							}
 						]
 					},
@@ -2276,7 +2276,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:Calculate', 'spreadsheet'),
 								'command': '.uno:Calculate',
-								'accessibility': { focusBack: true,	combination: 'R', de: null }
+								'accessibility': { focusBack: true,	combination: 'RC', de: null }
 							}
 						]
 					}
