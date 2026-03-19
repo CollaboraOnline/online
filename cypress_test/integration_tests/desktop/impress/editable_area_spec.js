@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
+var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 
 function selectTextShape(i) {
@@ -33,6 +34,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         // do not cover shapes with sidebar
         cy.cGet('#sidebar-panel').should('not.be.visible');
         cy.cGet('div.clipboard').as('clipboard');
+		desktopHelper.selectZoomLevel('60', false);
     });
 
     it.skip('Editing top text shape', function () {
