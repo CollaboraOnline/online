@@ -34,17 +34,26 @@ void HostUtilTests::testParseAlias()
     constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL_STR("test2\\.local", HostUtil::parseAlias("test2.local"));
+    LOK_ASSERT_EQUAL_STR("test3\\.local", HostUtil::parseAlias("http://test3.local"));
     LOK_ASSERT_EQUAL_STR("test3\\.local", HostUtil::parseAlias("https://test3.local"));
     LOK_ASSERT_EQUAL_STR("test4\\.local", HostUtil::parseAlias("https://test4.local:8080"));
     LOK_ASSERT_EQUAL_STR("test5\\.local", HostUtil::parseAlias("https://test5.local:8080/"));
     LOK_ASSERT_EQUAL_STR("test6\\.local", HostUtil::parseAlias("https://test6.local:8080/path"));
     LOK_ASSERT_EQUAL_STR("test7\\.local", HostUtil::parseAlias("test7.local/path"));
+    LOK_ASSERT_EQUAL_STR("test8", HostUtil::parseAlias("http://test8"));
+    LOK_ASSERT_EQUAL_STR("test9", HostUtil::parseAlias("http://test9:8080"));
+    LOK_ASSERT_EQUAL_STR("test10", HostUtil::parseAlias("http://test10:8080/"));
+    LOK_ASSERT_EQUAL_STR("test11", HostUtil::parseAlias("http://test11:8080/path"));
 
-    LOK_ASSERT_EQUAL_STR("test", HostUtil::parseAlias("test")); // invalid hostname, interpret as regex
-    LOK_ASSERT_EQUAL_STR("test[1-3]", HostUtil::parseAlias("test[1-3]"));
+    LOK_ASSERT_EQUAL_STR("test", HostUtil::parseAlias("test")); // identical result regardless of interpretation
+
+    LOK_ASSERT_EQUAL_STR("test[1-3]", HostUtil::parseAlias("test[1-3]")); // invalid hostname, interpret as regex
     LOK_ASSERT_EQUAL_STR("test[0-9].local", HostUtil::parseAlias("test[0-9].local"));
     LOK_ASSERT_EQUAL_STR("test[0-9]+.local", HostUtil::parseAlias("test[0-9]+.local"));
     LOK_ASSERT_EQUAL_STR("", HostUtil::parseAlias("test[0-9.local")); // invalid regex
+
+    LOK_ASSERT_EQUAL_STR("https://:8080", HostUtil::parseAlias("https://:8080")); // not a valid url, no hostname
+    LOK_ASSERT_EQUAL_STR("/my-path", HostUtil::parseAlias("/my-path")); // not a valid url, no hostname
 
     LOK_ASSERT_EQUAL_STR("https://aliasname[0-9]{1}:443", HostUtil::parseAlias("https://aliasname[0-9]{1}:443"));
 }
