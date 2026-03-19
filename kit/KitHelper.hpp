@@ -212,7 +212,7 @@ namespace LOKitHelper
             fetchPartsData(loKitDocument, resultInfo, partsCount, mode);
 
         resultInfo["mode"] = std::to_string(mode);
-        resultInfo["partHasComments"] = hasComments;
+        resultInfo["partHasComments"] = std::move(hasComments);
 
         return MapToJSONString(resultInfo);
     }
