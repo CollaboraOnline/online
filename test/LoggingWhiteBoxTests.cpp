@@ -85,7 +85,9 @@ void LoggingTests::testLogPrefix()
         const auto str = prefix.update(level, tp);
         LOK_ASSERT_EQUAL_STR(Log::prefixReference(tp, buffer, level), str);
         const auto firstPos = str.find_first_of(' ');
+        LOK_ASSERT(firstPos != std::string::npos);
         const auto secondPos = str.find_first_of(' ', firstPos + 1);
+        LOK_ASSERT(secondPos != std::string::npos);
         const auto thirdPos = str.find_first_of(' ', secondPos + 1);
         return str.substr(firstPos + 1, thirdPos - firstPos - 1);
     };
