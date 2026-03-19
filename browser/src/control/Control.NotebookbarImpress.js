@@ -403,7 +403,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -804,7 +804,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'type': 'overflowgroup',
 				'id': 'home-slide-layout',
 				'name':_('Slide Layout'),
-				'accessibility': { focusBack: true, combination: 'CS', de: null },
+				'accessibility': { focusBack: true, combination: 'NS', de: null },
 				'more': {
 					'command':'.uno:PageSetup',
 					'accessibility': { focusBack: true, combination: 'ML', de: null }
@@ -816,7 +816,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'applyCallback': '.uno:InsertPage',
 						'text': _('New'),
 						'command': '.uno:InsertPage',
-						'accessibility': { focusBack: true, combination: 'CS', de: null }
+						'accessibility': { focusBack: true, combination: 'NS', de: null }
 					},
 					{
 						'type': 'container',
@@ -828,7 +828,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'text': _('Change Layout'),
 								'icon': 'lc_changelayout.svg',
 								'command': '.uno:AssignLayout',
-								'accessibility': { focusBack: true, combination: 'CL', de: null }
+								'accessibility': { focusBack: true, combination: 'GL', de: null }
 							},
 							{
 								'id': 'home-assign-layout',
