@@ -93,23 +93,18 @@ function selectTextShapeInTheCenter() {
 	cy.log('<< selectTextShapeInTheCenter - end');
 }
 
-function selectTableInTheCenter() {
+function selectTableInTheCenter(win) {
 	cy.log('>> selectTableInTheCenter - start');
 
-	// Click on the center of the slide to select the text shape there
-	// Retry until it works
-	cy.waitUntil(function() {
-		cy.cGet('#document-container')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.cGet('body').click(XPos, YPos);
-			});
+	// First click selects the table as a shape.
+	clickCenterOfSlide();
+	helper.processToIdle(win);
 
-		return cy.cGet('.leaflet-cursor-container').should('be.visible');
-	});
+	// Second click enters the table and places the cursor in a cell.
+	clickCenterOfSlide();
+	helper.processToIdle(win);
 
+	cy.cGet('.leaflet-cursor-container').should('be.visible');
 	cy.cGet('.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	cy.cGet('#document-container svg g.Page g').should('exist');
 
