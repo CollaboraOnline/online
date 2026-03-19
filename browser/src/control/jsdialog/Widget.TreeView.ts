@@ -1363,7 +1363,17 @@ class TreeViewControl {
 		var nextElement = listElements.at(toIndex);
 		nextElement.tabIndex = 0;
 		nextElement.focus();
+		(builder as any).callback(
+			'treeview',
+			'select',
+			data,
+			(nextElement as any)._row,
+			builder,
+		);
 
+		// Update tabindex so the new entry is in the tab order and the
+		// old one is removed. Selected entries keep their tabindex so
+		// they remain reachable via Tab.
 		var nextInput = Array.from(
 			listElements
 				.at(toIndex)
@@ -1384,14 +1394,6 @@ class TreeViewControl {
 			) as Array<HTMLElement>;
 			if (oldInput && oldInput.length) oldInput.at(0).tabIndex = -1;
 		}
-
-		(builder as any).callback(
-			'treeview',
-			'select',
-			data,
-			(nextElement as any)._row,
-			builder,
-		);
 	}
 
 	getCurrentEntry(listElements: Array<HTMLElement>) {
