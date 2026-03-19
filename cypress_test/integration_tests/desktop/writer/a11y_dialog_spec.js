@@ -193,6 +193,35 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
+    it('Treeview arrow key moves focus and selection together', function () {
+        cy.then(function () {
+            win.app.map.sendUnoCommand('.uno:ChapterNumberingDialog');
+        });
+
+        a11yHelper.getActiveDialog(1)
+            .then(() => helper.processToIdle(win))
+            .then(() => {
+                // Click to select, then focus the entry for keyboard navigation
+                cy.cGet('#level .ui-treeview-entry').eq(0).click();
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                cy.cGet('#level .ui-treeview-entry').eq(0).should('have.class', 'selected');
+                cy.cGet('#level .ui-treeview-entry').eq(0).focus();
+
+                // ArrowDown should move both focus and selection to the second entry
+                cy.realPress('ArrowDown');
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                cy.cGet('#level .ui-treeview-entry').eq(1).should('have.class', 'selected');
+                cy.cGet('#level .ui-treeview-entry').eq(1).should('have.focus');
+                cy.cGet('#level .ui-treeview-entry').eq(0).should('not.have.class', 'selected');
+
+                a11yHelper.closeActiveDialog(1);
+            });
+    });
+
     a11yHelper.allCommonDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
         if (excludedCommonDialogs.includes(command)) {
