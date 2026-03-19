@@ -171,16 +171,10 @@ export class Header extends CanvasSectionObject {
 	_reInitRowColumnHeaderStylesAfterModeChange(): void {
 		// add a separation to update row/column DOM element info
 		var isSheetView = app.calc.isSelectedPartSheetView();
-		var isSheetViewSynced = app.calc.isSelectedPartSheetViewSynced();
 
 		if (this._isColumn) {
 			// update column DOM element info
-			if (isSheetView && !isSheetViewSynced) {
-				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-column');
-				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
-				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
-			}
-			else if (isSheetView) {
+			if (isSheetView) {
 				this._initHeaderEntryStyles('spreadsheet-header-sheetview-column');
 				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
 				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
@@ -194,12 +188,7 @@ export class Header extends CanvasSectionObject {
 		}
 		else {
 			// update row DOM element info
-			if (isSheetView && !isSheetViewSynced) {
-				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-row');
-				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
-				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
-			}
-			else if (isSheetView) {
+			if (isSheetView) {
 				this._initHeaderEntryStyles('spreadsheet-header-sheetview-row');
 				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
 				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');

@@ -64,7 +64,6 @@
 	--color-calc-header-sheetview: #0a0a0a;
 	--color-calc-header-sheetview-selected: #646464;
 	--color-calc-header-sheetview-hover: #646464;
-	--color-calc-header-sheetview-unsynced: #500000;
 
 	--color-text-calc-header-selected: var(--color-text-darker);
 	--color-text-calc-header-sheetview-selected: #fff;

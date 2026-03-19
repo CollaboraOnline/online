@@ -158,7 +158,6 @@ interface AppInterface {
 		pivotTableFilterCell: any; // The cell of the current pivot table filter popup.
 		isRTL(): boolean;
 		isSelectedPartSheetView(): boolean;
-		isSelectedPartSheetViewSynced(): boolean;
 	};
 	impress: {
 		partList: any; // Info for parts.
