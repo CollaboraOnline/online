@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include "McpHandler.hpp"
+#include "DocumentToolDescriptions.hpp"
 #include "McpResponseUtil.hpp"
 
 #include <ClientSession.hpp>
@@ -306,11 +307,7 @@ std::string McpHandler::handleToolsList(const std::string& requestId)
 
     tools->add(makeTool(
         "extract_link_targets",
-        "Extract all link targets from a document. Returns a JSON object with "
-        "categories: Headings, Bookmarks, Tables, Frames, Images, Sections, "
-        "OLE objects, Drawing objects. Each entry maps a name to a target string "
-        "(e.g. \"Table1\": \"Table1|table\"). These targets can be used to open the "
-        "document at a specific position.",
+        DocumentToolDescriptions::EXTRACT_LINK_TARGETS_DESCRIPTION,
         {{"uri", makeParam("string",
             "URI of the input file (file:// or http://). Alternative to 'data' - provide one or the other.")},
          {"data", makeParam("string",
@@ -324,11 +321,7 @@ std::string McpHandler::handleToolsList(const std::string& requestId)
 
     tools->add(makeTool(
         "extract_document_structure",
-        "Extract the structural outline of a document as JSON. "
-        "For Writer: headings, sections, tables, frames, images, bookmarks, content controls. "
-        "For Calc: sheet names. "
-        "For Impress: slide names, object names per slide. "
-        "Useful for understanding document layout before applying transformations.",
+        DocumentToolDescriptions::EXTRACT_DOC_STRUCTURE_DESCRIPTION,
         {{"uri", makeParam("string",
             "URI of the input file (file:// or http://). Alternative to 'data' - provide one or the other.")},
          {"data", makeParam("string",
@@ -360,64 +353,7 @@ std::string McpHandler::handleToolsList(const std::string& requestId)
             "Original filename with extension (e.g. 'presentation.odp'). "
             "The extension determines the input format. Not needed when 'uri' is provided.")},
          {"transform", makeParam("string",
-            R"(JSON transformation commands. The top-level object can contain "Transforms" and/or "UnoCommand" objects in any order.
-
---- Impress/ODP Presentations ---
-
-For presentations, use {"Transforms": {"SlideCommands": [...]}} where SlideCommands is an array of operations applied in order. There is always a "current slide" (default: index 0) that most commands act on.
-
-Navigation:
-- {"JumpToSlide": N} - jump to 0-based slide index; use "last" for last slide
-- {"JumpToSlideByName": "name"} - jump to named slide
-
-Slide management (inserts after current slide and jumps to new slide):
-- {"InsertMasterSlide": N} - insert slide based on master slide at index N
-- {"InsertMasterSlideByName": "name"} - insert slide by master slide name
-- {"DeleteSlide": N} - delete slide at index; use "" for current slide
-- {"DuplicateSlide": N} - duplicate slide at index; use "" for current
-- {"MoveSlide": N} - move current slide to position N
-- {"MoveSlide.X": N} - move slide at index X to position N
-- {"RenameSlide": "name"} - rename current slide (must be unique)
-
-Layout (applied to current slide):
-- {"ChangeLayoutByName": "name"} - set layout by name
-- {"ChangeLayout": N} - set layout by numeric ID
-Layout names: AUTOLAYOUT_TITLE (title+subtitle, id=0), AUTOLAYOUT_TITLE_CONTENT (title+content, id=1), AUTOLAYOUT_TITLE_2CONTENT (title+2 content, id=3), AUTOLAYOUT_TITLE_CONTENT_2CONTENT (id=12), AUTOLAYOUT_TITLE_CONTENT_OVER_CONTENT (id=14), AUTOLAYOUT_TITLE_2CONTENT_CONTENT (id=15), AUTOLAYOUT_TITLE_2CONTENT_OVER_CONTENT (id=16), AUTOLAYOUT_TITLE_4CONTENT (id=18), AUTOLAYOUT_TITLE_ONLY (title only, id=19), AUTOLAYOUT_NONE (blank, id=20), AUTOLAYOUT_ONLY_TEXT (centered text, id=32), AUTOLAYOUT_TITLE_6CONTENT (id=34), AUTOLAYOUT_VTITLE_VCONTENT (vertical, id=28), AUTOLAYOUT_VTITLE_VCONTENT_OVER_VCONTENT (id=27), AUTOLAYOUT_TITLE_VCONTENT (id=29), AUTOLAYOUT_TITLE_2VTEXT (id=30)
-
-Text content:
-- {"SetText.N": "text"} - set text of placeholder N on current slide (0=title, 1=first content, 2=second content, etc.). Use \n for paragraph breaks.
-
-Object selection:
-- {"MarkObject": N} - select object at index on current slide
-- {"UnMarkObject": N} - deselect object at index
-
-Rich text editing:
-- {"EditTextObject.N": [...]} - edit text object N with sub-commands:
-  - {"SelectText": []} - select all text; [para] selects paragraph; [para,startChar,endPara,endChar] selects range; [para,char] positions cursor
-  - {"SelectParagraph": N} - select paragraph N
-  - {"InsertText": "text"} - insert/replace text at selection
-  - {"UnoCommand": "cmd"} - apply UNO command to selection
-
-Tested UNO commands for text formatting:
-Toggle: .uno:Bold, .uno:Italic, .uno:Underline, .uno:Strikeout, .uno:Shadowed, .uno:SuperScript, .uno:SubScript
-Lists: .uno:DefaultBullet, .uno:DefaultNumbering (affect whole paragraphs)
-Alignment: .uno:LeftPara, .uno:CenterPara, .uno:RightPara, .uno:JustifyPara
-Color: .uno:Color {"Color.Color":{"type":"long","value":RGB_INT}}
-Background: .uno:CharBackColor {"CharBackColor.Color":{"type":"long","value":RGB_INT}}
-
-Top-level UNO commands (outside SlideCommands, works for all doc types):
-{"UnoCommand": {"name": ".uno:CommandName", "arguments": {"ArgName": {"type": "string|long|boolean", "value": "..."}}}}
-Example - enable change tracking:
-{"UnoCommand": {"name": ".uno:TrackChanges", "arguments": {"TrackChanges": {"type": "boolean", "value": "true"}}}}
-
---- Writer/Calc Content Controls ---
-
-For Writer/Calc, address content control items by selector:
-{"Transforms": {"ContentControls.ByIndex.0": {"content": "new value"}}}
-Selectors: ContentControls.ByIndex.N, ContentControls.ByTag.tagname, ContentControls.ByAlias.aliasname. Use extract_document_structure with filter="contentcontrol" first to discover available controls.
-
-Example - create a 3-slide presentation from a blank ODP:
-{"Transforms":{"SlideCommands":[{"ChangeLayoutByName":"AUTOLAYOUT_TITLE"},{"SetText.0":"Quarterly Report"},{"SetText.1":"Q1 2026"},{"InsertMasterSlide":0},{"ChangeLayoutByName":"AUTOLAYOUT_TITLE_CONTENT"},{"SetText.0":"Revenue"},{"SetText.1":"Revenue grew 15% year over year"},{"InsertMasterSlide":0},{"ChangeLayoutByName":"AUTOLAYOUT_TITLE_CONTENT"},{"SetText.0":"Next Steps"},{"SetText.1":"Focus on expansion into new markets"}]}})")},
+            DocumentToolDescriptions::TRANSFORM_PARAM_DESCRIPTION)},
          {"format", makeParam("string",
             "Output format for the transformed document (e.g. 'odp', 'pptx', 'pdf'). "
             "Defaults to the input file's format.")},
