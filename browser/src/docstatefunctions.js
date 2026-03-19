@@ -309,19 +309,6 @@ app.calc.isSelectedPartSheetView = function () {
 	return app.calc.isPartSheetView(app.map._docLayer._selectedPart);
 };
 
-app.calc.isPartSheetViewSynced = function (part) {
-	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
-	if (part >= app.map._docLayer._lastStatusJSON.parts.length) return false;
-
-	return app.map._docLayer._lastStatusJSON.parts[part].sheetviewsynced === 1;
-};
-
-app.calc.isSelectedPartSheetViewSynced = function () {
-	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
-
-	return app.calc.isPartSheetViewSynced(app.map._docLayer._selectedPart);
-};
-
 // Returns the name of the default sheet a given sheet view part.
 app.calc.getDefaultViewNameForPart = function (part) {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return null;

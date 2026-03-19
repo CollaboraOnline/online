@@ -263,16 +263,10 @@ window.L.Control.Tabs = window.L.Control.extend({
 
 					var sheetViewPart = app.calc.getSheetViewPartForDefaultPart(i);
 					if (sheetViewPart >= 0 && app.calc.hasActiveSheetView(i)) {
-						if (!app.calc.isPartSheetViewSynced(sheetViewPart)) {
-							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview-unsynced');
-						}
-						else {
-							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
-						}
+						window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
 					}
 					else {
 						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview');
-						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview-unsynced');
 					}
 					label.textContent = e.partNames[i];
 					tab.id = id;

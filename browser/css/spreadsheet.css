@@ -79,12 +79,6 @@
 	filter: invert(1) brightness(2);
 }
 
-.spreadsheet-tab.spreadsheet-tab-sheetview-unsynced > .view-indicator, .spreadsheet-tab.spreadsheet-tab-sheetview-unsynced:hover > .view-indicator {
-	width: 16px;
-	height: 16px;
-	background-image: url('images/sheetview_unsynced.svg') !important;
-	background-repeat: no-repeat !important;
-}
 
 #spreadsheet-tab-scroll button.spreadsheet-tab-selected:hover {
 	background-color: rgba(var(--doc-type)) !important;
@@ -230,13 +224,6 @@
 	background: linear-gradient(var(--color-calc-header-sheetview-selected), var(--color-calc-header-sheetview-selected), var(--color-calc-header-sheetview-selected));
 }
 
-.spreadsheet-header-sheetview-unsynced-row,
-.spreadsheet-header-sheetview-unsynced-column {
-	border: 1px solid var(--color-border-calc-header);
-	background-color: var(--color-calc-header-sheetview-unsynced);
-	font: var(--default-font-size)/1.5 var(--cool-font);
-	color: var(--color-text-light);
-}
 
 .spreadsheet-cell-autofill-marker {
 	margin-left: 0px;
