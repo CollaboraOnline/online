@@ -309,28 +309,6 @@ app.calc.isSelectedPartSheetView = function () {
 	return app.calc.isPartSheetView(app.map._docLayer._selectedPart);
 };
 
-// Returns the name of the default sheet a given sheet view part.
-app.calc.getDefaultViewNameForPart = function (part) {
-	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return null;
-	var parts = app.map._docLayer._lastStatusJSON.parts;
-	if (part >= parts.length) return null;
-
-	var partData = parts[part];
-	if (partData.sheetviewid === undefined || partData.sheetviewid < 0)
-		return null;
-
-	var defaultViewHash = partData.defaultviewhash;
-	if (!defaultViewHash) return null;
-
-	for (var i = 0; i < parts.length; i++) {
-		if (parts[i].hash === defaultViewHash) {
-			return parts[i].name;
-		}
-	}
-
-	return null;
-};
-
 // Checks if the given part is the default (base) sheet of the currently selected sheet view.
 app.calc.isDefaultPartOfSelectedSheetView = function (part) {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
