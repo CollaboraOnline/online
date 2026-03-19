@@ -2541,7 +2541,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'type': 'menubutton',
 				'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
 				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'DS', de: null }
+				'accessibility': { focusBack: true,	combination: 'ST', de: null }
 			},
 		];
 
