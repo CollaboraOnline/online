@@ -435,17 +435,26 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			else if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
 				               ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT ||
 				               ev.keyCode === this.keyCodes.PAGEDOWN || ev.keyCode === this.keyCodes.PAGEUP ||
-				               ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE)
+				               ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE ||
+				               ev.keyCode === this.keyCodes.HOME || ev.keyCode === this.keyCodes.END)
 				           && ev.type === 'keydown') {
 
 				var deletePart = (ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) ? true : false;
 
 				if (!deletePart) {
-					var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT ||
-						            ev.keyCode === this.keyCodes.PAGEUP) ? 'prev' : 'next';
+					if (ev.keyCode === this.keyCodes.HOME) {
+						this._map.deselectAll();
+						this._map.setPart(0);
+					} else if (ev.keyCode === this.keyCodes.END) {
+						this._map.deselectAll();
+						this._map.setPart(this._map._docLayer._parts - 1);
+					} else {
+						var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT ||
+										ev.keyCode === this.keyCodes.PAGEUP) ? 'prev' : 'next';
 
-					this._map.deselectAll();
-					this._map.setPart(partToSelect);
+						this._map.deselectAll();
+						this._map.setPart(partToSelect);
+					}
 					if (app.file.fileBasedView)
 						this._map._docLayer._checkSelectedPart();
 				}
