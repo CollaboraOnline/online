@@ -2419,7 +2419,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'GA', de: null },
 				'children' : [
 					{
-						'id': 'data-group',
+						'id': 'data-data-group',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Group'),
 						'command': '.uno:Group',
