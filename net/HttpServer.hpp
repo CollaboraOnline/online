@@ -340,20 +340,24 @@ private:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
-            const Buffer& out = socket->getOutBuffer();
+            Buffer& out = socket->getOutBuffer();
             LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
 
-            while (_fd >= 0 && capacity > 0)
+            while (_fd >= 0)
             {
-                //FIXME: replace with in-place read into the output buffer.
-                char buffer[64 * 1024];
-                const auto size = std::min({ sizeof(buffer), capacity, (size_t)(getEnd() - _pos) });
+                const auto provisioned = std::min<size_t>(capacity, getEnd() - _pos);
+                if (provisioned <= 0)
+                    break;
+
+                char* buffer = out.provision(provisioned);
                 int n;
-                while ((n = ::read(_fd, buffer, size)) < 0 && errno == EINTR)
+                while ((n = ::read(_fd, buffer, provisioned)) < 0 && errno == EINTR)
                     LOG_TRC("EINTR reading from " << _filename);
 
                 if (n <= 0 || _pos >= getEnd())
                 {
+                    out.commit(provisioned, 0); // Rollback, nothing written.
+
                     if (n >= 0)
                     {
                         LOG_TRC("performWrites finished uploading");
@@ -369,7 +373,8 @@ private:
                     break;
                 }
 
-                socket->send(buffer, n);
+                out.commit(provisioned, n);
+                socket->writeOutgoingData();
                 _pos += n;
                 LOG_ASSERT(static_cast<std::size_t>(n) <= capacity);
                 capacity -= n;
