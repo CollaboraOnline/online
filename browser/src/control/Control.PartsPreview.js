@@ -415,8 +415,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		return img;
 	},
 
-	_scrollToPart: function() {
-		var partNo = this._map.getCurrentPartNumber();
+	_scrollToPart: function(part) {
+		var partNo = part !== undefined ? part : this._map.getCurrentPartNumber();
 		//var sliderSize, nodePos, nodeOffset, nodeMargin;
 		var node = this._partsPreviewCont.children[partNo];
 
@@ -542,6 +542,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			}
 		}
 		this._selectedPartRange = [start, end];
+		this._scrollToPart(end);
 	},
 
 	_modifySelectedPartRange: function (direction) {
@@ -711,7 +712,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			return false;
 
 		var elemRect = el.getBoundingClientRect();
-		var viewRect = new DOMRect(0, 0, window.innerWidth, window.innerHeight);
+		var viewRect = document.getElementById('slide-sorter').getBoundingClientRect();
 
 		return (elemRect.left <= viewRect.right &&
 			viewRect.left <= elemRect.right &&
