@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2025-07-24 04:10+0000\n"
-"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
+"PO-Revision-Date: 2026-03-12 00:44+0000\n"
+"Last-Translator: Sami Määttä <sami.maatta@protonmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fi/>\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -418,7 +418,7 @@ msgstr "Tumma tila"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:348
 msgid "Compact layout"
-msgstr ""
+msgstr "Tiivis asettelu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:349
 #, fuzzy
@@ -432,7 +432,7 @@ msgstr "Näytä viivotin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:351
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Saavutettavuustarkastus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:352
 #: src/control/Control.NavigatorPanel.ts:286
@@ -441,7 +441,7 @@ msgstr "Navigaattori"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:353
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Näytä sivupalkki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:354
 msgid "Custom Animation"
@@ -457,16 +457,16 @@ msgstr "Tyylilista"
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:667
 msgid "Grid"
-msgstr ""
+msgstr "Ruudukko"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:361
 #: src/control/Control.BackstageView.ts:328
 msgid "Print"
-msgstr ""
+msgstr "Tulosta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:362
 msgid "Other"
-msgstr ""
+msgstr "Muu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 #: src/control/Control.NotebookbarImpress.js:676
@@ -495,7 +495,7 @@ msgstr "Kiinnitä ruudukkoon"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:368
 msgid "Empty Pages"
-msgstr ""
+msgstr "Tyhjät sivut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:369
 msgid "Force Breaks"
@@ -509,23 +509,23 @@ msgstr "Kaikki taulukot"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:372
 msgid "Content"
-msgstr ""
+msgstr "Sisältö"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:373
 #: src/control/Control.BackstageView.ts:937
 msgid "Drawing"
-msgstr ""
+msgstr "Piirustus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:374
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
 #: src/control/Control.NotebookbarWriter.js:1210
 msgid "Page"
-msgstr ""
+msgstr "Sivu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Fit to page"
-msgstr ""
+msgstr "Sovita sivulle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:376
 msgid "Tile pages"
@@ -545,7 +545,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:380
 msgid "Page name"
-msgstr ""
+msgstr "Sivun nimi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:381
 #: src/control/Control.NotebookbarCalc.js:781
@@ -561,7 +561,7 @@ msgstr "Aika"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:383
 msgid "Hidden pages"
-msgstr ""
+msgstr "Piilotetut sivut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:384
 msgid "From printer setup"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:390
 msgid "Images"
-msgstr ""
+msgstr "Kuvat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:391
 #, fuzzy
@@ -616,7 +616,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:393
 msgid "Background"
-msgstr ""
+msgstr "Tausta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:394
 msgid "Print Black"
@@ -624,7 +624,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:395
 msgid "Hidden text"
-msgstr ""
+msgstr "Piilotettu teksti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:396
 msgid "Placeholders"
@@ -632,23 +632,23 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:397
 msgid "Left pages"
-msgstr ""
+msgstr "Vasemmanpuoleiset sivut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:398
 msgid "Right pages"
-msgstr ""
+msgstr "Oikeanpuoleiset sivut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:399
 msgid "Brochure"
-msgstr ""
+msgstr "Esite"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:400
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Esite oikealta vasemmalle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:401
 msgid "Images and Objects"
-msgstr ""
+msgstr "Kuvat ja objektit"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:498
 msgid "Invalid JSON file"
@@ -667,12 +667,12 @@ msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
-"Lataa ulospäin uudelleenkäytettäviä tekstikatkelmia (.bau). Lisätäksesi "
-"tekstiä asiakirjaan, kirjoita AutoTextin merkinnän pikakuvake ja paina F3."
+"Tuo uudelleenkäytettäviä tekstikatkelmia (.bau). Lisätäksesi tekstikatkelman "
+"asiakirjaan, kirjoita AutoTextin pikanäppäin ja paina F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:522
 msgid "Upload Autotext"
-msgstr "Lataa ulospäin AutoText"
+msgstr "Tuo AutoText"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:527
 msgid "Custom dictionaries"
@@ -796,10 +796,12 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Käyttääksesi Zoteroa, anna API-avaimesi tähän. Voit luoda API-avaimen "
+"asetuksistasi: "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1473
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Zotero-tunnuksen API-asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1482
 #, fuzzy
@@ -990,7 +992,7 @@ msgstr "Avaa koko näkymässä"
 
 #: src/canvas/sections/CommentListSection.ts:1308
 msgid "Show in navigator"
-msgstr ""
+msgstr "Näytä navigaatiossa"
 
 #: src/canvas/sections/CommentListSection.ts:1336
 #: src/control/Control.JSDialogBuilder.js:1642
@@ -1037,7 +1039,7 @@ msgstr "Avaa valikko"
 
 #: src/canvas/sections/CommentSection.ts:346
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Paina Ctrl + Enter julkaistaksesi"
 
 #: src/canvas/sections/CommentSection.ts:418
 #: src/canvas/sections/CommentSection.ts:419
@@ -1069,7 +1071,7 @@ msgstr ""
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Nykyinen versio"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
@@ -1077,7 +1079,7 @@ msgstr ""
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
 msgid "Current Version"
-msgstr ""
+msgstr "Nykyinen versio"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1130,7 +1132,7 @@ msgstr "Kopioi kaikki versiotiedot englanniksi"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Versiotiedot on kopioitu"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -1202,7 +1204,7 @@ msgstr ""
 #: src/control/Control.BackstageView.ts:223
 #: src/control/Control.BackstageView.ts:224
 msgid "Back to document"
-msgstr ""
+msgstr "Palaa asiakirjaan"
 
 #: src/control/Control.BackstageView.ts:272
 #: src/control/Control.BackstageView.ts:406
@@ -1222,7 +1224,7 @@ msgstr "Uusi"
 
 #: src/control/Control.BackstageView.ts:288
 msgid "Open"
-msgstr ""
+msgstr "Avaa"
 
 #: src/control/Control.BackstageView.ts:296
 #: src/control/Control.Notebookbar.js:633
@@ -1241,7 +1243,7 @@ msgstr "Jaa"
 
 #: src/control/Control.BackstageView.ts:304
 msgid "Info"
-msgstr ""
+msgstr "Tiedot"
 
 #: src/control/Control.BackstageView.ts:320
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1255,7 +1257,7 @@ msgstr "Tallenna nimellä"
 
 #: src/control/Control.BackstageView.ts:336
 msgid "Export"
-msgstr ""
+msgstr "Vie"
 
 #: src/control/Control.BackstageView.ts:350 src/control/Control.Menubar.ts:123
 #: src/control/Control.Menubar.ts:460 src/control/Control.Menubar.ts:631
@@ -1265,18 +1267,17 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:440
 #: src/control/Control.NotebookbarWriter.js:415
 #: src/map/handler/Map.Settings.ts:83
-#, fuzzy
 msgid "Options"
-msgstr "Vaihtoehto"
+msgstr "Vaihtoehdot"
 
 #: src/control/Control.BackstageView.ts:407
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "Aloita uusi asiakirja käyttämällä pohjaa."
 
 #: src/control/Control.BackstageView.ts:450
 #: src/control/Control.BackstageView.ts:453
 msgid "More Templates"
-msgstr ""
+msgstr "Lisää pohjia"
 
 #: src/control/Control.BackstageView.ts:479
 #: src/control/jsdialog/Widget.ColorPicker.ts:426
@@ -1285,11 +1286,11 @@ msgstr "Viimeaikainen"
 
 #: src/control/Control.BackstageView.ts:511
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "Viimeksi avatut asiakirjat näkyvät tässä"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
@@ -1297,7 +1298,7 @@ msgstr ""
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
-msgstr ""
+msgstr "Asiakirjan tiedot"
 
 #: src/control/Control.BackstageView.ts:780
 msgid "View document properties and information"
@@ -1305,11 +1306,11 @@ msgstr ""
 
 #: src/control/Control.BackstageView.ts:796
 msgid "Export Document"
-msgstr ""
+msgstr "Vie asiakirja"
 
 #: src/control/Control.BackstageView.ts:797
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "vie asiakirjasi eri muodoissa"
 
 #: src/control/Control.BackstageView.ts:849 src/control/Control.Menubar.ts:385
 #: src/control/Control.Menubar.ts:1358
@@ -1328,16 +1329,16 @@ msgstr ""
 #: src/control/Control.BackstageView.ts:934 templates/templates.js:50
 #: templates/templates.js:60 templates/templates.js:70
 msgid "Text Document"
-msgstr ""
+msgstr "Tekstiasiakirja"
 
 #: src/control/Control.BackstageView.ts:934
 #: src/control/Control.BackstageView.ts:937
 msgid "Pages"
-msgstr ""
+msgstr "Sivut"
 
 #: src/control/Control.BackstageView.ts:935
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Laskentataulukko"
 
 #: src/control/Control.BackstageView.ts:935
 msgid "Sheets"
@@ -1369,23 +1370,23 @@ msgstr ""
 
 #: src/control/Control.BackstageView.ts:960
 msgid "File Name"
-msgstr ""
+msgstr "Tiedostonimi"
 
 #: src/control/Control.BackstageView.ts:1065
 msgid "Loading templates…"
-msgstr ""
+msgstr "Ladataan pohjia…"
 
 #: src/control/Control.BackstageView.ts:1111
 msgid "Search templates"
-msgstr ""
+msgstr "Etsi pohjia"
 
 #: src/control/Control.BackstageView.ts:1179
 msgid "No templates match your search."
-msgstr ""
+msgstr "Ei pohjia, jotka vastaavat hakuasi."
 
 #: src/control/Control.BackstageView.ts:1285
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Tyhjä laskentataulukko"
 
 #: src/control/Control.BackstageView.ts:1289
 #, fuzzy
@@ -1394,11 +1395,11 @@ msgstr "Lopeta esitys"
 
 #: src/control/Control.BackstageView.ts:1294
 msgid "Blank Document"
-msgstr ""
+msgstr "Tyhjä asiakirja"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "Nimeämätön"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1418,7 +1419,7 @@ msgstr "Täytä sarja"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "Asiakirjan nimi"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -2121,7 +2122,7 @@ msgstr "Korjaa"
 
 #: src/control/Control.Menubar.ts:143
 msgid "Compare Changes"
-msgstr ""
+msgstr "Vertaa muutoksia"
 
 #: src/control/Control.Menubar.ts:162 src/control/Control.Menubar.ts:483
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
@@ -2136,7 +2137,7 @@ msgstr "Nollaa zoomaus"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Sovita ruutuun"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2639,7 +2640,7 @@ msgstr "Liukuvärin loppu"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Navigaatiopalkki"
 
 #: src/control/Control.NavigatorPanel.ts:111
 msgid "Navigation"
@@ -2651,20 +2652,20 @@ msgstr "Sulje Navigointi"
 
 #: src/control/Control.NavigatorPanel.ts:226
 msgid "Results"
-msgstr ""
+msgstr "Tulokset"
 
 #: src/control/Control.NavigatorPanel.ts:476
 #: src/control/jsdialog/Widget.TreeView.ts:1674
 msgid "Search..."
-msgstr ""
+msgstr "Etsi..."
 
 #: src/control/Control.QuickFindPanel.ts:122
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Kirjoita hakukenttään etsiäksesi asiakirjasta"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animaatio"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
@@ -2680,7 +2681,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
@@ -2692,7 +2693,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Siirtymä"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
@@ -2701,11 +2702,11 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Tyyli"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:82
 msgid "Duration"
-msgstr ""
+msgstr "Kesto"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:110
 msgid "On mouse click"
@@ -2717,11 +2718,11 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:139
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Käytä kaikkiin dioihin"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Sisällysluettelo"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
@@ -2730,17 +2731,16 @@ msgstr ""
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1642
-#, fuzzy
 msgid "Field"
-msgstr "Kentät"
+msgstr "Kenttä"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animaatiot"
 
 #: src/control/Control.NotebookbarBuilder.js:236
 msgid "Click to expand"
-msgstr ""
+msgstr "Napsauta näyttääksesi"
 
 #: src/control/Control.NotebookbarBuilder.js:236
 msgid "Tap to expand"
@@ -2748,7 +2748,7 @@ msgstr "Laajenna napauttamalla"
 
 #: src/control/Control.NotebookbarBuilder.js:237
 msgid "Click to collapse"
-msgstr ""
+msgstr "Napsauta piilottaaksesi"
 
 #: src/control/Control.NotebookbarBuilder.js:237
 #: src/control/Control.NotebookbarBuilder.js:311
@@ -2845,7 +2845,7 @@ msgstr "Kipinärivi"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Taulukkotyyli"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2893,7 +2893,7 @@ msgstr "Nimeä uudelleen"
 #: src/control/Control.NotebookbarImpress.js:746
 #: src/control/Control.NotebookbarWriter.js:607
 msgid "Clipboard"
-msgstr ""
+msgstr "Leikepöytä"
 
 #: src/control/Control.NotebookbarCalc.js:480
 #: src/control/Control.NotebookbarDraw.js:673
@@ -2904,11 +2904,11 @@ msgstr "Fontti"
 #: src/control/Control.NotebookbarCalc.js:625
 #: src/control/Control.NotebookbarDraw.js:814
 msgid "Alignment"
-msgstr ""
+msgstr "Tasaus"
 
 #: src/control/Control.NotebookbarCalc.js:752
 msgid "Merge & Center"
-msgstr ""
+msgstr "Yhdistä & keskitä"
 
 #: src/control/Control.NotebookbarCalc.js:762
 #: src/control/Control.NotebookbarCalc.js:778
@@ -2951,11 +2951,11 @@ msgstr "Teksti"
 #: src/control/Control.NotebookbarCalc.js:792
 #: src/control/Control.NotebookbarWriter.js:2684
 msgid "Number Format"
-msgstr ""
+msgstr "Lukujen muotoilu"
 
 #: src/control/Control.NotebookbarCalc.js:865
 msgid "Cells"
-msgstr ""
+msgstr "Solut"
 
 #: src/control/Control.NotebookbarCalc.js:967
 #: src/control/jsdialog/Definitions.Menu.ts:2326
@@ -2985,7 +2985,7 @@ msgstr "Huono"
 #: src/control/Control.NotebookbarCalc.js:1023
 #: src/control/PermissionMode.ts:210
 msgid "Editing"
-msgstr ""
+msgstr "Muokkaus"
 
 #: src/control/Control.NotebookbarCalc.js:1047
 #: src/control/Control.NotebookbarDraw.js:1197
@@ -2997,12 +2997,12 @@ msgstr "Korvaa"
 #: src/control/Control.NotebookbarCalc.js:1111
 #: src/control/Control.NotebookbarWriter.js:1797
 msgid "Margin"
-msgstr ""
+msgstr "Reunukset"
 
 #: src/control/Control.NotebookbarCalc.js:1118
 #: src/control/Control.NotebookbarWriter.js:1804
 msgid "Size"
-msgstr ""
+msgstr "Koko"
 
 #: src/control/Control.NotebookbarCalc.js:1179
 msgid "Row Height"
@@ -3047,7 +3047,7 @@ msgstr "Poista sarakkeet"
 #: src/control/Control.NotebookbarWriter.js:2909
 #: src/control/Control.NotebookbarWriter.js:3232
 msgid "Align"
-msgstr ""
+msgstr "Asettele"
 
 #: src/control/Control.NotebookbarCalc.js:1340
 #: src/control/Control.NotebookbarCalc.js:3124
@@ -3060,7 +3060,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2968
 #: src/control/Control.NotebookbarWriter.js:3291
 msgid "Arrange"
-msgstr ""
+msgstr "Järjestä"
 
 #: src/control/Control.NotebookbarCalc.js:1403
 msgid "Sheet View"
@@ -3068,34 +3068,34 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1417
 msgid "Default View"
-msgstr ""
+msgstr "Oletusnäkymä"
 
 #: src/control/Control.NotebookbarCalc.js:1434
 msgid "Open Views List"
-msgstr ""
+msgstr "Avaa näkymäluettelo"
 
 #: src/control/Control.NotebookbarCalc.js:1441
 msgid "New Sheet View"
-msgstr ""
+msgstr "Uusi taulukkonäkymä"
 
 #: src/control/Control.NotebookbarCalc.js:1448
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Poista taulukkonäkymä"
 
 #: src/control/Control.NotebookbarCalc.js:1455
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Poistu taulukkonäkymästä"
 
 #: src/control/Control.NotebookbarCalc.js:1470
 msgid "Freeze"
-msgstr ""
+msgstr "Kiinnitys"
 
 #: src/control/Control.NotebookbarCalc.js:1524
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:544
 #: src/control/Control.NotebookbarWriter.js:1651
 msgid "Zoom"
-msgstr ""
+msgstr "Suurenna/loitonna"
 
 #: src/control/Control.NotebookbarCalc.js:1531
 #: src/control/Control.NotebookbarDraw.js:427
@@ -3124,11 +3124,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1681
 msgid "Header Row"
-msgstr ""
+msgstr "Otsikkorivi"
 
 #: src/control/Control.NotebookbarCalc.js:1693
 msgid "Total Row"
-msgstr ""
+msgstr "Yhteenvetorivi"
 
 #: src/control/Control.NotebookbarCalc.js:1711
 msgid "Banded Rows"
@@ -3140,15 +3140,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1741
 msgid "First Column"
-msgstr ""
+msgstr "Ensimmäinen sarake"
 
 #: src/control/Control.NotebookbarCalc.js:1753
 msgid "Last Column"
-msgstr ""
+msgstr "Viimeinen sarake"
 
 #: src/control/Control.NotebookbarCalc.js:1768
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Suodatinpainikkeet"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
@@ -3163,7 +3163,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3017
 #: src/control/Control.NotebookbarWriter.js:3340
 msgid "Group"
-msgstr ""
+msgstr "Ryhmät"
 
 #: src/control/Control.NotebookbarCalc.js:1812
 msgid "Ungroup"
@@ -3171,7 +3171,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1834
 msgid "Pivot Table"
-msgstr ""
+msgstr "Pivot-taulukko"
 
 #: src/control/Control.NotebookbarCalc.js:1883
 #: src/control/Control.NotebookbarDraw.js:94
@@ -3190,7 +3190,7 @@ msgstr "Taulukko"
 #: src/control/Control.NotebookbarImpress.js:1462
 #: src/control/Control.NotebookbarWriter.js:1241
 msgid "Illustrations"
-msgstr ""
+msgstr "Grafiikka"
 
 #: src/control/Control.NotebookbarCalc.js:1962
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -3210,7 +3210,7 @@ msgstr "Avustaja"
 
 #: src/control/Control.NotebookbarCalc.js:2178
 msgid "Insert Function"
-msgstr ""
+msgstr "Lisää funktio"
 
 #: src/control/Control.NotebookbarCalc.js:2186
 #, fuzzy
@@ -3223,15 +3223,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2213
 msgid "Financial"
-msgstr ""
+msgstr "Talous"
 
 #: src/control/Control.NotebookbarCalc.js:2231
 msgid "Logical"
-msgstr ""
+msgstr "Looginen"
 
 #: src/control/Control.NotebookbarCalc.js:2261
 msgid "Date & Time"
-msgstr ""
+msgstr "Päivämäärä & aika"
 
 #: src/control/Control.NotebookbarCalc.js:2273
 msgid "Lookup & Reference"
@@ -3239,11 +3239,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2291
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matemaattinen"
 
 #: src/control/Control.NotebookbarCalc.js:2303
 msgid "More Functions"
-msgstr ""
+msgstr "Lisää funktioita"
 
 #: src/control/Control.NotebookbarCalc.js:2348
 msgid "Range"
@@ -3251,11 +3251,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2431
 msgid "Sort"
-msgstr ""
+msgstr "Järjestä"
 
 #: src/control/Control.NotebookbarCalc.js:2477
 msgid "Filter"
-msgstr ""
+msgstr "Suodatus"
 
 #: src/control/Control.NotebookbarCalc.js:2725
 #: src/control/Control.NotebookbarImpress.js:1987
@@ -3266,7 +3266,7 @@ msgstr "Huomautus"
 
 #: src/control/Control.NotebookbarCalc.js:2831
 msgid "Format Cells"
-msgstr ""
+msgstr "Solujen muotoilu"
 
 #: src/control/Control.NotebookbarCalc.js:2891
 #: src/control/Control.NotebookbarImpress.js:1816
@@ -3308,7 +3308,7 @@ msgstr "Viivoitin"
 #: src/control/Control.NotebookbarWriter.js:811
 #: src/control/Control.NotebookbarWriter.js:2612
 msgid "Paragraph"
-msgstr ""
+msgstr "Kappale"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
@@ -3372,11 +3372,11 @@ msgstr "Nollaa asettelu"
 
 #: src/control/Control.NotebookbarImpress.js:851
 msgid "Character"
-msgstr ""
+msgstr "Fontti"
 
 #: src/control/Control.NotebookbarImpress.js:1112
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Asettelu & väri"
 
 #: src/control/Control.NotebookbarImpress.js:1802
 msgid "Master Slide Templates"
@@ -3388,7 +3388,7 @@ msgstr "Dian koko"
 
 #: src/control/Control.NotebookbarImpress.js:1889
 msgid "Background Image"
-msgstr ""
+msgstr "Dian taustakuva"
 
 #: src/control/Control.NotebookbarImpress.js:2091
 msgid "Merge & Split"
@@ -4150,11 +4150,11 @@ msgstr "Normaali"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "Leveä"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "Kapea"
 
 #: src/control/jsdialog/Definitions.Menu.ts:176
 msgid "Min"
@@ -4528,7 +4528,7 @@ msgstr "Lisää Kommentti"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2353
 msgid "Comments list"
-msgstr ""
+msgstr "Kommenttiluettelo"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
