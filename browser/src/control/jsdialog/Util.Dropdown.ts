@@ -296,6 +296,8 @@ JSDialog.CloseDropdown = function (id: string, focusHandled?: boolean) {
 
 JSDialog.CloseAllDropdowns = function () {
 	window.L.Map.THIS.jsdialog.closeAllDropdowns();
+	if (window.L.Map.THIS.contextToolbar)
+		window.L.Map.THIS.contextToolbar.hideContextToolbar();
 };
 
 JSDialog.GetDropdown = function (id: string) {
