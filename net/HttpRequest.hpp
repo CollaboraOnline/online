@@ -2128,6 +2128,12 @@ inline std::ostringstream& operator<<(std::ostringstream& os, const http::Status
     return os;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const http::Header::ConnectionToken& token)
+{
+    os << http::Header::name(token);
+    return os;
+}
+
 inline std::ostream& operator<<(std::ostream& os, const http::FieldParseState& fieldParseState)
 {
     os << http::name(fieldParseState);
