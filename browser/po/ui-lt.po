@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2025-12-29 14:42+0000\n"
+"PO-Revision-Date: 2026-03-18 21:09+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/lt/>\n"
-"Language: \n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/lt/>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -283,7 +283,7 @@ msgstr "Prašome palaukti, „Kubernetes“ klasteris keičiamas..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "Nepavyko nustatyti JWT autentifikavimo slapuko per nesaugų ryšį"
+msgstr "Nepavyko nustatyti \"jwt\" autentifikavimo slapuko per nesaugų ryšį"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
@@ -1058,23 +1058,23 @@ msgstr "Įrašytas"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Paskutinį kartą redagavo %1 %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: pradinė versija"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: esama versija"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
-msgstr ""
+msgstr "Pradinė Versija"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
 msgid "Current Version"
-msgstr ""
+msgstr "Esama Versija"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1126,7 +1126,7 @@ msgstr "Nukopijuokite visą versijos informaciją anglų kalba"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Versijos informacija nukopijuota"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -1218,7 +1218,7 @@ msgstr "Naujas"
 
 #: src/control/Control.BackstageView.ts:288
 msgid "Open"
-msgstr ""
+msgstr "Atidaryti"
 
 #: src/control/Control.BackstageView.ts:296
 #: src/control/Control.Notebookbar.js:633
@@ -1266,12 +1266,12 @@ msgstr "Parinktys"
 
 #: src/control/Control.BackstageView.ts:407
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "Kurti naują dokumentą naudojant vieną iš šablonų."
 
 #: src/control/Control.BackstageView.ts:450
 #: src/control/Control.BackstageView.ts:453
 msgid "More Templates"
-msgstr ""
+msgstr "Daugiau šablonų"
 
 #: src/control/Control.BackstageView.ts:479
 #: src/control/jsdialog/Widget.ColorPicker.ts:426
@@ -1284,11 +1284,11 @@ msgstr "Neseniai atidaryti dokumentai bus rodomi čia"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "Vardas"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
-msgstr ""
+msgstr "Pakeitimų data"
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
@@ -1392,7 +1392,7 @@ msgstr "Tuščias dokumentas"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "Be pavadinimo"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1412,7 +1412,7 @@ msgstr "Užpildymo serija"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "Dokumento pavadinimas"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -1939,11 +1939,11 @@ msgstr "Įterpti komentarą"
 
 #: src/control/Control.JSDialogBuilder.js:1956
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "Perjungti išskleidžiamąjį meniu"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Dialogo išskleidžiamasis meniu"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1597
@@ -1952,7 +1952,7 @@ msgstr "Išskleidžiamasis (meniu)"
 
 #: src/control/Control.JSDialogBuilder.js:1962
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "Taikyti veiksmą išskleidžiamajame meniu"
 
 #: src/control/Control.JSDialogBuilder.js:1989
 msgid "Open {name}"
@@ -2362,17 +2362,17 @@ msgstr "Esama skaidrė Bitmap formatu (.bmp)"
 #: src/control/Control.Menubar.ts:454
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr "Esama skaidrė GIF formatu (.gif)"
+msgstr "Esama skaidrė Gif formatu (.gif)"
 
 #: src/control/Control.Menubar.ts:455
 #: src/control/Control.NotebookbarBuilder.js:509
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr "Esama skaidrė PNG formatu (.png)"
+msgstr "Esama skaidrė Png formatu (.png)"
 
 #: src/control/Control.Menubar.ts:456
 #: src/control/Control.NotebookbarBuilder.js:514
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr "Esama skaidrė TIFF formatu (.tiff)"
+msgstr "Esama skaidrė Tiff formatu (.tiff)"
 
 #: src/control/Control.Menubar.ts:463
 #: src/control/Control.NotebookbarBuilder.js:648
@@ -3141,7 +3141,7 @@ msgstr "Filtrų mygtukai"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
-msgstr ""
+msgstr "Lentelių stiliai"
 
 #: src/control/Control.NotebookbarCalc.js:1805
 #: src/control/Control.NotebookbarCalc.js:2553
@@ -3327,7 +3327,7 @@ msgstr "Pranešėjo rodinys"
 
 #: src/control/Control.NotebookbarImpress.js:508
 msgid "Present to All"
-msgstr "Rodyti visiems"
+msgstr "Rodyti Visiems"
 
 #: src/control/Control.NotebookbarImpress.js:516
 #: src/slideshow/SlideShowPresenter.ts:1484
@@ -3676,7 +3676,7 @@ msgstr "Priartinti, kad tilptų į puslapį"
 
 #: src/control/Control.StatusBar.js:417
 msgid "The document is probably locked and has been opened as view-only"
-msgstr ""
+msgstr "Dokumentas tikriausiai užrakintas ir atidarytas tik peržiūrai"
 
 #: src/control/Control.StatusBar.js:426
 msgid ""
@@ -3975,9 +3975,8 @@ msgid "Updating citations"
 msgstr "Citatų atnaujinimas"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "Atsieti citatas"
+msgstr "Atsietos citatos"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -4776,7 +4775,7 @@ msgstr "Dokumento spalvos"
 
 #: src/docstatefunctions.js:255
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ", klasterio konfigūracijos klaida: neatitinka serverio ID"
+msgstr ", klasterio konfigūracijos klaida: neatitinka serverio \"id\""
 
 #: src/dom/NotebookbarAccessibility.js:235
 msgid "{0} tab selected"
@@ -4911,8 +4910,8 @@ msgstr ""
 "per greitai keičiasi jo dydis – susisiekite su sistemos administratoriumi. "
 "Tęsiant redagavimą, keli vartotojai gali nematyti vienas kito, kilti "
 "dokumentų saugyklos konfliktų ir (arba) kopijavimo / įklijavimo problemų. "
-"Tikėtasi serverio ID {0} maršruto prieigos raktui {1}, bet prisijungta prie "
-"serverio ID {2}"
+"Tikėtasi serverio \"id\" {0} maršruto prieigos raktui {1}, bet prisijungta "
+"prie serverio \"id\" {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -5150,10 +5149,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Jūsų naršyklės prieiga prie iškarpinės yra labai ribota, todėl naudokite "
+"šiuos sparčiuosius klavišus:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Iškirpti"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5221,11 +5222,11 @@ msgstr "Failo įkėlimas į serverį nepavyko. Būsena: {0}"
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "Nepavyko nuskaityti pasirinkto failo."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Šiuo metu esate peržiūros režime"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5239,7 +5240,7 @@ msgstr "Tuščia skaidrių demonstracija"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Visos skaidrės paslėptos!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
@@ -5339,7 +5340,7 @@ msgstr "Sekanti skaidrė"
 #: src/slideshow/PresenterConsole.js:35
 #: src/slideshow/SlideShowPresenter.ts:871
 msgid "Exchange"
-msgstr ""
+msgstr "Keitimasis"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Pause"
@@ -5354,7 +5355,6 @@ msgid "Resume"
 msgstr "Tęsti"
 
 #: src/slideshow/PresenterConsole.js:39
-#, fuzzy
 msgid "Present to all"
 msgstr "Rodyti visiems"
 
@@ -5393,11 +5393,11 @@ msgstr "Spustelėkite, kad išeitumėte iš pristatymo..."
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "Esate pirmoje skaidrėje"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
-msgstr ""
+msgstr "Laukiama, kol pranešėjas pereis prie kito etapo"
 
 #: src/slideshow/SlideShowPresenter.ts:805
 msgid "End Show"
@@ -5413,129 +5413,128 @@ msgid "Enable Animations"
 msgstr "Įjungti animacijas"
 
 #: src/slideshow/SlideShowPresenter.ts:1479
-#, fuzzy
 msgid "Stop Following"
-msgstr "Sustabdyti sekimą"
+msgstr "Sustabdyti Sekimą"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "Šiuolaikinis verslo laiškas (sans-serif)"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "Verslo Laiškas"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
-msgstr ""
+msgstr "Šiuolaikinis verslo laiškas (serif)"
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
-msgstr ""
+msgstr "Gyvenimo aprašymas (vieno lapo)"
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "Modernus stilius"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "Paprastas stilius"
 
 #: templates/templates.js:76
 msgid "Beehive"
-msgstr ""
+msgstr "Avilys"
 
 #: templates/templates.js:86
 msgid "Blue Curve"
-msgstr ""
+msgstr "Mėlyna kreivė"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
-msgstr ""
+msgstr "Brėžinių planai"
 
 #: templates/templates.js:106
 msgid "Candy"
-msgstr ""
+msgstr "Saldainis"
 
 #: templates/templates.js:116
 msgid "DNA"
-msgstr ""
+msgstr "DNR"
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "Dėmesys"
 
 #: templates/templates.js:136
 msgid "Forestbird"
-msgstr ""
+msgstr "Miško paukštis"
 
 #: templates/templates.js:146
 msgid "Freshes"
-msgstr ""
+msgstr "Šviežias"
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
-msgstr ""
+msgstr "Elegantiška pilka"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
-msgstr ""
+msgstr "Auganti laisvė"
 
 #: templates/templates.js:176
 msgid "Inspiration"
-msgstr ""
+msgstr "Įkvėpimas"
 
 #: templates/templates.js:186
 msgid "Lights"
-msgstr ""
+msgstr "Šviesos"
 
 #: templates/templates.js:196
 msgid "Metropolis"
-msgstr ""
+msgstr "Metropolis/sostinė"
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
-msgstr ""
+msgstr "Vidurnakčio mėlyna"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
-msgstr ""
+msgstr "Gamtos iliustracija"
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "Pieštukas"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "Pianinas"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "Portfelis"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "Pažanga"
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "Saulėlydis"
 
 #: templates/templates.js:276
 msgid "Vintage"
-msgstr ""
+msgstr "Vintažinis"
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "Ryškus"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "Geltona idėja"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
