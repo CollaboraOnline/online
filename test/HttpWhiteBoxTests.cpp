@@ -442,7 +442,7 @@ void HttpWhiteBoxTests::testClipboardIsOwnFormat()
 PK)x";
         std::istringstream stream(body);
 
-        LOK_ASSERT_EQUAL(ClipboardData::isOwnFormat(stream), true);
+        LOK_ASSERT_EQUAL(true, ClipboardData::isOwnFormat(stream));
     }
     {
         std::string body = R"(<!DOCTYPE html>
@@ -452,7 +452,7 @@ PK)x";
 
         // This is expected to fail: format is mimetype-length-bytes tuples and here the second line
         // is not a hex size.
-        LOK_ASSERT_EQUAL(ClipboardData::isOwnFormat(stream), false);
+        LOK_ASSERT_EQUAL(false, ClipboardData::isOwnFormat(stream));
     }
 }
 

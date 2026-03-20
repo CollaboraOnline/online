@@ -60,7 +60,7 @@ public:
                 {
                     if (expectedPrefix == "progress:")
                     {
-                        LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix(expectedPrefix, msg), true);
+                        LOK_ASSERT_EQUAL(true, COOLProtocol::matchPrefix(expectedPrefix, msg));
                         LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                         TST_LOG("Good WS response(0): " << msg);
                         return true;
