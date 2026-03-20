@@ -1719,6 +1719,13 @@ menuDefinitions.set('LineSpacingMenu', [
 		text: _UNO('.uno:ParaspaceDecrease'),
 		uno: 'ParaspaceDecrease',
 	},
+	{ type: 'separator' },
+	{
+		id: 'paragraphdialog',
+		img: 'paragraphdialog',
+		text: _UNO('.uno:ParagraphDialog'),
+		uno: 'ParagraphDialog',
+	},
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('LanguageMenu', [
