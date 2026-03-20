@@ -527,11 +527,11 @@ UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivityTO)
     TST_LOG("Test: X01 Connected: " << connected);
     if (forceInactivityTO)
     {
-        LOK_ASSERT(0 == connected);
+        LOK_ASSERT_EQUAL(size_t(0), connected);
     }
     else
     {
-        LOK_ASSERT(1 == connected);
+        LOK_ASSERT_EQUAL(size_t(1), connected);
     }
 
     TST_LOG("Ending Test: " << testname);

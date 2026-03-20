@@ -150,13 +150,13 @@ void UnitStreamSocketCtorFailure1::invokeWSDTest()
 
             if (expectFailure)
             {
-                LOK_ASSERT(false == connected00);
-                LOK_ASSERT(false == connected01);
+                LOK_ASSERT_EQUAL(false, connected00);
+                LOK_ASSERT_EQUAL(false, connected01);
             }
             else
             {
-                LOK_ASSERT(true == connected00);
-                LOK_ASSERT(true == connected01);
+                LOK_ASSERT_EQUAL(true, connected00);
+                LOK_ASSERT_EQUAL(true, connected01);
             }
 
             ++_iteration;
@@ -313,13 +313,13 @@ void UnitServerSocketAcceptFailure1::invokeWSDTest()
 
             if (expectFatalError)
             {
-                LOK_ASSERT(false == connected00);
-                LOK_ASSERT(false == connected01);
+                LOK_ASSERT_EQUAL(false, connected00);
+                LOK_ASSERT_EQUAL(false, connected01);
             }
             else
             {
-                LOK_ASSERT(true == connected00);
-                LOK_ASSERT(true == connected01);
+                LOK_ASSERT_EQUAL(true, connected00);
+                LOK_ASSERT_EQUAL(true, connected01);
             }
 
             ++_iteration;
