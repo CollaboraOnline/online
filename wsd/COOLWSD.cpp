@@ -2081,10 +2081,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
-    {
-        LOG_DBG("net::Defaults: Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
-                << ", maxExtConnections " << net::Defaults.maxExtConnections << "]");
-    }
+
+    LOG_DBG("net::Defaults: Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
+                                                       << ", maxExtConnections "
+                                                       << net::Defaults.maxExtConnections << ']');
 
 #if !MOBILEAPP
     NoSeccomp =
