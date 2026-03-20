@@ -11,7 +11,7 @@
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "babel-loader": "^9.1.3",
-    "cypress": "13.5.1",
+    "cypress": "^15.12.0",
     "cypress-file-upload": "5.0.8",
     "cypress-log-to-output": "1.1.2",
     "cypress-real-events": "^1.13.0",

@@ -72,7 +72,7 @@ NEXTCLOUD_PORT = 9980
 ALLOWED_PORTS = $(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),$(PHP_PROXY_PORT),\
 			$(if $(findstring nextcloud, $(CYPRESS_INTEGRATION)),$(NEXTCLOUD_PORT),$(shell seq 9900 1 9980)))
 
-KILL_COMMAND=$(if $(coolwsd),true,pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE))
+KILL_COMMAND=$(if $(coolwsd),true,pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)); pkill -9 geckodriver 2>/dev/null; rm -f /tmp/geckodriver
 LOAD_PID_FILE=$(abs_builddir)/workdir/load.pids
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
 
@@ -381,6 +381,28 @@ check-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call start_coolwsd)
 	$(call run_desktop_tests,$(spec))
 	$(V)$(KILL_COMMAND) || true
+
+if ENABLE_WASM_FALLBACK
+# WASM tests require Firefox (Chrome lacks SharedArrayBuffer in
+# the Cypress iframe).  Not included in check-desktop; run
+# separately with:
+#   CYPRESS_BROWSER=/path/to/firefox make check-wasm
+check-wasm: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_coolwsd)
+	$(eval CYPRESS_INCLUDE_TAGS=tagwasm)
+	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval export GECKODRIVER_PATH=$(or $(GECKODRIVER_PATH),$(shell which geckodriver 2>/dev/null)))
+	$(eval export CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT=$(or $(CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT),300000))
+	@# Increase WebDriver connectionRetryTimeout from 120s to 300s;
+	@# Firefox Nightly headless can take over 2 minutes to start.
+	$(V)sed -i 's/default: 12e4/default: 3e5/' \
+		$$(find $$HOME/.cache/Cypress -name node.js -path '*/webdriver/build/*' 2>/dev/null) 2>/dev/null; true
+	$(V)echo "Running cypress WASM tests (tags: $(CYPRESS_INCLUDE_TAGS))"
+	$(call run_test_headless,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(if $(spec),$(DESKTOP_TEST_FOLDER)/$(spec)))
+	$(V)$(KILL_COMMAND) || true
+endif
 
 run-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
@@ -847,6 +869,7 @@ LOAD_STOP_CMD = $(if $(ENABLE_CPULOAD),\
 # 3 - env:		 list of environment variables (e.g. cypress' --env argument).
 # 4 - spec (optional):   test file path (e.g. cypress' --spec argument)
 define run_test_headless
+	pkill -9 geckodriver 2>/dev/null; rm -f /tmp/geckodriver; \
 	$(LOAD_START_CMD) \
 	setsid $(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \

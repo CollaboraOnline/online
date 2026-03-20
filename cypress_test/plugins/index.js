@@ -62,7 +62,7 @@ function plugin(on, config) {
 				return levelIndex !== -1 && levelIndex <= maxLevelIndex;
 			});
 
-			launchOptions = logToOutput.browserLaunchHandler(browser, launchOptions);
+			launchOptions = logToOutput.browserLaunchHandler(browser, launchOptions) || launchOptions;
 		}
 
 		if (browser.family === 'chromium') {
@@ -75,6 +75,17 @@ function plugin(on, config) {
 				launchOptions.args.push('--window-size=' + process.env.CYPRESS_WINDOW_SIZE);
 			}
 			launchOptions.args.push('--simulate-outdated-no-au=\'2099-12-31T23:59:59.000000+00:00\'');
+		}
+
+		if (browser.family === 'firefox') {
+			// Allow SharedArrayBuffer in iframes without
+			// COOP/COEP on the top-level page.  Needed for
+			// WASM tests where the emscripten module runs
+			// inside Cypress's iframe.
+			if (!launchOptions.preferences) {
+				launchOptions.preferences = {};
+			}
+			launchOptions.preferences['dom.postMessage.sharedArrayBuffer.bypassCOOP_COEP.insecure.enabled'] = true;
 		}
 		prepareAudit(launchOptions);
 

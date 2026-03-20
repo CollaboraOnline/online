@@ -45,6 +45,11 @@ endif
 
 if ENABLE_CYPRESS
 SUBDIRS += cypress_test
+
+if ENABLE_WASM_FALLBACK
+check-wasm:
+	$(MAKE) -C cypress_test check-wasm
+endif
 endif
 
 export ENABLE_DEBUG
