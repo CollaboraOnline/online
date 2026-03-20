@@ -48,6 +48,12 @@ interface TableStyleEntry {
 	Elements: Array<TableStyleElement>;
 }
 
+interface TableStyleLayoutEntry {
+	isSeparator: boolean;
+	text?: string;
+	style?: TableStyleEntry;
+}
+
 function getElementColor(
 	style: TableStyleEntry,
 	type: string,
@@ -83,6 +89,34 @@ function darkenColor(hex: string, factor: number): string {
 class TableStylesService {
 	private styles = new Array<TableStyleEntry>();
 
+	private static readonly groupOrder: Record<string, number> = {
+		light: 1,
+		medium: 2,
+		dark: 3,
+		other: 4,
+	};
+
+	private static getGroup(name: string): string {
+		const lower = name.toLowerCase();
+		if (lower.includes('light')) return 'light';
+		if (lower.includes('medium')) return 'medium';
+		if (lower.includes('dark')) return 'dark';
+		return 'other';
+	}
+
+	private static getGroupLabel(group: string): string {
+		switch (group) {
+			case 'light':
+				return _('Light');
+			case 'medium':
+				return _('Medium');
+			case 'dark':
+				return _('Dark');
+			default:
+				return _('Custom');
+		}
+	}
+
 	public get(): Array<TableStyleEntry> {
 		return this.styles;
 	}
@@ -95,6 +129,21 @@ class TableStylesService {
 		if (e.commandName === '.uno:TableStyles') {
 			try {
 				this.styles = JSON.parse(e.state).TableStyles;
+				this.styles.sort((a, b) => {
+					const tableGroupA =
+						TableStylesService.groupOrder[
+							TableStylesService.getGroup(a.Name)
+						] ?? 4;
+					const tableGroupB =
+						TableStylesService.groupOrder[
+							TableStylesService.getGroup(b.Name)
+						] ?? 4;
+					if (tableGroupA !== tableGroupB) return tableGroupA - tableGroupB;
+					return a.Name.localeCompare(b.Name, undefined, {
+						numeric: true,
+						sensitivity: 'base',
+					});
+				});
 			} catch (e) {
 				app.console.error('Failed to parse TableStyles: ' + e);
 			}
@@ -113,12 +162,17 @@ class TableStylesService {
 
 			let position = -1;
 			if (currentStyle) {
-				position = 0; // state set -> at least None can be selected
-
-				for (const style of this.styles) {
-					position++;
-
-					if (style.Name === currentStyle.TableStyleName) break;
+				const layout = this.getEntriesLayout();
+				const targetName = currentStyle.TableStyleName || 'None';
+				position = layout.findIndex(
+					(item: TableStyleLayoutEntry) =>
+						!item.isSeparator && item.style?.Name === targetName,
+				);
+				if (position === -1) {
+					position = layout.findIndex(
+						(item: TableStyleLayoutEntry) => !item.isSeparator,
+					);
+					if (position === -1) position = 0;
 				}
 			}
 
@@ -294,6 +348,45 @@ class TableStylesService {
 		return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 	}
 
+	private getEntriesLayout(): TableStyleLayoutEntry[] {
+		const layout: TableStyleLayoutEntry[] = [];
+		layout.push({
+			isSeparator: true,
+			text: TableStylesService.getGroupLabel('light'),
+		});
+		layout.push({ isSeparator: false, style: this.getNoneStyle() });
+
+		let previousGroup = 'light';
+		this.styles.forEach((element) => {
+			const currentGroup = TableStylesService.getGroup(element.Name);
+			if (currentGroup === 'other') return;
+
+			if (currentGroup !== previousGroup) {
+				layout.push({
+					isSeparator: true,
+					text: TableStylesService.getGroupLabel(currentGroup),
+				});
+			}
+			previousGroup = currentGroup;
+			layout.push({ isSeparator: false, style: element });
+		});
+
+		const customStyles = this.styles.filter(
+			(style) => TableStylesService.getGroup(style.Name) === 'other',
+		);
+		if (customStyles.length > 0) {
+			layout.push({
+				isSeparator: true,
+				text: TableStylesService.getGroupLabel('other'),
+			});
+			customStyles.forEach((style) => {
+				layout.push({ isSeparator: false, style: style });
+			});
+		}
+
+		return layout;
+	}
+
 	public generateJSON(): Array<IconViewEntry> {
 		if (!this.styles) return [];
 
@@ -304,30 +397,38 @@ class TableStylesService {
 		const iconViewEntries = new Array<IconViewEntry>();
 		let i = 0;
 
-		iconViewEntries.push({
-			row: -1,
-			text: _('None'),
-			image: 'images/lc_table_none.svg',
-			width: 50,
-			height: 50,
-			selected:
-				!currentStyle ||
-				currentStyle.TableStyleName === '' ||
-				currentStyle.TableStyleName === 'None',
-		} as IconViewEntry);
+		const layout = this.getEntriesLayout();
+		layout.forEach((item) => {
+			if (item.isSeparator) {
+				iconViewEntries.push({
+					row: 'sep-' + i,
+					separator: true,
+					text: item.text || '',
+					image: '',
+				} as IconViewEntry);
+			} else {
+				if (!item.style) return;
+				const element = item.style;
+				const isNone = element.Name === 'None';
+				const selected = isNone
+					? !currentStyle ||
+						currentStyle.TableStyleName === '' ||
+						currentStyle.TableStyleName === 'None'
+					: currentStyle && element.Name === currentStyle.TableStyleName;
 
-		this.styles.forEach((element) => {
-			const selected = currentStyle
-				? element.Name === currentStyle.TableStyleName
-				: false;
-			iconViewEntries.push({
-				row: i++,
-				text: element.UIName,
-				image: this.generateIcon(element),
-				width: 50,
-				height: 50,
-				selected: selected,
-			} as IconViewEntry);
+				const formattedText = isNone ? _('None') : element.UIName;
+
+				iconViewEntries.push({
+					row: isNone ? -1 : i++,
+					text: formattedText,
+					image: isNone
+						? 'images/lc_table_none.svg'
+						: this.generateIcon(element),
+					width: 50,
+					height: 50,
+					selected: selected,
+				} as IconViewEntry);
+			}
 		});
 
 		return iconViewEntries;
