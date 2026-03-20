@@ -42,6 +42,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testEliminatePrefix);
     CPPUNIT_TEST(testStreamMatch);
+    CPPUNIT_TEST(testBase64EncodeNewLines);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -53,6 +54,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     void testUtf8();
     void testEliminatePrefix();
     void testStreamMatch();
+    void testBase64EncodeNewLines();
 };
 
 void UtilTests::testStringifyHexLine()
@@ -262,6 +264,32 @@ void UtilTests::testStreamMatch()
     Util::copyToMatch(is, os, "nomatch");
     std::string final = "Lorem ipsum dolor sit adipiscing elit";
     LOK_ASSERT_EQUAL_STR(final, os.str());
+}
+
+void UtilTests::testBase64EncodeNewLines()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Short input: no newlines in output from either function.
+    LOK_ASSERT_EQUAL(std::string("SGVsbG8="), Util::base64Encode("Hello"));
+    LOK_ASSERT_EQUAL(std::string("SGVsbG8="),
+                     Util::base64EncodeRemovingNewLines("Hello"));
+
+    // Poco::Base64Encoder inserts CRLF every 72 output characters.
+    // 54 bytes of input produces exactly 72 chars of Base64, which
+    // triggers a line break in base64Encode but not in
+    // base64EncodeRemovingNewLines.
+    std::string longInput(200, 'A');
+    std::string withNewLines = Util::base64Encode(longInput);
+    std::string withoutNewLines = Util::base64EncodeRemovingNewLines(longInput);
+
+    // base64Encode output contains newlines.
+    LOK_ASSERT(withNewLines.find('\r') != std::string::npos
+               || withNewLines.find('\n') != std::string::npos);
+
+    // base64EncodeRemovingNewLines output does not.
+    LOK_ASSERT(withoutNewLines.find('\n') == std::string::npos);
+    LOK_ASSERT(withoutNewLines.find('\r') == std::string::npos);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UtilTests);
