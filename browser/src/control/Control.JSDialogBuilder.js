@@ -1257,7 +1257,15 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 								let visibleContainer = Array.from(container[0].children).find(child =>
 									!child.classList.contains('hidden') && child.offsetParent !== null
 								);
-								let focusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('[tabindex="-1"]:not([disabled])')) : [];
+								
+								var allFocusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('*'))
+									.filter(function(el) { return el.checkVisibility() && JSDialog.IsFocusable(el); }) : [];
+
+								// Only leaf-level focusable elements are candidates.
+								var focusables = allFocusables.filter(function(el) {
+									return !allFocusables.some(function(other) { return other !== el && el.contains(other); });
+								});
+
 								if (focusables.length) {
 									let first = focusables[0];
 									let last = focusables[focusables.length - 1];
