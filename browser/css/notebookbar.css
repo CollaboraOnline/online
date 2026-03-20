@@ -829,6 +829,18 @@ label.notebookbar.ui-checkbox-label {
 	padding: 5px 10px;
 }
 
+#tablestyles_design.notebookbar .ui-iconview-separator {
+	display: none;
+}
+
+#masterpagenb-entries .static-label.ui-text,
+#tablestyles_design .ui-iconview-separator.label {
+	grid-column: 1 / -1;
+	padding-inline-start: 8px;
+	font-size: var(--default-font-size);
+	font-weight: 500;
+}
+
 /* Draw Tab */
 
 /* other */
