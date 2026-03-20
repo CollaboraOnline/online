@@ -82,6 +82,26 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 		testUnitPersistence('.', '\u2033');
 	});
 
+	it('Space before unit in displayed value', function () {
+		helper.setupAndLoadDocument('writer/help_dialog.odt', false, false, 'de-DE');
+		cy.getFrameWindow().then(function (w) {
+			win = w;
+		});
+
+		openDialogAndSwitchToBorder();
+
+		// cm unit should have a space before it
+		cy.cGet('#leftmf-input').invoke('val').then(function (val) {
+			expect(val).to.match(/\d\scm$/);
+		});
+
+		// After incrementing, the space should persist
+		cy.cGet('#leftmf .spinfieldbutton-up').click();
+		cy.cGet('#leftmf-input').invoke('val').then(function (val) {
+			expect(val).to.match(/\d\scm$/);
+		});
+	});
+
 	it('Unit persists with German locale', function () {
 		helper.setupAndLoadDocument('writer/help_dialog.odt', false, false, 'de-DE');
 		cy.getFrameWindow().then(function (w) {
