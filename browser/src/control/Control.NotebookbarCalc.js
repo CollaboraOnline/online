@@ -2709,14 +2709,14 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'type': 'overflowgroup',
 				'id': 'format-cells',
 				'name':_('Format Cells'),
-				'accessibility': { focusBack: true,	combination: 'PD', de: null },
+				'accessibility': { focusBack: true,	combination: 'PF', de: null },
 				'children' : [
 					{
 						'id': 'format-page-format-dialog',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
 						'command': '.uno:PageFormatDialog',
-						'accessibility': { focusBack: true,	combination: 'PD', de: null }
+						'accessibility': { focusBack: true,	combination: 'PF', de: null }
 					},
 					{
 						'id': 'format-format-cell-dialog',
