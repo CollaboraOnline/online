@@ -22,6 +22,14 @@ function plugin(on, config) {
 		config.video = true;
 	}
 
+	// Abort the run after the first spec failure so CI does not waste
+	// time running remaining specs when the build is already doomed.
+	on('after:spec', (spec, results) => {
+		if (results && results.stats.failures > 0) {
+			process.exit(1);
+		}
+	});
+
 	on('before:browser:launch', function(browser, launchOptions) {
 
 		if (process.env.ENABLE_CONSOLE_LOG) {
