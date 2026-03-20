@@ -86,12 +86,16 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 		edit.readOnly = true;
 	}
 
-	function _keyupChangeHandler() {
+	function _keyupChangeHandler(e) {
+		const nav_keys = ['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+
 		if (callback)
 			callback(this.value);
 
 		builder.callback('edit', 'change', edit, this.value, builder);
-		setTimeout(function () { _sendSimpleSelection(edit, builder); }, 0);
+		if (!nav_keys.includes(e.code)) {
+			setTimeout(function () { _sendSimpleSelection(edit, builder); }, 0);
+		}
 	}
 
 	edit.addEventListener('keyup', _keyupChangeHandler);
