@@ -192,7 +192,9 @@ class TopToolbar extends JSDialog.Toolbar {
 					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: '.uno:SpacePara2'},
 					{type: 'separator'},
 					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: '.uno:ParaspaceIncrease'},
-					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: '.uno:ParaspaceDecrease'}
+					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: '.uno:ParaspaceDecrease'},
+					{type: 'separator'},
+					{id: 'paragraphdialog', text: _UNO('.uno:ParagraphDialog'), uno: '.uno:ParagraphDialog'}
 				],
 			},
 			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText', icon: 'compact_wraptext.svg'}
