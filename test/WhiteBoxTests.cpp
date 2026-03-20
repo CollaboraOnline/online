@@ -623,47 +623,47 @@ void WhiteBoxTests::testTileData()
     data.appendBlob(44, "Dbaa", 4);
     LOK_ASSERT_EQUAL(size_t(6), data.size());
 
-    LOK_ASSERT_EQUAL(data.isPng(), false);
+    LOK_ASSERT_EQUAL(false, data.isPng());
 
     // validation.
-    LOK_ASSERT_EQUAL(data.isValid(), true);
+    LOK_ASSERT_EQUAL(true, data.isValid());
     data.invalidate();
-    LOK_ASSERT_EQUAL(data.isValid(), false);
+    LOK_ASSERT_EQUAL(false, data.isValid());
 
     std::vector<char> out;
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 128), false);
-    LOK_ASSERT_EQUAL(out.size(), size_t(0));
+    LOK_ASSERT_EQUAL(false, data.appendChangesSince(out, 128));
+    LOK_ASSERT_EQUAL(size_t(0), out.size());
 
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 42), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 42));
     LOK_ASSERT_EQUAL_STR("foobaa", Util::toString(out));
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 43));
     LOK_ASSERT_EQUAL_STR("baa", Util::toString(out));
 
     // append another delta
     data.appendBlob(47, "Dbaz", 4);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 1), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 1));
     LOK_ASSERT_EQUAL_STR("foobaabaz", Util::toString(out));
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 43));
     LOK_ASSERT_EQUAL_STR("baabaz", Util::toString(out));
 
     // append an empty delta
     data.appendBlob(52, "D", 1);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
-    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
-    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(52));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
+    LOK_ASSERT_EQUAL(size_t(4), data._wids.size());
+    LOK_ASSERT_EQUAL(unsigned(52), data._wids.back());
 
     // the next empty delta should pack into the last one
     data.appendBlob(54, "D", 1);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
-    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
-    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(54));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
+    LOK_ASSERT_EQUAL(size_t(4), data._wids.size());
+    LOK_ASSERT_EQUAL(unsigned(54), data._wids.back());
 }
 
 void WhiteBoxTests::testRectanglesIntersect()
