@@ -560,7 +560,6 @@ noinst_HEADERS = \
                  test/HttpTestServer.hpp \
                  test/KitPidHelpers.hpp \
                  test/UnitHTTP.hpp \
-                 test/UnitTimeoutBase.hpp \
                  test/UnitWSDClient.hpp \
                  test/WOPIUploadConflictCommon.hpp \
                  test/WebSocketSession.hpp \
