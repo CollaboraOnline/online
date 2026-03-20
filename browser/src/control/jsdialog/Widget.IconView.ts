@@ -82,11 +82,20 @@ function _iconViewEntry(
 	const ariaStateAttr = isMultiSelect ? 'aria-selected' : 'aria-checked';
 
 	if (entry.separator && entry.separator === true) {
-		window.L.DomUtil.create(
-			'hr',
-			builder.options.cssClass + ' ui-iconview-separator',
-			parentContainer,
-		);
+		if (entry.text) {
+			const label = window.L.DomUtil.create(
+				'div',
+				builder.options.cssClass + ' ui-iconview-separator label',
+				parentContainer,
+			);
+			label.innerText = entry.text;
+		} else {
+			window.L.DomUtil.create(
+				'hr',
+				builder.options.cssClass + ' ui-iconview-separator',
+				parentContainer,
+			);
+		}
 		return;
 	}
 
@@ -431,7 +440,10 @@ JSDialog.iconView = function (
 			data?.entries?.length > 0
 				? !data.entries.some((entry) => entry.selected === true)
 				: false;
-		if (shouldSelectFirstEntry) data.entries[0].selected = true;
+		if (shouldSelectFirstEntry) {
+			const firstValid = data.entries.find((entry) => !entry.separator);
+			if (firstValid) firstValid.selected = true;
+		}
 
 		for (const i in data.entries) {
 			_iconViewEntry(iconview, data, data.entries[i], builder);
