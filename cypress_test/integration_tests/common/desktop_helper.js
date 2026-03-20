@@ -297,9 +297,16 @@ function insertComment(text = 'some text0', save = true) {
 		cy.cGet('#menu-insertcomment').click();
 	}
 
-	// Use .last() because there might be multiple comments
-	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').should('not.have.attr','disabled');
-	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').type(text);
+	// Wait for the annotation to be created
+	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').should('exist');
+	// Wait for core to process and layouting to settle so the textarea has its final ID
+	cy.getFrameWindow().then(function(win) {
+		return helper.processToIdle(win);
+	});
+
+	// Use class selector since processToIdle may have caused the textarea ID to change from 'new' to a number
+	cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation .cool-annotation-textarea').should('not.have.attr','disabled');
+	cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation .cool-annotation-textarea').type(text);
 	// Check that comment exists
 	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-textarea').should('contain',text);
 
@@ -313,10 +320,9 @@ function insertComment(text = 'some text0', save = true) {
 
 		// Wait for the animation to stop
 		cy.cGet('.cool-annotation').last({log: false}).invoke('attr','style').should('not.contain','transition');
-		// Need to wait even longer so that modify and reply work
-		// TODO: Find out why newly typed text gets overwritten, find
-		// a way to query for it, and wait only in relevant tests
-		cy.wait(500);
+		cy.getFrameWindow().then(function(win) {
+			return helper.processToIdle(win);
+		});
 	} else {
 		cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-content').should('not.be.visible');
 		cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation').should('be.visible');
