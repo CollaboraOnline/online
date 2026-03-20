@@ -18,6 +18,7 @@ class ContextToolbar extends JSDialogComponent {
 	container!: HTMLElement;
 	initialized: boolean = false;
 	lastIinputEvent?: any = {};
+	pendingTask: TaskId | null = null;
 	pendingShow: boolean = false;
 	// roughly twice the height(76px) of default context toolbar in each direction from boundary
 	disappearingBoundary: number = 150; // px
@@ -66,7 +67,12 @@ class ContextToolbar extends JSDialogComponent {
 	showContextToolbarImpl(): void {
 		this.pendingShow = false;
 
-		app.layoutingService.appendLayoutingTask(() => {
+		if (this.pendingTask)
+			app.layoutingService.cancelLayoutingTask(this.pendingTask);
+
+		this.pendingTask = app.layoutingService.appendLayoutingTask(() => {
+			this.pendingTask = null;
+
 			if (!this.initialized) {
 				const contextToolbarItems = this.getWriterTextContext();
 
@@ -89,7 +95,11 @@ class ContextToolbar extends JSDialogComponent {
 	hideContextToolbar(): void {
 		document.removeEventListener('pointermove', this.pointerMove);
 
-		app.layoutingService.appendLayoutingTask(() => {
+		if (this.pendingTask)
+			app.layoutingService.cancelLayoutingTask(this.pendingTask);
+
+		this.pendingTask = app.layoutingService.appendLayoutingTask(() => {
+			this.pendingTask = null;
 			this.showHideToolbar(false);
 		});
 	}
