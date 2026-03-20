@@ -361,6 +361,11 @@ body {
 	height: 100%;
 }
 
+/* setup it statuc so we don't flicker to resize canvas */
+#sidebar-dock-wrapper {
+	width: 329px;
+}
+
 #sidebar-dock-wrapper.visible {
 	display: block;
 	/* synchronize time with Sidebar.ts setting focus */
