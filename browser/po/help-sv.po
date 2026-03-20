@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0200\n"
-"PO-Revision-Date: 2026-03-05 08:10+0000\n"
+"PO-Revision-Date: 2026-03-11 14:40+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "help/sv/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -3019,9 +3019,9 @@ msgid ""
 ">{productname}</span> Impress lets you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
-"<span class=\"def\"> Bildlayouter:</span> <span class=\"productname\""
-">{productname}</span> Impress låter dig ändra bildlayouten. Välj önskad "
-"bildlayout i rullgardinsmenyns layoutlista."
+"<span class=\"def\"> Bildlayouter:</span> <span class=\"productname\">"
+"{productname}</span> Impress låter dig ändra bildlayouten. Välj önskad "
+"bildlayout från rullgardinsmenyns layoutlista."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
@@ -3428,7 +3428,7 @@ msgstr "stil för sida"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document?"
-msgstr "Hur ändrar jag sidorienteringen till liggande i mitt dokument"
+msgstr "Hur ändrar jag sidorienteringen till liggande i mitt dokument?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:727-7
 msgid ""
