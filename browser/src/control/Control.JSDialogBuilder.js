@@ -348,8 +348,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var str = '' + value;
 		if (this._decimal !== '.')
 			str = str.replace('.', this._decimal);
-		if (unit)
-			return str + unit;
+		if (unit) {
+			var noSpace = (unit === '°' || unit === '"' || unit === '\u2033' || unit === '%');
+			return noSpace ? str + unit : str + ' ' + unit;
+		}
 		return str;
 	},
 
