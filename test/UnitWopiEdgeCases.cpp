@@ -15,11 +15,14 @@
 
 #include <config.h>
 
-#include <WopiTestServer.hpp>
-#include <Unit.hpp>
-#include <lokassert.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <test/WopiTestServer.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
+
+#include <csignal>
 
 using namespace std::literals;
 
@@ -138,6 +141,104 @@ public:
     }
 };
 
-UnitBase* unit_create_wsd(void) { return new UnitWopiOwnertermination(); }
+/// Test crashing a document after modifications.
+class UnitWOPICrashModified : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose) _phase;
+
+    /// The PID of the Kit process.
+    int _pid;
+
+public:
+    UnitWOPICrashModified()
+        : WopiTestServer("UnitWOPICrashModified")
+        , _phase(Phase::Load)
+        , _pid(-1)
+    {
+    }
+
+    void kitSegfault(int /* count */) override { /* ignore */ }
+
+    std::unique_ptr<http::Response> assertPutFileRequest(const Poco::Net::HTTPRequest&) override
+    {
+        failTest("Unexpected PutFile when there should be no file on disk to upload");
+
+        return nullptr;
+    }
+
+    void onDocBrokerAttachKitProcess(const std::string& docBroker, int pid) override
+    {
+        TST_LOG("DocBroker [" << docBroker << "] attached to pid: " << pid);
+        _pid = pid;
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        TST_LOG("Modifying");
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitDocClose);
+
+        TST_LOG("Killing Kit with PID " << _pid);
+        if (kill(_pid, SIGKILL) == -1)
+        {
+            const int onrre = errno;
+            TST_LOG("kill(" << _pid << ", SIGKILL) failed: " << Util::symbolicErrno(onrre) << ": "
+                            << std::strerror(onrre));
+        }
+
+        return true;
+    }
+
+    bool onDataLoss(const std::string& reason) override
+    {
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+        passTest("Finished with the data-loss check: " + reason);
+        return failed();
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                TST_LOG("Load: initWebsocket.");
+                initWebsocket("/wopi/files/0?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
+            case Phase::WaitDocClose:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
+{
+    return new UnitBase*[3]{ new UnitWopiOwnertermination(), new UnitWOPICrashModified(), nullptr };
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

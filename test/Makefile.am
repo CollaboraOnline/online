@@ -93,14 +93,13 @@ all_la_unit_tests = \
 	unit-wopi-versionrestore.la \
 	unit-wopi-transient-connect-fault.la \
 	unit-paste.la \
-	unit-wopi-ownertermination.la \
+	unit-wopi-edge-cases.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-any-input.la \
 	unit-clipboard-close.la \
 	unit-storage.la \
 	unit-convert-to-password-protected.la \
-	unit_wopi_renamefile.la \
-	unit-wopi-crash-modified.la \
+	unit-wopi-renamefile.la \
 	unit-wopi-saveas.la \
 	unit-kit-child-session.la \
 	unit-socket-failure.la \
@@ -275,12 +274,10 @@ unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.
 unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
 unit_wopi_async_slow_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_crash_modified_la_SOURCES = UnitWOPICrashModified.cpp
-unit_wopi_crash_modified_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_ownertermination_la_SOURCES = UnitWopiOwnertermination.cpp
-unit_wopi_ownertermination_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_edge_cases_la_SOURCES = UnitWopiEdgeCases.cpp
+unit_wopi_edge_cases_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_versionrestore_la_SOURCES = UnitWOPIVersionRestore.cpp
 unit_wopi_versionrestore_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
