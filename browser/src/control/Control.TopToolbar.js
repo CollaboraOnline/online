@@ -188,6 +188,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'menubutton',  id: 'linespacing',  command: 'linespacing', noLabel: true, text: _UNO('.uno:FormatSpacingMenu'), visible: false, lockUno: '.uno:FormatSpacingMenu', icon: 'compact_linespacing.svg',
 				menu: [
 					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: '.uno:SpacePara1'},
+					{id: 'spacepara115', text: _UNO('.uno:SpacePara115'), uno: '.uno:SpacePara115'},
 					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: '.uno:SpacePara15'},
 					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: '.uno:SpacePara2'},
 					{type: 'separator'},
