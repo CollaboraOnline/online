@@ -25,13 +25,15 @@
 
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 /// Base test suite class for timeout and connection limit using HTTP and WS sessions.
 class UnitTimeoutBase0 : public UnitWSD
 {
 public:
-    bool assertMessage(http::WebSocketSession &session, const std::string expectedPrefix, const std::string expectedId)
+    bool assertMessage(http::WebSocketSession& session, const std::string_view expectedPrefix,
+                       const std::string_view expectedId)
     {
         std::vector<char> res = session.poll(
             [&](const std::vector<char>& message) -> bool
@@ -71,42 +73,71 @@ public:
             },
             std::chrono::seconds(10), testname);
         return !res.empty();
-    };
+    }
 
-    template<typename SessionType>
-    bool pollDisconnected(std::chrono::microseconds timeout, SessionType &session, SocketPoll *syncSocketPoller=nullptr)
+    template <typename SessionType>
+    bool pollDisconnected(std::chrono::microseconds timeout, SessionType& session)
     {
         std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
         std::chrono::steady_clock::time_point t1 = t0;
         while( t1 - t0 < timeout && session.isConnected() )
         {
-            if( nullptr != syncSocketPoller )
-                syncSocketPoller->poll(std::chrono::microseconds(1000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
             t1 = std::chrono::steady_clock::now();
         }
         return !session.isConnected();
     }
 
-    template<typename SessionType>
-    bool pollDisconnected(std::chrono::microseconds timeout, std::vector<std::shared_ptr<SessionType>> &sessions, SocketPoll *syncSocketPoller=nullptr)
+    static void shutdownSession(std::shared_ptr<http::Session>& session)
     {
-        std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
-        std::chrono::steady_clock::time_point t1 = t0;
-        while( 0<sessions.size() && t1 - t0 < timeout )
-        {
-            if( nullptr != syncSocketPoller )
-                syncSocketPoller->poll(std::chrono::microseconds(1000));
-            for (auto iter=sessions.begin(); iter != sessions.end(); )
+        session->asyncShutdown();
+    }
+
+    static void shutdownSession(std::shared_ptr<http::WebSocketSession>& session)
+    {
+        session->shutdownWS();
+    }
+
+    template<typename SessionType>
+    TestResult shutdownAndCleanup(
+        std::vector<std::shared_ptr<SessionType>>& sessions,
+        std::vector<std::shared_ptr<TerminatingPoll>>& socketPollers,
+        size_t maxConnections, size_t connectionsCount, size_t connectionLimit,
+        bool useOwnPoller, bool pollerOnClientThread)
+    {
+        size_t connected = 0;
+        for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
+            std::shared_ptr<SessionType>& session = sessions[sockIdx];
+            TST_LOG("SessionA " << sockIdx << ": connected " << session->isConnected());
+            if( session->isConnected() )
             {
-                std::shared_ptr<SessionType>& session = *iter;
-                if( !session->isConnected() )
-                    iter = sessions.erase(iter);
-                else
-                    ++iter;
+                ++connected;
+                shutdownSession(session);
             }
-            t1 = std::chrono::steady_clock::now();
+            if( useOwnPoller ) {
+                const std::shared_ptr<TerminatingPoll>& socketPoller = socketPollers[sockIdx];
+                if( pollerOnClientThread )
+                {
+                    socketPoller->closeAllSockets();
+                } else {
+                    socketPoller->joinThread();
+                }
+            }
         }
-        return sessions.empty();
+        TST_LOG("Test: Connected: " << connected << " / " << connectionsCount << ", limit "
+                                    << connectionLimit);
+        LOK_ASSERT(maxConnections-1 <= connected && connected <= maxConnections+1);
+
+        TST_LOG("Clearing Sessions: " << testname);
+        sessions.clear();
+        TST_LOG("Clearing Poller: " << testname);
+        socketPollers.clear();
+        // TCP Connection Count: Just an estimation, no locking on server side
+        TST_LOG("TCP Connection Count: "
+                                         << StreamSocket::getExternalConnectionCount() << " / "
+                                         << net::Defaults.maxExtConnections);
+        TST_LOG("Ending Test: " << testname);
+        return TestResult::Ok;
     }
 
     UnitTimeoutBase0(const std::string& testname_)
@@ -184,40 +215,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
     {
         LOK_ASSERT_FAIL(exc.displayText());
     }
-    size_t connected = 0;
-    for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-        std::shared_ptr<http::Session> &session = sessions[sockIdx];
-        TST_LOG("SessionA " << sockIdx << ": connected " << session->isConnected());
-        if( session->isConnected() )
-        {
-            ++connected;
-            session->asyncShutdown();
-        }
-        if( UseOwnPoller ) {
-            std::shared_ptr<TerminatingPoll> socketPoller = socketPollers[sockIdx];
-            if( PollerOnClientThread )
-            {
-                socketPoller->closeAllSockets();
-            } else {
-                socketPoller->joinThread();
-            }
-        }
-    }
-    TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit "
-                                    << connectionLimit);
-    // LOK_ASSERT_EQUAL(MaxConnections, connected);
-    LOK_ASSERT(MaxConnections-1 <= connected && connected <= MaxConnections+1);
-
-    TST_LOG("Clearing Sessions: " << testname);
-    sessions.clear();
-    TST_LOG("Clearing Poller: " << testname);
-    socketPollers.clear();
-    // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: "
-                                     << StreamSocket::getExternalConnectionCount() << " / "
-                                     << net::Defaults.maxExtConnections);
-    TST_LOG("Ending Test: " << testname);
-    return TestResult::Ok;
+    return shutdownAndCleanup(sessions, socketPollers, MaxConnections, connectionsCount,
+                              connectionLimit, UseOwnPoller, PollerOnClientThread);
 }
 
 /// Test the native WebSocket control-frame ping/pong facility -> No Timeout!
@@ -291,41 +290,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
     TST_LOG("Test: X01 Connected: " << connected0 << " / " << connectionsCount << ", limit "
                                     << connectionLimit);
 
-    size_t connected = 0;
-    for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-        std::shared_ptr<http::WebSocketSession> wsSession = sessions[sockIdx];
-        TST_LOG("SessionA " << sockIdx << ": connected " << wsSession->isConnected());
-        if( wsSession->isConnected() )
-        {
-            ++connected;
-            // wsSession->asyncShutdown();
-            wsSession->shutdownWS();
-        }
-        if( UseOwnPoller ) {
-            std::shared_ptr<TerminatingPoll> socketPoller = socketPollers[sockIdx];
-            if( PollerOnClientThread )
-            {
-                socketPoller->closeAllSockets();
-            } else {
-                socketPoller->joinThread();
-            }
-        }
-    }
-    // 5 x Limiter hits occurred!
-    TST_LOG("Test: X02 Connected: " << connected << " / " << connectionsCount << ", limit "
-                                    << connectionLimit);
-    LOK_ASSERT(maxConnections-1 <= connected && connected <= maxConnections+1);
-
-    TST_LOG("Clearing Sessions: " << testname);
-    sessions.clear();
-    TST_LOG("Clearing Poller: " << testname);
-    socketPollers.clear();
-    // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: "
-                                     << StreamSocket::getExternalConnectionCount() << " / "
-                                     << net::Defaults.maxExtConnections);
-    TST_LOG("Ending Test: " << testname);
-    return TestResult::Ok;
+    return shutdownAndCleanup(sessions, socketPollers, maxConnections, connectionsCount,
+                              connectionLimit, UseOwnPoller, PollerOnClientThread);
 }
 
 /// Tests the WSD chat ping/pong facility, where client sends the ping.
@@ -384,7 +350,7 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
         }
     }
     for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-        std::shared_ptr<http::WebSocketSession> wsSession = sessions[sockIdx];
+        const std::shared_ptr<http::WebSocketSession>& wsSession = sessions[sockIdx];
         TST_LOG("Test: XX3a " << testname << '[' << sockIdx << "]: connected "
                               << wsSession->isConnected());
         if( wsSession->isConnected() )
@@ -398,40 +364,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
         }
     }
 
-    size_t connected = 0;
-    for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-        std::shared_ptr<http::WebSocketSession> wsSession = sessions[sockIdx];
-        TST_LOG("SessionA " << sockIdx << ": connected " << wsSession->isConnected());
-        if( wsSession->isConnected() )
-        {
-            ++connected;
-            wsSession->shutdownWS();
-        }
-        if( UseOwnPoller ) {
-            std::shared_ptr<TerminatingPoll> socketPoller = socketPollers[sockIdx];
-            if( PollerOnClientThread )
-            {
-                socketPoller->closeAllSockets();
-            } else {
-                socketPoller->joinThread();
-            }
-        }
-    }
-    // 5 x Limiter hits occurred!
-    TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit "
-                                    << connectionLimit);
-    LOK_ASSERT(maxConnections-1 <= connected && connected <= maxConnections+1);
-
-    TST_LOG("Clearing Sessions: " << testname);
-    sessions.clear();
-    TST_LOG("Clearing Poller: " << testname);
-    socketPollers.clear();
-    // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: "
-                                     << StreamSocket::getExternalConnectionCount() << " / "
-                                     << net::Defaults.maxExtConnections);
-    TST_LOG("Ending Test: " << testname);
-    return TestResult::Ok;
+    return shutdownAndCleanup(sessions, socketPollers, maxConnections, connectionsCount,
+                              connectionLimit, UseOwnPoller, PollerOnClientThread);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
