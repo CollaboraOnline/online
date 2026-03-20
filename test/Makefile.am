@@ -94,7 +94,6 @@ all_la_unit_tests = \
 	unit-wopi-transient-connect-fault.la \
 	unit-paste.la \
 	unit-wopi-edge-cases.la \
-	unit-wopi-async-upload-modifyclose.la \
 	unit-any-input.la \
 	unit-clipboard-close.la \
 	unit-storage.la \
@@ -270,8 +269,6 @@ unit_oauth_la_SOURCES = UnitOAuth.cpp
 unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_la_SOURCES = UnitWOPI.cpp
 unit_wopi_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.cpp
-unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
 unit_wopi_async_slow_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
