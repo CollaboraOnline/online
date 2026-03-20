@@ -1015,6 +1015,11 @@ class TreeViewControl {
 			return;
 		}
 
+		// Remember if the focused element is inside this treeview,
+		// because clearing selections removes tabindex which drops
+		// focus to BODY for non-natively-focusable elements.
+		const hadFocus = this._container.contains(document.activeElement);
+
 		// Clear existing selections
 		this._container
 			.querySelectorAll('.ui-treeview-entry.selected')
@@ -1024,7 +1029,7 @@ class TreeViewControl {
 
 		// Select the target row
 		const checkbox = rowElement.querySelector('input') as HTMLInputElement;
-		this.selectEntry(rowElement, checkbox, shouldFocus);
+		this.selectEntry(rowElement, checkbox, shouldFocus || hadFocus);
 	}
 
 	unselectEntry(item: HTMLElement) {
