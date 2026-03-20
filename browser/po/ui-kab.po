@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-01-19 18:01+0000\n"
+"PO-Revision-Date: 2026-03-14 21:31+0000\n"
 "Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -377,7 +377,7 @@ msgstr "URL n twila yettwabḍan ulac-it deg imuttiyen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Access token is missing in initial variables."
-msgstr "Ajiṭun n unekcum ulac-it deg yimuttiyen imezwura."
+msgstr "Tiddest n unekcum ulac-itt deg yimuttiyen imezwura."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:292
 msgid ""
@@ -924,7 +924,7 @@ msgstr "Isemli ad yettwasenkez ɣer uqeddac amaynut. Ales akka cwiṭ…"
 
 #: js/global.js:1766
 msgid "Failed to get RouteToken from controller"
-msgstr "Yecceḍ wawway n ujiṭun n ubrid seg usenqad"
+msgstr "Yecceḍ wawway n tiddest n webrid seg usenqad"
 
 #: src/app/Debug.ts:148
 msgid "Debug Tools"
