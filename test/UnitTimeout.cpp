@@ -104,6 +104,43 @@ public:
         return !session.isConnected();
     }
 
+    std::shared_ptr<SocketPoll> createPoller(std::vector<std::shared_ptr<TerminatingPoll>>& pollers,
+                                             bool useOwnPoller, bool pollerOnClientThread)
+    {
+        if (useOwnPoller)
+        {
+            auto poller = std::make_shared<TerminatingPoll>(testname);
+            if (pollerOnClientThread)
+            {
+                poller->runOnClientThread();
+            }
+            else
+            {
+                poller->startThread();
+            }
+
+            pollers.push_back(poller);
+            return poller;
+        }
+
+        return UnitBase::socketPoll();
+    }
+
+    void assertHttpResponse(const http::Session& session, const http::Response& response)
+    {
+        if (session.isConnected())
+        {
+            LOK_ASSERT_EQUAL(http::StatusCode::OK, response.statusCode());
+            LOK_ASSERT(http::Header::ConnectionToken::None ==
+                       response.header().getConnectionToken());
+            LOK_ASSERT(0 < response.header().getContentLength());
+        }
+        else
+        {
+            LOK_ASSERT_EQUAL(http::StatusCode::None, response.statusCode());
+        }
+    }
+
     static void shutdownSession(std::shared_ptr<http::Session>& session)
     {
         session->asyncShutdown();
@@ -131,6 +168,7 @@ public:
                 ++connected;
                 shutdownSession(session);
             }
+
             if (useOwnPoller)
             {
                 const std::shared_ptr<TerminatingPoll>& socketPoller = socketPollers[sockIdx];
@@ -168,24 +206,32 @@ public:
 /// Base test suite class for timeout and connection limit using HTTP and WS sessions.
 class UnitTimeoutBase1 : public UnitTimeoutBase0
 {
-public:
-    TestResult testHttp(size_t connectionLimit, size_t connectionsCount);
-    TestResult testWSPing(size_t connectionLimit, size_t connectionsCount);
-    TestResult testWSDChatPing(size_t connectionLimit, size_t connectionsCount);
+    const size_t _connectionLimit;
+    const size_t _connectionCount;
 
-    UnitTimeoutBase1(const std::string& testname_)
+public:
+    TestResult testHttp();
+    TestResult testWSPing();
+    TestResult testWSDChatPing();
+
+    UnitTimeoutBase1(const std::string& testname_, size_t connectionLimit, size_t connectionCount)
         : UnitTimeoutBase0(testname_)
+        , _connectionLimit(connectionLimit)
+        , _connectionCount(connectionCount)
     {
     }
+
+    size_t connectionLimit() const { return _connectionLimit; }
+
+    void invokeWSDTest() override;
 };
 
-inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLimit,
-                                                       const size_t connectionsCount)
+UnitBase::TestResult UnitTimeoutBase1::testHttp()
 {
     setTestname(__func__);
     TST_LOG("Starting Test: " << testname);
 
-    const size_t MaxConnections = std::min(connectionsCount, connectionLimit);
+    const size_t MaxConnections = std::min(_connectionCount, _connectionLimit);
     const std::string documentURL = "/favicon.ico";
 
     constexpr bool UseOwnPoller = true;
@@ -195,22 +241,10 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
 
     try
     {
-        for (size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx)
+        for (size_t sockIdx = 0; sockIdx < _connectionCount; ++sockIdx)
         {
-            std::shared_ptr<TerminatingPoll> socketPoller;
-            if (UseOwnPoller)
-            {
-                socketPoller = std::make_shared<TerminatingPoll>(testname);
-                if (PollerOnClientThread)
-                {
-                    socketPoller->runOnClientThread();
-                }
-                else
-                {
-                    socketPoller->startThread();
-                }
-                socketPollers.push_back(socketPoller);
-            }
+            std::shared_ptr<SocketPoll> socketPoller =
+                createPoller(socketPollers, UseOwnPoller, PollerOnClientThread);
 
             std::shared_ptr<http::Session> session =
                 http::Session::create(helpers::getTestServerURI());
@@ -218,42 +252,29 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
             TST_LOG("Test: " << testname << '[' << sockIdx << "]: `" << documentURL << '`');
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
-                session->syncRequest(request, UseOwnPoller ? *socketPoller : *socketPoll());
+                session->syncRequest(request, *socketPoller);
             TST_LOG("Response: " << response->header().toString());
             TST_LOG("Response size: " << testname << '[' << sockIdx << "]: `" << documentURL
                                       << "`: " << response->header().getContentLength());
-            if (session->isConnected())
-            {
-                LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-                LOK_ASSERT_EQUAL(true, session->isConnected());
-                LOK_ASSERT(http::Header::ConnectionToken::None ==
-                           response->header().getConnectionToken());
-                LOK_ASSERT(0 < response->header().getContentLength());
-            }
-            else
-            {
-                // connection limit hit
-                LOK_ASSERT_EQUAL(http::StatusCode::None, response->statusCode());
-                LOK_ASSERT_EQUAL(false, session->isConnected());
-            }
+            assertHttpResponse(*session, *response);
         }
     }
     catch (const Poco::Exception& exc)
     {
         LOK_ASSERT_FAIL(exc.displayText());
     }
-    return shutdownAndCleanup(sessions, socketPollers, MaxConnections, connectionsCount,
-                              connectionLimit, UseOwnPoller, PollerOnClientThread);
+
+    return shutdownAndCleanup(sessions, socketPollers, MaxConnections, _connectionCount,
+                              _connectionLimit, UseOwnPoller, PollerOnClientThread);
 }
 
 /// Test the native WebSocket control-frame ping/pong facility -> No Timeout!
-inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connectionLimit,
-                                                         const size_t connectionsCount)
+UnitBase::TestResult UnitTimeoutBase1::testWSPing()
 {
     setTestname(__func__);
     TST_LOG("Starting Test: " << testname);
 
-    const size_t maxConnections = std::min(connectionsCount, connectionLimit);
+    const size_t maxConnections = std::min(_connectionCount, _connectionLimit);
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
@@ -263,29 +284,17 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
     std::vector<std::shared_ptr<http::WebSocketSession>> sessions;
 
     size_t connected0 = 0;
-    for (size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx)
+    for (size_t sockIdx = 0; sockIdx < _connectionCount; ++sockIdx)
     {
-        std::shared_ptr<TerminatingPoll> socketPoller;
-        if (UseOwnPoller)
-        {
-            socketPoller = std::make_shared<TerminatingPoll>(testname);
-            if (PollerOnClientThread)
-            {
-                socketPoller->runOnClientThread();
-            }
-            else
-            {
-                socketPoller->startThread();
-            }
-            socketPollers.push_back(socketPoller);
-        }
+        std::shared_ptr<SocketPoll> socketPoller =
+            createPoller(socketPollers, UseOwnPoller, PollerOnClientThread);
 
         std::shared_ptr<http::WebSocketSession> session =
             http::WebSocketSession::create(helpers::getTestServerURI());
         sessions.push_back(session);
         TST_LOG("Test: " << testname << '[' << sockIdx << "]: `" << documentURL << '`');
         http::Request req(documentURL);
-        session->asyncRequest(req, UseOwnPoller ? socketPoller : socketPoll());
+        session->asyncRequest(req, socketPoller);
         session->sendMessage("load url=" + documentURL);
 
         TST_LOG("Test: XX0 " << testname << '[' << sockIdx << "]: connected "
@@ -322,22 +331,21 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
             LOK_ASSERT_EQUAL(false, session->isConnected());
         }
     }
-    TST_LOG("Test: X01 Connected: " << connected0 << " / " << connectionsCount << ", limit "
-                                    << connectionLimit);
+    TST_LOG("Test: X01 Connected: " << connected0 << " / " << _connectionCount << ", limit "
+                                    << _connectionLimit);
 
-    return shutdownAndCleanup(sessions, socketPollers, maxConnections, connectionsCount,
-                              connectionLimit, UseOwnPoller, PollerOnClientThread);
+    return shutdownAndCleanup(sessions, socketPollers, maxConnections, _connectionCount,
+                              _connectionLimit, UseOwnPoller, PollerOnClientThread);
 }
 
 /// Tests the WSD chat ping/pong facility, where client sends the ping.
 /// See: https://github.com/CollaboraOnline/online/blob/master/wsd/protocol.txt/
-inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t connectionLimit,
-                                                              const size_t connectionsCount)
+UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing()
 {
     setTestname(__func__);
     TST_LOG("Starting Test: " << testname);
 
-    const size_t maxConnections = std::min(connectionsCount, connectionLimit);
+    const size_t maxConnections = std::min(_connectionCount, _connectionLimit);
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
@@ -346,29 +354,17 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
     std::vector<std::shared_ptr<TerminatingPoll>> socketPollers;
     std::vector<std::shared_ptr<http::WebSocketSession>> sessions;
 
-    for (size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx)
+    for (size_t sockIdx = 0; sockIdx < _connectionCount; ++sockIdx)
     {
-        std::shared_ptr<TerminatingPoll> socketPoller;
-        if (UseOwnPoller)
-        {
-            socketPoller = std::make_shared<TerminatingPoll>(testname);
-            if (PollerOnClientThread)
-            {
-                socketPoller->runOnClientThread();
-            }
-            else
-            {
-                socketPoller->startThread();
-            }
-            socketPollers.push_back(socketPoller);
-        }
+        std::shared_ptr<SocketPoll> socketPoller =
+            createPoller(socketPollers, UseOwnPoller, PollerOnClientThread);
 
         std::shared_ptr<http::WebSocketSession> session =
             http::WebSocketSession::create(helpers::getTestServerURI());
         sessions.push_back(session);
         TST_LOG("Test: " << testname << '[' << sockIdx << "]: `" << documentURL << '`');
         http::Request req(documentURL);
-        session->asyncRequest(req, UseOwnPoller ? socketPoller : socketPoll());
+        session->asyncRequest(req, socketPoller);
         session->sendMessage("load url=" + documentURL);
 
         TST_LOG("Test: XX0 " << testname << '[' << sockIdx << "]: connected "
@@ -392,7 +388,7 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
             // LOK_ASSERT_EQUAL(false, session->isConnected());
         }
     }
-    for (size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx)
+    for (size_t sockIdx = 0; sockIdx < _connectionCount; ++sockIdx)
     {
         const std::shared_ptr<http::WebSocketSession>& wsSession = sessions[sockIdx];
         TST_LOG("Test: XX3a " << testname << '[' << sockIdx << "]: connected "
@@ -408,8 +404,27 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
         }
     }
 
-    return shutdownAndCleanup(sessions, socketPollers, maxConnections, connectionsCount,
-                              connectionLimit, UseOwnPoller, PollerOnClientThread);
+    return shutdownAndCleanup(sessions, socketPollers, maxConnections, _connectionCount,
+                              _connectionLimit, UseOwnPoller, PollerOnClientThread);
+}
+
+void UnitTimeoutBase1::invokeWSDTest()
+{
+    UnitBase::TestResult result;
+
+    result = testHttp();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testWSPing();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testWSDChatPing();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    exitTest(TestResult::Ok);
 }
 
 /// Test suite class for inactivity across WS and Http.
@@ -437,7 +452,7 @@ public:
     void invokeWSDTest() override;
 };
 
-inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivityTO)
+UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivityTO)
 {
     setTestname(__func__);
     TST_LOG("Starting Test: forceInactivityTO " << forceInactivityTO);
@@ -448,19 +463,11 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
     constexpr bool PollerOnClientThread = true;
     std::shared_ptr<SocketPoll> socketPoller;
     std::shared_ptr<http::Session> session;
+    std::vector<std::shared_ptr<TerminatingPoll>> socketPollers;
 
     try
     {
-        if (UseOwnPoller)
-        {
-            socketPoller = std::make_shared<TerminatingPoll>(testname);
-            if (PollerOnClientThread)
-                socketPoller->runOnClientThread();
-            else
-                socketPoller->startThread();
-        }
-        else
-            socketPoller = socketPoll();
+        socketPoller = createPoller(socketPollers, UseOwnPoller, PollerOnClientThread);
 
         session = http::Session::create(helpers::getTestServerURI());
         {
@@ -471,25 +478,16 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
             TST_LOG("Response1: " << response->header().toString());
             TST_LOG("Response1 size: `" << documentURL
                                         << "`: " << response->header().getContentLength());
-            if (session->isConnected())
-            {
-                LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-                LOK_ASSERT(http::Header::ConnectionToken::None ==
-                           response->header().getConnectionToken());
-                LOK_ASSERT(0 < response->header().getContentLength());
-            }
-            else
-            {
-                // connection limit hit
-                LOK_ASSERT_EQUAL(http::StatusCode::None, response->statusCode());
-            }
+            assertHttpResponse(*session, *response);
         }
+
         if (session->isConnected())
         {
             if (forceInactivityTO)
             {
                 std::this_thread::sleep_for(net::Defaults.inactivityTimeout * 2);
             }
+
             TST_LOG("Test Req2: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
@@ -497,24 +495,14 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
             TST_LOG("Response2: " << response->header().toString());
             TST_LOG("Response2 size: `" << documentURL
                                         << "`: " << response->header().getContentLength());
-            if (session->isConnected())
-            {
-                LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-                LOK_ASSERT(http::Header::ConnectionToken::None ==
-                           response->header().getConnectionToken());
-                LOK_ASSERT(0 < response->header().getContentLength());
-            }
-            else
-            {
-                // inactivity limit hit
-                LOK_ASSERT_EQUAL(http::StatusCode::None, response->statusCode());
-            }
+            assertHttpResponse(*session, *response);
         }
     }
     catch (const Poco::Exception& exc)
     {
         LOK_ASSERT_FAIL(exc.displayText());
     }
+
     size_t connected = 0;
     {
         TST_LOG("SessionA " << ": connected " << session->isConnected());
@@ -523,7 +511,8 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
             ++connected;
             session->asyncShutdown();
         }
-        if (UseOwnPoller)
+
+        if constexpr (UseOwnPoller)
         {
             if (PollerOnClientThread)
             {
@@ -594,7 +583,7 @@ UnitBase::TestResult UnitTimeoutInactivity::testWS(bool forceInactivityTO)
     if (session->isConnected())
     {
         ++connected;
-        session->asyncShutdown();
+        session->shutdownWS();
     }
 
     TST_LOG("Test: X01 Connected: " << connected);
@@ -632,54 +621,25 @@ void UnitTimeoutInactivity::invokeWSDTest()
     exitTest(TestResult::Ok);
 }
 
-/// Base test suite class for connection limit (limited) using HTTP and WS sessions.
+/// Test suite class for connection limit (limited) using HTTP and WS sessions.
 class UnitTimeoutConnections : public UnitTimeoutBase1
 {
-    const size_t _connectionLimit;
-    const size_t _connectionCount;
-
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
         net::Defaults.inactivityTimeout = 3600s;
-        net::Defaults.maxExtConnections = _connectionLimit;
+        net::Defaults.maxExtConnections = connectionLimit();
     }
 
 public:
     UnitTimeoutConnections(size_t connectionLimit, size_t connectionCount)
-        : UnitTimeoutBase1("UnitTimeoutConnections")
-        , _connectionLimit(connectionLimit)
-        , _connectionCount(connectionCount)
+        : UnitTimeoutBase1("UnitTimeoutConnections", connectionLimit, connectionCount)
     {
     }
-
-    void invokeWSDTest() override;
 };
 
-void UnitTimeoutConnections::invokeWSDTest()
-{
-    UnitBase::TestResult result = TestResult::Ok;
-
-    result = testHttp(_connectionLimit, _connectionCount);
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testWSPing(_connectionLimit, _connectionCount);
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testWSDChatPing(_connectionLimit, _connectionCount);
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    exitTest(TestResult::Ok);
-}
-
-/// Base test suite class for connection limit (no limits) using HTTP and WS sessions.
+/// Test suite class for connection limit (no limits) using HTTP and WS sessions.
 class UnitTimeoutNone : public UnitTimeoutBase1
 {
-    const size_t _connectionLimit;
-    const size_t _connectionCount;
-
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
         // Keep original values -> No timeout
@@ -687,33 +647,10 @@ class UnitTimeoutNone : public UnitTimeoutBase1
 
 public:
     UnitTimeoutNone(size_t connectionLimit, size_t connectionCount)
-        : UnitTimeoutBase1("UnitTimeoutNone")
-        , _connectionLimit(connectionLimit)
-        , _connectionCount(connectionCount)
+        : UnitTimeoutBase1("UnitTimeoutNone", connectionLimit, connectionCount)
     {
     }
-
-    void invokeWSDTest() override;
 };
-
-void UnitTimeoutNone::invokeWSDTest()
-{
-    UnitBase::TestResult result;
-
-    result = testHttp(_connectionLimit, _connectionCount);
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testWSPing(_connectionLimit, _connectionCount);
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testWSDChatPing(_connectionLimit, _connectionCount);
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    exitTest(TestResult::Ok);
-}
 
 UnitBase** unit_create_wsd_multi(void)
 {
