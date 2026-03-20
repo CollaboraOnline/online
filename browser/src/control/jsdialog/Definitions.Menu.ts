@@ -1695,6 +1695,12 @@ menuDefinitions.set('LineSpacingMenu', [
 		uno: 'SpacePara1',
 	},
 	{
+		id: 'spacepara115',
+		img: 'spacepara115',
+		text: _UNO('.uno:SpacePara115'),
+		uno: 'SpacePara115',
+	},
+	{
 		id: 'spacepara15',
 		img: 'spacepara15',
 		text: _UNO('.uno:SpacePara15'),
