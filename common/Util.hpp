@@ -1388,8 +1388,6 @@ int main(int argc, char**argv)
     // Wrap gmtime_r() which is not portable
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm);
 
-    /// Base-64 encode the given input.
-    std::string base64Encode(std::string_view input);
     /// Base-64 encode the given input, stripping CRLF endings, if any.
     std::string base64EncodeRemovingNewLines(std::string_view input);
     inline std::string base64EncodeRemovingNewLines(const std::vector<unsigned char>& input)
