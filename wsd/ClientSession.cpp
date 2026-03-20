@@ -2755,7 +2755,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             _canonicalViewId = CanonicalViewId(canonicalId);
         }
     }
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if (ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG) && !MOBILEAPP
     else if (tokens.equals(0, "status:") && !isViewLoaded())
     {
         std::ostringstream blockingCommandStatus;
@@ -2764,6 +2764,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                                                                                          : "false")
                               << " isLockedUser="
                               << (CommandControl::LockManager::isLockedUser() ? "true" : "false");
+#if ENABLE_DEBUG
+        // Enable testing feature restriction
+        const std::string restrictedCmds =
+            CommandControl::RestrictionManager::getRestrictedCommandListString();
+        if (!restrictedCmds.empty())
+            blockingCommandStatus << " test_restrictedCommands=" << restrictedCmds;
+#endif
         docBroker->forwardToChild(client_from_this(), blockingCommandStatus.str());
     }
 #endif

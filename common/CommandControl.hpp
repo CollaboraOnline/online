@@ -137,10 +137,9 @@ class RestrictionManager
     static bool _isRestrictedUser;
     static std::string RestrictedCommandListString;
 
-    static void generateRestrictedCommandList();
-
 public:
     RestrictionManager();
+    static void setRestrictedCommandList(const std::string& commandListString);
     static const std::unordered_set<std::string>& getRestrictedCommandList();
     static const std::string getRestrictedCommandListString();
 

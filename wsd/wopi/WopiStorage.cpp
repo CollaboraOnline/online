@@ -306,6 +306,13 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "IsUserRestricted", booleanFlag);
     CommandControl::RestrictionManager::setRestrictedUser(booleanFlag);
 
+#if ENABLE_DEBUG
+    // Enable testing feature restriction; always reset to avoid stale state from prior loads
+    std::string restrictedCommandList;
+    JsonUtil::findJSONValue(object, "Test_RestrictedCommandList", restrictedCommandList);
+    CommandControl::RestrictionManager::setRestrictedCommandList(restrictedCommandList);
+#endif
+
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
         _disableChangeTrackingRecord =
             (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
