@@ -136,7 +136,7 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
     {
         std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
         if (!sslVerifyResult.empty())
-            error += " code=" + Util::base64Encode(sslVerifyResult);
+            error += " code=" + Util::base64EncodeRemovingNewLines(sslVerifyResult);
     }
 #endif
     sendErrorAndShutdown(error, WebSocketHandler::StatusCodes::POLICY_VIOLATION);
