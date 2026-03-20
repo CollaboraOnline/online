@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-05 08:09+0000\n"
+"PO-Revision-Date: 2026-03-12 00:44+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.17-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1133,7 +1133,7 @@ msgstr "Kopiraj vse podatke o različici v angleškem jeziku"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Podatki o različici so kopirani"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3986,7 +3986,7 @@ msgstr "Posodabljanje citatov"
 #: src/control/Control.Zotero.js:1528
 #, fuzzy
 msgid "Unlinked citations"
-msgstr "Razveži citate"
+msgstr "Razvezani citati"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -5152,10 +5152,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Vaš brskalnik ima zelo omejen dostop do odložišča, zato raje uporabite "
+"naslednje tipke za bližnjice:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Izreži"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5231,7 +5233,7 @@ msgstr "Branje izbrane datoteke je spodletelo."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Trenutno ste v oglednem načinu"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5245,7 +5247,7 @@ msgstr "Prazna projekcija"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Vse prosojnice so skrite!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
