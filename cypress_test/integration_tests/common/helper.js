@@ -1369,6 +1369,36 @@ function waitForMapState(command, expectedValue) {
 	cy.log('<< waitForMapState - end');
 }
 
+// cy.realPress('Enter') via CDP bypasses preventDefault on keydown,
+// which causes implicit form submission and spurious button clicks
+// that don't happen with real keyboard input. This helper blocks
+// those side effects for a single keypress.
+function realPressInDialog(key) {
+	cy.cGet('.jsdialog-window form').then($form => {
+		// Block implicit form submission for this keypress
+		function blockSubmit(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+		$form[0].addEventListener('submit', blockSubmit, true);
+
+		// Block the close button from being clicked
+		var closeBtn = $form[0].querySelector('.ui-dialog-titlebar-close');
+		var origOnclick = closeBtn ? closeBtn.onclick : null;
+		if (closeBtn) {
+			closeBtn.onclick = function(e) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+			};
+		}
+
+		cy.realPress(key).then(() => {
+			$form[0].removeEventListener('submit', blockSubmit, true);
+			if (closeBtn) closeBtn.onclick = origOnclick;
+		});
+	});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1426,6 +1456,7 @@ module.exports.waitForTimers = waitForTimers;
 module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
 module.exports.getMatchedCSSRules = getMatchedCSSRules;
+module.exports.realPressInDialog = realPressInDialog;
 
 // Find all author CSS rules that match an element, with the source
 // stylesheet filename and the full selector for each matching rule.
