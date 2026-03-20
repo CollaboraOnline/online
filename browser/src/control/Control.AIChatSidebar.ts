@@ -976,6 +976,13 @@ namespace cool {
 		}
 
 		private async fetchSelectedMarkdown(): Promise<string> {
+			// Use annotated markdown for Calc to include row/column
+			// headers that give the LLM cell-address context.
+			const isCalc = app.map.getDocType() === 'spreadsheet';
+			const mimeType = isCalc
+				? 'application/x-libreoffice-markdown-annotated'
+				: 'text/markdown;charset=utf-8';
+
 			return new Promise((resolve, reject) => {
 				const cleanup = () => {
 					clearTimeout(timeout);
@@ -998,7 +1005,7 @@ namespace cool {
 							// If multiple MIME types, it comes as JSON
 							if (content.startsWith('{')) {
 								const json = JSON.parse(content);
-								const markdown = json['text/markdown;charset=utf-8'] || '';
+								const markdown = json[mimeType] || '';
 								resolve(markdown);
 							} else {
 								resolve(content);
@@ -1016,9 +1023,7 @@ namespace cool {
 
 				app.map.on('textselectioncontent', handleTextResponse);
 				app.map.on('complexselection', handleComplexResponse);
-				app.socket.sendMessage(
-					'gettextselection mimetype=text/markdown;charset=utf-8',
-				);
+				app.socket.sendMessage('gettextselection mimetype=' + mimeType);
 			});
 		}
 
