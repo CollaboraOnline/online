@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-01-08 09:39+0000\n"
-"Last-Translator: Jeff Huang <jeff.huang@ossii.com.tw>\n"
+"PO-Revision-Date: 2026-03-20 04:09+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1045,23 +1045,23 @@ msgstr "已儲存"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "最後由 %1 於 %2 編輯"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1：初始版本"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1：目前版本"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
-msgstr ""
+msgstr "初始版本"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
 msgid "Current Version"
-msgstr ""
+msgstr "目前版本"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1113,7 +1113,7 @@ msgstr "複製英文的所有版本資訊"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "已複製版本資訊"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -1201,7 +1201,7 @@ msgstr "新增"
 
 #: src/control/Control.BackstageView.ts:288
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: src/control/Control.BackstageView.ts:296
 #: src/control/Control.Notebookbar.js:633
@@ -1249,12 +1249,12 @@ msgstr "選項"
 
 #: src/control/Control.BackstageView.ts:407
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "從以下的其中一個範本開始新文件。"
 
 #: src/control/Control.BackstageView.ts:450
 #: src/control/Control.BackstageView.ts:453
 msgid "More Templates"
-msgstr ""
+msgstr "更多範本"
 
 #: src/control/Control.BackstageView.ts:479
 #: src/control/jsdialog/Widget.ColorPicker.ts:426
@@ -1267,11 +1267,11 @@ msgstr "最近開啟的文件"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "名稱"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
-msgstr ""
+msgstr "修改日期"
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
@@ -1375,7 +1375,7 @@ msgstr "空白文件"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "未命名"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1395,7 +1395,7 @@ msgstr "填入序列"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "文件名稱"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -1916,11 +1916,11 @@ msgstr "插入評註"
 
 #: src/control/Control.JSDialogBuilder.js:1956
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "切換下拉式選單"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "對話方塊下拉式選單"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1597
@@ -1929,7 +1929,7 @@ msgstr "下拉式選單"
 
 #: src/control/Control.JSDialogBuilder.js:1962
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "套用動作下拉式選單"
 
 #: src/control/Control.JSDialogBuilder.js:1989
 msgid "Open {name}"
@@ -3118,7 +3118,7 @@ msgstr "篩選按鈕"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
-msgstr ""
+msgstr "表格樣式"
 
 #: src/control/Control.NotebookbarCalc.js:1805
 #: src/control/Control.NotebookbarCalc.js:2553
@@ -3645,7 +3645,7 @@ msgstr "縮放至符合頁面寬度"
 
 #: src/control/Control.StatusBar.js:417
 msgid "The document is probably locked and has been opened as view-only"
-msgstr ""
+msgstr "該文件可能已被鎖定，且目前以唯讀模式開啟"
 
 #: src/control/Control.StatusBar.js:426
 msgid ""
@@ -3939,7 +3939,6 @@ msgid "Updating citations"
 msgstr "正在更新引用"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
 msgstr "解除連結引用"
 
@@ -5052,11 +5051,11 @@ msgstr "您的瀏覽器對剪貼簿的存取權限非常有限，請改用螢幕
 msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
-msgstr ""
+msgstr "您的瀏覽器對剪貼簿的存取權限非常有限，因此請使用以下鍵盤快捷鍵："
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "剪下"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5124,11 +5123,11 @@ msgstr "檔案上傳至伺服器失敗，狀態：{0}"
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "讀取選定的檔案失敗。"
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "您目前處於檢視模式"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5142,7 +5141,7 @@ msgstr "空的投影片放映"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "所有投影片皆已隱藏！"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
@@ -5240,7 +5239,7 @@ msgstr "下一張投影片"
 #: src/slideshow/PresenterConsole.js:35
 #: src/slideshow/SlideShowPresenter.ts:871
 msgid "Exchange"
-msgstr ""
+msgstr "交換"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Pause"
@@ -5255,7 +5254,6 @@ msgid "Resume"
 msgstr "繼續"
 
 #: src/slideshow/PresenterConsole.js:39
-#, fuzzy
 msgid "Present to all"
 msgstr "向全員簡報"
 
@@ -5294,11 +5292,11 @@ msgstr "請點按一下結束放映簡報……"
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "您目前位於第一張投影片"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
-msgstr ""
+msgstr "等待簡報者切換投影片"
 
 #: src/slideshow/SlideShowPresenter.ts:805
 msgid "End Show"
@@ -5314,129 +5312,128 @@ msgid "Enable Animations"
 msgstr "啟用動畫"
 
 #: src/slideshow/SlideShowPresenter.ts:1479
-#, fuzzy
 msgid "Stop Following"
 msgstr "停止追蹤"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "現代商務書信無襯線字"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "商務書信"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
-msgstr ""
+msgstr "現代商務書信有襯線字"
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
-msgstr ""
+msgstr "履歷"
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "現代樣式"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "簡易樣式"
 
 #: templates/templates.js:76
 msgid "Beehive"
-msgstr ""
+msgstr "蜂窩"
 
 #: templates/templates.js:86
 msgid "Blue Curve"
-msgstr ""
+msgstr "藍色曲線"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
-msgstr ""
+msgstr "藍圖計畫"
 
 #: templates/templates.js:106
 msgid "Candy"
-msgstr ""
+msgstr "糖果"
 
 #: templates/templates.js:116
 msgid "DNA"
-msgstr ""
+msgstr "DNA"
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "焦點"
 
 #: templates/templates.js:136
 msgid "Forestbird"
-msgstr ""
+msgstr "森鳥"
 
 #: templates/templates.js:146
 msgid "Freshes"
-msgstr ""
+msgstr "清新"
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
-msgstr ""
+msgstr "優雅灰"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
-msgstr ""
+msgstr "自由生長"
 
 #: templates/templates.js:176
 msgid "Inspiration"
-msgstr ""
+msgstr "靈感"
 
 #: templates/templates.js:186
 msgid "Lights"
-msgstr ""
+msgstr "光照"
 
 #: templates/templates.js:196
 msgid "Metropolis"
-msgstr ""
+msgstr "都會"
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
-msgstr ""
+msgstr "暗夜藍"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
-msgstr ""
+msgstr "自然插圖"
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "鉛筆"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "鋼琴"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "公事包"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "進度"
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "日落"
 
 #: templates/templates.js:276
 msgid "Vintage"
-msgstr ""
+msgstr "久釀"
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "鮮明"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "黃光好點子"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
