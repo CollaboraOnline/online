@@ -88,7 +88,7 @@ A11Y_TAG:=$(if $(findstring true,$(A11Y_ENABLE)),taga11yenabled,taga11ydisabled)
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
-export DEBUG=$(if $(ENABLE_LOGGING),$(FILTER_DEBUG),)
+export DEBUG:=$(or $(DEBUG),$(if $(ENABLE_LOGGING),$(FILTER_DEBUG)))
 endif
 
 if HAVE_LO_PATH
