@@ -184,6 +184,8 @@ JSDialog.notebookbarIconViewList = function (
 	};
 
 	const expanderCallback = () => {
+		JSDialog.CloseAllDropdowns();
+
 		JSDialog.OpenDropdown(
 			data.id,
 			rootNode,
