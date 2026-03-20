@@ -545,7 +545,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "blockingcommandstatus"))
     {
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if (ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG) && !MOBILEAPP
         return updateBlockingCommandStatus(tokens);
 #endif
     }
@@ -3465,7 +3465,7 @@ int ChildSession::getSpeed()
     return _cursorInvalidatedEvent.size();
 }
 
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if (ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG) && !MOBILEAPP
 bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
 {
     std::string lockStatus, restrictedStatus;
@@ -3481,7 +3481,20 @@ bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
     }
     std::string blockedCommands;
     if (restrictedStatus == "true")
+    {
         blockedCommands += CommandControl::RestrictionManager::getRestrictedCommandListString();
+#if ENABLE_DEBUG
+        // Extract restricted commands passed from the wsd process.
+        // Format: blockingcommandstatus isRestrictedUser=true isLockedUser=... test_restrictedCommands=cmd1 cmd2 ...
+        std::string firstCmd;
+        if (tokens.size() > 3 && getTokenString(tokens[3], "test_restrictedCommands", firstCmd))
+        {
+            blockedCommands += firstCmd;
+            for (std::size_t i = 4; i < tokens.size(); ++i)
+                blockedCommands += " " + tokens[i];
+        }
+#endif
+    }
     if (lockStatus == "true")
         blockedCommands += blockedCommands.empty()
                                ? CommandControl::LockManager::getLockedCommandListString()

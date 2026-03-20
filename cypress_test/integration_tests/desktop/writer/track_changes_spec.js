@@ -393,3 +393,41 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	});
 });
+
+describe(['tagdesktop'], 'Restricted user tracked changes dialog button state', function() {
+	function openManageChangesDialog() {
+		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920, 1080);
+		cy.cGet('.notebookbar #Review-tab-label').click();
+		desktopHelper.getNbIcon('AcceptTrackedChanges', 'Review').click();
+		cy.cGet('#AcceptRejectChangesDialog').should('be.visible');
+		cy.cGet('#writerchanges .ui-treeview-entry').first().click();
+	}
+
+	it('Accept and reject buttons are disabled for restricted user', function() {
+		helper.setupAndLoadDocument('writer/manage_tracking_changes.odt',
+			/* isMultiUser */ false, /* copyCertificates copies .wopi.json */ true);
+		openManageChangesDialog();
+
+		// When loading writer/manage_tracking_changes.odt.wopi.json, which
+		// has IsUserRestricted=true and Test_RestrictedCommandList containing
+		// the accept/reject UNO commands, all four buttons must be disabled
+		cy.cGet('#accept-button').should('have.attr', 'disabled');
+		cy.cGet('#reject-button').should('have.attr', 'disabled');
+		cy.cGet('#acceptall-button').should('have.attr', 'disabled');
+		cy.cGet('#rejectall-button').should('have.attr', 'disabled');
+	});
+
+	it('Accept and reject buttons are enabled for unrestricted user', function() {
+		helper.setupAndLoadDocument('writer/manage_tracking_changes.odt',
+			/* isMultiUser */ false, /* copyCertificates copies .wopi.json */ false);
+		openManageChangesDialog();
+
+		// Without the .wopi.json the user is not restricted,
+		// so all four buttons must be enabled
+		cy.cGet('#accept-button').should('not.have.attr', 'disabled');
+		cy.cGet('#reject-button').should('not.have.attr', 'disabled');
+		cy.cGet('#acceptall-button').should('not.have.attr', 'disabled');
+		cy.cGet('#rejectall-button').should('not.have.attr', 'disabled');
+	});
+});

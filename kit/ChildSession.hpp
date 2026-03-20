@@ -218,7 +218,7 @@ private:
     bool askSignatureStatus(const char* buffer, int length, const StringVector& tokens);
     bool renderShapeSelection(const StringVector& tokens);
     bool removeTextContext(const StringVector& tokens);
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG
     bool updateBlockingCommandStatus(const StringVector& tokens);
     std::string getBlockedCommandType(const std::string& command);
 #endif
