@@ -358,7 +358,9 @@ void DeltaTests::testRleIdentical()
     const TileWireId textWid = 1;
     std::vector<char> text =
         Png::loadPng(TDOC "/delta-graphic.png", height, width, rowBytes);
-    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(uint32_t(256), height);
+    LOK_ASSERT_EQUAL(uint32_t(256), width);
+    LOK_ASSERT_EQUAL(uint32_t(256 * 4), rowBytes);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
 
     DeltaGenerator::DeltaData data(
@@ -367,7 +369,9 @@ void DeltaTests::testRleIdentical()
 
     std::vector<char> text2 =
         Png::loadPng(TDOC "/delta-graphic2.png", height, width, rowBytes);
-    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(uint32_t(256), height);
+    LOK_ASSERT_EQUAL(uint32_t(256), width);
+    LOK_ASSERT_EQUAL(uint32_t(256 * 4), rowBytes);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
 
     DeltaGenerator::DeltaData data2(
@@ -410,13 +414,17 @@ void DeltaTests::testDeltaSequence()
     const TileWireId textWid = 1;
     std::vector<char> text =
         Png::loadPng(TDOC "/delta-text.png", height, width, rowBytes);
-    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(uint32_t(256), height);
+    LOK_ASSERT_EQUAL(uint32_t(256), width);
+    LOK_ASSERT_EQUAL(uint32_t(256 * 4), rowBytes);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
 
     const TileWireId text2Wid = 2;
     std::vector<char> text2 =
         Png::loadPng(TDOC "/delta-text2.png", height, width, rowBytes);
-    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(uint32_t(256), height);
+    LOK_ASSERT_EQUAL(uint32_t(256), width);
+    LOK_ASSERT_EQUAL(uint32_t(256 * 4), rowBytes);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
 
     std::vector<char> delta;
@@ -532,13 +540,17 @@ void DeltaTests::testDeltaCopyOutOfBounds()
     const TileWireId textWid = 1;
     std::vector<char> text =
         Png::loadPng(TDOC "/delta-graphic.png", height, width, rowBytes);
-    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(uint32_t(256), height);
+    LOK_ASSERT_EQUAL(uint32_t(256), width);
+    LOK_ASSERT_EQUAL(uint32_t(256 * 4), rowBytes);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
 
     const TileWireId text2Wid = 2;
     std::vector<char> text2 =
         Png::loadPng(TDOC "/delta-graphic2.png", height, width, rowBytes);
-    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(uint32_t(256), height);
+    LOK_ASSERT_EQUAL(uint32_t(256), width);
+    LOK_ASSERT_EQUAL(uint32_t(256 * 4), rowBytes);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
 
     std::vector<char> delta;
