@@ -1238,7 +1238,21 @@ public:
     {
         LOG_TRC("StreamSocket dtor called with pending write: " << _outBuffer.size()
                                                                 << ", read: " << _inBuffer.size());
-        ensureDisconnected();
+        if (!_doneDisconnect)
+        {
+            // This dtor could be called from a different thread when we are owned by
+            // a weak_ptr elevated to a shared_ptr while the real owning shared_ptr
+            // is destroyed. This can happen when we remove a closed socket from the
+            // poll while in another thread a weak_ptr on it has temporarily lock()'d
+            // and got another valid reference to it.
+            // In that case, the real owner should've called ensureDisconnected()
+            // and we won't need it again here, hence the conditional, and won't get
+            // tripped-up by the ASSERT_CORRECT_SOCKET_THREAD check inside it.
+            // Otherwise, we will invoke it and it's only fair to catch the thread
+            // affinity violation.
+            ensureDisconnected();
+        }
+
         _socketHandler.reset();
 
         if (!_shutdownSignalled)
