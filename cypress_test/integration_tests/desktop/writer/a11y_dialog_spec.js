@@ -187,6 +187,54 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
+    it('Treeview Enter key keeps focus in dialog', function () {
+        cy.then(function () {
+            win.app.map.sendUnoCommand('.uno:ChapterNumberingDialog');
+        });
+
+        a11yHelper.getActiveDialog(1)
+            .then(() => helper.processToIdle(win))
+            .then(() => {
+                cy.cGet('#level .ui-treeview-entry:nth-child(1)').click();
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                cy.cGet('#level .ui-treeview-entry:nth-child(1)').should('have.class', 'selected');
+                cy.cGet('#level .ui-treeview-entry:nth-child(1)').focus();
+
+                // Move to second entry
+                cy.realPress('ArrowDown');
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                cy.cGet('#level .ui-treeview-entry:nth-child(2)').should('have.class', 'selected');
+                cy.cGet('#level .ui-treeview-entry:nth-child(2)').should('have.focus');
+
+                // Press Enter on the focused entry
+                helper.realPressInDialog('Enter');
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                // Either dialog should still exist with focus inside it,
+                // or dialog should have closed (OK activated)
+                cy.cGet('body').then($body => {
+                    const dialogExists = $body.find('.ui-dialog[role="dialog"]').length > 0;
+                    if (dialogExists) {
+                        // Dialog still open - focus must be inside it
+                        cy.cGet('.ui-dialog[role="dialog"]').then($dlg => {
+                            const activeEl = win.document.activeElement;
+                            const focusInDialog = $dlg[0].contains(activeEl);
+                            const focusDesc = activeEl.tagName + '#' + activeEl.id + '.' + activeEl.className;
+                            expect(focusInDialog, 'focus should stay in dialog, but is on: ' + focusDesc).to.be.true;
+                        });
+                        cy.cGet('#cancel-button').click();
+                    } else {
+                        cy.log('Dialog closed after Enter');
+                    }
+                });
+            });
+    });
+
     it('Treeview arrow key moves focus and selection together', function () {
         cy.then(function () {
             win.app.map.sendUnoCommand('.uno:ChapterNumberingDialog');
