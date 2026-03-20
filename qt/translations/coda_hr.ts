@@ -6,57 +6,57 @@
     <message>
         <location filename="../DocumentOperations.cpp" line="49"/>
         <source>ODF text document (.odt)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF tekstualni dokument (.odt)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="50"/>
         <source>Rich Text (.rtf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatirani tekst (.rtf)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="51"/>
         <source>Word Document (.docx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Word dokument (.docx)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="52"/>
         <source>Word 2003 Document (.doc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Word 2003 dokument (.doc)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="58"/>
         <source>ODF spreadsheet (.ods)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF proračunska tablica (.ods)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="59"/>
         <source>Excel Spreadsheet (.xlsx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Excel proračunska tablica (.xlsx)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="60"/>
         <source>Excel 2003 Spreadsheet (.xls)</source>
-        <translation type="unfinished"></translation>
+        <translation>Excel 2003 proračunska tablica (.xls)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="66"/>
         <source>ODF presentation (.odp)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF prezentacija (.odp)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="67"/>
         <source>PowerPoint Presentation (.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>PowerPoint prezentacija (.pptx)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="68"/>
         <source>PowerPoint 2003 Presentation (.ppt)</source>
-        <translation type="unfinished"></translation>
+        <translation>PowerPoint 2003 prezentacija (.ppt)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="74"/>
         <source>ODF drawing (.odg)</source>
-        <translation type="unfinished"></translation>
+        <translation>ODF crtež (.odg)</translation>
     </message>
     <message>
         <location filename="../DocumentOperations.cpp" line="106"/>
@@ -164,23 +164,23 @@
     <message>
         <location filename="../WebView.cpp" line="156"/>
         <source>Presentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Prezentacija</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="161"/>
         <location filename="../WebView.cpp" line="177"/>
         <source>Text Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstualni dokument</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="166"/>
         <source>Spreadsheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Proračunska tablica</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="171"/>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Crtež</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="317"/>

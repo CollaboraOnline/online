@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2026-03-06 18:09+0000\n"
+"PO-Revision-Date: 2026-03-17 12:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hr/>\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1137,7 +1137,7 @@ msgstr "Kopiraj sve informacije o verziji na engleskom jeziku"
 
 #: src/control/Control.AboutDialog.ts:430
 msgid "Version information has been copied"
-msgstr ""
+msgstr "Podaci verzije su kopirani"
 
 #: src/control/Control.AboutDialog.ts:470
 msgid "COOLWSD version:"
@@ -3417,11 +3417,11 @@ msgstr "Offline modus"
 
 #: src/control/Control.NotebookbarWriter.js:491
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Bočna traka validacije"
 
 #: src/control/Control.NotebookbarWriter.js:498
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dijalog validacije"
 
 #: src/control/Control.NotebookbarWriter.js:941
 #: src/control/Control.Zotero.js:828
@@ -3992,7 +3992,6 @@ msgid "Updating citations"
 msgstr "Aktualiziranje citata"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
 msgstr "Odspoji citate"
 
@@ -5160,10 +5159,12 @@ msgid ""
 "Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:"
 msgstr ""
+"Tvoj preglednik ima vrlo ograničen pristup međuspremniku, stoga koristi ove "
+"tipkovničke prečace:"
 
 #: src/map/Clipboard.js:1503
 msgid "Cut"
-msgstr ""
+msgstr "Izreži"
 
 #: src/map/Clipboard.js:1519
 msgid ""
@@ -5238,7 +5239,7 @@ msgstr "Neuspjelo čitanje odabrane datoteke."
 
 #: src/map/handler/Map.Keyboard.js:649
 msgid "You are currently in View mode"
-msgstr ""
+msgstr "Trenutačno si u modusu pregleda"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5252,7 +5253,7 @@ msgstr "Prazna dijaprojekcija"
 #: src/map/handler/Map.SlideShow.js:60
 #: src/slideshow/SlideShowPresenter.ts:1251
 msgid "All slides are hidden!"
-msgstr ""
+msgstr "Svi slajdovi su skriveni!"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1278
@@ -5459,7 +5460,7 @@ msgstr "Jednostavan stil"
 
 #: templates/templates.js:76
 msgid "Beehive"
-msgstr ""
+msgstr "Košnica"
 
 #: templates/templates.js:86
 msgid "Blue Curve"
@@ -5467,11 +5468,11 @@ msgstr "Plava krivulja"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
-msgstr ""
+msgstr "Nacrti planova"
 
 #: templates/templates.js:106
 msgid "Candy"
-msgstr ""
+msgstr "Slatkiš"
 
 #: templates/templates.js:116
 msgid "DNA"
@@ -5487,7 +5488,7 @@ msgstr "Šumska ptica"
 
 #: templates/templates.js:146
 msgid "Freshes"
-msgstr ""
+msgstr "Svježa voda"
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
@@ -5495,7 +5496,7 @@ msgstr "Elegantno siva"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
-msgstr ""
+msgstr "Rastuća sloboda"
 
 #: templates/templates.js:176
 msgid "Inspiration"
