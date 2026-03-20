@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 17:39+0100\n"
-"PO-Revision-Date: 2025-12-10 20:00+0000\n"
+"PO-Revision-Date: 2026-03-12 00:44+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1277,11 +1277,11 @@ msgstr "מסמכים שנפתחו לאחרונה יופיעו כאן"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "שם"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
-msgstr ""
+msgstr "תאריך שינוי"
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
@@ -1385,7 +1385,7 @@ msgstr "מסמך ריק"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "ללא שם"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1405,7 +1405,7 @@ msgstr "מילוי סדרה"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "שם המסמך"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -3649,7 +3649,7 @@ msgstr "מונה בחירות"
 
 #: src/control/Control.StatusBar.js:252
 msgid "Multi Page View"
-msgstr ""
+msgstr "תצוגה רבת עמודים"
 
 #: src/control/Control.StatusBar.js:259
 msgid "Zoom to Fit Page Width"
@@ -3657,7 +3657,7 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:417
 msgid "The document is probably locked and has been opened as view-only"
-msgstr ""
+msgstr "המסמך כנראה נעול ונפתח לקריאה בלבד"
 
 #: src/control/Control.StatusBar.js:426
 msgid ""
@@ -3954,9 +3954,8 @@ msgid "Updating citations"
 msgstr "הציטוטים מתעדכנים"
 
 #: src/control/Control.Zotero.js:1528
-#, fuzzy
 msgid "Unlinked citations"
-msgstr "ניתוק ציטוטים"
+msgstr "ציטוטים מנותקים"
 
 #: src/control/Control.Zotero.js:1533
 msgid ""
@@ -4087,16 +4086,16 @@ msgstr "קריאה בלבד"
 
 #: src/control/PermissionMode.ts:125
 msgid "Viewing Mode"
-msgstr ""
+msgstr "מצב צפייה"
 
 #: src/control/PermissionMode.ts:131
 msgid "Editing Mode"
-msgstr ""
+msgstr "מצב עריכה"
 
 #: src/control/PermissionMode.ts:141 src/control/PermissionMode.ts:213
 #: src/control/PermissionMode.ts:219 src/control/PermissionMode.ts:225
 msgid "Viewing"
-msgstr ""
+msgstr "צפייה"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1760
@@ -4105,11 +4104,11 @@ msgstr "רגיל"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "רחב"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "צר"
 
 #: src/control/jsdialog/Definitions.Menu.ts:176
 msgid "Min"
@@ -5338,7 +5337,7 @@ msgstr "לחיצה תסגור את המצגת…"
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "זאת השקופית הראשונה"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
@@ -5364,11 +5363,11 @@ msgstr "הפסקת המעקב"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "מכתב עסקי עדכני (ללא עיטורים)"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "מכתב עסקי"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
@@ -5376,7 +5375,7 @@ msgstr ""
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "קורות חיים"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
@@ -5384,19 +5383,19 @@ msgstr ""
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "סגנון עדכני"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "סגנון פשוט"
 
 #: templates/templates.js:76
 msgid "Beehive"
-msgstr ""
+msgstr "כוורת"
 
 #: templates/templates.js:86
 msgid "Blue Curve"
-msgstr ""
+msgstr "עקומה כחולה"
 
 #: templates/templates.js:96
 msgid "Blueprint Plans"
@@ -5412,7 +5411,7 @@ msgstr ""
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "מיקוד"
 
 #: templates/templates.js:136
 msgid "Forestbird"
@@ -5428,7 +5427,7 @@ msgstr ""
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
-msgstr ""
+msgstr "חירות צומחת"
 
 #: templates/templates.js:176
 msgid "Inspiration"
@@ -5452,35 +5451,35 @@ msgstr ""
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "עיפרון"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "פסנתר"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "תיק עבודות"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "התקדמות"
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "שקיעה"
 
 #: templates/templates.js:276
 msgid "Vintage"
-msgstr ""
+msgstr "מיושן"
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "חיוני"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "רעיון צהוב"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
