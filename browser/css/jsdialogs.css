@@ -1969,17 +1969,18 @@ img.context-menu-icon {
 /* menu button */
 .jsdialog.menubutton {
 	box-sizing: border-box;
+	height: 32px;
 	line-height: normal;
-	font-size: calc(var(--default-font-size)*1.2);
+	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
-	padding: 8px 10px;
+	padding: 0 10px;
 	margin: 2px 0px;
 	background-color: var(--color-background-dark);
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .jsdialog.menubutton img {
@@ -2009,6 +2010,10 @@ button.has-img img {
 	display: table-cell !important;
 	float: right;
 	margin: 5px 0 0 5px;
+}
+
+.jsdialog.menubutton .arrow {
+	margin-inline-start: auto;
 }
 
 .jsdialog.menubutton[disabled] {
