@@ -1595,7 +1595,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
         _isBgSaveProcess = true;
 
         SigUtil::addActivity("forked background save process: " +
-                             std::to_string(pid));
+                             std::to_string(getpid()));
 
         threadGuard.clear();
 
