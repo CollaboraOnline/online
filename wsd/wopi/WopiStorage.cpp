@@ -336,9 +336,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
 
-    Poco::URI uriObjectAnonym(getUri());
-    uriObjectAnonym.setPath(COOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
-    const std::string uriAnonym = uriObjectAnonym.toString();
+    const std::string uriAnonym = getAnonymizedUri();
 
     const auto wopiLog = (lock == StorageBase::LockState::LOCK ? "WOPI::Lock" : "WOPI::Unlock");
     LOG_DBG(wopiLog << " requesting: " << uriAnonym);
@@ -431,9 +429,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
 
-    Poco::URI uriObjectAnonym(getUri());
-    uriObjectAnonym.setPath(COOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
-    const std::string uriAnonym = uriObjectAnonym.toString();
+    const std::string uriAnonym = getAnonymizedUri();
 
     const auto wopiLog = (lock == StorageBase::LockState::LOCK ? "WOPI::Lock" : "WOPI::Unlock");
     LOG_DBG(wopiLog << " requesting: " << uriAnonym);
@@ -572,9 +568,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    Poco::URI uriObjectAnonym(getUri());
-    uriObjectAnonym.setPath(COOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
-    const std::string uriAnonym = uriObjectAnonym.toString();
+    const std::string uriAnonym = getAnonymizedUri("/contents");
 
     try
     {
