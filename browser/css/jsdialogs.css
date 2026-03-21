@@ -712,9 +712,11 @@ algned to the bottom */
 }
 
 .ui-treeview.disabled,
-.ui-treeview-entry div.disabled {
+.ui-treeview-entry div.disabled,
+.ui-treeview-entry.disabled {
 	background-color: var(--color-background-dark) !important;
 	color: var(--color-text-lighter) !important;
+	pointer-events: none;
 }
 
 #custom_animation_label_parent {
