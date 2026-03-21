@@ -270,6 +270,10 @@ private:
                                     LockContext& lockCtx, LockState lock,
                                     const Attributes& attribs);
 
+    /// Set a WOPI header with both COOL and legacy LOOL prefixes.
+    void setWopiHeader(http::Request& httpRequest, const std::string& suffix,
+                       const std::string& value);
+
     /// Returns the URI with the path anonymized, optionally appending a suffix.
     std::string getAnonymizedUri(const std::string& pathSuffix = std::string()) const
     {
