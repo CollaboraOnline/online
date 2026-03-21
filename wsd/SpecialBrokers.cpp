@@ -251,11 +251,11 @@ void ConvertToBroker::setLoaded()
     _clientSession->handleMessage(saveasRequest);
 }
 
-static std::atomic<std::size_t> renderSearchResultBrokerInstanceCouter;
+static std::atomic<std::size_t> renderSearchResultBrokerInstanceCounter;
 
 std::size_t RenderSearchResultBroker::getInstanceCount()
 {
-    return renderSearchResultBrokerInstanceCouter;
+    return renderSearchResultBrokerInstanceCounter;
 }
 
 RenderSearchResultBroker::RenderSearchResultBroker(
@@ -324,7 +324,7 @@ void RenderSearchResultBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        renderSearchResultBrokerInstanceCouter--;
+        renderSearchResultBrokerInstanceCounter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }

@@ -182,7 +182,7 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
-        /// If user is limited to only writing/modifiyng comments
+        /// If user is limited to only writing/modifying comments
         bool _userCanOnlyComment = false;
         /// If user is limited to only managing redlines (accept/reject)
         bool _userCanOnlyManageRedlines = false;
@@ -283,7 +283,7 @@ private:
     }
 
 private:
-    /// A URl provided by the WOPI host to use for GetFile.
+    /// A URL provided by the WOPI host to use for GetFile.
     std::string _fileUrl;
 
     // Time spend in saving the file from storage
