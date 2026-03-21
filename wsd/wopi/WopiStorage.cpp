@@ -325,6 +325,14 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         _disableExport = true;
 }
 
+void WopiStorage::setWopiHeader(http::Request& httpRequest, const std::string& suffix,
+                                const std::string& value)
+{
+    httpRequest.set("X-COOL-WOPI-" + suffix, value);
+    if (isLegacyServer())
+        httpRequest.set("X-LOOL-WOPI-" + suffix, value);
+}
+
 http::Request WopiStorage::createLockRequest(const Poco::URI& uriObject, const Authorization& auth,
                                              LockContext& lockCtx, LockState lock,
                                              const Attributes& attribs)
@@ -336,11 +344,7 @@ http::Request WopiStorage::createLockRequest(const Poco::URI& uriObject, const A
                     lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
     httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
     if (!attribs.getExtendedData().empty())
-    {
-        httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
-        if (isLegacyServer())
-            httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
-    }
+        setWopiHeader(httpRequest, "ExtendedData", attribs.getExtendedData());
 
     // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
     httpRequest.setContentLength(0);
@@ -758,35 +762,23 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
         {
             // normal save
             httpRequest.set("X-WOPI-Override", "PUT");
-            httpRequest.set("X-COOL-WOPI-IsModifiedByUser",
-                            attribs.isUserModified() ? "true" : "false");
-            httpRequest.set("X-COOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
-            httpRequest.set("X-COOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
-            if (isLegacyServer())
-            {
-                httpRequest.set("X-LOOL-WOPI-IsModifiedByUser",
-                                attribs.isUserModified() ? "true" : "false");
-                httpRequest.set("X-LOOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
-                httpRequest.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
-            }
+            setWopiHeader(httpRequest, "IsModifiedByUser",
+                          attribs.isUserModified() ? "true" : "false");
+            setWopiHeader(httpRequest, "IsAutosave", attribs.isAutosave() ? "true" : "false");
+            setWopiHeader(httpRequest, "IsExitSave", attribs.isExitSave() ? "true" : "false");
 
-            if (attribs.isExitSave()) {
+            if (attribs.isExitSave())
+            {
                 // Don't maintain the socket if we are exiting.
                 httpRequest.setConnectionToken(http::Header::ConnectionToken::Close);
             }
             if (!attribs.getExtendedData().empty())
-            {
-                httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
-                if (isLegacyServer())
-                    httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
-            }
+                setWopiHeader(httpRequest, "ExtendedData", attribs.getExtendedData());
 
             if (!attribs.isForced() && isLastModifiedTimeSafe())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                httpRequest.set("X-COOL-WOPI-Timestamp", getLastModifiedTime());
-                if (isLegacyServer())
-                    httpRequest.set("X-LOOL-WOPI-Timestamp", getLastModifiedTime());
+                setWopiHeader(httpRequest, "Timestamp", getLastModifiedTime());
             }
         }
         else
