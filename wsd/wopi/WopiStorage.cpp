@@ -381,9 +381,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
 
         const bool unauthorized =
-            (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
+            http::isUnauthorizedStatusCode(httpResponse->statusLine().statusCode());
 
         LOG_ERR("Un-successful " << wopiLog << " with " << (unauthorized ? "expired token, " : "")
                                  << "HTTP status " << httpResponse->statusLine().statusCode()
@@ -490,9 +488,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
 
         const bool unauthorized =
-            (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
+            http::isUnauthorizedStatusCode(httpResponse->statusLine().statusCode());
 
         const StorageBase::LockUpdateResult::Status status =
             unauthorized ? LockUpdateResult::Status::UNAUTHORIZED
@@ -998,9 +994,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
         {
             result.setResult(StorageBase::UploadResult::Result::TOO_LARGE);
         }
-        else if (details.httpResponseCode == http::StatusCode::Unauthorized ||
-                 details.httpResponseCode == http::StatusCode::Forbidden ||
-                 details.httpResponseCode == http::StatusCode::NotFound)
+        else if (http::isUnauthorizedStatusCode(details.httpResponseCode))
         {
             // The ms-wopi specs recognizes 401 and 404 for invalid token
             // and file unknown/user unauthorized, respectively.
