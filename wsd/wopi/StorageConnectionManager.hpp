@@ -76,9 +76,6 @@ private:
         return uri;
     }
 
-    /// Saves new URI when resource was moved
-    // void setUri(const Poco::URI& uri) { _uri = sanitizeUri(uri); }
-
     /// If true, use only the WOPI URL for whether to use SSL to talk to storage server
     static bool SSLAsScheme;
     /// If true, force SSL communication with storage server
