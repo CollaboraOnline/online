@@ -176,11 +176,10 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
 
         // Set anonymized version of the above fields before logging.
         // Note: anonymization caches the result, so we don't need to store here.
-        if (COOLWSD::AnonymizeUserData)
-            object->set("BaseFileName", COOLWSD::anonymizeUrl(getFilename()));
+        object->set("BaseFileName", COOLWSD::anonymizeUrl(getFilename()));
 
         // If obfuscatedUserId is provided, then don't log the originals and use it.
-        if (COOLWSD::AnonymizeUserData && _obfuscatedUserId.empty())
+        if (_obfuscatedUserId.empty())
         {
             object->set("OwnerId", COOLWSD::anonymizeUsername(getOwnerId()));
             object->set("UserId", COOLWSD::anonymizeUsername(_userId));

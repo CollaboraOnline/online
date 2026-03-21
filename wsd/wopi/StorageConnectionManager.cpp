@@ -74,7 +74,7 @@ std::map<std::string, std::string> GetQueryParams(const Poco::URI& uri)
     return result;
 }
 
-static void addStorageDebugCookie([[maybe_unused]] Poco::Net::HTTPRequest& request)
+void addStorageDebugCookie([[maybe_unused]] Poco::Net::HTTPRequest& request)
 {
 #if ENABLE_DEBUG
     static const char* CoolStorageCookie = std::getenv("COOL_STORAGE_COOKIE");
