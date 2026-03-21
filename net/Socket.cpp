@@ -831,7 +831,7 @@ void SocketPoll::closeAllSockets()
     }
     // only then remove
     removeSockets();
-    assert(_newSockets.size() == 0);
+    assert(_newSockets.empty());
 }
 
 void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,

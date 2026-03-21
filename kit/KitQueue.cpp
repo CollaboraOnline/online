@@ -166,7 +166,7 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     const auto callbackType = static_cast<LibreOfficeKitCallbackType>(type);
 
     // Nothing to combine in this case:
-    if (_callbacks.size() == 0)
+    if (_callbacks.empty())
         return false;
 
     switch (callbackType)
