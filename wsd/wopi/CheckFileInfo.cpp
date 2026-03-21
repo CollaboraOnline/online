@@ -58,10 +58,7 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         LOG_TRC("WOPI::CheckFileInfo returned " << httpResponse->statusLine().statusCode());
 
         const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode == http::StatusCode::MovedPermanently ||
-            statusCode == http::StatusCode::Found ||
-            statusCode == http::StatusCode::TemporaryRedirect ||
-            statusCode == http::StatusCode::PermanentRedirect)
+        if (http::isRedirectStatusCode(statusCode))
         {
             if (redirectLimit != 0)
             {

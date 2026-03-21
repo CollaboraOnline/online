@@ -640,10 +640,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         LOG_TRC("WOPI::GetFile response header for URI [" << uriAnonym << "]:\n"
                                                           << httpResponse->header());
     }
-    else if (statusCode == http::StatusCode::MovedPermanently ||
-             statusCode == http::StatusCode::Found ||
-             statusCode == http::StatusCode::TemporaryRedirect ||
-             statusCode == http::StatusCode::PermanentRedirect)
+    else if (http::isRedirectStatusCode(statusCode))
     {
         if (redirectLimit)
         {
