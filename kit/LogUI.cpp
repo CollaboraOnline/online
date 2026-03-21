@@ -15,7 +15,9 @@
  */
 
 #include <config.h>
+
 #include <kit/LogUI.hpp>
+
 #include <common/Log.hpp>
 
 void LogUiCmd::logUiCmdLine(int userId, const std::string& line)

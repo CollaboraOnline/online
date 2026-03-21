@@ -11,17 +11,17 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
+
 #include <atomic>
 #include <cstring>
+#include <functional>
 #include <string>
 #include <string_view>
 #include <vector>
-#include <functional>
-
-#include <Protocol.hpp>
-#include <common/StringVector.hpp>
-#include <common/Log.hpp>
-#include <common/Util.hpp>
 
 /// The payload type used to send/receive data.
 class Message

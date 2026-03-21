@@ -16,6 +16,8 @@
 
 #include <config.h>
 
+#include <wsd/Admin.hpp>
+
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -31,7 +33,6 @@
 #include <SslSocket.hpp>
 #endif
 #include <net/WebSocketHandler.hpp>
-#include <wsd/Admin.hpp>
 #include <wsd/AdminModel.hpp>
 #include <wsd/Auth.hpp>
 #include <wsd/COOLWSD.hpp>

@@ -54,7 +54,7 @@
 #endif
 
 #if !MOBILEAPP
-#include <SigHandlerTrap.hpp>
+#include <common/SigHandlerTrap.hpp>
 #endif
 
 #if defined(__GLIBC__)

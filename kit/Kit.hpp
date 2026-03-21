@@ -11,28 +11,28 @@
 
 #pragma once
 
-#include <map>
-#include <string>
-
-#include <common/Util.hpp>
-#include <common/StateEnum.hpp>
 #include <common/Session.hpp>
+#include <common/StateEnum.hpp>
 #include <common/ThreadPool.hpp>
+#include <common/Util.hpp>
 #include <kit/KitQueue.hpp>
 #include <kit/LogUI.hpp>
-
+#include <net/Socket.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include <Socket.hpp>
-
 #include <LibreOfficeKit/LibreOfficeKitTypes.h>
+
+#include <Poco/Util/XMLConfiguration.h>
+
+#include <map>
+#include <string>
 
 #if MOBILEAPP
 
 #include <future>
 
-#include <ClientSession.hpp>
-#include <DocumentBroker.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
 
 #endif
 

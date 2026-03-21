@@ -18,12 +18,12 @@
 
 #include "SigUtil.hpp"
 
-#include <Common.hpp>
+#include <common/Common.hpp>
 #include <common/Log.hpp>
-#include <SigHandlerTrap.hpp>
-#include <Socket.hpp>
-#include <test/testlog.hpp>
+#include <common/SigHandlerTrap.hpp>
 #include <common/Util.hpp>
+#include <net/Socket.hpp>
+#include <test/testlog.hpp>
 
 #include <array>
 #include <atomic>
@@ -34,8 +34,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <fcntl.h>
-#include <fstream>
-#include <iomanip>
 #include <iostream>
 #include <poll.h>
 #include <sstream>

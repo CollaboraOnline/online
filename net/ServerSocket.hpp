@@ -16,15 +16,15 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
+
 #ifndef _WIN32
 #include <sys/un.h>
 #endif
 
-#include <NetUtil.hpp>
 #include <memory>
-
-#include <Socket.hpp>
-#include <common/Log.hpp>
 
 class SocketFactory
 {

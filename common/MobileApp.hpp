@@ -13,7 +13,7 @@
 
 #if MOBILEAPP
 
-#include <Storage.hpp>
+#include <wsd/Storage.hpp>
 
 #ifdef IOS
 #import "CODocument.h"

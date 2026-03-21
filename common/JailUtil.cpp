@@ -21,9 +21,9 @@
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
 #include <common/NumUtil.hpp>
+#include <common/SigUtil.hpp>
 #include <common/Util.hpp>
 
-#include <SigUtil.hpp>
 #include <csignal>
 #include <cstdio>
 #include <cstdlib>

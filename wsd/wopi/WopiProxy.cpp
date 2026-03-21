@@ -15,16 +15,16 @@
 
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
-#include <HttpHelper.hpp>
-#include <HttpRequest.hpp>
-#include <Protocol.hpp>
-#include <COOLWSD.hpp>
-#include <Exceptions.hpp>
-#include <common/Log.hpp>
-#include <common/Util.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
+#include <net/HttpHelper.hpp>
+#include <net/HttpRequest.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <wopi/WopiStorage.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/Exceptions.hpp>
 
 #include <iterator>
 #include <optional>

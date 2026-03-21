@@ -11,24 +11,17 @@
 
 #pragma once
 
-#include <cassert>
-#include <memory>
-#include <queue>
-#include <thread>
-#include <condition_variable>
-#include <fstream>
-#include <unordered_map>
-#include <vector>
+#include <common/Png.hpp>
+#include <common/Rectangle.hpp>
+#include <common/ThreadPool.hpp>
+#include <kit/Delta.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include <common/ThreadPool.hpp>
-
-#include <Png.hpp>
-#include <Delta.hpp>
-#include <Rectangle.hpp>
-#include <TileDesc.hpp>
-
+#include <cassert>
+#include <memory>
+#include <vector>
 namespace RenderTiles
 {
     struct Buffer {

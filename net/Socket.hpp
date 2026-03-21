@@ -16,6 +16,14 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
+#include <common/StateEnum.hpp>
+#include <common/Util.hpp>
+#include <net/Buffer.hpp>
+#include <net/FakeSocket.hpp>
+#include <net/NetUtil.hpp>
+
 #if !MOBILEAPP
 #include <poll.h>
 #include <unistd.h>
@@ -37,15 +45,6 @@
 #include <memory>
 #include <mutex>
 #include <thread>
-
-#include <common/StateEnum.hpp>
-#include <common/Log.hpp>
-#include <NetUtil.hpp>
-#include <common/Util.hpp>
-#include <Buffer.hpp>
-#include <SigUtil.hpp>
-
-#include <FakeSocket.hpp>
 
 #ifdef __linux__
 #define HAVE_ABSTRACT_UNIX_SOCKETS
