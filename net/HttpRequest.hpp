@@ -242,6 +242,13 @@ enum class StatusCode : unsigned
     NetworkAuthenticationRequired = 511, // RFC 6585
 };
 
+/// Returns true if the given StatusCode is a redirect (301, 302, 307, 308).
+constexpr bool isRedirectStatusCode(StatusCode code)
+{
+    return code == StatusCode::MovedPermanently || code == StatusCode::Found ||
+           code == StatusCode::TemporaryRedirect || code == StatusCode::PermanentRedirect;
+}
+
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
 /// The Reason Phrase is informational only, but it helps

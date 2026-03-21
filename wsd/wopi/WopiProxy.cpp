@@ -275,10 +275,7 @@ void WopiProxy::transfer(const std::shared_ptr<TerminatingPoll>& poll, const std
         LOG_TRC("WOPI::GetFile returned " << httpResponse->statusLine().statusCode());
 
         const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode == http::StatusCode::MovedPermanently ||
-            statusCode == http::StatusCode::Found ||
-            statusCode == http::StatusCode::TemporaryRedirect ||
-            statusCode == http::StatusCode::PermanentRedirect)
+        if (http::isRedirectStatusCode(statusCode))
         {
             if (redirectLimit)
             {
