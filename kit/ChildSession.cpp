@@ -1203,7 +1203,7 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
     Poco::JSON::Parser parser;
     const Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
     std::vector<std::string> directions { "Undo", "Redo" };
-    for (auto& directionName : directions)
+    for (const auto& directionName : directions)
     {
         Poco::JSON::Object::Ptr direction = root->get(directionName).extract<Poco::JSON::Object::Ptr>();
         if (direction->get("actions").type() == typeid(Poco::JSON::Array::Ptr))

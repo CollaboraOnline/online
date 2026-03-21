@@ -1168,7 +1168,7 @@ void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats) const
 {
     stats = ExpiredDocStats;
 
-    for (auto& d : _documents)
+    for (const auto& d : _documents)
         stats.Update(d.second, true);
 }
 

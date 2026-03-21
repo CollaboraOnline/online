@@ -712,7 +712,7 @@ void RemoteFontConfigPoll::handleJSON(const Poco::JSON::Object::Ptr& remoteJson)
 void RemoteFontConfigPoll::handleUnchangedJSON()
 {
     // Iterate over the fonts that were mentioned in the JSON file when it was last downloaded.
-    for (auto& it : fonts)
+    for (const auto& it : fonts)
     {
         // If the JSON has a "stamp" for the font, and we have already downloaded it, by
         // definition we don't need to do anything when the JSON file has not changed.

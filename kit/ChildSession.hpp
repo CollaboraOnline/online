@@ -162,7 +162,7 @@ public:
 
     void setDumpTiles(bool dumpTiles) { _isDumpingTiles = dumpTiles; }
 
-    std::string getViewRenderState() { return _viewRenderState; }
+    std::string getViewRenderState() const { return _viewRenderState; }
 
     TilePrioritizer::Priority getTilePriority(const TileDesc &desc) const;
 

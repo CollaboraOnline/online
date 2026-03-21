@@ -59,8 +59,8 @@ public:
         const std::string& getTemplateSource() const { return _templateSource; }
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
         const std::string& getFileUrl() const { return _fileUrl; }
-        const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
-        const std::string& getHideUserList() { return _hideUserList; }
+        const std::string& getPostMessageOrigin() const { return _postMessageOrigin; }
+        const std::string& getHideUserList() const { return _hideUserList; }
         const std::string& getPresentationLeader() const { return _presentationLeader; }
 
         bool getUserCanWrite() const { return _userCanWrite; }

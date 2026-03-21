@@ -359,7 +359,7 @@ void ProxyProtocolHandler::dumpProxyState(std::ostream& os)
 {
     os << "proxy protocol sockets: " << _outSockets.size() << " writeQueue: " << _writeQueue.size() << ":\n";
     os << '\t';
-    for (auto &it : _outSockets)
+    for (const auto &it : _outSockets)
     {
         auto sock = it.lock();
         os << '#' << (sock ? sock->getFD() : -2) << ' ';

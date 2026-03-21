@@ -189,7 +189,7 @@ void Quarantine::initialize(const std::string& path)
     // We are initialized at this point.
     QuarantinePath = path;
 
-    for (auto& pair : QuarantineMap)
+    for (const auto& pair : QuarantineMap)
     {
         LOG_TRC("BC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
                             << pair.first << ']');
@@ -198,7 +198,7 @@ void Quarantine::initialize(const std::string& path)
     // Clean up.
     makeQuarantineSpace(/*headroomBytes=*/0);
 
-    for (auto& pair : QuarantineMap)
+    for (const auto& pair : QuarantineMap)
     {
         LOG_TRC("AC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
                             << pair.first << ']');

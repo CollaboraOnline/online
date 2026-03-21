@@ -119,12 +119,12 @@ size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<Client
                                                     const std::chrono::steady_clock::time_point now)
 {
     size_t count = 0;
-    for (auto& it : _tilesBeingRendered)
+    for (const auto& it : _tilesBeingRendered)
     {
         if (it.second->isStale(now))
             continue;
 
-        for (auto& s : it.second->getSubscribers())
+        for (const auto& s : it.second->getSubscribers())
         {
             if (s.lock() == session)
                 ++count;

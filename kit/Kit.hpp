@@ -301,7 +301,7 @@ public:
     void onUnload(const ChildSession& session);
 
     /// Get a view ID <-> UserInfo map.
-    std::map<int, UserInfo> getViewInfo() { return _sessionUserInfo; }
+    std::map<int, UserInfo> getViewInfo() const { return _sessionUserInfo; }
 
     int getEditorId() const { return _editorId; }
 
@@ -421,12 +421,12 @@ public:
     bool isLoaded() const { return !!_loKitDocument; }
 
     /// Return access to the lok::Office instance.
-    std::shared_ptr<lok::Office> getLOKit() { return _loKit; }
+    std::shared_ptr<lok::Office> getLOKit() const { return _loKit; }
 
     /// Return access to the lok::Document instance.
     std::shared_ptr<lok::Document> getLOKitDocument();
 
-    std::string getObfuscatedFileId() { return _obfuscatedFileId; }
+    std::string getObfuscatedFileId() const { return _obfuscatedFileId; }
 
     bool isBackgroundSaveProcess() const { return _isBgSaveProcess; }
 

@@ -56,7 +56,7 @@ bool isTemplate(const std::string& filename)
                                                  ".dotm", ".otm",  ".stc", ".ots",
                                                  ".xltx", ".xltm", ".sti", ".otp",
                                                  ".potx", ".potm", ".std", ".otg" };
-    for (auto& extension : templateExtensions)
+    for (const auto& extension : templateExtensions)
         if (filename.ends_with(extension))
             return true;
     return false;
