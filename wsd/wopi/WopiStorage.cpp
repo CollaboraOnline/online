@@ -325,6 +325,29 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         _disableExport = true;
 }
 
+http::Request WopiStorage::createLockRequest(const Poco::URI& uriObject, const Authorization& auth,
+                                             LockContext& lockCtx, LockState lock,
+                                             const Attributes& attribs)
+{
+    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
+    httpRequest.setVerb(http::Request::VERB_POST);
+
+    httpRequest.set("X-WOPI-Override",
+                    lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
+    httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
+    if (!attribs.getExtendedData().empty())
+    {
+        httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+        if (isLegacyServer())
+            httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+    }
+
+    // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
+    httpRequest.setContentLength(0);
+
+    return httpRequest;
+}
+
 StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& auth,
                                                            LockContext& lockCtx,
                                                            StorageBase::LockState lock,
@@ -347,21 +370,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         std::shared_ptr<http::Session> httpSession =
             StorageConnectionManager::getHttpSession(uriObject);
 
-        http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
-        httpRequest.setVerb(http::Request::VERB_POST);
-
-        httpRequest.set("X-WOPI-Override",
-                        lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
-        httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
-        if (!attribs.getExtendedData().empty())
-        {
-            httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
-            if (isLegacyServer())
-                httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
-        }
-
-        // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
-        httpRequest.setContentLength(0);
+        http::Request httpRequest = createLockRequest(uriObject, auth, lockCtx, lock, attribs);
 
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
@@ -436,20 +445,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
     _lockHttpSession = StorageConnectionManager::getHttpSession(uriObject);
 
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
-    httpRequest.setVerb(http::Request::VERB_POST);
-
-    httpRequest.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
-    httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
-    if (!attribs.getExtendedData().empty())
-    {
-        httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
-        if (isLegacyServer())
-            httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
-    }
-
-    // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
-    httpRequest.setContentLength(0);
+    http::Request httpRequest = createLockRequest(uriObject, auth, lockCtx, lock, attribs);
 
     http::Session::FinishedCallback finishedCallback =
         [this, startTime, lock, wopiLog, asyncLockStateCallback,
