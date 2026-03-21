@@ -276,14 +276,20 @@ void TileCacheTests::testSimpleCombine()
     std::shared_ptr<http::WebSocketSession> socket1
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
 
-    sendTextFrame(socket1, "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "tilewidth=3840 tileheight=3840",
+                  testname);
 
     std::vector<char> tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
     std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 oldwid=42,42 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "oldwid=42,42 tilewidth=3840 tileheight=3840",
+                  testname);
     tile1a = getResponseMessage(socket1, "delta:", testname + "1 ", 10s);
     //  TST_LOG("Response is: " + HexUtil::dumpHex(tile1a) << "\n");
     // no content in an update delta: - so ends with a '\n'
@@ -296,7 +302,10 @@ void TileCacheTests::testSimpleCombine()
     std::shared_ptr<http::WebSocketSession> socket2
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
-    sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket2,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "tilewidth=3840 tileheight=3840",
+                  testname);
 
     std::vector<char> tile2a = getResponseMessage(socket2, "tile:", testname + "2 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
@@ -304,7 +313,10 @@ void TileCacheTests::testSimpleCombine()
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
 
     // First - check force keyframe
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 oldwid=0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "oldwid=0,0 tilewidth=3840 tileheight=3840",
+                  testname);
     tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
     tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
@@ -329,7 +341,10 @@ void TileCacheTests::testTileSubscription()
     std::shared_ptr<http::WebSocketSession> socket1
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
 
-    sendTextFrame(socket1, "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "tilewidth=3840 tileheight=3840",
+                  testname);
 
     // std::shared_ptr<TileDesc>
     auto tile1a = getResponseDesc(socket1, "tile:", testname + "1 ");
@@ -341,7 +356,10 @@ void TileCacheTests::testTileSubscription()
     sendChar(socket1, '.', skNone, testname);
 
     // no viewport set so we have to re-request:
-    sendTextFrame(socket1, "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 oldwid=42,42 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "oldwid=42,42 tilewidth=3840 tileheight=3840",
+                  testname);
 
     auto delta1a = getResponseDesc(socket1, "delta:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a delta: message as expected", !!delta1a);
@@ -374,9 +392,18 @@ void TileCacheTests::testTileSubscription()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     // two subscriptions on a tile we hope from three requests
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 oldwid=42,42 tileposy=0,0 tilewidth=3840 tileheight=3840");
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 oldwid=42,42 tileposy=0,0 tilewidth=3840 tileheight=3840");
-    sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 oldwid=42,42 "
+                  "tileposy=0,0 tilewidth=3840 tileheight=3840",
+                  testname);
+    sendTextFrame(socket1,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 oldwid=42,42 "
+                  "tileposy=0,0 tilewidth=3840 tileheight=3840",
+                  testname);
+    sendTextFrame(socket2,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 "
+                  "tilewidth=3840 tileheight=3840",
+                  testname);
 
     // User 2 should get tiles
     auto tile2a = getResponseDesc(socket2, "tile:", testname + "1 ");
@@ -842,8 +869,14 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     assertResponseString(socket1, "statechanged:", "client1 ");
     assertResponseString(socket2, "statechanged:", "client2 ");
 
-    sendTextFrame(socket1, "tile nviewid=0 part=42 width=256 height=256 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
-    sendTextFrame(socket2, "tile nviewid=0 part=42 width=256 height=256 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
+    sendTextFrame(socket1,
+                  "tile nviewid=0 part=42 width=256 height=256 tileposx=1000 tileposy=2000 "
+                  "tilewidth=3000 tileheight=3000",
+                  testname);
+    sendTextFrame(socket2,
+                  "tile nviewid=0 part=42 width=256 height=256 tileposx=1000 tileposy=2000 "
+                  "tilewidth=3000 tileheight=3000",
+                  testname);
 
     const auto response1 = assertResponseString(socket1, "tile:", "client1 ");
     const auto response2 = assertResponseString(socket2, "tile:", "client2 ");
@@ -884,7 +917,7 @@ void TileCacheTests::testLoad12ods()
         int docViewId = -1;
 
         // check document size
-        sendTextFrame(socket, "status");
+        sendTextFrame(socket, "status", testname);
 
         const auto response = assertResponseString(socket, "status:", testname);
         parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight,
@@ -942,7 +975,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& so
     // otherwise 2035200 should be rendered successfully.
     const char* req = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 "
                       "tilewidth=3840 tileheight=3840";
-    sendTextFrame(socket, req);
+    sendTextFrame(socket, req, testname);
 
     const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
     if (!tile.size())
@@ -1054,49 +1087,49 @@ void TileCacheTests::testWriterAnyKey()
         sendKeyEvent(socket, "up", 0, i, testname);
         sendText(socket, "\nEnd "+s+"\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Shift:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skShift, testname);
         sendKeyEvent(socket, "up", 0, i|skShift, testname);
         sendText(socket, "\nEnd "+s+" With Shift\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Ctrl:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skCtrl, testname);
         sendKeyEvent(socket, "up", 0, i|skCtrl, testname);
         sendText(socket, "\nEnd "+s+" With Ctrl\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Alt:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skAlt, testname);
         sendKeyEvent(socket, "up", 0, i|skAlt, testname);
         sendText(socket, "\nEnd "+s+" With Alt\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Shift+Ctrl:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skShift|skCtrl, testname);
         sendKeyEvent(socket, "up", 0, i|skShift|skCtrl, testname);
         sendText(socket, "\nEnd "+s+" With Shift+Ctrl\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Shift+Alt:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skShift|skAlt, testname);
         sendKeyEvent(socket, "up", 0, i|skShift|skAlt, testname);
         sendText(socket, "\nEnd "+s+" With Shift+Alt\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Ctrl+Alt:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skCtrl|skAlt, testname);
         sendKeyEvent(socket, "up", 0, i|skCtrl|skAlt, testname);
         sendText(socket, "\nEnd "+s+" With Ctrl+Alt\n", testname);
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         sendText(socket, "\n"+s+" With Shift+Ctrl+Alt:\n", testname);
         sendKeyEvent(socket, "input", 0, i|skShift|skCtrl|skAlt, testname);
@@ -1104,7 +1137,7 @@ void TileCacheTests::testWriterAnyKey()
         sendText(socket, "\nEnd "+s+" With Shift+Ctrl+Alt\n", testname);
 
         if (i>=istart)
-            sendTextFrame(socket, f);
+            sendTextFrame(socket, f, testname);
 
         // This is to allow server to process the input, and check that everything is still OK
         sendTextFrame(socket, "status", testname);
@@ -1407,8 +1440,11 @@ void TileCacheTests::testTileRequestByInvalidation()
 
     // 2. use case: invalidation of one tile inside the client visible area
     // Now set the client visible area
-    sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300", testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840",
+        testname);
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1437,11 +1473,20 @@ void TileCacheTests::testTileRequestByZoom()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875", testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200",
+        testname);
 
     // Request all tile of the visible area (it happens by zoom)
-    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600 tilewidth=3200 tileheight=3200");
+    sendTextFrame(socket,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 "
+                  "tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,"
+                  "3200,6400,9600,12800 "
+                  "tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,"
+                  "9600,9600,9600 tilewidth=3200 tileheight=3200",
+                  testname);
 
     // Check that we get all the tiles without we send back the tileprocessed message
     for (int i = 0; i < 20; ++i)
@@ -1465,8 +1510,11 @@ void TileCacheTests::testTileWireIDHandling()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300", testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840",
+        testname);
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1519,14 +1567,23 @@ void TileCacheTests::testTileProcessed()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=10000 height=9000");
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=10000 height=9000", testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200",
+        testname);
 
     for (int i = 0; i < 100; ++i)
         getResponseMessage(socket, "spinandwait:", testname, 10ms);
 
     // Request a lots of tiles ~25 ie. more than wsd can send back at once.
-    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200");
+    sendTextFrame(socket,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 "
+                  "tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,"
+                  "3200,6400,9600,12800,0,3200,6400,9600,12800 "
+                  "tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,"
+                  "9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200",
+                  testname);
 
     std::vector<std::string> tileIDs;
     int arrivedTile = 0;
@@ -1589,8 +1646,11 @@ void TileCacheTests::testTileInvalidatedOutside()
     // Set client visible area to make it not having intersection with the invalidate rectangle, but having shared tiles
     std::ostringstream oss;
     oss << "clientvisiblearea x=0 y=" << (y + height + 100) << " width=50490 height=72300";
-    sendTextFrame(socket, oss.str());
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket, oss.str(), testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840",
+        testname);
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1621,8 +1681,11 @@ void TileCacheTests::testTileBeingRenderedHandling()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875", testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200",
+        testname);
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1675,14 +1738,20 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     std::shared_ptr<http::WebSocketSession> socket1
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
     // Set the client visible area
-    sendTextFrame(socket1, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
-    sendTextFrame(socket1, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket1, "clientvisiblearea x=-4005 y=0 width=50490 height=72300", testname);
+    sendTextFrame(
+        socket1,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840",
+        testname);
 
     std::shared_ptr<http::WebSocketSession> socket2
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname, true);
     // Set the client visible area
-    sendTextFrame(socket1, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
-    sendTextFrame(socket1, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket1, "clientvisiblearea x=-4005 y=0 width=50490 height=72300", testname);
+    sendTextFrame(
+        socket1,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840",
+        testname);
 
     //1. First make the first client to trigger the kit to filter out tiles based on identical wireIDs
 
@@ -1723,7 +1792,10 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
 
     //2. Now request the same tiles by the other client (e.g. scroll to the same view)
 
-    sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket2,
+                  "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 "
+                  "tileposy=0,0,0 tilewidth=3840 tileheight=3840",
+                  testname);
 
     // We expect three tiles sent to the second client
     LOK_ASSERT_EQUAL(3, countMessages(socket2, "tile:", testname, 1s));
@@ -1753,8 +1825,11 @@ void TileCacheTests::testLimitTileVersionsOnFly()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
-    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875", testname);
+    sendTextFrame(
+        socket,
+        "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200",
+        testname);
 
     // Type one character to trigger sending tiles
     sendChar(socket, 'x', skNone, testname);
