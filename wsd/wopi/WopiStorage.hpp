@@ -265,6 +265,11 @@ private:
     std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
                                  const Authorization& auth, unsigned redirectLimit);
 
+    /// Create the HTTP request for a WOPI Lock/Unlock operation.
+    http::Request createLockRequest(const Poco::URI& uriObject, const Authorization& auth,
+                                    LockContext& lockCtx, LockState lock,
+                                    const Attributes& attribs);
+
     /// Returns the URI with the path anonymized, optionally appending a suffix.
     std::string getAnonymizedUri(const std::string& pathSuffix = std::string()) const
     {
