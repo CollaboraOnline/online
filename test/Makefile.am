@@ -96,7 +96,6 @@ all_la_unit_tests = \
 	unit-wopi-edge-cases.la \
 	unit-any-input.la \
 	unit-clipboard-close.la \
-	unit-storage.la \
 	unit-convert-to-password-protected.la \
 	unit-wopi-renamefile.la \
 	unit-wopi-saveas.la \
@@ -261,8 +260,6 @@ unit_socket_failure_la_SOURCES = UnitSocketFailure.cpp
 unit_socket_failure_la_LIBADD = $(CPPUNIT_LIBS)
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_prefork_la_LIBADD = $(CPPUNIT_LIBS)
-unit_storage_la_SOURCES = UnitStorage.cpp
-unit_storage_la_LIBADD = $(CPPUNIT_LIBS)
 # unit_tilecache_la_SOURCES = UnitTileCache.cpp
 # unit_tilecache_la_LIBADD = $(CPPUNIT_LIBS)
 unit_oauth_la_SOURCES = UnitOAuth.cpp
