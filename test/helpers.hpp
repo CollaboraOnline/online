@@ -256,8 +256,7 @@ inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket,
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
-                          const std::string_view string,
-                          const std::string_view testname = std::string_view())
+                          const std::string_view string, const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));

@@ -143,7 +143,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         std::shared_ptr<http::WebSocketSession> socket2
             = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
-        sendTextFrame(socket2, "userinactive");
+        sendTextFrame(socket2, "userinactive", testname);
 
         deleteAll(socket1, testname, 100ms, 1);
         sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
@@ -346,7 +346,7 @@ void HTTPWSTest::testViewInfoMsg()
     {
         // Load first view and remember the viewid
         TST_LOG("Loading the first view");
-        sendTextFrame(socket0, "load url=" + docURL);
+        sendTextFrame(socket0, "load url=" + docURL, testname);
         response = getResponseString(socket0, "status:", testname + "0 ");
         LOK_ASSERT_MESSAGE("Expected status: message", !response.empty());
         parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[0], testname);
@@ -364,7 +364,7 @@ void HTTPWSTest::testViewInfoMsg()
 
         // Load second view and remember the viewid
         TST_LOG("Loading the second view");
-        sendTextFrame(socket1, "load url=" + docURL);
+        sendTextFrame(socket1, "load url=" + docURL, testname);
         response = getResponseString(socket1, "status:", testname + "1 ");
         parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[1], testname);
 
