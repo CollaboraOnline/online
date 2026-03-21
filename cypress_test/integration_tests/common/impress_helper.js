@@ -136,8 +136,17 @@ function removeShapeSelection() {
 		helper.processToIdle(win);
 	});
 
-	cy.cGet('body').type('{esc}');
-	cy.cGet('body').type('{esc}');
+	helper.typeIntoDocument('{esc}');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
+
+	helper.typeIntoDocument('{esc}');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
 
 	cy.cGet('#document-container')
 		.should(function(overlay) {
