@@ -4125,7 +4125,7 @@ void COOLWSD::innerMain()
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         for (const auto& docBrokerIt : DocBrokers)
         {
-            std::shared_ptr<DocumentBroker> docBroker = docBrokerIt.second;
+            const std::shared_ptr<DocumentBroker>& docBroker = docBrokerIt.second;
             if (docBroker && docBroker->isAlive())
             {
                 LOG_DBG("Joining docBroker [" << docBrokerIt.first << "].");
@@ -4505,7 +4505,7 @@ void forwardSignal(const int signum)
 
     for (const auto& pair : DocBrokers)
     {
-        std::shared_ptr<DocumentBroker> docBroker = pair.second;
+        const std::shared_ptr<DocumentBroker>& docBroker = pair.second;
         if (docBroker && docBroker->getPid() > 0)
         {
             LOG_INF("Sending " << name << " to docBroker " << docBroker->getPid());

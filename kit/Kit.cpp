@@ -1185,7 +1185,7 @@ void Document::trimAfterInactivity()
     {
         for (auto& it : self->_sessions)
         {
-            std::shared_ptr<ChildSession> session = it.second;
+            const std::shared_ptr<ChildSession>& session = it.second;
             if (!session->isCloseFrame())
                 session->loKitCallback(type, payload);
         }
@@ -1196,7 +1196,7 @@ void Document::trimAfterInactivity()
         if (self->_sessions.size() == 1)
         {
             auto it = self->_sessions.begin();
-            std::shared_ptr<ChildSession> session = it->second;
+            const std::shared_ptr<ChildSession>& session = it->second;
             if (session && !session->isCloseFrame())
             {
                 session->loKitCallback(type, payload);
@@ -1883,7 +1883,7 @@ void Document::updateEditorSpeeds(int id, int speed)
 
     for (const auto& it : _sessions)
     {
-        const std::shared_ptr<ChildSession> session = it.second;
+        const std::shared_ptr<ChildSession>& session = it.second;
         int sessionId = session->getViewId();
 
         auto duration = (_lastUpdatedAt[id] - now);

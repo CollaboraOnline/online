@@ -286,7 +286,7 @@ public:
 
     const std::string& getInFilterOption() const { return _inFilterOptions; }
 
-    std::string getZoteroAPIKey() const { return _zoteroAPIKey; }
+    const std::string& getZoteroAPIKey() const { return _zoteroAPIKey; }
 
     void setZoteroAPIKey(const std::string& val) { _zoteroAPIKey = val; }
 

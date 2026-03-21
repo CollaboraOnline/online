@@ -270,7 +270,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         isUserLocked = false;
         CommandControl::LockManager::setUnlockLink(uriObject.getHost());
         Poco::URI newUri(HostUtil::getNewLockedUri(uriObject));
-        const std::string host = newUri.getHost();
+        const std::string& host = newUri.getHost();
 
         if (CommandControl::LockManager::hostExist(host))
         {
