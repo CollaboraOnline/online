@@ -323,12 +323,90 @@ public:
     }
 };
 
+class UnitStorage : public WopiTestServer
+{
+    STATE_ENUM(Phase,
+               Load, // load the document
+               Filter, // throw filter exception
+               Reload, // re-load the document
+               Done)
+    _phase;
+
+public:
+    UnitStorage()
+        : WopiTestServer("UnitStorage")
+        , _phase(Phase::Load)
+    {
+    }
+
+    bool filterCheckDiskSpace(const std::string& /* path */, bool& newResult) override
+    {
+        // Fail the disk-space check in Filter phase.
+        newResult = _phase != Phase::Filter;
+        TST_LOG("Result: " << (newResult ? "success" : "out-of-disk-space"));
+        return true;
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Loaded: [" << message << ']');
+
+        LOK_ASSERT_STATE(_phase, Phase::Done);
+        passTest("Loaded successfully");
+
+        return true;
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        // This may trigger multiple times.
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
+                                 std::string("error: cmd=internal kind=diskfull"), message);
+
+        LOK_ASSERT_STATE(_phase, Phase::Filter);
+
+        return true;
+    }
+
+    // When we fail to load, we must destroy the DocBroker.
+    void onDocBrokerDestroy(const std::string&) override
+    {
+        if (_phase == Phase::Filter)
+        {
+            TRANSITION_STATE(_phase, Phase::Reload);
+        }
+    }
+
+    void invokeWSDTest() override
+    {
+        LOG_TRC("invokeWSDTest: " << name(_phase));
+        switch (_phase)
+        {
+            case Phase::Load:
+                TRANSITION_STATE(_phase, Phase::Filter);
+                initWebsocket("/wopi/files/0?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            case Phase::Filter:
+                break;
+            case Phase::Reload:
+                TST_LOG("Reloading the document");
+                TRANSITION_STATE(_phase, Phase::Done);
+                initWebsocket("/wopi/files/0?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            case Phase::Done:
+                break;
+        }
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
     return new UnitBase* []
     {
         new UnitWopiOwnertermination(), new UnitWOPICrashModified(),
-            new UnitWOPIAsyncUpload_ModifyClose(), nullptr
+            new UnitWOPIAsyncUpload_ModifyClose(), new UnitStorage(), nullptr
     };
 }
 
