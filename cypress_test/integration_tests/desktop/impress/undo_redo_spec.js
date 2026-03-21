@@ -52,8 +52,10 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 	function undo(win) {
 		helper.processToIdle(win);
 		helper.typeIntoDocument('Hello World');
+		helper.processToIdle(win);
 		expectTypedText();
 		helper.typeIntoDocument('{ctrl+z}');
+		helper.processToIdle(win);
 		expectInitialText();
 	}
 
@@ -73,9 +75,11 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 	it('Repair Document', function() {
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
+		helper.processToIdle(this.win);
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('Overwrite Text');
+		helper.processToIdle(this.win);
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		repairHelper.rollbackPastChange('Undo', false, true);
 		impressHelper.triggerNewSVGForShapeInTheCenter();
