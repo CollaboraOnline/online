@@ -4276,7 +4276,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
     LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
     {
         if (!it.second->inWaitDisconnected())
             it.second->enqueueSendMessage(payload);
@@ -4291,7 +4291,7 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
                                                  << "] for all sessions with userId [" << userId
                                                  << ']');
 
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
     {
         if (it.second->getUserId() != userId)
             continue;
@@ -5644,7 +5644,7 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
 {
     std::vector<std::shared_ptr<ClientSession>> result;
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
         result.push_back(it.second);
     return result;
 }

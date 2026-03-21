@@ -289,7 +289,7 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
@@ -305,7 +305,7 @@ void COOLWSD::syncUsersBrowserSettings(const std::string& userId, const pid_t ch
 
     LOG_INF("Syncing browsersettings for all the users");
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         if (docBroker->getPid() == childPid)
@@ -324,7 +324,7 @@ void COOLWSD::alertUserInternal(const std::string& dockey, const std::string& ms
 
     LOG_INF("Alerting document users with dockey: [" << dockey << ']' << " msg: [" << msg << ']');
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         if (docBroker->getDocKey() == dockey)
@@ -2790,7 +2790,7 @@ void COOLWSD::setMigrationMsgReceived(const std::string& docKey)
 void COOLWSD::setAllMigrationMsgReceived()
 {
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([docBroker]() { docBroker->setMigrationMsgReceived(); });
@@ -3537,7 +3537,7 @@ void COOLWSDServer::dumpState(std::ostream& os) const
     {
         std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
         os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
-        for (auto& i : DocBrokers)
+        for (const auto& i : DocBrokers)
             i.second->dumpState(os);
     }
 
@@ -3913,7 +3913,7 @@ void COOLWSD::innerMain()
         << "Edit mode:" << '\n';
 
     auto names = FileUtil::getDirEntries(DEBUG_ABSSRCDIR "/test/samples");
-    for (auto &i : names)
+    for (const auto &i : names)
     {
         if (i.find("-edit") != std::string::npos)
         {
@@ -4123,7 +4123,7 @@ void COOLWSD::innerMain()
     // We block until they finish, or the service stopping times out.
     {
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        for (auto& docBrokerIt : DocBrokers)
+        for (const auto& docBrokerIt : DocBrokers)
         {
             std::shared_ptr<DocumentBroker> docBroker = docBrokerIt.second;
             if (docBroker && docBroker->isAlive())
@@ -4187,7 +4187,7 @@ void COOLWSD::innerMain()
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
-    for (auto& child : NewChildren)
+    for (const auto& child : NewChildren)
     {
         child->terminate();
     }
@@ -4346,7 +4346,7 @@ int COOLWSD::getClientPortNumber()
 std::string COOLWSD::getJailRoot(int pid)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-    for (auto &it : DocBrokers)
+    for (const auto &it : DocBrokers)
     {
         if (pid < 0 || it.second->getPid() == pid)
             return it.second->getJailRoot();
@@ -4362,7 +4362,7 @@ std::vector<std::shared_ptr<DocumentBroker>> COOLWSD::getBrokersTestOnly()
     std::vector<std::shared_ptr<DocumentBroker>> result;
 
     result.reserve(DocBrokers.size());
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
         result.push_back(brokerIt.second);
     return result;
 }

@@ -94,7 +94,7 @@ public:
         {
             {
                 uint64_t msSinceEpoc = getTimestamp();
-                for (auto d : _times)
+                for (const auto& d : _times)
                 {
                     uint64_t snapshot = *d.first; // one atomic read
                     if (snapshot == 0) // sleeping / polling

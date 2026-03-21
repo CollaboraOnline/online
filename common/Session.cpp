@@ -163,7 +163,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
                 continue;
             }
 
-            std::string decodedSignatureData = Uri::decode(value);
+            const std::string decodedSignatureData = Uri::decode(value);
             if (decodedSignatureData == "{}")
             {
                 LOG_INF("signatureconfig: Empty signature data received, skipping processing");

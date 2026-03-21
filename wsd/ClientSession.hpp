@@ -239,7 +239,7 @@ public:
 
     const std::pair<int, int>& getThumbnailPosition() const { return _thumbnailPosition; }
 
-    bool thumbnailSession() { return _thumbnailSession; }
+    bool thumbnailSession() const { return _thumbnailSession; }
 
     /// Do we recognize this clipboard ?
     bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
@@ -301,7 +301,7 @@ public:
         _browserSettingsJSON = jsonObject;
     }
 
-    Poco::SharedPtr<Poco::JSON::Object> getBrowserSettingJSON()
+    Poco::SharedPtr<Poco::JSON::Object> getBrowserSettingJSON() const
     {
         return _browserSettingsJSON;
     }
