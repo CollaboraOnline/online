@@ -99,10 +99,14 @@ void anonymizeAvatarURL(Poco::JSON::Object::Ptr& userExtraInfo)
     if (!avatarURL.empty())
     {
         const std::string avatar_path = "/avatar/";
-        std::size_t startPos = avatarURL.find(avatar_path) + avatar_path.length();
-        std::size_t endPos = avatarURL.find("/", startPos);
+        const std::size_t pos = avatarURL.find(avatar_path);
+        if (pos == std::string::npos)
+            return;
 
-        if (startPos != std::string::npos && endPos != std::string::npos)
+        const std::size_t startPos = pos + avatar_path.length();
+        const std::size_t endPos = avatarURL.find("/", startPos);
+
+        if (endPos != std::string::npos)
         {
             std::string avatarUserName = avatarURL.substr(startPos, endPos - startPos);
             avatarURL.replace(startPos, endPos - startPos, COOLWSD::anonymizeUsername(avatarUserName));
