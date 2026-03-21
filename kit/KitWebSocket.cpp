@@ -16,10 +16,10 @@
 
 #include <config.h>
 
+#include "KitWebSocket.hpp"
+
 // Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Include <typeinfo> here.
 #include <typeinfo>
-
-#include "KitWebSocket.hpp"
 
 #include <common/Anonymizer.hpp>
 #include <common/JsonUtil.hpp>

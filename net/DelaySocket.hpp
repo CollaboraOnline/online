@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <Socket.hpp>
+#include <net/Socket.hpp>
 
 /// Simulates network latency for local debugging.
 ///

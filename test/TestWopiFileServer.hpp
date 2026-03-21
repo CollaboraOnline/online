@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
 #include <wsd/RequestDetails.hpp>

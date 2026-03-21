@@ -16,6 +16,8 @@
 
 #include <config.h>
 
+#include <wsd/ClientRequestDispatcher.hpp>
+
 #if ENABLE_FEATURE_LOCK
 #include <CommandControl.hpp>
 #endif
@@ -40,7 +42,6 @@
 #include <net/HttpHelper.hpp>
 #include <net/NetUtil.hpp>
 #include <net/Uri.hpp>
-#include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
 

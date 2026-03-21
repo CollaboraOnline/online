@@ -15,9 +15,10 @@
  */
 
 #include <config.h>
-#include <Common.hpp>
-#include <Kit.hpp>
-#include <ServerSocket.hpp>
+
+#include <common/Common.hpp>
+#include <kit/Kit.hpp>
+#include <net/ServerSocket.hpp>
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 UnxSocketPath MasterLocation;
