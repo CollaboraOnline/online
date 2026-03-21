@@ -13,6 +13,7 @@
 
 #include <wsd/TileDesc.hpp>
 
+#include <deque>
 #include <string>
 #include <vector>
 
@@ -184,14 +185,14 @@ private:
 
 private:
     /// Queue of incoming messages from coolwsd
-    std::vector<Payload> _queue;
+    std::deque<Payload> _queue;
 
     /// Queues of incoming tile requests from coolwsd
     using viewTileQueue = std::pair<CanonicalViewId, std::vector<TileDesc>>;
-    std::vector<viewTileQueue> _tileQueues;
+    std::deque<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd
-    std::vector<Callback> _callbacks;
+    std::deque<Callback> _callbacks;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const KitQueue::Callback &c)
