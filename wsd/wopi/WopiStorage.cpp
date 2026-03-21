@@ -50,20 +50,22 @@
 #include <memory>
 #include <string>
 
-bool isTemplate(const std::string& filename)
-{
-    std::vector<std::string> templateExtensions{ ".stw",  ".ott",  ".dot", ".dotx",
-                                                 ".dotm", ".otm",  ".stc", ".ots",
-                                                 ".xltx", ".xltm", ".sti", ".otp",
-                                                 ".potx", ".potm", ".std", ".otg" };
-    for (const auto& extension : templateExtensions)
-        if (filename.ends_with(extension))
-            return true;
-    return false;
-}
-
 namespace
 {
+
+constexpr bool isTemplate(const std::string_view filename)
+{
+    constexpr std::string_view extensions[] = { ".stw",  ".ott",  ".dot",  ".dotx", ".dotm", ".otm",
+                                                ".stc",  ".ots",  ".xltx", ".xltm", ".sti",  ".otp",
+                                                ".potx", ".potm", ".std",  ".otg" };
+    for (const std::string_view extension : extensions)
+    {
+        if (filename.ends_with(extension))
+            return true;
+    }
+
+    return false;
+}
 
 /// A helper class to invoke the callback of an async
 /// request when it exits its scope.
