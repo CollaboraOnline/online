@@ -5358,7 +5358,7 @@ void DocumentBroker::shutdownClients(const std::string_view closeReason)
     std::map<std::string, std::shared_ptr<ClientSession>> sessions = _sessions;
     for (const auto& pair : sessions)
     {
-        std::shared_ptr<ClientSession> session = pair.second;
+        const std::shared_ptr<ClientSession>& session = pair.second;
         try
         {
             if (session->inWaitDisconnected())

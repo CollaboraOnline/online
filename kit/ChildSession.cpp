@@ -3491,7 +3491,7 @@ bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
     return true;
 }
 
-std::string ChildSession::getBlockedCommandType(std::string command)
+std::string ChildSession::getBlockedCommandType(const std::string& command)
 {
     if(CommandControl::RestrictionManager::getRestrictedCommandList().find(command)
     != CommandControl::RestrictionManager::getRestrictedCommandList().end())
