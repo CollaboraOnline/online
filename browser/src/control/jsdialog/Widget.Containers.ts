@@ -78,13 +78,27 @@ JSDialog.grid = function (
 	if (data.tabIndex !== undefined)
 		table.setAttribute('tabindex', data.tabIndex);
 
+	const expandCols: boolean[] = new Array(cols).fill(false);
+	if (data.children) {
+		for (const child of data.children) {
+			if (child.hexpand && child.left !== undefined) {
+				expandCols[parseInt(child.left)] = true;
+			}
+		}
+	}
+
+	const hasExpand = expandCols.some((v: boolean) => v);
+	const colDefs = [];
+	for (let c = 0; c < cols; c++) colDefs.push(expandCols[c] ? '1fr' : 'auto');
+
 	const gridRowColStyle =
 		'grid-template-rows: repeat(' +
 		rows +
 		', auto); \
-		grid-template-columns: repeat(' +
-		cols +
-		', auto);';
+		grid-template-columns: ' +
+		colDefs.join(' ') +
+		';' +
+		(hasExpand ? '' : ' justify-content: start;');
 
 	table.style = gridRowColStyle;
 
@@ -106,9 +120,13 @@ JSDialog.grid = function (
 				const sandbox = window.L.DomUtil.create('div');
 				builder.build(sandbox, [child], false);
 
-				const control = sandbox.firstChild;
+				const control = sandbox.firstChild as HTMLElement;
 				if (control) {
 					window.L.DomUtil.addClass(control, 'ui-grid-cell');
+					if (child.halign) {
+						control.style.justifySelf = child.halign;
+						control.style.width = 'auto';
+					}
 					table.appendChild(control);
 				}
 

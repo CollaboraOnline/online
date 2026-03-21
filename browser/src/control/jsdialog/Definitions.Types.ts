@@ -26,6 +26,10 @@ interface WidgetJSON {
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
+	halign?: string; // horizontal alignment in grid cell: start, center, end
+	hexpand?: boolean; // whether widget expands horizontally in grid
+	expand?: boolean; // box packing: whether child gets extra space
+	fill?: boolean; // box packing: whether child fills its allocation
 	labelledBy?: string;
 	allyRole?: string;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
