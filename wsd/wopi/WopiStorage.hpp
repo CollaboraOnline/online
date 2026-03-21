@@ -265,6 +265,14 @@ private:
     std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
                                  const Authorization& auth, unsigned redirectLimit);
 
+    /// Returns the URI with the path anonymized, optionally appending a suffix.
+    std::string getAnonymizedUri(const std::string& pathSuffix = std::string()) const
+    {
+        Poco::URI uriAnonym(getUri());
+        uriAnonym.setPath(COOLWSD::anonymizeUrl(uriAnonym.getPath()) + pathSuffix);
+        return uriAnonym.toString();
+    }
+
 private:
     /// A URl provided by the WOPI host to use for GetFile.
     std::string _fileUrl;
