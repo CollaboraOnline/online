@@ -134,4 +134,7 @@ interface DocLayerInterface {
 		menuStructure?: WidgetJSON,
 		onlyThread?: any,
 	): WidgetJSON;
+
+	_resetReferencesMarks(type?: string): void;
+	_clearSelections(calledFromSetPartHandler?: boolean): void;
 }
