@@ -244,7 +244,7 @@ void WopiProxy::transfer(const std::shared_ptr<TerminatingPoll>& poll, const std
                                                      << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, &poll, url, postBody, uriAnonym=std::move(uriAnonym),
+        [this, poll, url, postBody, uriAnonym=std::move(uriAnonym),
          redirectLimit](const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
