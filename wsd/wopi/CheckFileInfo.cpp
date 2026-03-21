@@ -83,9 +83,7 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         const std::string& wopiResponse = httpResponse->getBody();
         const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
         const bool unauthorized =
-            (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
+            http::isUnauthorizedStatusCode(httpResponse->statusLine().statusCode());
 
         if (Log::isEnabled(failed ? Log::Level::ERR : Log::Level::TRC))
         {

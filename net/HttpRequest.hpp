@@ -249,6 +249,13 @@ constexpr bool isRedirectStatusCode(StatusCode code)
            code == StatusCode::TemporaryRedirect || code == StatusCode::PermanentRedirect;
 }
 
+/// Returns true for status codes that indicate authorization failure (401, 403, 404).
+constexpr bool isUnauthorizedStatusCode(StatusCode code)
+{
+    return code == StatusCode::Unauthorized || code == StatusCode::Forbidden ||
+           code == StatusCode::NotFound;
+}
+
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
 /// The Reason Phrase is informational only, but it helps
