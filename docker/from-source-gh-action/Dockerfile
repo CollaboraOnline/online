@@ -2,6 +2,7 @@ FROM ubuntu:24.04 AS builder
 
 ENV CORE_ASSETS=https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-25.04-assets.tar.gz
 ENV BUILDDIR=/build
+ENV COLLABORA_ONLINE_BRANCH=distro/collabora/co-25.04
 ENV ONLINE_EXTRA_BUILD_OPTIONS=--enable-experimental
 
 WORKDIR /build
