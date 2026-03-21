@@ -4168,7 +4168,7 @@ void ClientSession::dumpState(std::ostream& os)
 
 const std::string &ClientSession::getOrCreateProxyAccess()
 {
-    if (_proxyAccess.size() <= 0)
+    if (_proxyAccess.empty())
         _proxyAccess = Util::rng::getHexString(
             ProxyAccessTokenLengthBytes);
     return _proxyAccess;

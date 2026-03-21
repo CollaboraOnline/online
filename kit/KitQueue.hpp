@@ -123,7 +123,7 @@ public:
 
     [[nodiscard]] bool getCallback(Callback& callback)
     {
-        if (_callbacks.size() == 0)
+        if (_callbacks.empty())
             return false;
         callback = std::move(_callbacks.front());
         _callbacks.erase(_callbacks.begin());
