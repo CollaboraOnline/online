@@ -94,21 +94,33 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			if (!hasOverflow)
 				return;
 
-			// Find sibling scroll buttons - deferred so all siblings exist in DOM
+			// Find sibling scroll buttons - deferred so all siblings exist in DOM.
+			// A scroll-button container is a simple wrapper whose only child
+			// is the button (e.g. a pushbutton widget).  Tab headers, toolbars
+			// and other complex siblings also contain <button> elements but
+			// have more than one child — skip those.
 			var prevSibling = scrollwindow.previousElementSibling;
 			var nextSibling = scrollwindow.nextElementSibling;
-			var leftBtn = prevSibling ? prevSibling.querySelector('button') : null;
-			var rightBtn = nextSibling ? nextSibling.querySelector('button') : null;
+			var isScrollBtn = function(sibling) {
+				if (!sibling)
+					return false;
+				var btn = sibling.querySelector('button');
+				return btn && btn.parentElement === sibling
+					&& sibling.children.length === 1;
+			};
+			var isLeftScrollBtn = isScrollBtn(prevSibling);
+			var isRightScrollBtn = isScrollBtn(nextSibling);
 
 			scrollwindow._externalScrollSetup = true;
 
-			// Hide sibling scroll buttons and show a native browser
-			// scrollbar instead - the browser handles overflow better
-			if (leftBtn)
-				leftBtn.parentElement.style.display = 'none';
-			if (rightBtn)
-				rightBtn.parentElement.style.display = 'none';
+			// Hide sibling scroll buttons — only simple single-button
+			// wrappers, not tab headers or other complex widgets.
+			if (isLeftScrollBtn)
+				prevSibling.style.display = 'none';
+			if (isRightScrollBtn)
+				nextSibling.style.display = 'none';
 
+			// Always show a native browser scrollbar when content overflows
 			scrollwindow.style.overflowX = 'auto';
 		};
 
