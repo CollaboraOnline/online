@@ -3150,20 +3150,21 @@ bool ChildSession::exportAs(const StringVector& tokens)
 
     const bool isPDF = extension == "pdf";
     const bool isEPUB = extension == "epub";
+
+    // We don't have the FileId at this point, just a new filename to save-as.
+    // So here the filename will be obfuscated with some hashing, which later will
+    // get a proper FileId that we will use going forward.
+    LOG_DBG("Calling LOK's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
+
+    getLOKitDocument()->setView(_viewId);
+
+    std::string encodedWopiFilename;
+    Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
+
+    _exportAsWopiUrl = std::move(encodedWopiFilename);
+
     if (isPDF || isEPUB)
     {
-        // We don't have the FileId at this point, just a new filename to save-as.
-        // So here the filename will be obfuscated with some hashing, which later will
-        // get a proper FileId that we will use going forward.
-        LOG_DBG("Calling LOK's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
-
-        getLOKitDocument()->setView(_viewId);
-
-        std::string encodedWopiFilename;
-        Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
-
-        _exportAsWopiUrl = std::move(encodedWopiFilename);
-
         const std::string arguments = "{"
             "\"SynchronMode\":{"
                 "\"type\":\"boolean\","
@@ -3178,8 +3179,14 @@ bool ChildSession::exportAs(const StringVector& tokens)
         return true;
     }
 
-    sendTextFrameAndLogError("error: cmd=exportas kind=unsupported");
-    return false;
+    // For image export (triggered from the image context menu).
+    // SaveGraphic writes the image in its native format to /tmp/
+    // and fires LOK_CALLBACK_EXPORT_FILE. If no graphic is selected,
+    // the command is a no-op.
+    // NOTE: new document export formats must be handled above this,
+    // like PDF and EPUB.
+    getLOKitDocument()->postUnoCommand(".uno:SaveGraphic", nullptr, false);
+    return true;
 }
 
 bool ChildSession::setClientPart(const StringVector& tokens)
