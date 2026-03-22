@@ -294,7 +294,8 @@ int domount(int argc, const char* const* argv)
         if (isCharDev)
         {
             // Even for character devices, we only support the random devices.
-            if (strstr("/dev/random", source) && strstr("/dev/urandom", source))
+            if (source != std::string_view("/dev/random") &&
+                source != std::string_view("/dev/urandom"))
             {
                 fprintf(stderr, "%s: cannot mount untrusted character-device [%s]", program,
                         source);
