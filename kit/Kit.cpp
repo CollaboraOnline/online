@@ -2450,7 +2450,17 @@ TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
     }
 
     if (maxPrio == TilePrioritizer::Priority::NONE)
-        LOG_WRN("No sessions match this viewId " << canonicalViewId);
+    {
+        // This can be highly noisy when a view is removed
+        // but we have a long back-log of tiles to deliver.
+        static CanonicalViewId lastViewId = CanonicalViewId::Invalid;
+        if (canonicalViewId != lastViewId)
+        {
+            lastViewId = canonicalViewId;
+            LOG_WRN("No sessions match this viewId " << canonicalViewId);
+        }
+    }
+
     // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
 }
