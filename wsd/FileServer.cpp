@@ -263,13 +263,6 @@ FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
     try
     {
         readDirToHash(root, "/browser/dist");
-
-        // Shrink this from approx 200M to 50M for debug version
-        for (auto& entry : FileHash)
-        {
-            entry.second.first.shrink_to_fit();
-            entry.second.second.shrink_to_fit();
-        }
     }
     catch (...)
     {
@@ -871,6 +864,7 @@ void FileServerRequestHandler::readDirToHash(const std::string& basePath, const 
             else
             {
                 compressedFile.resize(compSize - strm.avail_out);
+                compressedFile.shrink_to_fit();
             }
 
             FileHash.emplace(

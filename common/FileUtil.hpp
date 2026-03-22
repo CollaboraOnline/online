@@ -240,6 +240,7 @@ namespace FileUtil
         closeFD(fd);
 
         data.resize(originalSize + (n <= 0 ? 0 : n));
+        data.shrink_to_fit();
 
         return n;
     }
