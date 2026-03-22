@@ -725,7 +725,7 @@ void FileServerRequestHandler::sendError(http::StatusCode errorCode,
     HttpHelper::sendErrorAndShutdown(errorCode, socket, body, headers);
 }
 
-void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix)
+void FileServerRequestHandler::readDirToHash(const std::string& basePath, const std::string& path)
 {
     const std::string fullPath = basePath + path;
     LOG_DBG("Caching files in [" << fullPath << ']');
@@ -790,8 +790,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 }
             }
 
-            FileHash.emplace(prefix + relPath,
-                             std::make_pair(std::move(uncompressedFile), std::string()));
+            FileHash.emplace(relPath, std::make_pair(std::move(uncompressedFile), std::string()));
         }
         else if (S_ISREG(fileStat.st_mode))
         {
@@ -811,7 +810,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 }
 
                 // Always add the entry, even if the contents are empty.
-                FileHash.emplace(prefix + relPath,
+                FileHash.emplace(relPath,
                                  std::make_pair(std::move(uncompressedFile), std::string()));
                 continue;
             }
@@ -826,7 +825,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 LOG_ERR("Failed to deflateInit2 for file [" << basePath << relPath
                                                             << "], result: " << initResult);
                 // Add the uncompressed version; it's better to serve uncompressed than nothing at all.
-                FileHash.emplace(prefix + relPath,
+                FileHash.emplace(relPath,
                                  std::make_pair(std::move(uncompressedFile), std::string()));
 
                 deflateEnd(&strm);
@@ -861,8 +860,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 compressedFile.resize(compSize - strm.avail_out);
             }
 
-            FileHash.emplace(prefix + relPath, std::make_pair(std::move(uncompressedFile),
-                                                              std::move(compressedFile)));
+            FileHash.emplace(
+                relPath, std::make_pair(std::move(uncompressedFile), std::move(compressedFile)));
             deflateEnd(&strm);
         }
     }
