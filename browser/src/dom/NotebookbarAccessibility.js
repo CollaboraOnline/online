@@ -192,10 +192,15 @@ var NotebookbarAccessibility = function() {
 				else if (this.state === 1) {
 					itemWasClicked = true;
 					this.setTabItemDescription(element);
-					var clickTarget = element.querySelector('button.unobutton') || element;
-					clickTarget.click();
-					if (this.filteredItem && this.filteredItem.focusBack === true) {
-						this.focusToMap();
+					var selectTarget = element.tagName === 'SELECT' ? element : element.querySelector('select');
+					if (selectTarget) {
+						selectTarget.focus();
+						selectTarget.showPicker();
+					} else {
+						var clickTarget = element.querySelector('button.unobutton') || element;
+						clickTarget.click();
+						if (this.filteredItem && this.filteredItem.focusBack === true)
+							this.focusToMap();
 					}
 				}
 			}
