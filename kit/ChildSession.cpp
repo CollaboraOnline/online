@@ -674,6 +674,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
                 return unoCommand(newTokens);
             }
+            else if (tokens[1].find(".uno:SaveGraphic") != std::string::npos)
+            {
+                // SaveGraphic is not a document save - it exports an image
+                return unoCommand(tokens);
+            }
             else if (tokens[1].find(".uno:Save") != std::string::npos)
             {
                 LOG_ERR("Unexpected UNO Save command in client");

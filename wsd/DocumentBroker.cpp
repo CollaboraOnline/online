@@ -5254,7 +5254,8 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
     std::string viewId = session->getId();
 
     // Should not get through; we have our own save command.
-    assert(!message.starts_with("uno .uno:Save"));
+    // .uno:SaveGraphic is not a document save - it exports an image to a temp file.
+    assert(!message.starts_with("uno .uno:Save") || message.starts_with("uno .uno:SaveGraphic"));
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
