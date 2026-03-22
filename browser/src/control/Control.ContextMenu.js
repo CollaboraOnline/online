@@ -123,6 +123,11 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 						callback: function(key) {
 							if (key === '.uno:InsertAnnotation') {
 								app.map.insertComment();
+							} else if (key === 'saveimagetowopi') {
+								var ext = GraphicSelection.extraInfo && GraphicSelection.extraInfo.graphicExtension
+									? GraphicSelection.extraInfo.graphicExtension : 'png';
+								map._saveImageToWopi = true;
+								map.openSaveAs(ext);
 							} else if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
 								map.sendUnoCommand(key);
 								// For spelling context menu we need to remove selection
@@ -175,6 +180,22 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				obj.menu.splice(insertIndex, 0,
 					{ text: _('Delete'), type: 'command', command: '.uno:Delete', enabled: true });
 			}
+
+			// Add "Save Image to Server" after SaveGraphic when WOPI supports save-as
+			if (!this._map['wopi'].UserCanNotWriteRelative) {
+				var saveGraphicIndex = -1;
+				obj.menu.forEach(function(item, index) {
+					if (item.command === '.uno:SaveGraphic') {
+						saveGraphicIndex = index + 1;
+					}
+				});
+
+				if (saveGraphicIndex != -1) {
+					obj.menu.splice(saveGraphicIndex, 0,
+						{ text: _('Save Image to Server'), type: 'command',
+						  command: 'saveimagetowopi', enabled: true });
+				}
+			}
 		}
 	},
 
@@ -221,6 +242,17 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				isLastItemText = false;
 			}
 			else if (item.type === 'command') {
+				// Custom commands (not .uno:) injected by _amendContextMenuData
+				if (item.command && !item.command.startsWith('.uno:')) {
+					itemName = item.text;
+					contextMenu[item.command] = {
+						name: (window.mode.isMobile() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, item.command)),
+						isHtmlName: true,
+					};
+					isLastItemText = true;
+					continue;
+				}
+
 				// Only show allowlisted items
 				// Command name (excluding '.uno:') starts from index = 5
 				var commandName = item.command.substring(5);

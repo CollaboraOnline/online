@@ -416,6 +416,8 @@ class LOUtil {
 			// switch to compact mode: 1st hidden element in the top toolbar
 			closemobile: 'closedocmobile',
 			'file-saveas': 'saveas',
+			savegraphic: 'saveas',
+			saveimagetowopi: 'saveasremote',
 			'home-search': 'recsearch',
 			searchdialog3finitialfocusreplace3abool3dtrue: 'searchreplace',
 			'addmb-menu': 'ok',

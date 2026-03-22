@@ -747,7 +747,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 						return;
 					}
 
-					var isExport = format === 'pdf' || format === 'epub';
+					var isExport = format === 'pdf' || format === 'epub' || this._map._saveImageToWopi;
+					this._map._saveImageToWopi = false;
 					if (isExport) {
 						this._map.exportAs(msg.Values.Filename);
 					} else {
