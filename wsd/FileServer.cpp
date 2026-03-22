@@ -757,17 +757,30 @@ void FileServerRequestHandler::readDirToHash(const std::string& basePath, const 
             continue;
 
         const std::string relPath = path + '/' + currentFile->d_name;
-        struct stat fileStat;
-        if (stat ((basePath + relPath).c_str(), &fileStat) != 0)
+
+        int mode = 0;
+#if defined(_DIRENT_HAVE_D_TYPE) && defined(DTTOIF)
+        // This system supports d_type. Convert it to the stats mode.
+        mode = DTTOIF(currentFile->d_type);
+#endif
+
+        // Not all file-systems set d_type; we might still have to stat(2) after all.
+        if (!S_ISDIR(mode) && !S_ISREG(mode))
         {
-            LOG_ERR("Failed to stat " << relPath);
-            continue;
+            struct stat fileStat;
+            if (stat((basePath + relPath).c_str(), &fileStat) != 0)
+            {
+                LOG_ERR("Failed to stat " << relPath);
+                continue;
+            }
+
+            mode = fileStat.st_mode;
         }
 
-        if (S_ISDIR(fileStat.st_mode))
+        if (S_ISDIR(mode))
             readDirToHash(basePath, relPath);
 
-        else if (S_ISREG(fileStat.st_mode) && relPath.ends_with(".br"))
+        else if (S_ISREG(mode) && relPath.ends_with(".br"))
         {
             // Only cache without compressing.
             fileCount++;
@@ -792,7 +805,7 @@ void FileServerRequestHandler::readDirToHash(const std::string& basePath, const 
 
             FileHash.emplace(relPath, std::make_pair(std::move(uncompressedFile), std::string()));
         }
-        else if (S_ISREG(fileStat.st_mode))
+        else if (S_ISREG(mode))
         {
             std::string uncompressedFile;
             const ssize_t size =
