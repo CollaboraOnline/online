@@ -210,7 +210,7 @@ public:
                        const std::shared_ptr<StreamSocket>& socket,
                        ResourceAccessDetails& accessDetails);
 
-    void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
+    void readDirToHash(const std::string& basePath, const std::string& path);
 
     const std::string *getCompressedFile(const std::string &path);
 
