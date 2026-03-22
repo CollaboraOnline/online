@@ -60,7 +60,7 @@ const MenuCommands: MenuCommandsInterface = {
 				  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
 				  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
 				  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
-				  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
+				  'CompressGraphic', 'SaveGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 				  'AnimationEffects', 'ExecuteAnimationEffect',
 				  'InsertAnnotation', 'FormatGroup', 'FormatUngroup'],
 

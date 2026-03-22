@@ -549,6 +549,7 @@ var unoCommandsArray = {
 	'SamplingDialog':{spreadsheet:{menu:_('~Sampling...'),},},
 	'Save':{global:{menu:_('~Save'),},},
 	'SaveAs':{global:{menu:_('Save ~As...'),},},
+	'SaveGraphic':{global:{menu:_('Save...'),},presentation:{menu:_('~Save...'),},},
 	'SearchDialog':{global:{menu:_('Find and Rep~lace...'),},},
 	'SelectAll':{global:{menu:_('Select ~All'),},},
 	'SelectBackground':{presentation:{menu:_('Set Background Image...'),},},
