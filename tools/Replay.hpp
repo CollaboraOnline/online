@@ -569,8 +569,8 @@ public:
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
 
-            sendTextMessage("tileprocessed tile=" + desc.generateID());
-            LOG_TST(_logPre << "Sent tileprocessed tile= " << desc.generateID());
+            sendTextMessage("tileprocessed wids=" + std::to_string(desc.getWireId()));
+            LOG_TST(_logPre << "Sent tileprocessed wids= " << desc.getWireId());
         }
         else if (tokens.equals(0, "error:"))
         {

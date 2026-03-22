@@ -23,6 +23,7 @@
 #include <common/Util.hpp>
 #include <kit/Delta.hpp>
 #include <wsd/TileCache.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <test/KitPidHelpers.hpp>
 #include <test/WebSocketSession.hpp>
@@ -1527,9 +1528,14 @@ void TileCacheTests::testTileWireIDHandling()
                        countMessages(socket, "tile:", testname, 500ms) > 1);
 
     // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
-    sendTextFrame(socket, "tileprocessed tile=0:0:0:3840:3840:0", testname);
-    sendTextFrame(socket, "tileprocessed tile=0:3840:0:3840:3840:0", testname);
-    sendTextFrame(socket, "tileprocessed tile=0:7680:0:3840:3840:0", testname);
+    for (;;)
+    {
+        const auto tile = getResponseDesc(socket, "tile:", testname, 500ms);
+        if (!tile)
+            break;
+
+        sendTextFrame(socket, "tileprocessed wids=" + std::to_string(tile->getWireId()), testname);
+    }
 
     // Type another character
     sendChar(socket, 'y', skNone, testname);
@@ -1585,7 +1591,7 @@ void TileCacheTests::testTileProcessed()
                   "9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200",
                   testname);
 
-    std::vector<std::string> tileIDs;
+    std::vector<int> wids;
     int arrivedTile = 0;
     bool gotTile = false;
     do
@@ -1598,23 +1604,22 @@ void TileCacheTests::testTileProcessed()
 
             // Store tileID, so we can send it back
             StringVector tokens(StringVector::tokenize(tile, ' '));
-            std::string tileID = tokens[2].substr(std::string("part=").size()) + ':' +
-                                 tokens[5].substr(std::string("tileposx=").size()) + ':' +
-                                 tokens[6].substr(std::string("tileposy=").size()) + ':' +
-                                 tokens[7].substr(std::string("tileWidth=").size()) + ':' +
-                                 tokens[8].substr(std::string("tileHeight=").size()) + ':' +
-                                 tokens[1].substr(std::string("nviewid=").size());
-            tileIDs.push_back(tileID);
+            TileDesc desc = TileDesc::parse(tokens);
+
+            wids.push_back(desc.getWireId());
         }
 
     } while(gotTile);
 
     LOK_ASSERT_EQUAL_MESSAGE("Expected exactly the requested number of tiles", 25, arrivedTile);
 
-    for(std::string& tileID : tileIDs)
+    std::ostringstream oss;
+    for (int wid : wids)
     {
-        sendTextFrame(socket, "tileprocessed tile=" + tileID, testname);
+        oss << wid << ',';
     }
+
+    sendTextFrame(socket, "tileprocessed wids=" + oss.str(), testname);
 
     socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",

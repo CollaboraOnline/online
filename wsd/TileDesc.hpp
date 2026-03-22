@@ -403,14 +403,6 @@ public:
         return parse(StringVector::tokenize(message.data(), message.size()));
     }
 
-    [[nodiscard]] std::string generateID() const
-    {
-        std::ostringstream tileID;
-        tileID << getPart() << ':' << getEditMode() << ':' << getTilePosX() << ':' << getTilePosY()
-                << ':' << getTileWidth() << ':' << getTileHeight() << ':' << getCanonicalViewId();
-        return tileID.str();
-    }
-
 private:
     CanonicalViewId _canonicalViewId;
     int _part;
