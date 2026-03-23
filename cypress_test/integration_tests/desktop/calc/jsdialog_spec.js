@@ -143,6 +143,29 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#data-input').should('not.be.disabled');
 	});
 
+	it('Sparkline dialog listboxes allow narrow width', function() {
+		cy.getFrameWindow().then(function(win) {
+			win.app.map.sendUnoCommand('.uno:InsertSparkline');
+		});
+		cy.cGet('.ui-dialog[role="dialog"]').should('have.length', 1);
+		cy.getFrameWindow().then(function(win) {
+			return helper.processToIdle(win);
+		});
+
+		cy.cGet('#cbType').should('be.visible');
+		cy.cGet('#cbEmptyCells').should('be.visible');
+
+		cy.getFrameWindow().then(function(win) {
+			var typeEl = win.document.getElementById('cbType');
+			var emptyEl = win.document.getElementById('cbEmptyCells');
+			expect(typeEl.getBoundingClientRect().width).to.be.equal(75);
+			expect(emptyEl.getBoundingClientRect().width).to.be.equal(75);
+		});
+
+		cy.cGet('.ui-dialog-titlebar-close').click();
+		cy.cGet('.ui-dialog[role="dialog"]').should('not.exist');
+	});
+
 	it('QuerySelector Syntax error', function(){
 
 		cy.getFrameWindow().then(function(win) {
