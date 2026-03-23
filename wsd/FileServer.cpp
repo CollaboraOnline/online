@@ -825,7 +825,9 @@ void FileServerRequestHandler::readDirToHash(const std::string& basePath, const 
             strm.zalloc = Z_NULL;
             strm.zfree = Z_NULL;
             strm.opaque = Z_NULL;
-            const int initResult = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
+            const int initResult =
+                deflateInit2(&strm, Util::isDebugEnabled() ? Z_BEST_SPEED : Z_BEST_COMPRESSION,
+                             Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
             if (initResult != Z_OK)
             {
                 LOG_ERR("Failed to deflateInit2 for file [" << basePath << relPath
