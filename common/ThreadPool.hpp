@@ -88,13 +88,13 @@ public:
 
     size_t count() const { return _work.size(); }
 
-    void pushWork(const ThreadFn& fn)
+    void pushWork(ThreadFn fn)
     {
         std::unique_lock<std::mutex> lock(_mutex);
         assert(!_running);
         assert(!_shutdown);
         assert(_working == 0);
-        _work.push(fn);
+        _work.emplace(std::move(fn));
     }
 
     void runOne(std::unique_lock<std::mutex>& lock)
