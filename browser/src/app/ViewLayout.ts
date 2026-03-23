@@ -328,7 +328,7 @@ class ViewLayoutBase {
 
 	protected refreshCurrentCoordList() {
 		this.currentCoordList.length = 0;
-		const zoom = app.map.getZoom();
+		const zoom = Math.round(app.map.getZoom());
 
 		const columnCount = Math.ceil(
 			this._viewedRectangle.pWidth / TileManager.tileSize,
