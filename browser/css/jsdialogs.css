@@ -1897,6 +1897,12 @@ img.context-menu-icon {
 	background-color: var(--color-background-darker);
 }
 
+.menubutton:not(.splitbutton) .arrowbackground,
+.menubutton:not(.splitbutton) .arrowbackground:hover {
+	border-left-color: transparent;
+	background-color: transparent;
+}
+
 .unoarrow:not([disabled]):hover, .arrowbackground:not([disabled]):hover .unoarrow {
 	border-top-color: var(--color-text-darker);
 }
