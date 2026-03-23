@@ -118,7 +118,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false, icon: 'compact_redo.svg'}
 		];
 		var fontGroup = [
-			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), tooltip: _('Clone Formatting (double click to keep active)'), command: '.uno:FormatPaintbrush', doubleClickCommand: '.uno:FormatPaintbrush', doubleClickCommandArgs: { PersistentCopy: { type: 'boolean', value: true } }, mobile: false, icon: 'compact_formatpaintbrush.svg'},
+			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), tooltip: _('Clone Formatting (double click to keep active)'), activeTooltip: _('Clone Formatting is active (click again or press Esc to exit)'), command: '.uno:FormatPaintbrush', doubleClickCommand: '.uno:FormatPaintbrush', doubleClickCommandArgs: { PersistentCopy: { type: 'boolean', value: true } }, mobile: false, icon: 'compact_formatpaintbrush.svg'},
 			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'toolitem',  id: 'resetimpress', class: 'unoResetAttributes', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
