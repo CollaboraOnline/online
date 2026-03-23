@@ -224,6 +224,71 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		}
 	}
 
+	protected override refreshCurrentCoordList() {
+		this.currentCoordList.length = 0;
+		const zoom = Math.round(app.map.getZoom());
+		const tileSize = TileManager.tileSize;
+
+		const documentAnchor = this.getDocumentAnchorSection();
+		const view = cool.SimpleRectangle.fromCorePixels([
+			this.scrollProperties.viewX,
+			this.scrollProperties.viewY,
+			documentAnchor.size[0],
+			documentAnchor.size[1],
+		]);
+
+		const added: Set<string> = new Set();
+
+		for (let i = 0; i < this.documentRectangles.length; i++) {
+			const viewRect = this.viewRectangles[i];
+
+			if (!view.intersectsRectangle(viewRect.toArray())) continue;
+
+			const docRect = this.documentRectangles[i];
+
+			// Compute the visible portion of this page in view coordinates.
+			const visibleVX1 = Math.max(view.pX1, viewRect.pX1);
+			const visibleVY1 = Math.max(view.pY1, viewRect.pY1);
+			const visibleVX2 = Math.min(
+				view.pX1 + view.pWidth,
+				viewRect.pX1 + viewRect.pWidth,
+			);
+			const visibleVY2 = Math.min(
+				view.pY1 + view.pHeight,
+				viewRect.pY1 + viewRect.pHeight,
+			);
+
+			// Map the visible view portion back to document coordinates.
+			const docVisX1 = docRect.pX1 + (visibleVX1 - viewRect.pX1);
+			const docVisY1 = docRect.pY1 + (visibleVY1 - viewRect.pY1);
+			const docVisX2 = docRect.pX1 + (visibleVX2 - viewRect.pX1);
+			const docVisY2 = docRect.pY1 + (visibleVY2 - viewRect.pY1);
+
+			const startX = Math.floor(docVisX1 / tileSize) * tileSize;
+			const startY = Math.floor(docVisY1 / tileSize) * tileSize;
+			const columnCount = Math.ceil((docVisX2 - startX) / tileSize);
+			const rowCount = Math.ceil((docVisY2 - startY) / tileSize);
+
+			for (let c = 0; c <= columnCount; c++) {
+				for (let r = 0; r <= rowCount; r++) {
+					const coords = new TileCoordData(
+						startX + c * tileSize,
+						startY + r * tileSize,
+						zoom,
+						0,
+					);
+
+					const key = coords.key();
+					if (added.has(key)) continue;
+					added.add(key);
+
+					if (TileManager.isValidTile(coords))
+						this.currentCoordList.push(coords);
+				}
+			}
+		}
+	}
+
 	protected updateViewData() {
 		if (!app.file.writer.pageRectangleList.length) return;
 

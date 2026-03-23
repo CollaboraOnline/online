@@ -1368,6 +1368,11 @@ class TileManager {
 				app.activeDocument.activeLayout.type,
 			)
 		) {
+			for (const tile of this.tiles.values()) {
+				this.updateTileDistance(tile, zoom);
+			}
+			this.sortTileBitmapList();
+
 			this.beginTransaction();
 			const queue = this.checkRequestTiles(
 				app.activeDocument.activeLayout.getCurrentCoordList(),
