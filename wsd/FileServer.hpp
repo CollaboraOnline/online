@@ -238,7 +238,8 @@ public:
     void dumpState(std::ostream& os);
 
 private:
-    std::map<std::string, std::pair<std::string, std::string>> FileHash;
+    using FileHashMap_t = std::unordered_map<std::string, std::pair<std::string, std::string>>;
+    FileHashMap_t FileHash;
     static void sendError(http::StatusCode errorCode, const std::string& requestPath,
                           const std::shared_ptr<StreamSocket>& socket,
                           const std::string& shortMessage, const std::string& longMessage,

@@ -262,6 +262,7 @@ FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
     // cool files
     try
     {
+        FileHash.reserve(4096); // We have ~3964 files.
         readDirToHash(root, "/browser/dist");
     }
     catch (...)
@@ -741,7 +742,7 @@ void FileServerRequestHandler::readDirToHash(const std::string& basePath, const 
 
     size_t fileCount = 0;
     std::string filesRead;
-    filesRead.reserve(1024);
+    filesRead.reserve(8 * 1024);
 
     struct dirent *currentFile;
     while ((currentFile = readdir(workingdir)) != nullptr)
