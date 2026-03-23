@@ -1226,7 +1226,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .jsdialog-window .ui-combobox,
 .jsdialog-window .ui-timefield {
 	height: 32px;/* Use the same height as in .jsdialog.ui-edit */
-	min-width: 100px;
+	min-width: 50px;
 	width: 100%;
 }
 
