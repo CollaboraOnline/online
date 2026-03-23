@@ -2499,6 +2499,7 @@ class Menubar extends window.L.Control {
 			aItem.setAttribute('role', 'img');
 			aItem.setAttribute('aria-label', _('file type icon'));
 			aItem.target = '_blank';
+			aItem.rel = 'noopener noreferrer';
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
