@@ -673,14 +673,8 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			else if (ev.key && ev.key.length === 1 && !ev.ctrlKey && !ev.altKey && !map.isEditMode()) {
 				let permissionMode = map.uiManager && map.uiManager.permissionViewMode;
 				let viewModeBtn = permissionMode && (permissionMode.viewModeDropdown || permissionMode.viewModeContainer);
-				if (viewModeBtn && map.uiManager && map.uiManager.showTimedTooltip) {
-					map.uiManager.showTimedTooltip(viewModeBtn, _('You are currently in View mode'), 5000);
-					if (!viewModeBtn.classList.contains('attention')) {
-						viewModeBtn.classList.add('attention');
-						viewModeBtn.addEventListener('animationend', function() {
-							viewModeBtn.classList.remove('attention');
-						}, { once: true });
-					}
+				if (viewModeBtn && map.uiManager && map.uiManager.showAttention) {
+					map.uiManager.showAttention(viewModeBtn, _('You are currently in View mode'), true, 5000);
 				}
 			}
 		}

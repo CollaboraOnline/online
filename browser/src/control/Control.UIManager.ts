@@ -141,6 +141,20 @@ class UIManager extends window.L.Control {
 	}
 
 	/**
+	 * Shows a timed tooltip on an element and optionally plays the attention animation.
+	 */
+	showAttention(element: HTMLElement, text: string, animate: boolean, timeMs: number = 3000): void {
+		this.showTimedTooltip(element, text, timeMs);
+
+		if (animate && !element.classList.contains('attention')) {
+			element.classList.add('attention');
+			element.addEventListener('animationend', function () {
+				element.classList.remove('attention');
+			}, { once: true });
+		}
+	}
+
+	/**
 	 * Returns the current UI mode ("notebookbar" or "classic").
 	 */
 	getCurrentMode(): UIMode {
