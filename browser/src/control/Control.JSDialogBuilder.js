@@ -1678,6 +1678,17 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							builder.map,
 						);
 					}
+
+					// Swap tooltip text when activeTooltip is set
+					if (data.activeTooltip) {
+						if (isOn) {
+							div._wasActiveTooltip = true;
+							div.setAttribute('data-cooltip', data.activeTooltip);
+						} else if (div._wasActiveTooltip) {
+							div._wasActiveTooltip = false;
+							div.setAttribute('data-cooltip', tooltip);
+						}
+					}
 				};
 
 				updateFunction();
