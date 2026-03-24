@@ -335,6 +335,7 @@ export class Comment extends CanvasSectionObject {
 		edit.id = 'comment-annotation-menu-edit-' + this.sectionProperties.data.id;
 		edit.tabIndex = 0;
 		edit.onclick = this.onEditComment.bind(this);
+		edit.onkeypress = this.editOnKeyPress.bind(this);
 		edit.dataset.title = Comment.editCommentLabel;
 		edit.setAttribute('aria-label', Comment.editCommentLabel);
 
@@ -1053,6 +1054,13 @@ export class Comment extends CanvasSectionObject {
 		window.L.DomEvent.stopPropagation(e);
 	}
 
+	private editOnKeyPress (e: any): void {
+		if (e.code === 'Space' || e.code === 'Enter')
+		{
+			this.onEditComment(e);
+			window.L.DomEvent.stopPropagation(e);
+		}
+	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
