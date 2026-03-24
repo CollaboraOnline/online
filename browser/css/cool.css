@@ -612,10 +612,6 @@ body {
 	box-shadow: 0 0 0 1000px rgba(var(--doc-type),0.15);
 }
 
-.cool-annotation.tracked-deleted-comment-show {
-	opacity: 0.5;
-}
-
 .cool-annotation.tracked-deleted-comment-hide {
 	display: none;
 }
@@ -661,7 +657,10 @@ body {
 .cool-annotation:not(.annotation-active) .cool-annotation-redline-content-wrapper:hover {
 	color: var(--color-text-dark);
 }
-
+.tracked-deleted-comment-show .cool-annotation-content-wrapper:hover,
+.tracked-deleted-comment-show.annotation-active .cool-annotation-content-wrapper {
+	box-shadow: 0 0 3px var(--color-error);
+}
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
 .annotation-active.reply-annotation-container .cool-annotation-content-wrapper {
 	width: auto;
@@ -732,6 +731,12 @@ body {
 
 .cool-annotation-content-resolved {
 	color: var(--color-success);
+	font-weight: 700;
+	font-size: 0.625rem;
+}
+
+.cool-annotation-content-removed {
+	color: var(--color-error);
 	font-weight: 700;
 	font-size: 0.625rem;
 }
