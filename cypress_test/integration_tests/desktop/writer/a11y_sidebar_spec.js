@@ -63,46 +63,48 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		});
 
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+		helper.processToIdle(win);
 
 		// Enter chart edit mode
-		cy.realPress('Enter');
+		pressKey('Enter');
 		helper.processToIdle(win);
 
 		// Default chart deck panels
 		runA11yValidation(win);
 
 		// Enter the chart's inner object hierarchy
-		cy.realPress('Enter');
+		pressKey('Enter');
 		helper.processToIdle(win);
 
 		// Select the first sub-object
-		cy.realPress('Tab');
+		pressKey('Tab');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
 		// Go a level down the hierarchy, Data Series: Column 1
-		cy.realPress('Enter');
+		pressKey('Enter');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
 		// Go a level down the hierarchy, Data point 1 in data series 1
-		cy.realPress('Enter');
+		pressKey('Enter');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
 		// Back up to Data Series: Column 1
-		cy.realPress('Escape');
+		pressKey('Escape');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
 		// Data Series: Column 2
-		cy.realPress('Tab');
+		pressKey('Tab');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
 		// X Axis
-		cy.realPress('Tab');
-		cy.realPress('Tab');
+		pressKey('Tab');
+		helper.processToIdle(win);
+		pressKey('Tab');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
@@ -246,8 +248,18 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		a11yHelper.runA11yValidation(win, 'validatesidebara11y');
 	}
 
+	// Ensure focus is on the document before pressing a key.
+	// After processToIdle or runA11yValidation, focus can move to
+	// sidebar elements. cy.realPress sends events to the focused
+	// element, so we must restore document focus first.
+	function pressKey(key) {
+		cy.cGet('div.clipboard').focus();
+		cy.realPress(key);
+	}
+
 	function escLevel(win, count) {
 		for (var i = 0; i < count; i++) {
+			cy.cGet('div.clipboard').focus();
 			helper.typeIntoDocument('{esc}');
 			helper.processToIdle(win);
 		}
