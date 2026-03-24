@@ -72,7 +72,10 @@ class DocumentBase {
 		this.mouseControl = new MouseControl(app.CSections.MouseControl.name);
 		app.sectionContainer.addSection(this.mouseControl);
 
-		if (app.map._docLayer._docType === 'text') {
+		if (
+			app.map._docLayer._docType === 'text' &&
+			app.map.uiManager?.isRulerVisible()
+		) {
 			app.sectionContainer.addSection(new cool.RulerSpacerSection());
 		}
 	}
