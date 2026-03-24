@@ -2213,6 +2213,9 @@ class TileManager {
 	}
 
 	public static updateOnChangePart() {
+		// text doesn't have parts in sense of "tabs" or "slides"
+		if (app.map.getDocType() === 'text') return;
+
 		if (!this.checkPointers() || app.map._docLayer._documentInfo === '') {
 			return;
 		}
