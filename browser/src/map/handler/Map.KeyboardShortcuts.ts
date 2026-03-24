@@ -232,7 +232,12 @@ class KeyboardShortcuts {
         if (shortcut) {
             // In read-only mode, block shortcuts that send uno commands
             // to core unless they are explicitly meant for read-only use.
+
+            // FIXME: For some reason we need to check for .uno:CloseWin separately here. That is
+            // supposed to work both in viewing mode (called ViewType.ReadOnly) and editing mode.
+
             if (!this.map.isEditMode() && shortcut.unoAction &&
+                shortcut.unoAction !== '.uno:CloseWin' &&
                 shortcut.viewType !== ViewType.ReadOnly) {
                 event.preventDefault();
                 return true;
@@ -315,6 +320,12 @@ const keyboardShortcuts = new KeyboardShortcuts();
 
 // Default shortcuts.
 keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
+
+    // FIXME: Should we mark shortcuts that are supposed to work *only* in editing mode with
+    // viewType: ViewType.Edit? Having viewType as null means the shortcut is supposed to work in
+    // either viewing or editing mode, and having it as ViewType.ReadOnly means it is supposed to
+    // work only in viewing mode. At least if you believe the comment for viewType in the
+    // ShortcutDescriptor constructor.
 
     // All document types.
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'o', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT, unoAction: '.uno:Open' }),
