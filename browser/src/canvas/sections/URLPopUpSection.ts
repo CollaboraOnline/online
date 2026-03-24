@@ -18,11 +18,11 @@ class URLPopUpSection extends HTMLObjectSection {
 	copyButtonId = 'hyperlink-pop-up-copy';
 	editButtonId = 'hyperlink-pop-up-edit';
 	removeButtonId = 'hyperlink-pop-up-remove';
-	arrowDiv: HTMLDivElement;
+	static horizontalPadding = 5;
+	static popupVerticalMargin = 12;
 
-	static arrowHalfWidth = 10;
-	static horizontalPadding = 6;
-	static popupVerticalMargin = 20;
+	preview: HTMLDivElement;
+	link: HTMLAnchorElement;
 
 	constructor(url: string, documentPosition: cool.SimplePoint, linkPosition?: cool.SimplePoint, linkIsClientSide = false) {
         super(URLPopUpSection.sectionName, null, null, documentPosition, URLPopUpSection.cssClass);
@@ -37,7 +37,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		this.createUIElements(url);
 		this.setUpCallbacks(linkPosition);
 
-		document.getElementById('hyperlink-pop-up').title = url;
+		this.link.title = url;
 
 		if (app.map['wopi'].EnableRemoteLinkPicker)
 			app.map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
@@ -53,10 +53,9 @@ class URLPopUpSection extends HTMLObjectSection {
 		}
 
 		const divBoundingRectangle = this.sectionProperties.objectDiv.getBoundingClientRect();
-		const arrowBoundingRectangle = this.arrowDiv.getBoundingClientRect();
 
-		const left = Math.round((this.sectionProperties.documentPosition.vX / app.dpiScale) - (arrowBoundingRectangle.width * 0.5)) + 'px';
-		const top = Math.round((this.sectionProperties.documentPosition.vY / app.dpiScale) - divBoundingRectangle.height - (arrowBoundingRectangle.height * 0.5)) + 'px';
+		const left = Math.round((this.sectionProperties.documentPosition.vX / app.dpiScale)) + 'px';
+		const top = Math.round((this.sectionProperties.documentPosition.vY / app.dpiScale) - divBoundingRectangle.height) + 'px';
 
 		if (this.sectionProperties.objectDiv.style.left !== left)
 			this.sectionProperties.objectDiv.style.left = left;
@@ -79,12 +78,14 @@ class URLPopUpSection extends HTMLObjectSection {
 
 	createUIElements(url: string) {
 		const parent = this.getHTMLObject();
-		window.L.DomUtil.createWithId('div', this.containerId, parent);
+		this.preview = window.L.DomUtil.createWithId('div', this.containerId, parent) as HTMLDivElement;
 
-        const link = window.L.DomUtil.createWithId('a', this.linkId, parent);
-		link.innerText = url;
+		const linkRow = window.L.DomUtil.create('div', 'hyperlink-pop-up-link-row', parent);
+
+        this.link = window.L.DomUtil.createWithId('a', this.linkId, linkRow) as HTMLAnchorElement;
+		this.link.innerText = url;
 		const copyLinkText = _('Copy link location');
-		const copyBtn = window.L.DomUtil.createWithId('div', this.copyButtonId, parent);
+		const copyBtn = window.L.DomUtil.createWithId('div', this.copyButtonId, linkRow);
 		window.L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 		copyBtn.setAttribute('title', copyLinkText);
 		copyBtn.setAttribute('role', 'button');
@@ -98,7 +99,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgCopyBtn.style.padding = '4px';
 
 		const editLinkText = _('Edit link');
-		const editBtn = window.L.DomUtil.createWithId('div', this.editButtonId, parent);
+		const editBtn = window.L.DomUtil.createWithId('div', this.editButtonId, linkRow);
 		window.L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 		editBtn.setAttribute('title', editLinkText);
 		editBtn.setAttribute('role', 'button');
@@ -113,7 +114,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgEditBtn.style.padding = '4px';
 
 		const removeLinkText = _('Remove link');
-		const removeBtn = window.L.DomUtil.createWithId('div', this.removeButtonId, parent);
+		const removeBtn = window.L.DomUtil.createWithId('div', this.removeButtonId, linkRow);
 		window.L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 		removeBtn.setAttribute('title', removeLinkText);
 		removeBtn.setAttribute('role', 'button');
@@ -126,13 +127,10 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgRemoveBtn.setAttribute('alt', removeLinkText);
 		imgRemoveBtn.style.padding = '4px';
 
-		this.arrowDiv = document.createElement('div');
-		this.arrowDiv.className = 'arrow-div';
-		parent.appendChild(this.arrowDiv);
 	}
 
 	setUpCallbacks(linkPosition?: cool.SimplePoint) {
-		document.getElementById(this.linkId).onclick = () => {
+		this.link.onclick = () => {
 			if (!this.sectionProperties.url.startsWith('#'))
 				app.map.fire('warn', {url: this.sectionProperties.url, map: app.map, cmd: 'openlink'});
 			else
@@ -177,25 +175,39 @@ class URLPopUpSection extends HTMLObjectSection {
 		};
 	}
 
-	reLocateArrow(arrowAtTop: boolean) {
-		if (arrowAtTop) this.arrowDiv.classList.add('reverse');
-		else this.arrowDiv.classList.remove('reverse');
-
-		/*
-			Normally, the documentPosition sent from the core side nicely positions the arrow.
-			We will check if we reposition the popup.
-			If the arrow position falls outside of the popup, we will put it on the edge.
-		*/
-		const clientRect = this.getPopUpBoundingRectangle();
-		let arrowCSSLeft = this.sectionProperties.documentPosition.pX - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0] - URLPopUpSection.arrowHalfWidth;
-		arrowCSSLeft /= app.dpiScale;
-		arrowCSSLeft += document.getElementById('canvas-container').getBoundingClientRect().left; // Add this in case there is something on its left.
-		arrowCSSLeft -= clientRect.left;
-		this.arrowDiv.style.left = (arrowCSSLeft > URLPopUpSection.horizontalPadding ? arrowCSSLeft : URLPopUpSection.horizontalPadding) + 'px';
+	public static getCurrent(): URLPopUpSection {
+		return app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName) as URLPopUpSection;
 	}
 
-	public static resetPosition(section: URLPopUpSection) {
-		if (!section) section = app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName) as URLPopUpSection;
+	public updatePreview(values: { url: string; image?: string; title?: string }) {
+		// Guard against a stale response for a link that is no longer displayed.
+		// Compare against sectionProperties.url since DOM text gets overwritten below.
+		if (this.sectionProperties.url !== values.url)
+			return;
+
+		this.preview.innerText = '';
+		if (values.image && values.image.indexOf('data:') === 0) {
+			const image = window.L.DomUtil.create('img', '', this.preview) as HTMLImageElement;
+			image.src = values.image;
+			image.alt = values.title;
+			image.onload = function () {
+				URLPopUpSection.resetPosition();
+			};
+		} else {
+			window.L.DomUtil.addClass(this.preview, 'no-preview');
+		}
+		if (values.title) {
+			// The fetched page title is promoted to the link row (next to the
+			// action buttons) and the raw URL is shown in the preview area.
+			const urlEl = window.L.DomUtil.create('p', '', this.preview);
+			urlEl.innerText = values.url;
+			this.link.innerText = values.title;
+			URLPopUpSection.resetPosition();
+		}
+	}
+
+	public static resetPosition(section?: URLPopUpSection) {
+		if (!section) section = URLPopUpSection.getCurrent();
 		if (!section) return;
 
 		let originalLeft = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;
@@ -204,17 +216,14 @@ class URLPopUpSection extends HTMLObjectSection {
 		const checkLeft = originalLeft - app.activeDocument.activeLayout.viewedRectangle.pX1;
 		const checkTop = originalTop - app.activeDocument.activeLayout.viewedRectangle.pY1;
 
-		let arrowAtTop = false;
 		if (checkTop < 0) {
 			originalTop = section.sectionProperties.documentPosition.pY + (URLPopUpSection.popupVerticalMargin * 2 * app.dpiScale);
-			arrowAtTop = true;
 		}
 
 		if (checkLeft < 0) originalLeft = app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 		section.setPosition(originalLeft, originalTop);
 		section.adjustHTMLObjectPosition();
-		section.reLocateArrow(arrowAtTop);
 		section.containerObject.requestReDraw();
 	}
 

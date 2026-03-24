@@ -673,29 +673,9 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			}
 		}
 		else if (msg.MessageId == 'Action_GetLinkPreview_Resp') {
-			var preview = document.querySelector('#hyperlink-pop-up-preview');
-			if (preview) {
-				// check if this is a preview for currently displayed link
-				if (preview.nextSibling && preview.nextSibling.innerText !== msg.Values.url)
-					return;
-
-				preview.innerText = '';
-				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
-					var image = window.L.DomUtil.create('img', '', preview);
-					image.src = msg.Values.image;
-					image.alt = msg.Values.title;
-					image.onload = function() {
-						URLPopUpSection.resetPosition();
-					};
-				} else {
-					window.L.DomUtil.addClass(preview, 'no-preview');
-				}
-				if (msg.Values.title) {
-					var title = window.L.DomUtil.create('p', '', preview);
-					title.innerText = msg.Values.title;
-					URLPopUpSection.resetPosition();
-				}
-			}
+			var popup = URLPopUpSection.getCurrent();
+			if (popup)
+				popup.updatePreview(msg.Values);
 		}
 		else if (msg.MessageId === 'Action_InsertFile') {
 			if (msg.Values && (msg.Values.File instanceof Blob)) {
