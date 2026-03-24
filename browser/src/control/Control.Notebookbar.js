@@ -30,6 +30,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	additionalShortcutButtons: [],
 
+	_isMasterVisible: false,
+
 	setBuilder: function(builder, model) {
 		this.builder = builder;
 		this.model = model;
@@ -458,6 +460,17 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		let alreadySelected = null;
 		// Currently selected tab name, part of the element's ID.
 		let currentlySelectedTabName = null;
+
+		var anotherPageContext = requestedContext.endsWith('Page') && requestedContext !== 'MasterPage';
+
+		if (!this._isMasterVisible && requestedContext === 'MasterPage') {
+			this._isMasterVisible = true;
+		} else if (this._isMasterVisible && anotherPageContext) {
+			this._isMasterVisible = false;
+		}
+
+		// TODO nu mai pierde clasa hidden cand e selectat tabu shape
+
 		for (var tab in tabs) {
 			var tabElement = $('#' + tabs[tab].name + '-tab-label');
 			if (tabElement.hasClass('selected')) {
@@ -478,10 +491,17 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 							contextTab = tabElement;
 						else
 							alreadySelected = tabElement;
+						break;
 					} else if (contexts[context] === 'default') {
 						tabElement.show();
 						if (!tabElement.hasClass('selected'))
 							defaultTab = tabElement;
+					} else if (tabs[tab].name !== 'Home') {
+						if (this._isMasterVisible && contexts[context] === 'MasterPage') {
+							tabElement.show();
+						} else {
+							tabElement.addClass('hidden');
+						}
 					}
 				}
 			} else if (!this.map.uiManager.isTabVisible(tabs[tab].name)) {
