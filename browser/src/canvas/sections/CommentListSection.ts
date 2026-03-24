@@ -667,7 +667,10 @@ export class CommentSection extends CanvasSectionObject {
 			const tdAuthor = window.L.DomUtil.create(tagTd, 'cool-annotation-author', tr);
 			const imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 			const user = this.map.getViewId(commentData.author);
-			app.LOUtil.setUserImage(imgAuthor, this.map, user);
+			if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl)
+				imgAuthor.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+			else
+				app.LOUtil.setUserImage(imgAuthor, this.map, user);
 			imgAuthor.setAttribute('width', 32);
 			imgAuthor.setAttribute('height', 32);
 			const authorAvatarImg = imgAuthor;
@@ -675,7 +678,8 @@ export class CommentSection extends CanvasSectionObject {
 			const contentDate = window.L.DomUtil.create(tagDiv, 'cool-annotation-date', tdAuthor);
 
 			$(contentAuthor).text(commentData.author);
-			$(authorAvatarImg).attr('src', commentData.avatar);
+			if (!this.map['wopi'] || !this.map['wopi'].CommentAvatarUrl)
+				$(authorAvatarImg).attr('src', commentData.avatar);
 			if (user >= 0) {
 				const color = app.LOUtil.rgbToHex(this.map.getViewColor(user));
 				$(authorAvatarImg).css('border-color', color);
