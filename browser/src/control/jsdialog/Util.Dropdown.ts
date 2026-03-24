@@ -241,7 +241,7 @@ JSDialog.OpenDropdown = function (
 					const uno =
 						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
 					window.L.Map.THIS.sendUnoCommand(uno);
-					JSDialog.CloseDropdown(id);
+					JSDialog.CloseAllDropdowns();
 					return;
 				} else {
 					app.console.debug(
@@ -262,7 +262,7 @@ JSDialog.OpenDropdown = function (
 			)
 				return;
 
-			if (eventType === 'selected') JSDialog.CloseDropdown(id);
+			if (eventType === 'selected') JSDialog.CloseAllDropdowns();
 
 			// we want to send render request to the default callback -> no warn
 			if (eventType === 'render_entry') return;
