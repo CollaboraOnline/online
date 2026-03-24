@@ -14,6 +14,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		desktopHelper.switchUIToNotebookbar();
 
 		// Hide sidebar before enabling UICoverage tracking
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
