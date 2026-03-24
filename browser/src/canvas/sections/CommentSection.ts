@@ -310,7 +310,10 @@ export class Comment extends CanvasSectionObject {
 		var imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 		imgAuthor.setAttribute('alt', this.sectionProperties.data.author);
 		var viewId = this.map.getViewId(this.sectionProperties.data.author);
-		app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
+		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl)
+			imgAuthor.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+		else
+			app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
@@ -594,7 +597,10 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
-		if (this.sectionProperties.data.avatar) {
+		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl) {
+			this.sectionProperties.authorAvatarImg.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+		}
+		else if (this.sectionProperties.data.avatar) {
 			this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
 		}
 		else {
