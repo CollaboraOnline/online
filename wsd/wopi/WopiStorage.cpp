@@ -709,10 +709,10 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
     //TODO: replace with state machine.
     if (_uploadHttpSession)
     {
-        LOG_WRN("Upload is already in progress.");
+        LOG_INF("Upload is already in progress");
         asyncUploadCallback(
-            AsyncUpload(AsyncUpload::State::Error,
-                UploadResult(UploadResult::Result::FAILED, "Already in progress.")));
+            AsyncUpload(AsyncUpload::State::Running,
+                        UploadResult(UploadResult::Result::OK, "Already in progress.")));
         return 0;
     }
 
