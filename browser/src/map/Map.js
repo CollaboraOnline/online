@@ -177,7 +177,7 @@ window.L.Map = window.L.Evented.extend({
 				this._fireInitComplete('doclayerinit');
 			}
 
-			if (window.mode.isMobile())
+			if (window.mode.isSmallScreenDevice())
 			{
 				document.getElementById('document-container').classList.add('mobile');
 				this._size = new cool.Point(0,0);
@@ -291,7 +291,7 @@ window.L.Map = window.L.Evented.extend({
 					commentSection.clearList();
 			}
 
-			if (!window.mode.isMobile())
+			if (!window.mode.isSmallScreenDevice())
 				this.initializeModificationIndicator();
 
 			// We have loaded.

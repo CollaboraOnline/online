@@ -386,7 +386,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 		};
 
 
-		this.map.fire(window.mode.isMobile() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
+		this.map.fire(window.mode.isSmallScreenDevice() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
 
 		return this;
 	},
@@ -827,7 +827,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 
 				var dialogUpdateEvent = that.updateList([_('Styles')],_('An error occurred while fetching style list'));
 
-				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+				if (window.mode.isSmallScreenDevice()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 				var styleToBeSelected = (that.settings.style && that.settings.style !== '') ? that.settings : {name: window.prefs.get('Zotero_LastUsedStyle', '')};
 				if (styleToBeSelected !== '')
@@ -1152,7 +1152,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 				that.fillItems(data);
 				var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
-				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+				if (window.mode.isSmallScreenDevice()) window.mobileDialogId = dialogUpdateEvent.data.id;
 
 				// mark already existing citations
 				if (checkState) {
@@ -1278,7 +1278,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 				id: 'ZoteroDialog',
 			}
 		};
-		this.map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
+		this.map.fire(window.mode.isSmallScreenDevice() ? 'closemobilewizard' : 'jsdialog', closeEvent);
 
 		// clear all previous selections
 		delete this.selectedCitationLangCode;
@@ -1339,7 +1339,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 
 		var updateDialog = function () {
 			var dialogUpdateEvent = that.updateList([_('Notes')],_('An error occurred while fetching notes'));
-			if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+			if (window.mode.isSmallScreenDevice()) window.mobileDialogId = dialogUpdateEvent.data.id;
 			that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		};
 

@@ -905,7 +905,7 @@ class Socket {
 			// add the top toolbar and menubar controls to the map.
 			if (window.prefs.useBrowserSetting) {
 				if (
-					!window.mode.isMobile() &&
+					!window.mode.isSmallScreenDevice() &&
 					this._map.uiManager.getCurrentMode() === 'notebookbar'
 				)
 					this._map.uiManager.removeClassicUI();
@@ -953,7 +953,7 @@ class Socket {
 			this._map.uiManager.applyInvert();
 			this._map.uiManager.setCanvasColorAfterModeChange();
 
-			if (!window.mode.isMobile())
+			if (!window.mode.isSmallScreenDevice())
 				this._map.uiManager.initializeNotebookbarInCore();
 
 			// close all the popups otherwise document textArea will not get focus
@@ -1633,7 +1633,7 @@ class Socket {
 				let reloadMessage = _(
 					'Server is now reachable. We have to refresh the page now.',
 				);
-				if (window.mode.isMobile())
+				if (window.mode.isSmallScreenDevice())
 					reloadMessage = _('Server is now reachable...');
 
 				const reloadFunc = function () {

@@ -765,18 +765,18 @@ window.L.Map.include({
 	},
 
 	cancelSearch: function() {
-		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
+		var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileSearchBar: app.map.statusBar;
 		var searchInput = window.L.DomUtil.get('search-input');
 		app.searchService.resetSelection();
 		if (toolbar) {
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				toolbar.showItem('cancelsearch', false);
 			}
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
 		}
 		searchInput.value = '';
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			searchInput.focus();
 			toolbar.enableItem('cancelsearch', false);
 		}
@@ -801,7 +801,7 @@ window.L.Map.include({
 	},
 
 	onFormulaBarFocus: function() {
-		if (window.mode.isMobile() === true) {
+		if (window.mode.isSmallScreenDevice() === true) {
 			var mobileTopBar = this.mobileTopBar;
 			mobileTopBar.showItem('undo', false);
 			mobileTopBar.showItem('redo', false);
@@ -819,7 +819,7 @@ window.L.Map.include({
 	onFormulaBarBlur: function() {
 		var map = this;
 
-		if (window.mode.isMobile() && this.isEditMode()) {
+		if (window.mode.isSmallScreenDevice() && this.isEditMode()) {
 			var mobileTopBar = map.mobileTopBar;
 			mobileTopBar.showItem('cancelformula', false);
 			mobileTopBar.showItem('acceptformula', false);

@@ -392,7 +392,7 @@ class Dispatcher {
 
 	private addCalcCommands() {
 		this.actionsMap['acceptformula'] = function () {
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				app.map.focus();
 				app.map._docLayer.postKeyboardEvent(
 					'input',
@@ -423,7 +423,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['functiondialog'] = function () {
-			if (window.mode.isMobile() && app.map._functionWizardData) {
+			if (window.mode.isSmallScreenDevice() && app.map._functionWizardData) {
 				app.map._docLayer._closeMobileWizard();
 				app.map._docLayer._openMobileWizard(app.map._functionWizardData);
 				app.map.formulabarSetDirty();
@@ -884,7 +884,7 @@ class Dispatcher {
 			this.addImpressAndDrawCommands();
 		}
 
-		if (window.mode.isMobile()) this.addMobileCommands();
+		if (window.mode.isSmallScreenDevice()) this.addMobileCommands();
 	}
 
 	public dispatch(action: string, data?: any) {

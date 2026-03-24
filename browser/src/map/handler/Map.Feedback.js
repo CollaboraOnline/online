@@ -104,7 +104,7 @@ window.L.Map.Feedback = window.L.Handler.extend({
 		var proxyPrefixEnabled = window.socketProxy ? "True" : "False";
 
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
-		var params = [{ mobile : window.mode.isMobile() },
+		var params = [{ mobile : window.mode.isSmallScreenDevice() },
 			      { cssvar : cssVar},
 			      { wsdhash : window.app.socket.WSDServer.Hash },
 			      { 'version_number' : window.app.socket.WSDServer.Version },

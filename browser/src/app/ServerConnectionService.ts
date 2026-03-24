@@ -48,7 +48,7 @@ class ServerConnectionService {
 			window.zoteroEnabled &&
 			zoteroAPIKey &&
 			!zoteroPlugin &&
-			!window.mode.isMobile()
+			!window.mode.isSmallScreenDevice()
 		) {
 			app.console.debug('ServerConnectionService: initialize Zotero plugin');
 
@@ -75,7 +75,7 @@ class ServerConnectionService {
 	public onFirstTileReceived() {
 		app.console.debug('ServerConnectionService: onFirstTileReceived');
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			// show zotero items if needed
 			const zoteroItems = [
 				'zoteroaddeditbibliography',

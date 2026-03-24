@@ -1768,7 +1768,7 @@ class Menubar extends window.L.Control {
 			var pageStyles = e.commandValues['HeaderFooter'];
 			for (var iterator in pageStyles) {
 				style = pageStyles[iterator];
-				if (!window.mode.isMobile()) {
+				if (!window.mode.isSmallScreenDevice()) {
 					$menuHeader.append(this._createUnoMenuItem(_(style), constHeader + encodeURIComponent(style) + constArg, style));
 					$menuFooter.append(this._createUnoMenuItem(_(style), constFooter + encodeURIComponent(style) + constArg, style));
 				} else {
@@ -1813,7 +1813,7 @@ class Menubar extends window.L.Control {
 		this._bindEventIfNotBound('#main-menu', 'click', 'smapi', {self: this}, this._onClicked);
 		this._bindEventIfNotBound('#main-menu', 'keydown', '', {self: this}, this._onKeyDown);
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			$('#main-menu').parent().css('height', '0');
 			$('#toolbar-wrapper').addClass('mobile');
 		}
@@ -1828,12 +1828,12 @@ class Menubar extends window.L.Control {
 					var $menu = $('#main-menu');
 					var $nav = $menu.parent();
 					if ((event.target as HTMLInputElement).checked) {
-						if (!window.mode.isMobile()) {
+						if (!window.mode.isSmallScreenDevice()) {
 							// Surely this code, if it really is related only to the hamburger menu,
 							// will never be invoked on non-mobile browsers? I might be wrong though.
 							// If you notice this logging, please modify this comment to indicate what is
 							// going on.
-							window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
+							window.app.console.log('======> Assertion failed!? Not window.mode.isSmallScreenDevice()? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, () => { $menu.css('display', ''); });
 						} else {
@@ -1844,9 +1844,9 @@ class Menubar extends window.L.Control {
 							$('#toolbar-mobile-back').css('visibility', 'hidden');
 							$('#formulabar').hide();
 						}
-					} else if (!window.mode.isMobile()) {
+					} else if (!window.mode.isSmallScreenDevice()) {
 						// Ditto.
-						window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
+						window.app.console.log('======> Assertion failed!? Not window.mode.isSmallScreenDevice()? Control.Menubar.js #2');
 						$menu.show().slideUp(250, () => { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
 					} else {
@@ -2470,7 +2470,7 @@ class Menubar extends window.L.Control {
 			this._executeAction(item);
 		}
 
-		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment' && self && this._map)
+		if (!window.mode.isSmallScreenDevice() && $(item).data('id') !== 'insertcomment' && self && this._map)
 			this._map.focus();
 	}
 

@@ -63,7 +63,7 @@ window.L.Map.include({
 		}
 
 		if (statusText) {
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				app.map.statusBar.showSigningItem(statusIcon, statusText);
 
 				// If requested, show the signatures, now that the sign status

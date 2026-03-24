@@ -61,7 +61,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 		const params: Array<Record<string, any>> = [
 			{ ui_theme: theme },
 			{ lang: window.langParam },
-			{ mobile: window.mode.isMobile() },
+			{ mobile: window.mode.isSmallScreenDevice() },
 			{ access_token: window.accessToken },
 			{ access_token_ttl: window.accessTokenTTL },
 			{ wopi_setting_base_url: window.wopiSettingBaseUrl },
@@ -73,7 +73,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 					JSON.stringify({
 						ui_theme: theme,
 						lang: window.langParam,
-						mobile: window.mode.isMobile(),
+						mobile: window.mode.isSmallScreenDevice(),
 					}),
 			);
 

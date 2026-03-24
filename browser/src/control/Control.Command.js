@@ -53,7 +53,7 @@ window.L.Map.include({
 
 			var that = this;
 
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				var overlay = window.L.DomUtil.create('div', 'locking-overlay', DOMParentElement);
 				var lock = window.L.DomUtil.create('img', 'locking-overlay-lock', overlay);
 				app.LOUtil.setImage(lock, 'lc_lock.svg', this);

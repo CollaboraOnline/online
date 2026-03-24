@@ -24,7 +24,7 @@ window.L.Control.MobileWizard = window.L.Control.extend({
 		this.map = map;
 
 		// for the moment, the mobile-wizard is mobile phone only
-		if (!window.mode.isMobile())
+		if (!window.mode.isSmallScreenDevice())
 			return;
 
 		this.contents = [];

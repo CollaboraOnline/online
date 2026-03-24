@@ -120,7 +120,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 			},
 		};
 
-		if (!window.mode.isMobile() || window.mode.isTablet()) {
+		if (!window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			var that = this;
 			window.L.installContextMenu({
 				selector: '.spreadsheet-tab',
@@ -164,7 +164,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 				}
 				var ssTabScroll = window.L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
-				if (!window.mode.isMobile())
+				if (!window.mode.isSmallScreenDevice())
 					ssTabScroll.style.overflowX = 'scroll';
 
 				this._tabsCont.style.display = 'grid';
@@ -200,7 +200,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 					);
 				}
 
-				if (window.mode.isMobile()) {
+				if (window.mode.isSmallScreenDevice()) {
 					var menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
 				}
 
@@ -218,13 +218,13 @@ window.L.Control.Tabs = window.L.Control.extend({
 					var label = window.L.DomUtil.create('div', '', tab);
 					window.L.DomUtil.create('div', 'lock', tab);
 					window.L.DomUtil.create('div', 'view-indicator', tab);
-					if (window.mode.isMobile() || window.mode.isTablet()) {
+					if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
 								return function(e) {
 									this._tabForContextMenu = j;
 									if (!this._map.isReadOnlyMode()) {
-										if (window.mode.isMobile()) {
+										if (window.mode.isSmallScreenDevice()) {
 											window.contextMenuWizard = true;
 											this._map.fire('mobilewizard', {data: menuData});
 										} else {
@@ -239,7 +239,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 						horizScrollPos = tab.offsetLeft;
 					}
 
-					if (!window.mode.isMobile()) {
+					if (!window.mode.isSmallScreenDevice()) {
 						window.L.DomEvent.on(tab, 'dblclick', function(j) {
 							return function() {
 								// window.app.console.err('Double clicked ' + j);

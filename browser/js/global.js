@@ -167,7 +167,7 @@ class BrowserProperties {
 			},
 			// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
 			// requirement.
-			isMobile: function() {
+			isSmallScreenDevice: function() {
 				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
 					return false;
 
@@ -188,7 +188,7 @@ class BrowserProperties {
 				if (global.mode.isChromebook())
 					return false;
 
-				return global.L.Browser.mobile && !global.mode.isMobile();
+				return global.L.Browser.mobile && !global.mode.isSmallScreenDevice();
 			},
 			isCODesktop: function() {
 				return global.ThisIsTheMacOSApp || global.ThisIsTheQtApp || global.ThisIsTheWindowsApp;
@@ -206,7 +206,7 @@ class BrowserProperties {
 				return !global.L.Browser.mobile;
 			},
 			getDeviceFormFactor: function() {
-				if (global.mode.isMobile())
+				if (global.mode.isSmallScreenDevice())
 					return 'mobile';
 				else if (global.mode.isTablet())
 					return 'tablet';
@@ -352,7 +352,7 @@ class InitializerBase {
 		if(window.useIntegrationTheme && theme_name !== '')
 			theme_prefix = theme_name + '/';
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			link.setAttribute("href", this.uriPrefix + 'device-mobile.css');
 			brandingLink.setAttribute("href", this.brandingUriPrefix + theme_prefix + 'branding-mobile.css');
 		} else if (window.mode.isTablet()) {
@@ -1075,7 +1075,7 @@ function showWelcomeSVG() {
 			if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
 				return false;
 			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
-			return (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
+			return (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) || global.mode.isSmallScreenDevice() || global.mode.isTablet();
 			// It's better to guess that more devices will have an onscreen keyboard than reality,
 			// because calc becomes borderline unusable if you miss a device that pops up an onscreen keyboard which covers
 			// a sizeable portion of the screen

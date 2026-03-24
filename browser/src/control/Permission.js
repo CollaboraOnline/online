@@ -35,14 +35,14 @@ window.L.Map.include({
 		// For mobile we need to display the edit button for all the cases except for PDF
 		// we offer save-as to another place where the user can edit the document
 		var isPDF = app.file.fileBasedView && app.file.editComment;
-		if (!isPDF && (window.mode.isMobile() || window.mode.isTablet())) {
+		if (!isPDF && (window.mode.isSmallScreenDevice() || window.mode.isTablet())) {
 			button.css('display', 'flex');
 		} else {
 			button.hide();
 		}
 		var that = this;
 		if (perm === 'edit') {
-			if (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) {
+			if (this._shouldStartReadOnly() || window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 				button.on('click', function () {
 					that._switchToEditMode();
 				});
@@ -68,7 +68,7 @@ window.L.Map.include({
 				button.on('click', function () {
 					that._requestFileCopy();
 				});
-			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet()))) {
+			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isSmallScreenDevice() || window.mode.isTablet()))) {
 				$('#mobile-edit-button').hide();
 			}
 
@@ -135,7 +135,7 @@ window.L.Map.include({
 		this.options.canTryLock = false; // don't respond to lockfailed anymore
 		$('#mobile-edit-button').hide();
 		this._enterEditMode('edit');
-		if (window.mode.isMobile() || window.mode.isTablet() || window.mode.isCODesktop()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet() || window.mode.isCODesktop()) {
 			this.fire('editorgotfocus');
 			this.fire('closemobilewizard');
 			// In the iOS/android app, just clicking the mobile-edit-button is
@@ -216,7 +216,7 @@ window.L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
+		if ((window.mode.isSmallScreenDevice() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
 			this._textInput.setSwitchedToEditMode();
 		}
 
