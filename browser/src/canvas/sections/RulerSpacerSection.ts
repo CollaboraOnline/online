@@ -34,39 +34,13 @@ namespace cool {
 
 		constructor() {
 			super(app.CSections.RulerSpacer.name);
-			this.size = [0, 0];
-		}
-
-		onInitialize(): void {
-			const map = (<any>window).L.Map.THIS;
-			map.on('rulerchanged', this.onRulerChanged, this);
-			this.updateSize();
-		}
-
-		onRemove(): void {
-			const map = (<any>window).L.Map.THIS;
-			map.off('rulerchanged', this.onRulerChanged, this);
-		}
-
-		private onRulerChanged(): void {
-			this.updateSize();
-			if (this.containerObject) this.containerObject.reNewAllSections();
-		}
-
-		private updateSize(): void {
-			const rulerEl = document.querySelector(
-				'.cool-ruler:not(.vruler)',
-			) as HTMLElement;
-			const visible = rulerEl && rulerEl.style.display !== 'none';
-
-			if (visible) {
-				const height = Math.round(
-					rulerEl.getBoundingClientRect().height * app.dpiScale,
-				);
-				this.size = [0, height];
-			} else {
-				this.size = [0, 0];
-			}
+			const rulerHeight = parseFloat(
+				getComputedStyle(document.documentElement).getPropertyValue(
+					'--ruler-height',
+				),
+			);
+			const height = Math.round((rulerHeight || 0) * app.dpiScale);
+			this.size = [0, height];
 		}
 	}
 } // namespace cool

@@ -1344,6 +1344,12 @@ class UIManager extends window.L.Control {
 		$('#map').addClass('hasruler');
 		this.setDocTypePref('ShowRuler', true);
 		this.map.fire('rulerchanged');
+
+		if (app.sectionContainer
+			&& app.map?._docLayer?._docType === 'text'
+			&& !app.sectionContainer.getSectionWithName(app.CSections.RulerSpacer.name)) {
+			app.sectionContainer.addSection(new cool.RulerSpacerSection());
+		}
 	}
 
 	/**
@@ -1355,7 +1361,11 @@ class UIManager extends window.L.Control {
 
 		$('#map').removeClass('hasruler');
 		this.setDocTypePref('ShowRuler', false);
-		this.map.fire('rulerchanged');
+
+		if (app.sectionContainer
+			&& app.sectionContainer.getSectionWithName(app.CSections.RulerSpacer.name)) {
+			app.sectionContainer.removeSection(app.CSections.RulerSpacer.name);
+		}
 	}
 
 	/**
