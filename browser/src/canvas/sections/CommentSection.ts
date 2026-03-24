@@ -536,6 +536,11 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.removedTextElement) {
 			this.sectionProperties.removedTextElement.innerText = isDeleted ? _('Removed') : '';
 		}
+		if (isDeleted) {
+			this.sectionProperties.resolvedTextElement.innerText = '';
+		} else {
+			this.updateResolvedField(this.sectionProperties.data.resolved);
+		}
 	}
 
 	private isNewPara(): boolean {
