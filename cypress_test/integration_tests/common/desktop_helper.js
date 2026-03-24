@@ -248,7 +248,7 @@ function insertImage() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoInsertGraphic').filter(':visible').click();
 	} else {
-		cy.cGet('#toolbar-up .unoInsertGraphic').click();
+		cy.cGet('#toolbar-up .unoInsertGraphic').filter(':visible').click();
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
