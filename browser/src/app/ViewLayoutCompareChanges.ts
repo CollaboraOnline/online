@@ -31,7 +31,10 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 
 		this.adjustViewZoomLevel();
 
-		app.layoutingService.appendLayoutingTask(() => this.updateViewData());
+		app.layoutingService.appendLayoutingTask(() => {
+			app.sectionContainer.reNewAllSections();
+			this.updateViewData();
+		});
 	}
 
 	/// Refresh the view after scroll or zoom change.
