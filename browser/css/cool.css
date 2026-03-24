@@ -1184,27 +1184,32 @@ body {
 }
 
 .hyperlink-pop-up-container {
-	padding: 6px;
 	display: inline-block;
 	line-height: 1;
 	background-color: var(--color-background-lighter);
-	width: 301px;
+	width: 18rem !important;
 	overflow: visible !important;
 }
 
+.hyperlink-pop-up-link-row {
+	display: flex;
+	align-items: center;
+	padding: 6px;
+}
+
 .hyperlink-pop-up-container a {
-	display: inline-block;
+	flex: 1;
+	min-width: 0;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 188px;
 	color: #0078A8;
-	vertical-align: middle;
+	font-size: 0.88rem;
 }
 
 .hyperlink-popup-btn {
 	display: inline-block;
-	margin-left: 12px;
+	margin-left: 4px;
 	vertical-align: middle;
 	width: 26px;
 	height: 26px;
@@ -1387,39 +1392,34 @@ body {
 	border-radius: var(--border-radius);
 }
 
-.hyperlink-pop-up-container .arrow-div {
-	width: 20px;
-	height: 20px;
-	transform: rotate(45deg);
-	display: inline-block;
-	position: absolute;
-	top: calc(100% - 10px);
-	background-color: inherit;
-	border-right: 1px solid var(--color-border-darker);
-	border-bottom: 1px solid var(--color-border-darker);
-}
 
-.hyperlink-pop-up-container .arrow-div.reverse {
-	top: -11px;
-	border: none;
-	border-top: 1px solid var(--color-border-darker);
-	border-left: 1px solid var(--color-border-darker);
-}
-
-#hyperlink-pop-up-preview:not(.no-preview) {
-	text-align: center;
+#hyperlink-pop-up-preview:not(:empty) {
+	margin-bottom: 4px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: calc(var(--border-radius) - 2px);
 }
 
 #hyperlink-pop-up-preview img {
 	max-height: 150px;
-	max-width: 250px;
+	border-radius: calc(var(--border-radius) - 2px);
+	object-fit: cover;
+	width: calc(100% - 10px);
+	margin: 4px auto;
+	border: 1px solid var(--color-border-darker);
 }
 
 #hyperlink-pop-up-preview p {
 	color: var(--color-main-text);
+	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	font-size: 14px;
+	font-size: 0.80rem;
+	line-height: normal;
+	padding: 0px 6px;
+	margin-block: 12px 0px;
 }
 
 .prevent-select {
