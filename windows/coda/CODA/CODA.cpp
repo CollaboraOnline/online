@@ -1773,6 +1773,22 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_paste_or_read(ClipboardOp::READ, data);
         }
+        else if (s.starts_with(L"TEXTCLIPBOARD "))
+        {
+            std::wstring text = s.substr(14);
+            if (OpenClipboard(NULL))
+            {
+                EmptyClipboard();
+                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, (text.size() + 1) * sizeof(wchar_t));
+                if (hMem)
+                {
+                    memcpy(GlobalLock(hMem), text.c_str(), (text.size() + 1) * sizeof(wchar_t));
+                    GlobalUnlock(hMem);
+                    SetClipboardData(CF_UNICODETEXT, hMem);
+                }
+                CloseClipboard();
+            }
+        }
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
             do_clipboard_set(data.appDocId, Util::wide_string_to_string(s.substr(13)).c_str());

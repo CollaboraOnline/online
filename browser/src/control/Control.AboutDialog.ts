@@ -371,7 +371,7 @@ class AboutDialog {
 		}
 
 		const addLine = (label: string, value: string) => {
-			if (value.trim()) {
+			if (value && value.trim()) {
 				text += `${label}: ${value.trim()}\n`;
 			}
 		};
@@ -390,7 +390,7 @@ class AboutDialog {
 
 		text = text.replace(/\u00A0/g, ' ');
 
-		if ((window as any).ThisIsTheQtApp || (window as any).ThisIsTheMacOSApp) {
+		if (window.mode.isCODesktop()) {
 			(window as any).postMobileMessage('TEXTCLIPBOARD ' + text);
 			this.contentHasBeenCopiedShowSnackbar();
 		} else if (navigator.clipboard && window.isSecureContext) {
