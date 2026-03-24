@@ -360,7 +360,7 @@ export class ScrollSection extends CanvasSectionObject {
 			this.calculateCurrentAlpha(elapsedTime);
 
 		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.alwaysDrawVerticalScrollBar)) {
-			if ((<any>window).mode.isMobile())
+			if ((<any>window).mode.isSmallScreenDevice())
 				this.DrawVerticalScrollBarMobile();
 			else
 				this.drawVerticalScrollBar();

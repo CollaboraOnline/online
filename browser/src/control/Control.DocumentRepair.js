@@ -98,7 +98,7 @@ window.L.Control.DocumentRepair = window.L.Control.extend({
 		};
 
 
-		this._map.fire(window.mode.isMobile() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
+		this._map.fire(window.mode.isSmallScreenDevice() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
 
 		return this;
 	},
@@ -162,7 +162,7 @@ window.L.Control.DocumentRepair = window.L.Control.extend({
 				},
 			};
 		}
-		if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+		if (window.mode.isSmallScreenDevice()) window.mobileDialogId = dialogUpdateEvent.data.id;
 		this._map.fire('jsdialogupdate', dialogUpdateEvent);
 	},
 
@@ -191,7 +191,7 @@ window.L.Control.DocumentRepair = window.L.Control.extend({
 				id: 'DocumentRepairDialog',
 			}
 		};
-		this._map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
+		this._map.fire(window.mode.isSmallScreenDevice() ? 'closemobilewizard' : 'jsdialog', closeEvent);
 		console.log('Closed after' + element + ' ' + action);
 	},
 

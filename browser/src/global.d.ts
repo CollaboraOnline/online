@@ -334,7 +334,7 @@ interface Window {
 		get(name: string): string;
 	};
 	mode: {
-		isMobile(): boolean;
+		isSmallScreenDevice(): boolean;
 		isDesktop(): boolean;
 		isTablet(): boolean;
 		isCODesktop(): boolean;

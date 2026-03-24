@@ -38,7 +38,7 @@ JSDialog.pushButton = function (
 		data.enabled = false;
 	}
 
-	const wrapperClass = window.mode.isMobile()
+	const wrapperClass = window.mode.isSmallScreenDevice()
 		? ''
 		: 'd-flex justify-content-center';
 

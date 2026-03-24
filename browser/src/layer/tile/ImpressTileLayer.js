@@ -19,13 +19,13 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 	initialize: function (options) {
 		window.L.CanvasTileLayer.prototype.initialize.call(this, options);
 		// If this is mobile view, we we'll change the layout position of 'presentation-controls-wrapper'.
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			this._putPCWOutsideFlex();
 		}
 
 		this._preview = window.L.control.partsPreview();
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			this._addButton = window.L.control.mobileSlide();
 			window.L.DomUtil.addClass(window.L.DomUtil.get('mobile-edit-button'), 'impress');
 		}
@@ -154,7 +154,7 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 
 		var mobileEditButton = document.getElementById('mobile-edit-button');
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			if (window.L.DomUtil.isPortrait()) {
 				this._putPCWOutsideFlex();
 				if (mobileEditButton)
@@ -192,7 +192,7 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	onUpdatePermission: function (e) {
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			if (e.detail.perm === 'edit') {
 				this._addButton.addTo(this._map);
 			} else {

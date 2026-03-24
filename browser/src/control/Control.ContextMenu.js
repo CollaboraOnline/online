@@ -108,7 +108,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				break;
 			}
 		}
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			window.contextMenuWizard = true;
 			var menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(contextMenu, true, '');
 			map.fire('mobilewizard', {data: menuData});
@@ -246,7 +246,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				if (item.command && !item.command.startsWith('.uno:')) {
 					itemName = item.text;
 					contextMenu[item.command] = {
-						name: (window.mode.isMobile() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, item.command)),
+						name: (window.mode.isSmallScreenDevice() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, item.command)),
 						isHtmlName: true,
 					};
 					isLastItemText = true;
@@ -278,7 +278,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					continue;
 				}
 
-				if (window.mode.isMobile() && this.options.mobileDenylist.indexOf(commandName) !== -1)
+				if (window.mode.isSmallScreenDevice() && this.options.mobileDenylist.indexOf(commandName) !== -1)
 					continue;
 
 				if (commandName == 'None' && !item.text)
@@ -297,7 +297,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: (window.mode.isMobile() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, commandName)),
+					name: (window.mode.isSmallScreenDevice() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, commandName)),
 					isHtmlName: true,
 				};
 

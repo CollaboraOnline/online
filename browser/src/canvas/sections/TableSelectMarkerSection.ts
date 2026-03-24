@@ -57,7 +57,7 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		if (
 			(!this.containerObject.isDraggingSomething() &&
-				(<any>window).mode.isMobile()) ||
+				(<any>window).mode.isSmallScreenDevice()) ||
 			(<any>window).mode.isTablet()
 		) {
 			this.onClick(point, e);

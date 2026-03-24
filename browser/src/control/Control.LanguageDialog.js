@@ -133,7 +133,7 @@ window.L.Control.LanguageDialog = window.L.Control.extend({
 			callback: this._onAction.bind(this),
 		};
 
-		this.map.fire(window.mode.isMobile() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
+		this.map.fire(window.mode.isSmallScreenDevice() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
 	},
 
 	_onAction: function (element, action, data, index) {
@@ -151,7 +151,7 @@ window.L.Control.LanguageDialog = window.L.Control.extend({
 				id: 'LanguageDialog',
 			}
 		};
-		this.map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
+		this.map.fire(window.mode.isSmallScreenDevice() ? 'closemobilewizard' : 'jsdialog', closeEvent);
 	}
 });
 

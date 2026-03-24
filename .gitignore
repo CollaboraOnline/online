@@ -99,6 +99,7 @@ browser/admin/jsconfig.json
 browser/dist
 browser/compilets
 browser/typescript_js
+*.tsbuildinfo
 browser/src/app/TaskWorker.js
 
 /coolforkit

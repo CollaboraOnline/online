@@ -25,7 +25,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		app.events.on('contextchange', this.onContextChange.bind(this));
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
 	}
@@ -41,7 +41,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		this.map.off('wopiprops', this.onWopiProps, this);
 		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			this.map.off('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
 	}
@@ -321,7 +321,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
 			JSDialog.RefreshScrollables();
 		}

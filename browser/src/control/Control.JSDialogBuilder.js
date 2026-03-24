@@ -582,7 +582,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	_stressAccessKey: function(element, accessKey) {
-		if (!accessKey || window.mode.isMobile() || window.getAccessibilityState())
+		if (!accessKey || window.mode.isSmallScreenDevice() || window.getAccessibilityState())
 			return;
 
 		var text = element.textContent;

@@ -68,7 +68,7 @@ class JSDialogMessageRouter {
 		if (msgData.jsontype === 'popup') return;
 
 		// re/create component
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			// allow to use desktop's JSDialog component to show dropdowns
 			if (
 				msgData.type === 'dropdown' ||

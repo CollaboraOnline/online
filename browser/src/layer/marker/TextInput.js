@@ -754,7 +754,7 @@ window.L.TextInput = window.L.Layer.extend({
 		// And that is caused because after entering the first character
 		// cursor position is never updated by keyboard (I know it is strange)
 		// so here we manually correct the position
-		if (window.mode.isMobile() && content.length === 1 && this._lastContent.length === 0)
+		if (window.mode.isSmallScreenDevice() && content.length === 1 && this._lastContent.length === 0)
 			this._setCursorPosition(1);
 
 		var matchTo = 0;
@@ -1210,7 +1210,7 @@ window.L.TextInput = window.L.Layer.extend({
 		// We want to trigger auto-correction, but not if we may
 		// have to delete a count of characters in the future,
 		// which is specific to crazy mobile keyboard / IMEs:
-		if (!window.mode.isMobile() && !window.mode.isTablet() &&
+		if (!window.mode.isSmallScreenDevice() && !window.mode.isTablet() &&
 			this._autoCorrectChars[text])
 		{
 			let codes;

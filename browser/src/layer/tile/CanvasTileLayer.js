@@ -374,7 +374,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		tileSize: window.tileSize,
 		opacity: 1,
 
-		updateWhenIdle: (window.mode.isMobile() || window.mode.isTablet()),
+		updateWhenIdle: (window.mode.isSmallScreenDevice() || window.mode.isTablet()),
 		updateInterval: 200,
 
 		attribution: null,
@@ -492,7 +492,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using window.L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			this._map.on('move', this._painter.update, this._painter);
 			this._map.on('moveend', function () {
 				setTimeout(this.update.bind(this), 200);
@@ -1450,7 +1450,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		} else {
 			var funcData = JSON.parse(textMsg);
 
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				this._closeMobileWizard();
 
 				var data = {
@@ -3640,7 +3640,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_mobileChecksAfterResizeEvent: function(heightIncreased) {
-		if (!window.mode.isMobile()) return;
+		if (!window.mode.isSmallScreenDevice()) return;
 
 		const hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
 		const hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
@@ -3657,7 +3657,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_nonDesktopChecksAfterResizeEvent: function(heightIncreased) {
 		// We want to keep cursor visible when we show the keyboard on mobile device or tablet
-		if (!window.mode.isMobile() && !window.mode.isTablet()) return;
+		if (!window.mode.isSmallScreenDevice() && !window.mode.isTablet()) return;
 
 		const hasVisibleCursor = app.file.textCursor.visible
 			&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();

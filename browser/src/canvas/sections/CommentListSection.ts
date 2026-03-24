@@ -161,7 +161,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.reLayout = true;
 
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
-		this.sectionProperties.commentsAreListed = (app.map._docLayer._docType === 'text' || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
+		this.sectionProperties.commentsAreListed = (app.map._docLayer._docType === 'text' || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') && !(<any>window).mode.isSmallScreenDevice();
 		this.idIndexMap = new Map<any, number>();
 		this.mobileCommentModalId = this.map.uiManager.generateModalId(this.mobileCommentId);
 		this.annotationMinSize = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
@@ -196,7 +196,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.backgroundColor = this.containerObject.getClearColor();
 		this.initializeContextMenus();
 
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			this.setShowSection(false);
 			this.size[0] = 0;
 		}
@@ -237,7 +237,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private checkCollapseState(): void {
-		if (!(<any>window).mode.isMobile() && app.map._docLayer._docType !== 'spreadsheet') {
+		if (!(<any>window).mode.isSmallScreenDevice() && app.map._docLayer._docType !== 'spreadsheet') {
 			if (this.shouldCollapse()) {
 				this.sectionProperties.deflectionOfSelectedComment = 180;
 				this.setCollapsed();
@@ -286,7 +286,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	private checkSize (): void {
 		// When there is no comment || file is a spreadsheet || view type is mobile, we set this section's size to [0, 0].
-		if (app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile() || this.sectionProperties.commentList.length === 0)
+		if (app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isSmallScreenDevice() || this.sectionProperties.commentList.length === 0)
 		{
 			if (app.map._docLayer._docType === 'presentation' && this.sectionProperties.scrollAnnotation) {
 				this.map.removeControl(this.sectionProperties.scrollAnnotation);
@@ -378,7 +378,7 @@ export class CommentSection extends CanvasSectionObject {
 	public shouldCollapse (): boolean {
 		if (app.map._docLayer._docType === 'text')
 			return false;
-		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
+		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isSmallScreenDevice())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
 		/*
@@ -837,7 +837,7 @@ export class CommentSection extends CanvasSectionObject {
 			this.navigateAndFocusComment(cool.Comment.isAnyEdit());
 			return;
 		}
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			var avatar = undefined;
 			var author = this.map.getViewName(app.map._docLayer._viewId);
 			if (author in this.map._viewInfoByUserName) {
@@ -877,7 +877,7 @@ export class CommentSection extends CanvasSectionObject {
 			this.navigateAndFocusComment(cool.Comment.isAnyEdit());
 			return;
 		}
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			this.newAnnotationMobile(annotation, function(annotation: any) {
 				this.save(annotation);
 			}.bind(this), /* isMod */ true);
@@ -1336,13 +1336,13 @@ export class CommentSection extends CanvasSectionObject {
 								this.promote.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						showBigger: docLayer._docType !== 'text' || (<any>window).mode.isMobile() ? undefined : {
+						showBigger: docLayer._docType !== 'text' || (<any>window).mode.isSmallScreenDevice() ? undefined : {
 							name: isShownBig ? _('Show on the side') : _('Open in full view'),
 							callback: function (key: any, options: any) {
 								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						showInNavigator: (docLayer._docType !== 'text' && docLayer._docType !== 'spreadsheet') || (<any>window).mode.isMobile() ? undefined : {
+						showInNavigator: (docLayer._docType !== 'text' && docLayer._docType !== 'spreadsheet') || (<any>window).mode.isSmallScreenDevice() ? undefined : {
 							name: _('Show in navigator'),
 							callback: function (key: any, options: any) {
 								this.showInNavigator.call(this, options.$trigger[0].annotation);
@@ -1693,7 +1693,7 @@ export class CommentSection extends CanvasSectionObject {
 			obj.comment.avatar = this.map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
 		}
 
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			var annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
 			if (!annotation)
 				annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].parent)]; //this is required for reload after reply in writer
@@ -1840,7 +1840,7 @@ export class CommentSection extends CanvasSectionObject {
 				this.showHideComment(comment);
 			}
 		}
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			var shouldOpenWizard = false;
 			var wePerformedAction = obj.comment.author === this.map.getViewName(app.map._docLayer._viewId);
 
@@ -2185,7 +2185,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private layout (relayout: boolean = true): void {
-		if ((<any>window).mode.isMobile() || app.map._docLayer._docType === 'spreadsheet') {
+		if ((<any>window).mode.isSmallScreenDevice() || app.map._docLayer._docType === 'spreadsheet') {
 			if (this.sectionProperties.commentList.length > 0)
 				this.orderCommentList();
 			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.

@@ -1314,7 +1314,7 @@ class HRuler extends Ruler {
 		var pointXTwip = this._map._docLayer._pixelsToTwips({ x: pointX, y: 0 }).x;
 		var tabstop = this._getTabStopHit(tabstopContainer, pointX);
 
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			if (tabstop == null) {
 				this.currentPositionInTwips = pointXTwip;
 				this.currentTabStopIndex = null;

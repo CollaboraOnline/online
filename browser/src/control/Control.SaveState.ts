@@ -38,7 +38,7 @@ class SaveState {
 
 	// Function to show the saving status
 	showSavingStatus(): void {
-		if (window.mode.isMobile()) return;
+		if (window.mode.isSmallScreenDevice()) return;
 
 		if (!this.saveEle) this.initialize();
 
@@ -56,7 +56,7 @@ class SaveState {
 
 	// Function to show the saved status
 	showSavedStatus(): void {
-		if (window.mode.isMobile()) return;
+		if (window.mode.isSmallScreenDevice()) return;
 
 		if (!this.saveEle) this.initialize();
 

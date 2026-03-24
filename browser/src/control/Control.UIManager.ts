@@ -75,7 +75,7 @@ class UIManager extends window.L.Control {
 		map.on('infobar', this.showInfoBar, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			window.addEventListener('popstate', this.onGoBack.bind(this));
 
 			// provide entries in the history we can catch to close the app
@@ -145,7 +145,7 @@ class UIManager extends window.L.Control {
 	 */
 	getCurrentMode(): UIMode {
 		// no notebookbar on mobile
-		if (window.mode.isMobile())
+		if (window.mode.isSmallScreenDevice())
 			return 'classic';
 
 		return this.shouldUseNotebookbarMode() ? 'notebookbar' : 'classic';
@@ -304,7 +304,7 @@ class UIManager extends window.L.Control {
 		}
 		this.applyInvert();
 		this.setCanvasColorAfterModeChange();
-		if (!window.mode.isMobile())
+		if (!window.mode.isSmallScreenDevice())
 			this.refreshAfterThemeChange();
 
 		if (app.map._docLayer._docType === 'spreadsheet') {
@@ -372,14 +372,14 @@ class UIManager extends window.L.Control {
 	 */
 	initializeMenubarAndTopToolbar(): void {
 		const enableNotebookbar = this.shouldUseNotebookbarMode();
-		const isMobile = window.mode.isMobile();
-		if (isMobile || !enableNotebookbar) {
+		const isSmallScreenDevice = window.mode.isSmallScreenDevice();
+		if (isSmallScreenDevice || !enableNotebookbar) {
 			var menubar = new Menubar();
 			this.map.menubar = menubar;
 			this.map.addControl(menubar);
 		}
 
-		if (!isMobile && !enableNotebookbar)
+		if (!isSmallScreenDevice && !enableNotebookbar)
 			this.map.topToolbar = JSDialog.TopToolbar(this.map);
 
 		this.permissionViewMode = new PermissionViewMode(this.map);
@@ -394,13 +394,13 @@ class UIManager extends window.L.Control {
 
 		this.initializeMenubarAndTopToolbar();
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			$('#toolbar-mobile-back').on('click', () => {
 				this.enterReadonlyOrClose();
 			});
 		}
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			this.map.statusBar = JSDialog.StatusBar(this.map);
 
 			this.map.sidebar = JSDialog.Sidebar(this.map);
@@ -422,7 +422,7 @@ class UIManager extends window.L.Control {
 			this.map.addControl(this.documentNameInput);
 		}
 		this.map.addControl(window.L.control.alertDialog());
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			this.mobileWizard = window.L.control.mobileWizard();
 			this.map.addControl(this.mobileWizard);
 		}
@@ -552,7 +552,7 @@ class UIManager extends window.L.Control {
 		if (hasShare)
 			document.body.setAttribute('data-integratorSidebar', 'true');
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			$('#mobile-edit-button').css('display', 'flex');
 			this.map.mobileBottomBar = JSDialog.MobileBottomBar(this.map);
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
@@ -628,7 +628,7 @@ class UIManager extends window.L.Control {
 			this._map.fire('commandstatechanged', {commandName : 'showannotations', state : initialCommentState});
 			this.map.mention = new Mention(this.map);
 
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				// setup quickfind panel
 				this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
 				this.map.addControl(this.map.quickFindPanel);
@@ -966,7 +966,7 @@ class UIManager extends window.L.Control {
 	 * @param uiMode - Object containing the new UI mode and additional flags.
 	 */
 	onChangeUIMode(uiMode: UIModeCommand): void {
-		if (window.mode.isMobile())
+		if (window.mode.isSmallScreenDevice())
 			return;
 
 		var currentMode = this.getCurrentMode();
@@ -1416,7 +1416,7 @@ class UIManager extends window.L.Control {
 
 	initializeNotebookbarInCore(): void {
 		// do it always apart of mobile as we need it for contextual toolbar
-		if (window.mode.isMobile()) return;
+		if (window.mode.isSmallScreenDevice()) return;
 
 		if (!this.notebookbar.impl.initialized) {
 			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
@@ -1580,7 +1580,7 @@ class UIManager extends window.L.Control {
 	 * @param e - The event object containing permission details.
 	 */
 	onUpdatePermission(e: any): void {
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			if (e.detail.perm === 'edit') {
 				history.pushState({context: 'app-started'}, 'edit-mode');
 				$('#toolbar-down').show();
@@ -1592,7 +1592,7 @@ class UIManager extends window.L.Control {
 		}
 
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
-		if (enableNotebookbar && !window.mode.isMobile()) {
+		if (enableNotebookbar && !window.mode.isSmallScreenDevice()) {
 			if (e.detail.perm === 'edit') {
 				this.removeClassicUI();
 				// Avoid re-refreshing the notebookbar if it is already initialized.
@@ -1999,7 +1999,7 @@ class UIManager extends window.L.Control {
 				id: 'info-modal-tile-m',
 				type: 'fixedtext',
 				text: title,
-				hidden: !window.mode.isMobile()
+				hidden: !window.mode.isSmallScreenDevice()
 			},
 			{
 				id: 'info-modal-label1',
@@ -2078,7 +2078,7 @@ class UIManager extends window.L.Control {
 				id: 'info-modal-tile-m',
 				type: 'fixedtext',
 				text: title,
-				hidden: !window.mode.isMobile()
+				hidden: !window.mode.isSmallScreenDevice()
 			},
 			{
 				id: 'info-modal-label1',
@@ -2179,7 +2179,7 @@ class UIManager extends window.L.Control {
 				id: 'info-modal-tile-m',
 				type: 'fixedtext',
 				text: title,
-				hidden: !window.mode.isMobile()
+				hidden: !window.mode.isSmallScreenDevice()
 			},
 			{
 				id: 'info-modal-label1',
@@ -2324,7 +2324,7 @@ class UIManager extends window.L.Control {
 			}
 		}]);
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			const dialogElement = document.getElementById(dialogId);
 			if (dialogElement != null) {
 				dialogElement.style.marginRight = '0';
@@ -2353,7 +2353,7 @@ class UIManager extends window.L.Control {
 				id:  dialogId + '-title',
 				type: 'fixedtext',
 				text: title,
-				hidden: !window.mode.isMobile()
+				hidden: !window.mode.isSmallScreenDevice()
 			},
 			{
 				id: dialogId + '-label',

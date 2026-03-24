@@ -71,7 +71,7 @@ class NavigatorPanel extends SidebarBase {
 		// for presentation show slide sorter navigation panel by default
 		if (
 			allowedDocTypes.includes(app.map.getDocType()) &&
-			!window.mode.isMobile()
+			!window.mode.isSmallScreenDevice()
 		) {
 			// Navigator panel should be visible and by default we should open slide sorter in case of impress/draw
 			this.showNavigationPanel(false);

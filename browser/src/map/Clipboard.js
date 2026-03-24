@@ -1478,7 +1478,7 @@ window.L.Clipboard = window.L.Class.extend({
 		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			const p = document.createElement('p');
 			p.textContent = _('Your browser has very limited access to the clipboard, so please use the paste buttons on your on-screen keyboard instead.');
 			innerDiv.appendChild(p);
