@@ -116,6 +116,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container = null;
 		this.sectionProperties.author = null;
 		this.sectionProperties.resolvedTextElement = null;
+		this.sectionProperties.removedTextElement = null;
 		this.sectionProperties.authorAvatarImg = null;
 		this.sectionProperties.authorAvatartdImg = null;
 		this.sectionProperties.contentAuthor = null;
@@ -244,6 +245,7 @@ export class Comment extends CanvasSectionObject {
 		const resolvedEl = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', commentFooter);
 		this.sectionProperties.resolvedTextElement = resolvedEl;
 		this.updateResolvedField(this.sectionProperties.data.resolved);
+
 
 		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
@@ -525,6 +527,17 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
+	public updateRemovedField (): void {
+		var isDeleted = this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED;
+		if (isDeleted && !this.sectionProperties.removedTextElement) {
+			var commentFooter = this.sectionProperties.contentDate.parentNode;
+			this.sectionProperties.removedTextElement = window.L.DomUtil.create('div', 'cool-annotation-content-removed', commentFooter);
+		}
+		if (this.sectionProperties.removedTextElement) {
+			this.sectionProperties.removedTextElement.innerText = isDeleted ? _('Removed') : '';
+		}
+	}
+
 	private isNewPara(): boolean {
 		const selection = window.getSelection();
 		if (!selection.rangeCount) return;
@@ -598,6 +611,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
+		this.updateRemovedField();
 		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl) {
 			this.sectionProperties.authorAvatarImg.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
 		}
@@ -918,6 +932,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED) {
 			this.sectionProperties.container.classList.add(layoutClass);
 		}
+		this.updateRemovedField();
 	}
 
 	public show(): void {
