@@ -967,6 +967,17 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
+	// Focus the edit icon of the given comment
+	private focusEditIcon(comment: Comment): void {
+		var container = comment.sectionProperties.container;
+		app.layoutingService.appendLayoutingTask(() => {
+			var editIcon = container?.querySelector(
+				'.cool-annotation-menu-edit',
+			) as HTMLElement;
+			if (editIcon) editIcon.focus();
+		});
+	}
+
 	private scrollCommentIntoView (comment: Comment) {
 		if (CommentSection.importingComments || !comment)
 			return;
@@ -1652,6 +1663,13 @@ export class CommentSection extends CanvasSectionObject {
 			obj.redline.id = 'change-' + obj.redline.index;
 		}
 		var action = changetrack ? obj.redline.action : obj.comment.action;
+
+		if (action === 'Focus') {
+			var comment = this.getComment(obj[dataroot].id);
+			if (comment)
+				this.focusEditIcon(comment);
+			return;
+		}
 
 		if (!changetrack && obj.comment.parent === undefined) {
 			if (obj.comment.parentId)
