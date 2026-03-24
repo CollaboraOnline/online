@@ -28,6 +28,7 @@ interface WidgetJSON {
 	width?: string; // inside grid - width in number of columns
 	labelledBy?: string;
 	allyRole?: string;
+	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }
@@ -170,7 +171,7 @@ interface DialogJSON extends JSDialogJSON {
 type NotebookbarAccessibilityDescriptor = {
 	focusBack: boolean;
 	combination: string;
-	de?: string | null; // combination specific for german
+	[language: string]: string | boolean | null | undefined; // language-specific combinations (e.g. 'de' for German)
 };
 
 type NotebookbarTabEntry = {
