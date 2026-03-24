@@ -260,6 +260,8 @@
       <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
     </watermark>
 
+    <comment_avatar desc="URL of an image to use as the avatar for all comments, overriding per-user avatars. When empty (default), normal user avatars are shown" type="string" default=""></comment_avatar>
+
     @WELCOME_CONFIG_FRAGMENT@
 
     <user_interface>

@@ -1503,6 +1503,10 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     disablePresentation = disablePresentation || (!ConfigUtil::getBool("canvas_slideshow_enabled", true) && !watermarkText.empty());
     wopiInfo->set("DisablePresentation", disablePresentation);
 
+    const std::string commentAvatarUrl = ConfigUtil::getString("comment_avatar", "");
+    if (!commentAvatarUrl.empty())
+        wopiInfo->set("CommentAvatarUrl", commentAvatarUrl);
+
     std::ostringstream ossWopiInfo;
     wopiInfo->stringify(ossWopiInfo);
     const std::string wopiInfoString = ossWopiInfo.str();
