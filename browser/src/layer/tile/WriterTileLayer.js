@@ -133,8 +133,13 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		}
 
 		if (statusJSON.partHasComments !== undefined &&  statusJSON.partHasComments !== app.activeDocument.partHasComments) {
+			const hadValue = app.activeDocument.partHasComments !== undefined;
 			app.activeDocument.partHasComments = statusJSON.partHasComments;
-			this._fitWidthZoom();
+			// Only re-fit zoom when comment presence genuinely
+			// changes (added or removed), not on the first status
+			// message where it goes from undefined to a real value.
+			if (hadValue)
+				this._fitWidthZoom();
 		}
 
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
