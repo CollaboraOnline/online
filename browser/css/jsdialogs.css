@@ -3278,3 +3278,10 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 	width: 100%;
 	min-height: inherit;
 }
+
+/* Writer - Review - Tracking - Manage */
+#writerchanges .ui-treeview-cell-text-content {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}

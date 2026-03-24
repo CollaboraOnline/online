@@ -553,6 +553,15 @@ class TreeViewControl {
 		}
 	}
 
+	private setupCellTooltip(cell: HTMLElement, map: MapInterface) {
+		app.layoutingService.onDrain(() => {
+			if (cell.scrollWidth > cell.clientWidth) {
+				cell.dataset.cooltip = cell.innerText;
+				window.L.control.attachTooltipEventListener(cell, map);
+			}
+		});
+	}
+
 	createExpandableIconCell(
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
@@ -628,6 +637,7 @@ class TreeViewControl {
 				this.PAGE_ENTRY_PREFIX,
 				this.PAGE_ENTRY_SUFFIX,
 			);
+			this.setupCellTooltip(cell, builder.map);
 		} else if (treeViewData.highlightTerm !== undefined) {
 			cell = this.createHighlightedCell(
 				parent,
@@ -648,6 +658,7 @@ class TreeViewControl {
 				cell.setAttribute('for', selectionElement.id);
 			}
 			cell.innerText = text;
+			this.setupCellTooltip(cell, builder.map);
 		}
 
 		// in case of non-persistent entries we want to re-render in case of change
@@ -714,6 +725,7 @@ class TreeViewControl {
 			); // post
 		}
 
+		this.setupCellTooltip(mainSpan, builder.map);
 		return mainSpan;
 	}
 
