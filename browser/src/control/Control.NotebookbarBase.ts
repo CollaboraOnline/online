@@ -16,6 +16,10 @@
 class NotebookbarBase extends JSDialogComponent {
 	/// reference to old JS Notebookbar
 	impl: any = null;
+	private preferredLabels: [string, string][] = [
+		['fontnamecombobox', _('Font')],
+		['fontsizecombobox', _('Size')],
+	];
 
 	constructor(map: any, impl: any) {
 		super(map, 'Notebookbar', 'notebookbar');
@@ -27,6 +31,9 @@ class NotebookbarBase extends JSDialogComponent {
 		this.map.addControl(this.impl);
 
 		this.registerMessageHandlers();
+
+		for (const [id, label] of this.preferredLabels)
+			this.labelsOverride.set(id, label);
 	}
 
 	// when we show the UI

@@ -149,9 +149,9 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'toolitem',  id: 'resetimpress', class: 'unoResetAttributes', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
-			{type: 'combobox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false, changeOnEnterOnly: true},
-			{type: 'combobox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false, changeOnEnterOnly: true},
-			{type: 'combobox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false, changeOnEnterOnly: true, entries: ['6','7','8','9','10','10.5','11','12','13','14','15','16','18','20','22','24','26','28','32','36','40','44','48','54','60','66','72','80','88','96']}
+			{type: 'combobox', id: 'styles', label: _('Style'), text: _('Default Style'), desktop: true, mobile: false, tablet: false, changeOnEnterOnly: true},
+			{type: 'combobox', id: 'fontnamecombobox', label: _('Font'), text: 'Carlito', command: '.uno:CharFontName', mobile: false, changeOnEnterOnly: true},
+			{type: 'combobox', id: 'fontsizecombobox', label: _('Size'), text: '12 pt', command: '.uno:FontHeight', mobile: false, changeOnEnterOnly: true, entries: ['6','7','8','9','10','10.5','11','12','13','14','15','16','18','20','22','24','26','28','32','36','40','44','48','54','60','66','72','80','88','96']}
 		];
 		var formatGroup = [
 			{type: 'toolitem',  id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold'},
