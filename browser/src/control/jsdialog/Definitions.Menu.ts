@@ -1491,6 +1491,7 @@ menuDefinitions.set('MenuMargins', [
 			id: 'Layout-MarginMenu',
 			type: 'pagemarginentry',
 			options: pageMarginOptions,
+			initialSelectedId: 'normal',
 		},
 	},
 	{ id: 'MarginMenuSeparator', type: 'separator' },
