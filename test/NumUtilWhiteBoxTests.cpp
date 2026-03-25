@@ -28,6 +28,7 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(NumUtilWhiteBoxTests);
     CPPUNIT_TEST(testI32FromString);
+    CPPUNIT_TEST(testI64FromString);
     CPPUNIT_TEST(testU64FromString);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testStrtoint64MatchesStrtol);
@@ -38,6 +39,7 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testI32FromString();
+    void testI64FromString();
     void testU64FromString();
     void testSafeAtoi();
     void testStrtoint64MatchesStrtol();
@@ -205,6 +207,142 @@ void NumUtilWhiteBoxTests::testI32FromString()
     LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), NumUtil::i32FromString("   ", -1));
     LOK_ASSERT_EQUAL(static_cast<std::int32_t>(-1), NumUtil::i32FromString("+", -1));
     LOK_ASSERT_EQUAL(static_cast<std::int32_t>(99), NumUtil::i32FromString("2147483648", 99));
+}
+
+void NumUtilWhiteBoxTests::testI64FromString()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Basic positive numbers.
+    {
+        const auto [value, success] = NumUtil::i64FromString("0");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(0), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("42");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(42), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("123456789012345");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(123456789012345LL), value);
+    }
+
+    // Trailing non-numeric characters (partial parse, still succeeds).
+    {
+        const auto [value, success] = NumUtil::i64FromString("999abc");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(999), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("100,200");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(100), value);
+    }
+
+    // Negative numbers.
+    {
+        const auto [value, success] = NumUtil::i64FromString("-1");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-1), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("-123456789012345");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-123456789012345LL), value);
+    }
+
+    // INT64_MAX boundary.
+    {
+        const auto [value, success] = NumUtil::i64FromString("9223372036854775807");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::int64_t>::max(), value);
+    }
+
+    // INT64_MIN boundary.
+    {
+        const auto [value, success] = NumUtil::i64FromString("-9223372036854775808");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::int64_t>::min(), value);
+    }
+
+    // INT64_MAX + 1 overflows.
+    {
+        const auto [value, success] = NumUtil::i64FromString("9223372036854775808");
+        LOK_ASSERT(!success);
+    }
+
+    // INT64_MIN - 1 overflows.
+    {
+        const auto [value, success] = NumUtil::i64FromString("-9223372036854775809");
+        LOK_ASSERT(!success);
+    }
+
+    // Empty and invalid strings.
+    {
+        const auto [value, success] = NumUtil::i64FromString("");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("abc");
+        LOK_ASSERT(!success);
+    }
+
+    // Leading whitespace.
+    {
+        const auto [value, success] = NumUtil::i64FromString("  42");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(42), value);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("\t -7");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-7), value);
+    }
+
+    // Leading '+' sign.
+    {
+        const auto [value, success] = NumUtil::i64FromString("+99");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(99), value);
+    }
+
+    // Whitespace-only is failure.
+    {
+        const auto [value, success] = NumUtil::i64FromString("   ");
+        LOK_ASSERT(!success);
+    }
+
+    // Just a sign with no digits.
+    {
+        const auto [value, success] = NumUtil::i64FromString("+");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::i64FromString("-");
+        LOK_ASSERT(!success);
+    }
+
+    // Single digit.
+    {
+        const auto [value, success] = NumUtil::i64FromString("7");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::int64_t>(7), value);
+    }
+
+    // Default-value overload.
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(42), NumUtil::i64FromString("42", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-1), NumUtil::i64FromString("", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-1), NumUtil::i64FromString("abc", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(55), NumUtil::i64FromString("  55", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-1), NumUtil::i64FromString("   ", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(-1), NumUtil::i64FromString("+", -1));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(99),
+                     NumUtil::i64FromString("9223372036854775808", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(99),
+                     NumUtil::i64FromString("-9223372036854775809", 99));
 }
 
 void NumUtilWhiteBoxTests::testU64FromString()
