@@ -284,6 +284,22 @@ inline std::pair<std::uint64_t, StrToState> parseStrToUint64(const std::string_v
     return parseStrTo<std::uint64_t>(str, offset);
 }
 
+/// Convert a string to 64-bit int.
+/// Returns the parsed value and a boolean indicating success or failure.
+inline std::pair<std::int64_t, bool> i64FromString(const std::string_view input)
+{
+    std::size_t offset = 0;
+    const auto [value, status] = parseStrTo<std::int64_t>(input, offset);
+    return { value, status <= StrToState::Partial };
+}
+
+/// Convert a string to 64-bit int. On failure, returns the default value.
+/// Used where there is no interest in knowing whether the input was valid or not.
+inline std::int64_t i64FromString(const std::string_view input, const std::int64_t def)
+{
+    return strTo<std::int64_t>(input, def);
+}
+
 /// Convert a string to 64-bit unsigned int.
 /// Returns the parsed value and a boolean indicating success or failure.
 inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input)
