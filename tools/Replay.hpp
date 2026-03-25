@@ -602,7 +602,10 @@ public:
                 return;
             }
             else
+            {
+                SigUtil::requestShutdown();
                 Util::forcedExit(70);
+            }
         }
 
         // FIXME: implement code to send new view-ports based
