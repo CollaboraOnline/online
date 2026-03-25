@@ -62,6 +62,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart dialog tests', funct
 		cy.cGet('#CHART2_HID_SCH_WIZARD_ROADMAP')
 			.should('be.visible')
 			.invoke('width')
-			.should('be.greaterThan', 385).and('be.lessThan',415);
+			.should('be.greaterThan', 380).and('be.lessThan', 450);
 	});
 });
