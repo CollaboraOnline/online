@@ -84,6 +84,8 @@ interface Options {
 abstract class Ruler {
 	protected options: Options;
 
+	_updateTask: TaskId | null = null;
+
 	constructor(options: Partial<Options>) {
 		// Init default values for ruler options
 		this.options = {
@@ -120,6 +122,16 @@ abstract class Ruler {
 		this.options.timer = setTimeout(
 			window.L.bind(this._updateBreakPoints, this),
 			300,
+		);
+	}
+
+	protected abstract _updateParagraphIndentationsImpl(): void;
+
+	public _updateParagraphIndentations() {
+		if (this._updateTask)
+			app.layoutingService.cancelLayoutingTask(this._updateTask);
+		this._updateTask = app.layoutingService.appendLayoutingTask(
+			this._updateParagraphIndentationsImpl.bind(this),
 		);
 	}
 
