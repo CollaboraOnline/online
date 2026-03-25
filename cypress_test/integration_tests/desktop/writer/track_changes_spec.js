@@ -338,6 +338,38 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		});
 	});
 
+	it('Comment scrolls with document in compare changes mode', function () {
+		// Given a document with a comment in compare changes mode:
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert .unoInsertAnnotation').click();
+		cy.cGet('#annotation-modify-textarea-new').should('exist');
+		cy.cGet('#annotation-modify-textarea-new').type('some text');
+		cy.cGet('#annotation-save-new').click();
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#Review-tab-label').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
+
+		// When scrolling down:
+		let initialTop;
+		cy.cGet('#comment-container-1').then(function($el) {
+			initialTop = $el.position().top;
+		});
+		cy.getFrameWindow().then(function(win) {
+			win.app.sectionContainer.getSectionWithName('scroll').scrollVerticalWithOffset(100);
+		});
+
+		// Then the comment should move up:
+		// Without the accompanying fix in place, this test would have failed with:
+		// - comment top after scroll: expected 207 to be below 207
+		// while it reduced to 189 with the fix.
+		cy.cGet('#comment-container-1').should(function($el) {
+			expect($el.position().top, 'comment top after scroll').to.be.lessThan(initialTop);
+		});
+	});
+
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
