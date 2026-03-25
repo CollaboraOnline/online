@@ -97,6 +97,10 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 			this.halfWidth - this.viewGap,
 			documentAnchor.size[1],
 		]);
+
+		// Notify the section container that the document visible area changed, necessary
+		// for comment positions to update.
+		app.sectionContainer.onNewDocumentTopLeft();
 	}
 
 	protected updateViewData() {
