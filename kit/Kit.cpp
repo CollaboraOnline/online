@@ -374,14 +374,16 @@ namespace
         switch (linkOrCopyType)
         {
         case LinkOrCopyType::LO:
-            return path != std::string_view("program/wizards") && path == std::string_view("sdk") &&
+            return path != std::string_view("program/wizards") &&
+                   path != std::string_view("sdk") &&
                    path != std::string_view("debugsource") &&
                    path != std::string_view("share/basic") &&
-                   path != std::string_view("share/extentions/dict") &&
+                   !std::string_view(path).starts_with(std::string_view("share/extentions/dict")) &&
                    path != std::string_view("share/Scripts/java") &&
                    path != std::string_view("share/Scripts/javascript") &&
                    path != std::string_view("share/config/wizard") &&
-                   path != std::string_view("readmes") && path == std::string_view("help");
+                   path != std::string_view("readmes") &&
+                   path != std::string_view("help");
         default: // LinkOrCopyType::All
             return true;
         }
