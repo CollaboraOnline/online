@@ -17,14 +17,13 @@
 #include <config.h>
 #include <config_version.h>
 
-#include "Util.hpp"
-
 #include <common/Common.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Rectangle.hpp>
+#include <common/SigUtil.hpp>
 #include <common/TraceEvent.hpp>
-
+#include <common/Util.hpp>
 #include <common/base64.hpp>
 
 #include <Poco/HexBinaryEncoder.h>
@@ -40,7 +39,6 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
-#include <limits>
 #include <mutex>
 #include <random>
 #include <sstream>
