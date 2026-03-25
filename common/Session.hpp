@@ -154,7 +154,7 @@ public:
         return sendTextFrame(text.data(), text.size());
     }
 
-    bool sendTextFrameAndLogError(const std::string_view text)
+    bool sendTextFrameAndLogError(const std::string_view text, LOG_CAPTURE_CALLER_DECLARATION)
     {
         LOG_ERR(text);
         return sendTextFrame(text.data(), text.size());
