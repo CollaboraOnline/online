@@ -29,6 +29,7 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(NumUtilWhiteBoxTests);
     CPPUNIT_TEST(testI32FromString);
     CPPUNIT_TEST(testI64FromString);
+    CPPUNIT_TEST(testU32FromString);
     CPPUNIT_TEST(testU64FromString);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testStrtoint64MatchesStrtol);
@@ -40,6 +41,7 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     void testI32FromString();
     void testI64FromString();
+    void testU32FromString();
     void testU64FromString();
     void testSafeAtoi();
     void testStrtoint64MatchesStrtol();
@@ -343,6 +345,121 @@ void NumUtilWhiteBoxTests::testI64FromString()
                      NumUtil::i64FromString("9223372036854775808", 99));
     LOK_ASSERT_EQUAL(static_cast<std::int64_t>(99),
                      NumUtil::i64FromString("-9223372036854775809", 99));
+}
+
+void NumUtilWhiteBoxTests::testU32FromString()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Basic positive numbers.
+    {
+        const auto [value, success] = NumUtil::u32FromString("0");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(0), value);
+    }
+    {
+        const auto [value, success] = NumUtil::u32FromString("42");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(42), value);
+    }
+    {
+        const auto [value, success] = NumUtil::u32FromString("12345");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(12345), value);
+    }
+
+    // Trailing non-numeric characters (partial parse, still succeeds).
+    {
+        const auto [value, success] = NumUtil::u32FromString("42xy");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(42), value);
+    }
+    {
+        const auto [value, success] = NumUtil::u32FromString("100,200");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(100), value);
+    }
+
+    // UINT32_MAX boundary.
+    {
+        const auto [value, success] = NumUtil::u32FromString("4294967295");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::uint32_t>::max(), value);
+    }
+
+    // UINT32_MAX + 1 overflows.
+    {
+        const auto [value, success] = NumUtil::u32FromString("4294967296");
+        LOK_ASSERT(!success);
+    }
+
+    // Large overflow.
+    {
+        const auto [value, success] = NumUtil::u32FromString("99999999999999");
+        LOK_ASSERT(!success);
+    }
+
+    // Negative values are invalid for unsigned.
+    {
+        const auto [value, success] = NumUtil::u32FromString("-1");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::u32FromString("-0");
+        LOK_ASSERT(!success);
+    }
+
+    // Empty and invalid strings.
+    {
+        const auto [value, success] = NumUtil::u32FromString("");
+        LOK_ASSERT(!success);
+    }
+    {
+        const auto [value, success] = NumUtil::u32FromString("abc");
+        LOK_ASSERT(!success);
+    }
+
+    // Leading whitespace.
+    {
+        const auto [value, success] = NumUtil::u32FromString("  42");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(42), value);
+    }
+
+    // Leading '+' sign.
+    {
+        const auto [value, success] = NumUtil::u32FromString("+99");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(99), value);
+    }
+
+    // Whitespace-only is failure.
+    {
+        const auto [value, success] = NumUtil::u32FromString("   ");
+        LOK_ASSERT(!success);
+    }
+
+    // Just a sign with no digits.
+    {
+        const auto [value, success] = NumUtil::u32FromString("+");
+        LOK_ASSERT(!success);
+    }
+
+    // Single digit.
+    {
+        const auto [value, success] = NumUtil::u32FromString("7");
+        LOK_ASSERT(success);
+        LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(7), value);
+    }
+
+    // Default-value overload.
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(42), NumUtil::u32FromString("42", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(99), NumUtil::u32FromString("", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(99), NumUtil::u32FromString("abc", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(99), NumUtil::u32FromString("-1", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(88), NumUtil::u32FromString("  ", 88));
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(50), NumUtil::u32FromString("  50", 99));
+    LOK_ASSERT_EQUAL(static_cast<std::uint32_t>(77), NumUtil::u32FromString("4294967296", 77));
 }
 
 void NumUtilWhiteBoxTests::testU64FromString()
