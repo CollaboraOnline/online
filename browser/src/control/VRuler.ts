@@ -258,7 +258,7 @@ class VRuler extends Ruler {
 		this._updateBreakPoints();
 	}
 
-	public _updateParagraphIndentations() {
+	protected _updateParagraphIndentationsImpl() {
 		// if ruler is hidden no need to calculate the indentation of the para
 		if (!this.options.showruler) return;
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrapper
