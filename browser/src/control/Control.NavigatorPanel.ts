@@ -426,6 +426,23 @@ class NavigatorPanel extends SidebarBase {
 		}
 	}
 
+	getCurrentWidth() {
+		// Consider navigations sidebar width to place marker at correct position
+		const presentationControlsWrapper: HTMLDivElement = document.querySelector(
+			'#navigation-sidebar',
+		);
+		let presentationControlsWrapperWidth: number = 0;
+
+		if (presentationControlsWrapper)
+			presentationControlsWrapperWidth =
+				presentationControlsWrapper.getBoundingClientRect().width;
+		return presentationControlsWrapperWidth;
+	}
+
+	requestShow() {
+		app.socket.sendMessage('uno .uno:Navigator');
+	}
+
 	showNavigationPanel(setFocus: boolean) {
 		app.layoutingService.appendLayoutingTask(() => {
 			this.navigationPanel.classList.add('visible');
