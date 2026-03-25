@@ -55,8 +55,9 @@ class UnitPerf : public UnitWSD
     {
         config.setString("logging.level", "critical");
         config.setString("logging.level_startup", "critical");
+        config.setBool("admin_console.enable", false);
 
-//        pfm_initialize();
+        //        pfm_initialize();
         UnitWSD::configure(config);
     }
 
