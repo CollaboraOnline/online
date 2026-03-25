@@ -303,6 +303,9 @@ COOL_JS_LST =\
 	src/app/ViewLayoutCompareChanges.ts \
 	src/app/DocumentBase.ts \
 	src/app/DocumentView.ts \
+	src/app/TileCoordData.ts \
+	src/app/PaneBorder.ts \
+	src/app/Tile.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SearchService.ts \
 	src/app/BaseClass.ts \
