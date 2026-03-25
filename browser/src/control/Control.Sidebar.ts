@@ -167,6 +167,11 @@ class Sidebar extends SidebarBase {
 							'sidebarstealfocus',
 							() => {
 								app.layoutingService.appendLayoutingTask(() => {
+									if (
+										this.map.dialog.hasOpenedDialog() ||
+										(this.map.jsdialog && this.map.jsdialog.hasDialogOpened())
+									)
+										return;
 									const focusables = JSDialog.GetFocusableElements(
 										this.container,
 									);
