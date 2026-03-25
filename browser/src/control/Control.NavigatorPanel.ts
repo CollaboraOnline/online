@@ -24,6 +24,8 @@ class NavigatorPanel extends SidebarBase {
 
 	highlightTerm: string;
 	focusQuickFind: boolean;
+	dirtyWidth: boolean = true;
+	currentWidth: number = 0;
 
 	constructor(map: any) {
 		super(map, SidebarType.Navigator);
@@ -31,6 +33,7 @@ class NavigatorPanel extends SidebarBase {
 
 	onAdd(map: ReturnType<typeof window.L.map>) {
 		super.onAdd(map);
+		this.dirtyWidth = true;
 		this.map.on('navigator', this.onNavigator, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
 		this.map.on('focussearch', this.focusSearch, this);
@@ -60,6 +63,7 @@ class NavigatorPanel extends SidebarBase {
 		this.map.off('navigator');
 		this.map.off('zoomend');
 		this.map.off('doclayerinit');
+		this.dirtyWidth = true;
 	}
 
 	onDocLayerInit() {
@@ -276,6 +280,8 @@ class NavigatorPanel extends SidebarBase {
 			}
 			this.navigationPanel.prepend(navHeader);
 		}
+
+		this.dirtyWidth = true;
 	}
 
 	createFloatingNavigatorBtn() {
@@ -360,6 +366,8 @@ class NavigatorPanel extends SidebarBase {
 		} else {
 			this.closeSidebar();
 		}
+
+		this.dirtyWidth = true;
 	}
 
 	onJSUpdate(e: FireEvent) {
@@ -427,16 +435,21 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	getCurrentWidth() {
-		// Consider navigations sidebar width to place marker at correct position
-		const presentationControlsWrapper: HTMLDivElement = document.querySelector(
-			'#navigation-sidebar',
-		);
-		let presentationControlsWrapperWidth: number = 0;
+		if (this.dirtyWidth) {
+			// Consider navigations sidebar width to place marker at correct position
+			const presentationControlsWrapper: HTMLDivElement =
+				document.querySelector('#navigation-sidebar');
+			let presentationControlsWrapperWidth: number = 0;
 
-		if (presentationControlsWrapper)
-			presentationControlsWrapperWidth =
-				presentationControlsWrapper.getBoundingClientRect().width;
-		return presentationControlsWrapperWidth;
+			if (presentationControlsWrapper)
+				presentationControlsWrapperWidth =
+					presentationControlsWrapper.getBoundingClientRect().width;
+
+			this.currentWidth = presentationControlsWrapperWidth;
+			this.dirtyWidth = false;
+		}
+
+		return this.currentWidth;
 	}
 
 	requestShow() {
