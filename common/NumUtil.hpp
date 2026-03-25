@@ -258,6 +258,23 @@ inline std::int32_t i32FromString(const std::string_view input, const std::int32
     return strTo<std::int32_t>(input, def);
 }
 
+/// Convert a string to 32-bit unsigned int.
+/// Returns the parsed value and a boolean indicating success or failure.
+/// const auto [number, success] = NumUtil::u32FromString(portString);
+inline std::pair<std::uint32_t, bool> u32FromString(const std::string_view input)
+{
+    std::size_t offset = 0;
+    const auto [value, status] = parseStrTo<std::uint32_t>(input, offset);
+    return { value, status <= StrToState::Partial };
+}
+
+/// Convert a string to 32-bit unsigned int. On failure, returns the default value.
+/// Used where there is no interest in knowing whether the input was valid or not.
+inline std::uint32_t u32FromString(const std::string_view input, const std::uint32_t def)
+{
+    return strTo<std::uint32_t>(input, def);
+}
+
 /// Parse a string to unsigned 32-bit int.
 /// Returns the parsed value and a boolean indicating success or failure.
 /// const auto [number, state] = NumUtil::parseStrToUint32(str, offset);
