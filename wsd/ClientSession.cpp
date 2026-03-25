@@ -938,7 +938,7 @@ void ClientSession::callLLMAPI()
         return;
     }
 
-    httpSession->setTimeout(std::chrono::seconds(60));
+    httpSession->setTimeout(std::chrono::seconds(getAIRequestTimeoutSeconds()));
 
     auto clientSessionPtr = client_from_this();
 
@@ -1529,7 +1529,7 @@ ImageGenRequest ClientSession::createImageGenRequest(const std::string& prompt)
         return req;
     }
 
-    req.httpSession->setTimeout(std::chrono::seconds(60));
+    req.httpSession->setTimeout(std::chrono::seconds(getAIRequestTimeoutSeconds()));
     return req;
 }
 
@@ -3052,6 +3052,7 @@ bool ClientSession::handleUpdateViewSettings(const std::string& firstLine)
 
     std::string aiProviderAPIKey, aiProviderModel, aiProviderURL;
     std::string aiImageProviderAPIKey, aiImageProviderURL, aiImageModel, aiImageSize;
+    std::string aiRequestTimeout;
 
     JsonUtil::findJSONValue(viewSettings, "aiProviderAPIKey", aiProviderAPIKey);
     JsonUtil::findJSONValue(viewSettings, "aiProviderModel", aiProviderModel);
@@ -3060,6 +3061,7 @@ bool ClientSession::handleUpdateViewSettings(const std::string& firstLine)
     JsonUtil::findJSONValue(viewSettings, "aiImageProviderURL", aiImageProviderURL);
     JsonUtil::findJSONValue(viewSettings, "aiImageModel", aiImageModel);
     JsonUtil::findJSONValue(viewSettings, "aiImageSize", aiImageSize);
+    JsonUtil::findJSONValue(viewSettings, "aiRequestTimeout", aiRequestTimeout);
 
     setAIProviderAPIKey(aiProviderAPIKey);
     setAIProviderModel(aiProviderModel);
@@ -3068,6 +3070,7 @@ bool ClientSession::handleUpdateViewSettings(const std::string& firstLine)
     setAIImageProviderURL(aiImageProviderURL);
     setAIImageModel(aiImageModel);
     setAIImageSize(aiImageSize);
+    setAIRequestTimeout(aiRequestTimeout);
 
     std::string zoteroAPIKey, signatureCert, signatureKey, signatureCa;
     JsonUtil::findJSONValue(viewSettings, "zoteroAPIKey", zoteroAPIKey);

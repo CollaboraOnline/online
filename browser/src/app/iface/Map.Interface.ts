@@ -228,6 +228,7 @@ interface MapInterface extends Evented {
 	// TODO: window.L.control.lokDialog
 	dialog: any;
 	isAIConfigured?: boolean;
+	aiRequestTimeout?: number;
 
 	_controlCorners: Record<string, Node>;
 	_contextMenu: ContextMenuControl;
