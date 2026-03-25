@@ -11,7 +11,7 @@
 
 declare var JSDialog: any;
 
-function _createButtonForNotebookbarIconview(
+function _createButtonForNotebookbarIconView(
 	parentContainer: Element,
 	id: string,
 	buttonClass: string,
@@ -145,84 +145,76 @@ JSDialog.notebookbarIconViewList = function (
 		return false;
 	}
 
-	const buttonsContainer = window.L.DomUtil.create(
-		'div',
-		builder.options.cssClass + ' ui-iconview-buttons-container',
-		rootNode,
-	);
-	buttonsContainer.id = data.id + '-buttons-container';
-
-	// be aware the child iconviews can get update and be replaced in DOM
-	// we need to use firstChild to get correct instance at the time of execution
-	const scrollUpCallback = () => {
-		commonContainer.firstChild.scrollBy({
-			top: -commonContainer.firstChild.offsetHeight,
-			behavior: 'smooth',
-		});
-	};
-
-	const scrollDownCallback = () => {
-		commonContainer.firstChild.scrollBy({
-			top: commonContainer.firstChild.offsetHeight,
-			behavior: 'smooth',
-		});
-	};
-
-	const notebookbarIconViewCallback = (
-		objectType: string,
-		eventType: string,
-		object: any,
-		entry_data: string,
-	) => {
-		builder.callback(objectType, eventType, object, entry_data, builder);
-		/*
-			the dropdown can have controls to trigger dialogs
-			or sidebars. when that happens, we want the dropdown
-			to move out of our way.
-		*/
-		if (objectType !== 'iconview') JSDialog.CloseAllDropdowns();
-	};
-
-	const expanderCallback = () => {
-		JSDialog.OpenDropdown(
-			data.id,
+	const buttonChildren = iconViewData.children;
+	if (buttonChildren && buttonChildren.length) {
+		// create the button's container
+		const buttonsContainer = window.L.DomUtil.create(
+			'div',
+			builder.options.cssClass + ' ui-iconview-buttons-container',
 			rootNode,
-			_getDropdownContent(data, builder),
-			notebookbarIconViewCallback,
 		);
-	};
+		buttonsContainer.id = data.id + '-buttons-container';
 
-	_createButtonForNotebookbarIconview(
-		buttonsContainer,
-		data.id + '-scroll-up',
-		'ui-iconview-scroll-up-button',
-		'lc_searchprev.svg',
-		_('Scroll up'),
-		builder,
-		scrollUpCallback,
-	);
+		// be aware the child iconviews can get update and be replaced in DOM
+		// we need to use firstChild to get correct instance at the time of execution
+		const scrollUpCallback = () => {
+			commonContainer.firstChild.scrollBy({
+				top: -commonContainer.firstChild.offsetHeight,
+				behavior: 'smooth',
+			});
+		};
 
-	_createButtonForNotebookbarIconview(
-		buttonsContainer,
-		data.id + '-scroll-down',
-		'ui-iconview-scroll-down-button',
-		'lc_searchnext.svg',
-		_('Scroll down'),
-		builder,
-		scrollDownCallback,
-	);
+		const scrollDownCallback = () => {
+			commonContainer.firstChild.scrollBy({
+				top: commonContainer.firstChild.offsetHeight,
+				behavior: 'smooth',
+			});
+		};
 
-	_createButtonForNotebookbarIconview(
-		buttonsContainer,
-		data.id + '-expand',
-		'ui-iconview-expander-button',
-		'lc_iconviewexpander.svg',
-		_('More options'),
-		builder,
-		expanderCallback,
-		{ focusBack: true, combination: 'SD', de: null },
-		true /* opensPopup */,
-	);
+		const notebookbarIconViewCallback = (
+			objectType: string,
+			eventType: string,
+			object: any,
+			entry_data: string,
+		) => {
+			builder.callback(objectType, eventType, object, entry_data, builder);
+			/*
+				the dropdown can have controls to trigger dialogs
+				or sidebars. when that happens, we want the dropdown
+				to move out of our way.
+			*/
+			if (objectType !== 'iconview') JSDialog.CloseAllDropdowns();
+		};
+
+		const expanderCallback = () => {
+			JSDialog.OpenDropdown(
+				data.id,
+				rootNode,
+				_getDropdownContent(data, builder),
+				notebookbarIconViewCallback,
+			);
+		};
+
+		const getCallback = function (id: string) {
+			if (id === 'scroll-up') return scrollUpCallback;
+			else if (id === 'scroll-down') return scrollDownCallback;
+			else if (id === 'format-style-list-dialog') return expanderCallback;
+		};
+
+		for (const childData of buttonChildren) {
+			_createButtonForNotebookbarIconView(
+				buttonsContainer,
+				childData.id + '-' + data.id,
+				'ui-iconview-' + childData.id + '-button',
+				childData.icon || '',
+				childData.text || '',
+				builder,
+				getCallback(childData.id),
+				childData.accessibility,
+				childData.opensPopup,
+			);
+		}
+	}
 
 	rootNode._onDropDown = function (opened: boolean) {
 		if (opened) {

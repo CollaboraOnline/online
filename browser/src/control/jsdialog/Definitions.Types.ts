@@ -31,6 +31,9 @@ interface WidgetJSON {
 	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
+	icon?: string;
+	accessibility?: NotebookbarAccessibilityDescriptor;
+	opensPopup?: boolean;
 }
 
 interface JSBuilderOptions {
