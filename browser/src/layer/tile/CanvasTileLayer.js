@@ -3264,6 +3264,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	recalculateZoomOnResize: function() {
+		/* in impress, we always recalculate zoom on resize to keep the slide in-view.
+		 * so the second condition is unnecessary, but we keep it for consistency. */
 		if (this.isWriter() || this.isImpress())
 			this._invalidateZoomFirstFit = true;
 	},
@@ -3303,6 +3305,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			bringCommentsIntoView = true;
 			this._includedCommentsInFirstFit = true;
 			this._firstFitDone = false;
+		} else if (this.isImpress()) {
+			recalcFirstFit = true;
 		}
 
 		// `recalcFirstFit` is used to recalculate/reset the zoom levels to the
@@ -3324,7 +3328,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		var ratio = newSize.x / documentWidth;
 		var zoom = this._map.getScaleZoom(ratio);
 
-		if (!this._firstFitDone && this.isImpress()) {
+		if (this.isImpress()) {
 			/* assume that this is the range of diagonal sizes we are going to get
 			 * for the window and find where the current window size lies in these,
 			 * clamping it between [0,1]. then find appropriate margin between 4-9%
