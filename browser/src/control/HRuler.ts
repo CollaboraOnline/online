@@ -51,6 +51,8 @@ class HRuler extends Ruler {
 	currentTabStopIndex: number | null;
 	_map: ReturnType<typeof window.L.map>;
 
+	_updateTask: TaskId | null = null;
+
 	options: Options;
 
 	constructor(map: ReturnType<typeof window.L.map>, options: Partial<Options>) {
@@ -397,6 +399,14 @@ class HRuler extends Ruler {
 	}
 
 	public _updateParagraphIndentations() {
+		if (this._updateTask)
+			app.layoutingService.cancelLayoutingTask(this._updateTask);
+		this._updateTask = app.layoutingService.appendLayoutingTask(
+			this._updateParagraphIndentationsImpl,
+		);
+	}
+
+	public _updateParagraphIndentationsImpl() {
 		var items = this._map['stateChangeHandler'];
 		var state = items.getItemValue('.uno:LeftRightParaMargin');
 		// in impress/draw values are not as per Inch factore we should consider this case
