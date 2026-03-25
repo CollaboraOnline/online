@@ -2579,9 +2579,13 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'review-spell-online',
 								'type': 'toolitem',
-								'text': _UNO('.uno:SpellOnline'),
+								'text': _('Auto Spell Check'),
 								'command': '.uno:SpellOnline',
-								'accessibility': { focusBack: true,	combination: 'O', de: null }
+								'accessibility': { focusBack: true,	combination: 'O', de: null },
+								'stateIcons': {
+									on: 'autospellcheck-on',
+									off: 'autospellcheck-off',
+								}
 							}
 						]
 					},
