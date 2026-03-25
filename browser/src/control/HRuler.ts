@@ -1377,15 +1377,6 @@ class HRuler extends Ruler {
 	}
 
 	_getNavigationSidebarWidth() {
-		// Consider navigations sidebar width to place marker at correct position
-		const presentationControlsWrapper: HTMLDivElement = document.querySelector(
-			'#navigation-sidebar',
-		);
-		let presentationControlsWrapperWidth: number = 0;
-
-		if (presentationControlsWrapper)
-			presentationControlsWrapperWidth =
-				presentationControlsWrapper.getBoundingClientRect().width;
-		return presentationControlsWrapperWidth;
+		return app.map?.navigator ? app.map.navigator.getCurrentWidth() : 0;
 	}
 }
