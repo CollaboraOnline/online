@@ -198,6 +198,15 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		return this.viewSize.pX > Math.round(documentAnchor.size[0] * 0.5);
 	}
 
+	public getTotalSideSpace(): number {
+		Util.ensureValue(app.activeDocument);
+
+		const anchorWidth = this.getDocumentAnchorSection().size[0];
+		// Two pages side by side, with a gap in-between.
+		const contentWidth = 2 * app.activeDocument.fileSize.pX + this.viewGap;
+		return anchorWidth - contentWidth;
+	}
+
 	public override scroll(pX: number, pY: number): boolean {
 		const scrolled = super.scroll(pX, pY);
 

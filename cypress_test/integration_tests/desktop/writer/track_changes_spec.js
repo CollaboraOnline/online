@@ -368,6 +368,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#comment-container-1').should(function($el) {
 			expect($el.position().top, 'comment top after scroll').to.be.lessThan(initialTop);
 		});
+
+		// Also verify the comment is to the right of the "new" page (right half),
+		// not between the two pages:
+		cy.getFrameWindow().then(function(win) {
+			// Compute the right edge of the right-side page in view coordinates.
+			var layout = win.app.activeDocument.activeLayout;
+			var rightEdgePoint = new win.cool.SimplePoint(win.app.activeDocument.fileSize.pX, 0);
+			rightEdgePoint.mode = 2; // TileMode.RightSide
+			var rightPageEdge = layout.documentToViewX(rightEdgePoint) / win.app.dpiScale;
+			cy.cGet('#comment-container-1').should(function($el) {
+				// Without the accompanying fix in place, this test would have failed with:
+				// - comment left position: expected 593 to be above 747
+				// i.e. the comment left is 1247.125 with the fix.
+				expect($el.position().left, 'comment left position').to.be.greaterThan(rightPageEdge);
+			});
+		});
 	});
 
 	it.skip('Comment Undo-Redo', function () {

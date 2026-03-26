@@ -355,9 +355,17 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
+	/// If the current layout has more than one pages in a row, so the comment should be next to
+	/// the document content instead of next to the page.
+	private static isMultiColumnLayout(): boolean {
+		const type = app.activeDocument.activeLayout.type;
+		return type === 'ViewLayoutMultiPage' || type === 'ViewLayoutCompareChanges';
+	}
+
 	public calculateAvailableSpace() {
-		if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
-			const availableSpace = (app.activeDocument.activeLayout as ViewLayoutMultiPage).getTotalSideSpace();
+		if (CommentSection.isMultiColumnLayout()) {
+			const layout = app.activeDocument.activeLayout as ViewLayoutMultiPage | ViewLayoutCompareChanges;
+			const availableSpace = layout.getTotalSideSpace();
 			return Math.round(availableSpace * 0.5 / app.dpiScale);
 		}
 		else {
@@ -1416,7 +1424,7 @@ export class CommentSection extends CanvasSectionObject {
 		// This manually shows/hides comments
 		if (!this.sectionProperties.showResolved && app.map._docLayer._docType === 'text') {
 			let hide = annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true';
-			hide = hide || (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage' && this.calculateAvailableSpace() < this.sectionProperties.collapsedCommentWidth);
+			hide = hide || (CommentSection.isMultiColumnLayout() && this.calculateAvailableSpace() < this.sectionProperties.collapsedCommentWidth);
 
 			if (hide && annotation.isContainerVisible()) {
 				if (this.sectionProperties.selectedComment == annotation) {
@@ -1431,7 +1439,7 @@ export class CommentSection extends CanvasSectionObject {
 			}
 			this.update();
 		}
-		else if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+		else if (CommentSection.isMultiColumnLayout()) {
 			const hide = this.calculateAvailableSpace() < this.sectionProperties.collapsedCommentWidth;
 
 			if (hide && annotation.isContainerVisible()) {
@@ -2198,7 +2206,7 @@ export class CommentSection extends CanvasSectionObject {
 			var selectedIndex = null;
 			var x = isRTL ? 0 : topRight[0];
 
-			if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+			if (CommentSection.isMultiColumnLayout()) {
 				x = topRight[0] - availableSpace;
 			}
 			else if (isRTL)
