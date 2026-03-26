@@ -18,6 +18,7 @@
 /// <reference path="../src/app/TileCoordData.ts" />
 /// <reference path="../src/app/PaneBorder.ts" />
 /// <reference path="../src/app/Tile.ts" />
+/// <reference path="../src/app/BitmapTileManager.ts" />
 /// <reference path="../src/app/TilesMiddleware.ts" />
 /// <reference path="../src/app/Rectangle.ts" />
 /// <reference path="../src/app/LOUtil.ts" />
