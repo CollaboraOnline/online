@@ -48,6 +48,7 @@ interface JSBuilderOptions {
 
 interface JSBuilder {
 	_currentDepth: number; // mobile-wizard only FIXME: encapsulate
+	_responses: any;
 
 	_unoToolButton: UnoToolButtonHandler; // special handler which returns toolitem object
 	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
@@ -77,6 +78,9 @@ interface JSBuilder {
 	_getGridRows: (data: WidgetJSON[]) => number;
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
+	_setAccessKey: (element: HTMLElement, key: string) => void;
+	_getAccessKeyFromText: (text: string) => string;
+	_stressAccessKey: (element: HTMLElement, accessKey: string) => void;
 	_expanderHandler: any; // FIXME: use handlers getter instead
 }
 
@@ -310,6 +314,10 @@ interface PushButtonWidget extends WidgetJSON {
 	symbol?: string;
 	text?: string;
 	image?: string;
+	isToggle?: boolean;
+	checked?: boolean;
+	command?: string;
+	hidden?: boolean; // todo: deprecate it in favor of WidgetJson.visible
 }
 
 // type: 'menubutton'
