@@ -58,6 +58,15 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 		// Sizes of the scroll bars.
 		this.calculateTheScrollSizes();
 
+		// scroll() divides pY by 20 for mouse wheel dampening, so the vertical
+		// ratio must compensate: diffY * 20 / 20 = diffY (1:1 scrollbar tracking).
+		// Horizontal scroll has no such division, so ratio is 1.
+		// startX/startY are managed by scroll() and scrollTo() — not recalculated
+		// here to avoid drift caused by the vScrollMultiplier and rounding.
+		// We will keep this approach until we remove document-size based scroll entirely (will replace with view-size based scroll).
+		this.scrollProperties.verticalScrollRatio = 20;
+		this.scrollProperties.horizontalScrollRatio = 1;
+
 		// Properties for quick scrolling.
 		this.scrollProperties.verticalScrollStep = documentAnchor.size[1] / 2;
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
