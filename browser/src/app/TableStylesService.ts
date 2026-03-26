@@ -127,6 +127,8 @@ class TableStylesService {
 
 	public onCommandState(e: any) {
 		if (e.commandName === '.uno:TableStyles') {
+			if (e.state === '') return;
+
 			try {
 				this.styles = JSON.parse(e.state).TableStyles;
 				this.styles.sort((a, b) => {
