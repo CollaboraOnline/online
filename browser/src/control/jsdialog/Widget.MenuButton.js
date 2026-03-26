@@ -111,8 +111,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				} else if (eventType === 'selected' && entry && entry.action) {
-					app.dispatcher.dispatch(entry.action);
-					JSDialog.CloseDropdown(dropdownId);
+					app.dispatcher.dispatch(entry.action, entry);
+					const opensExternal = entry.action.startsWith('exportas-') || entry.action.startsWith('saveas-');
+					JSDialog.CloseDropdown(dropdownId, opensExternal);
 					return true;
 				} else if (eventType === 'selected' && entry && entry.id) {
 					builder.callback('menubutton', 'select', control.container, entry.id, builder);
@@ -144,10 +145,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 		// make it possible to setup separate callbacks for split button
 		if (isSplitButton) {
 			JSDialog.AddOnClick(control.button, applyCallback);
-			if (control.label)
-				JSDialog.AddOnClick(control.label, applyCallback);
-			if (control.arrow)
-				control.arrow.tabIndex = 0;
 		} else {
 			JSDialog.AddOnClick(control.button, clickFunction);
 			if (control.label)

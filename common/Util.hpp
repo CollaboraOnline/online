@@ -11,15 +11,17 @@
 
 #pragma once
 
-#include <Poco/Net/HTTPRequest.h>
+#include <common/StringVector.hpp>
+#include <common/Log.hpp>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-#include <common/StringVector.hpp>
+#include <typeinfo>
 
 #include <Poco/File.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Path.h>
-#include <regex>
 
 #include <algorithm>
 #include <cassert>
@@ -393,7 +395,9 @@ namespace Util
     std::string getVersionJSON(bool enableExperimental, const std::string& timezone);
 
 #if ENABLE_DEBUG
-    // for debugging validation only.
+    /// Returns the offset of the first invalid-UTF8 character.
+    /// Otherwise, returns > len for all-valid UTF8 characters.
+    /// for debugging validation only.
     inline size_t isValidUtf8(const unsigned char *data, size_t len)
     {
         for (size_t i = 0; i < len; ++i)
@@ -418,10 +422,12 @@ namespace Util
         return len + 1;
     }
 
-    // for debugging validation only.
-    inline bool isValidUtf8(const std::string_view str)
+    /// Returns the offset of the first invalid-UTF8 character.
+    /// Otherwise, returns > len for all-valid UTF8 characters.
+    /// for debugging validation only.
+    inline size_t isValidUtf8(const std::string_view str)
     {
-        return Util::isValidUtf8((unsigned char*)str.data(), str.size()) > str.size();
+        return Util::isValidUtf8((unsigned char*)str.data(), str.size());
     }
 #endif
 
@@ -483,7 +489,7 @@ namespace Util
     }
 
     /// Trim spaces from both left and right and copy. Just spaces.
-    inline std::string trimmed(const std::string& s)
+    inline std::string_view trimmed(const std::string_view s)
     {
         const size_t first = s.find_first_not_of(' ');
         const size_t last = s.find_last_not_of(' ');
@@ -502,10 +508,16 @@ namespace Util
             return s.substr(0, last + 1);
         }
 
-        return std::string();
+        return std::string_view();
     }
 
     /// Trim spaces from left and right. Just spaces.
+    inline std::string trimmed(const std::string& s)
+    {
+        return std::string(trimmed(std::string_view(s)));
+    }
+
+    /// Trim spaces from left and right. Just spaces. FIXME: REMOVE!
     inline std::string trimmed(const char* s)
     {
         return trimmed(std::string(s));
@@ -1221,47 +1233,6 @@ int main(int argc, char**argv)
     // If OS is not mobile, it must be Linux.
     std::string getLinuxVersion();
 
-    /// Convert a string to 32-bit signed int.
-    /// Returns the parsed value and a boolean indicating success or failure.
-    /// const auto [number, success] = Util::i32FromString(portString);
-    inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
-    {
-        const char* str = input.data();
-        char* endptr = nullptr;
-        errno = 0;
-        const auto value = std::strtol(str, &endptr, 10);
-        return std::make_pair(value, endptr > str && errno != ERANGE);
-    }
-
-    /// Convert a string to 32-bit signed int. On failure, returns the default
-    /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input,
-                                                       const std::int32_t def)
-    {
-        const auto pair = i32FromString(input);
-        return pair.second ? pair : std::make_pair(def, false);
-    }
-
-    /// Convert a string to 64-bit unsigned int.
-    /// Returns the parsed value and a boolean indicating success or failure.
-    inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input)
-    {
-        const char* str = input.data();
-        char* endptr = nullptr;
-        errno = 0;
-        const auto value = std::strtoul(str, &endptr, 10);
-        return std::make_pair(value, endptr > str && errno != ERANGE);
-    }
-
-    /// Convert a string to 64-bit unsigned int. On failure, returns the default
-    /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input,
-                                                        const std::uint64_t def)
-    {
-        const auto pair = u64FromString(input);
-        return pair.second ? pair : std::make_pair(def, false);
-    }
-
     /// Converts and returns the argument to lower-case.
     inline std::string toLower(std::string s)
     {
@@ -1384,21 +1355,14 @@ int main(int argc, char**argv)
     }
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo);
+    void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER_DECLARATION);
 
 #ifndef ASSERT_CORRECT_THREAD
-#define ASSERT_CORRECT_THREAD() assertCorrectThread(__FILE__, __LINE__)
+#define ASSERT_CORRECT_THREAD() assertCorrectThread()
 #endif
 #ifndef ASSERT_CORRECT_THREAD_OWNER
-#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER, __FILE__, __LINE__)
+#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER)
 #endif
-
-    /**
-     * Similar to std::atoi() but does not require p to be null-terminated.
-     *
-     * Returns std::numeric_limits<int>::min/max() if the result would overflow.
-     */
-    int safe_atoi(const char* p, int len);
 
     /// Sleep based on count of seconds in env. var
     void sleepFromEnvIfSet(const char *domain, const char *envVar);
@@ -1424,13 +1388,11 @@ int main(int argc, char**argv)
     // Wrap gmtime_r() which is not portable
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm);
 
-    /// Base-64 encode the given input.
+    /// Base-64 encode the given input
     std::string base64Encode(std::string_view input);
-    /// Base-64 encode the given input, stripping CRLF endings, if any.
-    std::string base64EncodeRemovingNewLines(const std::string_view& input);
-    inline std::string base64EncodeRemovingNewLines(const std::vector<unsigned char>& input)
+    inline std::string base64Encode(const std::vector<unsigned char>& input)
     {
-        return base64EncodeRemovingNewLines(
+        return base64Encode(
             std::string_view(reinterpret_cast<const char*>(input.data()), input.size()));
     }
 

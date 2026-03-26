@@ -26,7 +26,10 @@ function setupDocument(filePath, copyCertificates = false) {
 	} else {
 		// Rename and copy file to use a clean test document for every test case.
 		var randomText = (Math.random() + 1).toString(36).substring(2,7);
-		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.]/g, '-'); // replace slashes and spaces and dots
+		// The filename is used in a URI query string where characters like
+		// '/' and '+' have special meaning, and spaces are invalid. Replace
+		// these with hyphens so the path survives URL parsing unchanged.
+		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.+]/g, '-');
 
 		// Check for extension. The '.' has to be in fileName specifically, not earlier in filePath
 		if (getFileName(filePath).includes('.')) {
@@ -58,7 +61,7 @@ function setupDocument(filePath, copyCertificates = false) {
  *   document is loaded, such as clearing a warning about macros.
  * isMultiUser: Set to true for multiuser tests.
  */
-function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
+function loadDocument(filePath, skipDocumentChecks, isMultiUser, lang) {
 	cy.log('>> loadDocument - start');
 	cy.log('Param - filePath: ' + filePath);
 	if (skipDocumentChecks) {
@@ -88,7 +91,7 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadDocumentNextcloud(filePath);
 	} else {
-		loadDocumentNoIntegration(filePath, isMultiUser);
+		loadDocumentNoIntegration(filePath, isMultiUser, lang);
 	}
 
 	const isDraw = filePath.indexOf('draw') === 0;
@@ -114,14 +117,14 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
  * call setupDocument and loadDocument directly
  * filePath: test document path, for example: 'calc/hello-world.ods'
  */
-function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false) {
+function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false, lang = undefined) {
 	cy.log('>> setupAndLoadDocument - start');
 
 	var newFilePath = setupDocument(filePath, copyCertificates);
 	if (isMultiUser) {
-		loadDocument(newFilePath, undefined, isMultiUser);
+		loadDocument(newFilePath, undefined, isMultiUser, lang);
 	} else {
-		loadDocument(newFilePath);
+		loadDocument(newFilePath, undefined, undefined, lang);
 	}
 
 	cy.log('<< setupAndLoadDocument - end');
@@ -164,7 +167,7 @@ function logError(event) {
 /*
  * Loads the test document directly in Collabora Online.
  */
-function loadDocumentNoIntegration(filePath, isMultiUser) {
+function loadDocumentNoIntegration(filePath, isMultiUser, lang) {
 	cy.log('>> loadDocumentNoIntegration - start');
 
 	var URI = '';
@@ -174,7 +177,7 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 	}
 
 	URI += '/browser/' + Cypress.env('WSD_VERSION_HASH') + '/debug.html'
-		+ '?lang=en-US'
+		+ '?lang=' + (lang || 'en-US')
 		+ '&file_path=' + Cypress.env('DATA_WORKDIR') + filePath;
 
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -1307,9 +1310,42 @@ function waitUntilLayoutingIsIdle(win) {
 	});
 }
 
+// Wait for any pending ResizeObserver callbacks to fire.  After a UI
+// mode switch the document-container div changes size via CSS; the
+// ResizeObserver in CanvasTileLayer (which calls _syncTileContainerSize
+// and then sectionContainer.onResize) will fire asynchronously, and
+// we want to wait until the onResize has fired and sectionContainer
+// is updated.
+//
+// Two requestAnimationFrame calls are needed because of the order
+// within a single rendering frame:
+//   1. Run requestAnimationFrame callbacks
+//   2. Recalculate styles / layout
+//   3. Run ResizeObserver callbacks
+//   4. Paint
+// The first RAF runs at step 1 - before the ResizeObserver callback
+// at step 3.  From there it schedules a second RAF which runs at
+// step 1 of the next frame, by which time step 3 of the previous
+// frame has completed and sectionContainer.onResize has executed.
+function waitForResizeObserver(win) {
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.requestAnimationFrame(function() {
+				win.requestAnimationFrame(function() {
+					resolve();
+				});
+			});
+		});
+	});
+}
+
 function processToIdle(win) {
 	return waitUntilCoreIsIdle(win).then(function() {
+		return waitForTimers(win, 'jsdialog-deferred');
+	}).then(function() {
 		return waitUntilLayoutingIsIdle(win);
+	}).then(function() {
+		return waitForResizeObserver(win);
 	});
 }
 
@@ -1331,6 +1367,36 @@ function waitForMapState(command, expectedValue) {
 		expect(win.app.map['stateChangeHandler'].getItemValue(command)).to.equal(expectedValue);
 	});
 	cy.log('<< waitForMapState - end');
+}
+
+// cy.realPress('Enter') via CDP bypasses preventDefault on keydown,
+// which causes implicit form submission and spurious button clicks
+// that don't happen with real keyboard input. This helper blocks
+// those side effects for a single keypress.
+function realPressInDialog(key) {
+	cy.cGet('.jsdialog-window form').then($form => {
+		// Block implicit form submission for this keypress
+		function blockSubmit(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+		$form[0].addEventListener('submit', blockSubmit, true);
+
+		// Block the close button from being clicked
+		var closeBtn = $form[0].querySelector('.ui-dialog-titlebar-close');
+		var origOnclick = closeBtn ? closeBtn.onclick : null;
+		if (closeBtn) {
+			closeBtn.onclick = function(e) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+			};
+		}
+
+		cy.realPress(key).then(() => {
+			$form[0].removeEventListener('submit', blockSubmit, true);
+			if (closeBtn) closeBtn.onclick = origOnclick;
+		});
+	});
 }
 
 module.exports.setupDocument = setupDocument;
@@ -1389,3 +1455,50 @@ module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
 module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
+module.exports.getMatchedCSSRules = getMatchedCSSRules;
+module.exports.realPressInDialog = realPressInDialog;
+
+// Find all author CSS rules that match an element, with the source
+// stylesheet filename and the full selector for each matching rule.
+// Usage:
+//   helper.getMatchedCSSRules('.spinfieldbutton-up').then(function(output) {
+//       console.error(output);
+//   });
+function getMatchedCSSRules(selector) {
+	return cy.cGet(selector).first().then(function($el) {
+		var el = $el[0];
+		var doc = el.ownerDocument;
+		var lines = [];
+
+		for (var s = 0; s < doc.styleSheets.length; s++) {
+			var sheet = doc.styleSheets[s];
+			var href = sheet.href || 'inline';
+			if (href !== 'inline') {
+				var parts = href.split('/');
+				href = parts[parts.length - 1];
+			}
+
+			var rules;
+			try { rules = sheet.cssRules; } catch (e) { continue; }
+
+			for (var r = 0; r < rules.length; r++) {
+				var rule = rules[r];
+				if (!rule.selectorText) continue;
+				try {
+					if (!el.matches(rule.selectorText)) continue;
+				} catch (e) { continue; }
+
+				var props = [];
+				for (var p = 0; p < rule.style.length; p++) {
+					var name = rule.style[p];
+					var val = rule.style.getPropertyValue(name);
+					var priority = rule.style.getPropertyPriority(name);
+					props.push('  ' + name + ': ' + val + (priority ? ' !' + priority : ''));
+				}
+				lines.push(href + ' | ' + rule.selectorText);
+				lines.push(props.join('\n'));
+			}
+		}
+		return lines.join('\n');
+	});
+}

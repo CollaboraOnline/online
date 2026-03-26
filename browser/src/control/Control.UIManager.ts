@@ -125,6 +125,22 @@ class UIManager extends window.L.Control {
 	// UI initialization
 
 	/**
+	 * Shows a tooltip attached to an element and auto-hides it after a timeout.
+	 */
+	showTimedTooltip(element: HTMLElement, text: string, timeMs: number): void {
+		if (!element || !this.map.tooltip)
+			return;
+
+		this.map.tooltip.show(element, text);
+		clearTimeout(this.map._timedTooltipTimeout);
+		this.map._timedTooltipTimeout = setTimeout(() => {
+			if (this.map.tooltip && this.map.tooltip._current === element) {
+				this.map.tooltip.hide();
+			}
+		}, timeMs);
+	}
+
+	/**
 	 * Returns the current UI mode ("notebookbar" or "classic").
 	 */
 	getCurrentMode(): UIMode {
@@ -783,7 +799,8 @@ class UIManager extends window.L.Control {
 	 */
 	initializeRuler(): void {
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
-			var showRuler = this.getBooleanDocTypePref('ShowRuler');
+			var defaultShowRuler = (window as any).mode.isCODesktop();
+			var showRuler = this.getBooleanDocTypePref('ShowRuler', defaultShowRuler);
 			var interactiveRuler = this.map.isEditMode();
 			// Call the static method from the Ruler class
 			app.definitions.ruler.initializeRuler(this.map, {
@@ -1327,6 +1344,12 @@ class UIManager extends window.L.Control {
 		$('#map').addClass('hasruler');
 		this.setDocTypePref('ShowRuler', true);
 		this.map.fire('rulerchanged');
+
+		if (app.sectionContainer
+			&& app.map?._docLayer?._docType === 'text'
+			&& !app.sectionContainer.getSectionWithName(app.CSections.RulerSpacer.name)) {
+			app.sectionContainer.addSection(new cool.RulerSpacerSection());
+		}
 	}
 
 	/**
@@ -1338,7 +1361,11 @@ class UIManager extends window.L.Control {
 
 		$('#map').removeClass('hasruler');
 		this.setDocTypePref('ShowRuler', false);
-		this.map.fire('rulerchanged');
+
+		if (app.sectionContainer
+			&& app.sectionContainer.getSectionWithName(app.CSections.RulerSpacer.name)) {
+			app.sectionContainer.removeSection(app.CSections.RulerSpacer.name);
+		}
 	}
 
 	/**

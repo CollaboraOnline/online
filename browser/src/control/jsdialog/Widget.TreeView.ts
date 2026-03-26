@@ -367,7 +367,11 @@ class TreeViewControl {
 			parent,
 		);
 		this._rows.set(String(entry.row), tr);
+
+		//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
+		tr.id = data.id + '_' + entry.row;
 		tr.setAttribute('level', String(level));
+		(tr as any)._row = entry.row;
 		const rowRole =
 			this._containerRole === 'tree'
 				? 'treeitem'
@@ -1011,6 +1015,11 @@ class TreeViewControl {
 			return;
 		}
 
+		// Remember if the focused element is inside this treeview,
+		// because clearing selections removes tabindex which drops
+		// focus to BODY for non-natively-focusable elements.
+		const hadFocus = this._container.contains(document.activeElement);
+
 		// Clear existing selections
 		this._container
 			.querySelectorAll('.ui-treeview-entry.selected')
@@ -1020,7 +1029,7 @@ class TreeViewControl {
 
 		// Select the target row
 		const checkbox = rowElement.querySelector('input') as HTMLInputElement;
-		this.selectEntry(rowElement, checkbox, shouldFocus);
+		this.selectEntry(rowElement, checkbox, shouldFocus || hadFocus);
 	}
 
 	unselectEntry(item: HTMLElement) {
@@ -1356,11 +1365,23 @@ class TreeViewControl {
 		listElements: Array<HTMLElement>,
 		fromIndex: number,
 		toIndex: number,
+		builder: JSBuilder,
+		data: TreeWidgetJSON,
 	) {
 		var nextElement = listElements.at(toIndex);
 		nextElement.tabIndex = 0;
 		nextElement.focus();
+		(builder as any).callback(
+			'treeview',
+			'select',
+			data,
+			(nextElement as any)._row,
+			builder,
+		);
 
+		// Update tabindex so the new entry is in the tab order and the
+		// old one is removed. Selected entries keep their tabindex so
+		// they remain reachable via Tab.
 		var nextInput = Array.from(
 			listElements
 				.at(toIndex)
@@ -1429,7 +1450,8 @@ class TreeViewControl {
 		var currIndex = this.getCurrentEntry(listElements);
 
 		if (event.key === 'ArrowDown') {
-			if (currIndex < 0) this.changeFocusedRow(listElements, currIndex, 0);
+			if (currIndex < 0)
+				this.changeFocusedRow(listElements, currIndex, 0, builder, data);
 			else {
 				var nextIndex = currIndex + 1;
 				while (
@@ -1438,18 +1460,36 @@ class TreeViewControl {
 				)
 					nextIndex++;
 				if (nextIndex < treeLength)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
+					this.changeFocusedRow(
+						listElements,
+						currIndex,
+						nextIndex,
+						builder,
+						data,
+					);
 			}
 			preventDef = true;
 		} else if (event.key === 'ArrowUp') {
 			if (currIndex < 0)
-				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
+				this.changeFocusedRow(
+					listElements,
+					currIndex,
+					treeLength - 1,
+					builder,
+					data,
+				);
 			else {
 				var nextIndex = currIndex - 1;
 				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
 					nextIndex--;
 				if (nextIndex >= 0)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
+					this.changeFocusedRow(
+						listElements,
+						currIndex,
+						nextIndex,
+						builder,
+						data,
+					);
 			}
 
 			preventDef = true;
@@ -1797,7 +1837,9 @@ class TreeViewControl {
 		return (
 			!data.noSearchField &&
 			!TreeViewControl.isMenu(data) &&
-			TreeViewControl.isListbox(data)
+			TreeViewControl.isListbox(data) &&
+			data.entries &&
+			data.entries.length > 25
 		);
 	}
 

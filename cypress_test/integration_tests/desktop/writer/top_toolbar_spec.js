@@ -59,8 +59,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#stylesview-iconview').scrollTo('bottom') ;
-		cy.cGet('.notebookbar.ui-iconview-entry img[title=Title]').click();
+		cy.cGet('#stylesview').scrollTo('bottom');
+		cy.cGet('#stylesview .notebookbar.ui-iconview-entry img[title=Title]').first().scrollIntoView().should('be.visible').click();
 		refreshCopyPasteContainer();
 		helper.copy();
 		cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
@@ -477,6 +477,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		desktopHelper.getNbIcon('Bold').click();
 		desktopHelper.getNbIcon('FormatPaintbrush').click();
 
+		// Wait for the paintbrush to become active (single-click has a 250ms delay
+		// due to double-click detection).
+		cy.cGet('#document-canvas').should('have.class', 'bucket-cursor');
+
 		// Click at the blinking cursor position.
 		cy.cGet('.leaflet-cursor.blinking-cursor')
 			.then(function(cursor) {
@@ -570,7 +574,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it.skip('Scroll', function() {
 		// Start all the way on the left side of the toolbar
-		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
+		cy.cGet('#Home-container #home-do').should('be.visible');
 		// TODO: Cypress thinks buttons are visible even though they are not
 		//cy.cGet('#Home-container #home-search-dialog').should('not.be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-left').should('not.be.visible');
@@ -588,7 +592,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// Now we are all the way on the right side of the toolbar
 		// TODO: Cypress thinks buttons are visible even though they are not
-		//cy.cGet('#Home-container #home-undo-redo').should('not.be.visible');
+		//cy.cGet('#Home-container #home-do').should('not.be.visible');
 		cy.cGet('#Home-container #home-search-dialog').should('be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-left').should('be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-right').should('not.be.visible');
@@ -604,7 +608,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		});
 
 		// Now back on the left side of the toolbar
-		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
+		cy.cGet('#Home-container #home-do').should('be.visible');
 		// TODO: Cypress thinks buttons are visible even though they are not
 		//cy.cGet('#Home-container #home-search-dialog').should('not.be.visible');
 		cy.cGet('#toolbar-up .ui-scroll-left').should('not.be.visible');
@@ -624,5 +628,38 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Home-tab-label').should('not.have.class','selected');
 		cy.cGet('.notebookbar#Insert').should('be.visible');
 		cy.cGet('#Insert-tab-label').should('have.class','selected');
+	});
+
+	it('Formatting shortcuts blocked in view mode.', function() {
+		// Verify baseline: no bold in edit mode.
+		helper.setDummyClipboardForCopy();
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p').should('exist');
+		cy.cGet('#copy-paste-container p b').should('not.exist');
+
+		// Switch from edit mode to view mode.
+		cy.getFrameWindow().its('app').then(function(app) {
+			app.map.setPermission('readonly');
+		});
+		cy.cGet('#viewModeDropdownButton-button').should('have.text', 'Viewing');
+
+		// Press Ctrl+B - should be blocked in view mode.
+		helper.typeIntoDocument('{ctrl}b');
+
+		cy.getFrameWindow().then(function(win) {
+			helper.processToIdle(win);
+		});
+
+		// Switch back to edit mode to verify bold was not applied.
+		cy.getFrameWindow().its('app').then(function(app) {
+			app.map.setPermission('edit');
+		});
+
+		helper.setDummyClipboardForCopy();
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p').should('exist');
+		cy.cGet('#copy-paste-container p b').should('not.exist');
 	});
 });

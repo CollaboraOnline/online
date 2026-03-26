@@ -24,10 +24,6 @@
 #include <common/FileUtil.hpp>
 #include <helpers.hpp>
 
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/StringPartSource.h>
-#include <Poco/Net/FilePartSource.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
 using namespace std::literals;
@@ -37,6 +33,7 @@ class UnitConvert : public UnitWSD
 {
     bool _workerStarted;
     std::thread _worker;
+    std::shared_ptr<const http::Response> _lastResponse;
 
 public:
     UnitConvert()
@@ -62,57 +59,47 @@ public:
         config.setBool("storage.filesystem[@allow]", false);
     }
 
-    void sendConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, const std::string& filename, bool isTemplate = false, bool isCompare = false)
+    void sendConvertTo(std::shared_ptr<http::Session>& session, const std::string& filename, bool isTemplate = false, bool isCompare = false)
     {
         std::string uri;
         if (isTemplate || isCompare)
-        {
             uri = "/cool/convert-to";
-        }
         else
-        {
             uri = "/cool/convert-to/pdf";
-        }
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uri);
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+
+        http::Request request(uri, http::Request::VERB_POST);
+        helpers::MultipartFormBody form;
         if (isTemplate)
         {
-            form.set("format", "html");
+            form.addField("format", "html");
             std::string dataPath = Poco::Path(TDOC, filename).toString();
-            form.addPart("data", new Poco::Net::FilePartSource(dataPath));
+            form.addFile("data", dataPath);
             std::string templatePath = Poco::Path(TDOC, "template.docx").toString();
-            form.addPart("template", new Poco::Net::FilePartSource(templatePath));
+            form.addFile("template", templatePath);
         }
         else if (isCompare)
         {
-            form.set("format", "rtf");
+            form.addField("format", "rtf");
             std::string dataPath = Poco::Path(TDOC, filename).toString();
-            form.addPart("data", new Poco::Net::FilePartSource(dataPath));
+            form.addFile("data", dataPath);
             std::string comparePath = Poco::Path(TDOC, "old.docx").toString();
-            form.addPart("compare", new Poco::Net::FilePartSource(comparePath));
+            form.addFile("compare", comparePath);
         }
         else
         {
-            form.set("format", "txt");
-            form.addPart("data", new Poco::Net::StringPartSource("Hello World Content", "text/plain", filename));
+            form.addField("format", "txt");
+            form.addStringPart("data", "Hello World Content", "text/plain", filename);
         }
-        form.prepareSubmit(request);
-        form.write(session->sendRequest(request));
+        form.applyTo(request);
+        _lastResponse = session->syncRequest(request);
     }
 
-    bool checkConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, bool isTemplate = false, bool isCompare = false)
+    bool checkConvertTo(bool isTemplate = false, bool isCompare = false)
     {
-        Poco::Net::HTTPResponse response;
-        std::stringstream stringStream;
-        try {
-            std::istream& responseStream = session->receiveResponse(response);
-            Poco::StreamCopier::copyStream(responseStream, stringStream);
-        } catch (...) {
+        if (!_lastResponse || _lastResponse->state() != http::Response::State::Complete)
             return false;
-        }
 
-        bool ret = response.getStatus() == Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK;
+        bool ret = _lastResponse->statusCode() == http::StatusCode::OK;
         if (!ret || !(isTemplate || isCompare))
         {
             if (!ret)
@@ -123,7 +110,7 @@ public:
             return ret;
         }
 
-        std::string responseString = stringStream.str();
+        const std::string responseString(_lastResponse->getBody());
         if (isTemplate)
         {
             if (responseString.find("DOCTYPE html") == std::string::npos)
@@ -164,18 +151,36 @@ public:
         std::cerr << "Starting thread ...\n";
         _worker = std::thread([this]{
                 std::cerr << "Now started thread ...\n";
-                std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(Poco::URI(helpers::getTestServerURI())));
-                session->setTimeout(Poco::Timespan(30, 0)); // 30 seconds.
+                auto session = http::Session::create(helpers::getTestServerURI());
+                session->setTimeout(std::chrono::seconds(30));
 
                 sendConvertTo(session, "foo.txt");
-                if(!checkConvertTo(session))
+                if(!checkConvertTo())
                 {
                     exitTest(TestResult::Failed);
                     return;
                 }
 
                 sendConvertTo(session, "test___á.txt");
-                if(!checkConvertTo(session))
+                if(!checkConvertTo())
+                {
+                    exitTest(TestResult::Failed);
+                    return;
+                }
+
+                // Test filename with bare percent character (not valid
+                // percent-encoding).
+                sendConvertTo(session, "he%llo.txt");
+                if(!checkConvertTo())
+                {
+                    exitTest(TestResult::Failed);
+                    return;
+                }
+
+                // Test filename with literal %25 (percent-encoded percent)
+                // — ensures local paths treat '%' as literal, not URI encoding.
+                sendConvertTo(session, "hello%25world.txt");
+                if(!checkConvertTo())
                 {
                     exitTest(TestResult::Failed);
                     return;
@@ -187,7 +192,7 @@ public:
                 // Then make sure the output has a color from the template:
                 // Without the accompanying fix in place, this test would have failed with:
                 // checkConvertTo: no template color in output
-                if(!checkConvertTo(session, /*isTemplate=*/true))
+                if(!checkConvertTo(/*isTemplate=*/true))
                 {
                     exitTest(TestResult::Failed);
                     return;
@@ -199,7 +204,7 @@ public:
                 // Then make sure the output has content from the old document, too:
                 // Without the accompanying fix in place, this test would have failed with:
                 // checkConvertTo: no old content in output
-                if(!checkConvertTo(session, /*isTemplate=*/false, /*isCompare=*/true))
+                if(!checkConvertTo(/*isTemplate=*/false, /*isCompare=*/true))
                 {
                     exitTest(TestResult::Failed);
                     return;

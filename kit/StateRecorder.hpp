@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 /*
  * When the session is inactive, we need to record its state for a replay.
  */

@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 /*
  * The main entry point for the LibreOfficeKit process serving
  * a document editing session.

@@ -502,11 +502,11 @@ window.L.Map.include({
 		var searchInput = document.getElementById('online-help-search-input');
 		searchInput.setAttribute('placeholder',_('Search'));
 		searchInput.setAttribute('aria-label',_('Search'));
-		searchInput.focus(); // auto focus on user input field
 		var helpContentParent = document.getElementsByClassName('ui-dialog-content')[0];
 		var startFilter = false;
 		var isAnyMatchingContent = false;
-		searchInput.addEventListener('input', function () {
+
+		const performSearch = function() {
 			// Hide all elements within the #online-help-content on first key stroke/at start of filter content
 			if (!startFilter || !isAnyMatchingContent) {
 				helpContentParent.style.backgroundColor = 'var(--color-background-dark) !important';
@@ -528,9 +528,24 @@ window.L.Map.include({
 			}
 			else {
 				this.filterResults(searchTerm, isAnyMatchingContent, id);
+				this._focusContainer(id + '-box');
 			}
-		}.bind(this));
+		}.bind(this);
 
+		searchInput.addEventListener('keydown', function (e) {
+			if (e.key === 'Enter') {
+				performSearch();
+			}
+		});
+
+		const searchButton = document.getElementById('online-help-search-button');
+		searchButton.setAttribute('aria-label', _('Search'));
+		searchButton.addEventListener('click', performSearch);
+		searchButton.addEventListener('keydown', function (e) {
+			if (e.key === 'Enter') {
+				performSearch();
+			}
+		});
 
 		const onlineHelpContent = document.getElementById('online-help-content');
 		const buttons = onlineHelpContent.querySelectorAll('.scroll-button');
@@ -546,8 +561,19 @@ window.L.Map.include({
 				}
 			});
 		});
+
+		this._focusContainer(id + '-box');
 	},
 
+	_focusContainer: function(id) {
+		app.layoutingService.appendLayoutingTask(() => {
+			var contentContainer = document.getElementById(id);
+			if (contentContainer) {
+				contentContainer.setAttribute('tabindex', '-1');
+				contentContainer.focus();
+			}
+		});
+	},
 
 	filterResults: function (searchTerm, isAnyMatchingContent, id) {
 

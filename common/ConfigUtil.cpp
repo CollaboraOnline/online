@@ -17,14 +17,15 @@
 #include <config.h>
 
 #include <ConfigUtil.hpp>
+
 #include <common/Util.hpp>
 
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/XMLConfiguration.h>
 
 #include <cassert>
-#include <string>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 
 
@@ -232,7 +233,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "quarantine_files.max_versions_to_maintain", "5" },
     { "quarantine_files.path", "" },
     { "quarantine_files[@enable]", "false" },
-    { "view_mode.file_extensions", "docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx" },
+    { "view_mode.file_extensions", "" },
     { "remote_asset_config.url", "" },
     { "remote_config.remote_url", "" },
     { "remote_font_config.url", "" },

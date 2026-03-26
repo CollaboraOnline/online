@@ -22,17 +22,16 @@
 #include <common/Syscall.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
 #include <net/Socket.hpp>
+#include <net/Uri.hpp>
 #include <test/WebSocketSession.hpp>
 #include <test/lokassert.hpp>
 #include <test/testlog.hpp>
 #include <tools/COOLWebSocket.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include <Poco/BinaryReader.h>
 #include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Path.h>
@@ -44,6 +43,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <thread>
 
 #ifndef TDOC
@@ -186,10 +186,29 @@ inline std::string getTempFileCopyPath(const std::string& srcDir, const std::str
         try {
             std::filesystem::copy(srcPath, dstPath);
         }
+        catch (const std::filesystem::filesystem_error& ex)
+        {
+            if (ex.code() == std::errc::file_exists)
+            {
+                LOG_DBG("Failed to copy temp file and will retry: " << ex.what());
+                retry = true;
+                continue;
+            }
+
+            LOG_SYS("ERROR: " << ex.what());
+
+            // Permanent failure.
+            if (ex.code() == std::errc::no_such_file_or_directory ||
+                ex.code() == std::errc::filename_too_long ||
+                ex.code() == std::errc::invalid_argument)
+            {
+                throw;
+            }
+        }
         catch (const std::exception& ex)
         {
             LOG_SYS("ERROR: unexpected conflict creating file: " << ex.what());
-            retry = true;;
+            retry = true;
         }
     } while (retry);
 
@@ -237,8 +256,7 @@ inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket,
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
-                          const std::string_view string,
-                          const std::string_view testname = std::string_view())
+                          const std::string_view string, const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
@@ -255,68 +273,44 @@ inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::U
     return std::make_unique<Poco::Net::HTTPClientSession>(uri.getHost(), uri.getPort());
 }
 
-/// Uses Poco to make an HTTP GET from the given URI.
-inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGet(const Poco::URI& uri)
+/// Uses the internal http::Session to make an HTTP GET request.
+inline std::shared_ptr<const http::Response>
+httpGet(const std::string& uri)
 {
-    LOG_INF("pocoGet: " << uri.toString());
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(),
-                                   Poco::Net::HTTPMessage::HTTP_1_1);
-    session->sendRequest(request);
-    auto response = std::make_shared<Poco::Net::HTTPResponse>();
-    std::istream& rs = session->receiveResponse(*response);
-
-    LOG_DBG("pocoGet response for [" << uri.toString() << "]: " << response->getStatus() << ' '
-                                     << response->getReason()
-                                     << ", hasContentLength: " << response->hasContentLength()
-                                     << ", ContentLength: " << response->getContentLength64());
-
-    for (const auto& pair : *response)
+    LOG_INF("httpGet: " << uri);
+    auto httpSession = http::Session::create(uri);
+    if (!httpSession)
     {
-        LOG_TRC(pair.first << '=' << pair.second);
+        LOG_ERR("Failed to create http::Session for [" << uri << "]");
+        return nullptr;
     }
 
-    std::string responseString;
-    try
-    {
-        std::ostringstream outputStringStream;
-        Poco::StreamCopier::copyStream(rs, outputStringStream);
-        responseString = outputStringStream.str();
-        LOG_DBG("pocoGet [" << uri.toString() << "]: " << responseString);
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_ERR("Exception while reading Poco stream: " << ex.what());
-    }
-
-    return std::make_pair(response, responseString);
+    const std::string path(net::parseUrl(uri));
+    return httpSession->syncRequest(http::Request(path.empty() ? "/" : path));
 }
 
-/// Uses Poco to make an HTTP GET from the given URI.
-/// And optionally retries up to @retry times with
-/// @delayMs between attempts.
-inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGetRetry(const Poco::URI& uri, int retry = 3,
+/// Uses the internal http::Session to make an HTTP GET request.
+/// Optionally retries up to @retry times with @delayMs between attempts.
+inline std::shared_ptr<const http::Response>
+httpGetRetry(const std::string& uri, int retry = 3,
              std::chrono::milliseconds delayMs = std::chrono::seconds(1))
 {
     for (int attempt = 1; attempt <= retry; ++attempt)
     {
         try
         {
-            LOG_INF("pocoGet #" << attempt << ": " << uri.toString());
-            auto res = pocoGet(uri);
-            if (!res.first)
+            LOG_INF("httpGet #" << attempt << ": " << uri);
+            auto res = httpGet(uri);
+            if (!res || res->statusCode() == http::StatusCode::None)
             {
-                throw std::runtime_error("Server unavilable");
+                throw std::runtime_error("Server unavailable");
             }
 
             return res;
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("pocoGet #" << attempt << " failed for [" << uri.toString()
-                                << "]: " << ex.what());
+            LOG_ERR("httpGet #" << attempt << " failed for [" << uri << "]: " << ex.what());
             if (attempt == retry)
                 throw;
 
@@ -324,19 +318,84 @@ pocoGetRetry(const Poco::URI& uri, int retry = 3,
         }
     }
 
-    auto response = std::make_shared<Poco::Net::HTTPResponse>();
-    std::string responseString;
-    return std::make_pair(response, responseString);
+    return nullptr;
 }
 
-/// Uses Poco to make an HTTP GET from the given URI components.
-inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGet(bool secure, const std::string& host, const int port, const std::string& url)
+/// Builds a multipart/form-data body for http::Request.
+/// Replaces Poco::Net::HTMLForm + FilePartSource + StringPartSource.
+struct MultipartFormBody
 {
-    const char* scheme = (secure ? "https://" : "http://");
-    Poco::URI uri(scheme + host + ':' + std::to_string(port) + url);
-    return pocoGet(uri);
-}
+    MultipartFormBody()
+        : _boundary("----CoolFormBoundary" + Util::rng::getHexString(16))
+    {
+    }
+
+    /// Add a simple name=value form field.
+    void addField(const std::string& name, const std::string& value)
+    {
+        _parts.emplace_back(Part{ name, value, std::string(), std::string() });
+    }
+
+    /// Add a file part, reading from the given file path.
+    void addFile(const std::string& name, const std::string& filePath,
+                 const std::string& contentType = "application/octet-stream")
+    {
+        std::ifstream ifs(filePath, std::ios::binary);
+        std::string content((std::istreambuf_iterator<char>(ifs)),
+                            std::istreambuf_iterator<char>());
+        std::string filename = filePath;
+        const auto pos = filePath.find_last_of('/');
+        if (pos != std::string::npos)
+            filename = filePath.substr(pos + 1);
+        _parts.emplace_back(Part{ name, std::move(content), filename, contentType });
+    }
+
+    /// Add a string part with explicit content type and filename (replaces StringPartSource).
+    void addStringPart(const std::string& name, const std::string& content,
+                       const std::string& contentType, const std::string& filename)
+    {
+        _parts.emplace_back(Part{ name, content, filename, contentType });
+    }
+
+    /// Build the multipart body and set it on the request.
+    void applyTo(http::Request& request) const
+    {
+        std::string body;
+        for (const auto& part : _parts)
+        {
+            body += "--" + _boundary + "\r\n";
+            if (part.filename.empty())
+            {
+                body += "Content-Disposition: form-data; name=\"" + part.name + "\"\r\n";
+            }
+            else
+            {
+                body += "Content-Disposition: form-data; name=\"" + part.name +
+                        "\"; filename=\"" + part.filename + "\"\r\n";
+                if (!part.contentType.empty())
+                    body += "Content-Type: " + part.contentType + "\r\n";
+            }
+            body += "\r\n";
+            body += part.value;
+            body += "\r\n";
+        }
+        body += "--" + _boundary + "--\r\n";
+
+        request.setBody(std::move(body), "multipart/form-data; boundary=" + _boundary);
+    }
+
+private:
+    struct Part
+    {
+        std::string name;
+        std::string value;
+        std::string filename;
+        std::string contentType;
+    };
+
+    std::string _boundary;
+    std::vector<Part> _parts;
+};
 
 // Sets read / write timeout for the given file descriptor.
 inline void setSocketTimeOut(int socketFD, int timeMS)

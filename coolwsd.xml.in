@@ -118,6 +118,7 @@
         <anonymize>
             <anonymize_user_data type="bool" desc="Enable to anonymize/obfuscate of user-data in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@COOLWSD_ANONYMIZE_USER_DATA@">@COOLWSD_ANONYMIZE_USER_DATA@</anonymize_user_data>
             <anonymization_salt type="uint" desc="The salt used to anonymize/obfuscate user-data in logs. Use a secret 64-bit random number." default="82589933">82589933</anonymization_salt>
+            <high_strength type="bool" desc="Use cryptographic one-way hashing (PBKDF2-HMAC-SHA512) for anonymization instead of the default fast FNV-1a hash. This makes it computationally infeasible to reverse the anonymized values, even with knowledge of the salt. Slower but suitable when logs may be shared with third parties." default="false">false</high_strength>
         </anonymize>
         <docstats type="bool" desc="Enable to see document handling information in logs." default="false">false</docstats>
         <userstats desc="Enable user stats. i.e: logs the details of a file and user" type="bool" default="false">false</userstats>
@@ -259,6 +260,8 @@
       <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
     </watermark>
 
+    <comment_avatar desc="URL of an image to use as the avatar for all comments, overriding per-user avatars. When empty (default), normal user avatars are shown" type="string" default=""></comment_avatar>
+
     @WELCOME_CONFIG_FRAGMENT@
 
     <user_interface>
@@ -271,7 +274,8 @@
     </user_interface>
 
     <view_mode desc="View mode settings">
-        <file_extensions desc="List of file extensions that should be opened in view mode by default." type="string" default="docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx"></file_extensions>
+        <!-- Example: "docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx" -->
+        <file_extensions desc="List of file extensions that should be opened in view mode by default." type="string" default=""></file_extensions>
     </view_mode>
 
     <storage desc="Backend storage">

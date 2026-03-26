@@ -20,9 +20,10 @@
 
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
+#include <common/SigUtil.hpp>
 #include <common/Util.hpp>
 
-#include <SigUtil.hpp>
 #include <csignal>
 #include <cstdio>
 #include <cstdlib>
@@ -389,7 +390,7 @@ void cleanupJails(const std::string& root)
             {
                 bool skip = false;
                 const std::string_view pidStr = std::string_view(jail).substr(0, pidSepPos);
-                const auto [pid, success] = Util::i32FromString(pidStr);
+                const auto [pid, success] = NumUtil::i32FromString(pidStr);
                 if (success && pid > 1)
                 {
                     LOG_TRC("Checking pid for jail " << pid << " " << root);

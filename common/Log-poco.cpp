@@ -35,6 +35,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -58,13 +59,13 @@ bool AreasDisabled[Log::AreaMax] = { false, };
 /// Wrapper to expose protected 'log' and genericise
 class GenericLogger : public Poco::Logger
 {
-public:
     GenericLogger(const std::string& name,
                   Poco::AutoPtr<Poco::Channel> chan, int lvl)
         : Poco::Logger(name, std::move(chan), lvl)
     {
     }
 
+public:
     static GenericLogger& create(const std::string& name,
                                  Poco::AutoPtr<Poco::Channel> chan, int lvl)
     {
@@ -405,8 +406,6 @@ namespace Log
         std::unordered_map<Poco::Message::Priority, std::string> _colorByPriority;
     };
 
-    static bool IsShutdown = false;
-
     void initialize(const std::string& name,
                     const std::string& logLevel,
                     const bool withColor,
@@ -478,7 +477,7 @@ namespace Log
 
         const std::time_t t = std::time(nullptr);
         struct tm tm;
-        LOG_INF("Initializing " << name << ". GMT time: "
+        LOG_INF("Initializing " << name << ". Log timestamps are in GMT time. Now: "
                                 << std::put_time(Util::time_t_to_gmtime(t, tm), "%a %F %T %z")
                                 << ". Log level is [" << logger->getLevel() << ']');
 
@@ -509,6 +508,7 @@ namespace Log
 
     namespace
     {
+    bool IsShutdown = false;
 
     GenericLogger& logger()
     {
@@ -566,6 +566,11 @@ namespace Log
     bool isEnabled(Level l, Area a)
     {
         if (IsShutdown)
+            return false;
+
+        // Check if logger is properly initialized before calling logger()
+        // to avoid invalid downcast from Poco::Logger to GenericLogger.
+        if (!Static.getThreadLocalLogger() && !Static.getLogger())
             return false;
 
         Log::Level logLevel = GenericLogger::mapToLevel(

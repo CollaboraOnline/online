@@ -69,7 +69,7 @@ class HRuler extends Ruler {
 		this._map.on('rulerupdate', this._updateOptions, this);
 		this._map.on('tabstoplistupdate', this._updateTabStops, this);
 		this._map.on('scrolllimits', this._updatePaintTimer, this);
-		this._map.on('moveend fixruleroffset', this._fixOffset, this);
+		this._map.on('moveend fixruleroffset', this.fixOffset, this);
 		this._map.on('updatepermission', this._changeInteractions, this);
 		window.L.DomUtil.addClass(this._map.getContainer(), 'hasruler');
 
@@ -90,7 +90,7 @@ class HRuler extends Ruler {
 		this._map.off('rulerupdate', this._updateOptions, this);
 		this._map.off('tabstoplistupdate', this._updateTabStops, this);
 		this._map.off('scrolllimits', this._updatePaintTimer, this);
-		this._map.off('moveend fixruleroffset', this._fixOffset, this);
+		this._map.off('moveend fixruleroffset', this.fixOffset, this);
 		this._map.off('updatepermission', this._changeInteractions, this);
 	}
 
@@ -494,7 +494,7 @@ class HRuler extends Ruler {
 		const increaseBy = Math.round(numbersPerCM + 0.5);
 		const markerWidthPx = (increaseBy / numbersPerCM) * (1 / 0.026458);
 
-		this._fixOffset();
+		this.fixOffset();
 
 		this.options.DraggableConvertRatio = rulerWidth / this.options.pageWidth;
 		this._rFace.style.width = rulerWidth + 'px';
@@ -663,7 +663,7 @@ class HRuler extends Ruler {
 		wPixel =
 			this._map._docLayer._docPixelSize.x - this.options.tileMargin * 2 * scale;
 
-		this._fixOffset();
+		this.fixOffset();
 
 		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
 		this._rFace.style.width = wPixel + 'px';
@@ -813,11 +813,46 @@ class HRuler extends Ruler {
 	protected _fixOffsetImpl(): void {
 		if (!app.activeDocument || app.activeDocument.fileSize.x === 0) return;
 
-		const rulerOffset =
-			-app.activeDocument.activeLayout.viewedRectangle.cX1 +
-			this.options.tileMargin * app.getScale();
+		const layout = app.activeDocument.activeLayout;
 
-		this._rFace.style.marginInlineStart = rulerOffset + 'px';
+		if (layout.type === 'ViewLayoutMultiPage') {
+			const multiPageLayout = layout as ViewLayoutMultiPage;
+			const pageRectList = app.file.writer.pageRectangleList;
+			if (pageRectList.length === 0) return;
+
+			// Find which page the cursor is on.
+			let pageIndex = 0;
+			const cursorRect = app.file.textCursor.rectangle;
+			if (cursorRect) {
+				const cursorPoint = new cool.SimplePoint(cursorRect.x1, cursorRect.y1);
+				pageIndex = multiPageLayout.getClosestRectangleIndex(cursorPoint);
+			}
+
+			// Get the page's top-left corner in document coordinates.
+			const pageRect = pageRectList[pageIndex];
+			const pageTopLeft = new cool.SimplePoint(pageRect[0], pageRect[1]);
+
+			// Convert to screen position (core pixels -> CSS pixels).
+			const screenXCorePixels = layout.documentToViewX(pageTopLeft);
+			const rulerOffset = screenXCorePixels / app.dpiScale;
+
+			const newValue = rulerOffset + 'px';
+			if (this._rFace.style.marginInlineStart !== newValue)
+				this._rFace.style.marginInlineStart = newValue;
+		} else if (layout.type === 'ViewLayoutCompareChanges') {
+			let rulerOffset =
+				-layout.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
+			if (layout.type === 'ViewLayoutCompareChanges')
+				rulerOffset += Math.round(
+					layout.documentToViewX(new cool.SimplePoint(0, 0)) / app.dpiScale,
+				);
+			this._rFace.style.marginInlineStart = rulerOffset + 'px';
+		} else {
+			const rulerOffset =
+				-layout.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
+
+			this._rFace.style.marginInlineStart = rulerOffset + 'px';
+		}
 
 		this._updateParagraphIndentations();
 	}

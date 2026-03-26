@@ -21,10 +21,12 @@
 #include <common/Anonymizer.hpp>
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/StreamCopier.h>
@@ -543,7 +545,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "blockingcommandstatus"))
     {
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if (ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG) && !MOBILEAPP
         return updateBlockingCommandStatus(tokens);
 #endif
     }
@@ -671,6 +673,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 newTokens.push_back(tokens[0]);
                 newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
                 return unoCommand(newTokens);
+            }
+            else if (tokens[1].find(".uno:SaveGraphic") != std::string::npos)
+            {
+                // SaveGraphic is not a document save - it exports an image
+                return unoCommand(tokens);
             }
             else if (tokens[1].find(".uno:Save") != std::string::npos)
             {
@@ -1196,7 +1203,7 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
     Poco::JSON::Parser parser;
     const Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
     std::vector<std::string> directions { "Undo", "Redo" };
-    for (auto& directionName : directions)
+    for (const auto& directionName : directions)
     {
         Poco::JSON::Object::Ptr direction = root->get(directionName).extract<Poco::JSON::Object::Ptr>();
         if (direction->get("actions").type() == typeid(Poco::JSON::Array::Ptr))
@@ -1454,7 +1461,7 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     // Register download id -> URL mapping in the DocumentBroker
     const std::string docBrokerMessage =
         "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend + " clientid=" + getId();
-    _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
+    _docManager->sendFrame(docBrokerMessage);
 
     // Send download id to the client
     sendTextFrame("downloadas: downloadid=" + tmpDir + " port=" + std::to_string(ClientPortNumber) +
@@ -2518,11 +2525,8 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
             std::string json = jsonMsg;
             Poco::JSON::Parser parser;
             Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
-            if (EnableExperimental)
-            {
-                root->set("cacheKey", cacheKey);
-                root->set("isCompressed", isCompressed);
-             }
+            root->set("cacheKey", cacheKey);
+            root->set("isCompressed", isCompressed);
 
             json = JsonUtil::jsonToString(root);
 
@@ -2557,71 +2561,45 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
             if (size_t start = json.find("%IMAGECHECKSUM%"); start != std::string::npos)
                 json.replace(start, 15, std::to_string(pixmapHash));
 
-            if (EnableExperimental) // ZSTD
+            // Use ZSTD to compress the slide layer
+            if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
+                json.replace(start, 11, "zstd");
+
+            root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            root->set("width", width);
+            root->set("height", height);
+            json = JsonUtil::jsonToString(root);
+
+            std::string response = "zstdslidelayer: " + json;
+
+            response += "\n";
+
+            size_t compressed_max_size = ZSTD_COMPRESSBOUND(pixmap->size());
+            size_t max_required_size = response.size() + compressed_max_size;
+            output.resize(max_required_size);
+            std::memcpy(output.data(), response.data(), response.size());
+
+            if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
             {
-                if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
-                    json.replace(start, 11, "zstd");
-
-                {
-                    root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
-                    root->set("width", width);
-                    root->set("height", height);
-                    json = JsonUtil::jsonToString(root);
-                }
-
-                std::string response = "zstdslidelayer: " + json;
-
-                response += "\n";
-
-                size_t compressed_max_size = ZSTD_COMPRESSBOUND(pixmap->size());
-                size_t max_required_size = response.size() + compressed_max_size;
-                output.resize(max_required_size);
-                std::memcpy(output.data(), response.data(), response.size());
-                std::vector<char> compressedOutPut;
-                compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
-
-                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
-                {
-                    png_row_info rowInfo;
-                    rowInfo.rowbytes = pixmap->size();
-                    // Following function just needs row size to transform from BGRA to RGBA
-                    // We have a flat array so its safe to pass pixmap size as row size
-                    Png::unpremultiply_bgra_data(nullptr, &rowInfo, pixmap->data());
-                }
-                size_t compSize = ZSTD_compress(&output[response.size()], compressed_max_size,
-                                                pixmap->data(), pixmap->size(), -3);
-
-                if (ZSTD_isError(compSize))
-                {
-                    output.resize(0);
-                    LOG_ERR("Failed to compress slidelayer of size " << pixmap->size() << " with "
-                                                                    << ZSTD_getErrorName(compSize));
-                    return;
-                }
-                output.resize(response.size() + compSize);
-
-                LOG_TRC("Compressed slidelayer of size " << pixmap->size() << " to size " << compSize);
+                png_row_info rowInfo;
+                rowInfo.rowbytes = pixmap->size();
+                // Following function just needs row size to transform from BGRA to RGBA
+                // We have a flat array so its safe to pass pixmap size as row size
+                Png::unpremultiply_bgra_data(nullptr, &rowInfo, pixmap->data());
             }
-            else // PNG
+            size_t compSize = ZSTD_compress(&output[response.size()], compressed_max_size,
+                                            pixmap->data(), pixmap->size(), -3);
+
+            if (ZSTD_isError(compSize))
             {
-                if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
-                    json.replace(start, 11, "png");
-
-                std::string response = "slidelayer: " + json;
-
-                response += "\n";
-
-                output.reserve(response.size() + pixmap->size());
-                output.resize(response.size());
-
-                std::memcpy(output.data(), response.data(), response.size());
-
-                if (!Png::encodeSubBufferToPNG(pixmap->data(), 0, 0, width, height, width, height, output, tileMode))
-                {
-                    LOG_ERR("Failed to encode into PNG.");
-                    output.resize(0);
-                }
+                output.resize(0);
+                LOG_ERR("Failed to compress slidelayer of size " << pixmap->size() << " with "
+                                                                << ZSTD_getErrorName(compSize));
+                return;
             }
+            output.resize(response.size() + compSize);
+
+            LOG_TRC("Compressed slidelayer of size " << pixmap->size() << " to size " << compSize);
         });
     return true;
 }
@@ -2889,7 +2867,7 @@ bool ChildSession::resizeWindow(const StringVector& tokens)
 
 bool ChildSession::sendWindowCommand(const StringVector& tokens)
 {
-    const unsigned winId = (tokens.size() > 1 ? Util::u64FromString(tokens[1], 0).first : 0);
+    const unsigned winId = (tokens.size() > 1 ? NumUtil::u64FromString(tokens[1], 0) : 0);
 
     getLOKitDocument()->setView(_viewId);
 
@@ -3172,20 +3150,21 @@ bool ChildSession::exportAs(const StringVector& tokens)
 
     const bool isPDF = extension == "pdf";
     const bool isEPUB = extension == "epub";
+
+    // We don't have the FileId at this point, just a new filename to save-as.
+    // So here the filename will be obfuscated with some hashing, which later will
+    // get a proper FileId that we will use going forward.
+    LOG_DBG("Calling LOK's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
+
+    getLOKitDocument()->setView(_viewId);
+
+    std::string encodedWopiFilename;
+    Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
+
+    _exportAsWopiUrl = std::move(encodedWopiFilename);
+
     if (isPDF || isEPUB)
     {
-        // We don't have the FileId at this point, just a new filename to save-as.
-        // So here the filename will be obfuscated with some hashing, which later will
-        // get a proper FileId that we will use going forward.
-        LOG_DBG("Calling LOK's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
-
-        getLOKitDocument()->setView(_viewId);
-
-        std::string encodedWopiFilename;
-        Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
-
-        _exportAsWopiUrl = std::move(encodedWopiFilename);
-
         const std::string arguments = "{"
             "\"SynchronMode\":{"
                 "\"type\":\"boolean\","
@@ -3200,8 +3179,14 @@ bool ChildSession::exportAs(const StringVector& tokens)
         return true;
     }
 
-    sendTextFrameAndLogError("error: cmd=exportas kind=unsupported");
-    return false;
+    // For image export (triggered from the image context menu).
+    // SaveGraphic writes the image in its native format to /tmp/
+    // and fires LOK_CALLBACK_EXPORT_FILE. If no graphic is selected,
+    // the command is a no-op.
+    // NOTE: new document export formats must be handled above this,
+    // like PDF and EPUB.
+    getLOKitDocument()->postUnoCommand(".uno:SaveGraphic", nullptr, false);
+    return true;
 }
 
 bool ChildSession::setClientPart(const StringVector& tokens)
@@ -3480,7 +3465,7 @@ int ChildSession::getSpeed()
     return _cursorInvalidatedEvent.size();
 }
 
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if (ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG) && !MOBILEAPP
 bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
 {
     std::string lockStatus, restrictedStatus;
@@ -3496,7 +3481,20 @@ bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
     }
     std::string blockedCommands;
     if (restrictedStatus == "true")
+    {
         blockedCommands += CommandControl::RestrictionManager::getRestrictedCommandListString();
+#if ENABLE_DEBUG
+        // Extract restricted commands passed from the wsd process.
+        // Format: blockingcommandstatus isRestrictedUser=true isLockedUser=... test_restrictedCommands=cmd1 cmd2 ...
+        std::string firstCmd;
+        if (tokens.size() > 3 && getTokenString(tokens[3], "test_restrictedCommands", firstCmd))
+        {
+            blockedCommands += firstCmd;
+            for (std::size_t i = 4; i < tokens.size(); ++i)
+                blockedCommands += " " + tokens[i];
+        }
+#endif
+    }
     if (lockStatus == "true")
         blockedCommands += blockedCommands.empty()
                                ? CommandControl::LockManager::getLockedCommandListString()
@@ -3506,7 +3504,7 @@ bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
     return true;
 }
 
-std::string ChildSession::getBlockedCommandType(std::string command)
+std::string ChildSession::getBlockedCommandType(const std::string& command)
 {
     if(CommandControl::RestrictionManager::getRestrictedCommandList().find(command)
     != CommandControl::RestrictionManager::getRestrictedCommandList().end())
@@ -3677,6 +3675,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         if (payload == ".uno:NotesMode=true" || payload == ".uno:NotesMode=false" ||
             payload == ".uno:RedlineRenderMode=true" || payload == ".uno:RedlineRenderMode=false")
         {
+            getLOKitDocument()->setView(_viewId);
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("statusupdate: " + status);
         }
@@ -4028,8 +4027,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         // Register download id -> URL mapping in the DocumentBroker
         auto url = std::string("../../") + payload.substr(payload.find_last_of('/'));
         auto downloadId = Util::rng::getFilename(64);
-        std::string docBrokerMessage = "registerdownload: downloadid=" + downloadId + " url=" + url + " clientid=" + getId();
-        _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
+        const std::string docBrokerMessage =
+            "registerdownload: downloadid=" + downloadId + " url=" + url + " clientid=" + getId();
+        _docManager->sendFrame(docBrokerMessage);
         std::string message = "downloadas: downloadid=" + downloadId + " port=" + std::to_string(ClientPortNumber) + " id=export";
         sendTextFrame(message);
 #endif

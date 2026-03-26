@@ -22,6 +22,7 @@ interface WidgetJSON {
 	children?: Array<WidgetJSON>; // child nodes
 	title?: string;
 	text?: string; // TODO: remove, its for not yet defined widget types
+	tooltip?: string; // tooltip text (QuickHelpText from VCL)
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
@@ -107,6 +108,14 @@ type JSDialogCallback = (
 	builder: JSBuilder,
 ) => void;
 
+type JSDialogCallbackConsumer = (
+	objectType: string,
+	eventType: string,
+	object: any,
+	data: any,
+	builder: JSBuilder,
+) => boolean;
+
 type JSDialogMenuCallback = (
 	objectType: string,
 	eventType: string,
@@ -177,6 +186,7 @@ interface NotebookbarTab {
 	getName: () => string;
 	getEntry: () => NotebookbarTabEntry;
 	getContent: () => NotebookbarTabContent;
+	onCallback?: JSDialogCallbackConsumer;
 }
 
 // callback triggered for custom rendered entries
@@ -203,6 +213,8 @@ interface MenuDefinition extends WidgetJSON {
 	checked?: boolean; // state of check mark
 	items?: Array<any>;
 	selected?: boolean; // selected state for entry
+	statusCommand?: string; // UNO command used to retrieve the status/value of the entry
+	pos?: number | string; // identifier of an entry
 }
 
 interface HtmlContentJson extends WidgetJSON {
@@ -351,7 +363,7 @@ interface TreeColumnJSON {
 	link?: string;
 	collapsed?: string | boolean;
 	expanded?: string | boolean;
-	customEntryRenderer?: boolean; // has custome rendering enabled
+	customEntryRenderer?: boolean; // has custom rendering enabled
 	collapsedimage?: string;
 	expandedimage?: string;
 	editable?: boolean;
@@ -387,20 +399,20 @@ interface TreeWidgetJSON extends WidgetJSON {
 	highlightTerm?: string; // what, if any, entries are we highlighting?
 	customEntryRenderer?: boolean;
 	noSearchField?: boolean; // When true, the widget shouldn't have a search field added
-	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS isntead of callback (lists only)
+	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS instead of callback (lists only)
 	role?: string; // ARIA role from core: 'tree', 'treegrid', 'listbox', or 'grid'
 }
 
 interface IconViewEntry {
 	row: number | string; // unique id of the entry
-	separator: boolean; // is separator
-	selected: boolean; // is currently selected
+	separator?: boolean; // is separator
+	selected?: boolean; // is currently selected
 	image: string; // base64 encoded image
-	width: number; // width in pixels; used for on demand rendering
-	height: number; // height in pixels; used for on demand rendering
+	width?: number; // width in pixels; used for on demand rendering
+	height?: number; // height in pixels; used for on demand rendering
 	text: string; // label of an entry
-	tooltip: string; // tooltip of an entry
-	ondemand: boolean; // if true then we ignore image property and request it on demand (when shown)
+	tooltip?: string; // tooltip of an entry
+	ondemand?: boolean; // if true then we ignore image property and request it on demand (when shown)
 }
 
 interface IconViewJSON extends WidgetJSON {
@@ -410,12 +422,21 @@ interface IconViewJSON extends WidgetJSON {
 	selectionmode: string; // single or multiple
 }
 
+interface IconViewListJSON extends WidgetJSON {
+	children: Array<IconViewJSON>;
+}
+
 interface IconViewElement extends HTMLElement {
 	requestRenders: (
 		entry: IconViewEntry,
 		placeholder: Element,
 		entryContainer: Element,
 	) => void;
+
+	updateRenders: (pos: number) => void;
+
+	updateRendersImpl: (pos: number, id: string, where: HTMLElement) => void;
+
 	builderCallback: (
 		objectType: string,
 		eventType: string,
@@ -430,6 +451,7 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+	widthInChars: number; // width hint in characters
 }
 
 // type: 'checkbox'

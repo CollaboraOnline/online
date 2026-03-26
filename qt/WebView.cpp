@@ -15,6 +15,7 @@
 
 #include <qt/bridge.hpp>
 #include <net/FakeSocket.hpp>
+#include <common/LangUtil.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
 #include <qt/qt.hpp>
@@ -574,7 +575,9 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     coolHtmlPath.append("/browser/dist/cool.html");
     Poco::URI urlAndQuery(coolHtmlPath);
     urlAndQuery.setScheme("file");
-    urlAndQuery.addQueryParameter("lang", getUILanguage());
+    std::string uiLanguage = getUILanguage();
+    urlAndQuery.addQueryParameter("lang", uiLanguage);
+    urlAndQuery.addQueryParameter("dir", LangUtil::isRtlLanguage(uiLanguage) ? "rtl" : "");
 
     if (isStarterMode)
     {
@@ -614,7 +617,6 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         QString fileName = QString::fromStdString(uriPath.getFileName());
         applicationTitle = fileName + " - " APP_NAME;
     }
-    QApplication::setApplicationName(applicationTitle);
     if (_webView->window())
         _webView->window()->setWindowTitle(applicationTitle);
 

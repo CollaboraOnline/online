@@ -25,14 +25,9 @@
 #include <common/Rectangle.hpp>
 #include <common/TraceEvent.hpp>
 
-#include <Poco/Base64Decoder.h>
-#include <Poco/Base64Encoder.h>
-#include <Poco/ConsoleChannel.h>
-#include <Poco/Exception.h>
-#include <Poco/Format.h>
+#include <common/base64.hpp>
+
 #include <Poco/HexBinaryEncoder.h>
-#include <Poco/LineEndingConverter.h>
-#include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
@@ -59,7 +54,7 @@
 #endif
 
 #if !MOBILEAPP
-#include <SigHandlerTrap.hpp>
+#include <common/SigHandlerTrap.hpp>
 #endif
 
 #if defined(__GLIBC__)
@@ -167,10 +162,9 @@ namespace Util
         /// Note: May contain '/' characters.
         std::string getB64String(const std::size_t length)
         {
-            std::stringstream ss;
-            Poco::Base64Encoder b64(ss);
-            b64.write(getBytes(length).data(), length);
-            return ss.str().substr(0, length);
+            auto bytes = getBytes(length);
+            return macaron::Base64::Encode(
+                std::string_view(bytes.data(), length)).substr(0, length);
         }
 
         std::string getFilename(const std::size_t length)
@@ -753,56 +747,6 @@ namespace Util
         return ApplicationPath;
     }
 
-    int safe_atoi(const char* p, int len)
-    {
-        long ret{};
-        if (!p || !len)
-        {
-            return ret;
-        }
-
-        int multiplier = 1;
-        int offset = 0;
-        while (isspace(p[offset]))
-        {
-            ++offset;
-            if (offset >= len)
-            {
-                return ret;
-            }
-        }
-
-        switch (p[offset])
-        {
-            case '-':
-                multiplier = -1;
-                ++offset;
-                break;
-            case '+':
-                ++offset;
-                break;
-        }
-        if (offset >= len)
-        {
-            return ret;
-        }
-
-        while (isdigit(p[offset]))
-        {
-            std::int64_t next = ret * 10 + (p[offset] - '0');
-            if (next >= std::numeric_limits<int>::max())
-                return multiplier * std::numeric_limits<int>::max();
-            ret = next;
-            ++offset;
-            if (offset >= len)
-            {
-                return multiplier * ret;
-            }
-        }
-
-        return multiplier * ret;
-    }
-
     void forcedExit(int code)
     {
         if (code)
@@ -867,7 +811,7 @@ namespace Util
 #endif
     }
 
-    void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo)
+    void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER)
     {
         // uninitialized owner means detached and can be invoked by any thread.
         const bool sameThread = (owner == std::thread::id() || owner == std::this_thread::get_id());
@@ -875,7 +819,7 @@ namespace Util
             LOG_ERR("Incorrect thread affinity. Expected: "
                     << Log::to_string(owner) << " but called from "
                     << Log::to_string(std::this_thread::get_id()) << " (" << Util::getThreadId()
-                    << "). (" << fileName << ":" << lineNo << ")");
+                    << ')');
 
         assert(sameThread);
     }
@@ -1051,32 +995,15 @@ namespace Util
         }
     }
 
-    std::string base64Encode(std::string_view input)
+    std::string base64Encode(const std::string_view input)
     {
-        std::ostringstream oss;
-        Poco::Base64Encoder encoder(oss);
-        encoder << input;
-        encoder.close();
-        return oss.str();
-    }
-
-    std::string base64EncodeRemovingNewLines(const std::string_view& input)
-    {
-        std::ostringstream oss;
-        // Use a line ending converter to remove these CRLF.
-        Poco::OutputLineEndingConverter lineEndingConv(oss, "");
-        Poco::Base64Encoder encoder(lineEndingConv);
-        encoder << input;
-        encoder.close();
-        return oss.str();
+        return macaron::Base64::Encode(input);
     }
 
     std::string base64Decode(const std::string& input)
     {
-        std::istringstream istr(input);
         std::string decoded;
-        Poco::Base64Decoder decoder(istr);
-        decoder >> decoded;
+        macaron::Base64::Decode(input, decoded);
         return decoded;
     }
 

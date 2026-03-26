@@ -112,6 +112,7 @@ const defaultBrowserSetting: Record<string, any> = {
 	},
 	darkTheme: false,
 	accessibilityState: false,
+	lockAccessibilityOn: false,
 	spreadsheet: {
 		ShowStatusbar: false,
 		A11yCheckDeck: false,
@@ -323,6 +324,13 @@ class OnlineSettingsStorage extends SettingsStorage {
 	}
 }
 
+let isCODesktop = false;
+try {
+	isCODesktop = (window as any).parent.mode.isCODesktop();
+} catch (e) {
+	isCODesktop = false;
+}
+
 class SettingIframe {
 	private settingsStorage: SettingsStorage;
 	private wordbook;
@@ -336,7 +344,7 @@ class SettingIframe {
 		signatureCa: _('Signature CA'),
 	};
 	private readonly settingLabels: Record<string, string> = {
-		accessibilityState: _('In-document Screen Reader'),
+		lockAccessibilityOn: _('In-document Screen Reader'),
 		darkTheme: _('Dark Mode'),
 		compactMode: _('Compact layout'),
 		ShowStatusbar: _('Show status bar'),
@@ -421,12 +429,12 @@ class SettingIframe {
 	init(): void {
 		this._allConfigSection = document.getElementById('allConfigSection');
 		this.initWindowVariables();
-		if ((window as any).parent.mode.isCODesktop()) {
+		if (isCODesktop) {
 			this.settingsStorage = new DesktopSettingsStorage();
 		} else {
 			this.settingsStorage = new OnlineSettingsStorage();
 		}
-		if (!(window.parent as any).mode.isCODesktop()) {
+		if (!isCODesktop) {
 			this.insertConfigSections();
 			this.setupLeftNavbar();
 		}
@@ -896,7 +904,7 @@ class SettingIframe {
 				);
 
 				await this.uploadFile(this.PATH.browserSettingsUpload(), file);
-				if ((window as any).parent.mode.isCODesktop()) {
+				if (isCODesktop) {
 					(window.parent as any).postMobileMessage('SYNCSETTINGS');
 				}
 				button.disabled = false;
@@ -999,6 +1007,9 @@ class SettingIframe {
 			return container;
 		}
 		for (const key in data) {
+			// skip accessibilityState as it's only used for determining existing state of Help -> screen reader toggle button
+			if (key === 'accessibilityState') continue;
+
 			if (Object.prototype.hasOwnProperty.call(data, key)) {
 				const value = data[key];
 				const uniqueId = pathPrefix ? `${pathPrefix}-${key}` : key;
@@ -1148,7 +1159,7 @@ class SettingIframe {
 		let isDisabled = false;
 		let warningText: string | null = null;
 
-		if (key === 'accessibilityState') {
+		if (key === 'lockAccessibilityOn') {
 			isDisabled = !window.enableAccessibility;
 			if (isDisabled) {
 				warningText = _(
@@ -1190,6 +1201,9 @@ class SettingIframe {
 
 			if (sectionRaw === 'common') {
 				this.browserSettingOptions[settingKey] = value;
+
+				if (settingKey === 'lockAccessibilityOn')
+					this.browserSettingOptions['accessibilityState'] = value;
 			} else {
 				(this.browserSettingOptions[sectionRaw] as Record<string, boolean>)[
 					settingKey
@@ -1272,8 +1286,7 @@ class SettingIframe {
 
 		const image = document.createElement('img');
 		let src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
-		if ((window as any).parent.mode.isCODesktop())
-			src = `admin/images/${imageSrc}`;
+		if (isCODesktop) src = `admin/images/${imageSrc}`;
 		image.src = src;
 		image.alt = imageAlt;
 		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
@@ -1604,7 +1617,7 @@ class SettingIframe {
 
 		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
-		if (!(window.parent as any).mode.isCODesktop()) {
+		if (!isCODesktop) {
 			if (data.xcu && data.xcu.length > 0) {
 				const xcuFileContent = await this.settingsStorage.fetchSettingFile(
 					data.xcu[0].uri,
@@ -1654,6 +1667,11 @@ class SettingIframe {
 		if (data.wordbook)
 			this.populateList('wordbookList', data.wordbook, '/wordbook');
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
+
+		var navItem = document.querySelector<HTMLElement>(
+			'#settings-nav .settings-nav-item',
+		);
+		if (navItem) navItem.focus();
 	}
 
 	private setupLeftNavbar(): void {

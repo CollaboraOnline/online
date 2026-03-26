@@ -54,7 +54,7 @@ private:
     const std::weak_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
-    int _logFD;
+    const int _logFD;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

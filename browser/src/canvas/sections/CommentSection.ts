@@ -58,6 +58,10 @@ export class Comment extends CanvasSectionObject {
 	cachedIsEdit: boolean = false;
 	hidden: boolean | null = null;
 
+	containerPosX: number = 0;
+	containerPosY: number = 0;
+	canvasContainerBounds: DOMRect = new DOMRect();
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public static makeName(data: any): string {
 		return data.id === 'new' ? 'new comment' : 'comment ' + data.id;
@@ -112,6 +116,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container = null;
 		this.sectionProperties.author = null;
 		this.sectionProperties.resolvedTextElement = null;
+		this.sectionProperties.removedTextElement = null;
 		this.sectionProperties.authorAvatarImg = null;
 		this.sectionProperties.authorAvatartdImg = null;
 		this.sectionProperties.contentAuthor = null;
@@ -241,6 +246,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement = resolvedEl;
 		this.updateResolvedField(this.sectionProperties.data.resolved);
 
+
 		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
 		this.createReplyHint(this.sectionProperties.nodeModify);
@@ -306,7 +312,10 @@ export class Comment extends CanvasSectionObject {
 		var imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 		imgAuthor.setAttribute('alt', this.sectionProperties.data.author);
 		var viewId = this.map.getViewId(this.sectionProperties.data.author);
-		app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
+		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl)
+			imgAuthor.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+		else
+			app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
@@ -339,6 +348,73 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.annotation = this;
 	}
 
+	public setContainerPos(forceUpdate: boolean, canvasContainerBounds?: DOMRect, left?: number, top?: number): void {
+		if ((<any>window).mode.isMobile()) {
+			return;
+		}
+
+		if (canvasContainerBounds === undefined) {
+			canvasContainerBounds = this.canvasContainerBounds;
+		}
+
+		if (left === undefined) {
+			left = this.containerPosX;
+		}
+
+		if (top === undefined) {
+			top = this.containerPosY;
+		}
+
+		if (this.containerPosX === left
+				&& this.containerPosY === top
+				&& this.canvasContainerBounds.left === canvasContainerBounds.left
+				&& this.canvasContainerBounds.right === canvasContainerBounds.right
+				&& this.canvasContainerBounds.top === canvasContainerBounds.top
+				&& this.canvasContainerBounds.bottom === canvasContainerBounds.bottom
+				&& !forceUpdate
+		) {
+			return;
+		}
+
+		this.containerPosX = left;
+		this.containerPosY = top;
+		this.canvasContainerBounds = canvasContainerBounds;
+
+		left += canvasContainerBounds.left;
+		top += canvasContainerBounds.top;
+
+		if (this.isSelected() || this.isEdit()) {
+			if (left < canvasContainerBounds.left) {
+				left = canvasContainerBounds.left;
+			}
+
+			if (top < canvasContainerBounds.top) {
+				top = canvasContainerBounds.top;
+			}
+
+			const width = this.getCommentWidth() / app.dpiScale;
+			if (left + width > canvasContainerBounds.right) {
+				left = canvasContainerBounds.right - width;
+			}
+
+			const height = this.getCommentHeight();
+			if (top + height > canvasContainerBounds.bottom) {
+				top = canvasContainerBounds.bottom - height;
+			}
+		}
+
+		if (this.isSelected()) {
+			this.sectionProperties.container.style.zIndex = 14;
+		} else if (this.isEdit()) {
+			this.sectionProperties.container.style.zIndex = 13;
+		} else {
+			this.sectionProperties.container.style.zIndex = ''; // Default for .cool-annotation is 12
+		}
+
+		this.sectionProperties.container.style.left = Math.round(left) + 'px';
+		this.sectionProperties.container.style.top = Math.round(top) + 'px';
+	}
+
 	private createReplyHint (commentType: HTMLElement): void {
 		this.sectionProperties.replyHint = window.L.DomUtil.create('p', '', commentType);
 		var small = document.createElement('small');
@@ -354,11 +430,11 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public getContainerPosX(): number {
-		return parseInt(this.sectionProperties.container.style.left.replace('px', ''));
+		return this.containerPosX;
 	}
 
 	public getContainerPosY(): number {
-		return parseInt(this.sectionProperties.container.style.top.replace('px', ''));
+		return this.containerPosY;
 	}
 
 	public updateChildLines (): void {
@@ -371,7 +447,8 @@ export class Comment extends CanvasSectionObject {
 		for (let i = 0; i < this.sectionProperties.children.length; i++) {
 			if (this.sectionProperties.children[i].isContainerVisible())
 				childPositions.push({ id: this.sectionProperties.children[i].sectionProperties.data.id,
-									posY: this.getContainerPosY()});
+					posY: this.sectionProperties.children[i].getContainerPosY()
+				});
 		}
 		childPositions.sort((a, b) => { return a.posY - b.posY; });
 		let lastPosY = this.getContainerPosY() + this.getCommentHeight(false);
@@ -450,6 +527,22 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
+	public updateRemovedField (): void {
+		var isDeleted = this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED;
+		if (isDeleted && !this.sectionProperties.removedTextElement) {
+			var commentFooter = this.sectionProperties.contentDate.parentNode;
+			this.sectionProperties.removedTextElement = window.L.DomUtil.create('div', 'cool-annotation-content-removed', commentFooter);
+		}
+		if (this.sectionProperties.removedTextElement) {
+			this.sectionProperties.removedTextElement.innerText = isDeleted ? _('Removed') : '';
+		}
+		if (isDeleted) {
+			this.sectionProperties.resolvedTextElement.innerText = '';
+		} else {
+			this.updateResolvedField(this.sectionProperties.data.resolved);
+		}
+	}
+
 	private isNewPara(): boolean {
 		const selection = window.getSelection();
 		if (!selection.rangeCount) return;
@@ -523,7 +616,11 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
-		if (this.sectionProperties.data.avatar) {
+		this.updateRemovedField();
+		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl) {
+			this.sectionProperties.authorAvatarImg.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+		}
+		else if (this.sectionProperties.data.avatar) {
 			this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
 		}
 		else {
@@ -782,6 +879,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.collapsedInfoNode.style.visibility = '';
 		this.cachedIsEdit = false;
+		this.setContainerPos(true);
 	}
 
 	private showCalc() {
@@ -819,6 +917,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeReply.style.display = 'none';
 			this.sectionProperties.contentNode.style.display = '';
 			this.cachedIsEdit = false;
+			this.setContainerPos(true);
 			if (this.isSelected() || !this.isCollapsed) {
 				this.sectionProperties.container.style.visibility = '';
 			}
@@ -838,6 +937,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED) {
 			this.sectionProperties.container.classList.add(layoutClass);
 		}
+		this.updateRemovedField();
 	}
 
 	public show(): void {
@@ -875,6 +975,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.showSelectedCoordinate = false;
 		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.cachedIsEdit = false;
+		this.setContainerPos(true);
 		this.hidden = true;
 	}
 
@@ -901,6 +1002,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeModify.style.display = 'none';
 			this.sectionProperties.nodeReply.style.display = 'none';
 			this.cachedIsEdit = false;
+			this.setContainerPos(true);
 		}
 		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.hidden = true;
@@ -1194,8 +1296,12 @@ export class Comment extends CanvasSectionObject {
 		}
 		else {
 			this.sectionProperties.nodeReply.style.display = 'none';
-			if (!this.sectionProperties.nodeModify || this.sectionProperties.nodeModify.style.display === 'none')
+			if (!this.sectionProperties.nodeModify || this.sectionProperties.nodeModify.style.display === 'none') {
 				this.cachedIsEdit = false;
+				if (app.map._docLayer._docType !== 'spreadsheet') {
+					this.setContainerPos(true);
+				}
+			}
 		}
 	}
 
@@ -1251,6 +1357,9 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = '';
 		this.cachedIsEdit = true;
+		if (app.map._docLayer._docType !== 'spreadsheet') {
+			this.setContainerPos(true);
+		}
 		return this;
 	}
 
@@ -1262,6 +1371,9 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container.style.visibility = '';
 		this.sectionProperties.contentNode.style.display = 'none';
 		this.cachedIsEdit = true;
+		if (app.map._docLayer._docType !== 'spreadsheet') {
+			this.setContainerPos(true);
+		}
 		return this;
 	}
 

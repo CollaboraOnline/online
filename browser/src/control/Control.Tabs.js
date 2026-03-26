@@ -148,6 +148,9 @@ window.L.Control.Tabs = window.L.Control.extend({
 		}
 		if (docType === 'spreadsheet') {
 
+			// Track which default part has a sheet view active for tab icon display.
+			app.calc.updateActiveSheetView(selectedPart);
+
 			// Save scroll position
 			var horizScrollPos = 0;
 			var scrollDiv = window.L.DomUtil.get('spreadsheet-tab-scroll');
@@ -202,7 +205,8 @@ window.L.Control.Tabs = window.L.Control.extend({
 				}
 
 				for (var i = 0; i < parts; i++) {
-					if (app.calc.isPartHidden(i))
+					// Skip if hidden or a sheet view (implicitly hidden)
+					if (app.calc.isPartHidden(i) || app.calc.isPartSheetView(i))
 						continue;
 
 					// create a drop zone indicator for the sheet tab
@@ -225,7 +229,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 											this._map.fire('mobilewizard', {data: menuData});
 										} else {
 											$(e.target).trigger('contextmenu');
-                                        }
+										}
 									}
 								};
 							}(i).bind(this));
@@ -257,17 +261,12 @@ window.L.Control.Tabs = window.L.Control.extend({
 						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
 					}
 
-					if (app.calc.isPartSheetView(i)) {
-						if (!app.calc.isPartSheetViewSynced(i)) {
-							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview-unsynced');
-						}
-						else {
-							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
-						}
+					var sheetViewPart = app.calc.getSheetViewPartForDefaultPart(i);
+					if (sheetViewPart >= 0 && app.calc.hasActiveSheetView(i)) {
+						window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
 					}
 					else {
 						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview');
-						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview-unsynced');
 					}
 					label.textContent = e.partNames[i];
 					tab.id = id;
@@ -296,7 +295,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
 				window.L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
-				if (part === selectedPart) {
+				if (part === selectedPart || app.calc.isDefaultPartOfSelectedSheetView(part)) {
 					// close auto filter popups on sheet tab selected
 					this._map.fire('closeAutoFilterDialog');
 					this._map.fire('closepopups');

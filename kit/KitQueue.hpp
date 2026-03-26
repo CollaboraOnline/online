@@ -13,6 +13,7 @@
 
 #include <wsd/TileDesc.hpp>
 
+#include <deque>
 #include <string>
 #include <vector>
 
@@ -37,7 +38,7 @@ public:
 };
 
 /// Queue for handling the Kit's messaging needs
-class KitQueue
+class KitQueue final
 {
     friend class KitQueueTests;
 
@@ -45,7 +46,10 @@ class KitQueue
 public:
     using Payload = std::vector<char>;
 
-    KitQueue(const TilePrioritizer &prio) : _prio(prio) { }
+    explicit KitQueue(const TilePrioritizer& prio)
+        : _prio(prio)
+    {
+    }
     ~KitQueue() = default;
 
     KitQueue(const KitQueue&) = delete;
@@ -109,7 +113,7 @@ public:
     }
 
     /// Obtain the next callback
-    Callback getCallback()
+    [[nodiscard]] Callback getCallback()
     {
         assert(_callbacks.size() > 0);
         Callback front = _callbacks.front();
@@ -117,7 +121,7 @@ public:
         return front;
     }
 
-    bool getCallback(Callback &callback)
+    [[nodiscard]] bool getCallback(Callback& callback)
     {
         if (_callbacks.size() == 0)
             return false;
@@ -151,7 +155,7 @@ public:
 
     void dumpState(std::ostream& oss);
 
-protected:
+private:
     /// Search the queue for a previous textinput message and if found, remove it and combine its
     /// input with that in the current textinput message. We check that there aren't any interesting
     /// messages inbetween that would make it wrong to merge the textinput messages.
@@ -168,7 +172,6 @@ protected:
     /// @return New message to put into the queue. If empty, use what we got.
     std::string combineRemoveText(const StringVector& tokens);
 
-private:
     /// Search the queue for a duplicate callback and remove it (if present).
     ///
     /// This removes also callbacks that are made invalid by the current
@@ -182,14 +185,14 @@ private:
 
 private:
     /// Queue of incoming messages from coolwsd
-    std::vector<Payload> _queue;
+    std::deque<Payload> _queue;
 
     /// Queues of incoming tile requests from coolwsd
     using viewTileQueue = std::pair<CanonicalViewId, std::vector<TileDesc>>;
-    std::vector<viewTileQueue> _tileQueues;
+    std::deque<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd
-    std::vector<Callback> _callbacks;
+    std::deque<Callback> _callbacks;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const KitQueue::Callback &c)

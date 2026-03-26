@@ -310,8 +310,12 @@ class LOUtil {
 	public static getURL(path: string): string {
 		if (path === '') return '';
 		const customWindow = window as any;
-		if (customWindow.host === '' && customWindow.serviceRoot === '')
-			return path; // mobile app
+		if (customWindow.host === '' && customWindow.serviceRoot === '') {
+			// Mobile / desktop app: return a relative path so it resolves
+			// against the page's file:// origin rather than the filesystem root.
+			if (path.startsWith('/')) return path.substring(1);
+			return path;
+		}
 
 		let url = customWindow.makeHttpUrl('/browser/' + customWindow.versionPath);
 		if (path.substr(0, 1) !== '/') url += '/';
@@ -412,6 +416,8 @@ class LOUtil {
 			// switch to compact mode: 1st hidden element in the top toolbar
 			closemobile: 'closedocmobile',
 			'file-saveas': 'saveas',
+			savegraphic: 'saveas',
+			saveimagetowopi: 'saveasremote',
 			'home-search': 'recsearch',
 			searchdialog3finitialfocusreplace3abool3dtrue: 'searchreplace',
 			'addmb-menu': 'ok',
@@ -491,7 +497,6 @@ class LOUtil {
 			insertdatefieldvar: 'datefield',
 			setparagraphlanguagemenu: 'spelldialog',
 			spellingandgrammardialog: 'spelldialog',
-			spellonline: 'spelldialog',
 			styleapply3fstyle3astring3ddefault26familyname3astring3dcellstyles:
 				'fontcolor',
 			fontworkgalleryfloater: 'fontworkpropertypanel',
@@ -513,6 +518,7 @@ class LOUtil {
 			tabledeletemenu: 'deletetable',
 			insertcalctable: 'inserttable',
 			removecalctable: 'deletetable',
+			calculatedfieldrun: 'functiondialog',
 			databasesettings: 'tabledesign',
 			tracechangemode: 'trackchanges',
 			deleteallannotation: 'deleteallnotes',

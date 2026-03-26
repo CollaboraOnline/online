@@ -1130,7 +1130,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._map.fire('versionbar', obj);
 		}
 		else if (textMsg.startsWith('lockaccessibilityon')) {
-			// a11y forced on by DocumentBroker, from view settings overrides.
+			// a11y forced on by DocumentBroker, from interface settings overrides.
 			this._map.lockAccessibilityOn();
 		}
 		else if (textMsg.startsWith('a11y')) {
@@ -1637,9 +1637,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		app.definitions.otherViewGraphicSelectionSection.addOrUpdateGraphicSelectionIndicator(viewId, strTwips, parseInt(obj.part), obj.mode !== undefined ? parseInt(obj.mode): 0);
 
-		if (this.isCalc()) {
-			this._saveMessageForReplay(textMsg, viewId);
+		if (app.getFollowedViewId() === viewId && app.isFollowingUser()) {
+			if (this.isImpress() || this.isDraw() || this.isWriter()) {
+				this.goToOtherUserView(viewId);
+			}
 		}
+
+		this._saveMessageForReplay(textMsg, viewId);
 	},
 
 	_onCellCursorMsg: function (textMsg) {
@@ -1792,6 +1796,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// Only for reference equality comparison.
 		this._lastVisibleCursorRef = app.file.textCursor.rectangle.clone();
+
+		// Normally we don't need to refresh the ruler offset.
+		// But in multi page view, user may have clicked at the page next to the current one.
+		// In that case, we need to fix offset again (if required - it checks values before changing offset).
+		const layout = app.activeDocument ? (app.activeDocument.activeLayout ?  app.activeDocument.activeLayout.type : "") : "";
+		if (layout === 'ViewLayoutMultiPage' && app.UI.horizontalRuler)
+			app.UI.horizontalRuler.fixOffset();
 	},
 
 	_isHyperlinkChanged: function(hyperlink)
@@ -1860,7 +1871,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TextCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
-			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
+			if (this.isWriter() || this.isImpress() || this.isDraw()) {
 				this.goToViewCursor(viewId);
 			}
 			else if (this._map.getDocType() === 'spreadsheet') {
@@ -3014,6 +3025,19 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
+	// Jump to view of user with given *viewId*
+	goToOtherUserView: function(viewId) {
+		const graphicSection = OtherViewGraphicSelectionSection.getViewSection(viewId);
+
+		if (graphicSection) {
+			if (this._selectedPart !== graphicSection.sectionProperties.part) {
+				this._map.deselectAll();
+				this._map.setPart(graphicSection.sectionProperties.part);
+			}
+			graphicSection.goToSection();
+		}
+	},
+
 	goToViewCursor: function(viewId) {
 		if (viewId === this._viewId) {
 			this._onUpdateCursor();
@@ -3022,12 +3046,16 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		const section = TextCursorSection.getViewCursorSection(viewId);
 
-		if (section && section.showSection) {
-			const point = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
-			var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
-			if (!isNewCursorVisible)
-				this.scrollToPos(point);
-			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
+		if (section) {
+			if ((this.isImpress() || this.isDraw()) && this._selectedPart !== section.sectionProperties.part) {
+				this._map.deselectAll();
+				this._map.setPart(section.sectionProperties.part);
+			}
+
+			if (section.showSection) {
+				section.goToSection();
+				app.definitions.cursorHeaderSection.showCursorHeader(viewId);
+			}
 		}
 	},
 
@@ -3168,8 +3196,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		if (this.isImpress() && !maxZoom)
-			maxZoom = 10;
+		if (!maxZoom) {
+			if (this.isImpress()) maxZoom = 10;
+			else if (this.isWriter()) maxZoom = 13;
+		}
 
 		if (this._invalidateZoomFirstFit) {
 			recalcFirstFit = true;
@@ -3185,6 +3215,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		oldSize.x *= app.dpiScale;
 		oldSize.y *= app.dpiScale;
 
+		let bringCommentsIntoView = false;
+		if (this.isWriter() && app.activeDocument.partHasComments && (recalcFirstFit || !this._includedCommentsInFirstFit)) {
+			bringCommentsIntoView = true;
+			this._includedCommentsInFirstFit = true;
+			this._firstFitDone = false;
+		}
+
 		// `recalcFirstFit` is used to recalculate/reset the zoom levels to the
 		// maximum possible zoom level based on the window (canvas) size.
 		if (recalcFirstFit)
@@ -3196,7 +3233,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this._firstFitDone && newSize.x - oldSize.x === 0)
 			return;
 
-		var ratio = newSize.x / app.activeDocument.fileSize.pX;
+		const commentWidth = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).sectionProperties.commentWidth;
+		let documentWidth = app.activeDocument.fileSize.pX;
+		if (bringCommentsIntoView) documentWidth += commentWidth;
+
+		var ratio = newSize.x / documentWidth;
 		var zoom = this._map.getScaleZoom(ratio);
 
 		if (maxZoom)
@@ -3442,7 +3483,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				'graphicviewselection',
 			] : [
 				'textviewselection',
-				'invalidateviewcursor'
+				'invalidateviewcursor',
+				'graphicviewselection'
 			];
 
 			this._printTwipsMessagesForReplay = new window.L.MessageStore(ownViewTypes, otherViewTypes);
@@ -3716,6 +3758,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		 * UI code which triggers them.
 		 */
 		this._invalidateZoomFirstFit = false;
+		this._includedCommentsInFirstFit = false;
 
 		this._referencesAll = [];
 

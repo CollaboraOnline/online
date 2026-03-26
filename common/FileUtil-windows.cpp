@@ -38,7 +38,7 @@ namespace FileUtil
         }
         catch (const std::filesystem::filesystem_error& e)
         {
-            // Don't complain if already non-existant.
+            // Don't complain if already non-existent.
             if (FileUtil::Stat(path).exists())
             {
                 // Error only if it still exists.

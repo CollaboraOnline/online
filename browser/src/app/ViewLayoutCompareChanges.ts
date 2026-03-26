@@ -31,7 +31,10 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 
 		this.adjustViewZoomLevel();
 
-		app.layoutingService.appendLayoutingTask(() => this.updateViewData());
+		app.layoutingService.appendLayoutingTask(() => {
+			app.sectionContainer.reNewAllSections();
+			this.updateViewData();
+		});
 	}
 
 	/// Refresh the view after scroll or zoom change.
@@ -44,7 +47,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		this.refreshView();
 	}
 
-	public adjustViewZoomLevel() {
+	public override adjustViewZoomLevel() {
 		Util.ensureValue(app.activeDocument);
 
 		const min = 0.1;
@@ -62,7 +65,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		app.map.setZoom(zoom, { animate: false });
 	}
 
-	protected refreshCurrentCoordList() {
+	protected override refreshCurrentCoordList() {
 		super.refreshCurrentCoordList();
 
 		const additionalCoords: Array<TileCoordData> = [];
@@ -124,7 +127,9 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		this.sendClientVisibleArea();
 
 		this.refreshCurrentCoordList();
+		TileManager.beginTransaction();
 		TileManager.checkRequestTiles(this.currentCoordList);
+		TileManager.endTransaction(null);
 	}
 
 	private getDeflectionX(mode: TileMode): number {
@@ -140,20 +145,31 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		else return this.halfWidth + this.viewGap - this.scrollProperties.viewX;
 	}
 
-	public documentToViewX(point: cool.SimplePoint): number {
+	public override documentToViewX(point: cool.SimplePoint): number {
 		Util.ensureValue(app.activeDocument);
 
 		// Default to right side.
 		if (point.mode === -1) point.mode = TileMode.RightSide;
 
-		return point.pX + this.getDeflectionX(point.mode);
+		return (
+			point.pX +
+			this.getDeflectionX(point.mode) +
+			this._documentAnchorPosition[0]
+		);
 	}
 
-	public documentToViewY(point: cool.SimplePoint): number {
-		return point.pY + this.yStart - this.scrollProperties.viewY;
+	public override documentToViewY(point: cool.SimplePoint): number {
+		return (
+			point.pY +
+			this.yStart -
+			this.scrollProperties.viewY +
+			this._documentAnchorPosition[1]
+		);
 	}
 
-	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
+	public override canvasToDocumentPoint(
+		point: cool.SimplePoint,
+	): cool.SimplePoint {
 		const result = point.clone();
 
 		point.mode =
@@ -162,17 +178,23 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		// Remember which tile mode was used last.
 		this.lastTileMode = point.mode;
 
-		result.pX -= this.getDeflectionX(point.mode);
-		result.pY += this.scrollProperties.viewY - this.yStart;
+		result.pX -=
+			this.getDeflectionX(point.mode) + this._documentAnchorPosition[0];
+		result.pY +=
+			this.scrollProperties.viewY -
+			this.yStart -
+			this._documentAnchorPosition[1];
 
 		return result;
 	}
 
-	public canScrollHorizontal(documentAnchor: CanvasSectionObject): boolean {
+	public override canScrollHorizontal(
+		documentAnchor: CanvasSectionObject,
+	): boolean {
 		return this.viewSize.pX > Math.round(documentAnchor.size[0] * 0.5);
 	}
 
-	public scroll(pX: number, pY: number): boolean {
+	public override scroll(pX: number, pY: number): boolean {
 		const scrolled = super.scroll(pX, pY);
 
 		if (scrolled) {

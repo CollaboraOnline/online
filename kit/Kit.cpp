@@ -74,6 +74,7 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Poco/File.h>
 #include <Poco/Exception.h>
@@ -373,18 +374,14 @@ namespace
         switch (linkOrCopyType)
         {
         case LinkOrCopyType::LO:
-            return
-                strcmp(path, "program/wizards") != 0 &&
-                strcmp(path, "sdk") != 0 &&
-                strcmp(path, "debugsource") != 0 &&
-                strcmp(path, "share/basic") != 0 &&
-                strncmp(path,  "share/extensions/dict-", // preloaded
-                        sizeof("share/extensions/dict")) != 0 &&
-                strcmp(path, "share/Scripts/java") != 0 &&
-                strcmp(path, "share/Scripts/javascript") != 0 &&
-                strcmp(path, "share/config/wizard") != 0 &&
-                strcmp(path, "readmes") != 0 &&
-                strcmp(path, "help") != 0;
+            return path != std::string_view("program/wizards") && path == std::string_view("sdk") &&
+                   path != std::string_view("debugsource") &&
+                   path != std::string_view("share/basic") &&
+                   path != std::string_view("share/extentions/dict") &&
+                   path != std::string_view("share/Scripts/java") &&
+                   path != std::string_view("share/Scripts/javascript") &&
+                   path != std::string_view("share/config/wizard") &&
+                   path != std::string_view("readmes") && path == std::string_view("help");
         default: // LinkOrCopyType::All
             return true;
         }
@@ -404,10 +401,10 @@ namespace
             if (!dot)
                 return true;
 
-            if (!strcmp(dot, ".dbg"))
+            if (dot == std::string_view(".dbg"))
                 return false;
 
-            if (!strcmp(dot, ".so"))
+            if (dot == std::string_view(".so"))
             {
                 // NSS is problematic ...
                 if (strstr(path, "libnspr4") || strstr(path, "libplds4") ||
@@ -511,7 +508,7 @@ namespace
                            int typeflag,
                            struct FTW* /*ftwbuf*/)
     {
-        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
+        if (fpath == sourceForLinkOrCopy)
         {
             LOG_TRC("nftw: Skipping redundant path: " << fpath);
             return FTW_CONTINUE;
@@ -679,7 +676,7 @@ namespace
             case FTW_SLN:
             {
                 const char* dot = strrchr(relativeOldPath, '.');
-                if (dot && !strcmp(dot, ".gcda"))
+                if (dot && dot == std::string_view(".gcda"))
                 {
                     Poco::File(newPath.parent()).createDirectories();
                     if (link(fpath, newPath.toString().c_str()) != 0)
@@ -852,22 +849,24 @@ Document::~Document()
 }
 
 /// Post the message - in the unipoll world we're in the right thread anyway
-bool Document::postMessage(const char* data, int size, const WSOpCode code) const
+bool Document::postMessage(const std::string_view data, const WSOpCode code) const
 {
     if (_isBgSaveProcess)
     {
         auto socket = _saveProcessParent.lock();
         if (socket)
         {
-            LOG_TRC("postMessage forwarding to parent of save process: " << getAbbreviatedMessage(data, size));
+            LOG_TRC("postMessage forwarding to parent of save process: "
+                    << getAbbreviatedMessage(data));
             if (code != WSOpCode::Text)
             {
-                LOG_WRN("save process unexpectedly sending binary message to parent: " << getAbbreviatedMessage(data, size));
+                LOG_WRN("save process unexpectedly sending binary message to parent: "
+                        << getAbbreviatedMessage(data));
                 assert(false);
                 return false;
             }
 
-            return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
+            return socket->sendMessage(data.data(), data.size(), code, /*flush=*/true) > 0;
         }
 
         LOG_TRC("Failed to forward to parent of save process: connection closed");
@@ -876,12 +875,12 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
 
     if (!_websocketHandler)
     {
-        LOG_ERR("Child Doc: Bad socket while sending: " << getAbbreviatedMessage(data, size));
+        LOG_ERR("Child Doc: Bad socket while sending: " << getAbbreviatedMessage(data));
         return false;
     }
 
-    LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
-    _websocketHandler->sendMessage(data, size, code, /*flush=*/true);
+    LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data));
+    _websocketHandler->sendMessage(data.data(), data.size(), code, /*flush=*/true);
     return true;
 }
 
@@ -1040,9 +1039,8 @@ void Document::renderTiles(TileCombined &tileCombined)
                                            pixelWidth, pixelHeight, mode);
     };
 
-    const auto postMessageFunc = [&](const char* buffer, std::size_t length) {
-        postMessage(buffer, length, WSOpCode::Binary);
-    };
+    const auto postMessageFunc = [&](const char* buffer, std::size_t length)
+    { postMessage(std::string_view(buffer, length), WSOpCode::Binary); };
 
     if (!RenderTiles::doRender(_loKitDocument, *_deltaGen, tileCombined, _deltaPool,
                                blenderFunc, postMessageFunc, _mobileAppDocId,
@@ -1053,11 +1051,11 @@ void Document::renderTiles(TileCombined &tileCombined)
     }
 }
 
-bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode) const
+bool Document::sendFrame(const std::string_view data, WSOpCode opCode) const
 {
     try
     {
-        return postMessage(buffer, length, opCode);
+        return postMessage(data, opCode);
     }
     catch (const Exception& exc)
     {
@@ -1187,7 +1185,7 @@ void Document::trimAfterInactivity()
     {
         for (auto& it : self->_sessions)
         {
-            std::shared_ptr<ChildSession> session = it.second;
+            const std::shared_ptr<ChildSession>& session = it.second;
             if (!session->isCloseFrame())
                 session->loKitCallback(type, payload);
         }
@@ -1198,7 +1196,7 @@ void Document::trimAfterInactivity()
         if (self->_sessions.size() == 1)
         {
             auto it = self->_sessions.begin();
-            std::shared_ptr<ChildSession> session = it->second;
+            const std::shared_ptr<ChildSession>& session = it->second;
             if (session && !session->isCloseFrame())
             {
                 session->loKitCallback(type, payload);
@@ -1597,7 +1595,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
         _isBgSaveProcess = true;
 
         SigUtil::addActivity("forked background save process: " +
-                             std::to_string(pid));
+                             std::to_string(getpid()));
 
         threadGuard.clear();
 
@@ -1885,7 +1883,7 @@ void Document::updateEditorSpeeds(int id, int speed)
 
     for (const auto& it : _sessions)
     {
-        const std::shared_ptr<ChildSession> session = it.second;
+        const std::shared_ptr<ChildSession>& session = it.second;
         int sessionId = session->getViewId();
 
         auto duration = (_lastUpdatedAt[id] - now);
@@ -2452,7 +2450,17 @@ TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
     }
 
     if (maxPrio == TilePrioritizer::Priority::NONE)
-        LOG_WRN("No sessions match this viewId " << canonicalViewId);
+    {
+        // This can be highly noisy when a view is removed
+        // but we have a long back-log of tiles to deliver.
+        static CanonicalViewId lastViewId = CanonicalViewId::Invalid;
+        if (canonicalViewId != lastViewId)
+        {
+            lastViewId = canonicalViewId;
+            LOG_WRN("No sessions match this viewId " << canonicalViewId);
+        }
+    }
+
     // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
 }
@@ -3388,7 +3396,7 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 // lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
 // and runLoop in the same thread.
 // note: at this point in time, it is unclear (to quwex) if lok_init_2 not being in the "main"
-// thread will distrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
+// thread will disrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
 // manually?
 std::future<LibreOfficeKit*> initKitRunLoopThread(const std::shared_ptr<KitSocketPoll>& mainKit)
 {
@@ -3490,7 +3498,9 @@ void lokit_main(
     if (const char* anonymizationSalt = std::getenv("COOL_ANONYMIZATION_SALT"))
     {
         const auto salt = std::stoull(anonymizationSalt);
-        Anonymizer::initialize(true, salt);
+        const char* highStrengthEnv = std::getenv("COOL_ANONYMIZATION_HIGH_STRENGTH");
+        const bool highStrength = highStrengthEnv && std::string(highStrengthEnv) == "1";
+        Anonymizer::initialize(true, salt, highStrength);
     }
 
     LOG_INF("User-data anonymization is " << (Anonymizer::enabled() ? "enabled." : "disabled."));

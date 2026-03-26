@@ -56,7 +56,7 @@ public:
     std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>>::const_iterator
     find(const std::string& key) const;
 
-    std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>>::const_iterator end();
+    std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>>::const_iterator end() const;
 
-    std::size_t size();
+    std::size_t size() const;
 };

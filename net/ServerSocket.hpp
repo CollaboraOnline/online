@@ -16,15 +16,15 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
+
 #ifndef _WIN32
 #include <sys/un.h>
 #endif
 
-#include <NetUtil.hpp>
 #include <memory>
-
-#include <Socket.hpp>
-#include <common/Log.hpp>
 
 class SocketFactory
 {
@@ -120,7 +120,7 @@ public:
     }
 
 protected:
-    bool isUnrecoverableAcceptError(int cause);
+    bool isUnrecoverableAcceptError(int cause) const;
     /// Create a Socket instance from the accepted socket FD.
     std::shared_ptr<Socket> createSocketFromAccept(int fd, Socket::Type type) const
     {

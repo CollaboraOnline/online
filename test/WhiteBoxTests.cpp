@@ -19,6 +19,7 @@
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Protocol.hpp>
 #include <common/RegexUtil.hpp>
@@ -29,6 +30,7 @@
 #include <wsd/TileDesc.hpp>
 
 #include <test/lokassert.hpp>
+#include <test/testlog.hpp>
 
 #include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -65,12 +67,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
-    CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
     CPPUNIT_TEST(testStateEnum);
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testJoinPair);
     CPPUNIT_TEST(testThreadPool);
+    CPPUNIT_TEST(testLogCaptureCaller);
     CPPUNIT_TEST_SUITE_END();
 
     void testCOOLProtocolFunctions();
@@ -91,12 +93,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testAnonymization();
     void testStat();
     void testStringCompare();
-    void testSafeAtoi();
     void testJsonUtilEscapeJSONValue();
     void testStateEnum();
     void testFindInVector();
     void testJoinPair();
     void testThreadPool();
+    void testLogCaptureCaller();
 
     size_t waitForThreads(size_t count);
 };
@@ -621,47 +623,47 @@ void WhiteBoxTests::testTileData()
     data.appendBlob(44, "Dbaa", 4);
     LOK_ASSERT_EQUAL(size_t(6), data.size());
 
-    LOK_ASSERT_EQUAL(data.isPng(), false);
+    LOK_ASSERT_EQUAL(false, data.isPng());
 
     // validation.
-    LOK_ASSERT_EQUAL(data.isValid(), true);
+    LOK_ASSERT_EQUAL(true, data.isValid());
     data.invalidate();
-    LOK_ASSERT_EQUAL(data.isValid(), false);
+    LOK_ASSERT_EQUAL(false, data.isValid());
 
     std::vector<char> out;
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 128), false);
-    LOK_ASSERT_EQUAL(out.size(), size_t(0));
+    LOK_ASSERT_EQUAL(false, data.appendChangesSince(out, 128));
+    LOK_ASSERT_EQUAL(size_t(0), out.size());
 
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 42), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 42));
     LOK_ASSERT_EQUAL_STR("foobaa", Util::toString(out));
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 43));
     LOK_ASSERT_EQUAL_STR("baa", Util::toString(out));
 
     // append another delta
     data.appendBlob(47, "Dbaz", 4);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 1), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 1));
     LOK_ASSERT_EQUAL_STR("foobaabaz", Util::toString(out));
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 43));
     LOK_ASSERT_EQUAL_STR("baabaz", Util::toString(out));
 
     // append an empty delta
     data.appendBlob(52, "D", 1);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
-    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
-    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(52));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
+    LOK_ASSERT_EQUAL(size_t(4), data._wids.size());
+    LOK_ASSERT_EQUAL(unsigned(52), data._wids.back());
 
     // the next empty delta should pack into the last one
     data.appendBlob(54, "D", 1);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
-    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
-    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(54));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
+    LOK_ASSERT_EQUAL(size_t(4), data._wids.size());
+    LOK_ASSERT_EQUAL(unsigned(54), data._wids.back());
 }
 
 void WhiteBoxTests::testRectanglesIntersect()
@@ -854,55 +856,6 @@ void WhiteBoxTests::testStringCompare()
     LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
 }
 
-void WhiteBoxTests::testSafeAtoi()
-{
-    constexpr std::string_view testname = __func__;
-
-    {
-        std::string s("7");
-        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("+7");
-        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("-7");
-        LOK_ASSERT_EQUAL(-7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42");
-        LOK_ASSERT_EQUAL(4, Util::safe_atoi(s.data(), 1));
-    }
-    {
-        std::string s("  42");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42xy");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        // Make sure signed integer overflow doesn't happen.
-        std::string s("9999999990");
-        // Good:       2147483647
-        // Bad:        1410065398
-        LOK_ASSERT_EQUAL(std::numeric_limits<int>::max(), Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("123");
-        s[1] = '\0';
-        LOK_ASSERT_EQUAL(1, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        LOK_ASSERT_EQUAL(0, Util::safe_atoi(nullptr, 0));
-    }
-}
-
 void WhiteBoxTests::testJsonUtilEscapeJSONValue()
 {
     constexpr std::string_view testname = __func__;
@@ -1052,6 +1005,36 @@ void WhiteBoxTests::testThreadPool()
     pool.start();
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
 //    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
+}
+
+void WhiteBoxTests::testLogCaptureCaller()
+{
+    constexpr std::string_view testname = __func__;
+
+    const auto logWithoutCaller = []() -> std::string
+    {
+        std::ostringstream oss;
+        LOG_END(oss);
+        return oss.str();
+    };
+    // Should return an empty string.
+    const std::string withoutCaller = logWithoutCaller();
+    TST_LOG("Without caller: [" << withoutCaller << ']');
+    LOK_ASSERT_MESSAGE("Unexpected to find the parent's source location",
+                       withoutCaller.find("(from") == std::string::npos);
+
+#line __LINE__ "WhiteBoxTests.cpp"
+    const auto logWithCaller = [](LOG_CAPTURE_CALLER_DECLARATION) -> std::string
+    {
+        std::ostringstream oss;
+        LOG_END(oss);
+        return oss.str();
+    };
+    // Should return something like "(from WhiteBoxTests.cpp:1031)|"
+    const std::string withCaller = logWithCaller();
+    TST_LOG("With caller: [" << withCaller << ']');
+    LOK_ASSERT_MESSAGE("Expected to find the parent's source location",
+                       withCaller.find("|(from WhiteBoxTests.cpp:") != std::string::npos);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

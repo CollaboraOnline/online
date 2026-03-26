@@ -18,6 +18,7 @@
 
 #include <COOLWSD.hpp>
 #include <ConfigUtil.hpp>
+#include <FileUtil.hpp>
 #include <HttpRequest.hpp>
 #include <Poco/Net/PartHandler.h>
 #include <Socket.hpp>
@@ -109,13 +110,13 @@ public:
 
         bool isValid() const { return !_wopiSrc.empty() && !_accessToken.empty(); }
 
-        const std::string wopiSrc() const { return _wopiSrc; }
-        const std::string accessToken() const { return _accessToken; }
-        const std::string noAuthHeader() const { return _noAuthHeader; }
-        const std::string permission() const { return _permission; }
+        const std::string& wopiSrc() const { return _wopiSrc; }
+        const std::string& accessToken() const { return _accessToken; }
+        const std::string& noAuthHeader() const { return _noAuthHeader; }
+        const std::string& permission() const { return _permission; }
         // only exists in debugging mode, so built-in wopi debuging server
         // can support multiple 'shared' configs depending on configid=something
-        const std::string wopiConfigId() const { return _wopiConfigId; }
+        const std::string& wopiConfigId() const { return _wopiConfigId; }
 
     private:
         std::string _wopiSrc;
@@ -209,7 +210,7 @@ public:
                        const std::shared_ptr<StreamSocket>& socket,
                        ResourceAccessDetails& accessDetails);
 
-    void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
+    void readDirToHash(const std::string& basePath, const std::string& path);
 
     const std::string *getCompressedFile(const std::string &path);
 
@@ -237,7 +238,8 @@ public:
     void dumpState(std::ostream& os);
 
 private:
-    std::map<std::string, std::pair<std::string, std::string>> FileHash;
+    using FileHashMap_t = std::unordered_map<std::string, std::pair<std::string, std::string>>;
+    FileHashMap_t FileHash;
     static void sendError(http::StatusCode errorCode, const std::string& requestPath,
                           const std::shared_ptr<StreamSocket>& socket,
                           const std::string& shortMessage, const std::string& longMessage,
@@ -249,11 +251,17 @@ class FilePartHandler : public Poco::Net::PartHandler
 public:
     void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override;
     const std::string& getFileName() const { return _fileName; }
-    const std::string& getFileContent() const { return _fileContent; }
+    const std::string& getFilePath() const { return _filePath; }
+    /// Take shared ownership of the temp dir (and file within it).
+    /// Caller keeps this alive until the file is no longer needed.
+    std::shared_ptr<FileUtil::OwnedFile> getFileOwnership() const { return _fileDir; }
 
 private:
     std::string _fileName;
-    std::string _fileContent;
+    /// Path to temp file containing the uploaded content.
+    std::string _filePath;
+    /// Temp directory holding the file, removed recursively on destruction.
+    std::shared_ptr<FileUtil::OwnedFile> _fileDir;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

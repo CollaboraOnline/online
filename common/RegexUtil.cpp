@@ -17,7 +17,7 @@
 #include <config.h>
 #include <config_version.h>
 
-// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Include <typeinfo> here.
 #include <typeinfo>
 
 #include "RegexUtil.hpp"

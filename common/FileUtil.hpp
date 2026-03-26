@@ -164,15 +164,15 @@ namespace FileUtil
     inline bool isWritable(const std::string& path) { return isWritable(path.c_str()); }
 
     /// Copy the source file to the target.
-    bool copy(const std::string& fromPath, const std::string& toPath, bool log,
-              bool throw_on_error);
+    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error,
+              LOG_CAPTURE_CALLER_DECLARATION);
 
     /// Atomically copy a file and optionally preserve its timestamps.
     /// The file is copied with a temporary name, and then atomically renamed.
     /// NOTE: toPath must be a valid filename, not a directory.
     /// Does not log (except errors), does not throw. Returns true on success.
-    bool copyAtomic(const std::string& fromPath, const std::string& toPath,
-                    bool preserveTimestamps);
+    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps,
+                    LOG_CAPTURE_CALLER_DECLARATION);
 
     /// Copy a file from @fromPath to @toPath, throws on failure.
     inline void copyFileTo(const std::string& fromPath, const std::string& toPath)
@@ -240,6 +240,7 @@ namespace FileUtil
         closeFD(fd);
 
         data.resize(originalSize + (n <= 0 ? 0 : n));
+        data.shrink_to_fit();
 
         return n;
     }

@@ -289,7 +289,7 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
@@ -305,7 +305,7 @@ void COOLWSD::syncUsersBrowserSettings(const std::string& userId, const pid_t ch
 
     LOG_INF("Syncing browsersettings for all the users");
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         if (docBroker->getPid() == childPid)
@@ -324,7 +324,7 @@ void COOLWSD::alertUserInternal(const std::string& dockey, const std::string& ms
 
     LOG_INF("Alerting document users with dockey: [" << dockey << ']' << " msg: [" << msg << ']');
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         if (docBroker->getDocKey() == dockey)
@@ -591,11 +591,10 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 }
 
 /// Cleans up dead children.
-/// Returns true if removed at least one.
-static bool cleanupChildren()
+static void cleanupChildren()
 {
     if (Util::isKitInProcess())
-        return 0;
+        return;
 
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -612,14 +611,15 @@ static bool cleanupChildren()
     if (static_cast<int>(NewChildren.size()) != count)
         SigUtil::addActivity("removed " + std::to_string(count - NewChildren.size()) +
                              " children");
-
-    return static_cast<int>(NewChildren.size()) != count;
 }
 
 /// Decides how many children need spawning and spawns.
 static void rebalanceChildren(const std::string& configId, int64_t balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
+
+    // Remove dead children first so the available count is accurate.
+    cleanupChildren();
 
     int64_t available = 0;
     for (const auto& elem : NewChildren)
@@ -630,9 +630,6 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
 
     LOG_TRC("Rebalance children to " << balance << ", have " << available << " and "
                                      << OutstandingForks[configId] << " outstanding requests");
-
-    // Do the cleanup first.
-    const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTimes[configId]);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -646,15 +643,22 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
         OutstandingForks[configId] = 0;
     }
 
-    balance -= available;
-    balance -= OutstandingForks[configId];
+    if (OutstandingForks[configId] != 0)
+    {
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << OutstandingForks[configId]
+                << " outstanding fork requests. Time since last request: " << durationMs);
+        return;
+    }
 
-    if (balance > 0 && (rebalance || OutstandingForks[configId] == 0))
+    balance -= available;
+
+    if (balance > 0)
     {
         LOG_DBG("prespawnChildren ["
                 << configId << "]: Have " << available << " spare "
-                << (available == 1 ? "child" : "children") << ", and " << OutstandingForks[configId]
-                << " outstanding (total: " << NewChildren.size() << "), forking " << balance
+                << (available == 1 ? "child" : "children")
+                << " (total: " << NewChildren.size() << "), forking " << balance
                 << " more. Time since last request: " << durationMs);
         forkChildren(configId, balance);
     }
@@ -859,9 +863,10 @@ public:
 
 #if !MOBILEAPP
     // Resets the forkit process object
-    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc)
+    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc,
+                          LOG_CAPTURE_CALLER_DECLARATION)
     {
-        assertCorrectThread(__FILE__, __LINE__);
+        assertCorrectThread(LOG_PASS_PARENT_CALLER);
         _forKitProc = forKitProc;
         if (forKitProc && !_queuedSendMessages.empty())
         {
@@ -1472,7 +1477,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Load view mode file extensions configuration
     COOLWSD::ViewModeFileExtensions = ConfigUtil::getConfigValue<std::string>(
         conf, "view_mode.file_extensions", "");
-    LOG_DBG_S("View mode extensions: [" << COOLWSD::ViewModeFileExtensions << ']');
 
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = ConfigUtil::getConfigValue<std::string>(conf, "logging.level", "trace");
@@ -1614,6 +1618,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     std::ostringstream ossConfig;
     ossConfig << "Loaded config file [" << configFilePath << "] (non-default values):\n";
     ossConfig << ConfigUtil::getLoggableConfig(conf);
+    LOG_DBG_S("View mode extensions: [" << COOLWSD::ViewModeFileExtensions << ']');
 
     LoggableConfigEntries = ossConfig.str();
     LOG_INF(LoggableConfigEntries);
@@ -1737,6 +1742,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
 
     std::uint64_t anonymizationSalt = 82589933;
+    bool highStrengthAnonymize = false;
     LOG_INF("Anonymization of user-data is " << (AnonymizeUserData ? "enabled." : "disabled."));
     if (AnonymizeUserData)
     {
@@ -1745,9 +1751,17 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             conf, "logging.anonymize.anonymization_salt", 82589933);
         const std::string anonymizationSaltStr = std::to_string(anonymizationSalt);
         setenv("COOL_ANONYMIZATION_SALT", anonymizationSaltStr.c_str(), true);
+
+        highStrengthAnonymize = ConfigUtil::getConfigValue<bool>(
+            conf, "logging.anonymize.high_strength", false);
+        if (highStrengthAnonymize)
+        {
+            LOG_INF("Using high-strength cryptographic anonymization (PBKDF2-HMAC-SHA512).");
+            setenv("COOL_ANONYMIZATION_HIGH_STRENGTH", "1", true);
+        }
     }
 
-    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt);
+    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt, highStrengthAnonymize);
 
     {
         bool enableWebsocketURP =
@@ -2178,11 +2192,15 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #if !WASMAPP && !defined(_WIN32)
     struct rlimit rlim;
-    ::getrlimit(RLIMIT_NOFILE, &rlim);
-    LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
-    // 4 fds per document are used for client connection, Kit process communication, and
-    // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
-    LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+    if (::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+    {
+        LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
+        // 4 fds per document are used for client connection, Kit process communication, and
+        // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
+        LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+    }
+    else
+        LOG_SYS("Failed to get RLIMIT_NOFILE");
 #endif
 
     LOG_INF("Maximum concurrent open Documents limit: " << COOLWSD::MaxDocuments);
@@ -2340,6 +2358,10 @@ void COOLWSD::setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguratio
         }
 #endif
     }
+
+#if !MOBILEAPP
+    setenv("LOK_ALLOWED_EXTREF_PATHS", "", true);
+#endif
 }
 
 void COOLWSD::initializeSSL()
@@ -2406,11 +2428,13 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port_number"));
 
-#if ENABLE_DEBUG
-    optionSet.addOption(Option("find-free-port", "", "Find a free port to listen on, starting from the default.")
-                        .required(false)
-                        .repeatable(false));
-#endif
+    if constexpr (Util::isDebugEnabled())
+    {
+        optionSet.addOption(Option("find-free-port", "",
+                                   "Find a free port to listen on, starting from the default.")
+                                .required(false)
+                                .repeatable(false));
+    }
 
     optionSet.addOption(Option("disable-ssl", "", "Disable SSL security layer.")
                         .required(false)
@@ -2458,25 +2482,28 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                             .required(false)
                             .repeatable(false));
 
-#if ENABLE_DEBUG
-    optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("unitlib"));
+    if constexpr (Util::isDebugEnabled())
+    {
+        optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
+                                .required(false)
+                                .repeatable(false)
+                                .argument("unitlib"));
 
-    optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("seconds"));
+        optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
+                                .required(false)
+                                .repeatable(false)
+                                .argument("seconds"));
 
-    optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
-                        .required(false)
-                        .repeatable(false));
+        optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
+                                .required(false)
+                                .repeatable(false));
 
-    optionSet.addOption(Option("forcecaching", "", "Force HTML & asset caching even in debug mode: accelerates cypress.")
-                        .required(false)
-                        .repeatable(false));
-#endif
+        optionSet.addOption(
+            Option("forcecaching", "",
+                   "Force HTML & asset caching even in debug mode: accelerates cypress.")
+                .required(false)
+                .repeatable(false));
+    }
 }
 
 void COOLWSD::handleOption(const std::string& optionName,
@@ -2763,7 +2790,7 @@ void COOLWSD::setMigrationMsgReceived(const std::string& docKey)
 void COOLWSD::setAllMigrationMsgReceived()
 {
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([docBroker]() { docBroker->setMigrationMsgReceived(); });
@@ -3510,7 +3537,7 @@ void COOLWSDServer::dumpState(std::ostream& os) const
     {
         std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
         os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
-        for (auto& i : DocBrokers)
+        for (const auto& i : DocBrokers)
             i.second->dumpState(os);
     }
 
@@ -3886,7 +3913,7 @@ void COOLWSD::innerMain()
         << "Edit mode:" << '\n';
 
     auto names = FileUtil::getDirEntries(DEBUG_ABSSRCDIR "/test/samples");
-    for (auto &i : names)
+    for (const auto &i : names)
     {
         if (i.find("-edit") != std::string::npos)
         {
@@ -4096,9 +4123,9 @@ void COOLWSD::innerMain()
     // We block until they finish, or the service stopping times out.
     {
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        for (auto& docBrokerIt : DocBrokers)
+        for (const auto& docBrokerIt : DocBrokers)
         {
-            std::shared_ptr<DocumentBroker> docBroker = docBrokerIt.second;
+            const std::shared_ptr<DocumentBroker>& docBroker = docBrokerIt.second;
             if (docBroker && docBroker->isAlive())
             {
                 LOG_DBG("Joining docBroker [" << docBrokerIt.first << "].");
@@ -4160,7 +4187,7 @@ void COOLWSD::innerMain()
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
-    for (auto& child : NewChildren)
+    for (const auto& child : NewChildren)
     {
         child->terminate();
     }
@@ -4319,7 +4346,7 @@ int COOLWSD::getClientPortNumber()
 std::string COOLWSD::getJailRoot(int pid)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-    for (auto &it : DocBrokers)
+    for (const auto &it : DocBrokers)
     {
         if (pid < 0 || it.second->getPid() == pid)
             return it.second->getJailRoot();
@@ -4335,7 +4362,7 @@ std::vector<std::shared_ptr<DocumentBroker>> COOLWSD::getBrokersTestOnly()
     std::vector<std::shared_ptr<DocumentBroker>> result;
 
     result.reserve(DocBrokers.size());
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
         result.push_back(brokerIt.second);
     return result;
 }
@@ -4478,7 +4505,7 @@ void forwardSignal(const int signum)
 
     for (const auto& pair : DocBrokers)
     {
-        std::shared_ptr<DocumentBroker> docBroker = pair.second;
+        const std::shared_ptr<DocumentBroker>& docBroker = pair.second;
         if (docBroker && docBroker->getPid() > 0)
         {
             LOG_INF("Sending " << name << " to docBroker " << docBroker->getPid());

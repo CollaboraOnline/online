@@ -304,10 +304,10 @@ bool UnitBase::filterLOKitMessage(const std::shared_ptr<Message>& message)
     return onFilterLOKitMessage(message);
 }
 
-bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t len,
-                                          const WSOpCode code, const bool flush, int& unitReturn)
+bool UnitBase::filterSendWebSocketMessage(const std::string_view data, const WSOpCode code,
+                                          const bool flush, int& unitReturn)
 {
-    const std::string message(data, len);
+    const std::string message(data);
     if (message.starts_with("unocommandresult:"))
     {
         const std::size_t index = message.find_first_of('{');
@@ -385,7 +385,7 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
             return false;
     }
 
-    return onFilterSendWebSocketMessage(data, len, code, flush, unitReturn);
+    return onFilterSendWebSocketMessage(data, code, flush, unitReturn);
 }
 
 void UnitBase::exitTest(TestResult result, const std::string& reason)
@@ -490,13 +490,15 @@ void UnitBase::endTest([[maybe_unused]] const std::string& reason)
     if (TimeoutThread.joinable())
         TimeoutThread.join();
 
-    TST_LOG("==================== Finished [" << getTestname() << "] ====================");
+    TST_LOG("==================== Finished [" << getTestname() << "] " << name(_result) << " - "
+                                              << reason << " ====================");
 }
 
 UnitWSD::UnitWSD(const std::string& name)
     : UnitBase(name, UnitType::Wsd)
     , _wsd(nullptr)
     , _hasKitHooks(false)
+    , _hasDocBroker(false)
 {
 }
 
@@ -527,6 +529,16 @@ void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX
     }
 }
 
+void UnitWSD::DocBrokerCreate(const std::string& key)
+{
+    if (isUnitTesting())
+    {
+        onDocBrokerCreate(key);
+
+        _hasDocBroker = true;
+    }
+}
+
 void UnitWSD::DocBrokerDestroy(const std::string& key)
 {
     if (isUnitTesting())
@@ -545,23 +557,7 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
         // Check if we have more tests, but keep the current index if it's the last.
         if (haveMoreTests())
         {
-            // We have more tests.
-            ++GlobalIndex;
-            filter();
-
-            if (GlobalArray[GlobalIndex] != nullptr && !SigUtil::getShutdownRequestFlag() &&
-                (_result == TestResult::Ok || GlobalTestOptions.getKeepgoing()))
-            {
-                TST_LOG("Starting test #" << GlobalIndex + 1 << ": "
-                                          << GlobalArray[GlobalIndex]->getTestname());
-                UnitWSD* globalWSD = getMaybeNull();
-                if (globalWSD)
-                    globalWSD->configure(Poco::Util::Application::instance().config());
-                GlobalArray[GlobalIndex]->initialize();
-            }
-
-            // Wake-up so the previous test stops.
-            SocketPoll::wakeupWorld();
+            startNextTest();
         }
     }
 }
@@ -574,6 +570,35 @@ UnitWSD& UnitWSD::get()
 }
 
 UnitWSD* UnitWSD::getMaybeNull() { return static_cast<UnitWSD*>(GlobalArray[GlobalIndex]); }
+
+void UnitWSD::startNextTest()
+{
+            // Get the current UnitWSDInterface to pass to the next one.
+            UnitWSD* currentWSD = getMaybeNull();
+            UnitWSDInterface* unitWsdInterface = currentWSD ? currentWSD->_wsd : nullptr;
+
+            // We have more tests.
+            ++GlobalIndex;
+            filter();
+
+            if (GlobalArray[GlobalIndex] != nullptr && !SigUtil::getShutdownRequestFlag() &&
+                (_result == TestResult::Ok || GlobalTestOptions.getKeepgoing()))
+            {
+                TST_LOG("Starting test #" << GlobalIndex + 1 << ": "
+                                          << GlobalArray[GlobalIndex]->getTestname());
+                UnitWSD* globalWSD = getMaybeNull();
+                if (globalWSD)
+                {
+                    globalWSD->setWSD(unitWsdInterface);
+                    globalWSD->configure(Poco::Util::Application::instance().config());
+                }
+
+                GlobalArray[GlobalIndex]->initialize();
+            }
+
+            // Wake-up so the previous test stops.
+            SocketPoll::wakeupWorld();
+}
 
 void UnitWSD::onExitTest(TestResult result, const std::string&)
 {
@@ -592,7 +617,15 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
             return;
         }
 
-        TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        if (_hasDocBroker)
+        {
+            TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        }
+        else
+        {
+            startNextTest();
+        }
+
         return;
     }
 

@@ -253,7 +253,7 @@ private:
         std::chrono::steady_clock::time_point getWhen() const { return _when; }
 
         void setUri(const std::string& uri) { _uri = uri; }
-        std::string getUri() const { return _uri; }
+        const std::string& getUri() const { return _uri; }
 
     private:
         std::chrono::steady_clock::time_point _when;

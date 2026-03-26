@@ -21,6 +21,7 @@
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
 #include <wsd/ClientSession.hpp>
@@ -188,7 +189,7 @@ void Quarantine::initialize(const std::string& path)
     // We are initialized at this point.
     QuarantinePath = path;
 
-    for (auto& pair : QuarantineMap)
+    for (const auto& pair : QuarantineMap)
     {
         LOG_TRC("BC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
                             << pair.first << ']');
@@ -197,7 +198,7 @@ void Quarantine::initialize(const std::string& path)
     // Clean up.
     makeQuarantineSpace(/*headroomBytes=*/0);
 
-    for (auto& pair : QuarantineMap)
+    for (const auto& pair : QuarantineMap)
     {
         LOG_TRC("AC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
                             << pair.first << ']');
@@ -454,11 +455,10 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
     if (tokens.size() > 3)
     {
         _secondsSinceEpoch =
-            Util::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
-                .first;
+            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0);
 
-        _pid = Util::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
-                   .first;
+        _pid =
+            NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0);
 
         // Note: this is unreliable since both the dockey and filename can (and often do) contain the Delimiter '_'.
         _docKey = filename.substr(tokens[2]._index,
@@ -488,11 +488,10 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
     if (tokens.size() >= 3)
     {
         _secondsSinceEpoch =
-            Util::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
-                .first;
+            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0);
 
-        _pid = Util::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
-                   .first;
+        _pid =
+            NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0);
 
         _filename = filename.substr(tokens[2]._index, tokens[2]._length);
 

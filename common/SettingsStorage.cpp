@@ -27,6 +27,7 @@
 #include <sstream>
 
 #include "Log.hpp"
+#include <common/Util.hpp>
 
 namespace Desktop
 {
@@ -249,13 +250,8 @@ void processIntegratorAdminFile(const std::string& payload)
     replaceOrEmpty("<!--%CSS_VARIABLES%-->", "css_variables");
     replaceOrEmpty("%UI_THEME%", "ui_theme");
 
-#if ENABLE_DEBUG
-    const bool enableDebug = true;
-#else
-    const bool enableDebug = false;
-#endif
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
-                         std::string(enableDebug ? "true" : "false"));
+                         std::string(Util::isDebugEnabled() ? "true" : "false"));
 
     const auto& config = Poco::Util::Application::instance().config();
     std::string enableAccessibility =

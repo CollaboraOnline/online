@@ -281,7 +281,7 @@ public:
                        SocketDisposition::MoveFunction transferFn) const;
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
-    void stop(const std::string& reason);
+    void stop(std::string_view reason);
 
     /// Hard removes a session, only for ClientSession.
     void finalRemoveSession(const std::shared_ptr<ClientSession>& session);
@@ -363,7 +363,7 @@ public:
     bool autoSave(bool force, bool dontSaveIfUnmodified, bool finalWrite = false);
 
     /// Saves the document and stops if there was nothing to autosave.
-    void autoSaveAndStop(const std::string& reason);
+    void autoSaveAndStop(std::string_view reason);
 
     bool isAsyncUploading() const;
 
@@ -375,12 +375,12 @@ public:
     const std::string& getConfigId() const { return _configId; }
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
-    bool hasTileCache() { return _tileCache != nullptr; }
+    bool hasTileCache() const { return _tileCache != nullptr; }
     bool isAlive() const;
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(const char* filename = "?", int line = 0) const;
+    void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const;
 
     /// Pretty print internal state to a stream.
     void dumpState(std::ostream& os);
@@ -726,11 +726,11 @@ private:
     void endRenameFileCommand();
 
     /// Shutdown all client connections with the given reason.
-    void shutdownClients(const std::string& closeReason);
+    void shutdownClients(std::string_view closeReason);
 
     /// This gracefully terminates the connection
     /// with the child and cleans up ChildProcess etc.
-    void terminateChild(const std::string& closeReason);
+    void terminateChild(std::string_view closeReason);
 
 #if !MOBILEAPP && !WASMAPP
     /// Invoked to switch from Online to Offline mode.
@@ -1692,7 +1692,7 @@ private:
             _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
         bool _isFollowmeSlideShowOn = false;
-        int _currentLeaderEffect = -1;
+        int _currentLeaderEffect = 0;
         int _currentLeaderSlide = -1;
     };
 

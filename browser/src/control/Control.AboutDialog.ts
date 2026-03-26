@@ -215,7 +215,7 @@ class AboutDialog {
 			link.addEventListener('click', (e: MouseEvent) => {
 				e.preventDefault();
 				app.socket.sendMessage('uno .uno:WidgetTestDialog');
-				app.map.uiManager.closeModal('modal-dialog-about-dialog-box', false);
+				app.map.uiManager.closeModal('modal-dialog-about-dialog-box');
 			});
 
 			elements.jsDialog.appendChild(label);
@@ -371,7 +371,7 @@ class AboutDialog {
 		}
 
 		const addLine = (label: string, value: string) => {
-			if (value.trim()) {
+			if (value && value.trim()) {
 				text += `${label}: ${value.trim()}\n`;
 			}
 		};
@@ -390,7 +390,10 @@ class AboutDialog {
 
 		text = text.replace(/\u00A0/g, ' ');
 
-		if (navigator.clipboard && window.isSecureContext) {
+		if (window.mode.isCODesktop()) {
+			(window as any).postMobileMessage('TEXTCLIPBOARD ' + text);
+			this.contentHasBeenCopiedShowSnackbar();
+		} else if (navigator.clipboard && window.isSecureContext) {
 			navigator.clipboard
 				.writeText(text)
 				.then(
@@ -424,7 +427,7 @@ class AboutDialog {
 	private contentHasBeenCopiedShowSnackbar() {
 		const timeout = 1000;
 		this.map.uiManager.showSnackbar(
-			'Version information has been copied',
+			_('Version information has been copied'),
 			null,
 			null,
 			timeout,

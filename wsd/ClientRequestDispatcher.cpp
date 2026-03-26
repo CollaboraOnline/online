@@ -16,6 +16,8 @@
 
 #include <config.h>
 
+#include <wsd/ClientRequestDispatcher.hpp>
+
 #if ENABLE_FEATURE_LOCK
 #include <CommandControl.hpp>
 #endif
@@ -29,6 +31,7 @@
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/NumUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>
 #include <RequestDetails.hpp>
@@ -39,7 +42,6 @@
 #include <net/HttpHelper.hpp>
 #include <net/NetUtil.hpp>
 #include <net/Uri.hpp>
-#include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
 
@@ -895,9 +897,12 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
         memcpy(appDocIdBuffer, payload + space + 1, appDocIdLen);
         appDocIdBuffer[appDocIdLen] = '\0';
-        const auto [mobileAppDocId, docIdOk] = Util::u64FromString(appDocIdBuffer, 0);
-        if (!docIdOk) {
-            LOG_ERR("Bad document ID \"" << appDocIdBuffer << "\" in \"" << std::string_view(payload, len) << "\"");
+        auto [mobileAppDocId, docIdOk] = NumUtil::u64FromString(appDocIdBuffer);
+        if (!docIdOk)
+        {
+            mobileAppDocId = 0;
+            LOG_ERR("Bad document ID \"" << appDocIdBuffer << "\" in \""
+                                         << std::string_view(payload, len) << "\"");
         }
         free(appDocIdBuffer);
 
@@ -2188,7 +2193,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
         if (!fromPath.empty() && hasRequiredParameters)
         {
-            Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+            Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
             AdditionalFilePocoUris additionalFileUrisPublic;
             for (const auto& key : {"template", "compare"})
             {
@@ -2198,7 +2203,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                     continue;
                 }
 
-                additionalFileUrisPublic[key] = RequestDetails::sanitizeURI(it->second);
+                additionalFileUrisPublic[key] = RequestDetails::sanitizeLocalPath(it->second);
             }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
@@ -2460,7 +2465,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (fromPath.empty())
             return false;
 
-        Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+        Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
         const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
         // This lock could become a bottleneck.
@@ -2629,9 +2634,9 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = R"(progress: { "id":"find" })";
+        static constexpr std::string_view status = R"(progress: { "id":"find" })";
         LOG_TRC("Sending to Client [" << status << ']');
-        ws->sendMessage(status);
+        ws->sendTextMessage(status);
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
@@ -2641,8 +2646,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
     catch (const std::exception& exc)
     {
         LOG_ERR("Error while handling Client WS Request: " << exc.what());
-        const std::string msg = "error: cmd=internal kind=load";
-        ws->sendMessage(msg);
+        constexpr std::string_view msg = "error: cmd=internal kind=load";
+        ws->sendTextMessage(msg);
         ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
         socket->ignoreInput();
         return true;

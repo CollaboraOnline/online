@@ -20,11 +20,11 @@ L10N_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_ALL_JS)
 L10N_ALL_JS_ENTRY = l10n-all.js
 
-$(L10N_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
+$(L10N_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.py
 	find $(srcdir)/po -name 'ui-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
 	find $(srcdir)/po -name 'help-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
 	@mkdir -p $(dir $@)
-	perl $(srcdir)/util/create-l10n-all-js.pl >$@
+	python3 $(srcdir)/util/create-l10n-all-js.py >$@
 	find $(srcdir)/po -name 'ui-*.po.json' -delete
 	find $(srcdir)/po -name 'help-*.po.json' -delete
 endif
@@ -70,7 +70,7 @@ MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
 # tsc can report a failure, but still create a .js and a second make attempt will succeed,
 # so if this returns an error then delete the target
 $(MOCHA_JS_DIR)/main.js: $(MOCHA_DIR)/main.ts
-	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5 --downlevelIteration || (rm -f $@ && false)
+	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --moduleResolution node --lib dom,es2016 --target ES5 --downlevelIteration || (rm -f $@ && false)
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
@@ -186,7 +186,7 @@ COOL_ADMIN_JS =\
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
-	dompurify@3.2.4 \
+	dompurify@3.3.2 \
 	json-js@1.1.2 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
@@ -240,10 +240,13 @@ WORKER_NODE_MODULES_JS =\
 $(DIST_FOLDER)/src/app/TaskWorker.js: \
 	$(srcdir)/src/app/TaskWorker.js.m4 \
 	$(srcdir)/src/app/TaskWorkerSrc.js \
+	$(DIST_FOLDER)/src/layer/tile/CanvasTileUtils.js \
 	$(WORKER_NODE_MODULES_JS)
 
 	$(QUIET_M4) m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
+		-DMOBILEAPP=$(ENABLE_MOBILEAPP) \
 		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(WORKER_NODE_MODULES_JS)) \
+		-DTILEUTILS_JS=$(DIST_FOLDER)/src/layer/tile/CanvasTileUtils.js \
 		-DWORKER_JS=$(srcdir)/src/app/TaskWorkerSrc.js \
 		$(srcdir)/src/app/TaskWorker.js.m4 > $@
 
@@ -259,7 +262,6 @@ NODE_MODULES_JS =\
 	node_modules/gl-matrix/gl-matrix-min.js
 
 COOL_LIBS_JS =\
-	ResizeObserverPolyfill.js \
 	Autolinker.js \
 	sanitize-url.js
 
@@ -285,6 +287,7 @@ COOL_JS_LST =\
 	src/docstate.ts \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
+	src/app/TableStylesService.ts \
 	src/app/DocEvents.ts \
 	src/core/geometry.ts \
 	src/core/TimerRegistry.ts \
@@ -343,6 +346,7 @@ COOL_JS_LST =\
 	src/canvas/CanvasSectionContainer.ts \
 	src/canvas/CanvasSectionObject.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
+	src/canvas/sections/RulerSpacerSection.ts \
 	src/canvas/sections/CompareChangesLabelSection.ts \
 	src/canvas/sections/CommentMarkerSubSection.ts \
 	src/canvas/sections/CommentSection.ts \
@@ -413,7 +417,6 @@ COOL_JS_LST =\
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
 	src/layer/marker/A11yTextInput.js \
-	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
 	src/core/Handler.js \
 	src/dom/DomEvent.js \
@@ -473,7 +476,9 @@ COOL_JS_LST =\
 	src/control/jsdialog/Util.Accessibility.ts \
 	src/control/jsdialog/Util.ButtonType.ts \
 	src/control/jsdialog/Util.Dropdown.ts \
+	src/control/jsdialog/Util.GenerateTableIcon.ts \
 	src/control/jsdialog/Util.Events.ts \
+	src/control/jsdialog/Util.KeyCodes.ts \
 	src/control/jsdialog/Util.KeyboardTabNavigation.ts \
 	src/control/jsdialog/Util.KeyboardGridNavigation.ts \
 	src/control/jsdialog/Util.KeyboardListNavigation.ts \
@@ -551,9 +556,9 @@ COOL_JS_LST =\
 	$(icons_js) \
 	src/control/Control.BackstageView.ts \
 	src/control/Control.ContextToolbar.ts \
-	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
+	src/control/Notebookbar.CalcTableTab.ts \
 	src/control/Notebookbar.ImpressAnimationTab.ts \
 	src/control/Notebookbar.ImpressTransitionTab.ts \
 	src/control/Sidebar.FromNotebookbarPanel.ts \
@@ -1184,6 +1189,7 @@ pot:
 		js/global.js \
 		src/app/Debug.ts \
 		src/app/IconUtil.ts \
+		src/app/TableStylesService.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/canvas/sections/CompareChangesLabelSection.ts \
@@ -1219,6 +1225,7 @@ pot:
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.QuickFindPanel.ts \
+		src/control/Notebookbar.CalcTableTab.ts \
 		src/control/Notebookbar.ImpressAnimationTab.ts \
 		src/control/Notebookbar.ImpressTransitionTab.ts \
 		src/control/Notebookbar.WriterReferencesTab.ts \
@@ -1277,6 +1284,7 @@ pot:
 		src/map/Map.js \
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \
+		src/map/handler/Map.Keyboard.js \
 		src/map/handler/Map.Print.js \
 		src/map/handler/Map.SlideShow.js \
 		src/map/handler/Map.VersionBar.js \
@@ -1350,7 +1358,7 @@ DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
 check-local: $(MOCHA_JS_DIR)/main.js
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
-	@if npm test 2> ${MOCHA_TEST_LOG} 1>&2; then \
+	@if (cd $(srcdir) && PATH="$(abs_builddir)/node_modules/.bin:$$PATH" NODE_PATH="$(abs_builddir)/node_modules" npm test) 2> ${MOCHA_TEST_LOG} 1>&2; then \
 		echo "Mocha tests finished successfully. Results in ${MOCHA_TEST_LOG}"; \
 	else \
 		cat ${MOCHA_TEST_LOG}; \
@@ -1358,7 +1366,7 @@ check-local: $(MOCHA_JS_DIR)/main.js
 	fi
 
 	@echo > ${DUPLICATION_TEST_LOG}
-	$(QUIET_JSCPCD) if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
+	$(QUIET_JSCPCD) if (cd $(srcdir) && PATH="$(abs_builddir)/node_modules/.bin:$$PATH" NODE_PATH="$(abs_builddir)/node_modules" npm run duplication) 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
 		echo "Code duplication tests finished successfully."; \
 	else \
 		cat ${DUPLICATION_TEST_LOG}; \

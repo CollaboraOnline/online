@@ -18,12 +18,12 @@
 
 #include "SigUtil.hpp"
 
-#include <Common.hpp>
+#include <common/Common.hpp>
 #include <common/Log.hpp>
-#include <SigHandlerTrap.hpp>
-#include <Socket.hpp>
-#include <test/testlog.hpp>
+#include <common/SigHandlerTrap.hpp>
 #include <common/Util.hpp>
+#include <net/Socket.hpp>
+#include <test/testlog.hpp>
 
 #include <array>
 #include <atomic>
@@ -34,8 +34,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <fcntl.h>
-#include <fstream>
-#include <iomanip>
 #include <iostream>
 #include <poll.h>
 #include <sstream>
@@ -229,12 +227,7 @@ void resetTerminationFlags()
         fsync(SignalLogFD);
     }
 
-    void signalLogPrefix()
-    {
-        std::array<char, 1024> buffer;
-        Log::prefix<buffer.size()>(buffer, "SIG");
-        signalLog(buffer.data());
-    }
+    void signalLogPrefix() { signalLog(Log::prefix("SIG").data()); }
 
     // We need a signal safe means of writing messages
     //   $ man 7 signal

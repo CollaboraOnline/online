@@ -24,6 +24,7 @@
 #include <thread>
 #include <string>
 #include <common/Clipboard.hpp>
+#include <common/LangUtil.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
 #include <common/Util.hpp>
@@ -366,6 +367,10 @@ static std::atomic<int> appDocIdCounter(1);
 + (void)LOG_TRC:(NSString *)message {
     std::string stdMessage = [message UTF8String];
     LOG_TRC(stdMessage);
+}
+
++ (bool)isRtlLanguage:(NSString *)language {
+    return LangUtil::isRtlLanguage(std::string([language UTF8String]));
 }
 
 @end

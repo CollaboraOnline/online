@@ -71,7 +71,7 @@ private:
     }
 
     /// Returns the given protocol's scheme.
-    static const char* getProtocolScheme(Protocol protocol)
+    static constexpr std::string_view getProtocolScheme(Protocol protocol)
     {
         switch (protocol)
         {
@@ -154,7 +154,7 @@ public:
     }
 
     /// Returns the current protocol scheme.
-    const char* getProtocolScheme() const { return getProtocolScheme(_protocol); }
+    std::string_view getProtocolScheme() const { return getProtocolScheme(_protocol); }
 
     const std::string& host() const { return _host; }
     const std::string& port() const { return _port; }
@@ -385,7 +385,7 @@ private:
                 const auto size = item.size();
                 assert(size && "Zero-sized messages must never be queued for sending.");
 
-                sendTextMessage(item.data(), size);
+                sendTextMessage(std::string_view(item.data(), size));
 
                 wrote += size;
                 LOG_TRC("WebSocketSession: performing writes, wrote " << size << " bytes, " << wrote

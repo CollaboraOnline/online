@@ -90,7 +90,7 @@ class ShortcutDescriptor {
 
         On Mac, command is seen as Mod.CTRL and there is a separate Mod.MACCTRL to read control
 
-        If ommitted, no modifier will be required
+        If omitted, no modifier will be required
 
         @default Mod.NONE */
         modifier?: Mod,
@@ -112,15 +112,15 @@ class ShortcutDescriptor {
 
         If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
 
-        If ommitted, no uno command will be run when this keybind is pressed */
+        If omitted, no uno command will be run when this keybind is pressed */
         unoAction?: string,
         /** The action to dispatch when the keybind is pressed
 
         If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
 
-        If ommitted, no action will be dispatched when this keybind is pressed */
+        If omitted, no action will be dispatched when this keybind is pressed */
         dispatchAction?: string,
-        /** The optional data to pass to the sipatcher if dispatchAction is used*/
+        /** The optional data to pass to the dispatcher if dispatchAction is used*/
         dispatchData?: any,
         /** The view type (Edit or ReadOnly) to restrict this keybind to
 
@@ -230,6 +230,19 @@ class KeyboardShortcuts {
         const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
 
         if (shortcut) {
+            // In read-only mode, block shortcuts that send uno commands
+            // to core unless they are explicitly meant for read-only use.
+
+            // FIXME: For some reason we need to check for .uno:CloseWin separately here. That is
+            // supposed to work both in viewing mode (called ViewType.ReadOnly) and editing mode.
+
+            if (!this.map.isEditMode() && shortcut.unoAction &&
+                shortcut.unoAction !== '.uno:CloseWin' &&
+                shortcut.viewType !== ViewType.ReadOnly) {
+                event.preventDefault();
+                return true;
+            }
+
             let action = 'disabled';
             if (shortcut.unoAction) {
                 action = shortcut.unoAction;
@@ -308,6 +321,12 @@ const keyboardShortcuts = new KeyboardShortcuts();
 // Default shortcuts.
 keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
 
+    // FIXME: Should we mark shortcuts that are supposed to work *only* in editing mode with
+    // viewType: ViewType.Edit? Having viewType as null means the shortcut is supposed to work in
+    // either viewing or editing mode, and having it as ViewType.ReadOnly means it is supposed to
+    // work only in viewing mode. At least if you believe the comment for viewType in the
+    // ShortcutDescriptor constructor.
+
     // All document types.
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'o', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT, unoAction: '.uno:Open' }),
 
@@ -317,7 +336,9 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
         Disable F5 or assign it something to prevent browser refresh.
         Disable multi-sheet selection shortcuts in Calc.
         Disable F2 in Writer, formula bar is unsupported, and messes with further input.
+        Disable CTRL+SHIFT+N because core side template dialog is not supported on Online.
     */
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'N' }),
     new ShortcutDescriptor({ eventType: 'keydown', key: 'F1', dispatchAction: 'showhelp' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT, key: 'F1', dispatchAction: 'focustonotebookbar' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'f', dispatchAction: 'home-search' }),
@@ -350,6 +371,9 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'End', dispatchAction: 'lastpart', viewType: ViewType.ReadOnly }),
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'Home', dispatchAction: 'firstpart', viewType: ViewType.ReadOnly }),
 
+
+    // Prevent F7 from triggering Caret Browsing in desktop apps.
+    new ShortcutDescriptor({ eventType: 'keydown', key: 'F7', unoAction: '.uno:SpellingAndGrammarDialog', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT }),
 
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT | Mod.CTRL, key: 'p', dispatchAction: 'userlist' }),
 

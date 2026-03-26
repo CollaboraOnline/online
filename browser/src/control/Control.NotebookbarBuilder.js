@@ -26,6 +26,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	_overrideHandlers: function() {
 		var builder = this;
 		const comboboxesFocusingDocument = ['fontnamecombobox', 'fontsizecombobox', 'styles'];
+		const originalCallback = builder.callback;
 		this.callback = function(objectType, eventType, object, data, builderArg) {
 			if (eventType === 'selected'
 				&& comboboxesFocusingDocument.indexOf(object.id) >= 0) {
@@ -33,14 +34,15 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 				builder.map.focus();
 				return 'focusHandled';
 			}
-			return builder._defaultCallbackHandler(objectType, eventType, object, data, builderArg);
+			// allow for customization
+			return originalCallback(objectType, eventType, object, data, builderArg);
 		};
 
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
-		this._controlHandlers['iconview'] = JSDialog.notebookbarIconView;
+		this._controlHandlers['iconviewlist'] = JSDialog.notebookbarIconViewList;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 
 		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
@@ -392,15 +394,13 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 					'action': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
 					'text': _('EPUB (.epub)'),
 					'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub'
-				}
-			];
-			if (!window.ThisIsTheWindowsApp)
-				// In CODA-W surely just the PDF save with options should be enough
-				submenuOpts.push({
+				},
+				{
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
-				});
+				}
+			];
 			submenuOpts.push({
 				'action': 'downloadas-html',
 				'text': _('HTML File (.html)')
@@ -408,7 +408,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			if (!window.ThisIsTheAndroidApp)
 				submenuOpts.push({
 					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
 					'command': 'exportpdf'
 				});
 		} else if (docType === 'spreadsheet') {
@@ -432,19 +434,19 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 				{
 					'action': 'downloadas-html',
 					'text': _('HTML File (.html)')
-				}
-			];
-			if (!window.ThisIsTheWindowsApp)
-				// As for 'text'
-				submenuOpts.push({
+				},
+				{
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
-				});
+				}
+			];
 			if (!window.ThisIsTheAndroidApp)
 				submenuOpts.push({
 					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
 					'command': 'exportpdf'
 				});
 		} else if (docType === 'presentation') {
@@ -468,19 +470,19 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 				{
 					'action': 'downloadas-html',
 					'text': _('HTML Document (.html)')
-				}
-			];
-			if (!window.ThisIsTheWindowsApp)
-				// As for 'text'
-				submenuOpts.push({
+				},
+				{
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-				});
+				}
+			];
 			if (!window.ThisIsTheAndroidApp)
 				submenuOpts.push({
 					'action': 'exportpdf',
-					'text': _('PDF Document (.pdf) as...'),
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
 					'command': 'exportpdf'
 				});
 			if (window.extraExportFormats.includes('impress_swf'))
@@ -850,7 +852,8 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			if (hasManyChildren) {
+			var isContainer = this.isContainerType(childData.type);
+			if (hasManyChildren && isContainer) {
 				if (childData.id && childData.id.indexOf(' ') >= 0)
 					console.error('notebookbar: space in the id: "' + childData.id + '"');
 				var tableId = childData.id ? childData.id.replace(' ', '') : '';

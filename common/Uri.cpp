@@ -37,6 +37,20 @@ std::string Uri::decode(const std::string& uri)
     return decoded;
 }
 
+std::string Uri::encodeAllPercent(const std::string& path)
+{
+    std::string result;
+    result.reserve(path.size());
+    for (const char c : path)
+    {
+        if (c == '%')
+            result += "%25";
+        else
+            result += c;
+    }
+    return result;
+}
+
 bool Uri::needsEncoding(const std::string& uri, const std::string& reserved)
 {
     const std::string decoded = decode(uri);

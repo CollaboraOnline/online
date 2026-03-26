@@ -320,6 +320,14 @@ class A11yValidator {
 		}
 	}
 
+	validateIframeDialog(container: HTMLElement): void {
+		const iframe = container.querySelector('iframe');
+		if (!iframe || !iframe.contentDocument || !iframe.contentDocument.body)
+			return;
+
+		this.validateDialog(iframe.contentDocument.body);
+	}
+
 	validateAllOpenDialogs(): void {
 		const jsdialog = app.map?.jsdialog;
 		if (!jsdialog || !jsdialog.dialogs) {
@@ -348,7 +356,9 @@ class A11yValidator {
 			return;
 		}
 
-		const errorCount = this.validateContainer(currentSidebar.container);
+		const container = currentSidebar.getContainer();
+		Util.ensureValue(container);
+		const errorCount = this.validateContainer(container);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: sidebar passed all checks');
@@ -366,7 +376,9 @@ class A11yValidator {
 			return;
 		}
 
-		const errorCount = this.validateContainer(notebookbar.container);
+		let errorCount = this.validateContainer(notebookbar.container);
+		errorCount += this.checkTabContainerConsistency(notebookbar);
+		errorCount += this.checkOverflowGroupChildIds(notebookbar);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: notebookbar passed all checks');
@@ -374,6 +386,225 @@ class A11yValidator {
 			console.error(
 				`A11yValidator: notebookbar has ${errorCount} accessibility issues`,
 			);
+		}
+	}
+
+	private checkTabContainerConsistency(notebookbar: any): number {
+		const selectedTab = document.querySelector(
+			'.ui-tab.notebookbar.selected',
+		) as HTMLElement;
+		if (!selectedTab || !selectedTab.id) return 0;
+
+		const tabName = selectedTab.id.split('-')[0];
+		const tabs = notebookbar.getTabs();
+		const tabDef = tabs?.find((t: any) => t.id === selectedTab.id);
+
+		let errorCount = 0;
+
+		if (tabDef && tabDef.name && tabDef.name !== tabName) {
+			console.error(
+				new A11yValidatorException(
+					`Tab '${tabDef.id}' has name '${tabDef.name}' which does not match its id prefix '${tabName}'. The name must match so that accessibility shortcuts are assigned to its buttons.`,
+				),
+			);
+			errorCount++;
+		}
+
+		const container = notebookbar.container.querySelector(
+			'#' + tabName + '-container',
+		);
+		if (!container) {
+			console.error(
+				new A11yValidatorException(
+					`Selected tab '${selectedTab.id}' has no matching container '#${tabName}-container' in the DOM. Accessibility shortcuts for this tab's buttons will not work.`,
+				),
+			);
+			errorCount++;
+		}
+
+		errorCount += this.checkDuplicateShortcuts(selectedTab.id);
+
+		return errorCount;
+	}
+
+	private collectAllCombinations(
+		node: any,
+		items: Array<{ id: string; combination: string }>,
+		language: string | null,
+	): void {
+		if (!node) return;
+
+		if (Array.isArray(node)) {
+			for (const child of node) {
+				this.collectAllCombinations(child, items, language);
+			}
+			return;
+		}
+
+		const isOverflow = node.type === 'overflowgroup';
+
+		if (!isOverflow && node.accessibility && node.accessibility.combination) {
+			const combo =
+				language && node.accessibility[language]
+					? node.accessibility[language]
+					: node.accessibility.combination;
+			const id = node.id || 'unknown';
+			items.push({ id: id, combination: combo });
+		}
+
+		if (node.children && Array.isArray(node.children)) {
+			for (const child of node.children) {
+				this.collectAllCombinations(child, items, language);
+			}
+		}
+	}
+
+	private checkDuplicateShortcuts(selectedTabId: string): number {
+		const notebookbar = (window as any).app?.map?.uiManager?.notebookbar;
+		if (!notebookbar) return 0;
+
+		const tabs = notebookbar.getTabs();
+		const rawDefinitions = notebookbar.getFullJSON();
+		if (!tabs || !rawDefinitions) return 0;
+
+		// Find the ContextContainer
+		let node = rawDefinitions;
+		let contextContainer = null;
+		while (
+			node.children &&
+			Array.isArray(node.children) &&
+			node.children[0] &&
+			!contextContainer
+		) {
+			if (node.children[0].id === 'ContextContainer')
+				contextContainer = node.children[0];
+			else node = node.children[0];
+		}
+		if (!contextContainer) return 0;
+
+		// Find the selected tab's raw content
+		const tabName = selectedTabId.split('-')[0];
+		let rawContentList = null;
+		for (const child of contextContainer.children) {
+			if (
+				child.children &&
+				child.children[0] &&
+				child.children[0].id === tabName + '-container'
+			) {
+				rawContentList = child.children[0].children;
+				break;
+			}
+		}
+		if (!rawContentList) return 0;
+
+		const NbaDefs = (window as any).NotebookbarAccessibilityDefinitions;
+		const language = NbaDefs ? new NbaDefs().getLanguage() : null;
+
+		const items: Array<{ id: string; combination: string }> = [];
+		this.collectAllCombinations(rawContentList, items, language);
+
+		let errorCount = 0;
+
+		for (let i = 0; i < items.length; i++) {
+			for (let j = i + 1; j < items.length; j++) {
+				const a = items[i];
+				const b = items[j];
+				if (a.combination === b.combination) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}' has duplicate shortcut '${a.combination}' on '${a.id}' and '${b.id}'. Each shortcut within a tab must be unique.`,
+						),
+					);
+					errorCount++;
+				} else if (a.combination.startsWith(b.combination)) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}': shortcut '${b.combination}' on '${b.id}' is a prefix of '${a.combination}' on '${a.id}', making '${a.id}' unreachable.`,
+						),
+					);
+					errorCount++;
+				} else if (b.combination.startsWith(a.combination)) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}': shortcut '${a.combination}' on '${a.id}' is a prefix of '${b.combination}' on '${b.id}', making '${b.id}' unreachable.`,
+						),
+					);
+					errorCount++;
+				}
+			}
+		}
+
+		return errorCount;
+	}
+
+	private checkOverflowGroupChildIds(notebookbar: any): number {
+		const selectedTab = document.querySelector(
+			'.ui-tab.notebookbar.selected',
+		) as HTMLElement;
+		if (!selectedTab || !selectedTab.id) return 0;
+
+		const tabName = selectedTab.id.split('-')[0];
+		const containerId = tabName + '-container';
+
+		const fullJSON = notebookbar.getFullJSON();
+		const tabJSON = this.findJSONNodeById(fullJSON, containerId);
+		if (!tabJSON) return 0;
+
+		let errorCount = 0;
+
+		const walk = (node: any): void => {
+			if (!node || !node.children || !Array.isArray(node.children)) return;
+
+			for (const child of node.children) {
+				if (child.type === 'overflowgroup' && child.id) {
+					this.findDuplicateIdInChildren(
+						child.id,
+						child.children,
+						(dupId: string) => {
+							console.error(
+								new A11yValidatorException(
+									`Overflow group '${dupId}' contains a child with the same id. This breaks accessibility shortcut resolution because querySelector matches the parent instead of the child.`,
+								),
+							);
+							errorCount++;
+						},
+					);
+				}
+				walk(child);
+			}
+		};
+
+		walk(tabJSON);
+		return errorCount;
+	}
+
+	private findJSONNodeById(node: any, id: string): any {
+		if (!node) return null;
+		if (node.id === id) return node;
+		if (node.children && Array.isArray(node.children)) {
+			for (const child of node.children) {
+				const found = this.findJSONNodeById(child, id);
+				if (found) return found;
+			}
+		}
+		return null;
+	}
+
+	private findDuplicateIdInChildren(
+		parentId: string,
+		children: any[],
+		onDuplicate: (id: string) => void,
+	): void {
+		if (!children || !Array.isArray(children)) return;
+
+		for (const child of children) {
+			if (child.id === parentId) {
+				onDuplicate(parentId);
+				return;
+			}
+			if (child.children) {
+				this.findDuplicateIdInChildren(parentId, child.children, onDuplicate);
+			}
 		}
 	}
 }

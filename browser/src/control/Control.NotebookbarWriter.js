@@ -304,7 +304,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'id': 'runmacro',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:RunMacro', 'text'),
-						'command': '.uno:RunMacro'
+						'command': '.uno:RunMacro',
+						'accessibility': { focusBack: true,	combination: 'Z' }
 					}
 				]
 			});
@@ -364,7 +365,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -434,18 +435,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					'type': 'toolbox',
 					'children': [
 						{
-							'id': 'forum',
-							'type': 'bigtoolitem',
-							'text': _('Forum'),
-							'command': '.uno:ForumHelp',
-							'accessibility': { focusBack: true, combination: 'C', de: null }
-						}
-					]
-				},
-				{
-					'type': 'toolbox',
-					'children': [
-						{
 							'id': 'online-help',
 							'type': 'bigtoolitem',
 							'text': _('Online Help'),
@@ -463,11 +452,82 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							'type': 'bigtoolitem',
 							'text': _('Keyboard shortcuts'),
 							'command': '.uno:KeyboardShortcuts',
-							'accessibility': { focusBack: false, combination: 'S', de: null }
+							'accessibility': { focusBack: false, combination: 'SH', de: null }
 						}
 					]
 				},
 				{ type: 'separator', id: 'help-keyboardshortcuts-break', orientation: 'vertical' },
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'forum',
+							'type': 'bigtoolitem',
+							'text': _('Forum'),
+							'command': '.uno:ForumHelp',
+							'accessibility': { focusBack: true, combination: 'C', de: null }
+						}
+					]
+				},
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'report-an-issue',
+							'type': 'bigtoolitem',
+							'text': _('Report an issue'),
+							'command': '.uno:ReportIssue',
+							'accessibility': { focusBack: true, combination: 'K', de: null }
+						},
+					]
+				},
+				hasLatestUpdates ?
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'latestupdates',
+								'type': 'bigtoolitem',
+								'text': _('Latest Updates'),
+								'command': '.uno:LatestUpdates',
+								'accessibility': { focusBack: true,	combination: 'LU', de: null }
+
+							}
+						]
+					} : {},
+				hasFeedback ?
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'feedback',
+								'type': 'bigtoolitem',
+								'text': _('Send Feedback'),
+								'command': '.uno:Feedback',
+								'accessibility': { focusBack: true,	combination: 'SF', de: null }
+							}
+						]
+					} : {},
+				hasServerAudit ?
+					{
+						'id': 'help-serveraudit-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					} : {},
+				hasServerAudit ?
+					{
+						'id': 'server-audit',
+						'type': 'bigcustomtoolitem',
+						'text': _('Server audit'),
+						'command': 'serveraudit',
+						'accessibility': { focusBack: false, combination: 'SA', de: null }
+					} : {},
+				hasAccessibilitySupport || hasAccessibilityCheck ?
+					{
+						'id': 'help-accessibility-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					} : {},
 				hasAccessibilitySupport ?
 					{
 						'id':'togglea11ystate',
@@ -498,65 +558,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'visible': isDebugOn ? 'true' : 'false',
 						'accessibility': { focusBack: true,	combination: 'VD', de: null }
 					},
-				hasAccessibilitySupport || hasAccessibilityCheck ?
+				hasAbout ?
 					{
-						'id': 'help-accessibility-break',
+						'id': 'help-about-break',
 						'type': 'separator',
 						'orientation': 'vertical'
-					} : {},
-				hasServerAudit ?
-				{
-					'id': 'server-audit',
-					'type': 'bigcustomtoolitem',
-					'text': _('Server audit'),
-					'command': 'serveraudit',
-					'accessibility': { focusBack: false, combination: 'SA', de: null }
-				} : {},
-				hasServerAudit ?
-				{
-				'id': 'help-serveraudit-break',
-				'type': 'separator',
-				'orientation': 'vertical'
-				} : {},
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'report-an-issue',
-							'type': 'bigtoolitem',
-							'text': _('Report an issue'),
-							'command': '.uno:ReportIssue',
-							'accessibility': { focusBack: true, combination: 'K', de: null }
-						},
-					]
-				},
-				{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
-				hasLatestUpdates ?
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'latestupdates',
-								'type': 'bigtoolitem',
-								'text': _('Latest Updates'),
-								'command': '.uno:LatestUpdates',
-								'accessibility': { focusBack: true,	combination: 'LU', de: null }
-
-							}
-						]
-					} : {},
-				hasFeedback ?
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'feedback',
-								'type': 'bigtoolitem',
-								'text': _('Send Feedback'),
-								'command': '.uno:Feedback',
-								'accessibility': { focusBack: true,	combination: 'SF', de: null }
-							}
-						]
 					} : {},
 				hasAbout ?
 					{
@@ -579,7 +585,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	getHomeTab: function() {
 		var content = [
 			{
-				'id': 'home-undo-redo',
+				'id': 'home-do',
 				'type': 'container',
 				'children': [
 					{
@@ -630,7 +636,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 									'id': 'home-brush',
 									'type': 'toolitem',
 									'text': _UNO('.uno:FormatPaintbrush'),
+									'tooltip': _('Clone Formatting (double click to keep active)'),
 									'command': '.uno:FormatPaintbrush',
+									'doubleClickCommand': '.uno:FormatPaintbrush',
+									'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
 									'accessibility': { focusBack: true,	combination: 'FP',	de: null }
 								}
 							]
@@ -940,12 +949,18 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			   'name':_('Styles'),
 			   'children' : [
 					{
-						   'id': 'stylesview',
-						   'type': 'iconview',
-						   'entries': [],
-						   'vertical': 'false'
+						'id': 'stylesview-iconview-list',
+						'type': 'iconviewlist',
+						'children': [
+							{
+								'id': 'stylesview',
+								'type': 'iconview',
+								'entries': [],
+								'vertical': 'false'
+							}
+						]
 					},
-			   ]
+			  ]
 			},
 			{
 				'type': 'overflowgroup',
@@ -1109,7 +1124,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageDialog', 'text'),
 				'command': '.uno:PageDialog',
-				'accessibility': { focusBack: false, combination: 'D', de: null }
+				'accessibility': { focusBack: false, combination: 'PD', de: null }
 			},
 			{ type: 'separator', id: 'format-pagedialog-break', orientation: 'vertical' },
 			{
@@ -1124,7 +1139,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:EditRegion', 'text'),
 				'command': '.uno:EditRegion',
-				'accessibility': { focusBack: false, combination: 'F', de: null }
+				'accessibility': { focusBack: false, combination: 'RG', de: null }
 			},
 			{
 				'id': 'format-format-line',
@@ -1253,7 +1268,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 										'noLabel': true,
 										'text': _UNO('.uno:InsertGraphic'),
 										'command': '.uno:InsertGraphic',
-										'accessibility': { focusBack: true,	combination: 'P',	de:	'BI' }
+										'accessibility': { focusBack: true,	combination: 'PI',	de:	'BI' }
 									},
 								]
 							},
@@ -1809,7 +1824,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'menubutton',
 						'text': _UNO('.uno:Orientation', 'text'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true, combination: 'O', de: '4' }
+						'accessibility': { focusBack: true, combination: 'OI', de: '4' }
 					}
 				]
 			},
@@ -2162,11 +2177,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hideChangeTrackingControls = this._map['wopi'].HideChangeTrackingControls;
 		var content = [
 			{
-				'id': 'review-spelling-and-grammar-dialog',
+				'id': 'review-word-count-dialog',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SpellingAndGrammarDialog'),
-				'command': '.uno:SpellingAndGrammarDialog',
-				'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
+				'text': _UNO('.uno:WordCountDialog', 'text'),
+				'command': '.uno:WordCountDialog',
+				'accessibility': { focusBack: false, combination: 'W', de: 'W' }
 			},
 			{
 				'id': 'review-thesaurus-dialog',
@@ -2187,53 +2202,73 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					'id': 'review-translate',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Translate', 'text'),
-					'command': '.uno:Translate'
+					'command': '.uno:Translate',
+					'accessibility': { focusBack: false, combination: 'ZT', de: null }
 				}: {},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'review-spell-online',
-								'type': 'toolitem',
-								'text': _UNO('.uno:SpellOnline'),
-								'command': '.uno:SpellOnline',
-								'accessibility': { focusBack: true, combination: 'SO', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'review-word-count-dialog',
-								'type': 'toolitem',
-								'text': _UNO('.uno:WordCountDialog', 'text'),
-								'command': '.uno:WordCountDialog',
-								'accessibility': { focusBack: false, combination: 'W', de: 'W' }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
 			{ type: 'separator', id: 'review-wordcountdialog-break', orientation: 'vertical' },
-						{
+			{
 				'type': 'overflowgroup',
-				'id': 'review-comments',
-				'name':_('Comments'),
-				'accessibility': { focusBack: false, combination: 'C', de: 'N' },
+				'id': 'review-Spellcheck',
+				'name': _('Spellcheck'),
+				'icon': 'lc_spellcheck.svg',
+				'accessibility': { focusBack: false,combination: 'SP',	de:	'SP' },
 				'children' : [
 					{
-						'id': 'review-insert-annotation:AnnotationMenu',
-						'type': 'menubutton',
-						'text': _UNO('.uno:InsertAnnotation'),
-						'applyCallback': 'insertcomment',
-						'command': '.uno:InsertAnnotation',
-						'accessibility': { focusBack: false, combination: 'C', de: 'N' }
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-spelling-and-grammar-dialog',
+										'type': 'toolitem',
+										'text': _('Spelling Options'),
+										'command': '.uno:SpellingAndGrammarDialog',
+										'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-spell-online',
+										'type': 'toolitem',
+										'text': _('Auto Spell Check'),
+										'command': '.uno:SpellOnline',
+										'accessibility': { focusBack: true, combination: 'SO', de: null},
+										'stateIcons': {
+											on: 'autospellcheck-on',
+											off: 'autospellcheck-off',
+										},
+									}
+								]
+							},
+						],
+						'vertical': 'true'
 					},
+				]
+			},
+			{ type: 'separator', id: 'review-spell-break', orientation: 'vertical' },
+			{
+				'id': 'review-insert-annotation',
+				'class': 'unoAccessibilityCheck',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertAnnotation'),
+				'command': '.uno:InsertAnnotation',
+				'accessibility': { focusBack: false, combination: 'CM', de: 'N' }
+			},
+			{ type: 'separator', id: 'review-comment-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'review-comments',
+				'name':_('Show Comments'),
+				'accessibility': { focusBack: false, combination: 'SC', de: 'N' },
+				'more': {
+					'command':'showcommentsnavigator',
+					'accessibility': { focusBack: true,	combination: 'MC', de: null },
+				},
+				'children' : [
 					{
 						'type': 'container',
 						'children': [
@@ -2243,7 +2278,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 									{
 										'id': 'showannotations',
 										'type': 'customtoolitem',
-										'text': _UNO('.uno:ShowAnnotations', 'text'),
+										'text': _('Show Comments'),
 										'command': 'showannotations',
 										'accessibility': { focusBack: true, combination: 'SA', de: null }
 									}
@@ -2310,16 +2345,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true, combination: 'TC', de: null }
 					},
 					{
-						'id': 'review-show-tracked-changes',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:ShowTrackedChanges', 'text'),
-						'command': '.uno:ShowTrackedChanges',
-						'accessibility': { focusBack: true, combination: 'SC', de: null }
-					},
-					{
-						'id': 'compare-tracked-change',
-						'type': 'bigcustomtoolitem',
+						'id': 'compare-tracked-change:ViewChangesMenu',
+						'type': 'menubutton',
 						'text': _('View Changes'),
+						'applyCallback': 'comparechanges',
 						'command': 'comparechanges',
 						'accessibility': { focusBack: true, combination: 'CC' }
 					},
@@ -2742,31 +2771,39 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	getFormulaTab: function() {
 		var content = [
 			{
+				'id': 'change-font',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeFont', 'text'),
 				'command': '.uno:ChangeFont',
-				'icon': 'lc_fontdialog.svg'
+				'icon': 'lc_fontdialog.svg',
+				'accessibility': { focusBack: true, combination: 'CF', de: null },
 			},
 			{ type: 'separator', id: 'formula-changefont-break', orientation: 'vertical' },
 			{
+				'id': 'change-font-size',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeFontSize', 'text'),
 				'command': '.uno:ChangeFontSize',
-				'icon': 'lc_fontheight.svg'
+				'icon': 'lc_fontheight.svg',
+				'accessibility': { focusBack: true, combination: 'FZ', de: null },
 			},
 			{ type: 'separator', id: 'formula-changefontsize-break', orientation: 'vertical' },
 			{
+				'id': 'change-distance',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeDistance', 'text'),
 				'command': '.uno:ChangeDistance',
 				'icon': 'lc_spacing.svg',
+				'accessibility': { focusBack: true, combination: 'CD', de: null },
 			},
 			{ type: 'separator', id: 'formula-changedistance-break', orientation: 'vertical' },
 			{
+				'id': 'change-alignment',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeAlignment', 'text'),
 				'command': '.uno:ChangeAlignment',
-				'icon': 'lc_fontworkalignmentfloater.svg'
+				'icon': 'lc_fontworkalignmentfloater.svg',
+				'accessibility': { focusBack: true, combination: 'CA', de: null },
 			}
         ];
 		return this.getTabPage(formulaTabName, content);

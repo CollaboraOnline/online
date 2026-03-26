@@ -82,9 +82,9 @@ if ${trace} \
 				   --o:cache_files.path="$cache_path" \
 				   --o:storage.filesystem[@allow]=true \
 				   --o:logging.level=trace \
-				   --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
-				   --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
-				   --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
+				   --o:ssl.key_file_path="@abs_top_srcdir@/etc/key.pem" \
+				   --o:ssl.cert_file_path="@abs_top_srcdir@/etc/cert.pem" \
+				   --o:ssl.ca_file_path="@abs_top_srcdir@/etc/ca-chain.cert.pem" \
 				   --o:admin_console.username=admin --o:admin_console.password=admin \
 				   --o:storage.ssl.enable=false \
 				   --o:experimental_features=true \
@@ -109,9 +109,9 @@ else
 	echo "         --o:cache_files.path\"$cache_path\" \\"
 	echo "         --o:storage.filesystem[@allow]=true \\"
 	echo "         --o:logging.level=error\\" # logs and gdb don't go well together
-	echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"
-	echo "         --o:ssl.cert_file_path=\"${abs_top_builddir}/etc/cert.pem\" \\"
-	echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
+	echo "         --o:ssl.key_file_path=\"@abs_top_srcdir@/etc/key.pem\" \\"
+	echo "         --o:ssl.cert_file_path=\"@abs_top_srcdir@/etc/cert.pem\" \\"
+	echo "         --o:ssl.ca_file_path=\"@abs_top_srcdir@/etc/ca-chain.cert.pem\" \\"
 	echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
 	echo "         --o:storage.ssl.enable=false \\"
 	echo "         --o:experimental_features=true \\"

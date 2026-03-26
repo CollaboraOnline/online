@@ -13,6 +13,9 @@
 
 #include "DocumentOperations.hpp"
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>

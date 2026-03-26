@@ -72,7 +72,7 @@ bool Session::sendTextFrame(const char* buffer, const int length)
     }
 
     LOG_TRC("Send: [" << getAbbreviatedMessage(buffer, length) << ']');
-    return _protocol->sendTextMessage(buffer, length) >= length;
+    return _protocol->sendTextMessage(std::string_view(buffer, length)) >= length;
 }
 
 bool Session::sendBinaryFrame(const char *buffer, int length)
@@ -85,7 +85,7 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
     }
 
     LOG_TRC("Send: " << std::to_string(length) << " binary bytes");
-    return _protocol->sendBinaryMessage(buffer, length) >= length;
+    return _protocol->sendBinaryMessage(std::string_view(buffer, length)) >= length;
 }
 
 void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp)
@@ -163,7 +163,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
                 continue;
             }
 
-            std::string decodedSignatureData = Uri::decode(value);
+            const std::string decodedSignatureData = Uri::decode(value);
             if (decodedSignatureData == "{}")
             {
                 LOG_INF("signatureconfig: Empty signature data received, skipping processing");
@@ -351,7 +351,7 @@ void Session::disconnect()
     }
 }
 
-void Session::shutdown(bool goingAway, const std::string& statusMessage)
+void Session::shutdown(bool goingAway, const std::string_view statusMessage)
 {
     LOG_TRC("Shutting down WS [" << getName() << "] " << (goingAway ? "going" : "normal")
                                  << " and reason [" << statusMessage << ']');
@@ -360,7 +360,7 @@ void Session::shutdown(bool goingAway, const std::string& statusMessage)
     if (_protocol)
     {
         // skip the queue; FIXME: should we flush SessionClient's queue ?
-        std::string closeMsg = "close: " + statusMessage;
+        const std::string closeMsg = "close: " + std::string(statusMessage);
         _protocol->sendTextMessage(closeMsg);
         _protocol->shutdown(goingAway, statusMessage);
     }

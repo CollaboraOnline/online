@@ -58,10 +58,7 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         LOG_TRC("WOPI::CheckFileInfo returned " << httpResponse->statusLine().statusCode());
 
         const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode == http::StatusCode::MovedPermanently ||
-            statusCode == http::StatusCode::Found ||
-            statusCode == http::StatusCode::TemporaryRedirect ||
-            statusCode == http::StatusCode::PermanentRedirect)
+        if (http::isRedirectStatusCode(statusCode))
         {
             if (redirectLimit != 0)
             {
@@ -86,14 +83,12 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         const std::string& wopiResponse = httpResponse->getBody();
         const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
         const bool unauthorized =
-            (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
-             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
+            http::isUnauthorizedStatusCode(httpResponse->statusLine().statusCode());
 
         if (Log::isEnabled(failed ? Log::Level::ERR : Log::Level::TRC))
         {
             std::ostringstream oss;
-            oss << "WOPI::CheckFileInfo returned" << httpResponse->statusLine().statusCode() << ' '
+            oss << "WOPI::CheckFileInfo returned " << httpResponse->statusLine().statusCode() << ' '
                 << httpResponse->statusLine().reasonPhrase() << " for URI [" << uriAnonym
                 << "]. Headers: " << httpResponse->header();
 

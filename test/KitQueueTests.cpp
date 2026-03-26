@@ -47,6 +47,31 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCallbackInvalidation);
     CPPUNIT_TEST(testCallbackIndicatorValue);
     CPPUNIT_TEST(testCallbackPageSize);
+    CPPUNIT_TEST(testPutAndPop);
+    CPPUNIT_TEST(testPopEmptyQueue);
+    CPPUNIT_TEST(testClear);
+    CPPUNIT_TEST(testPutEmptyPayload);
+    CPPUNIT_TEST(testTextInputBlockedByKeyMessage);
+    CPPUNIT_TEST(testTextInputBlockedByMouse);
+    CPPUNIT_TEST(testTextInputBlockedByRemoveText);
+    CPPUNIT_TEST(testTextInputDifferentId);
+    CPPUNIT_TEST(testTextInputMissingTokens);
+    CPPUNIT_TEST(testRemoveTextBlockedByKeyMessage);
+    CPPUNIT_TEST(testRemoveTextBlockedByTextInput);
+    CPPUNIT_TEST(testRemoveTextDifferentId);
+    CPPUNIT_TEST(testCallbackStateChangedDedup);
+    CPPUNIT_TEST(testCallbackStateChangedDifferentCommands);
+    CPPUNIT_TEST(testCallbackStateChangedNoEquals);
+    CPPUNIT_TEST(testCallbackInvalidationMergeSizeLimit);
+    CPPUNIT_TEST(testCallbackInvalidationNoIntersection);
+    CPPUNIT_TEST(testCallbackInvalidationDifferentModes);
+    CPPUNIT_TEST(testCallbackCursorDedup);
+    CPPUNIT_TEST(testCallbackViewCursorDedup);
+    CPPUNIT_TEST(testPreviewTilesNoCombine);
+    CPPUNIT_TEST(testTileDeduplicationOnPush);
+    CPPUNIT_TEST(testMultiViewTileQueues);
+    CPPUNIT_TEST(testGetCallbackBoolOverload);
+    CPPUNIT_TEST(testCallbackInvalidationEmptyMode);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -66,6 +91,31 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     void testCallbackInvalidation();
     void testCallbackIndicatorValue();
     void testCallbackPageSize();
+    void testPutAndPop();
+    void testPopEmptyQueue();
+    void testClear();
+    void testPutEmptyPayload();
+    void testTextInputBlockedByKeyMessage();
+    void testTextInputBlockedByMouse();
+    void testTextInputBlockedByRemoveText();
+    void testTextInputDifferentId();
+    void testTextInputMissingTokens();
+    void testRemoveTextBlockedByKeyMessage();
+    void testRemoveTextBlockedByTextInput();
+    void testRemoveTextDifferentId();
+    void testCallbackStateChangedDedup();
+    void testCallbackStateChangedDifferentCommands();
+    void testCallbackStateChangedNoEquals();
+    void testCallbackInvalidationMergeSizeLimit();
+    void testCallbackInvalidationNoIntersection();
+    void testCallbackInvalidationDifferentModes();
+    void testCallbackCursorDedup();
+    void testCallbackViewCursorDedup();
+    void testPreviewTilesNoCombine();
+    void testTileDeduplicationOnPush();
+    void testMultiViewTileQueues();
+    void testGetCallbackBoolOverload();
+    void testCallbackInvalidationEmptyMode();
 
     // Compat helper for tests
     std::string popHelper(KitQueue &queue)
@@ -724,6 +774,488 @@ void KitQueueTests::testCallbackModifiedStatusIsSkipped()
         item = queue.getCallback();
         LOK_ASSERT_EQUAL_STR(messages[i].substr(ss.str().size() + 1), item._payload);
     }
+}
+
+void KitQueueTests::testPutAndPop()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    LOK_ASSERT(queue.isEmpty());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
+
+    queue.put("session1 key type=input char=0 key=0");
+    queue.put("session1 mouse type=buttondown x=1 y=2");
+    queue.put("session1 uno .uno:Bold");
+
+    LOK_ASSERT(!queue.isEmpty());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+
+    KitQueue::Payload p;
+
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("session1 key type=input char=0 key=0",
+                         std::string_view(p.data(), p.size()));
+
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("session1 mouse type=buttondown x=1 y=2",
+                         std::string_view(p.data(), p.size()));
+
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("session1 uno .uno:Bold", std::string_view(p.data(), p.size()));
+
+    LOK_ASSERT(queue.isEmpty());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
+}
+
+void KitQueueTests::testPopEmptyQueue()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    LOK_ASSERT(queue.isEmpty());
+
+    KitQueue::Payload p = queue.pop();
+    LOK_ASSERT(p.empty());
+}
+
+void KitQueueTests::testClear()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("session1 key type=input char=0 key=0");
+    queue.put("session1 mouse type=buttondown x=1 y=2");
+    putCallback(queue, "callback all 10 25");
+    putCallback(queue, "callback all 10 50");
+
+    LOK_ASSERT(!queue.isEmpty());
+    LOK_ASSERT(queue.callbackSize() > 0);
+
+    queue.clear();
+
+    LOK_ASSERT(queue.isEmpty());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.callbackSize());
+}
+
+void KitQueueTests::testPutEmptyPayload()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    bool threw = false;
+    try
+    {
+        queue.put(KitQueue::Payload{});
+    }
+    catch (const std::runtime_error&)
+    {
+        threw = true;
+    }
+    LOK_ASSERT(threw);
+}
+
+void KitQueueTests::testTextInputBlockedByKeyMessage()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess textinput id=0 text=a");
+    queue.put("sess key type=input char=0 key=0");
+    queue.put("sess textinput id=0 text=b");
+
+    // The key message blocks combining; all three remain separate.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+
+    KitQueue::Payload p;
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("sess textinput id=0 text=a", std::string_view(p.data(), p.size()));
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("sess key type=input char=0 key=0", std::string_view(p.data(), p.size()));
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("sess textinput id=0 text=b", std::string_view(p.data(), p.size()));
+}
+
+void KitQueueTests::testTextInputBlockedByMouse()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess textinput id=0 text=a");
+    queue.put("sess mouse type=buttondown x=1 y=2");
+    queue.put("sess textinput id=0 text=b");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+}
+
+void KitQueueTests::testTextInputBlockedByRemoveText()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess textinput id=0 text=a");
+    queue.put("sess removetextcontext id=0 before=1 after=0");
+    queue.put("sess textinput id=0 text=b");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+}
+
+void KitQueueTests::testTextInputDifferentId()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess textinput id=0 text=a");
+    queue.put("sess textinput id=1 text=b");
+
+    // Different ids should not combine.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
+}
+
+void KitQueueTests::testTextInputMissingTokens()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Missing text= token — queued as-is, no crash.
+    queue.put("sess textinput id=0");
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.size());
+
+    // Missing id= token — queued as-is.
+    queue.put("sess textinput text=a");
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
+}
+
+void KitQueueTests::testRemoveTextBlockedByKeyMessage()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess removetextcontext id=0 before=3 after=0");
+    queue.put("sess key type=input char=0 key=0");
+    queue.put("sess removetextcontext id=0 before=2 after=0");
+
+    // The key message blocks combining.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+
+    KitQueue::Payload p;
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("sess removetextcontext id=0 before=3 after=0",
+                         std::string_view(p.data(), p.size()));
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("sess key type=input char=0 key=0", std::string_view(p.data(), p.size()));
+    p = queue.pop();
+    LOK_ASSERT_EQUAL_STR("sess removetextcontext id=0 before=2 after=0",
+                         std::string_view(p.data(), p.size()));
+}
+
+void KitQueueTests::testRemoveTextBlockedByTextInput()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess removetextcontext id=0 before=3 after=0");
+    queue.put("sess textinput id=0 text=a");
+    queue.put("sess removetextcontext id=0 before=2 after=0");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+}
+
+void KitQueueTests::testRemoveTextDifferentId()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    queue.put("sess removetextcontext id=0 before=3 after=0");
+    queue.put("sess removetextcontext id=1 before=2 after=0");
+
+    // Different ids should not combine.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
+}
+
+void KitQueueTests::testCallbackStateChangedDedup()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    std::stringstream ss;
+    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+
+    putCallback(queue, ss.str() + " .uno:Bold=true");
+    putCallback(queue, ss.str() + " .uno:Bold=false");
+
+    // The older .uno:Bold=true should be removed; only the latest remains.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.callbackSize());
+
+    KitQueue::Callback item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR(".uno:Bold=false", item._payload);
+}
+
+void KitQueueTests::testCallbackStateChangedDifferentCommands()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    std::stringstream ss;
+    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+
+    putCallback(queue, ss.str() + " .uno:Bold=true");
+    putCallback(queue, ss.str() + " .uno:Italic=true");
+
+    // Different commands should both remain.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.callbackSize());
+}
+
+void KitQueueTests::testCallbackStateChangedNoEquals()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    std::stringstream ss;
+    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+
+    putCallback(queue, ss.str() + " .uno:Bold=true");
+    putCallback(queue, ss.str() + " .uno:Bold");
+
+    // A payload without '=' should not elide the earlier one with '='.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.callbackSize());
+}
+
+void KitQueueTests::testCallbackInvalidationMergeSizeLimit()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Two intersecting rectangles whose union exceeds 4*3840 x 2*3840.
+    // Rect1: x=0 y=0 w=10000 h=5000 part=0
+    // Rect2: x=8000 y=4000 w=10000 h=5000 part=0
+    // Union would be 18000 x 9000, exceeding limits (15360 x 7680).
+    putCallback(queue, "callback all 0 0, 0, 10000, 5000, 0");
+    putCallback(queue, "callback all 0 8000, 4000, 10000, 5000, 0");
+
+    // Should NOT merge because union is too large.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.callbackSize());
+}
+
+void KitQueueTests::testCallbackInvalidationNoIntersection()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Two non-intersecting rectangles on the same part.
+    putCallback(queue, "callback all 0 100, 100, 50, 50, 0");
+    putCallback(queue, "callback all 0 1000, 1000, 50, 50, 0");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.callbackSize());
+}
+
+void KitQueueTests::testCallbackInvalidationDifferentModes()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Same rectangle, same part, different modes — should not merge.
+    putCallback(queue, "callback all 0 100, 100, 50, 50, 0, 0");
+    putCallback(queue, "callback all 0 100, 100, 50, 50, 0, 1");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.callbackSize());
+}
+
+void KitQueueTests::testCallbackCursorDedup()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR = 1
+    putCallback(queue, "callback all 1 old_cursor_pos");
+    putCallback(queue, "callback all 1 new_cursor_pos");
+
+    // Only the latest should remain.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.callbackSize());
+
+    KitQueue::Callback item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("new_cursor_pos", item._payload);
+}
+
+void KitQueueTests::testCallbackViewCursorDedup()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // LOK_CALLBACK_CELL_VIEW_CURSOR = 26; payload requires JSON with viewId.
+    putCallback(queue, "callback all 26 { \"viewId\": \"1\", \"rectangle\": \"0, 0, 100, 100\" }");
+    putCallback(queue, "callback all 26 { \"viewId\": \"1\", \"rectangle\": \"50, 50, 100, 100\" }");
+
+    // Same viewId — the older one is replaced.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.callbackSize());
+
+    KitQueue::Callback item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("{ \"viewId\": \"1\", \"rectangle\": \"50, 50, 100, 100\" }", item._payload);
+
+    // Now add a different viewId — both should persist.
+    putCallback(queue, "callback all 26 { \"viewId\": \"1\", \"rectangle\": \"10, 10, 100, 100\" }");
+    putCallback(queue, "callback all 26 { \"viewId\": \"2\", \"rectangle\": \"200, 200, 100, 100\" }");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.callbackSize());
+}
+
+void KitQueueTests::testPreviewTilesNoCombine()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Preview tiles have id= parameter (id >= 0 means preview).
+    queue.put("tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0");
+    queue.put("tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.getTileQueueSize());
+
+    // Each preview should be popped individually — NOT combined into a tilecombine.
+    TilePrioritizer::Priority prio;
+    TileCombined c1 = queue.popTileQueue(prio);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), c1.getTiles().size());
+
+    TileCombined c2 = queue.popTileQueue(prio);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), c2.getTiles().size());
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.getTileQueueSize());
+}
+
+void KitQueueTests::testTileDeduplicationOnPush()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Push the same tile twice — sortedInsert replaces the duplicate.
+    queue.put("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+    queue.put("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.getTileQueueSize());
+
+    // Push a tilecombine containing the same tile — no growth.
+    queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.getTileQueueSize());
+}
+
+void KitQueueTests::testMultiViewTileQueues()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+
+    // Push tiles for two different viewIds.
+    queue.put("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+    queue.put("tile nviewid=1000 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+
+    // Total size is the sum of both queues.
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.getTileQueueSize());
+
+    // Pop both tiles.
+    TilePrioritizer::Priority prio;
+    TileCombined c1 = queue.popTileQueue(prio);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), c1.getTiles().size());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.getTileQueueSize());
+
+    TileCombined c2 = queue.popTileQueue(prio);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), c2.getTiles().size());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.getTileQueueSize());
+}
+
+void KitQueueTests::testGetCallbackBoolOverload()
+{
+    constexpr std::string_view testname = __func__;
+
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+    KitQueue::Callback cb;
+
+    // Empty queue — returns false.
+    LOK_ASSERT(!queue.getCallback(cb));
+
+    // Queue a callback and retrieve it.
+    putCallback(queue, "callback all 10 test_payload");
+
+    LOK_ASSERT(queue.getCallback(cb));
+    LOK_ASSERT_EQUAL(-1, cb._view);
+    LOK_ASSERT_EQUAL(10, cb._type);
+    LOK_ASSERT_EQUAL_STR("test_payload", cb._payload);
+
+    // Queue is empty again.
+    LOK_ASSERT(!queue.getCallback(cb));
+}
+
+void KitQueueTests::testCallbackInvalidationEmptyMode()
+{
+    // Given a mode=1 and a mode=2 partial invalidation in the queue:
+    constexpr std::string_view testname = __func__;
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
+    KitQueue::Callback item;
+    putCallback(queue, "callback all 0 284, 1418, 11105, 275, 0, 1");
+    putCallback(queue, "callback all 0 284, 1418, 11105, 275, 0, 2");
+    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.callbackSize()));
+
+    // When putting mode=1 and mode=2 full invalidations in the queue:
+    putCallback(queue, "callback all 0 EMPTY, 0, 1");
+    putCallback(queue, "callback all 0 EMPTY, 0, 2");
+
+    // Then make sure deduplication results in two full invalidations:
+    // Without the accompanying fix in place, this test would have failed with:
+    // - Expected: 2
+    // - Actual  : 3
+    // i.e. the queue had "284, 1418, 11105, 275, 0, 1", "284, 1418, 11105, 275, 0, 2" and "EMPTY,
+    // 0, 2", which means the EMPTY invalidate for mode=1 was lost.
+    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.callbackSize()));
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("EMPTY, 0, 1", item._payload);
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("EMPTY, 0, 2", item._payload);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(KitQueueTests);

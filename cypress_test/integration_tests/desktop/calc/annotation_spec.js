@@ -1,4 +1,4 @@
-/* global describe it require cy beforeEach */
+/* global describe it require cy beforeEach expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -16,7 +16,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Insert',function() {
-		// Make sure we know the cell adress.
+		// Make sure we know the cell address.
 		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
 
 		desktopHelper.insertComment();
@@ -55,6 +55,39 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			// Now click again to cell B2. There was an issue with commented cells. We should be able to click on the commented cell.
 			cy.cGet('body').realClick({ x: x, y: y });
 			cy.cGet(helper.addressInputSelector).should('have.value', 'B2');
+		});
+	});
+
+	it('Click on comment emits Clicked_Comment postMessage', function() {
+		desktopHelper.insertComment();
+
+		// This will record usage of window.postMessage (called from
+		// _postMessage in browser/src/map/handler/Map.WOPI.js
+		cy.getFrameWindow().then(win => {
+			cy.stub(win.parent, 'postMessage').as('postMessage');
+		});
+
+		// <div id="comment-container-1" ...> is the topmost element of the comment.
+		// Override its hidden attributes; then 'mouseover' should make the comment visible.
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').then(element => {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.cGet('#comment-container-1').trigger('mouseover', {force: true});
+
+		// <div class="cool-annotation-content-wrapper" ...> is its immediate child,
+		// and its internals are the same as in other modules
+		cy.cGet('.cool-annotation-content-wrapper').should('be.visible');
+		cy.cGet('.cool-annotation-content-wrapper').click();
+
+		cy.get('@postMessage').should(stub => {
+			const found = stub.getCalls().some(call => {
+				const msg = JSON.parse(call.args[0]);
+				return msg.MessageId === 'Clicked_Comment'
+					&& msg.Values && msg.Values.Id !== undefined;
+			});
+			expect(found, "Clicked_Comment was not posted").to.be.true;
 		});
 	});
 

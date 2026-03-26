@@ -60,8 +60,11 @@ namespace PrintPDFAndDelete
 
         static private async Task<List<System.Drawing.Image>> PdfToImage(string path)
         {
-            var storagePdfFile = await Windows.Storage.StorageFile.GetFileFromPathAsync(path);
-            Windows.Data.Pdf.PdfDocument pdfDocument = await Windows.Data.Pdf.PdfDocument.LoadFromFileAsync(storagePdfFile);
+            // Use standard .NET file I/O instead of WinRT GetFileFromPathAsync
+            // to avoid file access broker "access denied" errors on temp files
+            using var fileStream = File.OpenRead(path);
+            using var randomAccessStream = fileStream.AsRandomAccessStream();
+            Windows.Data.Pdf.PdfDocument pdfDocument = await Windows.Data.Pdf.PdfDocument.LoadFromStreamAsync(randomAccessStream);
 
             uint index = 0;
             List<System.Drawing.Image> images = new List<System.Drawing.Image>();

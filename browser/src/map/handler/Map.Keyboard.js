@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
-/* global app UNOKey TileManager */
+/* global _ app UNOKey TileManager */
 
 window.L.Map.mergeOptions({
 	keyboard: true,
@@ -421,20 +421,44 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return;
 		}
 		else if (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
-			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
+			if (ev.shiftKey && !ev.ctrlKey && !ev.altKey
+				&& (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.HOME || ev.keyCode === this.keyCodes.END)
+				&& ev.type === 'keydown') {
+
+				if (ev.keyCode === this.keyCodes.UP)
+					this._map._docLayer._preview._modifySelectedPartRange("UP");
+				else if (ev.keyCode === this.keyCodes.DOWN)
+					this._map._docLayer._preview._modifySelectedPartRange("DOWN");
+				else if (ev.keyCode === this.keyCodes.HOME)
+					this._map._docLayer._preview._selectPartRange(undefined, 0);
+				else if (ev.keyCode === this.keyCodes.END)
+					this._map._docLayer._preview._selectPartRange(undefined, this._map._docLayer._parts - 1);
+
+				ev.preventDefault();
+			}
+			else if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
 				               ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT ||
 				               ev.keyCode === this.keyCodes.PAGEDOWN || ev.keyCode === this.keyCodes.PAGEUP ||
-				               ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE)
+				               ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE ||
+				               ev.keyCode === this.keyCodes.HOME || ev.keyCode === this.keyCodes.END)
 				           && ev.type === 'keydown') {
 
 				var deletePart = (ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) ? true : false;
 
 				if (!deletePart) {
-					var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT ||
-						            ev.keyCode === this.keyCodes.PAGEUP) ? 'prev' : 'next';
+					if (ev.keyCode === this.keyCodes.HOME) {
+						this._map.deselectAll();
+						this._map.setPart(0);
+					} else if (ev.keyCode === this.keyCodes.END) {
+						this._map.deselectAll();
+						this._map.setPart(this._map._docLayer._parts - 1);
+					} else {
+						var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT ||
+										ev.keyCode === this.keyCodes.PAGEUP) ? 'prev' : 'next';
 
-					this._map.deselectAll();
-					this._map.setPart(partToSelect);
+						this._map.deselectAll();
+						this._map.setPart(partToSelect);
+					}
 					if (app.file.fileBasedView)
 						this._map._docLayer._checkSelectedPart();
 				}
@@ -454,7 +478,7 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 				app.map._clip.clearSelection();
 				app.map._clip.setTextSelectionType('slide');
 			}
-			else if (!ev.ctrlKey) {
+			else if (!ev.ctrlKey && !ev.shiftKey) {
 				this._map._docLayer._preview.partsFocused = false;
 				app.map._clip.clearSelection();
 				app.map.focus();
@@ -560,6 +584,10 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
 			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === this.keyCodes.SPACE && !app.file.textCursor.visible))) {
+				if (!this._map.isEditMode() && !this._isModifierNavigationKey(keyCode)) {
+					ev.preventDefault();
+					return;
+				}
 				if (keyEventFn) {
 					keyEventFn('input', charCode, unoKeyCode);
 					ev.preventDefault();
@@ -642,6 +670,19 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key], null, true /* animate? */);
 			}
+			else if (ev.key && ev.key.length === 1 && !ev.ctrlKey && !ev.altKey && !map.isEditMode()) {
+				let permissionMode = map.uiManager && map.uiManager.permissionViewMode;
+				let viewModeBtn = permissionMode && (permissionMode.viewModeDropdown || permissionMode.viewModeContainer);
+				if (viewModeBtn && map.uiManager && map.uiManager.showTimedTooltip) {
+					map.uiManager.showTimedTooltip(viewModeBtn, _('You are currently in View mode'), 5000);
+					if (!viewModeBtn.classList.contains('attention')) {
+						viewModeBtn.classList.add('attention');
+						viewModeBtn.addEventListener('animationend', function() {
+							viewModeBtn.classList.remove('attention');
+						}, { once: true });
+					}
+				}
+			}
 		}
 
 		window.L.DomEvent.stopPropagation(ev);
@@ -652,6 +693,14 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return e.metaKey;
 		else
 			return e.ctrlKey;
+	},
+
+	// Keys that should still be sent to core with modifiers in read-only mode.
+	_isModifierNavigationKey: function (keyCode) {
+		return (keyCode >= this.keyCodes.PAGEUP && keyCode <= this.keyCodes.DOWN) ||
+			keyCode === this.keyCodes.TAB ||
+			keyCode === this.keyCodes.A ||
+			(keyCode >= this.keyCodes.F1 && keyCode <= this.keyCodes.F12);
 	},
 
 	// Given a DOM keyboard event that happened while the Control key was depressed,

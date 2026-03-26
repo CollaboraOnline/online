@@ -15,11 +15,11 @@
 
 #include <config.h>
 
-#include <DocumentBroker.hpp>
+#include <common/Log.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
 
-#include <ClientSession.hpp>
-
-void DocumentBroker::assertCorrectThread(const char*, int) const {}
+void DocumentBroker::assertCorrectThread(LOG_CAPTURE_CALLER) const {}
 
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& /*data*/) {};
 

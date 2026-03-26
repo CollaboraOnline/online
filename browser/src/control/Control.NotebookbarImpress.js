@@ -405,7 +405,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -469,6 +469,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'slide-fullscreen-presentation',
 				'type': 'bigcustomtoolitem',
 				'text': _('From Beginning'),
+				'tooltip': _('Fullscreen, starting at slide 1'),
 				'command': 'fullscreen-presentation',
 				'accessibility': { focusBack: true, combination: 'FB', de: null }
 			},
@@ -476,6 +477,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'slide-presentation-currentslide',
 				'type': 'bigcustomtoolitem',
 				'text':  _('From Current Slide'),
+				'tooltip': _('Fullscreen, starting at this slide'),
 				'command': 'presentation-currentslide',
 				'accessibility': { focusBack: true, combination: 'FC', de: null }
 			},
@@ -490,6 +492,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-in-window',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present in Window'),
+					'tooltip': _('Plays inside the document window. Starts at slide 1'),
 					'command': 'presentinwindow',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
@@ -498,6 +501,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-in-console',
 					'type': 'bigcustomtoolitem',
 					'text': _('Presenter View'),
+					'tooltip': _('Shows your notes, next slide, and a timer'),
 					'command': 'presenterconsole',
 					'accessibility': { focusBack: true, combination: 'PC', de: null }
 				}: {},
@@ -506,6 +510,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present to All'),
+					'tooltip': _('Starts a slideshow on every viewer\'s screen'),
 					'command': 'followmepresentation',
 					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
@@ -514,6 +519,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-follow',
 					'type': 'bigcustomtoolitem',
 					'text': _('Follow Presenter'),
+					'tooltip': _('View slides as the presenter advances them'),
 					'command': 'followpresentation',
 					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
@@ -719,7 +725,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 	getHomeTab: function() {
 		var content = [
 			{
-				'id': 'home-undo-redo',
+				'id': 'home-do',
 				'type': 'container',
 				'children': [
 					{
@@ -770,7 +776,10 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 										'id': 'home-format-paint-brush',
 										'type': 'toolitem',
 										'text': _UNO('.uno:FormatPaintbrush'),
+										'tooltip': _('Clone Formatting (double click to keep active)'),
 										'command': '.uno:FormatPaintbrush',
+										'doubleClickCommand': '.uno:FormatPaintbrush',
+										'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
 										'accessibility': { focusBack: true, combination: 'FP', de: null }
 									}
 								]
@@ -805,7 +814,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'type': 'overflowgroup',
 				'id': 'home-slide-layout',
 				'name':_('Slide Layout'),
-				'accessibility': { focusBack: true, combination: 'CS', de: null },
+				'accessibility': { focusBack: true, combination: 'NS', de: null },
 				'more': {
 					'command':'.uno:PageSetup',
 					'accessibility': { focusBack: true, combination: 'ML', de: null }
@@ -817,7 +826,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'applyCallback': '.uno:InsertPage',
 						'text': _('New'),
 						'command': '.uno:InsertPage',
-						'accessibility': { focusBack: true, combination: 'CS', de: null }
+						'accessibility': { focusBack: true, combination: 'NS', de: null }
 					},
 					{
 						'type': 'container',
@@ -829,7 +838,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'text': _('Change Layout'),
 								'icon': 'lc_changelayout.svg',
 								'command': '.uno:AssignLayout',
-								'accessibility': { focusBack: true, combination: 'CL', de: null }
+								'accessibility': { focusBack: true, combination: 'GL', de: null }
 							},
 							{
 								'id': 'home-assign-layout',
@@ -910,7 +919,6 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'type': 'container',
 								'children': [
 									{
-										'id': 'ExtTop4',
 										'type': 'toolbox',
 										'children': [
 											{
@@ -949,13 +957,19 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 												'accessibility': { focusBack: true, combination: 'SH', de: null }
 											},
 											{
-												'id': 'home-fontworkgalleryfloater',
+												'id': 'home-superscript',
 												'type': 'toolitem',
-												'text': _UNO('.uno:FontworkGalleryFloater'),
-												'command': '.uno:FontworkGalleryFloater',
-												// Fontwork export/import not supported in other formats.
-												'visible': (app.LOUtil.isFileODF(this.map)) ? 'true' : 'false',
-												'accessibility': { focusBack: true, combination: 'FL', de: null }
+												'text': _UNO('.uno:SuperScript'),
+												'command': '.uno:SuperScript',
+												'accessibility': { focusBack: true, combination: '6', de: '6' }
+											},
+											{
+												'id': 'home-spacing:CharSpacingMenu',
+												'type': 'menubutton',
+												'noLabel': true,
+												'text': _UNO('.uno:Spacing'),
+												'command': '.uno:CharSpacing',
+												'accessibility': { focusBack: false, combination: 'FT', de: null }
 											},
 											{
 												'id': 'home-charbackcolor:ColorPickerMenu',
@@ -1717,7 +1731,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: true, combination: 'IX', de: null },
 				'children' : [
 					{
-						'id': 'insert-text',
+						'id': 'insert-insert-text',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Text'),
 						'command': '.uno:Text',
@@ -1804,8 +1818,28 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'icon': 'lc_masterslide.svg',
 				'children': [
 					{
-						'id': 'masterpageall_icons', // has to match core id
-						'type': 'iconview'
+						'id': 'masterpagenb',
+						'type': 'iconviewlist',
+						'children': [
+							{
+								'id': 'masterpagecurrent_label',
+								'type': 'fixedtext',
+								'text': _('This Presentation'),
+							},
+							{
+								'id': 'masterpagecurrent_icons', // has to match core id
+								'type': 'iconview',
+							},
+							{
+								'id': 'masterpageall_label',
+								'type': 'fixedtext',
+								'text': _('Presentation Templates'),
+							},
+							{
+								'id': 'masterpageall_icons', // has to match core id
+								'type': 'iconview',
+							}
+						]
 					}
 				]
 			},
@@ -1818,8 +1852,14 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'icon': 'lc_themesthames.svg',
 				'children': [
 					{
-						'id': 'iconview_theme_colors', // has to match core id
-						'type': 'iconview'
+						'id': 'iconview_theme_colors-iconview-list',
+						'type': 'iconviewlist',
+						'children': [
+							{
+								'id': 'iconview_theme_colors', // has to match core id
+								'type': 'iconview'
+							}
+						]
 					}
 				]
 			},

@@ -66,7 +66,8 @@ namespace FileUtil
         return size;
     }
 
-    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error)
+    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error,
+              LOG_CAPTURE_CALLER)
     {
         int from = -1, to = -1;
         try
@@ -173,7 +174,8 @@ namespace FileUtil
         return newTmp;
     }
 
-    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps)
+    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps,
+                    LOG_CAPTURE_CALLER)
     {
         const std::string randFilename = toPath + Util::rng::getFilename(12);
         if (copy(fromPath, randFilename, /*log=*/false, /*throw_on_error=*/false))
@@ -445,11 +447,8 @@ namespace FileUtil
         }
 
         // we should be able to run just OK with 5GB for production or 1GB for development
-#if ENABLE_DEBUG
-        constexpr int64_t gb(1);
-#else
-        constexpr int64_t gb(5);
-#endif
+        constexpr int64_t gb = Util::isDebugEnabled() ? 1 : 5;
+
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
 
         return platformDependentCheckDiskSpace(path, ENOUGH_SPACE);

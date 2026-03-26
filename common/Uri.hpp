@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>
+#include <typeinfo>
 #include <utility>
 #include <map>
 
@@ -48,6 +49,10 @@ public:
 
     /// URI-decode and return the URI.
     std::string decoded() const { return decode(_uri); }
+
+    /// Encode every '%' as '%25' unconditionally.
+    /// For local file paths where '%' is always a literal character, not URI encoding.
+    static std::string encodeAllPercent(const std::string& path);
 
     /// Checks whether or not the given string is encoded.
     /// That is, a string that is identical when encoded will return false.

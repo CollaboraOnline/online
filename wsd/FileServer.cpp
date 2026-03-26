@@ -24,6 +24,7 @@
 #include <common/ConfigUtil.hpp>
 #include <common/Crypto.hpp>
 #include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/LangUtil.hpp>
 #include <common/Log.hpp>
@@ -31,12 +32,14 @@
 #include <common/Util.hpp>
 #include <common/base64.hpp>
 #include <net/HttpRequest.hpp>
+#include <net/NetUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
 #include <wopi/StorageConnectionManager.hpp>
 #include <wsd/Auth.hpp>
 #include <wsd/COOLWSD.hpp>
+#include <wsd/HostUtil.hpp>
 #include <wsd/ContentSecurityPolicy.hpp>
 #include <wsd/Exceptions.hpp>
 #include <wsd/RequestDetails.hpp>
@@ -230,6 +233,27 @@ std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& conf
     return config.getBool(propertyName, defaultValue) ? "true" : "false";
 }
 
+/// Returns true if the host is allowed, false otherwise.
+bool isAllowedWopiHost(const Poco::URI& uri)
+{
+    if (!HostUtil::isWopiEnabled())
+        return false;
+
+    const std::string& targetHost = uri.getHost();
+    if (HostUtil::allowedWopiHost(targetHost))
+        return true;
+
+    // Check if a resolved IP address is in the allowlist.
+    const auto hostAddresses(net::resolveAddresses(targetHost));
+    for (const auto& address : hostAddresses)
+    {
+        if (HostUtil::allowedWopiHost(address))
+            return true;
+    }
+
+    return false;
+}
+
 } // namespace
 
 FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
@@ -238,14 +262,8 @@ FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
     // cool files
     try
     {
+        FileHash.reserve(4096); // We have ~3964 files.
         readDirToHash(root, "/browser/dist");
-
-        // Shrink this from approx 200M to 50M for debug version
-        for (auto& entry : FileHash)
-        {
-            entry.second.first.shrink_to_fit();
-            entry.second.second.shrink_to_fit();
-        }
     }
     catch (...)
     {
@@ -701,7 +719,7 @@ void FileServerRequestHandler::sendError(http::StatusCode errorCode,
     HttpHelper::sendErrorAndShutdown(errorCode, socket, body, headers);
 }
 
-void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix)
+void FileServerRequestHandler::readDirToHash(const std::string& basePath, const std::string& path)
 {
     const std::string fullPath = basePath + path;
     LOG_DBG("Caching files in [" << fullPath << ']');
@@ -724,7 +742,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
     size_t fileCount = 0;
     std::string filesRead;
-    filesRead.reserve(1024);
+    filesRead.reserve(8 * 1024);
 
     struct dirent *currentFile;
     while ((currentFile = readdir(workingdir)) != nullptr)
@@ -733,17 +751,30 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             continue;
 
         const std::string relPath = path + '/' + currentFile->d_name;
-        struct stat fileStat;
-        if (stat ((basePath + relPath).c_str(), &fileStat) != 0)
+
+        int mode = 0;
+#if defined(_DIRENT_HAVE_D_TYPE) && defined(DTTOIF)
+        // This system supports d_type. Convert it to the stats mode.
+        mode = DTTOIF(currentFile->d_type);
+#endif
+
+        // Not all file-systems set d_type; we might still have to stat(2) after all.
+        if (!S_ISDIR(mode) && !S_ISREG(mode))
         {
-            LOG_ERR("Failed to stat " << relPath);
-            continue;
+            struct stat fileStat;
+            if (stat((basePath + relPath).c_str(), &fileStat) != 0)
+            {
+                LOG_ERR("Failed to stat " << relPath);
+                continue;
+            }
+
+            mode = fileStat.st_mode;
         }
 
-        if (S_ISDIR(fileStat.st_mode))
+        if (S_ISDIR(mode))
             readDirToHash(basePath, relPath);
 
-        else if (S_ISREG(fileStat.st_mode) && relPath.ends_with(".br"))
+        else if (S_ISREG(mode) && relPath.ends_with(".br"))
         {
             // Only cache without compressing.
             fileCount++;
@@ -766,10 +797,9 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 }
             }
 
-            FileHash.emplace(prefix + relPath,
-                             std::make_pair(std::move(uncompressedFile), std::string()));
+            FileHash.emplace(relPath, std::make_pair(std::move(uncompressedFile), std::string()));
         }
-        else if (S_ISREG(fileStat.st_mode))
+        else if (S_ISREG(mode))
         {
             std::string uncompressedFile;
             const ssize_t size =
@@ -787,7 +817,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 }
 
                 // Always add the entry, even if the contents are empty.
-                FileHash.emplace(prefix + relPath,
+                FileHash.emplace(relPath,
                                  std::make_pair(std::move(uncompressedFile), std::string()));
                 continue;
             }
@@ -796,13 +826,15 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             strm.zalloc = Z_NULL;
             strm.zfree = Z_NULL;
             strm.opaque = Z_NULL;
-            const int initResult = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
+            const int initResult =
+                deflateInit2(&strm, Util::isDebugEnabled() ? Z_BEST_SPEED : Z_BEST_COMPRESSION,
+                             Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
             if (initResult != Z_OK)
             {
                 LOG_ERR("Failed to deflateInit2 for file [" << basePath << relPath
                                                             << "], result: " << initResult);
                 // Add the uncompressed version; it's better to serve uncompressed than nothing at all.
-                FileHash.emplace(prefix + relPath,
+                FileHash.emplace(relPath,
                                  std::make_pair(std::move(uncompressedFile), std::string()));
 
                 deflateEnd(&strm);
@@ -835,10 +867,11 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             else
             {
                 compressedFile.resize(compSize - strm.avail_out);
+                compressedFile.shrink_to_fit();
             }
 
-            FileHash.emplace(prefix + relPath, std::make_pair(std::move(uncompressedFile),
-                                                              std::move(compressedFile)));
+            FileHash.emplace(
+                relPath, std::make_pair(std::move(uncompressedFile), std::move(compressedFile)));
             deflateEnd(&strm);
         }
     }
@@ -1594,9 +1627,24 @@ void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::is
             if (endPos != std::string::npos)
                 _fileName = _fileName.substr(0, endPos);
 
-            std::ostringstream oss;
-            Poco::StreamCopier::copyStream(stream, oss);
-            _fileContent = oss.str();
+            std::string dirPath = FileUtil::createRandomTmpDir(
+                COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH) + '/';
+            _filePath = dirPath + "upload";
+
+            std::ofstream fileStream;
+            fileStream.open(_filePath, std::ios::binary);
+            if (fileStream.good())
+            {
+                Poco::StreamCopier::copyStream(stream, fileStream);
+                fileStream.close();
+                _fileDir = std::make_shared<FileUtil::OwnedFile>(std::move(dirPath), true);
+            }
+            else
+            {
+                LOG_ERR("Unable to open [" << _filePath << "] for FilePartHandler streaming");
+                _filePath.clear();
+                FileUtil::removeFile(dirPath);
+            }
         }
     }
 }
@@ -1621,6 +1669,16 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     }
 
     Poco::URI sharedUri(sharedConfigUrl);
+
+    if (!isAllowedWopiHost(sharedUri))
+    {
+        LOG_WRN("Rejected settings config request to untrusted host ["
+                << COOLWSD::anonymizeUrl(sharedConfigUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket, shortMessage,
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     sharedUri.addQueryParameter("access_token", accessToken);
     sharedUri.addQueryParameter("fileId", "-1");
     sharedUri.addQueryParameter("type", type);
@@ -1700,6 +1758,17 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     }
 
     Poco::URI dicUrl(fileUrl);
+
+    if (!isAllowedWopiHost(dicUrl))
+    {
+        LOG_WRN("Rejected setting file request to untrusted host ["
+                << COOLWSD::anonymizeUrl(fileUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket,
+                  "Failed to fetch setting file",
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     const auto& queryParams = dicUrl.getQueryParameters();
     bool hasAccessToken = false;
     for (const auto& param : queryParams)
@@ -1767,6 +1836,16 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     }
 
     Poco::URI sharedUri(sharedConfigUrl);
+
+    if (!isAllowedWopiHost(sharedUri))
+    {
+        LOG_WRN("Rejected settings delete request to untrusted host ["
+                << COOLWSD::anonymizeUrl(sharedConfigUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket, shortMessage,
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     sharedUri.addQueryParameter("access_token", accessToken);
     sharedUri.addQueryParameter("fileId", fileId);
     if (noAuthHeader)
@@ -1838,8 +1917,8 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 
     const std::string& shortMessage = "Failed to upload preset file.";
     const std::string& fileName = partHandler.getFileName();
-    const std::string& fileContent = partHandler.getFileContent();
-    if (fileName.empty() || fileContent.empty())
+    const std::string& uploadedFilePath = partHandler.getFilePath();
+    if (fileName.empty() || uploadedFilePath.empty())
     {
         sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
                   "No valid file uploaded.");
@@ -1864,6 +1943,16 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
     }
 
     Poco::URI wopiUri(wopiSettingBaseUrl + "/upload");
+
+    if (!isAllowedWopiHost(wopiUri))
+    {
+        LOG_WRN("Rejected upload request to untrusted host ["
+                << COOLWSD::anonymizeUrl(wopiSettingBaseUrl) << ']');
+        sendError(http::StatusCode::Forbidden, getRequestPath(request), socket, shortMessage,
+                  "Target host is not in the allowed WOPI host list");
+        return;
+    }
+
     const std::string& fileId = filePath + fileName;
     wopiUri.addQueryParameter("fileId", fileId);
     wopiUri.addQueryParameter("access_token", token);
@@ -1874,15 +1963,17 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
     httpRequest.setVerb(http::Request::VERB_POST);
 
     httpRequest.set("Content-Type", "application/octet-stream");
-    httpRequest.setBody(fileContent);
+    httpRequest.setBodyFile(uploadedFilePath);
 
     auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
 
+    auto uploadedFileOwnership = partHandler.getFileOwnership();
+
     http::Session::FinishedCallback finishedCallback =
         [fileName, uriAnonym, socketWeak, requestPath = getRequestPath(request),
-         shortMessage](const std::shared_ptr<http::Session>& wopiSession)
+         shortMessage, uploadedFileOwnership = std::move(uploadedFileOwnership)](const std::shared_ptr<http::Session>& wopiSession)
     {
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)

@@ -1066,7 +1066,7 @@ window.L.Map = window.L.Evented.extend({
 	// Returns true iff the document has input focus,
 	// as opposed to a dialog, sidebar, formula bar, etc.
 	editorHasFocus: function () {
-		return this.getWinId() === 0 && !this.calcInputBarHasFocus();
+		return this.getWinId() === 0 && !this.calcInputBarHasFocus() && !this._iframeDialog;
 	},
 
 	// Returns true iff the formula-bar has the focus.
@@ -1713,8 +1713,10 @@ window.L.Map = window.L.Evented.extend({
 
 		if (this.getDocType() === 'spreadsheet') {
 			this._docLayer.goToCellViewCursor(id);
-		} else if (this.getDocType() === 'text' || this.getDocType() === 'presentation') {
+		} else if (this.getDocType() === 'text') {
 			this._docLayer.goToViewCursor(id);
+		} else if (this.getDocType() === 'presentation' || this.getDocType() === 'drawing') {
+			this._docLayer.goToOtherUserView(id);
 		}
 	},
 

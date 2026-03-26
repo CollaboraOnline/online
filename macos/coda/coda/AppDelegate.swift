@@ -51,16 +51,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /**
-     * Replaces one menu entry in the menu with the provided name. The menu item is identified by its selector.
+     * Replaces "ProductName" in a menu item title with the real app name.
+     * The menu item is identified by its selector.
+     * The title is already localized by AppKit from Main.strings, so we
+     * only need to substitute the placeholder.
      */
-    private func renameItem(in menu: NSMenu, withAction action: Selector, actionName: String, appName: String) {
+    private func replaceProductName(in menu: NSMenu, withAction action: Selector, appName: String) {
         for item in menu.items {
             if item.action == action {
-                item.title = String(format: actionName, appName)
+                item.title = item.title.replacingOccurrences(of: "ProductName", with: appName)
                 return
             }
             if let sub = item.submenu {
-                renameItem(in: sub, withAction: action, actionName: actionName, appName: appName)
+                replaceProductName(in: sub, withAction: action, appName: appName)
             }
         }
     }
@@ -77,16 +80,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /**
      * Use the real app name in the menus where it is expected.
+     * AppKit has already applied the localized Main.strings to the
+     * storyboard, so the titles contain "ProductName" in the correct
+     * localized form (e.g. "Über ProductName" in German).  We just
+     * swap that placeholder for the real name.
      */
     private func updateProductName() {
         guard let mainMenu = NSApp.mainMenu else { return }
 
         let name = AppDelegate.getAppName()
 
-        renameItem(in: mainMenu, withAction: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), actionName: NSLocalizedString("About %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
-        renameItem(in: mainMenu, withAction: #selector(NSApplication.hide(_:)), actionName: NSLocalizedString("Hide %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
-        renameItem(in: mainMenu, withAction: #selector(NSApplication.terminate(_:)), actionName: NSLocalizedString("Quit %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
-        renameItem(in: mainMenu, withAction: #selector(NSApplication.showHelp(_:)), actionName: NSLocalizedString("%@ Help", comment: "The format string (%%@) is replaced with the app name"), appName: name)
+        // The app menu item and its submenu title
+        if let appMenuItem = mainMenu.items.first {
+            appMenuItem.title = appMenuItem.title.replacingOccurrences(of: "ProductName", with: name)
+            appMenuItem.submenu?.title = appMenuItem.submenu?.title.replacingOccurrences(of: "ProductName", with: name) ?? name
+        }
+
+        replaceProductName(in: mainMenu, withAction: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), appName: name)
+        replaceProductName(in: mainMenu, withAction: #selector(NSApplication.hide(_:)), appName: name)
+        replaceProductName(in: mainMenu, withAction: #selector(NSApplication.terminate(_:)), appName: name)
     }
 
     /**

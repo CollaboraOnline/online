@@ -42,6 +42,8 @@ class UtilTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testEliminatePrefix);
     CPPUNIT_TEST(testStreamMatch);
+    CPPUNIT_TEST(testBase64Encode);
+    CPPUNIT_TEST(testBase64Decode);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -53,6 +55,8 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     void testUtf8();
     void testEliminatePrefix();
     void testStreamMatch();
+    void testBase64Encode();
+    void testBase64Decode();
 };
 
 void UtilTests::testStringifyHexLine()
@@ -218,11 +222,11 @@ void UtilTests::testUtf8()
 {
 #if ENABLE_DEBUG
     constexpr std::string_view testname = __func__;
-    LOK_ASSERT(Util::isValidUtf8("foo"));
-    LOK_ASSERT(Util::isValidUtf8("©")); // 2 char
-    LOK_ASSERT(Util::isValidUtf8("→ ")); // 3 char
-    LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊."));
-    LOK_ASSERT(!Util::isValidUtf8("\xff\x03"));
+    LOK_ASSERT(Util::isValidUtf8("foo") > 3);
+    LOK_ASSERT(Util::isValidUtf8("©") > 2); // 2 char
+    LOK_ASSERT(Util::isValidUtf8("→ ") > 3); // 3 char
+    LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊.") > 11);
+    LOK_ASSERT(Util::isValidUtf8("\xff\x03") < 2);
 #endif
 }
 
@@ -262,6 +266,42 @@ void UtilTests::testStreamMatch()
     Util::copyToMatch(is, os, "nomatch");
     std::string final = "Lorem ipsum dolor sit adipiscing elit";
     LOK_ASSERT_EQUAL_STR(final, os.str());
+}
+
+void UtilTests::testBase64Encode()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Simple string.
+    LOK_ASSERT_EQUAL(std::string("SGVsbG8="), Util::base64Encode("Hello"));
+
+    // Input with newlines is encoded as-is (newlines become part of the encoding).
+    std::string withNewLines = "Hello\nWorld\n";
+    std::string encoded = Util::base64Encode(withNewLines);
+    LOK_ASSERT_EQUAL(withNewLines, Util::base64Decode(encoded));
+
+    // Round-trip with longer content.
+    std::string longer = "The quick brown fox jumps over the lazy dog";
+    LOK_ASSERT_EQUAL(longer, Util::base64Decode(Util::base64Encode(longer)));
+
+    // Long input (>54 bytes) would trigger Poco line breaks every 72 output
+    // chars. Verify the output contains no newlines.
+    std::string longInput(200, 'A');
+    std::string longencoded = Util::base64Encode(longInput);
+    LOK_ASSERT(longencoded.find('\n') == std::string::npos);
+    LOK_ASSERT(longencoded.find('\r') == std::string::npos);
+}
+
+void UtilTests::testBase64Decode()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Simple round-trip.
+    LOK_ASSERT_EQUAL(std::string("Hello"), Util::base64Decode("SGVsbG8="));
+
+    // Decode longer string.
+    LOK_ASSERT_EQUAL(std::string("Hello World!"),
+                     Util::base64Decode("SGVsbG8gV29ybGQh"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UtilTests);

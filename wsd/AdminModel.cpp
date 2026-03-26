@@ -49,9 +49,8 @@ std::ostream& print(std::ostream& oss, const std::string_view prefix, const std:
     return oss;
 }
 
-
-std::string concat(const std::string_view &prefix, const std::string_view name,
-                    const std::string_view suffix)
+std::string concat(const std::string_view prefix, const std::string_view name,
+                   const std::string_view suffix)
 {
     std::ostringstream oss;
     print(oss, prefix, name, suffix);
@@ -208,7 +207,7 @@ bool Subscriber::notify(const std::string& message)
         try
         {
             UNITWSD_CALL(onAdminNotifyMessage(message));
-            webSocket->sendMessage(message);
+            webSocket->sendTextMessage(message);
             return true;
         }
         catch (const std::exception& ex)
@@ -1169,7 +1168,7 @@ void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats) const
 {
     stats = ExpiredDocStats;
 
-    for (auto& d : _documents)
+    for (const auto& d : _documents)
         stats.Update(d.second, true);
 }
 

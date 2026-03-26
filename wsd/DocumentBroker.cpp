@@ -242,7 +242,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                                << "] created with docKey [" << _docKey
                                << "], always_save_on_exit: " << _alwaysSaveOnExit);
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerCreate(_docKey));
+    UNITWSD_CALL_INSTANCE(_unitWsd, DocBrokerCreate(_docKey));
 }
 
 pid_t DocumentBroker::getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
@@ -283,9 +283,9 @@ static std::chrono::seconds getLimitLoadSecs()
     return value;
 }
 
-void DocumentBroker::assertCorrectThread(const char* filename, int line) const
+void DocumentBroker::assertCorrectThread(LOG_CAPTURE_CALLER) const
 {
-    _poll->assertCorrectThread(filename, line);
+    _poll->assertCorrectThread(LOG_PASS_PARENT_CALLER);
 }
 
 void DocumentBroker::clearCaches()
@@ -933,7 +933,7 @@ void DocumentBroker::joinThread()
     _poll->joinThread();
 }
 
-void DocumentBroker::stop(const std::string& reason)
+void DocumentBroker::stop(const std::string_view reason)
 {
     if (_closeReason.empty() || _closeReason == reason)
     {
@@ -1508,6 +1508,10 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // the new slideshow supports watermarking, anyway it's still an experimental features
     disablePresentation = disablePresentation || (!ConfigUtil::getBool("canvas_slideshow_enabled", true) && !watermarkText.empty());
     wopiInfo->set("DisablePresentation", disablePresentation);
+
+    const std::string commentAvatarUrl = ConfigUtil::getString("comment_avatar", "");
+    if (!commentAvatarUrl.empty())
+        wopiInfo->set("CommentAvatarUrl", commentAvatarUrl);
 
     std::ostringstream ossWopiInfo;
     wopiInfo->stringify(ossWopiInfo);
@@ -3616,7 +3620,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
     return sent;
 }
 
-void DocumentBroker::autoSaveAndStop(const std::string& reason)
+void DocumentBroker::autoSaveAndStop(const std::string_view reason)
 {
     LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "]: " << reason);
 
@@ -4204,7 +4208,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
                                   << id << ']');
             if (ws)
             {
-                const std::string msg("error: cmd=load kind=docunloading");
+                constexpr std::string_view msg("error: cmd=load kind=docunloading");
                 ws->sendTextMessage(msg);
                 ws->shutdown(true, msg);
             }
@@ -4215,7 +4219,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
         {
-            static constexpr const char* const statusReady = "progress: { \"id\":\"ready\" }";
+            static constexpr std::string_view statusReady = "progress: { \"id\":\"ready\" }";
             LOG_TRC("Sending to Client [" << statusReady << ']');
             ws->sendTextMessage(statusReady);
         }
@@ -4243,7 +4247,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
 
     if (ws)
     {
-        const std::string msg("error: cmd=internal kind=load");
+        constexpr std::string_view msg("error: cmd=internal kind=load");
         ws->sendTextMessage(msg);
         ws->shutdown(true, msg);
     }
@@ -4276,7 +4280,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
     LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
     {
         if (!it.second->inWaitDisconnected())
             it.second->enqueueSendMessage(payload);
@@ -4291,7 +4295,7 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
                                                  << "] for all sessions with userId [" << userId
                                                  << ']');
 
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
     {
         if (it.second->getUserId() != userId)
             continue;
@@ -5169,18 +5173,26 @@ std::string DocumentBroker::applyBrowserAccessibility(const std::string& message
                                                    const std::string& viewId)
 {
     bool accessibilityEnabled = false;
+    bool lockAccessibilityOn = false;
     const auto it = _sessions.find(viewId);
     if (it != _sessions.end())
     {
         auto session = it->second;
         auto json = session->getBrowserSettingJSON();
         JsonUtil::findJSONValue(json, "accessibilityState", accessibilityEnabled);
+        JsonUtil::findJSONValue(json, "lockAccessibilityOn", lockAccessibilityOn);
     }
     else
         LOG_WRN("Cannot lock accessibility on for ClientSession [" << viewId << ']');
 
     if (!accessibilityEnabled)
         return message;
+
+    if (lockAccessibilityOn && it != _sessions.end())
+    {
+        auto session = it->second;
+        session->sendTextFrame("lockaccessibilityon");
+    }
 
     // Ensure accessibilityState=true is enabled. Overwrite accessibilityState=
     // if it exists, append otherwise.
@@ -5246,7 +5258,8 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
     std::string viewId = session->getId();
 
     // Should not get through; we have our own save command.
-    assert(!message.starts_with("uno .uno:Save"));
+    // .uno:SaveGraphic is not a document save - it exports an image to a temp file.
+    assert(!message.starts_with("uno .uno:Save") || message.starts_with("uno .uno:SaveGraphic"));
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
@@ -5339,7 +5352,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     return false;
 }
 
-void DocumentBroker::shutdownClients(const std::string& closeReason)
+void DocumentBroker::shutdownClients(const std::string_view closeReason)
 {
     ASSERT_CORRECT_THREAD();
     LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "] with reason: " << closeReason);
@@ -5349,7 +5362,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
     std::map<std::string, std::shared_ptr<ClientSession>> sessions = _sessions;
     for (const auto& pair : sessions)
     {
-        std::shared_ptr<ClientSession> session = pair.second;
+        const std::shared_ptr<ClientSession>& session = pair.second;
         try
         {
             if (session->inWaitDisconnected())
@@ -5371,7 +5384,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
     }
 }
 
-void DocumentBroker::terminateChild(const std::string& closeReason)
+void DocumentBroker::terminateChild(const std::string_view closeReason)
 {
     ASSERT_CORRECT_THREAD();
 
@@ -5636,7 +5649,7 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
 {
     std::vector<std::shared_ptr<ClientSession>> result;
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
         result.push_back(it.second);
     return result;
 }

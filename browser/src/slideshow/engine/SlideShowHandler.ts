@@ -282,6 +282,10 @@ class SlideShowHandler {
 		return this.aStartedEffectList.length > 0;
 	}
 
+	getCurrentEffect(): number {
+		return this.nCurrentEffect;
+	}
+
 	notifyNextEffectStart() {
 		assert(
 			!this.bIsNextEffectRunning,
@@ -533,14 +537,13 @@ class SlideShowHandler {
 
 		if (this.nCurrentEffect >= this.aNextEffectEventArray.size()) return false;
 
-		this.presenter.sendSlideShowFollowMessage(
-			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
-		);
-
 		this.notifyNextEffectStart();
 
 		this.aNextEffectEventArray.at(this.nCurrentEffect).fire();
 		++this.nCurrentEffect;
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
+		);
 		this.update();
 		return true;
 	}
@@ -620,7 +623,7 @@ class SlideShowHandler {
 	}
 
 	skipNEffects(nEffectNumber: number) {
-		for (let i = 0; i <= nEffectNumber; i++) if (!this.skipNextEffect()) break;
+		for (let i = 0; i < nEffectNumber; i++) if (!this.skipNextEffect()) break;
 	}
 
 	/** skipPlayingOrNextEffect
@@ -987,7 +990,11 @@ class SlideShowHandler {
 			}
 
 			this.bIsIdle = false;
-			setTimeout(this.update.bind(this), nNextTimeout * 1000);
+			app.timerRegistry.setTimeout(
+				'slideshowupdate',
+				this.update.bind(this),
+				nNextTimeout * 1000,
+			);
 		} else {
 			this.bIsIdle = true;
 		}

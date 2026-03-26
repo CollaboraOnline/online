@@ -42,6 +42,16 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 		if (reset) {
 			actualData = [];
+		} else if (option === 'mem') {
+			actualData = this._memStatsData;
+		} else if (option === 'cpu') {
+			actualData = this._cpuStatsData;
+		} else if (option === 'sent') {
+			actualData = this._sentStatsData;
+		} else if (option === 'recv') {
+			actualData = this._recvStatsData;
+		} else if (option === 'conn') {
+			actualData = this._connStatsData;
 		}
 
 		var offset = actualData.length * interval;

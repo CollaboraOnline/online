@@ -16,7 +16,6 @@
 
 #include <config.h>
 
-#include <WebSocketHandler.hpp>
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
@@ -34,6 +33,10 @@
 #include <kit/Kit.hpp>
 #include <kit/SetupKitEnvironment.hpp>
 #include <net/ServerSocket.hpp>
+#include <net/WebSocketHandler.hpp>
+
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Poco/Path.h>
 #include <Poco/URI.h>
@@ -46,12 +49,12 @@
 #include <sysexits.h>
 
 #include <atomic>
+#include <chrono>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <map>
 #include <thread>
-#include <chrono>
 #include <utility>
 
 namespace
@@ -418,7 +421,7 @@ void cleanupChildren(const std::string& childRoot)
             stream << "segfaultcount=" << segFaultCount << ' ' << "killedcount=" << killedCount
                     << ' ' << "oomkilledcount=" << oomKilledCount << '\n';
 
-            int ret = WSHandler->sendMessage(stream.str());
+            const int ret = WSHandler->sendTextMessage(stream.str());
             if (ret == -1)
             {
                 LOG_WRN("Could not send 'segfaultcount' message through websocket");

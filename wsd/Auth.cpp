@@ -27,7 +27,6 @@
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Dynamic/Var.h>
-#include <Poco/LineEndingConverter.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -36,8 +35,6 @@
 
 #include <cstdlib>
 #include <string>
-
-using Poco::OutputLineEndingConverter;
 
 std::unique_ptr<Poco::Crypto::RSAKey> JWTAuth::_key(
     new Poco::Crypto::RSAKey(Poco::Crypto::RSAKey(Poco::Crypto::RSAKey::KL_2048, Poco::Crypto::RSAKey::EXP_LARGE)));
@@ -77,7 +74,7 @@ const std::string JWTAuth::getAccessToken()
     Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
 
     // The signature generated contains CRLF line endings.
-    std::string encodedSig = Util::base64EncodeRemovingNewLines(digest);
+    std::string encodedSig = Util::base64Encode(digest);
 
     // trim '=' from end of encoded signature
     encodedSig.erase(std::find_if(encodedSig.rbegin(), encodedSig.rend(),
@@ -112,7 +109,7 @@ bool JWTAuth::verify(const std::string& accessToken)
         Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
 
         // The signature generated contains CRLF line endings.
-        std::string encodedSig = Util::base64EncodeRemovingNewLines(digest);
+        std::string encodedSig = Util::base64Encode(digest);
 
         // trim '=' from end of encoded signature.
         encodedSig.erase(std::find_if(encodedSig.rbegin(), encodedSig.rend(),
@@ -169,7 +166,7 @@ const std::string JWTAuth::createHeader()
     const std::string header = R"({"alg":")" + _alg + R"(","typ":")" + _typ + "\"}";
 
     LOG_INF("JWT Header: " << header);
-    return Util::base64EncodeRemovingNewLines(header);
+    return Util::base64Encode(header);
 }
 
 const std::string JWTAuth::createPayload()
@@ -184,7 +181,7 @@ const std::string JWTAuth::createPayload()
                                 _aud + R"(","nme":")" + _name + R"(","exp":")" + exptime + "\"}";
 
     LOG_INF("JWT Payload: " << payload << " expires in " << expirySeconds << "seconds");
-    return Util::base64EncodeRemovingNewLines(payload);
+    return Util::base64Encode(payload);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

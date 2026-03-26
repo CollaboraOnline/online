@@ -35,6 +35,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.model = model;
 	},
 
+	getWidgetSnapshot(id) {
+		return this.model.getById(id);
+	},
+
 	// happens only once
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -50,6 +54,11 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
 
 		this.map.on('notebookbar', this.onNotebookbar, this);
+	},
+
+	// override in subclasses
+	onCallback: function () {
+		return false; // consumed
 	},
 
 	// on show
@@ -435,13 +444,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		if (!id) return;
 
 		this.builder.executeAction(this.container, {
-			id: this.builder.windowId,
-			action: 'action',
-			jsontype: 'notebookbar',
-			data: {
-				control_id: id,
-				action_type: show ? 'show' : 'hide',
-			}
+			control_id: id,
+			action_type: show ? 'show' : 'hide',
 		});
 
 		JSDialog.RefreshScrollables();

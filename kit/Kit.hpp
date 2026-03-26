@@ -11,36 +11,42 @@
 
 #pragma once
 
-#include <Poco/Util/XMLConfiguration.h>
-#include <map>
-#include <string>
-
-#include <common/Util.hpp>
-#include <common/StateEnum.hpp>
 #include <common/Session.hpp>
+#include <common/StateEnum.hpp>
 #include <common/ThreadPool.hpp>
+#include <common/Util.hpp>
 #include <kit/KitQueue.hpp>
 #include <kit/LogUI.hpp>
-
+#include <net/Socket.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include <Socket.hpp>
+#include <LibreOfficeKit/LibreOfficeKitTypes.h>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <Poco/Util/XMLConfiguration.h>
+
+#include <map>
+#include <string>
 
 #if MOBILEAPP
 
 #include <future>
 
-#include <ClientSession.hpp>
-#include <DocumentBroker.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
 
 #endif
 
 #ifdef IOS
 void runKitLoopInAThread();
 #endif
+
+namespace lok
+{
+class Document;
+class Office;
+}
+struct LibreOfficeKitStruct;
+using LibreOfficeKit = LibreOfficeKitStruct;
 
 void lokit_main(
 #if !MOBILEAPP
@@ -223,7 +229,7 @@ public:
     const std::string& getUrl() const { return _url; }
 
     /// Post the message - in the unipoll world we're in the right thread anyway
-    bool postMessage(const char* data, int size, WSOpCode code) const;
+    bool postMessage(const std::string_view data, WSOpCode code) const;
 
     bool createSession(const std::string& sessionId);
 
@@ -236,12 +242,9 @@ public:
 
     void renderTiles(TileCombined& tileCombined);
 
-    bool sendTextFrame(const std::string& message) const
-    {
-        return sendFrame(message.data(), message.size());
-    }
+    bool sendTextFrame(const std::string_view message) const { return sendFrame(message); }
 
-    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) const;
+    bool sendFrame(std::string_view data, WSOpCode opCode = WSOpCode::Text) const;
 
     void alertNotAsync() const
     {
@@ -285,7 +288,7 @@ private:
 
     /// Calculate tile rendering priority from a TileDesc
     Priority getTilePriority(const TileDesc& desc) const override;
-    virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
+    std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:
     /// Request loading a document, or a new view, if one exists,
@@ -298,7 +301,7 @@ public:
     void onUnload(const ChildSession& session);
 
     /// Get a view ID <-> UserInfo map.
-    std::map<int, UserInfo> getViewInfo() { return _sessionUserInfo; }
+    const std::map<int, UserInfo>& getViewInfo() const { return _sessionUserInfo; }
 
     int getEditorId() const { return _editorId; }
 
@@ -306,7 +309,7 @@ public:
 
     bool haveDocPassword() const { return _haveDocPassword; }
 
-    std::string getDocPassword() const { return _docPassword; }
+    const std::string& getDocPassword() const { return _docPassword; }
 
     DocumentPasswordType getDocPasswordType() const { return _docPasswordType; }
 
@@ -418,12 +421,12 @@ public:
     bool isLoaded() const { return !!_loKitDocument; }
 
     /// Return access to the lok::Office instance.
-    std::shared_ptr<lok::Office> getLOKit() { return _loKit; }
+    std::shared_ptr<lok::Office> getLOKit() const { return _loKit; }
 
     /// Return access to the lok::Document instance.
     std::shared_ptr<lok::Document> getLOKitDocument();
 
-    std::string getObfuscatedFileId() { return _obfuscatedFileId; }
+    const std::string& getObfuscatedFileId() const { return _obfuscatedFileId; }
 
     bool isBackgroundSaveProcess() const { return _isBgSaveProcess; }
 

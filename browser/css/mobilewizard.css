@@ -294,7 +294,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 #mobile-wizard-content * {
-	font-family: var(--mobile-font);
+	font-family: var(--cool-font);
 	color: var(--color-main-text);
 }
 

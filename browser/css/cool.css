@@ -1,14 +1,7 @@
 :root {
 	/*All used fonts (except w2ui)
 	----------------------------------*/
-	--cool-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
-	/*investigate what are the drawback in consisntly use --cool-fonts
-	for jquery-ui and perhaps mobile*/
-	--mobile-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-	--jquery-ui-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-
-	--docs-font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	--docs--pre-font: 'Consolas', 'Menlo', 'Lucida Console', 'Courier New', monospace;
+	--cool-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
 	/* Shared color for cell and selection border */
 	--cell-cursor-selection-border-color: var(--color-primary);
@@ -206,7 +199,7 @@ body {
 	padding: 0 14px 0 4px;
 	height: 28px;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 #toolbar-wrapper.readonly {
@@ -362,6 +355,11 @@ body {
 	scrollbar-width: var(--scrollbar-width);
 	scrollbar-color: var(--scrollbar-color);
 	height: 100%;
+}
+
+/* setup it statuc so we don't flicker to resize canvas */
+#sidebar-dock-wrapper {
+	width: 329px;
 }
 
 #sidebar-dock-wrapper.visible {
@@ -592,7 +590,8 @@ body {
 	-webkit-user-select: text;
 	-ms-user-select: text;
 	z-index: 12;
-	width: 250px;
+	width: min-content;
+	min-width: 250px;
 	transition: left .25s;
 }
 
@@ -601,7 +600,7 @@ body {
 	max-width: 95%;
 	max-height: 95%;
 	width: 66ch;
-	/* Centered align comment in TS, we cannot align it here with positon relative */
+	/* Centered align comment in TS, we cannot align it here with position relative */
 	z-index: 1000;
 }
 .cool-annotation.annotation-pop-up:not(.annotation-active) > .cool-annotation-content-wrapper {
@@ -611,10 +610,6 @@ body {
 	transition: transform 400ms cubic-bezier(0.2,0,0,1), box-shadow 400ms cubic-bezier(0.2,0,0,1);
 	will-change: transform, box-shadow;
 	box-shadow: 0 0 0 1000px rgba(var(--doc-type),0.15);
-}
-
-.cool-annotation.tracked-deleted-comment-show {
-	opacity: 0.5;
 }
 
 .cool-annotation.tracked-deleted-comment-hide {
@@ -662,7 +657,10 @@ body {
 .cool-annotation:not(.annotation-active) .cool-annotation-redline-content-wrapper:hover {
 	color: var(--color-text-dark);
 }
-
+.tracked-deleted-comment-show .cool-annotation-content-wrapper:hover,
+.tracked-deleted-comment-show.annotation-active .cool-annotation-content-wrapper {
+	box-shadow: 0 0 3px var(--color-error);
+}
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
 .annotation-active.reply-annotation-container .cool-annotation-content-wrapper {
 	width: auto;
@@ -674,6 +672,7 @@ body {
 	overflow: auto;
 	scrollbar-color: var(--scrollbar-color);
 	scrollbar-width: var(--scrollbar-width);
+	min-width: 200px;
 }
 
 .cool-annotation-info-collapsed {
@@ -732,6 +731,12 @@ body {
 
 .cool-annotation-content-resolved {
 	color: var(--color-success);
+	font-weight: 700;
+	font-size: 0.625rem;
+}
+
+.cool-annotation-content-removed {
+	color: var(--color-error);
 	font-weight: 700;
 	font-size: 0.625rem;
 }
@@ -869,10 +874,6 @@ body {
 	width: 100%;
 	overflow: hidden;
 	flex: 1;
-}
-
-.cool-annotation:not(.annotation-pop-up) .cool-annotation-author {
-	max-width: 150px;
 }
 
 .cool-annotation-content-author {
@@ -1087,7 +1088,7 @@ body {
 	padding: 0px;
 }
 
-.lokdialog.ui-dialog-content [Id$='Page'] {
+.lokdialog.ui-dialog-content [Id$='Page']:not(.checkbutton) {
 	grid-column-gap: 24px;
 }
 
@@ -1362,7 +1363,7 @@ body {
 	position: absolute;
 	text-align: center;
 	z-index: 11;
-	font-family: var(--docs-font);
+	font-family: var(--cool-font);
 	font-size: var(--default-font-size);
 	border-radius: var(--border-radius-large);
 	box-shadow: 0 0 2px 1px var(--color-box-shadow);
@@ -1522,3 +1523,35 @@ body {
 	background-color: rgb(var(--doc-type));
 	color: var(--color-background-lighter);
 }
+
+/* Debug panel */
+
+#debug-panel {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 1000;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 6px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+	padding: 8px 12px;
+	font: 12px/1.25 sans-serif;
+	color: #333;
+	max-height: 80vh;
+	overflow-y: auto;
+	pointer-events: auto;
+}
+
+#debug-panel .debug-panel-header { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+#debug-panel .debug-panel-hint { font-size: 10px; color: #888; margin-bottom: 4px; }
+
+#debug-panel .debug-panel-group {
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	padding: 2px 8px 4px;
+	margin-bottom: 4px;
+}
+#debug-panel .debug-panel-group legend { font-weight: 600; font-size: 12px; padding: 0 3px; }
+
+#debug-panel label { display: block; cursor: pointer; padding: 1px 0; }
+#debug-panel input[type='checkbox'] { margin-right: 5px; }

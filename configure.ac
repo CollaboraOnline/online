@@ -201,6 +201,16 @@ AC_ARG_ENABLE([qtapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view. See qt/README.]))
 
+AC_ARG_ENABLE([qtapp-tests],
+              AS_HELP_STRING([--enable-qtapp-tests],
+                             [Enable the WebdriverIO test suite for the Qt app.
+                              Requires --enable-qtapp and --with-atspi-driver-path.]))
+
+AC_ARG_WITH([atspi-driver-path],
+            AS_HELP_STRING([--with-atspi-driver-path=/path/to/selenium-webdriver-at-spi.py],
+                           [Path to the selenium-webdriver-at-spi.py script
+                            required to run the Qt app tests.]))
+
 AC_ARG_ENABLE(fuzzers,
     AS_HELP_STRING([--enable-fuzzers],
         [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
@@ -1157,6 +1167,24 @@ fi
 AC_SUBST(ENABLE_QTAPP)
 AM_CONDITIONAL([ENABLE_QTAPP], [test "$ENABLE_QTAPP" = "true"])
 
+ENABLE_QTAPP_TESTS=false
+AT_SPI_DRIVER_PATH=
+if test "$enable_qtapp_tests" = "yes"; then
+    if test "$ENABLE_QTAPP" != "true"; then
+        AC_MSG_ERROR([--enable-qtapp-tests requires --enable-qtapp])
+    fi
+    if test -z "$with_atspi_driver_path"; then
+        AC_MSG_ERROR([--enable-qtapp-tests requires --with-atspi-driver-path=<path>])
+    fi
+    if test ! -f "$with_atspi_driver_path"; then
+        AC_MSG_ERROR([AT-SPI driver not found: $with_atspi_driver_path])
+    fi
+    AT_SPI_DRIVER_PATH="$with_atspi_driver_path"
+    ENABLE_QTAPP_TESTS=true
+fi
+AC_SUBST(AT_SPI_DRIVER_PATH)
+AM_CONDITIONAL([ENABLE_QTAPP_TESTS], [test "$ENABLE_QTAPP_TESTS" = "true"])
+
 dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
 dnl capability. Compare to ENABLE_WASM.
 
@@ -1595,20 +1623,49 @@ AS_IF([test "$ENABLE_WINDOWSAPP" != "true"],
 
 dnl config for qtapp frontend for cool
 AS_IF([test "$ENABLE_QTAPP" = true],
-      [PKG_CHECK_MODULES([QT6],[Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus],,)
-       dnl Qt6 moc executable is found at /usr/lib64/qt6/libexec/moc with
-       dnl qt-base-devel on fedora... TODO: check what is the story with other
-       dnl distros is it ever really in the PATH?
-       AC_PATH_PROG([MOC], [moc], [no], [$PATH$PATH_SEPARATOR/usr/lib64/qt6/libexec$PATH_SEPARATOR/usr/lib/qt6$PATH_SEPARATOR/usr/libexec/qt6$PATH_SEPARATOR/usr/lib/qt6/libexec])
-       if test "x$MOC" = "xno"; then
-             AC_MSG_ERROR([moc not found. Please install Qt development tools.])
+      [
+       PKG_CHECK_MODULES([QT6],
+             [Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus Qt6PrintSupport],,
+             [AC_MSG_ERROR([Qt6 not found. Set QT6_CFLAGS and QT6_LIBS if your distro lacks .pc files.])])
+
+       dnl Locate qtpaths6 for Qt6 tool discovery
+       AC_PATH_PROG([QTPATHS6], [qtpaths6], [no],
+             [$PATH$PATH_SEPARATOR/usr/lib/qt6/bin])
+       if test "x$QTPATHS6" = "xno"; then
+             AC_MSG_ERROR([qtpaths6 not found. Install Qt6 development tools.])
+       fi
+       QT_LIBEXEC_DIR=$($QTPATHS6 --qt-query QT_INSTALL_LIBEXECS 2>/dev/null)
+       QT_BIN_DIR=$($QTPATHS6 --qt-query QT_INSTALL_BINS 2>/dev/null)
+
+       AC_MSG_CHECKING([for moc])
+       if test -n "$QT_LIBEXEC_DIR" -a -x "$QT_LIBEXEC_DIR/moc"; then
+             MOC="$QT_LIBEXEC_DIR/moc"
+             AC_MSG_RESULT([$MOC])
+       else
+             AC_MSG_RESULT([no])
+             AC_MSG_ERROR([moc not found in $QT_LIBEXEC_DIR])
        fi
        AC_SUBST(MOC)
-       AC_PATH_PROGS(LRELEASE, [lrelease6 lrelease-qt6 lrelease], [:], [$PATH$PATH_SEPARATOR/usr/lib/qt6/bin])
-       AC_PATH_PROGS(LUPDATE,  [lupdate6  lupdate-qt6  lupdate],  [:], [$PATH$PATH_SEPARATOR/usr/lib/qt6/bin])
-       if test "x$LRELEASE" = "x:"; then
-             AC_MSG_ERROR([lrelease or lrelease6 not found – please install Qt Linguist tools])
+
+       AC_MSG_CHECKING([for lrelease])
+       if test -n "$QT_BIN_DIR" -a -x "$QT_BIN_DIR/lrelease"; then
+             LRELEASE="$QT_BIN_DIR/lrelease"
+             AC_MSG_RESULT([$LRELEASE])
+       else
+             AC_MSG_RESULT([no])
+             AC_MSG_ERROR([lrelease not found in $QT_BIN_DIR])
        fi
+       AC_SUBST(LRELEASE)
+
+       AC_MSG_CHECKING([for lupdate])
+       if test -n "$QT_BIN_DIR" -a -x "$QT_BIN_DIR/lupdate"; then
+             LUPDATE="$QT_BIN_DIR/lupdate"
+             AC_MSG_RESULT([$LUPDATE])
+       else
+             AC_MSG_RESULT([no])
+             AC_MSG_WARN([lupdate not found in $QT_BIN_DIR])
+       fi
+       AC_SUBST(LUPDATE)
 ])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
@@ -1797,6 +1854,26 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$EN
                 [AC_MSG_ERROR([header Poco/SAX/SAXParser.h not found, perhaps you want to use --with-poco-includes])])
        fi
 
+       # If Poco is built with --unbundled, its static archives reference
+       # system pcre2 (PocoFoundation), expat (PocoXML) and zlib (PocoZip)
+       # instead of bundled copies.  Detect by trying to link with
+       # Poco::RegularExpression which needs PCRE2 from PocoFoundation.
+       AC_MSG_CHECKING([if we need to link with PCRE2, expat and zlib (unbundled Poco)])
+       AC_LINK_IFELSE([AC_LANG_SOURCE([
+       #include <Poco/RegularExpression.h>
+       int main(int argc, char **argv)
+       {
+           (void)argc;
+           Poco::RegularExpression e("abc.[[def]]");
+           Poco::RegularExpression::Match m;
+           return e.match(argv[[1]], m);
+       }
+       ])],
+                      [AC_MSG_RESULT([no])],
+                      [AC_MSG_RESULT([yes])
+                       PKG_CHECK_MODULES([PCRE2], [libpcre2-8])
+                       LIBS="$LIBS $PCRE2_LIBS -lexpat -lz"])
+
        ])
 
 AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darwin"],
@@ -1808,8 +1885,8 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
             AC_MSG_ERROR([node required to build cool, but not installed])
        else
            NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-           if test "$NODE_VER" -lt 100000; then
-               AC_MSG_ERROR([This node version is old, upgrade to >= 10.0.0])
+           if test "$NODE_VER" -lt 200000; then
+               AC_MSG_ERROR([This node version is old, upgrade to >= 20.0.0])
            fi
        fi
 
@@ -1819,8 +1896,8 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
                AC_MSG_ERROR([npm required to build cool, but not installed])
            else
                NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-               if test "$NPM_VER" -lt 50000; then
-                   AC_MSG_ERROR([This npm version is too old, upgrade to >= 5.0.0])
+               if test "$NPM_VER" -lt 90000; then
+                   AC_MSG_ERROR([This npm version is too old, upgrade to >= 9.0.0])
                fi
            fi
        fi
@@ -1875,11 +1952,23 @@ if test "$srcdir" != '.'; then
              as_fn_error $? "cannot create directory $dirname"
 
        rm -f "$dst_dir"
-       src_dir=$srcdir/$dst_dir
+       case $srcdir in
+         /*)
+           src_dir=$srcdir/$dst_dir
+           ;;
+         *)
+           dir=$(dirname "$dst_dir")
+           if test "$dir" = .; then
+             src_dir=$srcdir/$dst_dir
+           else
+             src_dir=$(printf %s "$dir" | sed -e 's|[[^/]]*|..|g')/$srcdir/$dst_dir
+           fi
+           ;;
+       esac
        echo "linking $src_dir to $dst_dir"
        ln -s "$src_dir" "$dst_dir" 2>/dev/null ||
           ln "$src_dir" "$dst_dir" 2>/dev/null ||
-             cp -p "$src_dir" "$dst_dir" ||
+             cp -p "$srcdir/$dst_dir" "$dst_dir" ||
                 as_fn_error $? "cannot link or copy $src_dir to $dst_dir"
    done
 fi])

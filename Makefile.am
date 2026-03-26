@@ -20,6 +20,12 @@ SUBDIRS = macos browser
 else
 if ENABLE_QTAPP
 SUBDIRS = qt browser
+
+if ENABLE_QTAPP_TESTS
+check-qtapp:
+	$(MAKE) $(AM_MAKEFLAGS) -C qt check-qtapp
+endif ENABLE_QTAPP_TESTS
+
 else
 if ENABLE_WASM
 SUBDIRS = wasm browser
@@ -493,6 +499,7 @@ shared_headers = \
                  common/Log.hpp \
                  common/Message.hpp \
                  common/MobileApp.hpp \
+                 common/NumUtil.hpp \
                  common/Png.hpp \
                  common/Protocol.hpp \
                  common/Rectangle.hpp \
@@ -559,7 +566,6 @@ noinst_HEADERS = \
                  test/HttpTestServer.hpp \
                  test/KitPidHelpers.hpp \
                  test/UnitHTTP.hpp \
-                 test/UnitTimeoutBase.hpp \
                  test/UnitWSDClient.hpp \
                  test/WOPIUploadConflictCommon.hpp \
                  test/WebSocketSession.hpp \
@@ -569,9 +575,6 @@ noinst_HEADERS = \
                  test/test.hpp \
                  test/testlog.hpp \
                  tools/COOLWebSocket.hpp
-
-GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
-GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
 
 dist-hook:
 	git log -1 --format=%h --abbrev=10 > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
@@ -933,6 +936,8 @@ stress:
 		$(stress_file) $(trace_dir)/writer-quick.txt
 
 if ENABLE_CODE_COVERAGE
+GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
+GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
 GEN_COVERAGE_COMMAND=$(QUIET_MKDIRP) mkdir -p ${abs_top_srcdir}/gcov && \
 lcov --no-external --capture --rc 'lcov_excl_line=' --rc 'lcov_excl_br_line=LOG_|TST_|LOK_|WSD_|TRANSITION|assert' \
 --compat libtool=on --directory ${abs_top_srcdir}/. --output-file ${abs_top_srcdir}/gcov/cool.coverage.test.info && \

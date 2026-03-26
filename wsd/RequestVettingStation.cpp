@@ -440,9 +440,9 @@ std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
         // Indicate to the client that we're connecting to the docbroker.
         if (_ws)
         {
-            static constexpr const char* const statusConnect = "progress: { \"id\":\"connect\" }";
+            static constexpr std::string_view statusConnect = "progress: { \"id\":\"connect\" }";
             LOG_TRC("Sending to Client [" << statusConnect << ']');
-            _ws->sendMessage(statusConnect);
+            _ws->sendTextMessage(statusConnect);
         }
 
         LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
@@ -456,16 +456,18 @@ std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
     return nullptr;
 }
 
-static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
-                                   const std::string& msg,
-                                   WebSocketHandler::StatusCodes statusCode)
+namespace
+{
+void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws, const std::string_view msg,
+                            WebSocketHandler::StatusCodes statusCode)
 {
     if (ws)
     {
-        ws->sendMessage(msg);
+        ws->sendTextMessage(msg);
         ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
     }
 }
+} // namespace
 
 void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                                                 const std::string& docKey, const std::string& url,
@@ -584,7 +586,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
         });
 }
 
-void RequestVettingStation::sendErrorAndShutdown(const std::string& msg,
+void RequestVettingStation::sendErrorAndShutdown(const std::string_view msg,
                                                  WebSocketHandler::StatusCodes statusCode)
 {
     sendErrorAndShutdownWS(_ws, msg, statusCode);

@@ -11,6 +11,7 @@
             <action name="view" default="true" ext="fodt"/>
             <!-- Text template documents -->
             <action name="view" default="true" ext="stw"/>
+            <action name="edit" default="true" ext="ott"/>
             <action name="view" default="true" ext="ott"/>
             <!-- MS Word -->
             <action name="edit" default="true" ext="doc"/>
@@ -21,7 +22,9 @@
             <action name="view" default="true" ext="docx"/>
             <action name="edit" default="true" ext="docm"/>
             <action name="view" default="true" ext="docm"/>
+            <action name="edit" default="true" ext="dotx"/>
             <action name="view" default="true" ext="dotx"/>
+            <action name="edit" default="true" ext="dotm"/>
             <action name="view" default="true" ext="dotm"/>
             <!-- Others -->
             <action name="view" default="true" ext="wpd"/>
@@ -65,6 +68,7 @@
             <action name="view" default="true" ext="fods"/>
             <!-- Spreadsheet template documents -->
             <action name="view" default="true" ext="stc"/>
+            <action name="edit" default="true" ext="ots"/>
             <action name="view" default="true" ext="ots"/>
             <!-- MS Excel -->
             <action name="edit" default="true" ext="xls"/>
@@ -72,7 +76,9 @@
             <action name="edit" default="true" ext="xla"/>
             <action name="view" default="true" ext="xla"/>
             <!-- OOXML spreadsheet -->
+            <action name="edit" default="true" ext="xltx"/>
             <action name="view" default="true" ext="xltx"/>
+            <action name="edit" default="true" ext="xltm"/>
             <action name="view" default="true" ext="xltm"/>
             <action name="edit" default="true" ext="xlsx"/>
             <action name="view" default="true" ext="xlsx"/>
@@ -112,6 +118,7 @@
             <action name="view" default="true" ext="fodp"/>
             <!-- Presentation template documents -->
             <action name="view" default="true" ext="sti"/>
+            <action name="edit" default="true" ext="otp"/>
             <action name="view" default="true" ext="otp"/>
             <!-- MS PowerPoint -->
             <action name="edit" default="true" ext="ppt"/>
@@ -122,7 +129,9 @@
             <action name="view" default="true" ext="pptx"/>
             <action name="edit" default="true" ext="pptm"/>
             <action name="view" default="true" ext="pptm"/>
+            <action name="edit" default="true" ext="potx"/>
             <action name="view" default="true" ext="potx"/>
+            <action name="edit" default="true" ext="potm"/>
             <action name="view" default="true" ext="potm"/>
             <action name="edit" default="true" ext="ppsx"/>
             <action name="view" default="true" ext="ppsx"/>

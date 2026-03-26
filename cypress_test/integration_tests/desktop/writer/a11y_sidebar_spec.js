@@ -14,6 +14,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		desktopHelper.switchUIToNotebookbar();
 
 		// Hide sidebar before enabling UICoverage tracking
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
@@ -111,7 +112,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		helper.processToIdle(win);
 
 		// At which point the sidebar disappears
-		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
 		// esc to get back to main document
 		escLevel(win, 1);

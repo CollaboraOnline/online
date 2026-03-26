@@ -28,6 +28,10 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 			cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').click();
 			cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').type('some text{enter}');
 
+			cy.getFrameWindow().then((win1) => {
+				helper.processToIdle(win1);
+			});
+
 			// turn off following in the second view
 			cy.cSetActiveFrame('#iframe2');
 			cy.cGet('#followingChip').click();

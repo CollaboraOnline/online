@@ -71,7 +71,7 @@ JSDialog.grid = function (
 	if (data.allyRole) {
 		table.role = data.allyRole;
 
-		if (data.allyRole === 'listbox')
+		if (data.allyRole === 'listbox' && data.initialSelectedId)
 			table.setAttribute('aria-activedescendant', data.initialSelectedId);
 	}
 
@@ -126,11 +126,26 @@ JSDialog.grid = function (
 		if (processedChildren.indexOf(child) === -1) {
 			const sandbox = window.L.DomUtil.create('div');
 			builder.build(sandbox, [child], false);
-			const control = sandbox.firstChild;
-			if (control) {
-				window.L.DomUtil.addClass(control, 'ui-grid-cell');
-				table.appendChild(control);
+
+			// For listbox role, process all children from sandbox
+			// all children will be of role="option"
+			if (data.allyRole === 'listbox') {
+				const controls = Array.from(sandbox.children);
+				for (let j = 0; j < controls.length; j++) {
+					const control = controls[j];
+					if (control) {
+						window.L.DomUtil.addClass(control, 'ui-grid-cell');
+						table.appendChild(control);
+					}
+				}
+			} else {
+				const control = sandbox.firstChild;
+				if (control) {
+					window.L.DomUtil.addClass(control, 'ui-grid-cell');
+					table.appendChild(control);
+				}
 			}
+
 			processedChildren.push(child);
 		}
 	}

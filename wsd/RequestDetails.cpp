@@ -271,7 +271,7 @@ void RequestDetails::processURI()
             first = false;
         }
 
-        _fields[Field::DocumentURI] = docUri;
+        _fields[Field::DocumentURI] = std::move(docUri);
     }
 
     // &compat=
@@ -307,23 +307,17 @@ void RequestDetails::processURI()
 
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
-    // The URI of the document is url-encoded, except that in a mobile app it isn't?
-    Poco::URI uriPublic((Util::isMobileApp() ? uri : Uri::decode(uri)));
+    const std::string decoded = Uri::decode(uri);
 
-    if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+    // Detect local file paths before constructing Poco::URI, because a bare '%'
+    // (from the WebSocket URL decode of %25) would cause Poco::URI to throw.
+    if (decoded[0] == '/' || decoded.starts_with("file://"))
     {
-        // TODO: Validate and limit access to local paths!
-        uriPublic.normalize();
-#ifdef _WIN32
-        // Change a bogus path like /C:/Users/tml/foo.odt to C:/Users/tml/foo.odt. If this path then
-        // later is changed back into a file: URI, as in ClientSession::loadDocument(), we can't
-        // just prefix "file://" but need one more slash. So maybe it would in fact be simpler to
-        // just keep the seemingly bogus /C:/Users/tml/foo.odt?
-        std::string p = uriPublic.getPath();
-        if (p.length() > 4 && p[0] == '/' && std::isalpha(p[1]) && p[2] == ':' && p[3] == '/')
-            uriPublic.setPath(p.substr(1));
-#endif
+        // Any remaining '%' after the decode is literal, not URI encoding.
+        return sanitizeLocalPath(decoded);
     }
+
+    Poco::URI uriPublic(decoded);
 
     if (uriPublic.getPath().empty())
     {
@@ -345,6 +339,31 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     uriPublic.setQueryParameters(queryParams);
 
     LOG_DBG("Sanitized URI [" << uri << "] to [" << uriPublic.toString() << ']');
+    return uriPublic;
+}
+
+Poco::URI RequestDetails::sanitizeLocalPath(const std::string& path)
+{
+    // For local file paths, '%' is always a literal character, never URI encoding.
+    // Encode every '%' so that Poco::URI's automatic decoding restores the originals.
+    Poco::URI uriPublic(Uri::encodeAllPercent(path));
+
+    if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+    {
+        uriPublic.normalize();
+#ifdef _WIN32
+        std::string p = uriPublic.getPath();
+        if (p.length() > 4 && p[0] == '/' && std::isalpha(p[1]) && p[2] == ':' && p[3] == '/')
+            uriPublic.setPath(p.substr(1));
+#endif
+    }
+
+    if (uriPublic.getPath().empty())
+    {
+        throw std::runtime_error("Invalid URI.");
+    }
+
+    LOG_DBG("Sanitized local path [" << path << "] to [" << uriPublic.toString() << ']');
     return uriPublic;
 }
 

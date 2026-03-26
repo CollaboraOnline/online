@@ -141,7 +141,7 @@ UnitBase::TestResult UnitSession::testHandshake()
                 const std::string msg(std::string(message.begin(), message.end()));
                 if (!msg.starts_with("error:"))
                 {
-                    LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix("progress:", msg), true);
+                    LOK_ASSERT_EQUAL(true, COOLProtocol::matchPrefix("progress:", msg));
                     LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                 }
                 else

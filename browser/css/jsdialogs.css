@@ -163,11 +163,23 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	background-color: var(--color-background-lighter);
 }
 
+/* Draw close "X" icon with SVG instead of bitmap sprite.
+   Branding layers override this background-image via higher specificity. */
+.ui-dialog-titlebar-close .ui-icon-closethick {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M3 3 L13 13 M13 3 L3 13' stroke='%23222' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 16px 16px;
+}
+
+[data-theme='dark'] .ui-dialog-titlebar-close .ui-icon-closethick {
+	filter: invert(1);
+}
+
 .jsdialog-container .ui-dialog-content {
 	max-height: calc( 90vh - 34px);
 	overflow-y: auto !important;
 	background-color: var(--color-background-lighter) !important;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	line-height: 1.5;
 	scrollbar-color: var(--scrollbar-color);
 	scrollbar-width: var(--scrollbar-width);
@@ -545,7 +557,7 @@ algned to the bottom */
 }
 
 .ui-expander-label.jsdialog {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .ui-expander-label::before,
@@ -700,9 +712,11 @@ algned to the bottom */
 }
 
 .ui-treeview.disabled,
-.ui-treeview-entry div.disabled {
+.ui-treeview-entry div.disabled,
+.ui-treeview-entry.disabled {
 	background-color: var(--color-background-dark) !important;
 	color: var(--color-text-lighter) !important;
+	pointer-events: none;
 }
 
 #custom_animation_label_parent {
@@ -1127,64 +1141,91 @@ img.context-menu-icon {
 /* spinfield */
 
 .spinfieldcontainer {
+	display: flex;
+	align-items: center;
 	margin-inline-end: 5px;
 	min-width: 70px;
 	width: 100%;
-}
-
-.spinfieldcontainer input {
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	background: var(--color-background-dark);
 	color: var(--color-text-dark);
+	box-sizing: border-box;
+	height: 28px;
 }
 
-.spinfieldcontainer input:not([disabled]):hover {
+.spinfieldcontainer:not([disabled]):hover {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
 }
 
-.jsdialog.spinfieldcontainer[disabled] input {
+.ui-dialog .spinfieldcontainer:has(.spinfield:focus-visible) {
+	outline: auto Highlight;
+	outline: auto -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+.jsdialog.spinfieldcontainer[disabled] {
 	border: 1px solid var(--color-border-lighter);
+	color: var(--color-text-lighter);
+	background: var(--color-background-lighter);
 }
 
 .spinfield {
-	padding: 4px 0 4px 4px;
-	height: 28px;
+	flex: 1;
+	width: 0;
+	min-width: 0;
+	padding: 0;
+	padding-inline-start: 4px;
+	height: 100%;
 	box-sizing: border-box;
-	margin-right: 1px;
-	min-width: 70px;
-	width: 100%;
+	border: none;
+	background: transparent;
+	color: inherit;
+	outline: none;
 }
 
-:dir(rtl) .spinfield {
-	padding: 4px 4px 4px 0;
+.spinfieldbuttons {
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+	flex-shrink: 0;
 }
 
-.spinfieldunit {
-	font-size: var(--default-font-size);
-	color: var(--color-text-dark);
-	margin: 5px;
-	margin-inline-start: calc(-50px);
-}
-/* spinfield (number) */
-input[type='number'] {
-	padding-top: 0 !important;
-	padding-bottom: 0 !important;
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-	opacity: 0.5;
-	height: 28px;
-	margin: 0;
-}
-
-input[type='number']:hover::-webkit-inner-spin-button,
-input[type='number']:hover::-webkit-outer-spin-button {
-	opacity: 1;
+.spinfieldbutton-up,
+.spinfieldbutton-down {
+	border: none;
+	background: none;
+	padding: 0 4px;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
+}
+
+.spinfieldbutton-up::after,
+.spinfieldbutton-down::after {
+	content: '';
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+}
+
+.spinfieldbutton-up::after {
+	border-bottom: 5px solid var(--color-text-lighter);
+}
+
+.spinfieldbutton-down::after {
+	border-top: 5px solid var(--color-text-lighter);
+}
+
+.spinfieldcontainer:not([disabled]):hover .spinfieldbutton-up::after {
+	border-bottom-color: var(--color-text-dark);
+}
+
+.spinfieldcontainer:not([disabled]):hover .spinfieldbutton-down::after {
+	border-top-color: var(--color-text-dark);
 }
 /* listbox */
 .ui-listbox-container,
@@ -1216,7 +1257,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 1.5rem;
 	line-height: normal;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
@@ -1225,14 +1266,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-combobox-label {
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .jsdialog-window .ui-listbox,
 .jsdialog-window .ui-combobox,
 .jsdialog-window .ui-timefield {
 	height: 32px;/* Use the same height as in .jsdialog.ui-edit */
-	min-width: 100px;
+	min-width: 50px;
 	width: 100%;
 }
 
@@ -1377,7 +1418,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: block;
 	width: 100%;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	color: var(--color-text-dark);
 }
 
@@ -1495,7 +1536,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 
 .ui-overflow-group-label {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	font-size: var(--overflow-group-font-size);
 	color: var(--color-text-lighter);
 	flex-grow: 1;
@@ -1538,7 +1579,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	text-wrap: nowrap;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .ui-iconview-entry.selected {
@@ -1554,6 +1595,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-iconview-entry img {
 	vertical-align: middle;
+	justify-self: center;
 }
 
 .ui-iconview-separator {
@@ -1592,7 +1634,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	position: absolute;
 	z-index: 1105;
 	padding: 0;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .autofilter-container > .root-container,
@@ -1864,7 +1906,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	box-sizing: border-box;
 	line-height: normal;
 	font-size: calc(var(--default-font-size)*1.2);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	padding: 8px 10px;
@@ -1891,6 +1933,11 @@ button.menubutton.sidebar > span {
 .jsdialog .unobutton img {
 	width: var(--btn-img-size);
 	height: var(--btn-img-size);
+}
+
+button.has-img img {
+	min-width: 16px;
+	min-height: 16px;
 }
 
 .menubutton .arrow {
@@ -2206,6 +2253,7 @@ button.menubutton.sidebar > span {
 	right: var(--click-increment);
 	bottom: var(--click-increment);
 	left: var(--click-increment);
+	pointer-events: none;
 }
 
 /* targetting buttons inside of split button */
@@ -2908,9 +2956,7 @@ kbd,
 	align-items: center;
 }
 
-/* Writer - Format - Paragraph - Text Flow */
 /* Writer - Format - Paragraph - Tabs */
-#ParagraphPropertiesDialog #textflow #checkAcrossPage.checkbutton,
 #ParagraphPropertiesDialog #labelTP_TABULATOR #ParagraphTabsPage {
 	grid-column-gap: 0;
 }

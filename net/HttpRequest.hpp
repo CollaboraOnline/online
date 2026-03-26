@@ -18,6 +18,7 @@
 
 #include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StateEnum.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
@@ -240,6 +241,20 @@ enum class StatusCode : unsigned
     NotExtended = 510, // RFC 2774
     NetworkAuthenticationRequired = 511, // RFC 6585
 };
+
+/// Returns true if the given StatusCode is a redirect (301, 302, 307, 308).
+constexpr bool isRedirectStatusCode(StatusCode code)
+{
+    return code == StatusCode::MovedPermanently || code == StatusCode::Found ||
+           code == StatusCode::TemporaryRedirect || code == StatusCode::PermanentRedirect;
+}
+
+/// Returns true for status codes that indicate authorization failure (401, 403, 404).
+constexpr bool isUnauthorizedStatusCode(StatusCode code)
+{
+    return code == StatusCode::Unauthorized || code == StatusCode::Forbidden ||
+           code == StatusCode::NotFound;
+}
 
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
@@ -651,10 +666,10 @@ public:
     const Header& header() const { return _header; }
 
     // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string& key) const { return _header.has(key); }
+    bool has(const std::string_view key) const { return _header.has(key); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    [[nodiscard]] std::string get(const std::string_view& key,
+    [[nodiscard]] std::string get(const std::string_view key,
                                   const std::string& def = std::string()) const
     {
         return _header.get(key, def);
@@ -1343,13 +1358,16 @@ private:
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
                "Invalid hostname and portNumber for http::Sesssion");
-#if ENABLE_DEBUG
-        std::string scheme;
-        std::string hostString;
-        std::string portString;
-        assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() && portString.empty()
-               && hostString == _host && "http::Session expects a hostname and not a URI");
-#endif
+
+        if constexpr (Util::isDebugEnabled())
+        {
+            std::string scheme;
+            std::string hostString;
+            std::string portString;
+            assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() &&
+                   portString.empty() && hostString == _host &&
+                   "http::Session expects a hostname and not a URI");
+        }
     }
 
     /// Returns the given protocol's scheme.
@@ -1403,7 +1421,7 @@ public:
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
 
-        const auto [port, success] = Util::i32FromString(portString);
+        const auto [port, success] = NumUtil::i32FromString(portString);
         if (success && port > 0)
             return create(std::move(hostname), protocol, port);
 
@@ -1588,7 +1606,7 @@ public:
         }
     }
 
-    std::string getSslVerifyMessage()
+    std::string getSslVerifyMessage() const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1600,7 +1618,7 @@ public:
 #endif
     }
 
-    long getSslVerifyResult()
+    long getSslVerifyResult() const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1612,7 +1630,7 @@ public:
 #endif
     }
 
-    std::string getSslCert(std::string& subjectHash)
+    std::string getSslCert(std::string& subjectHash) const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1624,7 +1642,7 @@ public:
         return std::string();
     }
 
-    net::AsyncConnectResult connectionResult()
+    net::AsyncConnectResult connectionResult() const
     {
         return _result;
     }
@@ -1795,7 +1813,7 @@ private:
         }
     }
 
-    void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
+    void shutdown(bool /*goingAway*/, const std::string_view /*statusMessage*/) override
     {
         LOG_TRC("shutdown");
     }
@@ -2051,8 +2069,8 @@ private:
         return false;
     }
 
-    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
-    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendTextMessage(std::string_view, bool) const override { return 0; }
+    int sendBinaryMessage(std::string_view, bool) const override { return 0; }
 
 private:
     const std::string _host;

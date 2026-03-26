@@ -35,11 +35,11 @@ const allCalcDialogs = [
     '.uno:InsertCell',
     '.uno:InsertObjectChart',
     '.uno:InsertSparkline',
-    // '.uno:JumpToTable',
+    '.uno:JumpToTable',
     '.uno:Move?FromContextMenu:bool=true&MoveOrCopySheetDialog:bool=true&ContextMenuIndex=0',
     '.uno:MovingAverageDialog',
     '.uno:PageFormatDialog',
-    // '.uno:Protect',
+    '.uno:Protect',
     '.uno:RegressionDialog',
     '.uno:RowHeight',
     '.uno:SamplingDialog',
@@ -62,19 +62,6 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyCalcDialogs = [
-    '.uno:DataFilterSpecialFilter',
-    '.uno:DataFilterStandardFilter',
-    '.uno:DefineName',
-    '.uno:DefineDBName',
-    '.uno:Delete',
-    '.uno:EditHeaderAndFooter',
-    '.uno:EditPrintArea',
-    '.uno:EditStyle?Param:string=Heading&Family:short=2',
-    '.uno:FormatCellDialog',
-    '.uno:FunctionDialog',
-    '.uno:InsertObjectChart',
-    '.uno:PageFormatDialog',
-    '.uno:Validation',
 ];
 
 describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: false }, function () {
@@ -283,5 +270,23 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
 
     it.skip('PDF export warning dialog', function () {
         a11yHelper.testPDFExportWarningDialog(win);
+    });
+
+    it('Settings dialog', function () {
+        cy.then(() => {
+            win.app.map.settings.showSettingsDialog();
+        });
+
+        cy.cGet('.iframe-settings-wrap').should('be.visible').then(() => {
+            var spy = Cypress.sinon.spy(win.console, 'error');
+            var container = win.document.querySelector('.iframe-settings-wrap');
+            win.app.a11yValidator.validateIframeDialog(container);
+            a11yHelper.checkA11yErrors(win, spy);
+            spy.restore();
+        });
+
+        // Close the settings dialog
+        cy.cGet('.iframe-settings-wrap .ui-dialog-titlebar-close').click();
+        cy.cGet('.iframe-settings-wrap').should('not.exist');
     });
 });

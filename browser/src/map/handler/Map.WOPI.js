@@ -165,6 +165,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
 		this.DisablePresentation = wopiInfo['DisablePresentation'];
 		this.PresentationLeader = wopiInfo['PresentationLeader'];
+		this.CommentAvatarUrl = wopiInfo['CommentAvatarUrl'];
 
 		if (this.UserCanWrite && !app.isReadOnly()) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
 			app.setPermission('edit');
@@ -550,6 +551,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 
 		if (msg.MessageId === 'Grab_Focus') {
 			app.idleHandler._activate();
+			app.map.focus();
 			return;
 		}
 
@@ -746,7 +748,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 						return;
 					}
 
-					var isExport = format === 'pdf' || format === 'epub';
+					var isExport = format === 'pdf' || format === 'epub' || this._map._saveImageToWopi;
+					this._map._saveImageToWopi = false;
 					if (isExport) {
 						this._map.exportAs(msg.Values.Filename);
 					} else {
@@ -786,6 +789,18 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		else if (msg.MessageId === 'Action_Mention') {
 			var list = msg.Values.list;
 			this._map.mention.openMentionPopup(list);
+		}
+		else if (msg.MessageId === 'Action_ResolveComment') {
+			// Currently only Writer has "Resolve Comment" feature.
+			if (msg.Values && this._map._docLayer._docType === 'text') {
+				const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+				if (commentSection) {
+					const comment = commentSection.getComment(msg.Values.Id);
+					if (comment && comment.sectionProperties.data.resolved !== 'true') {
+						commentSection.resolve(comment);
+					}
+				}
+			}
 		}
 		else if (msg.sender === 'EIDEASY_SINGLE_METHOD_SIGNATURE') {
 			// This is produced by the esign popup.

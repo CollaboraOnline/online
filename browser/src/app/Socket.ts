@@ -75,18 +75,26 @@ class Socket {
 		this.socket = undefined;
 		this.traceEvents = new TraceEvents(this);
 
-		if (window.Worker && !(window as any).ThisIsAMobileApp) {
+		if (
+			window.Worker &&
+			(!(window as any).ThisIsAMobileApp || (window as any).mode.isCODesktop())
+		) {
 			window.app.console.info('Creating TaskWorkers');
 			for (let i = 0; i < 4; ++i) {
-				this.workers.push(
-					new Worker(app.LOUtil.getURL('/src/app/TaskWorker.js')),
-				);
-				this.workers[i].addEventListener('message', (e: any) =>
-					this.onWorkerMessage(e),
-				);
-				this.workers[i].addEventListener('error', (e: any) =>
-					this.onWorkerError(e),
-				);
+				try {
+					this.workers.push(
+						new Worker(app.LOUtil.getURL('/src/app/TaskWorker.js')),
+					);
+					this.workers[i].addEventListener('message', (e: any) =>
+						this.onWorkerMessage(e),
+					);
+					this.workers[i].addEventListener('error', (e: any) =>
+						this.onWorkerError(e),
+					);
+				} catch (e) {
+					this.onWorkerError(e);
+					break;
+				}
 			}
 		}
 	}
@@ -229,7 +237,7 @@ class Socket {
 		if (window.enableExperimentalFeatures) {
 			// Use the new Cool WS URL.
 			return window.makeWopiCoolWsUrl(
-				window.makeWsUrl('/cool/'),
+				window.makeWsUrl('/cool'),
 				$.param(map.options.docParams),
 			);
 		} else {
@@ -1321,7 +1329,6 @@ class Socket {
 		// imageElement.onerror expects a different type of handler according to tsc.
 		// (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error): any;
 		// So use addEventListener() for 'error' event.
-		imageElement.onerror;
 		imageElement.addEventListener(
 			'error',
 			function (this: Socket, err: ErrorEvent) {

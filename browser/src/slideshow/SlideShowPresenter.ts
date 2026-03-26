@@ -134,7 +134,7 @@ class SlideShowPresenter {
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
 	private _slideShowNavigator: SlideShowNavigator;
-	private _metaPresentation: MetaPresentation;
+	public _metaPresentation: MetaPresentation;
 	private _startSlide: number;
 	private _startEffect: number;
 	private _presentationInfoChanged: boolean = false;
@@ -243,13 +243,13 @@ class SlideShowPresenter {
 							? 0
 							: this._slideShowNavigator.getLeaderSlide(),
 					startEffectNumber:
-						this._slideShowNavigator.getLeaderEffect() === -1
+						this._slideShowNavigator.getLeaderEffect() === 0
 							? undefined
 							: this._slideShowNavigator.getLeaderEffect(),
 				});
 				break;
 			case 'dispatcheffect':
-				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
+				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect(false);
 				break;
 			case 'rewindeffect':
 				if (this.isFollowing()) this._slideShowNavigator.rewindEffect();
@@ -491,6 +491,21 @@ class SlideShowPresenter {
 		}
 	}
 
+	private _configureCloseButtonStyles(
+		closeBtn: HTMLElement,
+		closeImg: HTMLImageElement,
+	) {
+		closeBtn.style.position = 'absolute';
+		closeBtn.style.top = '10px';
+		closeBtn.style.right = '10px';
+		closeBtn.style.width = '24px';
+		closeBtn.style.height = '24px';
+		closeBtn.style.cursor = 'pointer';
+		closeImg.style.width = '100%';
+		closeImg.style.height = '100%';
+		closeImg.style.pointerEvents = 'none';
+	}
+
 	private _createPresenterHTML(
 		parent: Element,
 		width: number,
@@ -516,6 +531,28 @@ class SlideShowPresenter {
 			height,
 			showSwitchMonitors,
 		);
+
+		if (this._isWelcomePresentation) {
+			const closeBtn = window.L.DomUtil.create(
+				'div',
+				'welcome-slideshow-close-btn',
+				presenterContainer,
+			);
+			const closeImg = window.L.DomUtil.create(
+				'img',
+				'',
+				closeBtn,
+			) as HTMLImageElement;
+			closeImg.src = app.LOUtil.getImageURL('closedoc.svg');
+
+			this._configureCloseButtonStyles(closeBtn, closeImg);
+
+			closeBtn.onclick = function (e: MouseEvent) {
+				e.stopPropagation();
+				app.dispatcher.dispatch('closeapp');
+			};
+		}
+
 		return presenterContainer;
 	}
 
@@ -689,13 +726,6 @@ class SlideShowPresenter {
 
 	private _onNextSlide = (e: Event) => {
 		e.stopPropagation();
-		// Do not allow follower to go ahead of the leader
-		if (
-			this.isFollower() &&
-			this._slideShowNavigator.currentSlideIndex ===
-				this._slideShowNavigator.getLeaderSlide()
-		)
-			return;
 		if (this._navigateSkipTransition) this._slideShowNavigator.skipEffect();
 		else this._slideShowNavigator.dispatchEffect();
 	};
@@ -765,7 +795,7 @@ class SlideShowPresenter {
 
 	private _updatePrevButtonState(currentSlide: number) {
 		const enabled = this._canGoPrev(currentSlide);
-		const tooltip = enabled ? _('Previous') : _("You're on the first slide");
+		const tooltip = enabled ? _('Previous') : _('You are on the first slide');
 		this._setButtonState(this._prevButton, !enabled, tooltip);
 	}
 
@@ -941,29 +971,29 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
+		app.console.debug('SlideShowPresenter.endPresentation');
+		if (this._pauseTimer) this._pauseTimer.stopTimer();
+
+		const settings = this._presentationInfo;
+		if (!force && !settings.isEndless && this.exitSlideshowWithWarning()) {
+			return;
+		}
+
 		this.sendSlideShowFollowMessage('endpresentation');
 		this.checkDarkMode(false);
 		this.setLeader(false);
 		this.setFollowing(false);
 
-		app.console.debug('SlideShowPresenter.endPresentation');
-		if (this._pauseTimer) this._pauseTimer.stopTimer();
-
-		const settings = this._presentationInfo;
 		if (force || !settings.isEndless) {
-			if (!force && this.exitSlideshowWithWarning()) {
-				return;
-			}
 			this._stopFullScreen();
 			this._closeSlideShowWindow();
 			if (window.mode.isCODesktop() && this._isWelcomePresentation) {
 				this._isWelcomePresentation = false;
 				app.dispatcher.dispatch('closeapp');
 			}
-			return;
+		} else {
+			this.startTimer(settings.loopAndRepeatDuration);
 		}
-
-		this.startTimer(settings.loopAndRepeatDuration);
 	}
 
 	public handleSlideShowProgressBar(event: { isVisible: boolean }): void {
@@ -1018,22 +1048,17 @@ class SlideShowPresenter {
 	}
 
 	_closeSlideShowWindow() {
+		const proxy = this._slideShowWindowProxy;
 		setTimeout(
 			function () {
-				if (
-					!this._slideShowWindowProxy ||
-					!this._slideShowWindowProxy.isConnected
-				) {
+				if (!proxy || !proxy.isConnected) {
 					return;
 				}
 
-				if (this._slideShowWindowProxy) {
-					this._slideShowWindowProxy.parentElement.removeChild(
-						this._slideShowWindowProxy,
-					);
-					this._map.fire('presentinwindowclose');
+				proxy.parentElement.removeChild(proxy);
+				this._map.fire('presentinwindowclose');
+				if (this._slideShowWindowProxy === proxy)
 					this._slideShowWindowProxy = null;
-				}
 				// enable present in console on closeSlideShowWindow
 				this._enablePresenterConsole(false);
 				this._map.uiManager.closeSnackbar();
@@ -1105,7 +1130,8 @@ class SlideShowPresenter {
 			true,
 		);
 
-		this._windowCloseInterval = setInterval(
+		this._windowCloseInterval = app.timerRegistry.setInterval(
+			'slideshowwindowclose',
 			function () {
 				if (!slideShowWindow.isConnected) this.slideshowWindowCleanUp();
 			}.bind(this),
@@ -1120,7 +1146,7 @@ class SlideShowPresenter {
 	}
 
 	slideshowWindowCleanUp = () => {
-		clearInterval(this._windowCloseInterval);
+		app.timerRegistry.clearInterval(this._windowCloseInterval);
 		this._slideShowNavigator.quit();
 		this._map.uiManager.closeSnackbar();
 		this._slideShowCanvas = null;
@@ -1201,7 +1227,7 @@ class SlideShowPresenter {
 				// new window for it, vs otherwise going full screen.
 				// b) It turns out that macOS appears to also do such a substitution
 				// automatically on going full-screen, so the window handle we have isn't
-				// that of the full screen window, and it seems impractiable to get access
+				// that of the full screen window, and it seems impracticable to get access
 				// to it, which we need to be able to swap it from one monitor to another
 				app.socket.sendMessage('FULLSCREENPRESENTATION true');
 				this._doInWindowPresentation(true);
@@ -1248,7 +1274,7 @@ class SlideShowPresenter {
 		this._map.uiManager.showInfoModal(
 			'allslidehidden-modal',
 			_('Empty Slide Show'),
-			'All slides are hidden!',
+			_('All slides are hidden!'),
 			'',
 			_('OK'),
 			() => {

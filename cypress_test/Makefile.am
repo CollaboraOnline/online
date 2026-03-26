@@ -88,7 +88,7 @@ A11Y_TAG:=$(if $(findstring true,$(A11Y_ENABLE)),taga11yenabled,taga11ydisabled)
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
-export DEBUG=$(if $(ENABLE_LOGGING),$(FILTER_DEBUG),)
+export DEBUG:=$(or $(DEBUG),$(if $(ENABLE_LOGGING),$(FILTER_DEBUG)))
 endif
 
 if HAVE_LO_PATH
@@ -525,7 +525,7 @@ run-multi: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(V)$(KILL_COMMAND) || true
 
 MULTIUSER_CONFIG = \
-	specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+	specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
 
 MULTIUSER_ENV = \
 	CYPRESS_INCLUDE_TAGS=tagmultiuser,DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)

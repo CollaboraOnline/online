@@ -22,11 +22,11 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		app.events.on('resize', this.reset.bind(this));
 		app.map.on('zoomend', this.reset.bind(this));
 
-		this.reset();
 		this.adjustViewZoomLevel();
+		this.reset();
 	}
 
-	public adjustViewZoomLevel() {
+	public override adjustViewZoomLevel() {
 		Util.ensureValue(app.activeDocument);
 
 		const min = 0.1;
@@ -224,6 +224,71 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		}
 	}
 
+	protected override refreshCurrentCoordList() {
+		this.currentCoordList.length = 0;
+		const zoom = Math.round(app.map.getZoom());
+		const tileSize = TileManager.tileSize;
+
+		const documentAnchor = this.getDocumentAnchorSection();
+		const view = cool.SimpleRectangle.fromCorePixels([
+			this.scrollProperties.viewX,
+			this.scrollProperties.viewY,
+			documentAnchor.size[0],
+			documentAnchor.size[1],
+		]);
+
+		const added: Set<string> = new Set();
+
+		for (let i = 0; i < this.documentRectangles.length; i++) {
+			const viewRect = this.viewRectangles[i];
+
+			if (!view.intersectsRectangle(viewRect.toArray())) continue;
+
+			const docRect = this.documentRectangles[i];
+
+			// Compute the visible portion of this page in view coordinates.
+			const visibleVX1 = Math.max(view.pX1, viewRect.pX1);
+			const visibleVY1 = Math.max(view.pY1, viewRect.pY1);
+			const visibleVX2 = Math.min(
+				view.pX1 + view.pWidth,
+				viewRect.pX1 + viewRect.pWidth,
+			);
+			const visibleVY2 = Math.min(
+				view.pY1 + view.pHeight,
+				viewRect.pY1 + viewRect.pHeight,
+			);
+
+			// Map the visible view portion back to document coordinates.
+			const docVisX1 = docRect.pX1 + (visibleVX1 - viewRect.pX1);
+			const docVisY1 = docRect.pY1 + (visibleVY1 - viewRect.pY1);
+			const docVisX2 = docRect.pX1 + (visibleVX2 - viewRect.pX1);
+			const docVisY2 = docRect.pY1 + (visibleVY2 - viewRect.pY1);
+
+			const startX = Math.floor(docVisX1 / tileSize) * tileSize;
+			const startY = Math.floor(docVisY1 / tileSize) * tileSize;
+			const columnCount = Math.ceil((docVisX2 - startX) / tileSize);
+			const rowCount = Math.ceil((docVisY2 - startY) / tileSize);
+
+			for (let c = 0; c <= columnCount; c++) {
+				for (let r = 0; r <= rowCount; r++) {
+					const coords = new TileCoordData(
+						startX + c * tileSize,
+						startY + r * tileSize,
+						zoom,
+						0,
+					);
+
+					const key = coords.key();
+					if (added.has(key)) continue;
+					added.add(key);
+
+					if (TileManager.isValidTile(coords))
+						this.currentCoordList.push(coords);
+				}
+			}
+		}
+	}
+
 	protected updateViewData() {
 		if (!app.file.writer.pageRectangleList.length) return;
 
@@ -236,10 +301,15 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		this.sendClientVisibleArea();
 
 		this.refreshCurrentCoordList();
+		TileManager.beginTransaction();
 		TileManager.checkRequestTiles(this.currentCoordList);
+		TileManager.endTransaction(null);
+
+		// We most likely scrolled the view. We also need to check ruler position.
+		if (app.UI.horizontalRuler) app.UI.horizontalRuler.fixOffset();
 	}
 
-	public documentToViewX(point: cool.SimplePoint): number {
+	public override documentToViewX(point: cool.SimplePoint): number {
 		const index = this.getClosestRectangleIndex(point);
 		return (
 			this.viewRectangles[index].pX1 +
@@ -249,7 +319,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		);
 	}
 
-	public documentToViewY(point: cool.SimplePoint): number {
+	public override documentToViewY(point: cool.SimplePoint): number {
 		const index = this.getClosestRectangleIndex(point);
 		return (
 			this.viewRectangles[index].pY1 +
@@ -259,7 +329,9 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		);
 	}
 
-	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
+	public override canvasToDocumentPoint(
+		point: cool.SimplePoint,
+	): cool.SimplePoint {
 		point.pX += this.scrollProperties.viewX;
 		point.pY += this.scrollProperties.viewY;
 
@@ -269,15 +341,17 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 
 		result.pX =
 			this.documentRectangles[index].pX1 +
-			(point.pX - this.viewRectangles[index].pX1);
+			(point.pX - this.viewRectangles[index].pX1) -
+			this._documentAnchorPosition[0];
 		result.pY =
 			this.documentRectangles[index].pY1 +
-			(point.pY - this.viewRectangles[index].pY1);
+			(point.pY - this.viewRectangles[index].pY1) -
+			this._documentAnchorPosition[1];
 
 		return result;
 	}
 
-	public scroll(pX: number, pY: number): boolean {
+	public override scroll(pX: number, pY: number): boolean {
 		const scrolled = super.scroll(pX, pY);
 
 		if (scrolled) {
@@ -288,7 +362,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		return scrolled;
 	}
 
-	public scrollTo(pX: number, pY: number): void {
+	public override scrollTo(pX: number, pY: number): void {
 		const point = cool.SimplePoint.fromCorePixels([pX, pY]);
 		if (!this.viewedRectangle.containsPoint(point.toArray())) {
 			const index = this.getClosestRectangleIndex(point);
@@ -298,7 +372,14 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 			if (layoutR) {
 				let scrolled = false;
 
-				if (!this.viewedRectangle.containsX(point.x)) {
+				// Check if the target X is already visible in the viewport.
+				const viewportWidth = this.getDocumentAnchorSection().size[0];
+				const xVisibleInViewport =
+					viewR.pX1 >= this.scrollProperties.viewX &&
+					viewR.pX1 + layoutR.pWidth <=
+						this.scrollProperties.viewX + viewportWidth;
+
+				if (!xVisibleInViewport) {
 					this.scrollProperties.startX = Math.round(
 						(viewR.pX1 / this._viewSize.pX) *
 							this.scrollProperties.horizontalScrollLength,
@@ -335,8 +416,10 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 	public reset() {
 		if (!app.file.writer.pageRectangleList.length) return;
 
-		this.resetViewLayout();
-		this.updateViewData();
+		app.layoutingService.appendLayoutingTask(() => {
+			this.resetViewLayout();
+			this.updateViewData();
+		});
 	}
 
 	public getTotalSideSpace() {

@@ -13,6 +13,9 @@
 
 #include "QtClipboard.hpp"
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
 
@@ -24,20 +27,24 @@
 #include <QMimeData>
 #include <QString>
 
+#include <QMetaObject>
+#include <QThreadPool>
+
 #include <atomic>
 #include <cstdlib>
+#include <functional>
 #include <memory>
 #include <vector>
 
 std::atomic<unsigned> sClipboardSourceDocId{0};
 
-void getClipboard(unsigned appDocId)
+static std::unique_ptr<QMimeData> fetchClipboardData(unsigned appDocId)
 {
     lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
     if (!loKitDoc)
     {
         LOG_DBG("getClipboard: no loKitDocument");
-        return;
+        return nullptr;
     }
 
     size_t outCount = 0;
@@ -49,7 +56,7 @@ void getClipboard(unsigned appDocId)
         || outCount == 0)
     {
         LOG_DBG("getClipboard: empty or failed");
-        return;
+        return nullptr;
     }
 
     auto mimeData = std::make_unique<QMimeData>();
@@ -65,8 +72,30 @@ void getClipboard(unsigned appDocId)
     free(outSizes);
     free(outStreams);
 
-    QGuiApplication::clipboard()->setMimeData(mimeData.release());
-    sClipboardSourceDocId.store(appDocId);
+    return mimeData;
+}
+
+void getClipboard(unsigned appDocId, std::function<void()> onDone)
+{
+    QThreadPool::globalInstance()->start(
+        [appDocId, onDone = std::move(onDone)]()
+        {
+            auto mimeData = fetchClipboardData(appDocId);
+
+            QMetaObject::invokeMethod(
+                qApp,
+                [appDocId, mimeData = std::move(mimeData), onDone = std::move(onDone)]() mutable
+                {
+                    if (mimeData)
+                    {
+                        QGuiApplication::clipboard()->setMimeData(mimeData.release());
+                        sClipboardSourceDocId.store(appDocId);
+                    }
+                    if (onDone)
+                        onDone();
+                },
+                Qt::QueuedConnection);
+        });
 }
 
 void setClipboard(unsigned appDocId)

@@ -60,7 +60,7 @@ const MenuCommands: MenuCommandsInterface = {
 				  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
 				  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
 				  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
-				  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
+				  'CompressGraphic', 'SaveGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 				  'AnimationEffects', 'ExecuteAnimationEffect',
 				  'InsertAnnotation', 'FormatGroup', 'FormatUngroup'],
 
@@ -71,14 +71,15 @@ const MenuCommands: MenuCommandsInterface = {
 			   'TableDeleteMenu', 'SetObjectToBackground', 'SetObjectToForeground',
 			   'DeleteRows', 'DeleteColumns', 'DeleteTable', 'EditCurrentRegion',
 			   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
-			   'UpdateCurIndex','RemoveTableOf',
+			   'UpdateCurIndex','RemoveTableOf','EditCurIndex',
 			   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
 			   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
 			   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',
 			   'AddToWordbook'],
 
 		spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
-				  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'InsertCalcTable', 'RemoveCalcTable',
+				  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'CalculatedFieldRun',
+				  'InsertCalcTable', 'RemoveCalcTable',
 				  'DatabaseSettings', 'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
 				  'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
 				  'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines', 'AutoFill'],
@@ -112,7 +113,7 @@ const MenuCommands: MenuCommandsInterface = {
 		// text
 		'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 		// spreadsheet
-		'FormatCellDialog', 'DataDataPilotRun', 'InsertCalcTable',
+		'FormatCellDialog', 'DataDataPilotRun', 'CalculatedFieldRun', 'InsertCalcTable',
 		'GroupSparklines', 'UngroupSparklines', 'AutoFill'
 	],
 };

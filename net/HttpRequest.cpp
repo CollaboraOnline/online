@@ -20,6 +20,7 @@
 
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/MemoryStream.h>
@@ -267,7 +268,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         LOG_ERR("StatusLine::parse: expected valid integer number");
         return FieldParseState::Invalid;
     }
-    _statusCode = Util::safe_atoi(&p[off], len - off);
+    _statusCode = NumUtil::safe_atoi(&p[off], len - off);
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
     {
         LOG_ERR("StatusLine::parse: Invalid StatusCode [" << _statusCode << "]");
@@ -810,12 +811,22 @@ int64_t Response::readData(const char* p, int64_t len)
             // Assume we have a body unless we have reason to expect otherwise.
             _parserStage = ParserStage::Body;
 
-            if (_statusLine.statusCategory() == StatusLine::StatusCodeClass::Informational ||
-                _statusLine.statusCode() == http::StatusCode::NoContent ||
-                _statusLine.statusCode() == http::StatusCode::NotModified) // || HEAD request
+            if (_statusLine.statusCode() == http::StatusCode::Continue)
+            {
+                // 100 Continue is an intermediate response; the final response follows.
+                // Reset parser state to read the actual final response.
+                LOG_TRC("Got 100 Continue, resetting parser for final response");
+                _statusLine = StatusLine();
+                _header = Header();
+                _parserStage = ParserStage::StatusLine;
+                _recvBodySize = 0;
+            }
+            else if (_statusLine.statusCategory() == StatusLine::StatusCodeClass::Informational ||
+                     _statusLine.statusCode() == http::StatusCode::NoContent ||
+                     _statusLine.statusCode() == http::StatusCode::NotModified) // || HEAD request
             // || 2xx on CONNECT request
             {
-                // No body, we are done.
+                // No body, we are done (101 Switching Protocols, 204, 304, etc.).
                 _parserStage = ParserStage::Finished;
             }
             else
@@ -1012,7 +1023,7 @@ std::shared_ptr<Session> Session::create(std::string host, Protocol protocol, in
 
     if (!portString.empty())
     {
-        const auto [portInt, res] = Util::i32FromString(portString);
+        const auto [portInt, res] = NumUtil::i32FromString(portString);
         assert((port == 0 || port == portInt) && "Two conflicting port numbers given.");
         if (res && portInt > 0)
             port = portInt;

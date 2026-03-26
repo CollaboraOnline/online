@@ -209,6 +209,10 @@ window.L.Clipboard = window.L.Class.extend({
 		));
 	},
 
+	getMetaOrigin: function (html) {
+		return this._getMetaOrigin(html, '<div id="meta-origin" data-coolorigin="');
+	},
+
 	_getMetaOrigin: function (html, prefix) {
 		var start = html.indexOf(prefix);
 		if (start < 0) {
@@ -414,7 +418,7 @@ window.L.Clipboard = window.L.Class.extend({
 		if (window.ThisIsTheQtApp || window.ThisIsTheWindowsApp) {
 			// To work around a qtwebchannel "Could not convert argument
 			// QJsonValue(object, QJsonObject()) to target type QString ." bug, send the
-			// playload as a base64-encoded string rather than as an ArrayBuffer blob
+			// payload as a base64-encoded string rather than as an ArrayBuffer blob
 			// (and decode it in ChildSession::paste in kit/ChildSession.cpp):
 			blob = header + window.btoa(
 				Array.from(new Uint8Array(fileBlob), (b) => String.fromCodePoint(b))
@@ -963,14 +967,15 @@ window.L.Clipboard = window.L.Class.extend({
 		} else {
 			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-			const text = (async () => {
+			// It's important in DisableCopy to write something to the clipboard so that future paste actions can trigger an internal paste
+			const text = (this._map['wopi'].DisableCopy ? this._getDisabledCopyStubHtml() : (async () => {
 				if (await check_ === null)
 					throw new Error('Failed check, either wrong command or pending event');
 					// We need to throw an error here rather than just returning so that a failure halts copying the ClipboardItem to the clipboard
 
 				const result = await fetch(url);
 				return await result.text();
-			})();
+			})());
 
 			const clipboardItem = new ClipboardItem({
 				'text/html': this._parseClipboardFetchResult(text, 'text/html', 'html'),
@@ -991,6 +996,26 @@ window.L.Clipboard = window.L.Class.extend({
 				// When document is not focused, writing to clipboard is not allowed. But this error shouldn't stop the usage of clipboard API.
 				if (!document.hasFocus()) {
 					window.app.console.warn('navigator.clipboard.write() failed: ' + error.message);
+					// The user switched to another tab before the async clipboard write completed.
+					// Schedule a one-shot retry when this window regains focus so the system
+					// clipboard is updated with the latest copied content, enabling correct
+					// cross-tab paste behaviour.
+					// Remove any previous pending retry - only the latest copy matters.
+					if (this._pendingClipboardRetryHandler) {
+						window.removeEventListener('focus', this._pendingClipboardRetryHandler);
+					}
+					var retryClipboardItem = clipboardItem;
+					var retryClipboard = clipboard;
+					var self = this;
+					var retryHandler = function() {
+						window.removeEventListener('focus', retryHandler);
+						self._pendingClipboardRetryHandler = null;
+						retryClipboard.write([retryClipboardItem]).catch(function(retryError) {
+							window.app.console.warn('navigator.clipboard.write() retry failed: ' + retryError.message);
+						});
+					};
+					this._pendingClipboardRetryHandler = retryHandler;
+					window.addEventListener('focus', retryHandler);
 					return;
 				}
 
@@ -1168,12 +1193,6 @@ window.L.Clipboard = window.L.Class.extend({
 	// Pull UNO clipboard commands out from menus and normal user input.
 	// We try to massage and re-emit these, to get good security event / credentials.
 	filterExecCopyPaste: function(cmd, params) {
-		if (this._map['wopi'].DisableCopy && (cmd === '.uno:Copy' || cmd === '.uno:Cut' || cmd === '.uno:CopyHyperlinkLocation')) {
-			// perform internal operations
-			app.socket.sendMessage('uno ' + cmd);
-			return true;
-		}
-
 		if (window.ThisIsTheAndroidApp) {
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
@@ -1246,6 +1265,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 		if (this._map['wopi'].DisableCopy === true)
 		{
+			app.socket.sendMessage('uno .uno:' + unoName);
 			var text = this._getDisabledCopyStubHtml();
 			var plainText = DocUtil.stripHTML(text);
 			if (ev.clipboardData) {
@@ -1466,7 +1486,7 @@ window.L.Clipboard = window.L.Class.extend({
 		else {
 			const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
 			const p = document.createElement('p');
-			p.textContent = 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:';
+			p.textContent = _('Your browser has very limited access to the clipboard, so use these keyboard shortcuts:');
 			innerDiv.appendChild(p);
 
 			const table = document.createElement('table');
@@ -1500,7 +1520,7 @@ window.L.Clipboard = window.L.Class.extend({
 			table.appendChild(row);
 			for (let i = 0; i < 3; i++) {
 				const cell = document.createElement('td');
-				cell.textContent = i === 0 ? 'Copy': (i === 1 ? 'Cut': 'Paste');
+				cell.textContent = i === 0 ? _('Copy'): (i === 1 ? _('Cut'): _('Paste'));
 				row.appendChild(cell);
 			}
 		}

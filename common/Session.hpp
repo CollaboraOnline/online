@@ -166,13 +166,13 @@ public:
     virtual void disconnect();
 
     /// clean & normal shutdown
-    void shutdownNormal(const std::string& statusMessage = std::string())
+    void shutdownNormal(const std::string_view statusMessage = std::string_view())
     {
         shutdown(false, statusMessage);
     }
 
     /// abnormal / hash shutdown end-point going away
-    void shutdownGoingAway(const std::string& statusMessage = std::string())
+    void shutdownGoingAway(const std::string_view statusMessage = std::string_view())
     {
         shutdown(true, statusMessage);
     }
@@ -286,7 +286,7 @@ public:
 
     const std::string& getInFilterOption() const { return _inFilterOptions; }
 
-    std::string getZoteroAPIKey() const { return _zoteroAPIKey; }
+    const std::string& getZoteroAPIKey() const { return _zoteroAPIKey; }
 
     void setZoteroAPIKey(const std::string& val) { _zoteroAPIKey = val; }
 
@@ -322,7 +322,8 @@ protected:
                                     Poco::JSON::Object::Ptr& userPrivateInfoObject);
 
 private:
-    void shutdown(bool goingAway = false, const std::string& statusMessage = std::string());
+    void shutdown(bool goingAway = false,
+                  const std::string_view statusMessage = std::string_view());
 
     virtual bool _handleInput(const char* buffer, int length) = 0;
 

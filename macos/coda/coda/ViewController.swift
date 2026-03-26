@@ -379,6 +379,17 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     }
                     return (nil, nil)
                 }
+                else if body == "uno .uno:SaveAs" {
+                    // Trigger the NSDocument Save As… panel
+                    document.saveAs(nil)
+                    return (nil, nil)
+                }
+                else if body.hasPrefix("TEXTCLIPBOARD ") {
+                    let text = String(body.dropFirst("TEXTCLIPBOARD ".count))
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(text, forType: .string)
+                    return (nil, nil)
+                }
                 else if let result = ViewController.handleBackstageMessage(body) {
                     return result
                 }

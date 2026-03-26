@@ -57,6 +57,32 @@ class NotebookbarBase extends JSDialogComponent {
 		if (this.impl) this.impl.onRemove();
 	}
 
+	public onCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		if (this.impl && this.impl.onCallback) {
+			const consumed = this.impl.onCallback(
+				objectType,
+				eventType,
+				object,
+				data,
+				builder,
+			);
+			if (consumed) return;
+		}
+		this.builder?._defaultCallbackHandler(
+			objectType,
+			eventType,
+			object,
+			data,
+			builder,
+		);
+	}
+
 	protected createBuilder() {
 		this.builder = new window.L.control.notebookbarBuilder({
 			windowId: WindowId.Notebookbar,
@@ -65,6 +91,7 @@ class NotebookbarBase extends JSDialogComponent {
 			cssClass: 'notebookbar',
 			useSetTabs: true,
 			suffix: 'notebookbar',
+			callback: this.onCallback.bind(this),
 		});
 	}
 
@@ -143,6 +170,7 @@ class NotebookbarBase extends JSDialogComponent {
 			this.builder.updateWidget(this.container, widgetData);
 		}
 	}
+
 	protected onJSAction(e: any) {
 		if (super.onJSAction(e)) {
 			this.impl?.setInitialized(true);

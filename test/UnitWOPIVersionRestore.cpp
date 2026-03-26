@@ -71,10 +71,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const size_t len, const WSOpCode /* code */,
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
                                       const bool /* flush */, int& /*unitReturn*/) override
     {
-        std::string message(data, len);
         if (message == "close: versionrestore: prerestore_ack")
         {
             LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);

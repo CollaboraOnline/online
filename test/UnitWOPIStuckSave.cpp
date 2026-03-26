@@ -15,17 +15,19 @@
 
 #include <config.h>
 
-#include <HttpRequest.hpp>
-#include <lokassert.hpp>
-
-#include <WopiTestServer.hpp>
-#include <common/Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
-#include <helpers.hpp>
 #include <common/Message.hpp>
+#include <common/Unit.hpp>
+#include <net/HttpRequest.hpp>
+#include <test/WopiTestServer.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/LayeredConfiguration.h>
+
+#include <chrono>
+#include <string>
+#include <thread>
 
 using namespace std::literals;
 
@@ -152,6 +154,118 @@ public:
     }
 };
 
-UnitBase* unit_create_wsd(void) { return new UnitWOPIStuckSave(); }
+class UnitWOPIInfiniteSave : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitFail)
+    _phase;
+
+    std::size_t _versions;
+
+public:
+    UnitWOPIInfiniteSave()
+        : WopiTestServer("UnitWOPIInfiniteSave")
+        , _phase(Phase::Load)
+        , _versions(0)
+    {
+        // We need more time to retry saving.
+        setTimeout(200s);
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        WopiTestServer::configure(config);
+
+        // Small value to shorten the test run time.
+        config.setUInt("per_document.limit_store_failures", 2);
+        config.setBool("per_document.always_save_on_exit", true);
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        // Simulate slow upload so the subsequent one overlaps with it.
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+        return nullptr;
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    /// The document is modified. Save it.
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitFail);
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        return true;
+    }
+
+    bool onDocumentSaved(const std::string& message, bool success,
+                         [[maybe_unused]] const std::string& result) override
+    {
+        TST_LOG("Save result: " << message);
+
+        LOK_ASSERT_MESSAGE("Expected save to succeed", success);
+        if (++_versions >= 6)
+        {
+            passTest("Saved " + std::to_string(_versions) + " versions without errors");
+        }
+
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                TST_LOG("Load: initWebsocket");
+                initWebsocket("/wopi/files/0?access_token=anything");
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
+                break;
+            case Phase::WaitFail:
+            {
+                const std::string res = helpers::getResponseString(
+                    getWs()->getWebSocket(), "error:", getTestname(), std::chrono::milliseconds(1));
+                if (!res.empty())
+                {
+                    failTest("Unexpected to get save failure: " + res);
+                }
+
+                WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                break;
+            }
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
+{
+    return new UnitBase* [] { new UnitWOPIStuckSave(), new UnitWOPIInfiniteSave(), nullptr };
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

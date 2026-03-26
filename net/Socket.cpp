@@ -15,6 +15,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include "Socket.hpp"
 
@@ -842,7 +843,7 @@ void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,
     bool transferred = false;
 
     // Important we're not blocking the fromPoll thread.
-    toPoll->assertCorrectThread(__FILE__, __LINE__);
+    ASSERT_CORRECT_SOCKET_THREAD(toPoll);
 
     int socketFD = inSocket->getFD();
 
@@ -1153,8 +1154,8 @@ bool StreamSocket::send(const http::Response& response)
     return false;
 }
 
-#ifndef _WIN32
-// CODA-W builds fine without HttpRequest.cpp, which is where the below writeData() is, and also
+#if !(defined QTAPP || defined _WIN32 || defined(MACOS))
+// CODA-Q/-W/-M build fine without HttpRequest.cpp, which is where the below writeData() is, and also
 // without this function.
 
 bool StreamSocket::send(http::Request& request)
@@ -1271,7 +1272,7 @@ bool ServerSocket::bind([[maybe_unused]] Type type, [[maybe_unused]] int port)
 
 #if !MOBILEAPP
 
-bool ServerSocket::isUnrecoverableAcceptError(const int cause)
+bool ServerSocket::isUnrecoverableAcceptError(const int cause) const
 {
     constexpr const char * messagePrefix = "Failed to accept. (errno: ";
     switch(cause)
@@ -1318,7 +1319,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
     assert(_type != Socket::Type::Unix);
 
     UnitWSD* const unitWsd = UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr;
-    if (unitWsd && unitWsd->simulateExternalAcceptError())
+    if (UNITWSD_CALL_INSTANCE(unitWsd, simulateExternalAcceptError()))
         return nullptr; // Recoverable error, ignore to retry
 
     struct sockaddr_in6 clientInfo;
@@ -1367,15 +1368,14 @@ std::shared_ptr<Socket> ServerSocket::accept()
     try
     {
         // Create a socket object using the factory.
-        std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
-        if (unitWsd)
-            unitWsd->simulateExternalSocketCtorException(_socket);
+        std::shared_ptr<Socket> socket = createSocketFromAccept(rc, type);
+        UNITWSD_CALL_INSTANCE(unitWsd, simulateExternalSocketCtorException(socket));
 
-        _socket->setClientAddress(addrstr, clientInfo.sin6_port);
+        socket->setClientAddress(addrstr, clientInfo.sin6_port);
 
-        LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
-                                    << clientInfo.sin6_family << ", " << *_socket);
-        return _socket;
+        LOG_TRC("Accepted socket #" << socket->getFD() << " has family " << clientInfo.sin6_family
+                                    << ", " << *socket);
+        return socket;
     }
     catch (const std::exception& ex)
     {
@@ -1933,13 +1933,13 @@ std::string WebSocketHandler::generateKey()
 // Required by Android and iOS apps.
 namespace http
 {
-std::string getAgentString() { return "COOLWSD HTTP Agent " + Util::getCoolVersion(); }
+std::string getAgentString() { return "COOLWSD HTTP Agent " COOLWSD_VERSION; }
 
 std::string getServerString()
 {
     CONFIG_STATIC const bool sig = ConfigUtil::getBool("security.server_signature", false);
     if (sig)
-        return "COOLWSD HTTP Server " + Util::getCoolVersion();
+        return "COOLWSD HTTP Server " COOLWSD_VERSION;
 
     return " ";
 }

@@ -49,7 +49,7 @@ public:
         // with a char delimiter stops at the first newline.
         std::string cspLine = csp;
         std::replace(cspLine.begin(), cspLine.end(), '\n', ' ');
-        StringVector tokens = StringVector::tokenize(cspLine, ';');
+        StringVector tokens = StringVector::tokenize(std::move(cspLine), ';');
         for (std::size_t i = 0; i < tokens.size(); ++i)
         {
             const std::string token = Util::trimmed(tokens[i]);

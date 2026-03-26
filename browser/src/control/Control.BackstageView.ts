@@ -788,7 +788,7 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-export');
 		this.clearContent();
 
-		// extract list from notebookbar - incase need to add condition better to add there?
+		// extract list from notebookbar - in case need to add condition better to add there?
 		const exportOptions = this.getExportOptionsFromNotebookbar();
 
 		if (exportOptions.downloadAs.length > 0) {
@@ -822,7 +822,9 @@ class BackstageView extends window.L.Class {
 
 		const format = option.action.startsWith('downloadas-')
 			? option.action.substring('downloadas-'.length)
-			: '';
+			: option.action.startsWith('export')
+				? option.action.substring('export'.length)
+				: '';
 		const extension = format ? `.${format}` : '';
 
 		const icon = this.createElement('div', 'format-icon');
@@ -1358,14 +1360,9 @@ class BackstageView extends window.L.Class {
 		const docType = this.getDocTypeString();
 		const builder = new (window.L.Control.NotebookbarBuilder as any)();
 
-		let downloadAsOpts: ExportOptionItem[] = builder._getDownloadAsSubmenuOpts
+		const downloadAsOpts: ExportOptionItem[] = builder._getDownloadAsSubmenuOpts
 			? builder._getDownloadAsSubmenuOpts(docType) || []
 			: [];
-
-		downloadAsOpts = downloadAsOpts.filter(
-			(option) =>
-				option.action !== 'exportpdf' && option.command !== 'exportpdf',
-		);
 
 		return {
 			exportAs: [],

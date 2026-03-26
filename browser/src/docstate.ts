@@ -54,6 +54,7 @@
 		partHashes: null, // hashes used to distinguish parts (we use sheet name)
 		autoFilterCell: null, // The cell of the current autofilter popup.
 		pivotTableFilterCell: null, // The cell of the current pivot table filter popup.
+		partWithActiveSheetView: -1, // Default part index with an active sheet view, or -1 if none.
 	},
 	impress: {
 		partList: null, // Info for parts.
@@ -109,8 +110,7 @@
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.
 		},
 		exportFormats: [], // possible output formats
-		viewModeExtensions:
-			'docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx',
+		viewModeExtensions: '',
 	},
 	following: {
 		// describes which cursor we follow with the view
@@ -288,6 +288,7 @@
 		ThemeColors: { name: _('Theme colors'), colors: [] },
 		DocumentColors: { name: _('Document colors'), colors: [] },
 	},
+	tableStyles: null, // TableStylesService
 	colorLastSelection: {}, // last used colors for uno commands
 
 	serverAudit: null, // contains list of warnings / errors detected on the server instance

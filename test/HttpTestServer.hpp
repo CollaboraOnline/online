@@ -16,6 +16,7 @@
 #pragma once
 
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 #include <net/HttpRequest.hpp>
 #include <net/Socket.hpp>
@@ -109,7 +110,7 @@ private:
             if (url.starts_with("/status/"))
             {
                 const auto [statusCode, success] =
-                    Util::i32FromString(std::string_view(url).substr(sizeof("/status")));
+                    NumUtil::i32FromString(std::string_view(url).substr(sizeof("/status")));
                 const auto reason = http::getReasonPhraseForCode(statusCode);
                 LOG_TRC("HandleIncomingMessage: got StatusCode " << statusCode
                                                                  << ", sending back: " << reason);

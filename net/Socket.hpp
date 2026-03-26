@@ -16,6 +16,14 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
+#include <common/StateEnum.hpp>
+#include <common/Util.hpp>
+#include <net/Buffer.hpp>
+#include <net/FakeSocket.hpp>
+#include <net/NetUtil.hpp>
+
 #if !MOBILEAPP
 #include <poll.h>
 #include <unistd.h>
@@ -38,15 +46,6 @@
 #include <mutex>
 #include <thread>
 
-#include <common/StateEnum.hpp>
-#include <common/Log.hpp>
-#include <NetUtil.hpp>
-#include <common/Util.hpp>
-#include <Buffer.hpp>
-#include <SigUtil.hpp>
-
-#include <FakeSocket.hpp>
-
 #ifdef __linux__
 #define HAVE_ABSTRACT_UNIX_SOCKETS
 #endif
@@ -54,8 +53,7 @@
 // Enable to dump socket traffic as hex in logs.
 // #define LOG_SOCKET_DATA ENABLE_DEBUG
 
-#define ASSERT_CORRECT_SOCKET_THREAD(socket) \
-    socket->assertCorrectThread(__FILE__, __LINE__);
+#define ASSERT_CORRECT_SOCKET_THREAD(socket) socket->assertCorrectThread();
 
 namespace http
 {
@@ -377,10 +375,10 @@ public:
     const std::thread::id& getThreadOwner() const { return _owner; }
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(const char* fileName = "", int lineNo = 0) const
+    void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
     {
         if (!ThreadChecks::Inhibit)
-            Util::assertCorrectThread(_owner, fileName, lineNo);
+            Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
     bool ignoringInput() const { return _ignoreInput; }
@@ -585,10 +583,10 @@ public:
     virtual ~ProtocolHandlerInterface() = default;
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(const char* fileName = "", int lineNo = 0) const
+    void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
     {
         if (!ThreadChecks::Inhibit)
-            Util::assertCorrectThread(_owner, fileName, lineNo);
+            Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
     /// Called when the socket is newly created to
@@ -643,24 +641,17 @@ public:
     /// Sends a text message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    virtual int sendTextMessage(const char* msg, size_t len, bool flush = false) const = 0;
-
-    /// Convenience wrapper
-    int sendTextMessage(const std::string_view msg, bool flush = false) const
-    {
-        ASSERT_CORRECT_THREAD();
-        return sendTextMessage(msg.data(), msg.size(), flush);
-    }
+    virtual int sendTextMessage(std::string_view msg, bool flush = false) const = 0;
 
     /// Sends a binary message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    virtual int sendBinaryMessage(const char* data, size_t len, bool flush = false) const = 0;
+    virtual int sendBinaryMessage(std::string_view data, bool flush = false) const = 0;
 
     /// Shutdown the socket and specify if the endpoint is going away or not (useful for WS).
     /// Optionally provide a message sent in the close frame (useful for WS).
     virtual void shutdown(bool goingAway = false,
-                          const std::string& statusMessage = std::string()) = 0;
+                          const std::string_view statusMessage = std::string_view()) = 0;
 
     virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
 
@@ -727,9 +718,9 @@ class SimpleSocketHandler : public ProtocolHandlerInterface
 {
 public:
     SimpleSocketHandler() = default;
-    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
-    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
-    void shutdown(bool, const std::string &) override {}
+    int sendTextMessage(std::string_view, bool) const override { return 0; }
+    int sendBinaryMessage(std::string_view, bool) const override { return 0; }
+    void shutdown(bool, const std::string_view) override {}
     void getIOStats(uint64_t &, uint64_t &) override {}
 };
 
@@ -871,17 +862,17 @@ public:
     /// Executed inside the poll in case of a wakeup
     virtual void wakeupHook() {}
 
-    const std::thread::id &getThreadOwner()
+    const std::thread::id &getThreadOwner() const
     {
         return _owner;
     }
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(const char* fileName = "?", int lineNo = 0) const
+    void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
     {
         if (!ThreadChecks::Inhibit && isAlive())
-            Util::assertCorrectThread(_owner, fileName, lineNo);
+            Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
     /// Kit poll can be called from LOK's Yield in any thread, adapt to that.
@@ -920,7 +911,7 @@ public:
     }
 
     /// Wakeup the main polling loop in another thread
-    void wakeup()
+    void wakeup() const
     {
         // There is a race when shutting down because
         // SocketPoll threads exit when shutting down.
@@ -1246,7 +1237,21 @@ public:
     {
         LOG_TRC("StreamSocket dtor called with pending write: " << _outBuffer.size()
                                                                 << ", read: " << _inBuffer.size());
-        ensureDisconnected();
+        if (!_doneDisconnect)
+        {
+            // This dtor could be called from a different thread when we are owned by
+            // a weak_ptr elevated to a shared_ptr while the real owning shared_ptr
+            // is destroyed. This can happen when we remove a closed socket from the
+            // poll while in another thread a weak_ptr on it has temporarily lock()'d
+            // and got another valid reference to it.
+            // In that case, the real owner should've called ensureDisconnected()
+            // and we won't need it again here, hence the conditional, and won't get
+            // tripped-up by the ASSERT_CORRECT_SOCKET_THREAD check inside it.
+            // Otherwise, we will invoke it and it's only fair to catch the thread
+            // affinity violation.
+            ensureDisconnected();
+        }
+
         _socketHandler.reset();
 
         if (!_shutdownSignalled)
@@ -1354,7 +1359,7 @@ public:
     }
 
     /// Send a string to the socket peer.
-    void send(const std::string& str, const bool doFlush = true)
+    void send(const std::string_view str, const bool doFlush = true)
     {
         send(str.data(), str.size(), doFlush);
     }

@@ -332,7 +332,7 @@ private:
     }
 
     /// Maps SSL Error codes to their respective string form.
-    constexpr std::string_view sslErrorToName(int sslError)
+    constexpr std::string_view sslErrorToName(int sslError) const
     {
         switch (sslError)
         {

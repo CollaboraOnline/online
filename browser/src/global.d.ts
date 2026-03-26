@@ -158,7 +158,6 @@ interface AppInterface {
 		pivotTableFilterCell: any; // The cell of the current pivot table filter popup.
 		isRTL(): boolean;
 		isSelectedPartSheetView(): boolean;
-		isSelectedPartSheetViewSynced(): boolean;
 	};
 	impress: {
 		partList: any; // Info for parts.
@@ -196,7 +195,7 @@ interface AppInterface {
 	colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 	colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 	console: Console;
-	map: any; // TODO should be window.L.Map
+	map: MapInterface; // TODO should be window.L.Map
 	// file defined in: src/docstate.ts
 	file: {
 		editComment: boolean;
@@ -225,6 +224,7 @@ interface AppInterface {
 	};
 	languages: Array<{ translated: string; neutral: string; iso: string }>;
 	favouriteLanguages: Array<string>;
+	tableStyles: TableStylesService;
 	colorLastSelection: any;
 	serverAudit: any;
 	events: DocEvents;

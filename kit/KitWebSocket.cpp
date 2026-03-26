@@ -16,10 +16,10 @@
 
 #include <config.h>
 
-// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
-#include <typeinfo>
-
 #include "KitWebSocket.hpp"
+
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Include <typeinfo> here.
+#include <typeinfo>
 
 #include <common/Anonymizer.hpp>
 #include <common/JsonUtil.hpp>
@@ -269,7 +269,7 @@ void BgSaveParentWebSocketHandler::terminateSave(const std::string &reason)
     LOG_TRC("terminating bgsave: " << reason);
 
     // Hard terminate the bgsave child
-    sendMessage("exit");
+    sendTextMessage("exit");
     shutdown(true, "unexpected jsdialog");
 
     reportFailedSave(reason);
@@ -283,9 +283,10 @@ void BgSaveParentWebSocketHandler::reportFailedSave(const std::string &reason)
     // Synthesize a failed save result
     // FIXME: could this allow another new manual save to race against the ongoing bgsave ?
     // either way - that's better than hanging and blocking if we get interactive dialogs on save.
-    std::string saveFailed = "client-" + _session->getId() +
+    const std::string saveFailed =
+        "client-" + _session->getId() +
         " unocommandresult: { \"commandName\": \".uno:Save\", \"success\": false }";
-    _document->sendFrame(saveFailed.c_str(), saveFailed.size(), WSOpCode::Text);
+    _document->sendFrame(saveFailed, WSOpCode::Text);
 
     _document->updateModifiedOnFailedBgSave();
     _saveCompleted = true;
@@ -331,7 +332,7 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
     }
 
     // Messages already include client-foo prefixes inherited from ourselves
-    _document->sendFrame(data.data(), data.size(), WSOpCode::Text);
+    _document->sendFrame(std::string_view(data.data(), data.size()), WSOpCode::Text);
 
     if (tokens[1] == "error:")
         _document->disableBgSave("on save error");

@@ -30,6 +30,8 @@ class ServerConnectionService {
 
 	public onBasicUI() {
 		app.console.debug('ServerConnectionService: onBasicUI');
+
+		app.tableStyles = new TableStylesService();
 	}
 
 	public onViewSetting(viewSetting: ViewSetting) {
@@ -57,11 +59,6 @@ class ServerConnectionService {
 			app.map.addControl(zoteroPlugin);
 
 			zoteroPlugin.updateUserID();
-		}
-
-		if (viewSetting.accessibilityState) {
-			app.console.debug('ServerConnectionService: initialize accessibility');
-			app.map.lockAccessibilityOn();
 		}
 	}
 

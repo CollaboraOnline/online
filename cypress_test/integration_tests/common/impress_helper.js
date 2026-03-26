@@ -136,8 +136,17 @@ function removeShapeSelection() {
 		helper.processToIdle(win);
 	});
 
-	cy.cGet('body').type('{esc}');
-	cy.cGet('body').type('{esc}');
+	helper.typeIntoDocument('{esc}');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
+
+	helper.typeIntoDocument('{esc}');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
 
 	cy.cGet('#document-container')
 		.should(function(overlay) {
@@ -248,6 +257,32 @@ function changeSlide(changeNum,direction) {
 	cy.log('<< changeSlide - end');
 }
 
+function getSlideShow() {
+	return cy.cGet('#slideshow-cypress-iframe');
+}
+
+function getSlideShowContent() {
+	return getSlideShow().its('0.contentDocument');
+}
+
+function getSlideShowCanvas() {
+	return getSlideShowContent().find('#slideshow-canvas');
+}
+
+// Wait for the slideshow to have loaded a slide and for any
+// animations/transitions to finish. Waits for the navigator's
+// currentSlideIndex to be set (slide loaded via fetchAndRun)
+// then waits for no active 'slideshowupdate' timers.
+function waitForSlideShowIdle(win) {
+	cy.waitUntil(() => {
+		var presenter = win.app && win.app.map && win.app.map.slideShowPresenter;
+		if (!presenter || !presenter._slideShowNavigator)
+			return false;
+		return presenter._slideShowNavigator.currentSlideIndex !== undefined;
+	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
+	helper.waitForTimers(win, 'slideshowupdate');
+}
+
 module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
@@ -261,3 +296,7 @@ module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;
 module.exports.selectTableInTheCenter = selectTableInTheCenter;
+module.exports.getSlideShow = getSlideShow;
+module.exports.getSlideShowContent = getSlideShowContent;
+module.exports.getSlideShowCanvas = getSlideShowCanvas;
+module.exports.waitForSlideShowIdle = waitForSlideShowIdle;

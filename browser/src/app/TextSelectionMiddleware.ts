@@ -45,6 +45,9 @@ class TextSelections {
 		this.active = false;
 		this.start.setShowSection(false);
 		this.end.setShowSection(false);
+
+		// Schedule a redraw if there's not any.
+		app.sectionContainer.requestReDraw();
 	}
 
 	public static activate() {
@@ -141,6 +144,9 @@ class TextSelections {
 			*/
 			this.switchStartEndHandles();
 		}
+
+		// Schedule a redraw if there's not any.
+		app.sectionContainer.requestReDraw();
 	}
 
 	public static switchStartEndHandles() {

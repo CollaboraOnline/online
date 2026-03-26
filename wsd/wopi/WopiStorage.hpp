@@ -59,8 +59,8 @@ public:
         const std::string& getTemplateSource() const { return _templateSource; }
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
         const std::string& getFileUrl() const { return _fileUrl; }
-        const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
-        const std::string& getHideUserList() { return _hideUserList; }
+        const std::string& getPostMessageOrigin() const { return _postMessageOrigin; }
+        const std::string& getHideUserList() const { return _hideUserList; }
         const std::string& getPresentationLeader() const { return _presentationLeader; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
@@ -182,7 +182,7 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
-        /// If user is limited to only writing/modifiyng comments
+        /// If user is limited to only writing/modifying comments
         bool _userCanOnlyComment = false;
         /// If user is limited to only managing redlines (accept/reject)
         bool _userCanOnlyManageRedlines = false;
@@ -265,8 +265,25 @@ private:
     std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
                                  const Authorization& auth, unsigned redirectLimit);
 
+    /// Create the HTTP request for a WOPI Lock/Unlock operation.
+    http::Request createLockRequest(const Poco::URI& uriObject, const Authorization& auth,
+                                    LockContext& lockCtx, LockState lock,
+                                    const Attributes& attribs);
+
+    /// Set a WOPI header with both COOL and legacy LOOL prefixes.
+    void setWopiHeader(http::Request& httpRequest, const std::string& suffix,
+                       const std::string& value);
+
+    /// Returns the URI with the path anonymized, optionally appending a suffix.
+    std::string getAnonymizedUri(const std::string& pathSuffix = std::string()) const
+    {
+        Poco::URI uriAnonym(getUri());
+        uriAnonym.setPath(COOLWSD::anonymizeUrl(uriAnonym.getPath()) + pathSuffix);
+        return uriAnonym.toString();
+    }
+
 private:
-    /// A URl provided by the WOPI host to use for GetFile.
+    /// A URL provided by the WOPI host to use for GetFile.
     std::string _fileUrl;
 
     // Time spend in saving the file from storage

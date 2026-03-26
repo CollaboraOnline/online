@@ -500,7 +500,7 @@ public:
         if (!msg.empty())
         {
             LOG_TST(_logPre << "Send: '" << msg << "'");
-            sendMessage(msg);
+            sendTextMessage(msg);
         }
 
         if (!getNextRecord())
@@ -569,8 +569,8 @@ public:
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
 
-            sendMessage("tileprocessed tile=" + desc.generateID());
-            LOG_TST(_logPre << "Sent tileprocessed tile= " << desc.generateID());
+            sendTextMessage("tileprocessed wids=" + std::to_string(desc.getWireId()));
+            LOG_TST(_logPre << "Sent tileprocessed wids= " << desc.getWireId());
         }
         else if (tokens.equals(0, "error:"))
         {
@@ -583,7 +583,7 @@ public:
             else if (firstLine == "error: cmd=storage kind=documentconflict")
             {
                 LOG_TST("Document conflict - need to resolve it first ...");
-                sendMessage("closedocument");
+                sendTextMessage("closedocument");
                 reconnect = true;
             }
             else
@@ -610,10 +610,10 @@ public:
     }
 
     /// override ProtocolHandlerInterface piece
-    int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
+    int sendTextMessage(std::string_view msg, bool flush = false) const override
     {
-        _stats->accumulateSend(msg, len, flush);
-        return WebSocketHandler::sendTextMessage(msg, len, flush);
+        _stats->accumulateSend(msg.data(), msg.size(), flush);
+        return WebSocketHandler::sendTextMessage(msg, flush);
     }
 
     static void addPollFor(SocketPoll& poll, const std::string& server, const std::string& filePath,

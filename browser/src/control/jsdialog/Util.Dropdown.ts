@@ -70,6 +70,21 @@ JSDialog.OpenDropdown = function (
 		else return false;
 	};
 
+	for (let i = 0; i < entries.length; i++) {
+		if (entries[i].statusCommand) {
+			const items = window.L.Map.THIS['stateChangeHandler'];
+			const val = items.getItemValue(entries[i].statusCommand);
+			if (val) {
+				const index = parseInt(val);
+				if (index === i) {
+					entries[i].selected = true;
+				} else {
+					entries[i].selected = false;
+				}
+			}
+		}
+	}
+
 	const shouldSelectFirstEntry =
 		entries.length > 0
 			? !entries.some((entry) => entry.selected === true)
@@ -184,6 +199,9 @@ JSDialog.OpenDropdown = function (
 			if (typeof data === 'number') pos = data;
 			else pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : -1;
 			const entry = targetEntries && pos >= 0 ? targetEntries[pos] : null;
+			if (entry) {
+				entry.pos = pos;
+			}
 			const subMenuId = object.id + '-' + pos;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
@@ -223,7 +241,7 @@ JSDialog.OpenDropdown = function (
 					const uno =
 						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
 					window.L.Map.THIS.sendUnoCommand(uno);
-					JSDialog.CloseDropdown(id);
+					JSDialog.CloseAllDropdowns();
 					return;
 				} else {
 					app.console.debug(
@@ -244,7 +262,10 @@ JSDialog.OpenDropdown = function (
 			)
 				return;
 
-			if (eventType === 'selected') JSDialog.CloseDropdown(id);
+			if (eventType === 'selected') JSDialog.CloseAllDropdowns();
+
+			// we want to send render request to the default callback -> no warn
+			if (eventType === 'render_entry') return;
 
 			app.console.warn(
 				'Dropdown: unhandled action: "' +

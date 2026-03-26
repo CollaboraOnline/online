@@ -327,6 +327,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton:not(.notebookbar) .unobutton
 	right: var(--click-increment);
 	bottom: var(--click-increment);
 	left: var(--click-increment);
+	pointer-events: none;
 }
 
 .unotoolbutton.notebookbar.inline:hover {
@@ -460,6 +461,7 @@ label.notebookbar.ui-checkbox-label {
 .has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
+	color: var(--color-main-text);
 }
 
 /* adding focus to tab in notebookbar */
@@ -481,6 +483,10 @@ label.notebookbar.ui-checkbox-label {
 	display: none;
 }
 
+.notebookbar .ui-iconview-root {
+	display: flex;
+}
+
 /* Writer */
 
 /* File Tab */
@@ -490,11 +496,12 @@ label.notebookbar.ui-checkbox-label {
 	line-height: 22px;
 }
 
-/* Styles preview */
-.jsdialog #stylesview:not(.sidebar),
-.jsdialog #masterpageall_icons:not(.sidebar),
-.jsdialog #transitions_icons:not(.sidebar),
-.jsdialog #iconview_theme_colors:not(.sidebar) {
+/* root of iconview */
+.jsdialog #stylesview-iconview-list:not(.sidebar),
+.jsdialog #masterpagenb-iconview-list:not(.sidebar),
+.jsdialog #tablestyles_design-iconview-list:not(.sidebar),
+.jsdialog #transitions_icons-iconview-list:not(.sidebar),
+.jsdialog #iconview_theme_colors-iconview-list:not(.sidebar) {
 	height: auto !important;
 	min-height: 64px !important;
 	border: none !important;
@@ -542,15 +549,15 @@ label.notebookbar.ui-checkbox-label {
 	box-sizing: border-box;
 }
 
-.jsdialog #stylesview:not(.sidebar),
-.jsdialog #masterpageall_icons:not(.sidebar),
-.jsdialog #transitions_icons:not(.sidebar),
-.notebookbar #stylesview-iconview,
-.notebookbar #masterpageall_icons-iconview,
-.notebookbar #transitions_icons-iconview,
-.notebookbar #iconview_theme_colors-iconview,
-#custom_animation_list,
-#effect_list {
+/* inner iconview - don't set height for dropdown ones */
+.notebookbar#stylesview,
+.notebookbar#masterpageall_icons,
+.notebookbar#masterpagecurrent_icons,
+.notebookbar#tablestyles_design,
+.notebookbar#transitions_icons,
+.notebookbar#iconview_theme_colors,
+.notebookbar#custom_animation_list,
+.notebookbar#effect_list {
 	height: var(--notebookbar-element-height);
 	overflow: auto;
 	display: grid;
@@ -575,7 +582,7 @@ label.notebookbar.ui-checkbox-label {
  * see `JSDialog.notebookbarIconView` for details.
  */
 .jsdialog #stylesview,
-.notebookbar #stylesview-iconview {
+.notebookbar #stylesview {
 	width: 36.8vw !important;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
@@ -588,13 +595,13 @@ label.notebookbar.ui-checkbox-label {
 	justify-content: center;
 }
 
-#masterpageall_icons-dropdown,
-#stylesview-dropdown,
-#iconview_theme_colors-dropdown {
+#masterpagenb-iconview-list-dropdown,
+#stylesview-iconview-list-dropdown,
+#iconview_theme_colors-iconview-list-dropdown {
 	margin-top: 37px !important;
 }
 
-#transitions_icons-dropdown {
+#transitions_icons-iconview-list-dropdown {
 	margin-top: 42px !important;
 }
 
@@ -617,7 +624,7 @@ label.notebookbar.ui-checkbox-label {
 }
 
 .jsdialog #stylesview .ui-iconview-entry,
-.notebookbar #stylesview-iconview .ui-iconview-entry {
+.notebookbar #stylesview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
 	align-self: start;
@@ -629,12 +636,12 @@ label.notebookbar.ui-checkbox-label {
 }
 
 .jsdialog #stylesview .icon-view-item-container,
-.notebookbar #stylesview-iconview .icon-view-item-container {
+.notebookbar #stylesview .icon-view-item-container {
 	margin: unset;
 }
 
 .jsdialog #stylesview .ui-iconview-entry-title,
-.notebookbar #stylesview-iconview .ui-iconview-entry-title {
+.notebookbar #stylesview .ui-iconview-entry-title {
 	display: none;
 }
 
@@ -736,7 +743,9 @@ label.notebookbar.ui-checkbox-label {
 /* Design Tab */
 
 .jsdialog #masterpageall_icons,
-#masterpageall_icons-iconview {
+.jsdialog #masterpagecurrent_icons
+#masterpageall_icons,
+#masterpagecurrent_icons {
 	width: 15vw !important;
 	max-width: 265px;
 	min-width: 90px;
@@ -777,7 +786,7 @@ label.notebookbar.ui-checkbox-label {
 	justify-items: stretch;
 }
 
-.notebookbar #transitions_icons.ui-iconview {
+.notebookbar#transitions_icons.ui-iconview {
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
@@ -828,6 +837,25 @@ label.notebookbar.ui-checkbox-label {
 }
 
 /* Table Tab */
+
+#tablestyles_design.notebookbar,
+#tablestyles_design.jsdialog {
+	grid-template-columns: repeat(7, 1fr);
+	grid-gap: 10px;
+	padding: 5px 10px;
+}
+
+#tablestyles_design.notebookbar .ui-iconview-separator {
+	display: none;
+}
+
+#masterpagenb-entries .static-label.ui-text,
+#tablestyles_design .ui-iconview-separator.label {
+	grid-column: 1 / -1;
+	padding-inline-start: 8px;
+	font-size: var(--default-font-size);
+	font-weight: 500;
+}
 
 /* Draw Tab */
 
@@ -1012,12 +1040,3 @@ label.notebookbar.ui-checkbox-label {
 	height: var(--btn-img-size);
 }
 
-#masterpageall_icons .notebookbar.ui-iconview-entry {
-	align-self: start;
-	margin-top: 6px;
-}
-
-#masterpageall_icons .notebookbar.ui-iconview-entry img {
-	height: 45px;
-	width: 80px;
-}

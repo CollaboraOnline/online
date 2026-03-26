@@ -177,10 +177,13 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	private doWeKeepRatio(e: MouseEvent) {
+		if (this.sectionProperties.cropModeEnabled)
+			return false;
+
 		let keep = e.ctrlKey && e.shiftKey;
 
 		// For images, the keepRatio shortcut works the opposite way.
-		if (app.map.context.context === 'Graphic')
+		if (app.map.context && app.map.context.context === 'Graphic')
 			keep = !keep;
 
 		return keep;

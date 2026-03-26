@@ -193,7 +193,7 @@ class WriterReferencesTab implements NotebookbarTab {
 		] as WidgetJSON[];
 
 		// zotero plugin buttons are visible when it is initialized in ServerConnectionService
-		// as initial visibility value we set existance of zotero plugin, later we can show/hide
+		// as initial visibility value we set existence of zotero plugin, later we can show/hide
 		// using notebookbar show/hide item functionality
 		content = content.concat([
 			{

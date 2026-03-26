@@ -185,7 +185,7 @@ public:
     /// Message that is about to be sent via the websocket.
     /// To override, handle onFilterSendWebSocketMessage or any of the onDocument...() handlers.
     /// Returns true to stop processing the message further.
-    bool filterSendWebSocketMessage(const char* data, std::size_t len, WSOpCode code, bool flush,
+    bool filterSendWebSocketMessage(std::string_view data, WSOpCode code, bool flush,
                                     int& unitReturn);
 
     /// Hook the disk space check
@@ -344,7 +344,7 @@ private:
     virtual bool onFilterLOKitMessage(const std::shared_ptr<Message>& /*message*/) { return false; }
 
     /// Handles messages sent via WebSocket.
-    virtual bool onFilterSendWebSocketMessage(const char* /*data*/, const std::size_t /*len*/,
+    virtual bool onFilterSendWebSocketMessage(std::string_view /*data*/,
                                               const WSOpCode /* code */, const bool /* flush */,
                                               int& /*unitReturn*/)
     {
@@ -399,6 +399,7 @@ class UnitWSD : public UnitBase
 {
     UnitWSDInterface *_wsd;
     bool _hasKitHooks;
+    std::atomic_bool _hasDocBroker;
 
 public:
     explicit UnitWSD(const std::string& testname);
@@ -585,10 +586,6 @@ public:
 
     // ---------------- DocBroker events ----------------
 
-    /// Called when a DocumentBroker is created (from the constructor).
-    /// Useful to detect track the beginning of a document's life cycle.
-    virtual void onDocBrokerCreate(const std::string&) {}
-
     /// Called when the Kit process is attached to a DocBroker.
     virtual void onDocBrokerAttachKitProcess(const std::string&, int) {}
 
@@ -605,11 +602,20 @@ public:
     virtual void onDocBrokerPresetsInstallEnd(bool /*success*/) {}
 
 protected:
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect track the beginning of a document's life cycle.
+    virtual void onDocBrokerCreate(const std::string&) {}
+
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     virtual void onDocBrokerDestroy(const std::string&) {}
 
 public:
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect when a document was created at all.
+    /// Handle by overriding onDocBrokerCreate.
+    void DocBrokerCreate(const std::string&);
+
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     /// Handle by overriding onDocBrokerDestroy.
@@ -635,6 +641,7 @@ private:
     /// The actual test implementation.
     virtual void invokeWSDTest() {}
 
+    void startNextTest();
     void onExitTest(TestResult result, const std::string& reason = std::string()) override;
 };
 

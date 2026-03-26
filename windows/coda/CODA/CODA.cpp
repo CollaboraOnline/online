@@ -36,6 +36,7 @@
 #include "litecask.h"
 
 #include <common/Clipboard.hpp>
+#include <common/LangUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
@@ -81,7 +82,7 @@ struct FilenameAndUri
     std::string uri;
 };
 
-// Various document window speficic data
+// Various document window specific data
 struct WindowData
 {
     HWND hWnd;
@@ -1536,8 +1537,12 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
 
     auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
 
+    // Required for instantiating new Web Workers, which otherwise fail with a
+    // cross-origin SecurityError because file:// gets origin 'null'.
+    std::wstring additionalArgs = L"--allow-file-access-from-files";
     if (enableWebDriver)
-        options->put_AdditionalBrowserArguments(L"--remote-debugging-port=9222");
+        additionalArgs += L" --remote-debugging-port=9222";
+    options->put_AdditionalBrowserArguments(additionalArgs.c_str());
 
     CreateCoreWebView2EnvironmentWithOptions(
         nullptr,
@@ -1695,11 +1700,11 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
                                     "file_path=" + data.filenameAndUri.uri +
                                     std::string("&permission=edit") +
                                     std::string("&appdocid=") + std::to_string(data.appDocId) +
-                                    std::string("&userinterfacemode=notebookbar"
-                                                "&dir=ltr");
+                                    std::string("&userinterfacemode=notebookbar");
                             }
 
                             coolURL += "&lang=" + uiLanguage;
+                            coolURL += "&dir=" + std::string(LangUtil::isRtlLanguage(uiLanguage) ? "rtl" : "");
 
                             if (!isLightTheme())
                                 coolURL +=
@@ -1767,6 +1772,22 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s == L"CLIPBOARDREAD")
         {
             do_paste_or_read(ClipboardOp::READ, data);
+        }
+        else if (s.starts_with(L"TEXTCLIPBOARD "))
+        {
+            std::wstring text = s.substr(14);
+            if (OpenClipboard(NULL))
+            {
+                EmptyClipboard();
+                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, (text.size() + 1) * sizeof(wchar_t));
+                if (hMem)
+                {
+                    memcpy(GlobalLock(hMem), text.c_str(), (text.size() + 1) * sizeof(wchar_t));
+                    GlobalUnlock(hMem);
+                    SetClipboardData(CF_UNICODETEXT, hMem);
+                }
+                CloseClipboard();
+            }
         }
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
