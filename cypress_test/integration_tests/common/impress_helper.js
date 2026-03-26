@@ -93,23 +93,18 @@ function selectTextShapeInTheCenter() {
 	cy.log('<< selectTextShapeInTheCenter - end');
 }
 
-function selectTableInTheCenter() {
+function selectTableInTheCenter(win) {
 	cy.log('>> selectTableInTheCenter - start');
 
-	// Click on the center of the slide to select the text shape there
-	// Retry until it works
-	cy.waitUntil(function() {
-		cy.cGet('#document-container')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.cGet('body').click(XPos, YPos);
-			});
+	// First click selects the table as a shape.
+	clickCenterOfSlide();
+	helper.processToIdle(win);
 
-		return cy.cGet('.leaflet-cursor-container').should('be.visible');
-	});
+	// Second click enters the table and places the cursor in a cell.
+	clickCenterOfSlide();
+	helper.processToIdle(win);
 
+	cy.cGet('.leaflet-cursor-container').should('be.visible');
 	cy.cGet('.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	cy.cGet('#document-container svg g.Page g').should('exist');
 
@@ -185,14 +180,10 @@ function triggerNewSVGForShapeInTheCenter() {
 function selectTextOfShape() {
 	cy.log('>> selectTextOfShape - start');
 
-	// Double click onto the selected shape
-	// Retry until the cursor appears and the text is selected
-	cy.waitUntil(function() {
-		dblclickOnSelectedShape();
-		helper.typeIntoDocument('{ctrl}a');
-		return cy.cGet('.text-selection-handle-start, .text-selection-handle-end').should('exist');
-	});
-
+	dblclickOnSelectedShape();
+	helper.typeIntoDocument('{ctrl}a');
+	cy.cGet('.text-selection-handle-start, .text-selection-handle-end')
+		.should('exist');
 	cy.cGet('.leaflet-cursor-container, .text-selection-handle-start')
 		.should('exist');
 
@@ -205,13 +196,9 @@ function selectTextOfShape() {
 function dblclickOnSelectedShape() {
 	cy.log('>> dblclickOnSelectedShape - start');
 
-	cy.cGet('#canvas-container > svg')
-		.then(function(element) {
-			expect(element).to.have.length(1);
-			const x = parseInt(element[0].style.left.replace('px', '')) + parseInt(element[0].style.width.replace('px', '')) / 2;
-			const y = parseInt(element[0].style.top.replace('px', '')) + parseInt(element[0].style.height.replace('px', '')) / 2;
-			cy.cGet('#document-canvas').dblclick(x, y, { force: true });
-		});
+	helper.getShapeSVGCenter().then(function(pos) {
+		cy.cGet('#document-canvas').dblclick(pos.x, pos.y, { force: true });
+	});
 
 	// check if any of text input markers exist
 	cy.cGet('.leaflet-cursor-container, .text-selection-handle-start, .leaflet-cursor.blinking-cursor')

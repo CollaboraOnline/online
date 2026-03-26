@@ -395,7 +395,7 @@ class HRuler extends Ruler {
 		this._rWrapper.style.visibility = '';
 	}
 
-	public _updateParagraphIndentations() {
+	protected _updateParagraphIndentationsImpl() {
 		var items = this._map['stateChangeHandler'];
 		var state = items.getItemValue('.uno:LeftRightParaMargin');
 		// in impress/draw values are not as per Inch factore we should consider this case
@@ -1377,15 +1377,6 @@ class HRuler extends Ruler {
 	}
 
 	_getNavigationSidebarWidth() {
-		// Consider navigations sidebar width to place marker at correct position
-		const presentationControlsWrapper: HTMLDivElement = document.querySelector(
-			'#navigation-sidebar',
-		);
-		let presentationControlsWrapperWidth: number = 0;
-
-		if (presentationControlsWrapper)
-			presentationControlsWrapperWidth =
-				presentationControlsWrapper.getBoundingClientRect().width;
-		return presentationControlsWrapperWidth;
+		return app.map?.navigator ? app.map.navigator.getCurrentWidth() : 0;
 	}
 }

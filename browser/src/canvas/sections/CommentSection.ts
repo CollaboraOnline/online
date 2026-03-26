@@ -239,6 +239,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.contentNode = window.L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
+		this.sectionProperties.contentNode.setAttribute('tabindex', '-1');
 
 		const commentFooter = window.L.DomUtil.create('div', 'cool-annotation-footer', this.sectionProperties.wrapper);
 		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', commentFooter);
@@ -335,6 +336,7 @@ export class Comment extends CanvasSectionObject {
 		edit.id = 'comment-annotation-menu-edit-' + this.sectionProperties.data.id;
 		edit.tabIndex = 0;
 		edit.onclick = this.onEditComment.bind(this);
+		edit.onkeypress = this.editOnKeyPress.bind(this);
 		edit.dataset.title = Comment.editCommentLabel;
 		edit.setAttribute('aria-label', Comment.editCommentLabel);
 
@@ -1053,6 +1055,13 @@ export class Comment extends CanvasSectionObject {
 		window.L.DomEvent.stopPropagation(e);
 	}
 
+	private editOnKeyPress (e: any): void {
+		if (e.code === 'Space' || e.code === 'Enter')
+		{
+			this.onEditComment(e);
+			window.L.DomEvent.stopPropagation(e);
+		}
+	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {

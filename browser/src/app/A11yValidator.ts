@@ -428,7 +428,7 @@ class A11yValidator {
 	}
 
 	private collectAllCombinations(
-		node: any,
+		node: WidgetJSON | WidgetJSON[],
 		items: Array<{ id: string; combination: string }>,
 		language: string | null,
 	): void {
@@ -446,7 +446,7 @@ class A11yValidator {
 		if (!isOverflow && node.accessibility && node.accessibility.combination) {
 			const combo =
 				language && node.accessibility[language]
-					? node.accessibility[language]
+					? (node.accessibility[language] as string)
 					: node.accessibility.combination;
 			const id = node.id || 'unknown';
 			items.push({ id: id, combination: combo });

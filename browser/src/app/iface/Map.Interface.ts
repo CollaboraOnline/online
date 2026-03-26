@@ -79,6 +79,7 @@ interface MapInterface extends Evented {
 		resetAppLoaded(): void;
 		DisableInactiveMessages: boolean;
 		UserCanNotWriteRelative: boolean;
+		IsOwner: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
 		UserCanWrite: boolean;
