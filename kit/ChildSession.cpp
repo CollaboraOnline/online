@@ -3996,10 +3996,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
         if (exportWasRequested)
         {
-            std::string encodedURL;
-            Poco::URI::encode(payload, "", encodedURL);
-
-            sendTextFrame("exportas: url=" + encodedURL + " filename=" + _exportAsWopiUrl);
+            // The payload from LOKit is already a properly encoded file:// URL
+            // (e.g., spaces as %20). Pass it through as-is — do NOT re-encode
+            // with Poco::URI::encode(), which would double-encode percent signs
+            // (%20 -> %2520) producing a path that doesn't match the file on disk.
+            sendTextFrame("exportas: url=" + payload + " filename=" + _exportAsWopiUrl);
 
             _exportAsWopiUrl.clear();
             return;
