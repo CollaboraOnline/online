@@ -84,7 +84,8 @@ JSDialog.grid = function (
 		', auto); \
 		grid-template-columns: repeat(' +
 		cols +
-		', auto);';
+		', 1fr);' +
+		(data.columnSpacing > 0 ? ' column-gap:' + data.columnSpacing + 'px;' : '');
 
 	table.style = gridRowColStyle;
 
