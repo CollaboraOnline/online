@@ -25,6 +25,7 @@ interface DocLayerInterface {
 	_getViewId(): string;
 	_painter: PainterInterface;
 	_docType: string;
+	_coreMousePointer: string;
 
 	isCalc(): boolean;
 	isWriter(): boolean;
