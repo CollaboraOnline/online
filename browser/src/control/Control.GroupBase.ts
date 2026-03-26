@@ -80,9 +80,8 @@ export abstract class GroupBase extends CanvasSectionObject {
 		const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 
 		const fontFamily = window.L.DomUtil.getStyle(elem, 'font-family');
-		const fontSize = parseInt(window.L.DomUtil.getStyle(elem, 'font-size'));
-		this._getFont = function() {
-			return Math.round(fontSize * app.dpiScale) + 'px ' + fontFamily;
+		this._getFont = () => {
+			return Math.round(this._groupHeadSize * 0.8) + 'px ' + fontFamily;
 		};
 		window.L.DomUtil.remove(elem);
 	}
@@ -253,6 +252,42 @@ export abstract class GroupBase extends CanvasSectionObject {
 					return this._isParentGroupVisible(parentGroup);
 				}
 			}
+		}
+	}
+
+	drawGroupBoxes(startX: number, startY: number, hidden: boolean): void {
+		// By forcing _groupHeadSize to be an even number, we guarantee that (_groupHeadSize / 2) is a solid integer.
+		// This prevents the canvas from anti-aliasing (blurring) the line across two distinct pixels.
+		if (this._groupHeadSize % 2 !== 0) {
+			this._groupHeadSize++;
+		}
+
+		// draw head
+		this.context.beginPath();
+		this.context.fillStyle = this.backgroundColor;
+		this.context.fillRect(this.transformRectX(startX, this._groupHeadSize), startY, this._groupHeadSize, this._groupHeadSize);
+		this.context.strokeStyle = this.getColors().strokeColor;
+		this.context.lineWidth = 1.0;
+		this.context.strokeRect(this.transformRectX(startX + 0.5, this._groupHeadSize), startY + 0.5, this._groupHeadSize, this._groupHeadSize);
+
+		if (!hidden) {
+			// draw '-'
+			this.context.beginPath();
+			this.context.moveTo(startX + 0.5 + this._groupHeadSize * 0.25, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.lineTo(startX + 0.5 + this._groupHeadSize * 0.75, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.stroke();
+		}
+		else {
+			// draw '+'
+			this.context.beginPath();
+			// horizontal
+			this.context.moveTo(startX + 0.5 + this._groupHeadSize * 0.25, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.lineTo(startX + 0.5 + this._groupHeadSize * 0.75, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.stroke();
+			// vertical
+			this.context.moveTo(startX + 0.5 + this._groupHeadSize / 2, startY + 0.5 + this._groupHeadSize * 0.25);
+			this.context.lineTo(startX + 0.5 + this._groupHeadSize / 2, startY + 0.5 + this._groupHeadSize * 0.75);
+			this.context.stroke();
 		}
 	}
 
