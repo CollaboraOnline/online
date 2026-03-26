@@ -334,7 +334,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				dispatcher.dispatch('closeapp');
 			}
-			this._defaultCallbackHandlerSendMessage(objectType, eventType, object, data, builder);
+			builder._defaultCallbackHandlerSendMessage(objectType, eventType, object, data, builder);
 		}
 	},
 
