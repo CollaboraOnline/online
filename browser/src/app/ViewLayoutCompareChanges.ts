@@ -98,12 +98,20 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	}
 
 	protected refreshVisibleAreaRectangle(): void {
+		Util.ensureValue(app.activeDocument);
+
 		const documentAnchor = this.getDocumentAnchorSection();
 
+		// Both left and right pages need tiles from different X ranges due to
+		// their different screen positions (getDeflectionX). The right page may
+		// need tiles starting from X=0 even when scrolled far right. Cover the
+		// full document width with a small margin for twips rounding.
+		const margin = 15;
+
 		this._viewedRectangle = cool.SimpleRectangle.fromCorePixels([
-			this.scrollProperties.viewX,
+			-margin,
 			this.scrollProperties.viewY - this.yStart,
-			this.halfWidth - this.viewGap,
+			app.activeDocument.fileSize.pX + 2 * margin,
 			documentAnchor.size[1],
 		]);
 
