@@ -27,6 +27,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	constructor() {
 		super();
 
+		app.events.on('resize', this.onResize.bind(this));
 		app.map.on('zoomend', this.onZoomEnd.bind(this));
 
 		this.adjustViewZoomLevel();
@@ -41,6 +42,11 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	private refreshView(): void {
 		this.updateViewData();
 		app.sectionContainer.requestReDraw();
+	}
+
+	private onResize(): void {
+		this.halfWidth = Math.round(this.getDocumentAnchorSection().size[0] * 0.5);
+		this.refreshView();
 	}
 
 	private onZoomEnd(): void {
@@ -113,8 +119,8 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 
 		this._viewSize = cool.SimplePoint.fromCorePixels([
 			Math.max(
-				this.halfWidth,
-				app.activeDocument.fileSize.pX + 2 * this.viewGap,
+				anchorSection.size[0],
+				2 * app.activeDocument.fileSize.pX + 2 * this.viewGap,
 			),
 			Math.max(
 				anchorSection.size[1],
@@ -139,14 +145,24 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	private getDeflectionX(mode: TileMode): number {
 		Util.ensureValue(app.activeDocument);
 
+		const canvasWidth = this.getDocumentAnchorSection().size[0];
+		const viewXCenter = Math.max(0, this._viewSize.pX - canvasWidth) * 0.5;
+
 		if (mode === TileMode.LeftSide)
 			return (
 				this.halfWidth -
 				app.activeDocument.fileSize.pX -
 				this.scrollProperties.viewX -
-				this.viewGap
+				this.viewGap +
+				viewXCenter
 			);
-		else return this.halfWidth + this.viewGap - this.scrollProperties.viewX;
+		else
+			return (
+				this.halfWidth +
+				this.viewGap -
+				this.scrollProperties.viewX +
+				viewXCenter
+			);
 	}
 
 	public override documentToViewX(point: cool.SimplePoint): number {
