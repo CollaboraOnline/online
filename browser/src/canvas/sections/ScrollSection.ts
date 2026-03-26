@@ -769,15 +769,23 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseDown (point: cool.SimplePoint, e: MouseEvent): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
+		const layout = (app.activeDocument as DocumentBase).activeLayout;
+		const scrollProps: ScrollProperties = layout.scrollProperties;
 
 		this.clearQuickScrollTimeout();
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
 
 		const mirrorX = this.isRTL();
+		const documentAnchor = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
 
-		if (app.activeDocument.activeLayout.viewedRectangle.pY1 >= 0) {
+		// For CompareChanges view, viewedRectangle.pY1 can be negative (due to
+		// yStart offset) even when scrolling is possible, so use canScrollVertical instead.
+		const canScrollV = layout.type === 'ViewLayoutCompareChanges'
+			? layout.canScrollVertical(documentAnchor)
+			: layout.viewedRectangle.pY1 >= 0;
+
+		if (canScrollV) {
 			if ((!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness)
 				|| (mirrorX && point.pY <= scrollProps.usableThickness)) {
 				if (point.pY > scrollProps.yOffset) {
@@ -797,7 +805,12 @@ export class ScrollSection extends CanvasSectionObject {
 			}
 		}
 
-		if (app.activeDocument.activeLayout.viewedRectangle.pX1 >= 0) {
+		// Same reasoning as vertical: CompareChanges can have negative pX1.
+		const canScrollH = layout.type === 'ViewLayoutCompareChanges'
+			? layout.canScrollHorizontal(documentAnchor)
+			: layout.viewedRectangle.pX1 >= 0;
+
+		if (canScrollH) {
 			if (point.pY >= this.size[1] - scrollProps.usableThickness) {
 				if ((!mirrorX && point.pX >= scrollProps.xOffset && point.pX <= this.size[0] - scrollProps.horizontalScrollRightOffset)
 					|| (mirrorX && point.pX >= scrollProps.xOffset && point.pX >= scrollProps.horizontalScrollRightOffset)) {
