@@ -94,7 +94,7 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 		}
 
 		if (pY !== 0 && this.canScrollVertical(documentAnchor)) {
-			pY /= 10;
+			pY /= 20;
 
 			const max =
 				this.scrollProperties.verticalScrollLength -
