@@ -13,13 +13,22 @@
  * JSDialog.Pushbutton - push button widget
  */
 
-/* global JSDialog app $ */
+declare var JSDialog: any;
+
+function _customPushButtonTextForId(buttonId: string) {
+	if (buttonId == 'validref') return _('Select range');
+	return '';
+}
+
+function _isStringLCIcon(str: string) {
+	return str.indexOf('lc_') === 0;
+}
 
 JSDialog.pushButton = function (
-	parentContainer,
-	data,
-	builder,
-	customCallback,
+	parentContainer: HTMLElement,
+	data: PushButtonWidget,
+	builder: JSBuilder,
+	customCallback: JSDialogCallback,
 ) {
 	if (
 		data.id &&
@@ -44,11 +53,14 @@ JSDialog.pushButton = function (
 	);
 	pushbutton.id = wrapper.id + '-button';
 	pushbutton.setAttribute('tabindex', '0');
-	builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
+	builder._setAccessKey(
+		pushbutton,
+		builder._getAccessKeyFromText(data.text ? data.text : ''),
+	);
 	var pushbuttonText =
-		builder._customPushButtonTextForId(data.id) !== ''
-			? builder._customPushButtonTextForId(data.id)
-			: builder._cleanText(data.text);
+		_customPushButtonTextForId(data.id) !== ''
+			? _customPushButtonTextForId(data.id)
+			: builder._cleanText(data.text ? data.text : '');
 	var image;
 	if (data.image && pushbuttonText !== '') {
 		window.L.DomUtil.addClass(
@@ -66,7 +78,7 @@ JSDialog.pushButton = function (
 			'has-img d-flex align-content-center justify-content-center align-items-center',
 		);
 		image = window.L.DomUtil.create('img', '', pushbutton);
-		builder._isStringLCIcon(data.image)
+		_isStringLCIcon(data.image)
 			? app.LOUtil.setImage(image, data.image, builder.map)
 			: (image.src = data.image);
 	} else if (data.symbol) {

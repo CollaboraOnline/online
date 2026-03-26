@@ -1461,13 +1461,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		return false;
 	},
 
-	_customPushButtonTextForId: function(buttonId) {
-		if (buttonId == 'validref')
-			return _('Select range');
-
-		return '';
-	},
-
 	_linkButtonControl: function(parentContainer, data, builder) {
 		var buttonLink = window.L.DomUtil.create('button', builder.options.cssClass + " ui-linkbutton", parentContainer);
 
@@ -1811,10 +1804,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_isStringCloseToURL : function(str) {
 		return str.indexOf('http') !== -1;
-	},
-
-	_isStringLCIcon: function (str) {
-		return str.indexOf('lc_') === 0;
 	},
 
 	// TODO: move to jsdialog/Widget.Toolitem.ts
