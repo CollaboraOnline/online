@@ -306,6 +306,7 @@ COOL_JS_LST =\
 	src/app/TileCoordData.ts \
 	src/app/PaneBorder.ts \
 	src/app/Tile.ts \
+	src/app/BitmapTileManager.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SearchService.ts \
 	src/app/BaseClass.ts \
