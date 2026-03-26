@@ -164,6 +164,11 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private setCursorType() {
+		// If the core has set a specific pointer (e.g. 'pointer' for hyperlinks),
+		// let it take precedence over our client-side cursor.
+		const corePointer = app.map._docLayer._coreMousePointer;
+		if (corePointer && corePointer !== 'default') return;
+
 		// If we have blinking cursor visible
 		// we need to change cursor from default style
 		if (app.file.textCursor.visible) this.context.canvas.style.cursor = 'text';

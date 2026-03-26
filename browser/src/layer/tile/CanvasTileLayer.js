@@ -1716,9 +1716,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	_onMousePointerMsg: function (textMsg) {
 		textMsg = textMsg.substring(14); // "mousepointer: "
 		textMsg = Cursor.getCustomCursor(textMsg) || textMsg;
-		var mapPane = $('.leaflet-pane.leaflet-map-pane');
-		if (mapPane.css('cursor') !== textMsg) {
-			mapPane.css('cursor', textMsg);
+		this._coreMousePointer = textMsg;
+		const canvas = document.getElementById('document-canvas');
+		if (canvas && canvas.style.cursor !== textMsg) {
+			canvas.style.cursor = textMsg;
 		}
 	},
 
@@ -2709,6 +2710,23 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				if (link.rectangle.containsPoint([x, y])) {
 					URLPopUpSection.showURLPopUP(link.uri, new cool.SimplePoint(x, y + this.getFiledBasedViewVerticalOffset()), undefined, /*linkIsClientSide:*/true);
 				}
+			}
+		}
+
+		if (type === 'move' && thereArePageLinks) {
+			let overLink = false;
+			for (const link of tempPageLinks) {
+				if (link.rectangle.containsPoint([x, y])) {
+					overLink = true;
+					break;
+				}
+			}
+			const canvas = document.getElementById('document-canvas');
+			if (overLink) {
+				if (canvas && canvas.style.cursor !== 'pointer')
+					canvas.style.cursor = 'pointer';
+			} else if (canvas && canvas.style.cursor === 'pointer') {
+				canvas.style.cursor = '';
 			}
 		}
 
