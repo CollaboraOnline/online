@@ -134,7 +134,7 @@ class ContextMenuControl extends JSControl {
 			}
 		}
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			window.contextMenuWizard = true;
 			const menuData =
 				window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(
@@ -151,6 +151,8 @@ class ContextMenuControl extends JSControl {
 	}
 
 	private _addMenu(contextMenu: Record<string, CtxtValueType>): void {
+		Util.ensureValue(this._map);
+		const map = this._map;
 		Util.ensureValue(app.activeDocument);
 		Util.ensureValue(app.activeDocument.mouseControl);
 		const position = app.activeDocument.mouseControl.getMouseCanvasPosition();
@@ -175,8 +177,20 @@ class ContextMenuControl extends JSControl {
 			data: any,
 			entry: JSBuilder | MenuDefinition,
 		): boolean => {
-			if ((entry as MenuDefinition).id === '.uno:InsertAnnotation') {
+			const key = (entry as MenuDefinition).id;
+			if (key === '.uno:InsertAnnotation') {
 				app.map.insertComment();
+				return false;
+			}
+
+			if (key === 'saveimagetowopi') {
+				var ext =
+					GraphicSelection.extraInfo &&
+					GraphicSelection.extraInfo.graphicExtension
+						? GraphicSelection.extraInfo.graphicExtension
+						: 'png';
+				map._saveImageToWopi = true;
+				map.openSaveAs(ext);
 				return false;
 			}
 
@@ -269,6 +283,26 @@ class ContextMenuControl extends JSControl {
 					enabled: 'true',
 				});
 			}
+
+			Util.ensureValue(this._map);
+			// Add "Save Image to Server" after SaveGraphic when WOPI supports save-as
+			if (!this._map['wopi'].UserCanNotWriteRelative) {
+				let saveGraphicIndex = -1;
+				menu.forEach((item: MenuEntry, index: number) => {
+					if (item.command === '.uno:SaveGraphic') {
+						saveGraphicIndex = index + 1;
+					}
+				});
+
+				if (saveGraphicIndex != -1) {
+					menu.splice(saveGraphicIndex, 0, {
+						text: _('Save Image to Server'),
+						type: 'command',
+						command: 'saveimagetowopi',
+						enabled: 'true',
+					});
+				}
+			}
 		}
 	}
 
@@ -330,6 +364,20 @@ class ContextMenuControl extends JSControl {
 				}
 				isLastItemText = false;
 			} else if (item.type === 'command') {
+				// Custom commands (not .uno:) injected by _amendContextMenuData
+				if (item.command && !item.command.startsWith('.uno:')) {
+					Util.ensureValue(item.text);
+					itemName = item.text;
+					contextMenu[item.command] = {
+						name: window.mode.isSmallScreenDevice()
+							? _(itemName)
+							: app.IconUtil.createMenuItemLink(itemName, item.command),
+						isHtmlName: true,
+					};
+					isLastItemText = true;
+					continue;
+				}
+
 				// Only show allowlisted items
 				// Command name (excluding '.uno:') starts from index = 5
 				let commandName = item.command.substring(5);
@@ -372,7 +420,7 @@ class ContextMenuControl extends JSControl {
 				}
 
 				if (
-					window.mode.isMobile() &&
+					window.mode.isSmallScreenDevice() &&
 					this.options.mobileDenylist.indexOf(commandName) !== -1
 				)
 					continue;
@@ -384,7 +432,10 @@ class ContextMenuControl extends JSControl {
 					commandName === 'None' ||
 					commandName === 'FontDialogForParagraph' ||
 					commandName === 'Delete' ||
-					commandName == 'PasteSpecial'
+					commandName == 'PasteSpecial' ||
+					commandName === 'UpdateCurIndex' ||
+					commandName === 'RemoveTableOf' ||
+					commandName === 'EditCurIndex'
 				) {
 					Util.ensureValue(item.text);
 					// These commands have a custom item.text, don't overwrite
