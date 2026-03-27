@@ -19,6 +19,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Check the correctness of c
             });
 
         // We should get the longer cell context menu, not the shorter edit context menu
-        cy.cGet('.context-menu-item').its('length').should('be.greaterThan', 10);
+        helper.getContextMenuItemList().its('length').should('be.greaterThan', 10);
     });
 });

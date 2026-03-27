@@ -1429,6 +1429,10 @@ function getContextMenuItem(menuItemText) {
 			menuItemText);
 }
 
+function getContextMenuItemList() {
+	return cy.cGet('#jsd-context-menu-dropdown-overlay').find('.ui-combobox-entry.jsdialog.ui-grid-cell span');
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1486,6 +1490,7 @@ module.exports.waitForTimers = waitForTimers;
 module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
 module.exports.getContextMenuItem = getContextMenuItem;
+module.exports.getContextMenuItemList = getContextMenuItemList;
 module.exports.getMatchedCSSRules = getMatchedCSSRules;
 module.exports.realPressInDialog = realPressInDialog;
 module.exports.getShapeSVGCenter = getShapeSVGCenter;
