@@ -551,12 +551,14 @@ void TileCache::assertCacheSize()
 {
     if constexpr (Util::isDebugEnabled())
     {
+#if !defined NDEBUG
         size_t recalcSize = 0;
         for (const auto& it : _cache)
         {
             recalcSize += itemCacheSize(it.second);
         }
         assert(recalcSize == _cacheSize);
+#endif
     }
 }
 
