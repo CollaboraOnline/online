@@ -845,12 +845,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (builder.wizard) {
 			var that = this;
 			var functionName = data.functionName;
-			$(rightDiv).click(() => {
+			$(rightDiv).click(e => {
+				e.stopPropagation();
 				builder.wizard.goLevelDown(mainContainer);
 				if (contentNode.onshow)
 					contentNode.onshow();
 			});
-			$(leftDiv).click(() => {
+			$(sectionTitle).click(() => {
 				if (functionName !== '') {
 					app.socket.sendMessage('completefunction name=' + functionName);
 					that.map.fire('closemobilewizard');
