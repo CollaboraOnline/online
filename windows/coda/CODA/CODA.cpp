@@ -1860,6 +1860,50 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             if (filenameAndUri.filename != "")
                 DocumentData::get(data.appDocId).loKitDocument->saveAs(filenameAndUri.uri.c_str(), extension.c_str(), nullptr);
         }
+        else if (s.starts_with(L"exportfile "))
+        {
+            // "exportfile url=file:///C:/Users/.../tmp/image.png"
+            auto const ns = Util::wide_string_to_string(s);
+            auto const tokens = StringVector::tokenize(ns);
+            std::string fileUrl;
+            if (!COOLProtocol::getTokenString(tokens, "url", fileUrl))
+            {
+                LOG_ERR("No url parameter in message '" << ns << "'");
+                return;
+            }
+
+            auto srcPath = Poco::URI(fileUrl).getPath();
+            if (srcPath.length() > 4 && srcPath[0] == '/' && srcPath[2] == ':' && srcPath[3] == '/')
+                srcPath = srcPath.substr(1);
+
+            if (!std::filesystem::exists(srcPath))
+            {
+                LOG_ERR("exportfile: source file not found: " << srcPath);
+                return;
+            }
+
+            auto const extension = Poco::Path(srcPath).getExtension();
+            auto filenameAndUri = fileSaveDialog("image." + extension,
+                                                 "",
+                                                 {
+                                                     {
+                                                         Util::string_to_wide_string(extension).c_str(),
+                                                         Util::string_to_wide_string("*." + extension).c_str()
+                                                     }
+                                                 });
+
+            if (filenameAndUri.filename != "")
+            {
+                auto const destPath = Poco::URI(filenameAndUri.uri).getPath();
+                std::error_code ec;
+                std::filesystem::copy_file(srcPath, destPath,
+                                           std::filesystem::copy_options::overwrite_existing, ec);
+                if (ec)
+                    LOG_ERR("exportfile: failed to copy to '" << destPath << "': " << ec.message());
+                else
+                    LOG_INF("exportfile: saved image to " << destPath);
+            }
+        }
         else if (s.starts_with(L"loaddocument "))
         {
             // "loaddocument url=file:///path/to/file.ext"
