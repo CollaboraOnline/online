@@ -165,8 +165,7 @@ class BrowserProperties {
 			isChromebook: function() {
 				return chromebook;
 			},
-			// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
-			// requirement.
+			// This typically means a mobile phone. Has to match small screen size requirement.
 			isSmallScreenDevice: function() {
 				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
 					return false;
