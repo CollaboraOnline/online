@@ -842,6 +842,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		else if (textMsg.startsWith('downloadas:')) {
 			this._onDownloadAsMsg(textMsg);
 		}
+		else if (textMsg.startsWith('exportfile:')) {
+			this._onExportFileMsg(textMsg);
+		}
 		else if (textMsg.startsWith('error:')) {
 			this._onErrorMsg(textMsg);
 		}
@@ -1588,6 +1591,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				this._map._fileDownloader.src = url;
 			else
 				this._map._fileDownloader.setAttribute('data-src', url);
+		}
+	},
+
+	_onExportFileMsg: function (textMsg) {
+		this._map.hideBusy();
+		var command = app.socket.parseServerCmd(textMsg);
+		if (command.url) {
+			window.postMobileMessage('exportfile url=' + command.url);
 		}
 	},
 

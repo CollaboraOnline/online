@@ -4024,6 +4024,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         // continue editing the saved and differently named copy, the PDF and EPUB cases that
         // continue to be more like "Export" need to be put into a separate "Export" menu. Or
         // something.
+#elif defined(QTAPP)
+        // Send the exported file URL to JS, which forwards it to the Qt Bridge
+        // for presenting a native save dialog to the user.
+        sendTextFrame("exportfile: url=" + payload);
 #else
         // Register download id -> URL mapping in the DocumentBroker
         auto url = std::string("../../") + payload.substr(payload.find_last_of('/'));
