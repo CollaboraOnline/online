@@ -4013,19 +4013,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
             [[document viewController] exportFileURL:payloadURL];
         });
-#elif defined(_WIN32)
-        // We don't need to do any registerdownload thing for CODA-W. When we come here, the PDF has
-        // been exported by core already and the user will continue editing the same document. Some
-        // "registerdownload" with a weird relative URI ../..//foo.pdf is surely a meaningless thing
-        // to do?
-        //
-        // When we eventually turn CODA-W's "Export as" functionality into "Save As" where you
-        // continue editing the saved and differently named copy, the PDF and EPUB cases that
-        // continue to be more like "Export" need to be put into a separate "Export" menu. Or
-        // something.
-#elif defined(QTAPP)
-        // Send the exported file URL to JS, which forwards it to the Qt Bridge
-        // for presenting a native save dialog to the user.
+#elif defined(_WIN32) || defined(QTAPP)
+        // We don't need the registerdownload approach used by the browser.
+        // Send the exported file URL to JS, which forwards it to the native
+        // message handler for presenting a save dialog to the user.
         sendTextFrame("exportfile: url=" + payload);
 #else
         // Register download id -> URL mapping in the DocumentBroker
