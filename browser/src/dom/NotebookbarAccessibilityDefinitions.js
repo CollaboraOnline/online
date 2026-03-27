@@ -50,6 +50,9 @@ var NotebookbarAccessibilityDefinitions = function() {
 					} else if (document.getElementById(id + '-input')) {
 						// checkbox
 						list.push({ id: id + '-input', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else if (rawList[i].type === 'iconviewlist') {
+						// iconviewlist
+						list.push({ id: id + '-expand-button', focusBack:  rawList[i].accessibility.focusBack, combination: combination });
 					} else {
 						// other
 						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
