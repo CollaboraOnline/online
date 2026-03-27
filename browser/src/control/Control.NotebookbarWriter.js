@@ -946,6 +946,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					{
 						'id': 'stylesview-iconview-list',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'SD' },
 						'children': [
 							{
 								'id': 'stylesview',
