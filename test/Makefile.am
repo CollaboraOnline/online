@@ -387,6 +387,34 @@ EXTRA_DIST = data/delta-text.png data/delta-text2.png data/delta-graphic.png dat
 build-tests: ${all_la_unit_tests}
 	@echo "All test libraries built."
 
+# compile_commands.json support: collect all test source files.
+all_test_la_sources = $(sort $(foreach t,$(all_la_unit_tests),$($(subst -,_,$(basename $(t)))_SOURCES)))
+
+all_test_compiled_sources = $(sort \
+	$(common_sources) \
+	$(globals_sources) \
+	$(wsd_sources) \
+	$(test_base_sources) \
+	$(unittest_SOURCES) \
+	$(unithttplib_SOURCES) \
+	$(fakesockettest_SOURCES) \
+	$(all_test_la_sources) \
+)
+
+TEST_JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(filter %.cpp,$(all_test_compiled_sources)))
+
+CLANGXX_TEST_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+
+JSON_TEST_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_TEST_COMPILE_FLAGS)))
+
+.cpp.cmd:
+	@echo -n "{\"directory\":\"$(abs_builddir)\",\"command\":\"" > $@
+	@echo -n $(JSON_TEST_COMPILE_FLAGS) >> $@
+	@echo -n " -o $(patsubst %.cpp,%.o,$<) -c $<\",\"file\":\"$<\"}" >> $@
+
+compile_commands: $(TEST_JSON_COMPILE_SRC)
+
 check_valgrind: all
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	./run_unit.sh --log-file test.log --trs-file test.trs --valgrind
