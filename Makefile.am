@@ -851,7 +851,30 @@ CLANGXX_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 
 JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS) $(coolstress_TDOC_CPPFLAGS)))
 
-JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(wildcard **/*.cpp))
+all_compiled_sources = $(sort \
+	$(shared_sources) \
+	$(coolwsd_sources) \
+	$(coolforkit_sources) \
+	$(coolwsd_SOURCES) \
+	$(coolforkit_caps_SOURCES) \
+	$(connect_SOURCES) \
+	$(lokitclient_SOURCES) \
+	$(coolstress_SOURCES) \
+	$(coolconfig_SOURCES) \
+	$(coolsocketdump_SOURCES) \
+	$(coolbench_SOURCES) \
+	$(coolconvert_SOURCES) \
+	$(coolmount_SOURCES) \
+	$(coolmap_SOURCES) \
+	$(clientnb_SOURCES) \
+	$(libsimd_a_SOURCES) \
+	$(libglobals_a_SOURCES) \
+	$(libkitglobals_a_SOURCES) \
+	$(libwsdglobals_a_SOURCES) \
+	$(libkitwsdglobals_a_SOURCES) \
+)
+
+JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(filter %.cpp,$(all_compiled_sources)))
 
 $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 
@@ -861,8 +884,15 @@ $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 	@echo -n " -o $(patsubst %.cpp,%.o,$<) -c $<\",\"file\":\"$<\"}" >> $@
 
 $(abs_srcdir)/compile_commands.json: $(JSON_COMPILE_SRC)
+	@$(MAKE) -C test compile_commands
 	@echo -n "[" > $@
 	@for file in $(JSON_COMPILE_SRC) ; \
+	do \
+		cat $$file; \
+		echo ","; \
+		rm -f $$file; \
+	done >> $@
+	@for file in $$(find test -name '*.cmd' 2>/dev/null) ; \
 	do \
 		cat $$file; \
 		echo ","; \
