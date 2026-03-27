@@ -39,6 +39,37 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		checkCollapsedGroups();
 	});
 
+	it('OverflowGroup collapse state preserved after mode switch', function() {
+		cy.viewport(1280, 600);
+		helper.processToIdle(this.win);
+
+		// At this width some groups should be collapsed and some expanded
+		cy.cGet('.notebookbar .ui-overflow-group:not(.nofold):not(.ui-overflow-group-container-with-label)')
+			.should('have.length.greaterThan', 0);
+		cy.cGet('.notebookbar .ui-overflow-group.ui-overflow-group-container-with-label')
+			.should('have.length.greaterThan', 0);
+
+		// Save the number of expanded groups before switching
+		cy.cGet('.notebookbar .ui-overflow-group.ui-overflow-group-container-with-label')
+			.then($expanded => cy.wrap($expanded.length).as('expandedCount'));
+
+		// Switch to compact UI via View tab
+		desktopHelper.switchUIToCompact();
+		// Switch back to notebookbar via View menu
+		desktopHelper.switchUIToNotebookbar();
+
+		// Wait for layout stabilization after mode switch
+		cy.getFrameWindow().then((win) => {
+			helper.processToIdle(win);
+		});
+
+		// Verify the number of expanded groups is preserved (bug: all were collapsed)
+		cy.get('@expandedCount').then(expandedCount => {
+			cy.cGet('.notebookbar .ui-overflow-group.ui-overflow-group-container-with-label')
+				.should('have.length', expandedCount);
+		});
+	});
+
 	it('Apply bold font from dropdown in Format tab', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('.notebookbar #Format-tab-label').click();
