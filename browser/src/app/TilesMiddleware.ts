@@ -422,10 +422,24 @@ class TileManager {
 			window.app.console.assert(!this.tileBitmapList.find((i) => i == tile));
 
 		// free the last tile if we need to
-		if (this.tileBitmapList.length > highNumBitmaps)
-			this.reclaimTileBitmapMemory(
-				this.tileBitmapList[this.tileBitmapList.length - 1],
-			);
+		if (this.tileBitmapList.length > highNumBitmaps) {
+			let chosenTile = null;
+			let i = this.tileBitmapList.length - 1;
+
+			while (i >= 0) {
+				if (this.tileBitmapList[i].distanceFromView > 0) {
+					chosenTile = this.tileBitmapList[i];
+					break;
+				}
+				i--;
+			}
+
+			if (chosenTile) this.reclaimTileBitmapMemory(chosenTile);
+			else
+				window.app.console.warn(
+					'There are more visible tiles than the allowed cached tile count.',
+				);
+		}
 
 		// current tiles are first:
 		if (tile.distanceFromView === 0) this.tileBitmapList.unshift(tile);
