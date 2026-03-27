@@ -754,16 +754,16 @@ namespace Util
         else
             LOG_INF("Forced Exit with code: " << code);
 
-        Log::shutdown();
-
-#if CODE_COVERAGE
-        __gcov_dump();
-#endif
-
 #if !MOBILEAPP
         /// Wait for the signal handler, if any,
         /// and prevent _Exit while collecting backtrace.
         SigUtil::SigHandlerTrap::wait();
+#endif
+
+        Log::shutdown();
+
+#if CODE_COVERAGE
+        __gcov_dump();
 #endif
 
         std::_Exit(code);

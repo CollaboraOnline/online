@@ -28,6 +28,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <cstdint>
 #include <cstring>
 #include <ctime>
@@ -36,6 +37,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -45,7 +47,7 @@ namespace
 std::atomic_int32_t ThreadLocalBufferCount(0);
 
 #ifndef NDEBUG
-// In debug builds, we track the thread-ids to list the ones still running at exist.
+// In debug builds, we track the thread-ids to list the ones still running at exit.
 thread_local std::int32_t OwnThreadIdIndex = 0;
 std::int32_t ThreadIdArray[256];
 std::atomic_int32_t NextThreadIdIndex(0);
@@ -593,9 +595,14 @@ namespace Log
             return;
         if (!Util::isKitInProcess())
         {
+            // Allow other threads time to exit.
+            for (int i = 0; i < 10 && ThreadLocalBufferCount > 1; ++i)
+            {
+                std::this_thread::yield();
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            }
+
 #ifndef NDEBUG
-            OwnThreadIdIndex = NextThreadIdIndex++;
-            ThreadIdArray[OwnThreadIdIndex] = Util::getThreadId();
             const auto currentThreadId = Util::getThreadId();
             for (int i = 0; i < NextThreadIdIndex; ++i)
             {
