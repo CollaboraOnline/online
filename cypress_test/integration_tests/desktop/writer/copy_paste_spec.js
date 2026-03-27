@@ -77,8 +77,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 
 		helper.setDummyClipboardForCopy();
 
-		cy.cGet('body').contains('.context-menu-link', 'Copy')
-			.click();
+		const copyEntry = helper.getContextMenuItem('Copy');
+		copyEntry.should('be.visible');
+		copyEntry.click();
 
 		// With DisableCopy active we should not copy to clipboard
 		cy.cGet('#copy-paste-container div p').should('not.have.text', 'text');
