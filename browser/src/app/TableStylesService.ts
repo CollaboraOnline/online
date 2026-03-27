@@ -195,23 +195,35 @@ class TableStylesService {
 		}
 	}
 
-	public generateTableStylesJSON(): IconViewListJSON {
+	public generateTableStylesJSON(): OverflowGroupWidgetJSON {
 		return {
-			id: 'tablestyles_design-iconview-list',
-			type: 'iconviewlist',
+			id: 'Tablestyles_design--group',
+			type: 'overflowgroup',
+			name: _('Table Styles'),
+			nofold: true,
+			icon: 'lc_tablestyle.svg',
 			children: [
 				{
-					id: 'tablestyles_design',
-					type: 'iconview',
-					text: _('Table Styles'),
-					command: '.uno:DatabaseSettings',
-					aria: { label: _('Table Styles') },
-					accessibility: { focusBack: true, combination: 'TS' },
-					entries: this.generateJSON(),
-					singleclickactivate: true,
-					textWithIconEnabled: false, // standard names from core are not translated yet
-					selectionmode: 'single',
-				} as IconViewJSON,
+					id: 'tablestyles_design-iconview-list',
+					type: 'iconviewlist',
+					children: [
+						{
+							id: 'tablestyles_design',
+							type: 'iconview',
+							text: _('Table Styles'),
+							command: '.uno:DatabaseSettings',
+							aria: { label: _('Table Styles') },
+							accessibility: {
+								focusBack: true,
+								combination: 'TS',
+							},
+							entries: this.generateJSON(),
+							singleclickactivate: true,
+							textWithIconEnabled: false, // standard names from core are not translated yet
+							selectionmode: 'single',
+						} as IconViewJSON,
+					],
+				},
 			],
 		};
 	}
