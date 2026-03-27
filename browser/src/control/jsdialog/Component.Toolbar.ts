@@ -197,7 +197,7 @@ class Toolbar extends JSDialogComponent {
 		const items = this.getToolItems();
 		items.forEach((item) => {
 			if (
-				(window as any).ThisIsTheiOSApp &&
+				window.ThisIsTheiOSApp &&
 				window.mode.isTablet() &&
 				item.iosapptablet === false
 			) {
@@ -206,8 +206,7 @@ class Toolbar extends JSDialogComponent {
 				((window.mode.isSmallScreenDevice() && item.mobile === false) ||
 					(window.mode.isTablet() && item.tablet === false) ||
 					(window.mode.isDesktop() && item.desktop === false) ||
-					(!(window as any).ThisIsAMobileApp &&
-						item.mobilebrowser === false)) &&
+					(!window.ThisIsAMobileApp && item.mobilebrowser === false)) &&
 				!item.hidden
 			) {
 				toHide.push(item.id);
@@ -215,7 +214,7 @@ class Toolbar extends JSDialogComponent {
 				((window.mode.isSmallScreenDevice() && item.mobile === true) ||
 					(window.mode.isTablet() && item.tablet === true) ||
 					(window.mode.isDesktop() && item.desktop === true) ||
-					((window as any).ThisIsAMobileApp && item.mobilebrowser === true)) &&
+					(window.ThisIsAMobileApp && item.mobilebrowser === true)) &&
 				(item.hidden || item.visible === false)
 			) {
 				toShow.push(item.id);

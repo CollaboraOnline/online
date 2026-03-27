@@ -151,8 +151,8 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onContextMenu(point: cool.SimplePoint, evt: MouseEvent): void {
-		if ((window as any).mode.isSmallScreenDevice() && this._map.isEditMode()) {
-			(window as any).contextMenuWizard = true;
+		if (window.mode.isSmallScreenDevice() && this._map.isEditMode()) {
+			window.contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
 		}
 		else if (this._map.isEditMode()) {
@@ -531,7 +531,7 @@ export class Header extends CanvasSectionObject {
 	}
 
 	_bindContextMenu(): void {
-		if ((window as any).mode.isSmallScreenDevice()) {
+		if (window.mode.isSmallScreenDevice()) {
 			// On mobile, we use the mobile wizard rather than the context menu
 			return;
 		}

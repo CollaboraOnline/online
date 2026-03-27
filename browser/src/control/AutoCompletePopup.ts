@@ -61,7 +61,7 @@ abstract class AutoCompletePopup {
 			persistKeyboard: true,
 		} as PopupData;
 
-		this.isSmallScreenDevice = (<any>window).mode.isSmallScreenDevice();
+		this.isSmallScreenDevice = window.mode.isSmallScreenDevice();
 		this.onAdd();
 		this.map.on('closepopup', this.closePopup, this);
 	}

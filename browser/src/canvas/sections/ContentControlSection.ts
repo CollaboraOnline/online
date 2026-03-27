@@ -61,7 +61,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		this.sectionProperties.picturePicker = false;
 
 		if (json.date) {
-			$.datepicker.setDefaults($.datepicker.regional[(<any>window).langParamLocale.language]);
+			$.datepicker.setDefaults($.datepicker.regional[window.langParamLocale.language]);
 			$('#datepicker').datepicker({
 				onSelect: function (date: any, datepicker: any) {
 					if (date != '') {

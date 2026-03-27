@@ -417,7 +417,7 @@ class UIManager extends window.L.Control {
 
 		window.setupToolbar(this.map);
 
-		if (!((window as any).mode.isCODesktop())) {
+		if (!(window.mode.isCODesktop())) {
 			this.documentNameInput = window.L.control.documentNameInput();
 			this.map.addControl(this.documentNameInput);
 		}
@@ -500,7 +500,7 @@ class UIManager extends window.L.Control {
 	}
 
 	initializeBackstageView(): void {
-		if (!(window as any).mode.isCODesktop())
+		if (!window.mode.isCODesktop())
 			return;
 
 		if (!this.map.backstageView) {
@@ -562,7 +562,7 @@ class UIManager extends window.L.Control {
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
-		if ((window as any).mode.isCODesktop()) {
+		if (window.mode.isCODesktop()) {
 			if (!this.map.backstageView) {
 				this.map.backstageView = new window.L.Control.BackstageView(this.map);
 				console.log('UIManager: BackstageView created and attached to map');
@@ -799,7 +799,7 @@ class UIManager extends window.L.Control {
 	 */
 	initializeRuler(): void {
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
-			var defaultShowRuler = (window as any).mode.isCODesktop();
+			var defaultShowRuler = window.mode.isCODesktop();
 			var showRuler = this.getBooleanDocTypePref('ShowRuler', defaultShowRuler);
 			var interactiveRuler = this.map.isEditMode();
 			// Call the static method from the Ruler class

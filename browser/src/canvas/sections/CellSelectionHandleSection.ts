@@ -50,7 +50,7 @@ class CellSelectionHandle extends CanvasSectionObject {
 	}
 
 	public onDraw() {
-		this.context.strokeStyle = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
+		this.context.strokeStyle = window.prefs.getBoolean('darkTheme') ? 'white' : 'black';
 		this.context.lineWidth = 2;
 
 		this.context.beginPath();

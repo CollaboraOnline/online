@@ -272,7 +272,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.doPendingInitializationInView();
 
-		if (!(<any>window).mode.isSmallScreenDevice())
+		if (!window.mode.isSmallScreenDevice())
 			document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
@@ -282,7 +282,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
 		window.L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
 
-		var mobileClass = (<any>window).mode.isSmallScreenDevice() ? ' wizard-comment-box': '';
+		var mobileClass = window.mode.isSmallScreenDevice() ? ' wizard-comment-box': '';
 
 		if (this.sectionProperties.data.trackchange) {
 			this.sectionProperties.wrapper = window.L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
@@ -351,7 +351,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public setContainerPos(forceUpdate: boolean, canvasContainerBounds?: DOMRect, left?: number, top?: number): void {
-		if ((<any>window).mode.isSmallScreenDevice()) {
+		if (window.mode.isSmallScreenDevice()) {
 			return;
 		}
 
@@ -892,7 +892,7 @@ export class Comment extends CanvasSectionObject {
 		this.cachedIsEdit = false;
 
 		this.positionCalcComment();
-		if (!(<any>window).mode.isSmallScreenDevice()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			this.sectionProperties.commentListSection.select(this);
 		}
 		this.sectionProperties.container.style.visibility = '';
@@ -904,7 +904,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public positionCalcComment(): void {
-		if (!(<any>window).mode.isSmallScreenDevice()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + this.calcOptimumSizeForCalc()[0] - 3;
 
 			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
@@ -950,7 +950,7 @@ export class Comment extends CanvasSectionObject {
 		this.showMarker();
 
 		// On mobile, container shouldn't be 'document-container', but it is 'document-container' on initialization. So we hide the comment until comment wizard is opened.
-		if ((<any>window).mode.isSmallScreenDevice() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
+		if (window.mode.isSmallScreenDevice() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
 			this.sectionProperties.container.style.visibility = 'hidden';
 
 		if (cool.CommentSection.commentWasAutoAdded)
@@ -1072,7 +1072,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onMouseClick (e: any): void {
-		if (((<any>window).mode.isSmallScreenDevice() || (<any>window).mode.isTablet())
+		if ((window.mode.isSmallScreenDevice() || window.mode.isTablet())
 			&& this.map.getDocType() == 'spreadsheet'
 			&& !this.map.uiManager.mobileWizard.isOpen()) {
 			this.hide();
@@ -1083,7 +1083,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onEscKey (e: any): void {
-		if ((<any>window).mode.isDesktop()) {
+		if (window.mode.isDesktop()) {
 			// When a comment is being edited and focus is in comment textbox,
 			// Esc should not close the comment being edited, but should just mark it with an attention.
 			if (e.keyCode === 27) {
@@ -1119,7 +1119,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onReplyClick (e: any): void {
 		window.L.DomEvent.stopPropagation(e);
-		if ((<any>window).mode.isSmallScreenDevice()) {
+		if (window.mode.isSmallScreenDevice()) {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
@@ -1597,7 +1597,7 @@ export class Comment extends CanvasSectionObject {
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
-		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isSmallScreenDevice() || (<any>window).mode.isTablet()) {
+		if (!this.containerObject.isDraggingSomething() && window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing')
 				app.map._docLayer._openCommentWizard(this);
 			this.onMouseEnter();
@@ -1934,7 +1934,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private getActiveEditorElement(): HTMLElement | null {
-		if ((<any>window).mode.isSmallScreenDevice()) {
+		if (window.mode.isSmallScreenDevice()) {
 			const commentSection = app.sectionContainer.getSectionWithName(
 				app.CSections.CommentList.name,
 			);

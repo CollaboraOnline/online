@@ -36,7 +36,7 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		builder: any,
 	): void {
 		var fireEvent: string = 'jsdialog';
-		if ((<any>window).mode.isSmallScreenDevice()) {
+		if (window.mode.isSmallScreenDevice()) {
 			fireEvent = 'mobilewizard';
 		}
 		var closeDropdownJson = {
@@ -152,7 +152,7 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 			this.showDatePicker();
 		} else if (this.sectionProperties.json.items) {
 			var fireEvent: string = 'jsdialog';
-			if ((<any>window).mode.isSmallScreenDevice()) {
+			if (window.mode.isSmallScreenDevice()) {
 				fireEvent = 'mobilewizard';
 			}
 			app.map.fire(fireEvent, {

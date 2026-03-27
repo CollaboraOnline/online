@@ -17,7 +17,7 @@
  * ### Key Features:
  * - **Configurable Options**: Supports margins, tab stops, interactivity, and display settings.
  * - **Abstract Design**: Subclasses must implement `_updateBreakPoints()` for specific behaviors.
- * - **Shared Utilities**: Includes reusable methods like `_updatePaintTimer` and `getWindowProperty`.
+ * - **Shared Utilities**: Includes reusable methods like `_updatePaintTimer`.
  * - **Easy Initialization**: `initializeRuler` simplifies setup for HRuler and VRuler.
  *
  * ### Guidelines:
@@ -133,10 +133,6 @@ abstract class Ruler {
 		this._updateTask = app.layoutingService.appendLayoutingTask(
 			this._updateParagraphIndentationsImpl.bind(this),
 		);
-	}
-
-	getWindowProperty<T>(propertyName: string): T | undefined {
-		return (window as any)[propertyName];
 	}
 
 	// Static method to handle the initialization of rulers

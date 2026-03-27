@@ -449,7 +449,7 @@ class MouseControl extends CanvasSectionObject {
 		this.refreshPosition(point);
 		this.clickCount++;
 
-		if (!(<any>window).mode.isDesktop()) app.map.fire('closemobilewizard');
+		if (!window.mode.isDesktop()) app.map.fire('closemobilewizard');
 
 		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
 		let buttons = app.LOButtons.left;
@@ -478,7 +478,7 @@ class MouseControl extends CanvasSectionObject {
 
 			// For future: Here, we are checking the window size to determine the view mode, we can also check the event type (touch/click).
 			app.map.focus(
-				(<any>window).mode.isDesktop()
+				window.mode.isDesktop()
 					? undefined
 					: this.getMobileKeyboardVisibility(),
 			);

@@ -100,7 +100,7 @@ class HRuler extends Ruler {
 				this._lMarginDrag.style.cursor = 'e-resize';
 				this._rMarginDrag.style.cursor = 'w-resize';
 
-				if (!this.getWindowProperty<boolean>('ThisIsTheiOSApp')) {
+				if (!window.ThisIsTheiOSApp) {
 					window.L.DomEvent.on(
 						this._rMarginDrag,
 						'mousedown',
@@ -118,7 +118,7 @@ class HRuler extends Ruler {
 				this._lMarginDrag.style.cursor = 'default';
 				this._rMarginDrag.style.cursor = 'default';
 
-				if (!this.getWindowProperty<boolean>('ThisIsTheiOSApp')) {
+				if (!window.ThisIsTheiOSApp) {
 					window.L.DomEvent.off(
 						this._rMarginDrag,
 						'mousedown',
@@ -1010,11 +1010,7 @@ class HRuler extends Ruler {
 			e.clientX = e.touches[0].clientX;
 		}
 
-		if (
-			this.getWindowProperty<boolean>('ThisIsTheiOSApp') &&
-			!this._map.isEditMode()
-		)
-			return;
+		if (window.ThisIsTheiOSApp && !this._map.isEditMode()) return;
 
 		this._map.rulerActive = true;
 
@@ -1201,10 +1197,7 @@ class HRuler extends Ruler {
 		tabstopContainer.tabStopMarkerBeingDragged = tabstop;
 		tabstopContainer.tabStopInitialPosiiton = pointX;
 
-		if (
-			!this.getWindowProperty<boolean>('ThisIsTheiOSApp') &&
-			event.pointerType !== 'touch'
-		) {
+		if (!window.ThisIsTheiOSApp && event.pointerType !== 'touch') {
 			window.L.DomEvent.on(
 				this._rTSContainer,
 				'mousemove',

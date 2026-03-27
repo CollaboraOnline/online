@@ -542,11 +542,7 @@ class VRuler extends Ruler {
 	}
 
 	_initiateIndentationDrag(e: any) {
-		if (
-			this.getWindowProperty<boolean>('ThisIsTheiOSApp') &&
-			!this._map.isEditMode()
-		)
-			return;
+		if (window.ThisIsTheiOSApp && !this._map.isEditMode()) return;
 
 		this._map.rulerActive = true;
 

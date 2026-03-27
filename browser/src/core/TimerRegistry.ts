@@ -128,5 +128,5 @@ class TimerRegistry {
 }
 
 // Global instance
-(window as any).app = (window as any).app || {};
-(window as any).app.timerRegistry = new TimerRegistry();
+window.app = window.app || ({} as AppInterface); // Huh?
+window.app.timerRegistry = new TimerRegistry();
