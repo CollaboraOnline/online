@@ -184,7 +184,7 @@ namespace LOKitHelper
         {
             Poco::JSON::Parser parser;
             const auto var = parser.parse(values.get());
-            const auto obj = var.extract<Poco::JSON::Object::Ptr>();
+            const auto& obj = var.extract<Poco::JSON::Object::Ptr>();
             if (obj && obj->has("parts"))
             {
                 const auto parts = obj->getArray("parts");

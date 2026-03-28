@@ -66,7 +66,7 @@ void UnitAnyInput::invokeWSDTest()
     bool hasInvalidPage = false;
     for (const auto& child : *pages)
     {
-        auto page = child.extract<Poco::JSON::Object::Ptr>();
+        const auto& page = child.extract<Poco::JSON::Object::Ptr>();
         bool isInvalidContent{};
         JsonUtil::findJSONValue(page, "isInvalidContent", isInvalidContent);
         if (isInvalidContent)

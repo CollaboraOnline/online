@@ -138,7 +138,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
 
         Poco::JSON::Parser parser;
         Poco::Dynamic::Var jsonFile = parser.parse(responseString);
-        Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
+        const Poco::JSON::Object::Ptr& features = jsonFile.extract<Poco::JSON::Object::Ptr>();
         LOK_ASSERT(features);
         LOK_ASSERT(features->has("convert-to"));
 
