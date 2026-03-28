@@ -106,6 +106,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			docLogo.setAttribute('target', '_blank');
 			docLogo.setAttribute('aria-label', _('file type icon'));
 			docLogo.setAttribute('tabIndex', 0);
+			docLogo.setAttribute('aria-label', _('file type icon'));
 
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);
