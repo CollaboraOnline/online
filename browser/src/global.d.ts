@@ -363,6 +363,7 @@ interface Window {
 	enableAccessibility: boolean;
 	enableExperimentalFeatures: boolean;
 	enableDebug: boolean;
+	simulateError: (name: string) => boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
 	expectedServerId: string;
