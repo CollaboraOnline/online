@@ -28,7 +28,7 @@ namespace LOKitHelper
 
     struct StringDeleter
     {
-        inline void operator()(char* string) { std::free(string); }
+        void operator()(char* string) { std::free(string); }
     };
     using ScopedString = std::unique_ptr<char, StringDeleter>;
 
