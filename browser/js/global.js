@@ -316,6 +316,11 @@ class InitializerBase {
 		}.bind(coolParams);
 
 		window.coolParams = coolParams;
+
+		// Returns true if the simulateError param matches the check
+		window.simulateError = function(name) {
+			return coolParams.get('simulateError') === name;
+		};
 	}
 
 	loadCSSFiles() {
