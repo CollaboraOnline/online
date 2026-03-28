@@ -320,8 +320,8 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and same contents.
-        static inline bool isIdenticalTo(const Stat& l, const std::string& lPath,
-                                         const Stat& r, const std::string& rPath)
+        static bool isIdenticalTo(const Stat& l, const std::string& lPath, const Stat& r,
+                                  const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,
@@ -333,8 +333,8 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and modified timestamp.
-        static inline bool isUpToDate(const Stat& l, const std::string& lPath,
-                                      const Stat& r, const std::string& rPath)
+        static bool isUpToDate(const Stat& l, const std::string& lPath, const Stat& r,
+                               const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,

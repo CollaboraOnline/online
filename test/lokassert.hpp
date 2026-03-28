@@ -116,7 +116,7 @@ namespace test
 namespace detail
 {
 /// For tests that don't have a 'failed' member.
-inline constexpr bool failed() { return false; }
+constexpr bool failed() { return false; }
 } // namespace detail
 } // namespace test
 
