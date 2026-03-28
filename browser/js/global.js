@@ -331,6 +331,11 @@ class InitializerBase {
 
 		window.coolParams = coolParams;
 
+		// Returns true if the simulateError param matches the check
+		window.simulateError = function(name) {
+			return coolParams.get('simulateError') === name;
+		};
+
 		// Starter Screen: Show BackstageView without document when app launches
 		window.starterScreen = coolParams.get('starterMode') === 'true';
 	}

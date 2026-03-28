@@ -23,6 +23,8 @@ class Socket {
 		TimeZone: '',
 	};
 	private IndirectSocketReconnectCount: number = 0;
+	private _initialConnectRetries: number = 0;
+	private _connectCount: number = 0;
 
 	/// Whether Trace Event recording is enabled or not. ("Enabled" here means whether it can be
 	/// turned on (and off again), not whether it is on.)
@@ -291,6 +293,9 @@ class Socket {
 		this.socket.onopen = this._onSocketOpen.bind(this);
 		this.socket.onmessage = this._slurpMessage.bind(this);
 		this.socket.binaryType = 'arraybuffer';
+
+		this._connectCount++;
+		this._faultInjection();
 		if (
 			map.options.docParams.access_token &&
 			parseInt(map.options.docParams.access_token_ttl as string)
@@ -446,6 +451,18 @@ class Socket {
 					errorType = 'websocketgenericfailure';
 					errorMsg = window.errorMessages.websocketgenericfailure;
 				}
+			} else if (this._initialConnectRetries++ < 3) {
+				// Transient connection failure with no server error.
+				// Retry the initial connection before giving up.
+				window.app.console.debug(
+					'_onSocketClose: transient failure during initial load, attempt ' +
+						this._initialConnectRetries,
+				);
+				this._map['wopi'].resetAppLoaded();
+				setTimeout(() => {
+					this._scheduleReconnect();
+				}, 1);
+				return;
 			} else {
 				errorType = 'websocketproxyfailure';
 				errorMsg = window.errorMessages.websocketproxyfailure;
@@ -515,9 +532,7 @@ class Socket {
 		setTimeout(() => {
 			if (!this._reconnecting) {
 				this._reconnecting = true;
-				if (!app.idleHandler._documentIdle)
-					this._map.showBusy(_('Reconnecting...'), false);
-				app.idleHandler._activate();
+				this._scheduleReconnect();
 			}
 		}, 1 /* ms */);
 
@@ -531,6 +546,41 @@ class Socket {
 			!app.sectionContainer.testing
 		)
 			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
+	}
+
+	// Simulate error conditions for testing via the
+	// simulateError URL parameter.
+	private _faultInjection(): void {
+		if (
+			this._connectCount === 1 &&
+			this.socket &&
+			window.simulateError('socket:initialClose')
+		) {
+			const sock = this.socket;
+			if (sock.readyState === 1) {
+				// global.js may have already connected the socket
+				// before bundle.js loaded - close after current
+				// event processing
+				setTimeout(function () {
+					sock.close();
+				}, 0);
+			} else {
+				const realOnOpen = sock.onopen;
+				sock.onopen = function (evt: Event) {
+					realOnOpen(evt);
+					setTimeout(function () {
+						sock.close();
+					}, 0);
+				};
+			}
+		}
+	}
+
+	private _scheduleReconnect(): void {
+		app.idleHandler._active = false;
+		if (!app.idleHandler._documentIdle)
+			this._map.showBusy(_('Reconnecting...'), false);
+		app.idleHandler._activate();
 	}
 
 	private _onSocketError(evt: Event): void {
