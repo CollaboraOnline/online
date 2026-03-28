@@ -13,14 +13,14 @@
 
 #include <common/Log.hpp>
 
+#include <Poco/Path.h>
+
 #include <cerrno>
 #include <chrono>
 #include <fcntl.h>
 #include <fstream>
 #include <string>
 #include <sys/stat.h>
-
-#include <Poco/Path.h>
 
 #if !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG)
 #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)

@@ -15,20 +15,19 @@
 
 #include <config.h>
 
+#include <common/Png.hpp>
+#include <common/Unit.hpp>
 #include <net/HttpRequest.hpp>
-
-#include <memory>
-#include <string>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/NodeList.h>
-#include <test/lokassert.hpp>
 
-#include <Png.hpp>
-#include <Unit.hpp>
-#include <helpers.hpp>
+#include <memory>
+#include <string>
 
 /// Test suite for /hosting, etc.
 class UnitHosting : public UnitWSD
