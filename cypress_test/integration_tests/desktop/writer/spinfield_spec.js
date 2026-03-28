@@ -1,6 +1,7 @@
 /* global describe it cy require beforeEach expect */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 	var win;
@@ -212,6 +213,33 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 			var num = parseFloat($el.val());
 			expect(num).to.equal(max);
 		});
+	});
+
+	it('Kerning spinfield is labelled by Custom Value label', function () {
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+
+		// Click the dropdown arrow on the Spacing toolbar button
+		// in the sidebar to open the TextCharacterSpacingControl popover
+		cy.cGet('#sidebar-dock-wrapper .unoSpacing .arrowbackground').click();
+
+		cy.cGet('.jsdialog-window.modalpopup').should('exist');
+		cy.then(function () {
+			return helper.processToIdle(win);
+		});
+
+		// The kerning spinfield should be labeled by a <label> element
+		// with text "Custom Value", not have a stale aria-label
+		// containing the current numeric value.
+		cy.cGet('label[for="kerning-input"]').should('exist')
+			.should('contain.text', 'Custom Value');
+		cy.cGet('#kerning-input').should('not.have.attr', 'aria-label');
+
+		// Change the value and verify the label still says "Custom Value"
+		// and no aria-label with the old value reappears.
+		cy.cGet('#kerning-input').clear().type('1.5');
+		cy.cGet('#kerning-input').should('not.have.attr', 'aria-label');
+		cy.cGet('label[for="kerning-input"]').should('contain.text', 'Custom Value');
 	});
 
 	it('Buttons enabled after re-enabling spinfield in columns dialog', function () {
