@@ -19,11 +19,24 @@
 #include "ChildSession.hpp"
 
 #include <common/Anonymizer.hpp>
+#include <common/Authorization.hpp>
+#include <common/Clipboard.hpp>
+#include <common/CommandControl.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
 #include <common/HexUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/NumUtil.hpp>
+#include <common/Png.hpp>
+#include <common/SpookyV2.h>
+#include <common/TraceEvent.hpp>
 #include <common/Unit.hpp>
+#include <common/Uri.hpp>
 #include <common/Util.hpp>
+#include <common/base64.hpp>
+#include <kit/KitHelper.hpp>
+#include <kit/SlideCompressor.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
@@ -43,20 +56,6 @@
 #ifdef __ANDROID__
 #include <androidapp.hpp>
 #endif
-
-#include <common/base64.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/FileUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Authorization.hpp>
-#include <common/TraceEvent.hpp>
-#include <common/SpookyV2.h>
-#include <common/Uri.hpp>
-#include <KitHelper.hpp>
-#include <Png.hpp>
-#include <Clipboard.hpp>
-#include <CommandControl.hpp>
-#include <SlideCompressor.hpp>
 
 #ifdef IOS
 #include "DocumentViewController.h"

@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <string>
-#include <unordered_map>
-#include <cstdlib>
-
 #include <common/JsonUtil.hpp>
 #include <common/Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
+#include <cstdlib>
+#include <string>
+#include <unordered_map>
 
 namespace LOKitHelper
 {

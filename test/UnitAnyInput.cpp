@@ -15,16 +15,16 @@
 
 #include <config.h>
 
-#include <memory>
-#include <string>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <kit/Kit.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/URI.h>
-#include <test/lokassert.hpp>
-#include <kit/Kit.hpp>
 
-#include <Unit.hpp>
-#include <common/Util.hpp>
-#include <helpers.hpp>
+#include <memory>
+#include <string>
 
 /// Tests the anyInput callback.
 class UnitAnyInput : public UnitWSD

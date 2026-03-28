@@ -27,7 +27,6 @@
 #include <test/helpers.hpp>
 #include <test/lokassert.hpp>
 
-#include <JsonUtil.hpp>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>

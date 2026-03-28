@@ -19,37 +19,37 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 
 #if ENABLE_FEATURE_LOCK
-#include <CommandControl.hpp>
+#include <common/CommandControl.hpp>
 #endif
 
 #include <common/Anonymizer.hpp>
-#include <common/StateEnum.hpp>
-#include <COOLWSD.hpp>
-#include <ClientSession.hpp>
-#include <ConfigUtil.hpp>
-#include <Exceptions.hpp>
-#include <FileServer.hpp>
-#include <HttpRequest.hpp>
+#include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/NumUtil.hpp>
-#include <ProofKey.hpp>
-#include <ProxyRequestHandler.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
-#include <UserMessages.hpp>
+#include <common/StateEnum.hpp>
 #include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
+#include <net/HttpRequest.hpp>
 #include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
 #include <net/Uri.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/ProofKey.hpp>
+#include <wsd/ProxyRequestHandler.hpp>
+#include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/UserMessages.hpp>
 
 #if !MOBILEAPP
-#include <Admin.hpp>
-#include <JailUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <wsd/Admin.hpp>
+#include <wsd/HostUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
-#include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
 #include <Poco/DOM/AutoPtr.h>

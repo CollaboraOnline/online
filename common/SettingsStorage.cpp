@@ -13,6 +13,9 @@
 
 #include "SettingsStorage.hpp"
 
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Environment.h>
 #include <Poco/File.h>
@@ -22,12 +25,10 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/String.h>
 #include <Poco/Util/Application.h>
+
 #include <exception>
 #include <fstream>
 #include <sstream>
-
-#include "Log.hpp"
-#include <common/Util.hpp>
 
 namespace Desktop
 {

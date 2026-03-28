@@ -11,10 +11,11 @@
 
 #pragma once
 
+#include <Poco/Path.h>
+
+#include <functional>
 #include <string>
 #include <vector>
-#include <functional>
-#include <Poco/Path.h>
 
 namespace Desktop
 {

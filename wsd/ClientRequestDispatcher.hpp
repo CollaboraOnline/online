@@ -16,16 +16,16 @@
 
 #pragma once
 
-#include <RequestVettingStation.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
+#include <net/Socket.hpp>
+#include <wsd/RequestDetails.hpp>
+#include <wsd/RequestVettingStation.hpp>
 #if !MOBILEAPP
 #include <wopi/WopiProxy.hpp>
 #endif // !MOBILEAPP
 
 #include <cstdint>
-#include <string>
 #include <memory>
+#include <string>
 
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
