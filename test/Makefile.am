@@ -138,12 +138,14 @@ wsd_sources = \
 	../kit/Kit.cpp \
 	../kit/KitWebSocket.cpp \
 	../kit/TestStubs.cpp \
+	../wsd/ContentType.cpp \
 	../wsd/FileServerUtil.cpp \
 	../wsd/ProofKey.cpp \
 	../wsd/RequestDetails.cpp \
 	../wsd/TileCache.cpp
 
 test_base_sources = \
+	ClientRequestDispatcherTests.cpp \
 	DeltaTests.cpp \
 	FileServeWhiteBoxTests.cpp \
 	HostUtilTests.cpp \
