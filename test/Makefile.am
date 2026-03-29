@@ -16,7 +16,7 @@ DIST_FOLDER ?= $(abs_top_builddir)/browser/dist
 # unittest: tests that run a captive coolwsd as part of themselves.
 check_PROGRAMS = fakesockettest
 
-noinst_PROGRAMS = fakesockettest unittest unithttplib
+noinst_PROGRAMS = fakesockettest unittest unithttplib clienttest
 
 include_paths = ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
 if ENABLE_SSL
@@ -134,18 +134,44 @@ endif
 
 AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
-wsd_sources = \
+kit_sources = \
 	../kit/Kit.cpp \
 	../kit/KitWebSocket.cpp \
-	../kit/TestStubs.cpp \
+	../kit/TestStubs.cpp
+
+wsd_sources = \
+	../common/Crypto.cpp \
+	../wsd/Admin.cpp \
+	../wsd/AdminModel.cpp \
+	../wsd/Auth.cpp \
+	../wsd/COOLWSD.cpp \
+	../wsd/CacheUtil.cpp \
+	../wsd/ClientRequestDispatcher.cpp \
+	../wsd/ClientSession.cpp \
 	../wsd/ContentType.cpp \
+	../wsd/DocumentBroker.cpp \
+	../wsd/FileServer.cpp \
 	../wsd/FileServerUtil.cpp \
+	../wsd/HostUtil.cpp \
 	../wsd/ProofKey.cpp \
+	../wsd/ProxyProtocol.cpp \
+	../wsd/ProxyRequestHandler.cpp \
+	../wsd/QuarantineUtil.cpp \
+	../wsd/RemoteConfig.cpp \
 	../wsd/RequestDetails.cpp \
-	../wsd/TileCache.cpp
+	../wsd/RequestVettingStation.cpp \
+	../wsd/ServerAuditUtil.cpp \
+	../wsd/SlideCache.cpp \
+	../wsd/SpecialBrokers.cpp \
+	../wsd/Storage.cpp \
+	../wsd/TileCache.cpp \
+	../wsd/dumpWsdState.cpp \
+	../wsd/wopi/CheckFileInfo.cpp \
+	../wsd/wopi/StorageConnectionManager.cpp \
+	../wsd/wopi/WopiProxy.cpp \
+	../wsd/wopi/WopiStorage.cpp
 
 test_base_sources = \
-	ClientRequestDispatcherTests.cpp \
 	DeltaTests.cpp \
 	FileServeWhiteBoxTests.cpp \
 	HostUtilTests.cpp \
@@ -160,21 +186,24 @@ test_base_sources = \
 	UriTests.cpp \
 	UtilTests.cpp \
 	WhiteBoxTests.cpp \
-	WopiProofTests.cpp \
-	$(wsd_sources)
+	WopiProofTests.cpp
 
 common_sources = \
 	$(util_platform_cpp) \
 	../common/Authorization.cpp \
 	../common/CommandControl.cpp \
 	../common/ConfigUtil.cpp \
+	../common/CoolMount.cpp \
 	../common/DummyTraceEventEmitter.cpp \
 	../common/FileUtil-unix.cpp \
 	../common/FileUtil.cpp \
+	../common/JailUtil.cpp \
 	../common/Log-common.cpp \
 	../common/Log-poco.cpp \
+	../common/MobileApp.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \
+	../common/Seccomp.cpp \
 	../common/Session.cpp \
 	../common/SigUtil-server.cpp \
 	../common/Simd.cpp \
@@ -190,12 +219,12 @@ common_sources = \
 	../common/Util.cpp \
 	../kit/KitQueue.cpp \
 	../kit/LogUI.cpp \
+	../net/DelaySocket.cpp \
+	../net/HttpHelper.cpp \
 	../net/HttpRequest.cpp \
 	../net/NetUtil.cpp \
 	../net/Socket.cpp \
-	../wsd/Auth.cpp \
-	../wsd/Exceptions.cpp \
-	../wsd/HostUtil.cpp
+	../wsd/Exceptions.cpp
 
 globals_sources = ../common/Globals.cpp
 
@@ -207,16 +236,38 @@ unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
 	$(common_sources) \
 	$(test_base_sources) \
+	$(kit_sources) \
+	../wsd/FileServerUtil.cpp \
+	../wsd/HostUtil.cpp \
+	../wsd/ProofKey.cpp \
+	../wsd/RequestDetails.cpp \
 	../wsd/TestStubs.cpp \
+	../wsd/TileCache.cpp \
 	test.cpp
 
 unittest_LDADD = $(top_builddir)/libsimd.a $(CPPUNIT_LIBS)
+
+clienttest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
+
+clienttest_SOURCES = \
+	$(common_sources) \
+	$(globals_sources) \
+	$(wsd_sources) \
+	ClientTestStubs.cpp \
+	ClientRequestDispatcherTests.cpp \
+	test.cpp
+
+clienttest_LDADD = $(top_builddir)/libsimd.a $(CPPUNIT_LIBS)
+
+# Add SSL dependencies if needed.
 if ENABLE_SSL
 unittest_SOURCES += ../net/Ssl.cpp
 unithttplib_SOURCES += ../net/Ssl.cpp
+clienttest_SOURCES += ../net/Ssl.cpp
 else
 unittest_LDADD += -lssl -lcrypto
 unithttplib_LDADD += -lssl -lcrypto
+clienttest_LDADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
@@ -374,9 +425,9 @@ check-local:
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo "Done test check-local"
 
+# unittest and unithttplib are run in all-local (before TESTS).
 TESTS = \
-	${all_la_unit_tests} \
-	unithttplib
+	${all_la_unit_tests}
 
 endif
 
@@ -395,7 +446,6 @@ all_test_la_sources = $(sort $(foreach t,$(all_la_unit_tests),$($(subst -,_,$(ba
 all_test_compiled_sources = $(sort \
 	$(common_sources) \
 	$(globals_sources) \
-	$(wsd_sources) \
 	$(test_base_sources) \
 	$(unittest_SOURCES) \
 	$(unithttplib_SOURCES) \
@@ -421,13 +471,14 @@ check_valgrind: all
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	./run_unit.sh --log-file test.log --trs-file test.trs --valgrind
 
-# run unittest during the normal build
-all-local: unittest
+# Run unittest and unithttplib during the normal build.
+all-local: unittest unithttplib clienttest
 	@echo
 	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
 	@echo "Test output is in `pwd`/test.log and is displayed on failure."
 	@echo
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
+	@UNITTEST=1 ${top_builddir}/test/clienttest --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && /bin/false)
 	@UNITTEST=1 ${top_builddir}/test/unittest --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && /bin/false)
 	@echo "Done test all-local"
 	@$(CLEANUP_COMMAND)
