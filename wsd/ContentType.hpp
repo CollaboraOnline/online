@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <string>
+#include <string_view>
 
 namespace ContentType
 {
 /// Map a file name (or path) to its MIME content type based on extension.
 /// Returns "application/octet-stream" for unknown extensions.
-std::string fromFileName(const std::string& fileName);
+std::string_view fromFileName(std::string_view fileName);
 
 /// Return true if the file name corresponds to a spreadsheet type.
-bool isSpreadsheet(const std::string& fileName);
+bool isSpreadsheet(std::string_view fileName);
 
 } // namespace ContentType
 
