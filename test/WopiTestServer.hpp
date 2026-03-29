@@ -33,6 +33,7 @@
 
 #include <cctype>
 #include <sstream>
+#include <string_view>
 #include <vector>
 
 /// Simulates a WOPI server for testing purposes.
@@ -231,13 +232,13 @@ protected:
     }
 
     /// Returns true iff @uriPath is a Wopi path but not to the contents.
-    static bool isWopiInfoRequest(const std::string& uriPath)
+    static bool isWopiInfoRequest(const std::string_view uriPath)
     {
         return uriPath.starts_with(getURIRootPath()) && !uriPath.ends_with("/contents");
     }
 
     /// Returns true iff @uriPath is a Wopi path to the contents of a file.
-    static bool isWopiContentRequest(const std::string& uriPath)
+    static bool isWopiContentRequest(const std::string_view uriPath)
     {
         return uriPath.starts_with(getURIRootPath()) && uriPath.ends_with("/contents");
     }
