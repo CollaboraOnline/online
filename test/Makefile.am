@@ -42,70 +42,70 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
-	unit-wopi-fail-upload.la \
 	unit-tiletest.la \
 	unit-wopi-documentconflict.la \
 	unit-wopi-stuck-save.la \
+	unit-wopi-fail-upload.la \
 	unit-wopi-async-slow.la \
-	unit-wopi-lock.la \
 	unit-perf.la \
+	unit-wopi-lock.la \
+	unit-save-torture.la \
 	unit-invalidation.la \
 	unit-close.la \
+	unit-user-presets.la \
 	unit-wopi-watermark.la \
 	unit-crash.la \
-	unit-user-presets.la \
 	unit-integration.la \
-	unit-initial-load-fail.la \
 	unit-timeout.la \
 	unit-wopi-save-on-exit.la \
+	unit-initial-load-fail.la \
+	unit-insert-delete.la \
 	unit-uno-command.la \
 	unit-quarantine.la \
-	unit-insert-delete.la \
 	unit-wopi.la \
 	unit-each-view.la \
 	unit-copy-paste.la \
-	unit-load-torture.la \
 	unit-httpws.la \
-	unit-wopi-languages.la \
+	unit-load-torture.la \
 	unit-load.la \
+	unit-wopi-languages.la \
 	unit-session.la \
-	unit-save-torture.la \
+	unit-wopi-edge-cases.la \
+	unit-socket-failure.la \
+	unit-kit-child-session.la \
 	unit-wopi-fileurl.la \
-	unit-join-disconnect.la \
+	unit-cursor.la \
+	unit-copy-paste-writer.la \
+	unit-convert-csv.la \
+	unit-render-shape.la \
 	unit-multi-tenant.la \
+	unit-large-paste.la \
+	unit-join-disconnect.la \
+	unit-convert.la \
+	unit-wopi-temp.la \
+	unit-wopi-transient-connect-fault.la \
 	unit-password-protected.la \
 	unit-calc.la \
-	unit-wopi-temp.la \
-	unit-convert.la \
-	unit-copy-paste-writer.la \
-	unit-render-shape.la \
-	unit-http.la \
-	unit-save.la \
-	unit-cursor.la \
-	unit-large-paste.la \
-	unit-render-search-result.la \
-	unit-convert-csv.la \
-	unit-tiff-load.la \
-	unit-oauth.la \
-	unit-typing.la \
-	unit-prefork.la \
-	unit-synthetic-lok.la \
-	unit-wopi-versionrestore.la \
-	unit-wopi-transient-connect-fault.la \
-	unit-paste.la \
-	unit-wopi-edge-cases.la \
-	unit-any-input.la \
-	unit-clipboard-close.la \
-	unit-convert-to-password-protected.la \
-	unit-wopi-renamefile.la \
-	unit-wopi-saveas.la \
-	unit-kit-child-session.la \
-	unit-socket-failure.la \
 	unit-rendering-options.la \
-	unit-bad-doc-load.la \
+	unit-prefork.la \
+	unit-any-input.la \
+	unit-save.la \
+	unit-wopi-saveas.la \
+	unit-typing.la \
+	unit-tiff-load.la \
+	unit-synthetic-lok.la \
+	unit-paste.la \
+	unit-wopi-versionrestore.la \
+	unit-oauth.la \
+	unit-http.la \
+	unit-wopi-renamefile.la \
+	unit-render-search-result.la \
+	unit-clipboard-close.la \
+	unit-proxy.la \
 	unit-wopi-httpredirect.la \
-	unit-hosting.la \
-	unit-proxy.la
+	unit-convert-to-password-protected.la \
+	unit-bad-doc-load.la \
+	unit-hosting.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
 
@@ -480,6 +480,7 @@ all-local: unittest unithttplib clienttest
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@UNITTEST=1 ${top_builddir}/test/clienttest --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && /bin/false)
 	@UNITTEST=1 ${top_builddir}/test/unittest --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && /bin/false)
+	@UNITTEST=1 ${top_builddir}/test/unithttplib --cert-path ${abs_top_srcdir}/etc 2> test.log || (cat test.log && /bin/false)
 	@echo "Done test all-local"
 	@$(CLEANUP_COMMAND)
 
