@@ -4516,7 +4516,7 @@ void forwardSignal(const int signum)
 #endif
 
 // Avoid this in the Util::isFuzzing() case because libfuzzer defines its own main().
-#if !MOBILEAPP && !LIBFUZZER
+#if !MOBILEAPP && !LIBFUZZER && !defined(STANDALONE_CPPUNIT)
 
 int main(int argc, char** argv)
 {

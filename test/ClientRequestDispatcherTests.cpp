@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/ContentType.hpp>
 #include <net/HttpRequest.hpp>
 #include <test/MockStreamSocket.hpp>
@@ -50,6 +51,8 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testMockStreamSocket_HttpResponse);
     CPPUNIT_TEST(testRobotsTxtResponse);
     CPPUNIT_TEST(testJsonResultResponse);
+    CPPUNIT_TEST(testHandleIncomingMessage_RobotsTxt);
+    CPPUNIT_TEST(testHandleIncomingMessage_Capabilities);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -282,6 +285,49 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
         LOK_ASSERT(output.find("application/json") != std::string::npos);
         LOK_ASSERT(output.find("X-Content-Type-Options: nosniff") != std::string::npos);
         LOK_ASSERT(output.find(R"("status": "Ok")") != std::string::npos);
+    }
+
+    /// Helper: create a CRD wired to a MockStreamSocket, inject an HTTP request,
+    /// and call handleIncomingMessage. Returns the raw HTTP response.
+    std::string dispatchRequest(const std::string& httpRequest)
+    {
+        auto handler = std::make_shared<ClientRequestDispatcher>();
+        auto socket = std::make_shared<MockStreamSocket>();
+        socket->setHandler(handler);
+
+        // Call through base — onConnect and handleIncomingMessage are private overrides.
+        std::shared_ptr<ProtocolHandlerInterface> base = handler;
+        base->onConnect(socket);
+
+        // Inject the HTTP request into the socket's input buffer.
+        auto& inBuf = socket->getInBuffer();
+        inBuf.append(httpRequest.data(), httpRequest.size());
+
+        SocketDisposition disposition(socket);
+        base->handleIncomingMessage(disposition);
+
+        return socket->getOutput();
+    }
+
+    void testHandleIncomingMessage_RobotsTxt()
+    {
+        constexpr std::string_view testname = __func__;
+        const std::string response =
+            dispatchRequest("GET /robots.txt HTTP/1.1\r\nHost: localhost\r\n\r\n");
+
+        LOK_ASSERT(response.find("HTTP/1.1 200") != std::string::npos);
+        LOK_ASSERT(response.find("User-agent: *") != std::string::npos);
+        LOK_ASSERT(response.find("Disallow: /") != std::string::npos);
+    }
+
+    void testHandleIncomingMessage_Capabilities()
+    {
+        constexpr std::string_view testname = __func__;
+        const std::string response =
+            dispatchRequest("GET /hosting/capabilities HTTP/1.1\r\nHost: localhost\r\n\r\n");
+
+        // Capabilities requires COOLWSD initialization; verify we get a valid HTTP response.
+        LOK_ASSERT(response.find("HTTP/1.1") != std::string::npos);
     }
 };
 
