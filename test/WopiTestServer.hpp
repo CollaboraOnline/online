@@ -251,6 +251,11 @@ protected:
 
         // Reset to default.
         config.setBool("storage.wopi.is_legacy_server", false);
+
+        // Reduce the save retry time.
+        config.setUInt("per_document.min_time_between_saves_ms", 100);
+        // Reduce the upload retry time.
+        config.setUInt("per_document.min_time_between_uploads_ms", 500);
     }
 
     /// Returns the default CheckFileInfo json.

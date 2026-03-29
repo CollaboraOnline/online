@@ -542,6 +542,8 @@ public:
         WopiTestServer::configure(config);
 
         // We intentionally fail uploading twice, so need at least 3 tries.
+        config.setUInt("per_document.min_time_between_saves_ms", 100);
+        config.setUInt("per_document.min_time_between_uploads_ms", 100); // Short retry interval.
         config.setUInt("per_document.limit_store_failures", 3);
         config.setBool("per_document.always_save_on_exit", false);
         config.setBool("storage.wopi.is_legacy_server", true);
