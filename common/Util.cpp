@@ -188,7 +188,7 @@ namespace Util
     void setKitInProcess(bool value) { kitInProcess = value; }
     bool isKitInProcess() { return isFuzzing() || isMobileApp() || kitInProcess; }
 
-    std::string replace(std::string result, const std::string& from, const std::string& to)
+    std::string replace(std::string result, const std::string_view from, const std::string_view to)
     {
         const std::size_t fromSize = from.size();
         if (fromSize > 0)
@@ -246,10 +246,10 @@ namespace Util
         return replaceAllOf(filename, mtch, repl);
     }
 
-    std::string formatLinesForLog(const std::string& s)
+    std::string formatLinesForLog(const std::string_view s)
     {
         std::string r;
-        std::string::size_type n = s.size();
+        std::string_view::size_type n = s.size();
         if (n > 0 && s.back() == '\n')
             r = s.substr(0, n-1);
         else
