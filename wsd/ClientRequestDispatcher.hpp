@@ -113,10 +113,6 @@ private:
                                    const std::shared_ptr<StreamSocket>& socket,
                                    bool bVTT);
 
-    static std::string getContentType(const std::string& fileName);
-
-    static bool isSpreadsheet(const std::string& fileName);
-
     /// @return true if request has been handled synchronously and response sent, otherwise false
     bool handlePostRequest(const RequestDetails& requestDetails,
                            const Poco::Net::HTTPRequest& request, std::istream& message,

@@ -1981,16 +1981,6 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
     return false; // async
 }
 
-std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
-{
-    return std::string(ContentType::fromFileName(fileName));
-}
-
-bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
-{
-    return ContentType::isSpreadsheet(fileName);
-}
-
 bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
                                                 const Poco::Net::HTTPRequest& request,
                                                 std::istream& message,
@@ -2067,7 +2057,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
             const bool fullSheetPreview =
                 (form.has("FullSheetPreview") && form.get("FullSheetPreview") == "true");
-            if (fullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
+            if (fullSheetPreview && format == "pdf" && ContentType::isSpreadsheet(fromPath))
             {
                 //FIXME: We shouldn't have "true" as having the option already implies that
                 // we want it enabled (i.e. we shouldn't set the option if we don't want it).
@@ -2266,7 +2256,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             // Instruct browsers to download the file, not display it
             // with the exception of SVG where we need the browser to
             // actually show it.
-            response.setContentType(getContentType(fileName));
+            response.setContentType(std::string(ContentType::fromFileName(fileName)));
             if (serveAsAttachment)
                 response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
