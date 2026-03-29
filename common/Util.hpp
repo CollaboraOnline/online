@@ -342,7 +342,7 @@ namespace Util
     void setProcessAndThreadPriorities(pid_t pid, int prio);
 
     /// Replace substring @a in string @s with string @b.
-    std::string replace(std::string s, const std::string& a, const std::string& b);
+    std::string replace(std::string s, std::string_view a, std::string_view b);
 
     /// Replace character @a in string @s, in place, with character @b.
     inline std::string& replaceInPlace(std::string& s, char a, char b)
@@ -369,7 +369,7 @@ namespace Util
 
     void replaceAllSubStr(std::string& input, const std::string& target, const std::string& replacement);
 
-    std::string formatLinesForLog(const std::string& s);
+    std::string formatLinesForLog(std::string_view s);
 
     void setThreadName(const std::string& s);
 
