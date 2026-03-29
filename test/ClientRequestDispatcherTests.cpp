@@ -172,7 +172,7 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
     void testGetContentType_CaseExtension()
     {
         constexpr std::string_view testname = __func__;
-        LOK_ASSERT_EQUAL_STR("application/octet-stream",
+        LOK_ASSERT_EQUAL_STR("application/vnd.oasis.opendocument.text",
                              ContentType::fromFileName("test.ODT"));
     }
 
