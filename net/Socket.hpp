@@ -1635,6 +1635,7 @@ public:
 
     Buffer& getInBuffer() { return _inBuffer; }
 
+    const Buffer& getOutBuffer() const { return _outBuffer; }
     Buffer& getOutBuffer()
     {
         return _outBuffer;
