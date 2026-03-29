@@ -1965,7 +1965,7 @@ class TileManager {
 			if (!x.bitmap) {
 				// This path is taken when this is called on the DOM thread (i.e. the worker
 				// hasn't decompressed the raw delta)
-				x.deltas = (window as any).fzstd.decompress(x.rawDelta);
+				x.deltas = window.fzstd.decompress(x.rawDelta);
 				if (x.isKeyframe) {
 					x.keyframeBuffer = new Uint8Array(
 						e.data.tileSize * e.data.tileSize * 4,

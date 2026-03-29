@@ -126,7 +126,7 @@ class BackstageView extends window.L.Class {
 	constructor(map: any) {
 		super();
 		this.map = map;
-		this.isStarterMode = (window as any).starterScreen;
+		this.isStarterMode = window.starterScreen;
 		this.container = this.createContainer();
 		document.body.appendChild(this.container);
 		this.map?.on(
@@ -1040,7 +1040,7 @@ class BackstageView extends window.L.Class {
 		const loader = (async () => {
 			try {
 				// fetch templates from templates/templates.js build path
-				const entries = (window as any).CODA_TEMPLATES || [];
+				const entries = window.CODA_TEMPLATES || [];
 				this.templates = entries;
 				this.templatesLoadError = false;
 

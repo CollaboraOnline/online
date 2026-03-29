@@ -39,7 +39,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['closeapp'] = () => {
-			if ((window as any).ThisIsAMobileApp) {
+			if (window.ThisIsAMobileApp) {
 				window.postMobileMessage('BYE');
 			} else {
 				if (
@@ -537,7 +537,7 @@ class Dispatcher {
 		this.actionsMap['presentation'] = this.actionsMap[
 			'fullscreen-presentation'
 		] = () => {
-			if ((window as any).canvasSlideshowEnabled)
+			if (window.canvasSlideshowEnabled)
 				app.map.fire('newfullscreen', {
 					isWelcomePresentation:
 						window.coolParams.get('welcome') === 'true' ? true : false,
@@ -548,7 +548,7 @@ class Dispatcher {
 		this.actionsMap['presentation-currentslide'] = this.actionsMap[
 			'presentation-currentslide'
 		] = () => {
-			if ((window as any).canvasSlideshowEnabled)
+			if (window.canvasSlideshowEnabled)
 				app.map.fire('newfullscreen', {
 					startSlideNumber: app.map.getCurrentPartNumber(),
 				});
@@ -562,7 +562,7 @@ class Dispatcher {
 			() => {
 				const welcomePresentation =
 					window.coolParams.get('welcome') === 'true' ? true : false;
-				if ((window as any).canvasSlideshowEnabled)
+				if (window.canvasSlideshowEnabled)
 					app.map.fire('newpresentinwindow', {
 						isWelcomePresentation: welcomePresentation,
 					});
@@ -589,8 +589,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['presenterconsole'] = () => {
-			if ((window as any).canvasSlideshowEnabled)
-				app.map.fire('newpresentinconsole');
+			if (window.canvasSlideshowEnabled) app.map.fire('newpresentinconsole');
 		};
 
 		this.actionsMap['fullscreen-drawing'] = () => {
@@ -656,7 +655,7 @@ class Dispatcher {
 
 		this.actionsMap['leftpara'] = function () {
 			app.map.sendUnoCommand(
-				(window as any).getUNOCommand({
+				window.getUNOCommand({
 					textCommand: '.uno:LeftPara',
 					objectCommand: '.uno:ObjectAlignLeft',
 					unosheet: '.uno:AlignLeft',
@@ -665,7 +664,7 @@ class Dispatcher {
 		};
 		this.actionsMap['centerpara'] = function () {
 			app.map.sendUnoCommand(
-				(window as any).getUNOCommand({
+				window.getUNOCommand({
 					textCommand: '.uno:CenterPara',
 					objectCommand: '.uno:AlignCenter',
 					unosheet: '.uno:AlignHorizontalCenter',
@@ -674,7 +673,7 @@ class Dispatcher {
 		};
 		this.actionsMap['rightpara'] = function () {
 			app.map.sendUnoCommand(
-				(window as any).getUNOCommand({
+				window.getUNOCommand({
 					textCommand: '.uno:RightPara',
 					objectCommand: '.uno:ObjectAlignRight',
 					unosheet: '.uno:AlignRight',
@@ -877,12 +876,12 @@ class Dispatcher {
 
 		this.actionsMap['fontcolor'] = () => {
 			app.map.fire('mobilewizard', {
-				data: (window as any).getColorPickerData('Font Color'),
+				data: window.getColorPickerData('Font Color'),
 			});
 		};
 		this.actionsMap['backcolor'] = () => {
 			app.map.fire('mobilewizard', {
-				data: (window as any).getColorPickerData('Highlight Color'),
+				data: window.getColorPickerData('Highlight Color'),
 			});
 		};
 		// TODO: leftover from mobile bottom bar

@@ -375,7 +375,7 @@ class LOUtil {
 		const lang = LOUtil.getUILanguageCode();
 		const hasLocalized = lang && LOUtil.localizedIcons[lang]?.includes(imgName);
 
-		if ((window as any).prefs.getBoolean('darkTheme')) {
+		if (window.prefs.getBoolean('darkTheme')) {
 			if (hasLocalized)
 				return LOUtil.getURL('images/dark/' + lang + '/' + imgName);
 			return LOUtil.getURL('images/dark/' + imgName);

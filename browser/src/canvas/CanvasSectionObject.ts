@@ -252,7 +252,7 @@ class CanvasSectionObject {
 
 	/// Updates sectionProperties.polygonColor based on the current dark/light theme.
 	protected changeBorderStyle(): void {
-		const polygonColor = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
+		const polygonColor = window.prefs.getBoolean('darkTheme') ? 'white' : 'black';
 		if (this.sectionProperties.polygonColor !== polygonColor)
 			this.sectionProperties.polygonColor = polygonColor;
 	}

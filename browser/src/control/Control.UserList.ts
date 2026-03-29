@@ -239,7 +239,7 @@ class UserList extends window.L.Control {
 
 	hideUserList() {
 		return (
-			(window as any) /* TODO: remove cast after gh#8221 */.ThisIsAMobileApp ||
+			window /* TODO: remove cast after gh#8221 */.ThisIsAMobileApp ||
 			(this.map['wopi'].HideUserList !== null &&
 				this.map['wopi'].HideUserList !== undefined &&
 				$.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
@@ -538,7 +538,7 @@ class UserList extends window.L.Control {
 		followEditorCheckbox.id = 'follow-editor-checkbox';
 		followEditorCheckbox.setAttribute('type', 'checkbox');
 		followEditorCheckbox.onchange = (event: Event) => {
-			(window as any).editorUpdate(event);
+			window.editorUpdate(event);
 			this.renderAll();
 		};
 		(followEditorCheckbox as HTMLInputElement).checked =

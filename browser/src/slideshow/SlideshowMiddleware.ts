@@ -62,7 +62,7 @@ class SlideBitmapManager {
 		}
 
 		// Synchronous path
-		const img = (window as any).fzstd.decompress(imgRawData);
+		const img = window.fzstd.decompress(imgRawData);
 		const clampedArray = new Uint8ClampedArray(img);
 		const imgData = new ImageData(clampedArray, width, height);
 		return createImageBitmap(imgData);

@@ -426,6 +426,26 @@ interface Window {
 	getAccessibilityState(): boolean;
 	makeClientVisibleArea(): string;
 	postMobileDebug(msg: string): void;
+	fzstd: any;
+	commentWizard: boolean;
+	langParamLocale: any;
+	CODA_TEMPLATES?: any[];
+	contextMenuWizard: boolean;
+	unoCmdToToolbarId: (commandname: string) => string;
+	WOPIPostmessageReady: boolean;
+	editorUpdate: (e: any) => void;
+	getConditionalFormatMenuElements: (more: any, jsdialogDropdown: any) => any;
+	getConditionalColorScaleMenuElements: (
+		more: any,
+		jsdialogDropdown: any,
+	) => any;
+	getConditionalDataBarMenuElements: (more: any, jsdialogDropdown: any) => any;
+	getInsertTablePopupElements: (closeCallback: any) => any;
+	getShapesPopupElements: (closeCallback: any) => any;
+	getConnectorsPopupElements: (closeCallback: any) => any;
+	canvasSlideshowEnabled: boolean;
+	getUNOCommand: (unoData: any) => any;
+	getColorPickerData: (type: string) => any;
 }
 
 // For localization

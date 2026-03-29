@@ -51,7 +51,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 	}
 
 	public onInitialize() {
-		if ((<any>window).mode.isDesktop()) {
+		if (window.mode.isDesktop()) {
 			this.size = [Math.round(6 * app.dpiScale), Math.round(6 * app.dpiScale)];
 		} else {
 			this.size = [
@@ -68,7 +68,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 
 	protected setMarkerPosition() {
 		var center: number = 0;
-		if (!(<any>window).mode.isDesktop()) {
+		if (!window.mode.isDesktop()) {
 			Util.ensureValue(app.calc.cellCursorRectangle);
 			center = app.calc.cellCursorRectangle.pWidth * 0.5;
 		}
@@ -126,7 +126,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 		this.context.lineCap = 'square';
 		this.context.lineWidth = 1;
 
-		var desktop: boolean = (<any>window).mode.isDesktop();
+		var desktop: boolean = window.mode.isDesktop();
 		var translation = desktop
 			? [this.size[0], this.size[1]]
 			: [Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
