@@ -1983,7 +1983,7 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
 
 std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
 {
-    return ContentType::fromFileName(fileName);
+    return std::string(ContentType::fromFileName(fileName));
 }
 
 bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)

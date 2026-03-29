@@ -13,17 +13,15 @@
 
 #include "ContentType.hpp"
 
-#include <string>
+#include <string_view>
 #include <unordered_map>
-
-#include <Poco/Path.h>
 
 namespace ContentType
 {
 
-std::string fromFileName(const std::string& fileName)
+std::string_view fromFileName(const std::string_view fileName)
 {
-    static std::unordered_map<std::string, std::string> contentTypes{
+    static std::unordered_map<std::string_view, std::string_view> contentTypes{
         { "svg", "image/svg+xml" },
         { "pot", "application/vnd.ms-powerpoint" },
         { "xla", "application/vnd.ms-excel" },
@@ -163,7 +161,15 @@ std::string fromFileName(const std::string& fileName)
         { "pdf", "application/pdf" },
     };
 
-    const std::string ext = Poco::Path(fileName).getExtension();
+    const auto dotPos = fileName.rfind('.');
+    if (dotPos == std::string_view::npos || dotPos + 1 >= fileName.size())
+        return "application/octet-stream";
+
+    // Extension only (after the last dot, no path separators).
+    auto ext = fileName.substr(dotPos + 1);
+    const auto slashPos = ext.rfind('/');
+    if (slashPos != std::string_view::npos)
+        return "application/octet-stream";
 
     const auto it = contentTypes.find(ext);
     if (it != contentTypes.end())
@@ -172,9 +178,9 @@ std::string fromFileName(const std::string& fileName)
     return "application/octet-stream";
 }
 
-bool isSpreadsheet(const std::string& fileName)
+bool isSpreadsheet(const std::string_view fileName)
 {
-    const std::string contentType = fromFileName(fileName);
+    const std::string_view contentType = fromFileName(fileName);
 
     return contentType == "application/vnd.oasis.opendocument.spreadsheet" ||
            contentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||

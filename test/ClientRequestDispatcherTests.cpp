@@ -161,8 +161,6 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
     void testGetContentType_CaseExtension()
     {
         constexpr std::string_view testname = __func__;
-        // Poco::Path::getExtension() preserves case; the map uses lowercase keys.
-        // Uppercase extensions should fall through to octet-stream.
         LOK_ASSERT_EQUAL_STR("application/octet-stream",
                              ContentType::fromFileName("test.ODT"));
     }
