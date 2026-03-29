@@ -12,6 +12,8 @@
 #include <config.h>
 
 #include <wsd/ContentType.hpp>
+#include <net/HttpRequest.hpp>
+#include <test/MockStreamSocket.hpp>
 
 #include <test/lokassert.hpp>
 #include <test/testlog.hpp>
@@ -19,9 +21,10 @@
 #include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <memory>
 #include <string>
 
-/// Unit tests for ContentType utilities (used by ClientRequestDispatcher).
+/// Unit tests for ClientRequestDispatcher.
 class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(ClientRequestDispatcherTests);
@@ -42,6 +45,11 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testIsSpreadsheet_Excel);
     CPPUNIT_TEST(testIsSpreadsheet_OOXML);
     CPPUNIT_TEST(testIsSpreadsheet_NotSpreadsheet);
+
+    CPPUNIT_TEST(testMockStreamSocket_Send);
+    CPPUNIT_TEST(testMockStreamSocket_HttpResponse);
+    CPPUNIT_TEST(testRobotsTxtResponse);
+    CPPUNIT_TEST(testJsonResultResponse);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -194,6 +202,86 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
 
         // xlsm and xlsb have different content types not in the isSpreadsheet check
         LOK_ASSERT(!ContentType::isSpreadsheet("macro.xlsm"));
+    }
+
+    /// Verify MockStreamSocket captures raw send() data.
+    void testMockStreamSocket_Send()
+    {
+        constexpr std::string_view testname = __func__;
+        auto socket = std::make_shared<MockStreamSocket>();
+
+        LOK_ASSERT(socket->getOutput().empty());
+
+        socket->send(std::string_view("hello"), false);
+        LOK_ASSERT_EQUAL_STR("hello", socket->getOutput());
+
+        socket->send(std::string_view(" world"), false);
+        LOK_ASSERT_EQUAL_STR("hello world", socket->getOutput());
+
+        socket->clearOutput();
+        LOK_ASSERT(socket->getOutput().empty());
+    }
+
+    /// Verify MockStreamSocket captures http::Response output.
+    void testMockStreamSocket_HttpResponse()
+    {
+        constexpr std::string_view testname = __func__;
+        auto socket = std::make_shared<MockStreamSocket>();
+
+        http::Response response(http::StatusCode::OK);
+        response.setBody("test body", "text/plain");
+        response.writeData(socket->getOutBuffer());
+
+        const std::string output = socket->getOutput();
+        LOK_ASSERT(output.find("HTTP/1.1 200") != std::string::npos);
+        LOK_ASSERT(output.find("Content-Type: text/plain") != std::string::npos);
+        LOK_ASSERT(output.find("test body") != std::string::npos);
+    }
+
+    /// Reproduce the robots.txt response pattern from handleRobotsTxtRequest.
+    void testRobotsTxtResponse()
+    {
+        constexpr std::string_view testname = __func__;
+        auto socket = std::make_shared<MockStreamSocket>();
+
+        // Same pattern as handleStaticRequest in ClientRequestDispatcher.cpp
+        const std::string body = "User-agent: *\nDisallow: /\n";
+        http::Response response(http::StatusCode::OK);
+        response.set("Last-Modified", "Sat, 29 Mar 2026 00:00:00 GMT");
+        response.setContentLength(body.size());
+        response.set("Content-Type", "text/plain");
+        response.writeData(socket->getOutBuffer());
+        socket->send(std::string_view(body), false);
+
+        const std::string output = socket->getOutput();
+        LOK_ASSERT(output.find("HTTP/1.1 200") != std::string::npos);
+        LOK_ASSERT(output.find("Content-Type: text/plain") != std::string::npos);
+        LOK_ASSERT(output.find("User-agent: *\nDisallow: /\n") != std::string::npos);
+
+        // Verify Content-Length matches body
+        const std::string clHeader = "Content-Length: " + std::to_string(body.size());
+        LOK_ASSERT(output.find(clHeader) != std::string::npos);
+    }
+
+    /// Reproduce the JSON result pattern from sendResult in ClientRequestDispatcher.cpp.
+    void testJsonResultResponse()
+    {
+        constexpr std::string_view testname = __func__;
+        auto socket = std::make_shared<MockStreamSocket>();
+
+        // Same pattern as sendResult() in ClientRequestDispatcher.cpp
+        const std::string jsonBody = "{\"status\": \"Ok\"}\n";
+        http::Response response(http::StatusCode::OK);
+        response.setBody(std::string(jsonBody), "application/json");
+        response.set("X-Content-Type-Options", "nosniff");
+        response.writeData(socket->getOutBuffer());
+        socket->send(std::string_view(jsonBody), false);
+
+        const std::string output = socket->getOutput();
+        LOK_ASSERT(output.find("HTTP/1.1 200") != std::string::npos);
+        LOK_ASSERT(output.find("application/json") != std::string::npos);
+        LOK_ASSERT(output.find("X-Content-Type-Options: nosniff") != std::string::npos);
+        LOK_ASSERT(output.find(R"("status": "Ok")") != std::string::npos);
     }
 };
 
