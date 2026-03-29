@@ -54,6 +54,7 @@
 
 	--color-box-shadow-light: rgba(77, 77, 77, 0.1);
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
+	--color-box-shadow-dark: rgba(77, 77, 77, 0.85);
 	--color-hyperlink: #000080;
 
 	--color-calc-grid: #c0c0c0;
