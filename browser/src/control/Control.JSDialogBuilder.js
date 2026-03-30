@@ -2617,6 +2617,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._expanderDepth = savedExpanderDepth;
 		var backupGridColSpan = control.style.gridColumn;
 		var backupGridRowSpan = control.style.gridRow;
+		var backupJustifySelf = control.style.justifySelf;
+		var backupWidth = control.style.width;
 
 		control.replaceWith(temporaryParent.firstChild)
 
@@ -2625,6 +2627,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			newControl.scrollTop = scrollTop;
 			newControl.style.gridColumn = backupGridColSpan;
 			newControl.style.gridRow = backupGridRowSpan;
+			newControl.style.justifySelf = backupJustifySelf;
+			newControl.style.width = backupWidth;
 
 			// todo: is that needed? should be in widget impl?
 			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton')) {
@@ -2812,12 +2816,20 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					var cols = this._getGridColumns(childData.children);
 
 					if (rows > 1 && cols > 1) {
-						var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + '); \
-							grid-template-columns: repeat(' + cols  + ');';
+						var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + ', auto); \
+							grid-template-columns: repeat(' + cols  + ', auto); \
+							justify-content: start;';
 
 						table.style = gridRowColStyle;
 					} else {
 						$(table).css('grid-auto-flow', 'column');
+						var hasExpand = childData.children.some(function (c) { return c.expand; });
+						var colDefs = childData.children.map(function (c) {
+							return c.expand ? '1fr' : 'auto';
+						});
+						$(table).css('grid-template-columns', colDefs.join(' '));
+						if (!hasExpand)
+							$(table).css('justify-content', 'start');
 					}
 
 					$(table).css('display', 'grid');
