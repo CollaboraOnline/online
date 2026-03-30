@@ -192,6 +192,19 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
+    it('Treeview column header role in dialog', function () {
+        cy.then(function () {
+            win.app.map.sendUnoCommand('.uno:InsertBookmark');
+        });
+
+        a11yHelper.getActiveDialog(1)
+            .then(() => helper.processToIdle(win))
+            .then(() => {
+                cy.cGet('.ui-treeview-headers[role="row"]');
+                cy.cGet('.ui-treeview-header[role="columnheader"]');
+            });
+    });
+
     it('Treeview Enter key keeps focus in dialog', function () {
         cy.then(function () {
             win.app.map.sendUnoCommand('.uno:ChapterNumberingDialog');
