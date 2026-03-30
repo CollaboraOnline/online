@@ -782,13 +782,10 @@ export class ScrollSection extends CanvasSectionObject {
 		const mirrorX = this.isRTL();
 		const documentAnchor = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
 
-		// For CompareChanges view, viewedRectangle.pY1 can be negative (due to
-		// yStart offset) even when scrolling is possible, so use canScrollVertical instead.
-		const canScrollV = layout.type === 'ViewLayoutCompareChanges'
-			? layout.canScrollVertical(documentAnchor)
-			: layout.viewedRectangle.pY1 >= 0;
+		// For CompareChanges view, viewedRectangle.pY1 can be negative while scrolling is possible.
+		const initialVerticalCheck = layout.type === 'ViewLayoutCompareChanges' ? true : layout.viewedRectangle.pY1 >= 0;
 
-		if (canScrollV) {
+		if (initialVerticalCheck) {
 			if ((!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness)
 				|| (mirrorX && point.pY <= scrollProps.usableThickness)) {
 				if (point.pY > scrollProps.yOffset) {
