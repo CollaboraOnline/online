@@ -1004,7 +1004,9 @@ class BackstageView extends window.L.Class {
 			const type = this.normalizeTemplateType(entry.type, absolutePath);
 			if (!type) return;
 
-			const name = entry.name || this.deriveDisplayName(absolutePath);
+			const name = entry.name;
+			if (!name) return;
+
 			const id = entry.id || this.slugify(name + absolutePath);
 			const searchComponents = [name, type, absolutePath];
 
@@ -1326,15 +1328,6 @@ class BackstageView extends window.L.Class {
 			.replace(/[^a-z0-9]+/g, '-')
 			.replace(/^-+|-+$/g, '')
 			.replace(/-{2,}/g, '-');
-	}
-
-	private deriveDisplayName(templatePath: string): string {
-		const baseName = templatePath.split(/[\\/]/).pop() || templatePath;
-		const nameWithoutExtension = baseName.replace(/\.[^.]+$/, '');
-		return nameWithoutExtension
-			.replace(/[_-]+/g, ' ')
-			.replace(/\s+/g, ' ')
-			.replace(/\b\w/g, (char) => char.toUpperCase());
 	}
 
 	private getDocTypeString(): string {
