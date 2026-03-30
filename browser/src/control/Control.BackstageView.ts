@@ -1228,19 +1228,6 @@ class BackstageView extends window.L.Class {
 		}
 	}
 
-	private getTemplateTypeLabel(type: TemplateType): string {
-		switch (type) {
-			case 'writer':
-				return 'Writer';
-			case 'calc':
-				return 'Calc';
-			case 'impress':
-				return 'Impress';
-			default:
-				return type;
-		}
-	}
-
 	private createTemplateCard(
 		template: TemplateData,
 		options: { variant?: 'featured'; isBlank?: boolean } = {},
