@@ -225,45 +225,47 @@ class Cursor {
 	}
 
 	private updatePositionAndSize() {
-		let x;
-		let y;
+		app.layoutingService.appendLayoutingTask(() => {
+			let x : number;
+			let y : number;
 
-		if (app.map.getDocType() === 'spreadsheet') {
-			let diffX = -app.activeDocument.activeLayout.viewedRectangle.pX1;
-			let diffY = -app.activeDocument.activeLayout.viewedRectangle.pY1;
+			if (app.map.getDocType() === 'spreadsheet') {
+				let diffX = -app.activeDocument.activeLayout.viewedRectangle.pX1;
+				let diffY = -app.activeDocument.activeLayout.viewedRectangle.pY1;
 
-			if (app.isXOrdinateInFrozenPane(this.rectangle.pX1))
-				diffX = 0;
+				if (app.isXOrdinateInFrozenPane(this.rectangle.pX1))
+					diffX = 0;
 
-			if (app.isYOrdinateInFrozenPane(this.rectangle.pY1))
-				diffY = 0;
+				if (app.isYOrdinateInFrozenPane(this.rectangle.pY1))
+					diffY = 0;
 
-			x = Math.round((this.rectangle.pX1 + diffX + app.sectionContainer.getDocumentAnchor()[0]) / app.dpiScale);
-			y = Math.round((this.rectangle.pY1 + diffY + app.sectionContainer.getDocumentAnchor()[1]) / app.dpiScale);
-		}
-		else {
-			x = Math.round(this.rectangle.v1X / app.dpiScale);
-			y = Math.round(this.rectangle.v1Y / app.dpiScale);
-		}
-
-		this.container.style.top = y + 'px';
-		this.container.style.left = this.transformX(x) + 'px';
-		this.container.style.zIndex = this.zIndex + '';
-		// Suspend blinking animation during cursor movement
-		if (this.blink) {
-			window.L.DomUtil.addClass(this.cursor, 'blinking-suspended');
-			if (this.blinkSuspendTimeout) {
-				clearTimeout(this.blinkSuspendTimeout);
+				x = Math.round((this.rectangle.pX1 + diffX + app.sectionContainer.getDocumentAnchor()[0]) / app.dpiScale);
+				y = Math.round((this.rectangle.pY1 + diffY + app.sectionContainer.getDocumentAnchor()[1]) / app.dpiScale);
 			}
-			this.blinkSuspendTimeout = setTimeout(() => {
-				app.layoutingService.appendLayoutingTask(() => {
-					window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
-				});
-			}, 500);
-		}
+			else {
+				x = Math.round(this.rectangle.v1X / app.dpiScale);
+				y = Math.round(this.rectangle.v1Y / app.dpiScale);
+			}
 
-		this.cursor.style.height = this.rectangle.cHeight + 'px';
-		this.container.style.top = '-' + (this.container.clientHeight - this.rectangle.cHeight - 2) / 2 + 'px';
+			this.container.style.top = y + 'px';
+			this.container.style.left = this.transformX(x) + 'px';
+			this.container.style.zIndex = this.zIndex + '';
+			// Suspend blinking animation during cursor movement
+			if (this.blink) {
+				window.L.DomUtil.addClass(this.cursor, 'blinking-suspended');
+				if (this.blinkSuspendTimeout) {
+					clearTimeout(this.blinkSuspendTimeout);
+				}
+				this.blinkSuspendTimeout = setTimeout(() => {
+					app.layoutingService.appendLayoutingTask(() => {
+						window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
+					});
+				}, 500);
+			}
+
+			this.cursor.style.height = this.rectangle.cHeight + 'px';
+			this.container.style.top = '-' + (this.container.clientHeight - this.rectangle.cHeight - 2) / 2 + 'px';
+		});
 	}
 
 	static hotSpot = new Map<string, cool.Point>([['fill', new cool.Point(7, 16)]]);
