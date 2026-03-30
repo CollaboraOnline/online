@@ -256,7 +256,9 @@ class Cursor {
 				clearTimeout(this.blinkSuspendTimeout);
 			}
 			this.blinkSuspendTimeout = setTimeout(() => {
-				window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
+				app.layoutingService.appendLayoutingTask(() => {
+					window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
+				});
 			}, 500);
 		}
 
