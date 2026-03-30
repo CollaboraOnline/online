@@ -672,9 +672,9 @@ class CanvasSectionContainer {
 		if (!this.isCanvasSizeValidAfterDisplayChange())
 			return;
 
+		this.flushLayoutingTasks();
 		this.resizeCanvas();
 		this.drawSections();
-		this.flushLayoutingTasks();
 		this.canvas.style.visibility = 'unset';
 
 		// need to check if we should continue animation
