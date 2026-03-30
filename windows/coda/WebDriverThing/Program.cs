@@ -3,6 +3,7 @@
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Interactions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -213,8 +214,22 @@ namespace WebDriverThing
             Thread.Sleep(500);
             new Actions(driver).KeyDown(Keys.Control).SendKeys("s").KeyUp(Keys.Control).Perform();
 
-            // Close the document (and app) using Control+W
+            // Create a new text document using the Backstage
+            FindAndClick(driver, OpenQA.Selenium.By.Id("File-tab-label"));
+
+            FindAndClick(driver, OpenQA.Selenium.By.Id("backstage-new"));
+
+            FindAndClick(driver, OpenQA.Selenium.By.Id("blank-writer"));
+
             Thread.Sleep(500);
+            var newWindow = driver.WindowHandles[1];
+
+            // Close the first document using Control+W
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("w").KeyUp(Keys.Control).Perform();
+
+            // Switch to the new document window, close it (and the app) using Control+W
+            Thread.Sleep(500);
+            driver.SwitchTo().Window(newWindow);
             new Actions(driver).KeyDown(Keys.Control).SendKeys("w").KeyUp(Keys.Control).Perform();
 
             Thread.Sleep(500);

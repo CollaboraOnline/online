@@ -1234,7 +1234,11 @@ class BackstageView extends window.L.Class {
 		template: TemplateData,
 		options: { variant?: 'featured'; isBlank?: boolean } = {},
 	): HTMLElement {
-		const card = this.createElement('div', 'backstage-template-card');
+		const card = this.createElement(
+			'div',
+			'backstage-template-card',
+			template.id,
+		);
 		if (options.variant === 'featured') card.classList.add('is-featured');
 		if (options.isBlank) card.classList.add('is-blank');
 
