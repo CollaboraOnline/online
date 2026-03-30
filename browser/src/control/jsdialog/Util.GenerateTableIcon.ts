@@ -39,9 +39,11 @@ function strengthenColor(hex: string, factor: number): string {
 	const delta = max - min;
 
 	let h = 0,
+		s = 0,
 		l = (max + min) / 2;
 
 	if (delta !== 0) {
+		s = delta / (1 - Math.abs(2 * l - 1));
 		if (max === rNorm) h = ((gNorm - bNorm) / delta) % 6;
 		else if (max === gNorm) h = (bNorm - rNorm) / delta + 2;
 		else h = (rNorm - gNorm) / delta + 4;
@@ -49,8 +51,8 @@ function strengthenColor(hex: string, factor: number): string {
 		if (h < 0) h += 360;
 	}
 
-	if (delta < 0.08) {
-		return darkenColor(hex, 0.6);
+	if (s < 0.15) {
+		return l > 0.5 ? darkenColor(hex, 0.4) : darkenColor(hex, 0.6);
 	}
 
 	l = l * factor;
@@ -92,30 +94,31 @@ function strengthenColor(hex: string, factor: number): string {
 }
 
 function lightTableStyleSvg(
-	gridColor: string,
+	headerColor: string,
+	bodyColor: string,
 	stripeColor: string,
 	lightStyleIndex: number,
 ): string {
-	const accentColor = strengthenColor(stripeColor, 0.35);
+	const accentColor = strengthenColor(stripeColor, 0.25);
 
 	// Light 1 - 7: Has alternating row stripes, top border and bottom border
 	if (lightStyleIndex >= 1 && lightStyleIndex <= 7) {
 		return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 			<!-- Background -->
-			<rect id="table-background" x="1.5" y="3.35" width="29" height="25.1" fill="#FFFF"/>
+			<rect id="table-background" x="1.5" y="3.35" width="29" height="25.1" fill="${bodyColor}"/>
 
 			<!-- Top border -->
 			<line id="top-border" x1="1.5" y1="3.34998" x2="30.4942" y2="3.34998" stroke="${accentColor}" stroke-width="0.5"/>
 
 			<!-- Header -->
 			<g id="header-row">
-				<rect id="header-bg" x="1.5" y="3.5" width="29" height="5" fill="#FFFF"/>
-				<line id="header-column-5" x1="25.5" y1="6.18884" x2="29.7" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
-				<line id="header-column-4" x1="19.7" y1="6.18884" x2="23.9" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
-				<line id="header-column-3" x1="13.9" y1="6.18884" x2="18.1" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
-				<line id="header-column-2" x1="8.1" y1="6.18884" x2="12.3" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
-				<line id="header-column-1" x1="2.3" y1="6.18884" x2="6.5" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
+				<rect id="header-bg" x="1.5" y="3.5" width="29" height="5" fill="${bodyColor}"/>
+				<line id="header-column-5" x1="26.1" y1="6.18884" x2="29.1" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
+				<line id="header-column-4" x1="20.3" y1="6.18884" x2="23.3" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
+				<line id="header-column-3" x1="14.5" y1="6.18884" x2="17.5" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
+				<line id="header-column-2" x1="8.7" y1="6.18884" x2="11.7" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
+				<line id="header-column-1" x1="2.9" y1="6.18884" x2="5.9" y2="6.18884" stroke="${accentColor}" stroke-width="0.5"/>
 			</g>
 
 			<!-- Header separator -->
@@ -125,38 +128,38 @@ function lightTableStyleSvg(
 			<g id="body-rows">
 				<g id="row-1">
 					<rect id="row-1-bg" x="1.5" y="9" width="29" height="5" fill="${stripeColor}"/>
-					<line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="${accentColor}" stroke-width="0.5"/>
 				</g>
 
 				<g id="row-2">
-					<rect id="row-2-bg" x="1.5" y="13.5" width="29" height="5" fill="#FFFF"/>
-					<line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
+					<rect id="row-2-bg" x="1.5" y="13.5" width="29" height="5" fill="${bodyColor}"/>
+					<line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="${accentColor}" stroke-width="0.5"/>
 				</g>
 
 				<g id="row-3">
 					<rect id="row-3-bg" x="1.5" y="18.4" width="29" height="5" fill="${stripeColor}"/>
-					<line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="${accentColor}" stroke-width="0.5"/>
 				</g>
 
 				<g id="row-4">
-					<rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5" fill="#FFFF"/>
-					<line id="row-4-column-5" x1="25.5" y1="25.8051" x2="29.7" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-4-column-4" x1="19.7" y1="25.8051" x2="23.9" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-4-column-3" x1="13.9" y1="25.8051" x2="18.1" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-4-column-2" x1="8.1" y1="25.8051" x2="12.3" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
-					<line id="row-4-column-1" x1="2.3" y1="25.8051" x2="6.5" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
+					<rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5" fill="${bodyColor}"/>
+					<line id="row-4-column-5" x1="26.1" y1="25.8051" x2="29.1" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-4-column-4" x1="20.3" y1="25.8051" x2="23.3" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-4-column-3" x1="14.5" y1="25.8051" x2="17.5" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-4-column-2" x1="8.7" y1="25.8051" x2="11.7" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
+					<line id="row-4-column-1" x1="2.9" y1="25.8051" x2="5.9" y2="25.8051" stroke="${accentColor}" stroke-width="0.5"/>
 				</g>
 			</g>
 
@@ -174,12 +177,12 @@ function lightTableStyleSvg(
 
 			<!-- Header -->
 			<g id="header-row">
-				<rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="${gridColor}"/>
-				<line id="header-column-5" x1="25.5" y1="6.1438" x2="29.7" y2="6.1438" stroke="white" stroke-width="0.5"/>
-				<line id="header-column-4" x1="19.7" y1="6.1438" x2="23.9" y2="6.1438" stroke="white" stroke-width="0.5"/>
-				<line id="header-column-3" x1="13.9" y1="6.1438" x2="18.1" y2="6.1438" stroke="white" stroke-width="0.5"/>
-				<line id="header-column-2" x1="8.1" y1="6.1438" x2="12.3" y2="6.1438" stroke="white" stroke-width="0.5"/>
-				<line id="header-column-1" x1="2.3" y1="6.1438" x2="6.5" y2="6.1438" stroke="white" stroke-width="0.5"/>
+				<rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="${headerColor}"/>
+				<line id="header-column-5" x1="26.1" y1="6.1438" x2="29.1" y2="6.1438" stroke="white" stroke-width="0.5"/>
+				<line id="header-column-4" x1="20.3" y1="6.1438" x2="23.3" y2="6.1438" stroke="white" stroke-width="0.5"/>
+				<line id="header-column-3" x1="14.5" y1="6.1438" x2="17.5" y2="6.1438" stroke="white" stroke-width="0.5"/>
+				<line id="header-column-2" x1="8.7" y1="6.1438" x2="11.7" y2="6.1438" stroke="white" stroke-width="0.5"/>
+				<line id="header-column-1" x1="2.9" y1="6.1438" x2="5.9" y2="6.1438" stroke="white" stroke-width="0.5"/>
 			</g>
 
 			<!-- Body -->
@@ -189,12 +192,12 @@ function lightTableStyleSvg(
 					<mask id="row-1-mask" fill="white">
 						<path d="M1.5 8.70001H30.5V13.7H1.5V8.70001Z"/>
 					</mask>
-					<path id="row-1-divider" d="M30.5 13.7V13.2H1.5V13.7V14.2H30.5V13.7Z" fill="${gridColor}" mask="url(#row-1-mask)"/>
-					<line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
-					<line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
-					<line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
-					<line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
-					<line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+					<path id="row-1-divider" d="M30.5 13.7V13.2H1.5V13.7V14.2H30.5V13.7Z" fill="${headerColor}" mask="url(#row-1-mask)"/>
+					<line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
+					<line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
+					<line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+					<line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
+					<line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
 				</g>
 
 				<!-- Row 2 -->
@@ -202,12 +205,12 @@ function lightTableStyleSvg(
 					<mask id="row-2-mask" fill="white">
 						<path d="M1.5 13.5H30.5V18.5H1.5V13.5Z"/>
 					</mask>
-					<path id="row-2-divider" d="M30.5 18.5V18H1.5V18.5V19H30.5V18.5Z" fill="${gridColor}" mask="url(#row-2-mask)"/>
-					<line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
-					<line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
-					<line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
-					<line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
-					<line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+					<path id="row-2-divider" d="M30.5 18.5V18H1.5V18.5V19H30.5V18.5Z" fill="${headerColor}" mask="url(#row-2-mask)"/>
+					<line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
+					<line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
+					<line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+					<line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
+					<line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
 				</g>
 
 				<!-- Row 3 -->
@@ -215,80 +218,80 @@ function lightTableStyleSvg(
 					<mask id="row-3-mask" fill="white">
 						<path d="M1.5 18.4H30.5V23.4H1.5V18.4Z"/>
 					</mask>
-					<path id="row-3-divider" d="M30.5 23.4V22.9H1.5V23.4V23.9H30.5V23.4Z" fill="${gridColor}" mask="url(#row-3-mask)"/>
-					<line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
-					<line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
-					<line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
-					<line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
-					<line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+					<path id="row-3-divider" d="M30.5 23.4V22.9H1.5V23.4V23.9H30.5V23.4Z" fill="${headerColor}" mask="url(#row-3-mask)"/>
+					<line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
+					<line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
+					<line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+					<line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
+					<line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
 				</g>
 
 				<!-- Row 4 -->
 				<g id="row-4">
-					<line id="row-4-column-5" x1="25.5" y1="25.8051" x2="29.7" y2="25.8051" stroke="black" stroke-width="0.5"/>
-					<line id="row-4-column-4" x1="19.7" y1="25.8051" x2="23.9" y2="25.8051" stroke="black" stroke-width="0.5"/>
-					<line id="row-4-column-3" x1="13.9" y1="25.8051" x2="18.1" y2="25.8051" stroke="black" stroke-width="0.5"/>
-					<line id="row-4-column-2" x1="8.1" y1="25.8051" x2="12.3" y2="25.8051" stroke="black" stroke-width="0.5"/>
-					<line id="row-4-column-1" x1="2.3" y1="25.8051" x2="6.5" y2="25.8051" stroke="black" stroke-width="0.5"/>
+					<line id="row-4-column-5" x1="26.1" y1="25.8051" x2="29.1" y2="25.8051" stroke="black" stroke-width="0.5"/>
+					<line id="row-4-column-4" x1="20.3" y1="25.8051" x2="23.3" y2="25.8051" stroke="black" stroke-width="0.5"/>
+					<line id="row-4-column-3" x1="14.5" y1="25.8051" x2="17.5" y2="25.8051" stroke="black" stroke-width="0.5"/>
+					<line id="row-4-column-2" x1="8.7" y1="25.8051" x2="11.7" y2="25.8051" stroke="black" stroke-width="0.5"/>
+					<line id="row-4-column-1" x1="2.9" y1="25.8051" x2="5.9" y2="25.8051" stroke="black" stroke-width="0.5"/>
 				</g>
 			</g>
 
 			<!-- Table border -->
-			<rect id="table-border" x="1.7" y="3.2" width="28.6" height="25.6" stroke="${gridColor}" stroke-width="0.4"/>
+			<rect id="table-border" x="1.7" y="3.2" width="28.6" height="25.6" stroke="${headerColor}" stroke-width="0.4"/>
 		</svg>`;
 	}
 
 	// Light 15 - 21: Has vertical separators, header separator and table border
 	return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<!-- Background -->
-		<rect id="table-background" x="1.7" y="3.2" width="28.6" height="25.6" fill="#FFFF"/>
+		<rect id="table-background" x="1.7" y="3.2" width="28.6" height="25.6" fill="${bodyColor}"/>
 
 		<!-- Header -->
 		<g id="header-row">
-			<rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="#FFFF"/>
-			<line id="header-column-5" x1="25.5" y1="6.1438" x2="29.7" y2="6.1438" stroke="black" stroke-width="0.5"/>
-			<line id="header-column-4" x1="19.7" y1="6.1438" x2="23.9" y2="6.1438" stroke="black" stroke-width="0.5"/>
-			<line id="header-column-3" x1="13.9" y1="6.1438" x2="18.1" y2="6.1438" stroke="black" stroke-width="0.5"/>
-			<line id="header-column-2" x1="8.1" y1="6.1438" x2="12.3" y2="6.1438" stroke="black" stroke-width="0.5"/>
-			<line id="header-column-1" x1="2.3" y1="6.1438" x2="6.5" y2="6.1438" stroke="black" stroke-width="0.5"/>
+			<rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="${bodyColor}"/>
+			<line id="header-column-5" x1="26.1" y1="6.1438" x2="29.1" y2="6.1438" stroke="black" stroke-width="0.5"/>
+			<line id="header-column-4" x1="20.3" y1="6.1438" x2="23.3" y2="6.1438" stroke="black" stroke-width="0.5"/>
+			<line id="header-column-3" x1="14.5" y1="6.1438" x2="17.5" y2="6.1438" stroke="black" stroke-width="0.5"/>
+			<line id="header-column-2" x1="8.7" y1="6.1438" x2="11.7" y2="6.1438" stroke="black" stroke-width="0.5"/>
+			<line id="header-column-1" x1="2.9" y1="6.1438" x2="5.9" y2="6.1438" stroke="black" stroke-width="0.5"/>
 		</g>
 
 		<!-- Body rows -->
 		<g id="body-rows">
 			<g id="row-1">
 				<path id="row-1-bg" d="M1.5 8.70001H30.5V13.7H1.5V8.70001Z" fill="${stripeColor}"/>
-				<line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
-				<line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
-				<line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
-				<line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
-				<line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+				<line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
+				<line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
+				<line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+				<line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
+				<line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
 			</g>
 
 			<g id="row-2">
-				<path id="row-2-bg" d="M1.5 13.5H30.5V18.5H1.5V13.5Z" fill="#FFFF"/>
-				<line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
-				<line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
-				<line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
-				<line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
-				<line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+				<path id="row-2-bg" d="M1.5 13.5H30.5V18.5H1.5V13.5Z" fill="${bodyColor}"/>
+				<line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
+				<line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
+				<line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+				<line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
+				<line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
 			</g>
 
 			<g id="row-3">
 				<path id="row-3-bg" d="M1.5 18.4H30.5V23.4H1.5V18.4Z" fill="${stripeColor}"/>
-				<line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
-				<line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
-				<line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
-				<line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
-				<line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+				<line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
+				<line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
+				<line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+				<line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
+				<line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
 			</g>
 
 			<g id="row-4">
-				<rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5.70001" fill="#FFFF"/>
-				<line id="row-4-column-5" x1="25.5" y1="26.1909" x2="29.7" y2="26.1909" stroke="black" stroke-width="0.5"/>
-				<line id="row-4-column-4" x1="19.7" y1="26.1909" x2="23.9" y2="26.1909" stroke="black" stroke-width="0.5"/>
-				<line id="row-4-column-3" x1="13.9" y1="26.1909" x2="18.1" y2="26.1909" stroke="black" stroke-width="0.5"/>
-				<line id="row-4-column-2" x1="8.1" y1="26.1909" x2="12.3" y2="26.1909" stroke="black" stroke-width="0.5"/>
-				<line id="row-4-column-1" x1="2.3" y1="26.1909" x2="6.5" y2="26.1909" stroke="black" stroke-width="0.5"/>
+				<rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5.70001" fill="${bodyColor}"/>
+				<line id="row-4-column-5" x1="26.1" y1="26.1909" x2="29.1" y2="26.1909" stroke="black" stroke-width="0.5"/>
+				<line id="row-4-column-4" x1="20.3" y1="26.1909" x2="23.3" y2="26.1909" stroke="black" stroke-width="0.5"/>
+				<line id="row-4-column-3" x1="14.5" y1="26.1909" x2="17.5" y2="26.1909" stroke="black" stroke-width="0.5"/>
+				<line id="row-4-column-2" x1="8.7" y1="26.1909" x2="11.7" y2="26.1909" stroke="black" stroke-width="0.5"/>
+				<line id="row-4-column-1" x1="2.9" y1="26.1909" x2="5.9" y2="26.1909" stroke="black" stroke-width="0.5"/>
 			</g>
 		</g>
 
@@ -312,11 +315,11 @@ function lightTableStyleSvg(
 
 function mediumTableStyleSvg(
 	headerColor: string,
-	stripeColor: string,
 	bodyColor: string,
+	stripeColor: string,
 	mediumStyleIndex: number,
 ): string {
-	const accentColor = strengthenColor(stripeColor, 0.55);
+	const accentColor = strengthenColor(stripeColor, 0.45);
 
 	// Medium 1 - 7: Has header background and alternating row stripes and table border
 	if (mediumStyleIndex >= 1 && mediumStyleIndex <= 7) {
@@ -327,49 +330,49 @@ function mediumTableStyleSvg(
   <!-- Header -->
   <g id="header-row">
     <rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="${headerColor}"/>
-    <line id="header-column-5" x1="25.5" y1="6.1438" x2="29.7" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-4" x1="19.7" y1="6.1438" x2="23.9" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-3" x1="13.9" y1="6.1438" x2="18.1" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-2" x1="8.1" y1="6.1438" x2="12.3" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-1" x1="2.3" y1="6.1438" x2="6.5" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-5" x1="26.1" y1="6.1438" x2="29.1" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-4" x1="20.3" y1="6.1438" x2="23.3" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-3" x1="14.5" y1="6.1438" x2="17.5" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-2" x1="8.7" y1="6.1438" x2="11.7" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-1" x1="2.9" y1="6.1438" x2="5.9" y2="6.1438" stroke="white" stroke-width="0.5"/>
   </g>
 
   <!-- Body rows -->
   <g id="body-rows">
     <g id="row-1">
       <path id="row-1-bg" d="M1.5 8.70001H30.5V13.7H1.5V8.70001Z" fill="${stripeColor}"/>
-      <line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-2">
-      <path id="row-2-bg" d="M1.5 13.6H30.5V18.6H1.5V13.6Z" fill="#FFFF"/>
-      <line id="row-2-column-5" x1="25.5" y1="15.9564" x2="29.7" y2="15.9564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-4" x1="19.7" y1="15.9564" x2="23.9" y2="15.9564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-3" x1="13.9" y1="15.9564" x2="18.1" y2="15.9564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-2" x1="8.1" y1="15.9564" x2="12.3" y2="15.9564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-1" x1="2.3" y1="15.9564" x2="6.5" y2="15.9564" stroke="black" stroke-width="0.5"/>
+      <path id="row-2-bg" d="M1.5 13.6H30.5V18.6H1.5V13.6Z" fill="${bodyColor}"/>
+      <line id="row-2-column-5" x1="26.1" y1="15.9564" x2="29.1" y2="15.9564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-4" x1="20.3" y1="15.9564" x2="23.3" y2="15.9564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-3" x1="14.5" y1="15.9564" x2="17.5" y2="15.9564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-2" x1="8.7" y1="15.9564" x2="11.7" y2="15.9564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-1" x1="2.9" y1="15.9564" x2="5.9" y2="15.9564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-3">
       <path id="row-3-bg" d="M1.5 18.4H30.5V23.6H1.5V18.4Z" fill="${stripeColor}"/>
-      <line id="row-3-column-5" x1="25.5" y1="20.8606" x2="29.7" y2="20.8606" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-4" x1="19.7" y1="20.8606" x2="23.9" y2="20.8606" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-3" x1="13.9" y1="20.8606" x2="18.1" y2="20.8606" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-2" x1="8.1" y1="20.8606" x2="12.3" y2="20.8606" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-1" x1="2.3" y1="20.8606" x2="6.5" y2="20.8606" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-5" x1="26.1" y1="20.8606" x2="29.1" y2="20.8606" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-4" x1="20.3" y1="20.8606" x2="23.3" y2="20.8606" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-3" x1="14.5" y1="20.8606" x2="17.5" y2="20.8606" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-2" x1="8.7" y1="20.8606" x2="11.7" y2="20.8606" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-1" x1="2.9" y1="20.8606" x2="5.9" y2="20.8606" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-4">
-      <rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5.5" fill="#FFFF"/>
-      <line id="row-4-column-5" x1="25.5" y1="25.4505" x2="29.7" y2="25.4505" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-4" x1="19.7" y1="25.4505" x2="23.9" y2="25.4505" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-3" x1="13.9" y1="25.4505" x2="18.1" y2="25.4505" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-2" x1="8.1" y1="25.4505" x2="12.3" y2="25.4505" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-1" x1="2.3" y1="25.4505" x2="6.5" y2="25.4505" stroke="black" stroke-width="0.5"/>
+      <rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5.5" fill="${bodyColor}"/>
+      <line id="row-4-column-5" x1="26.1" y1="25.4505" x2="29.1" y2="25.4505" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-4" x1="20.3" y1="25.4505" x2="23.3" y2="25.4505" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-3" x1="14.5" y1="25.4505" x2="17.5" y2="25.4505" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-2" x1="8.7" y1="25.4505" x2="11.7" y2="25.4505" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-1" x1="2.9" y1="25.4505" x2="5.9" y2="25.4505" stroke="black" stroke-width="0.5"/>
     </g>
   </g>
 
@@ -387,49 +390,49 @@ function mediumTableStyleSvg(
   <!-- Header -->
   <g id="header-row">
     <rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="${headerColor}"/>
-    <line id="header-column-5" x1="25.5" y1="6.1438" x2="29.7" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-4" x1="19.7" y1="6.1438" x2="23.9" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-3" x1="13.9" y1="6.1438" x2="18.1" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-2" x1="8.1" y1="6.1438" x2="12.3" y2="6.1438" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-1" x1="2.3" y1="6.1438" x2="6.5" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-5" x1="26.1" y1="6.1438" x2="29.1" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-4" x1="20.3" y1="6.1438" x2="23.3" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-3" x1="14.5" y1="6.1438" x2="17.5" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-2" x1="8.7" y1="6.1438" x2="11.7" y2="6.1438" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-1" x1="2.9" y1="6.1438" x2="5.9" y2="6.1438" stroke="white" stroke-width="0.5"/>
   </g>
 
   <!-- Body rows -->
   <g id="body-rows">
     <g id="row-1">
       <path id="row-1-bg" d="M1.5 8.70001H30.5V13.7H1.5V8.70001Z" fill="${stripeColor}"/>
-      <line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-2">
       <path id="row-2-bg" d="M1.5 13.5H30.5V18.5H1.5V13.5Z" fill="${bodyColor}"/>
-      <line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-3">
       <path id="row-3-bg" d="M1.5 18.4H30.5V23.4H1.5V18.4Z" fill="${stripeColor}"/>
-      <line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-4">
       <rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5.70001" fill="${bodyColor}"/>
-      <line id="row-4-column-5" x1="25.5" y1="26.1909" x2="29.7" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-4" x1="19.7" y1="26.1909" x2="23.9" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-3" x1="13.9" y1="26.1909" x2="18.1" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-2" x1="8.1" y1="26.1909" x2="12.3" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-1" x1="2.3" y1="26.1909" x2="6.5" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-5" x1="26.1" y1="26.1909" x2="29.1" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-4" x1="20.3" y1="26.1909" x2="23.3" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-3" x1="14.5" y1="26.1909" x2="17.5" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-2" x1="8.7" y1="26.1909" x2="11.7" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-1" x1="2.9" y1="26.1909" x2="5.9" y2="26.1909" stroke="black" stroke-width="0.5"/>
     </g>
   </g>
 
@@ -464,11 +467,11 @@ function mediumTableStyleSvg(
   <!-- Header -->
   <g id="header-row">
     <rect id="header-bg" x="1.5" y="3.5" width="29" height="5" fill="${headerColor}"/>
-    <line id="header-column-5" x1="25.5" y1="6.18884" x2="29.7" y2="6.18884" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-4" x1="19.7" y1="6.18884" x2="23.9" y2="6.18884" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-3" x1="13.9" y1="6.18884" x2="18.1" y2="6.18884" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-2" x1="8.1" y1="6.18884" x2="12.3" y2="6.18884" stroke="white" stroke-width="0.5"/>
-    <line id="header-column-1" x1="2.3" y1="6.18884" x2="6.5" y2="6.18884" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-5" x1="26.1" y1="6.18884" x2="29.1" y2="6.18884" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-4" x1="20.3" y1="6.18884" x2="23.3" y2="6.18884" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-3" x1="14.5" y1="6.18884" x2="17.5" y2="6.18884" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-2" x1="8.7" y1="6.18884" x2="11.7" y2="6.18884" stroke="white" stroke-width="0.5"/>
+    <line id="header-column-1" x1="2.9" y1="6.18884" x2="5.9" y2="6.18884" stroke="white" stroke-width="0.5"/>
   </g>
 
   <!-- Header separator -->
@@ -478,38 +481,38 @@ function mediumTableStyleSvg(
   <g id="body-rows">
     <g id="row-1">
       <rect id="row-1-bg" x="1.5" y="9" width="29" height="5" fill="${stripeColor}"/>
-      <line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-2">
-      <rect id="row-2-bg" x="1.5" y="13.5" width="29" height="5" fill="#FFFF"/>
-      <line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <rect id="row-2-bg" x="1.5" y="13.5" width="29" height="5" fill="${bodyColor}"/>
+      <line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-3">
       <rect id="row-3-bg" x="1.5" y="18.4" width="29" height="5" fill="${stripeColor}"/>
-      <line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-4">
-      <rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5" fill="#FFFF"/>
-      <line id="row-4-column-5" x1="25.5" y1="25.8051" x2="29.7" y2="25.8051" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-4" x1="19.7" y1="25.8051" x2="23.9" y2="25.8051" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-3" x1="13.9" y1="25.8051" x2="18.1" y2="25.8051" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-2" x1="8.1" y1="25.8051" x2="12.3" y2="25.8051" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-1" x1="2.3" y1="25.8051" x2="6.5" y2="25.8051" stroke="black" stroke-width="0.5"/>
+      <rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5" fill="${bodyColor}"/>
+      <line id="row-4-column-5" x1="26.1" y1="25.8051" x2="29.1" y2="25.8051" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-4" x1="20.3" y1="25.8051" x2="23.3" y2="25.8051" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-3" x1="14.5" y1="25.8051" x2="17.5" y2="25.8051" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-2" x1="8.7" y1="25.8051" x2="11.7" y2="25.8051" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-1" x1="2.9" y1="25.8051" x2="5.9" y2="25.8051" stroke="black" stroke-width="0.5"/>
     </g>
   </g>
 
@@ -527,49 +530,49 @@ function mediumTableStyleSvg(
   <!-- Header -->
   <g id="header-row">
     <rect id="header-bg" x="1.5" y="3.29999" width="29" height="5.5" fill="${headerColor}"/>
-    <line id="header-column-5" x1="25.5" y1="6.1438" x2="29.7" y2="6.1438" stroke="black" stroke-width="0.5"/>
-    <line id="header-column-4" x1="19.7" y1="6.1438" x2="23.9" y2="6.1438" stroke="black" stroke-width="0.5"/>
-    <line id="header-column-3" x1="13.9" y1="6.1438" x2="18.1" y2="6.1438" stroke="black" stroke-width="0.5"/>
-    <line id="header-column-2" x1="8.1" y1="6.1438" x2="12.3" y2="6.1438" stroke="black" stroke-width="0.5"/>
-    <line id="header-column-1" x1="2.3" y1="6.1438" x2="6.5" y2="6.1438" stroke="black" stroke-width="0.5"/>
+    <line id="header-column-5" x1="26.1" y1="6.1438" x2="29.1" y2="6.1438" stroke="black" stroke-width="0.5"/>
+    <line id="header-column-4" x1="20.3" y1="6.1438" x2="23.3" y2="6.1438" stroke="black" stroke-width="0.5"/>
+    <line id="header-column-3" x1="14.5" y1="6.1438" x2="17.5" y2="6.1438" stroke="black" stroke-width="0.5"/>
+    <line id="header-column-2" x1="8.7" y1="6.1438" x2="11.7" y2="6.1438" stroke="black" stroke-width="0.5"/>
+    <line id="header-column-1" x1="2.9" y1="6.1438" x2="5.9" y2="6.1438" stroke="black" stroke-width="0.5"/>
   </g>
 
   <!-- Body rows -->
   <g id="body-rows">
     <g id="row-1">
       <path id="row-1-bg" d="M1.5 8.70001H30.5V13.7H1.5V8.70001Z" fill="${stripeColor}"/>
-      <line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
-      <line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="black" stroke-width="0.5"/>
+      <line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-2">
       <path id="row-2-bg" d="M1.5 13.5H30.5V18.5H1.5V13.5Z" fill="${bodyColor}"/>
-      <line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
-      <line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="black" stroke-width="0.5"/>
+      <line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-3">
       <path id="row-3-bg" d="M1.5 18.4H30.5V23.4H1.5V18.4Z" fill="${stripeColor}"/>
-      <line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
-      <line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="black" stroke-width="0.5"/>
+      <line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="black" stroke-width="0.5"/>
     </g>
 
     <g id="row-4">
       <rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5.70001" fill="${bodyColor}"/>
-      <line id="row-4-column-5" x1="25.5" y1="26.1909" x2="29.7" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-4" x1="19.7" y1="26.1909" x2="23.9" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-3" x1="13.9" y1="26.1909" x2="18.1" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-2" x1="8.1" y1="26.1909" x2="12.3" y2="26.1909" stroke="black" stroke-width="0.5"/>
-      <line id="row-4-column-1" x1="2.3" y1="26.1909" x2="6.5" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-5" x1="26.1" y1="26.1909" x2="29.1" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-4" x1="20.3" y1="26.1909" x2="23.3" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-3" x1="14.5" y1="26.1909" x2="17.5" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-2" x1="8.7" y1="26.1909" x2="11.7" y2="26.1909" stroke="black" stroke-width="0.5"/>
+      <line id="row-4-column-1" x1="2.9" y1="26.1909" x2="5.9" y2="26.1909" stroke="black" stroke-width="0.5"/>
     </g>
   </g>
 
@@ -589,13 +592,14 @@ function mediumTableStyleSvg(
 function darkTableStyleSvg(
 	headerColor: string,
 	bodyColor: string,
-	gridColor: string,
+	firstRowStripe: string,
 	styleIndex: number,
 ): string {
-	const headerLineColor = getContrastStroke(headerColor);
-	const bodyLineColor = getBodyContrastStroke(gridColor, bodyColor);
+	const headerLineColor =
+		styleIndex >= 1 && styleIndex <= 11 ? 'white' : 'black';
+	const bodyLineColor = styleIndex >= 1 && styleIndex <= 7 ? 'white' : 'black';
 	const separatorColor =
-		styleIndex >= 1 && styleIndex <= 7 ? '#FFFF' : gridColor;
+		styleIndex >= 1 && styleIndex <= 7 ? '#FFFF' : firstRowStripe;
 
 	return `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 
@@ -604,43 +608,43 @@ function darkTableStyleSvg(
 
 		<!-- Header -->
 		<rect x="1.5" y="2.95" width="29" height="5" fill="${headerColor}"/>
-		<line id="header-column-5" x1="25.5" y1="5.51251" x2="29.7" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
-		<line id="header-column-4" x1="19.7" y1="5.51251" x2="23.9" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
-		<line id="header-column-3" x1="13.9" y1="5.51251" x2="18.1" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
-		<line id="header-column-2" x1="8.1" y1="5.51251" x2="12.3" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
-		<line id="header-column-1" x1="2.3" y1="5.51251" x2="6.5" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
+		<line id="header-column-5" x1="26.1" y1="5.51251" x2="29.1" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
+		<line id="header-column-4" x1="20.3" y1="5.51251" x2="23.3" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
+		<line id="header-column-3" x1="14.5" y1="5.51251" x2="17.5" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
+		<line id="header-column-2" x1="8.7" y1="5.51251" x2="11.7" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
+		<line id="header-column-1" x1="2.9" y1="5.51251" x2="5.9" y2="5.51251" stroke="${headerLineColor}" stroke-width="0.5"/>
 
 		<!-- Row 1 -->
-		<rect id="row-1-bg" x="1.5" y="8.70001" width="29" height="5" fill="${gridColor}"/>
-		<line id="row-1-column-5" x1="25.5" y1="11.0564" x2="29.7" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-1-column-4" x1="19.7" y1="11.0564" x2="23.9" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-1-column-3" x1="13.9" y1="11.0564" x2="18.1" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-1-column-2" x1="8.1" y1="11.0564" x2="12.3" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-1-column-1" x1="2.3" y1="11.0564" x2="6.5" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<rect id="row-1-bg" x="1.5" y="8.70001" width="29" height="5" fill="${firstRowStripe}"/>
+		<line id="row-1-column-5" x1="26.1" y1="11.0564" x2="29.1" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-1-column-4" x1="20.3" y1="11.0564" x2="23.3" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-1-column-3" x1="14.5" y1="11.0564" x2="17.5" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-1-column-2" x1="8.7" y1="11.0564" x2="11.7" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-1-column-1" x1="2.9" y1="11.0564" x2="5.9" y2="11.0564" stroke="${bodyLineColor}" stroke-width="0.5"/>
 
 		<!-- Row 2 -->
 		<rect id="row-2-bg" x="1.5" y="13.5" width="29" height="5" fill="${bodyColor}"/>
-		<line id="row-2-column-5" x1="25.5" y1="15.8564" x2="29.7" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-2-column-4" x1="19.7" y1="15.8564" x2="23.9" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-2-column-3" x1="13.9" y1="15.8564" x2="18.1" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-2-column-2" x1="8.1" y1="15.8564" x2="12.3" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-2-column-1" x1="2.3" y1="15.8564" x2="6.5" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-2-column-5" x1="26.1" y1="15.8564" x2="29.1" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-2-column-4" x1="20.3" y1="15.8564" x2="23.3" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-2-column-3" x1="14.5" y1="15.8564" x2="17.5" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-2-column-2" x1="8.7" y1="15.8564" x2="11.7" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-2-column-1" x1="2.9" y1="15.8564" x2="5.9" y2="15.8564" stroke="${bodyLineColor}" stroke-width="0.5"/>
 
 		<!-- Row 3 -->
-		<rect id="row-3-bg" x="1.5" y="18.4" width="29" height="5" fill="${gridColor}"/>
-		<line id="row-3-column-5" x1="25.5" y1="20.7563" x2="29.7" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-3-column-4" x1="19.7" y1="20.7563" x2="23.9" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-3-column-3" x1="13.9" y1="20.7563" x2="18.1" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-3-column-2" x1="8.1" y1="20.7563" x2="12.3" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-3-column-1" x1="2.3" y1="20.7563" x2="6.5" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<rect id="row-3-bg" x="1.5" y="18.4" width="29" height="5" fill="${firstRowStripe}"/>
+		<line id="row-3-column-5" x1="26.1" y1="20.7563" x2="29.1" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-3-column-4" x1="20.3" y1="20.7563" x2="23.3" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-3-column-3" x1="14.5" y1="20.7563" x2="17.5" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-3-column-2" x1="8.7" y1="20.7563" x2="11.7" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-3-column-1" x1="2.9" y1="20.7563" x2="5.9" y2="20.7563" stroke="${bodyLineColor}" stroke-width="0.5"/>
 
 		<!-- Row 4 -->
 		<rect id="row-4-bg" x="1.5" y="23.3" width="29" height="5" fill="${bodyColor}"/>
-		<line id="row-4-column-5" x1="25.5" y1="25.8051" x2="29.7" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-4-column-4" x1="19.7" y1="25.8051" x2="23.9" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-4-column-3" x1="13.9" y1="25.8051" x2="18.1" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-4-column-2" x1="8.1" y1="25.8051" x2="12.3" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
-		<line id="row-4-column-1" x1="2.3" y1="25.8051" x2="6.5" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-4-column-5" x1="26.1" y1="25.8051" x2="29.1" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-4-column-4" x1="20.3" y1="25.8051" x2="23.3" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-4-column-3" x1="14.5" y1="25.8051" x2="17.5" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-4-column-2" x1="8.7" y1="25.8051" x2="11.7" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
+		<line id="row-4-column-1" x1="2.9" y1="25.8051" x2="5.9" y2="25.8051" stroke="${bodyLineColor}" stroke-width="0.5"/>
 
 		<!-- Header separator -->
 		<line id="header-separator" x1="1.5" y1="8.5" x2="30.5" y2="8.5" stroke="${separatorColor}"/>
@@ -659,43 +663,43 @@ function customTableStyleSvg(
 
 		<!-- Header -->
 		<rect x="1.5" y="3" width="29" height="5.5" fill="${headerColor}"/>
-		<line x1="25.5" y1="5.8" x2="29.7" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
-		<line x1="19.7" y1="5.8" x2="23.9" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
-		<line x1="13.9" y1="5.8" x2="18.1" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
-		<line x1="8.1" y1="5.8" x2="12.3" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
-		<line x1="2.3" y1="5.8" x2="6.5" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="26.1" y1="5.8" x2="29.1" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="20.3" y1="5.8" x2="23.3" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="14.5" y1="5.8" x2="17.5" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="8.7" y1="5.8" x2="11.7" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="2.9" y1="5.8" x2="5.9" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
 
 		<!-- Row 1 -->
 		<rect x="1.5" y="8.7" width="29" height="5" fill="${firstRowStripe}"/>
-		<line x1="25.5" y1="11.1" x2="29.7" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="19.7" y1="11.1" x2="23.9" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="13.9" y1="11.1" x2="18.1" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="8.1" y1="11.1" x2="12.3" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="2.3" y1="11.1" x2="6.5" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="26.1" y1="11.1" x2="29.1" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="20.3" y1="11.1" x2="23.3" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="14.5" y1="11.1" x2="17.5" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.7" y1="11.1" x2="11.7" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.9" y1="11.1" x2="5.9" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
 
 		<!-- Row 2 -->
 		<rect x="1.5" y="13.5" width="29" height="5" fill="${secondRowStripe}"/>
-		<line x1="25.5" y1="15.9" x2="29.7" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="19.7" y1="15.9" x2="23.9" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="13.9" y1="15.9" x2="18.1" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="8.1" y1="15.9" x2="12.3" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="2.3" y1="15.9" x2="6.5" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="26.1" y1="15.9" x2="29.1" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="20.3" y1="15.9" x2="23.3" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="14.5" y1="15.9" x2="17.5" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.7" y1="15.9" x2="11.7" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.9" y1="15.9" x2="5.9" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
 
 		<!-- Row 3 -->
 		<rect x="1.5" y="18.4" width="29" height="5" fill="${firstRowStripe}"/>
-		<line x1="25.5" y1="20.8" x2="29.7" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="19.7" y1="20.8" x2="23.9" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="13.9" y1="20.8" x2="18.1" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="8.1" y1="20.8" x2="12.3" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="2.3" y1="20.8" x2="6.5" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="26.1" y1="20.8" x2="29.1" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="20.3" y1="20.8" x2="23.3" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="14.5" y1="20.8" x2="17.5" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.7" y1="20.8" x2="11.7" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.9" y1="20.8" x2="5.9" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
 
 		<!-- Row 4 -->
 		<rect x="1.5" y="23.3" width="29" height="5" fill="${secondRowStripe}"/>
-		<line x1="25.5" y1="25.8" x2="29.7" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="19.7" y1="25.8" x2="23.9" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="13.9" y1="25.8" x2="18.1" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="8.1" y1="25.8" x2="12.3" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
-		<line x1="2.3" y1="25.8" x2="6.5" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="26.1" y1="25.8" x2="29.1" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="20.3" y1="25.8" x2="23.3" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="14.5" y1="25.8" x2="17.5" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.7" y1="25.8" x2="11.7" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.9" y1="25.8" x2="5.9" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
 
 	</svg>`;
 }
