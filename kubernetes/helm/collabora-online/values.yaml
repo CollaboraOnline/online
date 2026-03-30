@@ -201,7 +201,7 @@ probes:
     enabled: true
     failureThreshold: 30
     periodSeconds: 3
-
+    path: /
   readiness:
     enabled: true
     initialDelaySeconds: 0
@@ -209,6 +209,7 @@ probes:
     timeoutSeconds: 30
     successThreshold: 1
     failureThreshold: 2
+    path: /
   liveness:
     enabled: true
     initialDelaySeconds: 0
@@ -216,6 +217,7 @@ probes:
     timeoutSeconds: 30
     successThreshold: 1
     failureThreshold: 4
+    path: /
 
 route:
   # -- enable an HTTPRoute resource for collabora.
