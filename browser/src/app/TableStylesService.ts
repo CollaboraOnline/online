@@ -72,15 +72,6 @@ function toHex(r: number, g: number, b: number): string {
 	);
 }
 
-function lightenColor(hex: string, factor: number): string {
-	const [r, g, b] = parseHexToRgb(hex);
-	return toHex(
-		r + (255 - r) * factor,
-		g + (255 - g) * factor,
-		b + (255 - b) * factor,
-	);
-}
-
 function darkenColor(hex: string, factor: number): string {
 	const [r, g, b] = parseHexToRgb(hex);
 	return toHex(r * (1 - factor), g * (1 - factor), b * (1 - factor));
@@ -319,7 +310,7 @@ class TableStylesService {
 	}
 
 	public generateIcon(style: TableStyleEntry): string {
-		const wholeTable = getElementColor(style, 'WholeTable') || '000000';
+		const wholeTable = getElementColor(style, 'WholeTable') || 'FFFF';
 		const headerRow = getElementColor(style, 'HeaderRow') || wholeTable;
 		const firstRowStripe =
 			getElementColor(style, 'FirstRowStripe') || wholeTable;
@@ -339,25 +330,11 @@ class TableStylesService {
 		let svg: string;
 
 		if (style.Name.indexOf('Light') >= 0) {
-			svg = lightTableStyleSvg(
-				hr,
-				lightenColor(frs, 0.5),
-				getStyleIndex('Light'),
-			);
+			svg = lightTableStyleSvg(hr, wt, frs, getStyleIndex('Light'));
 		} else if (style.Name.indexOf('Medium') >= 0) {
-			svg = mediumTableStyleSvg(
-				hr,
-				frs,
-				lightenColor(frs, 0.55),
-				getStyleIndex('Medium'),
-			);
+			svg = mediumTableStyleSvg(hr, wt, frs, getStyleIndex('Medium'));
 		} else if (style.Name.indexOf('Dark') >= 0) {
-			const darkStyleIndex = getStyleIndex('Dark');
-			const gridColor =
-				darkStyleIndex >= 8 && darkStyleIndex <= 11
-					? strengthenColor(wt, 0.75)
-					: darkenColor(wt, 0.35);
-			svg = darkTableStyleSvg(hr, wt, gridColor, darkStyleIndex);
+			svg = darkTableStyleSvg(hr, wt, frs, getStyleIndex('Dark'));
 		} else {
 			svg = customTableStyleSvg(hr, frs, srs);
 		}
