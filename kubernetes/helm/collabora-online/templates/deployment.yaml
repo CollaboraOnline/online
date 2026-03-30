@@ -69,7 +69,7 @@ spec:
           {{- if .Values.probes.startup.enabled }}
           startupProbe:
             httpGet:
-              path: /
+              path: {{ .Values.probes.startup.path }}
               port: {{ .Values.deployment.containerPort }}
               scheme: HTTP
             failureThreshold: {{ .Values.probes.startup.failureThreshold }}
@@ -78,7 +78,7 @@ spec:
           {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.probes.liveness.path }}
               port: {{ .Values.deployment.containerPort }}
               scheme: HTTP
             initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
@@ -90,7 +90,7 @@ spec:
           {{- if .Values.probes.readiness.enabled }}
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.probes.readiness.path }}
               port: {{ .Values.deployment.containerPort }}
               scheme: HTTP
             initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
