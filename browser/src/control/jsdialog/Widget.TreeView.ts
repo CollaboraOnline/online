@@ -334,6 +334,7 @@ class TreeViewControl {
 			th,
 		);
 
+		th.setAttribute('role', 'columnheader');
 		span.innerText = header.text;
 
 		if (header.sortable !== false) {
@@ -1609,6 +1610,8 @@ class TreeViewControl {
 			'ui-treeview-headers',
 			this._container,
 		);
+
+		this._thead.setAttribute('role', 'row');
 
 		let dummyCells = this._columns - headers.length;
 		if (this._hasState) dummyCells++;
