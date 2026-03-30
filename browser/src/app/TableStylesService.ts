@@ -325,10 +325,13 @@ class TableStylesService {
 		const headerRow = getElementColor(style, 'HeaderRow') || wholeTable;
 		const firstRowStripe =
 			getElementColor(style, 'FirstRowStripe') || wholeTable;
+		const secondRowStripe =
+			getElementColor(style, 'SecondRowStripe') || wholeTable;
 
 		const wt = '#' + wholeTable;
 		const hr = '#' + headerRow;
 		const frs = '#' + firstRowStripe;
+		const srs = '#' + secondRowStripe;
 
 		const getStyleIndex = (variant: string) => {
 			const match = style.Name.match(new RegExp(`${variant}(\\d+)$`));
@@ -358,11 +361,7 @@ class TableStylesService {
 					: darkenColor(wt, 0.35);
 			svg = darkTableStyleSvg(hr, wt, gridColor, darkStyleIndex);
 		} else {
-			svg = lightTableStyleSvg(
-				wt,
-				lightenColor(wt, 0.5),
-				getStyleIndex('Light'),
-			);
+			svg = customTableStyleSvg(hr, frs, srs);
 		}
 
 		return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);

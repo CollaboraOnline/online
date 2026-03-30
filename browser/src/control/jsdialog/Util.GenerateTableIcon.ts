@@ -647,3 +647,55 @@ function darkTableStyleSvg(
 
 	</svg>`;
 }
+
+function customTableStyleSvg(
+	headerColor: string,
+	firstRowStripe: string,
+	secondRowStripe: string,
+): string {
+	const lineColor = getBodyContrastStroke(firstRowStripe, secondRowStripe);
+
+	return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+		<!-- Header -->
+		<rect x="1.5" y="3" width="29" height="5.5" fill="${headerColor}"/>
+		<line x1="25.5" y1="5.8" x2="29.7" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="19.7" y1="5.8" x2="23.9" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="13.9" y1="5.8" x2="18.1" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="8.1" y1="5.8" x2="12.3" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+		<line x1="2.3" y1="5.8" x2="6.5" y2="5.8" stroke="${getContrastStroke(headerColor)}" stroke-width="0.5"/>
+
+		<!-- Row 1 -->
+		<rect x="1.5" y="8.7" width="29" height="5" fill="${firstRowStripe}"/>
+		<line x1="25.5" y1="11.1" x2="29.7" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="19.7" y1="11.1" x2="23.9" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="13.9" y1="11.1" x2="18.1" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.1" y1="11.1" x2="12.3" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.3" y1="11.1" x2="6.5" y2="11.1" stroke="${lineColor}" stroke-width="0.5"/>
+
+		<!-- Row 2 -->
+		<rect x="1.5" y="13.5" width="29" height="5" fill="${secondRowStripe}"/>
+		<line x1="25.5" y1="15.9" x2="29.7" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="19.7" y1="15.9" x2="23.9" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="13.9" y1="15.9" x2="18.1" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.1" y1="15.9" x2="12.3" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.3" y1="15.9" x2="6.5" y2="15.9" stroke="${lineColor}" stroke-width="0.5"/>
+
+		<!-- Row 3 -->
+		<rect x="1.5" y="18.4" width="29" height="5" fill="${firstRowStripe}"/>
+		<line x1="25.5" y1="20.8" x2="29.7" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="19.7" y1="20.8" x2="23.9" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="13.9" y1="20.8" x2="18.1" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.1" y1="20.8" x2="12.3" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.3" y1="20.8" x2="6.5" y2="20.8" stroke="${lineColor}" stroke-width="0.5"/>
+
+		<!-- Row 4 -->
+		<rect x="1.5" y="23.3" width="29" height="5" fill="${secondRowStripe}"/>
+		<line x1="25.5" y1="25.8" x2="29.7" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="19.7" y1="25.8" x2="23.9" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="13.9" y1="25.8" x2="18.1" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="8.1" y1="25.8" x2="12.3" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+		<line x1="2.3" y1="25.8" x2="6.5" y2="25.8" stroke="${lineColor}" stroke-width="0.5"/>
+
+	</svg>`;
+}
