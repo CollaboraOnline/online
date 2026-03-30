@@ -53,6 +53,10 @@ export class Header extends CanvasSectionObject {
 
 	getFont: () => string;
 
+	getHeaderInfo(): HeaderInfo {
+		return this._headerInfo;
+	}
+
 	constructor (name: string) {
 		super(name);
 	}
@@ -147,7 +151,7 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onContextMenu(point: cool.SimplePoint, evt: MouseEvent): void {
-		if ((window as any).mode.isMobile() && this._map.isEditMode()) {
+		if ((window as any).mode.isSmallScreenDevice() && this._map.isEditMode()) {
 			(window as any).contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
 		}
@@ -167,16 +171,10 @@ export class Header extends CanvasSectionObject {
 	_reInitRowColumnHeaderStylesAfterModeChange(): void {
 		// add a separation to update row/column DOM element info
 		var isSheetView = app.calc.isSelectedPartSheetView();
-		var isSheetViewSynced = app.calc.isSelectedPartSheetViewSynced();
 
 		if (this._isColumn) {
 			// update column DOM element info
-			if (isSheetView && !isSheetViewSynced) {
-				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-column');
-				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
-				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
-			}
-			else if (isSheetView) {
+			if (isSheetView) {
 				this._initHeaderEntryStyles('spreadsheet-header-sheetview-column');
 				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
 				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
@@ -190,12 +188,7 @@ export class Header extends CanvasSectionObject {
 		}
 		else {
 			// update row DOM element info
-			if (isSheetView && !isSheetViewSynced) {
-				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-row');
-				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
-				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
-			}
-			else if (isSheetView) {
+			if (isSheetView) {
 				this._initHeaderEntryStyles('spreadsheet-header-sheetview-row');
 				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
 				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
@@ -519,7 +512,6 @@ export class Header extends CanvasSectionObject {
 
 	onMouseEnter(): void {
 		this.context.canvas.style.cursor = this._cursor;
-		this._bindContextMenu();
 	}
 
 	onMouseLeave (point: cool.SimplePoint): void {
@@ -539,18 +531,24 @@ export class Header extends CanvasSectionObject {
 	}
 
 	_bindContextMenu(): void {
-		if ((window as any).mode.isMobile() || this._map.isReadOnlyMode()) {
+		if ((window as any).mode.isSmallScreenDevice()) {
 			// On mobile, we use the mobile wizard rather than the context menu
 			return;
 		}
 
 		this._unBindContextMenu();
+		const map = this._map;
 		$.contextMenu({
 			selector: '#canvas-container',
 			className: 'cool-font',
 			zIndex: 1500,
 			items: this._menuItem,
-			callback: function() { return; }
+			callback: function() { return; },
+			build: function() {
+				if (map.isReadOnlyMode())
+					return false;
+				return { };
+			}
 		});
 		$('#canvas-container').contextMenu('update');
 		this._map._contextMenu.stopRightMouseUpEvent();
@@ -721,23 +719,23 @@ export class HeaderInfo {
 		this._dimGeom = this._isColumn ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
 	}
 
-	findXInCellSelections (cellSelections: cool.Rectangle[], ordinate: number): boolean {
+	findXInCellSelections (cellSelections: cool.SimpleRectangle[], ordinate: number): boolean {
 		for (let i = 0; i < cellSelections.length; i++) {
-			if (cellSelections[i].containsPixelOrdinateX(ordinate))
+			if (cellSelections[i].pContainsX(ordinate))
 				return true;
 		}
 		return false;
 	}
 
-	findYInCellSelections (cellSelections: cool.Rectangle[], ordinate: number): boolean {
+	findYInCellSelections (cellSelections: cool.SimpleRectangle[], ordinate: number): boolean {
 		for (let i = 0; i < cellSelections.length; i++) {
-			if (cellSelections[i].containsPixelOrdinateY(ordinate))
+			if (cellSelections[i].pContainsY(ordinate))
 				return true;
 		}
 		return false;
 	}
 
-	isHeaderEntryHighLighted (cellSelections: cool.Rectangle[], ordinate: number): boolean {
+	isHeaderEntryHighLighted (cellSelections: cool.SimpleRectangle[], ordinate: number): boolean {
 		if (this._isColumn && this._map.wholeRowSelected)
 			return true;
 		else if (!this._isColumn && this._map.wholeColumnSelected)
@@ -753,7 +751,7 @@ export class HeaderInfo {
 	}
 
 	update(section: CanvasSectionObject): void {
-		const cellSelections: cool.Rectangle[] = this._map._docLayer._cellSelections;
+		const cellSelections: cool.SimpleRectangle[] = this._map._docLayer._cellSelections;
 
 		let currentIndex: number;
 		if (app.calc.cellCursorVisible) {
@@ -912,6 +910,10 @@ export class HeaderInfo {
 
 	getElementData (index: number): HeaderEntryData {
 		return this._elements[index];
+	}
+
+	getDocVisStart(): number {
+		return this._docVisStart;
 	}
 
 	getRowData (index: number): HeaderEntryData {

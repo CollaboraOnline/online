@@ -10,6 +10,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function confirmChange(action) {
@@ -22,13 +26,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 		}
 	}
 	//enable record for track changes
-	function enableRecord() {
+	function enableRecord(win) {
 		cy.cGet('#toolbar-hamburger').click();
 		cy.cGet('.menu-entry-icon.changesmenu').parent().click();
 		cy.cGet('.menu-entry-icon.trackchanges').parent().click();
 
 		//if we don't wait , the test will fail in CLI
-		cy.wait(200);
+		helper.processToIdle(win);
 
 		cy.cGet('#toolbar-hamburger').click();
 		cy.cGet('.menu-entry-icon.changesmenu').parent().click();
@@ -41,11 +45,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 	it('Accept All', function() {
 		helper.typeIntoDocument('Hello World');
 		cy.wait(1000);
-		enableRecord();
+		enableRecord(this.win);
 		helper.selectAllText();
 		helper.typeIntoDocument('{del}');
 		//if we don't wait, the test will fail in CI
-		cy.wait(200);
+		helper.processToIdle(this.win);
 		helper.selectAllText();
 		confirmChange('Accept All');
 		helper.typeIntoDocument('{ctrl}a');
@@ -56,7 +60,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		cy.wait(1000);
-		enableRecord();
+		enableRecord(this.win);
 		helper.selectAllText();
 		helper.typeIntoDocument('{del}');
 		//if we don't wait , the test will fail in CLI

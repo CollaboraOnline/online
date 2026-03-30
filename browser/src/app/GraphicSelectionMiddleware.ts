@@ -14,7 +14,7 @@
 declare var JSDialog: any;
 
 class GraphicSelection {
-	public static rectangle: cool.SimpleRectangle = null;
+	public static rectangle: cool.SimpleRectangle | null = null;
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
 	public static handlesSection: ShapeHandlesSection = null;
@@ -65,7 +65,8 @@ class GraphicSelection {
 
 		var videoToInsert =
 			'<?xml version="1.0" encoding="UTF-8"?>\
-		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="' +
+		<svg xmlns="http://www.w3.org/2000/svg">\
+		<foreignObject overflow="visible" width="' +
 			videoDesc.width +
 			'" height="' +
 			videoDesc.height +
@@ -81,9 +82,14 @@ class GraphicSelection {
 			'" type="' +
 			videoDesc.mimeType +
 			'"/>\
+					<track src="' +
+			videoDesc.srt +
+			'" kind="subtitles"' +
+			'"/>\
 				</video>\
 			</body>\
-		</foreignObject>';
+		</foreignObject>\
+		</svg>';
 
 		this.handlesSection.addEmbeddedVideo(videoToInsert);
 	}
@@ -277,6 +283,10 @@ class GraphicSelection {
 	}
 
 	private static checkChartData() {
+		// Chart Context Buttons are disabled now.
+		// we will probably enable it when chart styles will work fine.
+		var disabled = true;
+		if (disabled) return;
 		if (
 			GraphicSelection.extraInfo &&
 			GraphicSelection.extraInfo.isChartPage &&

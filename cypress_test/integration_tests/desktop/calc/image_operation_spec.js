@@ -21,28 +21,31 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	});
 
 	it('Crop Image', function() {
+		const moveY = 50;
+
 		desktopHelper.insertImage('calc');
 
 		helper.assertImageSize(248, 63);
 
-		cy.cGet('#test-div-shape-handle-3').should('exist');
+		// use bottom handle
+		cy.cGet('#test-div-shape-handle-6').should('exist');
 		cy.cGet('.unoCrop').should('be.visible').click();
 
-		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
+		cy.cGet('#test-div-shape-handle-6').then(($handle) => {
 			const rect = $handle[0].getBoundingClientRect();
 			const startX = rect.left + rect.width / 2;
 			const startY = rect.top + rect.height / 2;
-			const moveX = 50;
 
 			cy.cGet('body').realMouseDown({ x: startX, y: startY });
 
-			cy.cGet('body').realMouseMove(startX + moveX, startY);
+			cy.cGet('body').realMouseMove(startX, startY - moveY);
 
+			cy.cGet('body').realMouseUp({ x: startX, y: startY - moveY });
 			cy.cGet('body').realMouseUp();
 		});
 
 		cy.wait(1000);
-		helper.assertImageSize(205, 45);
+		helper.assertImageSize(248, 63 - moveY);
 	});
 
 	it.skip('Resize image when keep ratio option enabled and disabled', function() {

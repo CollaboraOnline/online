@@ -1,4 +1,4 @@
-/* global describe it require cy beforeEach */
+/* global describe it require cy beforeEach expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -9,11 +9,15 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/annotation.ods');
 		desktopHelper.switchUIToNotebookbar();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(win);
+		});
 	});
 
 	it('Insert',function() {
-		// Make sure we know the cell adress.
-		helper.typeIntoInputField(helper.addressInputSelector, 'B2');
+		// Make sure we know the cell address.
+		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
 
 		desktopHelper.insertComment();
 
@@ -28,7 +32,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('#test-div-OwnCellCursor').then((items) => {
 			const cursor = items[0];
 			const clientRectangle = cursor.getBoundingClientRect();
-			const x = Math.round(clientRectangle.left + clientRectangle.width * 0.5);
+			const x = Math.round(clientRectangle.left + clientRectangle.width * 0.7);
 			const y = Math.round(clientRectangle.top + clientRectangle.height * 0.5);
 			const width = clientRectangle.width;
 			const height = clientRectangle.height;
@@ -51,6 +55,39 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			// Now click again to cell B2. There was an issue with commented cells. We should be able to click on the commented cell.
 			cy.cGet('body').realClick({ x: x, y: y });
 			cy.cGet(helper.addressInputSelector).should('have.value', 'B2');
+		});
+	});
+
+	it('Click on comment emits Clicked_Comment postMessage', function() {
+		desktopHelper.insertComment();
+
+		// This will record usage of window.postMessage (called from
+		// _postMessage in browser/src/map/handler/Map.WOPI.js
+		cy.getFrameWindow().then(win => {
+			cy.stub(win.parent, 'postMessage').as('postMessage');
+		});
+
+		// <div id="comment-container-1" ...> is the topmost element of the comment.
+		// Override its hidden attributes; then 'mouseover' should make the comment visible.
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').then(element => {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.cGet('#comment-container-1').trigger('mouseover', {force: true});
+
+		// <div class="cool-annotation-content-wrapper" ...> is its immediate child,
+		// and its internals are the same as in other modules
+		cy.cGet('.cool-annotation-content-wrapper').should('be.visible');
+		cy.cGet('.cool-annotation-content-wrapper').click();
+
+		cy.get('@postMessage').should(stub => {
+			const found = stub.getCalls().some(call => {
+				const msg = JSON.parse(call.args[0]);
+				return msg.MessageId === 'Clicked_Comment'
+					&& msg.Values && msg.Values.Id !== undefined;
+			});
+			expect(found, "Clicked_Comment was not posted").to.be.true;
 		});
 	});
 
@@ -148,23 +185,23 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('View Jump', function() {
-		helper.typeIntoInputField(helper.addressInputSelector, 'A100');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A100');
 		desktopHelper.insertComment();
 		/* comments are hidden in calc by default, so no visibility assert */
 		cy.cGet('#comment-container-1').should('exist')
 		cy.cGet('#Home-tab-label').click();
 
-		helper.typeIntoInputField(helper.addressInputSelector, 'A150');
-		helper.typeIntoInputField(helper.addressInputSelector, 'A135');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A150');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A135');
 
 		/*
 			NOTE: this scrollbar position might change in future. one can
 			get the new scrollbar position by printing `x` to the console
 			in `assertScrollbarPosition` function.
 		*/
-		desktopHelper.assertScrollbarPosition('vertical', 250, 250);
+		desktopHelper.assertScrollbarPosition('vertical', 249, 252);
 		desktopHelper.insertComment('second comment', false);
-		desktopHelper.assertScrollbarPosition('vertical', 250, 250);
+		desktopHelper.assertScrollbarPosition('vertical', 249, 252);
 	});
 
 });

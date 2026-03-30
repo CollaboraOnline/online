@@ -9,12 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for WOPI template functionality.
+ */
+
 #include <config.h>
 
 #include <Poco/Net/HTTPRequest.h>
 
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
@@ -106,7 +110,7 @@ public:
             }
 
             const std::streamsize size = request.getContentLength();
-            LOK_ASSERT( size > 0 );
+            LOK_ASSERT(size > 0);
 
             const std::string body = "{\"LastModifiedTime\": \"" +
                                      Util::getIso8601FracformatTime(getFileLastModifiedTime()) + "\" }";

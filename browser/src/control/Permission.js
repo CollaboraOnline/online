@@ -80,7 +80,7 @@ window.L.Map.include({
 				button.on('click', function () {
 					that._requestFileCopy();
 				});
-			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet()))) {
+			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isSmallScreenDevice() || window.mode.isTablet()))) {
 				$('#mobile-edit-button').hide();
 			}
 
@@ -120,10 +120,17 @@ window.L.Map.include({
 	_shouldStartReadOnly: function () {
 		if (this.isLockedReadOnlyUser())
 			return true;
+		if (window.mode.isCODesktop() && !window.mode.isNewDocument()) {
+			return true;
+		}
 		var fileName = this['wopi'].BaseFileName;
 		// use this feature for only integration.
 		if (!fileName) return false;
-		var extension = this._getFileExtension(fileName);
+		var extension = this._getFileExtension(fileName).toLowerCase();
+		
+		// Check if this is a view mode format from server configuration
+		if (app.isViewModeExtension(extension)) return true;
+		
 		if (!Object.prototype.hasOwnProperty.call(this.readonlyStartingFormats, extension))
 			return false;
 		return true;
@@ -140,7 +147,7 @@ window.L.Map.include({
 		this.options.canTryLock = false; // don't respond to lockfailed anymore
 		$('#mobile-edit-button').hide();
 		this._enterEditMode('edit');
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet() || window.mode.isCODesktop()) {
 			this.fire('editorgotfocus');
 			this.fire('closemobilewizard');
 			// In the iOS/android app, just clicking the mobile-edit-button is
@@ -175,6 +182,13 @@ window.L.Map.include({
 		if (this._shouldStartReadOnly() && !window.ThisIsAMobileApp) {
 			var fileName = this['wopi'].BaseFileName;
 			var extension = this._getFileExtension(fileName);
+			
+			// For defined formats (from server config), just proceed to edit mode without dialog
+			if (app.isViewModeExtension(extension)) {
+				this._proceedEditMode();
+				return;
+			}
+			
 			var extensionInfo = this.readonlyStartingFormats[extension];
 
 			var yesButtonText = !this['wopi'].UserCanNotWriteRelative ? _('Save as ODF format'): null;
@@ -214,7 +228,7 @@ window.L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
+		if ((window.mode.isSmallScreenDevice() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
 			this._textInput.setSwitchedToEditMode();
 		}
 

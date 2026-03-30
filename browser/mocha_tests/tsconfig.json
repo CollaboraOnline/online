@@ -7,7 +7,7 @@
       "sourceMap": false,
       "incremental": true,
 
-      "moduleResolution": "classic",
+      "moduleResolution": "node",
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": false,

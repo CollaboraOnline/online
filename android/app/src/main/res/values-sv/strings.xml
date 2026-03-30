@@ -45,7 +45,7 @@
     <string name="external_sd_path">Sökväg för extern SD</string>
     <string name="physical_storage_settings">Inställningar för fysisk lagring</string>
     <string name="otg_missing_error">Ogiltig root-fil. Kontrollera din OTG-enhet och/eller konfiguration.</string>
-    <string name="ext_document_provider_error">Ogiltig root-fil. Kontrollera din SD-kortkonfiguration.</string>
+    <string name="ext_document_provider_error">Ogiltig root-fil. Kontrollera din SD-kortskonfiguration.</string>
     <string name="owncloud_settings">Inställningar för molnserver</string>
     <string name="storage_provider_settings">Inställningar för lagringsleverantör</string>
     <string name="owncloud_unspecified_error">Ospecificerat fel vid anslutning till molnservern. Kontrollera din konfiguration och/eller försök senare.</string>
@@ -98,9 +98,7 @@
     <string name="grid_view">Rutnät</string>
     <string name="no_recent_items">Öppna en fil genom att använda mapp-ikonen i verktygsfältet.</string>
     <string name="app_description">$APP_NAME är en användarvänlig och modern produktivitetssvit i öppen källkod för ordbehandling, kalkylark, presentationer med mera.</string>
-    <string name="app_version_and_hash">Version: %1$s
-\nonline git-hash: %2$s
-\ncore git-hash: %3$s</string>
+    <string name="app_version_and_hash">Version: %1$s \nonline git-hash: %2$s \ncore git-hash: %3$s</string>
     <string name="action_about">Om</string>
     <string name="title_activity_show_html">Om</string>
     <string name="app_name_settings">Inställningar</string>

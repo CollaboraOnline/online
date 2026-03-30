@@ -4,11 +4,13 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Row Column Operation', function() {
-
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/row_column_operation.ods');
 		desktopHelper.switchUIToNotebookbar();
 		cy.viewport(1920,1080);
+		cy.getFrameWindow().then(function(frameWindow) {
+			this.win = frameWindow;
+		});
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
@@ -17,12 +19,14 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 	it('Insert/Delete row' , function() {
 		//Insert row above
 		desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
+		helper.processToIdle(this.win);
 
 		//calcHelper.assertSheetContents(['','','Hello','Hi','World','Bye']);
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
 
 		desktopHelper.getNbIcon('DeleteRows', 'Home').click();
+		helper.processToIdle(this.win);
 		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 
 		//insert row below
@@ -33,15 +37,16 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 
 	it('Insert/Delete Column', function() {
 		//insert column before
-	  desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
+		desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
+		helper.processToIdle(this.win);
 		//calcHelper.assertSheetContents(['','Hello','Hi','','World','Bye']);
 		calcHelper.clickOnFirstCell(true, false);
 
 		//delete column
 		desktopHelper.getNbIcon('DeleteColumns', 'Home').click();
-		cy.wait(500);
+		helper.processToIdle(this.win);
 		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
-		calcHelper.clickOnFirstCell(true,false);
+		calcHelper.clickOnFirstCell(true, false);
 
 		//insert column after
 		desktopHelper.getNbIcon('InsertColumnsAfter', 'Home').click();

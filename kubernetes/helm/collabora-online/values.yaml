@@ -4,7 +4,7 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: collabora/code
+  repository: docker.io/collabora/code
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -216,6 +216,46 @@ probes:
     timeoutSeconds: 30
     successThreshold: 1
     failureThreshold: 4
+
+route:
+  # -- enable an HTTPRoute resource for collabora.
+  enabled: false
+  # -- Set the route apiVersion
+  apiVersion: gateway.networking.k8s.io/v1
+  # -- Set the route kind
+  kind: HTTPRoute
+  # -- Route annotations
+  annotations: {}
+  # -- Route labels
+  labels: {}
+  # -- Route hostnames
+  hostnames: []
+  # -- Reference to parent gateways
+  parentRefs: []
+  # -- Route matches
+  matches:
+    - path:
+        type: PathPrefix
+        value: "/"
+  # -- Route filters
+  filters: []
+  # -- Additional rules  to deny some path like ingresses
+  additionalRules: []
+  # eg with traefik as controller all following path will be redirect to noop@internal
+  # - matches:
+  #     - path:
+  #         type: PathPrefix
+  #         value: /cool/getMetrics
+  #     - path:
+  #         type: PathPrefix
+  #         value: /cool/adminws/
+  #     - path:
+  #         type: PathPrefix
+  #         value: /browser/dist/admin/
+  #   backendRefs:
+  #     - group: traefik.io
+  #       kind: TraefikService
+  #       name: noop@internal
 
 ingress:
   enabled: false
@@ -500,6 +540,8 @@ dynamicConfig:
 trusted_certs_install:
   enabled: false
   trusted_certs: []
+
+priorityClassName: ""
 
 nodeSelector: {}
 

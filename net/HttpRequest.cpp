@@ -9,12 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of asynchronous HTTP/1.1 client with header parsing and state management.
+ * Classes: http::Session, http::Request, http::Response, http::Header
+ */
+
 #include <config.h>
 
 #include "HttpRequest.hpp"
 
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/MemoryStream.h>
@@ -167,11 +173,11 @@ int64_t Header::parse(const char* p, int64_t len)
 
         _chunked = getTransferEncoding() == "chunked";
 
-        LOG_TRC("Read " << data.tellg()
+        LOG_TRC("Read " << static_cast<std::size_t>(data.tellg())
                         << " bytes of header. hasContentLength: " << hasContentLength()
                         << ", contentLength: " << (hasContentLength() ? getContentLength() : -1)
                         << ", chunked: " << getChunkedTransferEncoding() << ":\n"
-                        << std::string(p, data.tellg()));
+                        << std::string_view(p, data.tellg()));
 
         // We consumed the full header, including the blank line.
         return endPos + 1;
@@ -262,7 +268,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         LOG_ERR("StatusLine::parse: expected valid integer number");
         return FieldParseState::Invalid;
     }
-    _statusCode = Util::safe_atoi(&p[off], len - off);
+    _statusCode = NumUtil::safe_atoi(&p[off], len - off);
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
     {
         LOG_ERR("StatusLine::parse: Invalid StatusCode [" << _statusCode << "]");
@@ -340,13 +346,38 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
         // Get the data to write into the socket
         // from the client's callback. This is
         // used to upload files, or other data.
-        char buffer[64 * 1024];
+        constexpr std::size_t BlockSize = 64 * 1024;
         std::size_t wrote = 0;
         const bool chunked =
             Util::toLower(get("transfer-encoding")).find("chunked") != std::string::npos;
         do
         {
-            const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
+            int64_t read;
+            if (chunked)
+            {
+                // Chunked encoding needs to prepend the size header before the
+                // data, so we must read into a temporary buffer first.
+                char buffer[BlockSize];
+                read = _bodyReaderCb(buffer, sizeof(buffer));
+                if (read > 0)
+                {
+                    std::stringstream ss;
+                    ss << std::hex << read;
+                    out.append(ss.str());
+                    out.append("\r\n");
+                    out.append(buffer, read);
+                    out.append("\r\n");
+                }
+            }
+            else
+            {
+                // Read directly into the output buffer.
+                const auto provisioned = std::min(BlockSize, capacity - wrote);
+                char* buffer = out.provision(provisioned);
+                read = _bodyReaderCb(buffer, provisioned);
+                out.commit(provisioned, read > 0 ? read : 0);
+            }
+
             if (read < 0)
             {
                 LOG_ERR("Error reading the data to send as the HTTP request body: " << read);
@@ -360,28 +391,13 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
                 setStage(Stage::Finished);
                 if (chunked)
                 {
-                    out.append("0\r\n\r\n"); // Ending chunck.
+                    out.append("0\r\n\r\n"); // Ending chunk.
                 }
 
                 break;
             }
 
-            const auto before = out.size();
-            if (chunked)
-            {
-                std::stringstream ss;
-                ss << std::hex << read;
-                out.append(ss.str());
-                out.append("\r\n");
-                out.append(buffer, read);
-                out.append("\r\n");
-            }
-            else
-            {
-                out.append(buffer, read);
-            }
-
-            wrote += (out.size() - before);
+            wrote += read;
             LOG_TRC("performWrites (request body): " << read << " bytes, total: "
                                                      << out.size() - buffered_size);
         } while (wrote < capacity);
@@ -805,12 +821,22 @@ int64_t Response::readData(const char* p, int64_t len)
             // Assume we have a body unless we have reason to expect otherwise.
             _parserStage = ParserStage::Body;
 
-            if (_statusLine.statusCategory() == StatusLine::StatusCodeClass::Informational ||
-                _statusLine.statusCode() == http::StatusCode::NoContent ||
-                _statusLine.statusCode() == http::StatusCode::NotModified) // || HEAD request
+            if (_statusLine.statusCode() == http::StatusCode::Continue)
+            {
+                // 100 Continue is an intermediate response; the final response follows.
+                // Reset parser state to read the actual final response.
+                LOG_TRC("Got 100 Continue, resetting parser for final response");
+                _statusLine = StatusLine();
+                _header = Header();
+                _parserStage = ParserStage::StatusLine;
+                _recvBodySize = 0;
+            }
+            else if (_statusLine.statusCategory() == StatusLine::StatusCodeClass::Informational ||
+                     _statusLine.statusCode() == http::StatusCode::NoContent ||
+                     _statusLine.statusCode() == http::StatusCode::NotModified) // || HEAD request
             // || 2xx on CONNECT request
             {
-                // No body, we are done.
+                // No body, we are done (101 Switching Protocols, 204, 304, etc.).
                 _parserStage = ParserStage::Finished;
             }
             else
@@ -1007,7 +1033,7 @@ std::shared_ptr<Session> Session::create(std::string host, Protocol protocol, in
 
     if (!portString.empty())
     {
-        const auto [portInt, res] = Util::i32FromString(portString);
+        const auto [portInt, res] = NumUtil::i32FromString(portString);
         assert((port == 0 || port == portInt) && "Two conflicting port numbers given.");
         if (res && portInt > 0)
             port = portInt;

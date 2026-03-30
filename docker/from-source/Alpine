@@ -1,0 +1,94 @@
+FROM alpine:3.21 AS builder
+
+# Do not use pre-built CORE_ASSETS -- they are built on glibc and won't work on musl.
+# Build core from source instead.
+ENV CORE_BRANCH=distro/collabora/co-26.04
+ENV COLLABORA_ONLINE_BRANCH=main
+ENV BUILDDIR=/build
+ENV ONLINE_EXTRA_BUILD_OPTIONS=--enable-experimental
+
+WORKDIR /build
+
+# core refuses to build as root
+RUN adduser -D builder && chown builder: /build
+
+RUN apk add --no-cache \
+    # Basic build tools
+    build-base autoconf automake libtool pkgconf git wget ccache \
+    gperf nasm libxslt flex bison zip rsync curl bash coreutils findutils tar \
+    meson ninja perl python3 \
+    # Core build deps
+    zlib-dev util-linux-dev \
+    # X11 headers (needed even for headless VCL backend)
+    libx11-dev libxrender-dev libxext-dev libxrandr-dev libxinerama-dev \
+    # Font rendering headers
+    fontconfig-dev freetype-dev \
+    # COOL build deps
+    libpng-dev openssl-dev zstd-dev libcap-dev linux-pam-dev cppunit-dev \
+    linux-headers \
+    # Python modules for COOL build
+    py3-lxml py3-polib \
+    # Node.js for COOL browser client
+    nodejs npm
+
+COPY --chown=builder / $BUILDDIR/
+
+USER builder
+RUN bash build-alpine.sh
+
+# Build the final image
+FROM alpine:3.21
+
+# UTF-8 locale -- musl has built-in UTF-8 support
+ENV LC_CTYPE=C.UTF-8
+
+# install LOKit run-time dependencies
+# install findutils, openssl and cpio that we need later
+# install tzdata to accept the TZ environment variable
+# install an editor
+# tdf#117557 - Add CJK Fonts to Collabora Online Docker Image
+RUN apk add --no-cache \
+    libpng fontconfig cpio tzdata findutils nano \
+    libcap libcap-utils openssl openssh-client \
+    libxcb libxrender libxext \
+    libstdc++ libgcc linux-pam zstd-libs libintl \
+    font-noto-cjk ca-certificates bash
+
+# copy freshly built LOKit and Collabora Online
+COPY --from=builder /build/instdir /
+
+# copy the start script from the cloned online repo (supports both musl and glibc)
+COPY --from=builder /build/builddir/online/docker/from-packages/scripts/start-collabora-online.sh /start-collabora-online.sh
+RUN chmod +x /start-collabora-online.sh
+
+# set up Collabora Online (normally done by postinstall script of package)
+# Fix permissions
+RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
+    setcap cap_sys_admin=ep /usr/bin/coolmount && \
+    addgroup -S -g 1001 cool && \
+    adduser -S -G cool -u 1001 -h /opt/cool -s /sbin/nologin cool && \
+    rm -rf /opt/cool || true && \
+    mkdir -p /opt/cool/child-roots /opt/cool/cache && \
+    chown cool: /opt/cool && \
+    chown cool: /opt/cool/child-roots && \
+    chown cool: /opt/cool/cache && \
+    fc-cache /opt/lokit/share/fonts/truetype && \
+    coolwsd-systemplate-setup /opt/cool/systemplate /opt/lokit >/dev/null 2>&1 && \
+    touch /var/log/coolwsd.log && \
+    chown cool:cool /var/log/coolwsd.log && \
+    chown -R cool:cool /etc/coolwsd && \
+    chown cool:cool /etc/coolwsd/coolwsd.xml && \
+    chmod 640 /etc/coolwsd/coolwsd.xml && \
+    chown cool:cool /etc/coolwsd && \
+    rm -rf /etc/coolwsd/proof_key* && \
+    chown cool:cool /start-collabora-online.sh && \
+    # musl has no NSS -- the start script appends to /etc/passwd directly
+    # for OpenShift random UID support, so it must be writable
+    chmod g+w /etc/passwd
+
+EXPOSE 9980
+
+# switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
+USER 1001
+
+ENTRYPOINT ["/start-collabora-online.sh"]

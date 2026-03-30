@@ -120,12 +120,18 @@ window.L.Control.Tabs = window.L.Control.extend({
 			},
 		};
 
-		if ((!window.mode.isMobile() && !this._map.isReadOnlyMode()) || window.mode.isTablet()) {
+		if (!window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
+			var that = this;
 			window.L.installContextMenu({
 				selector: '.spreadsheet-tab',
 				className: 'cool-font',
-				items: this._menuItem,
-				zIndex: 1000
+				items: this._menuItem, // rewrite mutates
+				zIndex: 1000,
+				build: function() {
+					if (that._map.isReadOnlyMode())
+						return false;
+					return { }
+				}
 			});
 		}
 
@@ -142,6 +148,9 @@ window.L.Control.Tabs = window.L.Control.extend({
 		}
 		if (docType === 'spreadsheet') {
 
+			// Track which default part has a sheet view active for tab icon display.
+			app.calc.updateActiveSheetView(selectedPart);
+
 			// Save scroll position
 			var horizScrollPos = 0;
 			var scrollDiv = window.L.DomUtil.get('spreadsheet-tab-scroll');
@@ -155,7 +164,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 				}
 				var ssTabScroll = window.L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
-				if (!window.mode.isMobile())
+				if (!window.mode.isSmallScreenDevice())
 					ssTabScroll.style.overflowX = 'scroll';
 
 				this._tabsCont.style.display = 'grid';
@@ -191,12 +200,13 @@ window.L.Control.Tabs = window.L.Control.extend({
 					);
 				}
 
-				if (window.mode.isMobile()) {
+				if (window.mode.isSmallScreenDevice()) {
 					var menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
 				}
 
 				for (var i = 0; i < parts; i++) {
-					if (app.calc.isPartHidden(i))
+					// Skip if hidden or a sheet view (implicitly hidden)
+					if (app.calc.isPartHidden(i) || app.calc.isPartSheetView(i))
 						continue;
 
 					// create a drop zone indicator for the sheet tab
@@ -205,20 +215,21 @@ window.L.Control.Tabs = window.L.Control.extend({
 					dropZoneIndicator.id = 'drop-zone-' + i;
 					var id = 'spreadsheet-tab' + i;
 					var tab = window.L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
-					window.L.DomUtil.create('div', 'lock', tab);
 					var label = window.L.DomUtil.create('div', '', tab);
-					if (window.mode.isMobile() || window.mode.isTablet()) {
+					window.L.DomUtil.create('div', 'lock', tab);
+					window.L.DomUtil.create('div', 'view-indicator', tab);
+					if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
 								return function(e) {
 									this._tabForContextMenu = j;
 									if (!this._map.isReadOnlyMode()) {
-										if (window.mode.isMobile()) {
+										if (window.mode.isSmallScreenDevice()) {
 											window.contextMenuWizard = true;
 											this._map.fire('mobilewizard', {data: menuData});
 										} else {
 											$(e.target).trigger('contextmenu');
-                                        }
+										}
 									}
 								};
 							}(i).bind(this));
@@ -228,7 +239,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 						horizScrollPos = tab.offsetLeft;
 					}
 
-					if (!window.mode.isMobile()) {
+					if (!window.mode.isSmallScreenDevice()) {
 						window.L.DomEvent.on(tab, 'dblclick', function(j) {
 							return function() {
 								// window.app.console.err('Double clicked ' + j);
@@ -250,17 +261,12 @@ window.L.Control.Tabs = window.L.Control.extend({
 						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
 					}
 
-					if (app.calc.isPartSheetView(i)) {
-						if (!app.calc.isPartSheetViewSynced(i)) {
-							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview-unsynced');
-						}
-						else {
-							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
-						}
+					var sheetViewPart = app.calc.getSheetViewPartForDefaultPart(i);
+					if (sheetViewPart >= 0 && app.calc.hasActiveSheetView(i)) {
+						window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
 					}
 					else {
 						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview');
-						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview-unsynced');
 					}
 					label.textContent = e.partNames[i];
 					tab.id = id;
@@ -289,7 +295,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
 				window.L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
-				if (part === selectedPart) {
+				if (part === selectedPart || app.calc.isDefaultPartOfSelectedSheetView(part)) {
 					// close auto filter popups on sheet tab selected
 					this._map.fire('closeAutoFilterDialog');
 					this._map.fire('closepopups');

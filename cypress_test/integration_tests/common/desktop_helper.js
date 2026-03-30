@@ -83,16 +83,15 @@ function selectColorFromPalette(color) {
 	cy.log('<< selectColorFromPalette - end');
 }
 
-// Select an item from a listbox widget used on top toolbar.
+// Select an item from a listbox/combobox widget used on top toolbar.
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromListbox(item) {
 	cy.log('>> selectFromListbox - start');
 
-	cy.cGet('.select2-dropdown').should('be.visible');
-	// We use force because the tooltip sometimes hides the items.
-	cy.cGet('body').contains('.select2-results__option', item).click();
-	cy.cGet('.select2-dropdown').should('not.exist');
+	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
+	cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click();
+	cy.cGet('[id$="-dropdown"].modalpopup').should('not.exist');
 
 	cy.log('<< selectFromListbox - end');
 }
@@ -104,7 +103,6 @@ function selectFromJSDialogListbox(item, isImage) {
 	cy.log('>> selectFromJSDialogListbox - start');
 
 	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
-	// We use force because the tooltip sometimes hides the items.
 	if (isImage) {
 		cy.wait(1000); // We need some time to render custom entries
 		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click();
@@ -219,6 +217,7 @@ function selectZoomLevel(zoomLevel, makeZoomVisible = true) {
 }
 
 // Reset zoom level to 100%.
+// WARN: doesn't work for writer, use fitWidthZoom for that.
 function resetZoomLevel() {
 	cy.log('>> resetZoomLevel - start');
 
@@ -227,6 +226,14 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 
 	cy.log('<< resetZoomLevel - end');
+}
+
+function fitWidthZoom() {
+	cy.log('>> fitWidthZoom - start');
+
+	cy.cGet('#toolbar-down #fitwidthzoom').click();
+
+	cy.log('<< fitWidthZoom - end');
 }
 
 function insertImage() {
@@ -240,7 +247,7 @@ function insertImage() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoInsertGraphic').filter(':visible').click();
 	} else {
-		cy.cGet('#toolbar-up .unoInsertGraphic').click();
+		cy.cGet('#toolbar-up .unoInsertGraphic').filter(':visible').click();
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
@@ -281,6 +288,10 @@ function closeNavigatorSidebar () {
 function insertComment(text = 'some text0', save = true) {
 	cy.log('>> insertComment - start');
 
+	cy.getFrameWindow().then(function(win) {
+		return helper.processToIdle(win);
+	});
+
 	var mode = Cypress.env('USER_INTERFACE');
 	if (mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
@@ -290,9 +301,16 @@ function insertComment(text = 'some text0', save = true) {
 		cy.cGet('#menu-insertcomment').click();
 	}
 
-	// Use .last() because there might be multiple comments
-	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').should('not.have.attr','disabled');
-	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').type(text);
+	// Wait for the annotation to be created
+	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').should('exist');
+	// Wait for core to process and layouting to settle so the textarea has its final ID
+	cy.getFrameWindow().then(function(win) {
+		return helper.processToIdle(win);
+	});
+
+	// Use class selector since processToIdle may have caused the textarea ID to change from 'new' to a number
+	cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation .cool-annotation-textarea').should('not.have.attr','disabled');
+	cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation .cool-annotation-textarea').type(text);
 	// Check that comment exists
 	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-textarea').should('contain',text);
 
@@ -306,10 +324,9 @@ function insertComment(text = 'some text0', save = true) {
 
 		// Wait for the animation to stop
 		cy.cGet('.cool-annotation').last({log: false}).invoke('attr','style').should('not.contain','transition');
-		// Need to wait even longer so that modify and reply work
-		// TODO: Find out why newly typed text gets overwritten, find
-		// a way to query for it, and wait only in relevant tests
-		cy.wait(500);
+		cy.getFrameWindow().then(function(win) {
+			return helper.processToIdle(win);
+		});
 	} else {
 		cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-content').should('not.be.visible');
 		cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation').should('be.visible');
@@ -326,7 +343,7 @@ function toggleComments(resolved = false) {
 	if (mode === 'notebookbar') {
 		cy.cGet('#Review-tab-label').click();
 		if (resolved) getNbIcon('ShowResolvedAnnotations', 'Review').click();
-		else cy.cGet('.showannotations').click();
+		else cy.cGet('#showannotations').click();
 		// to avoid notebookbar collapse in subsequent calls to toggleComments.
 		cy.cGet('#Home-tab-label').click();
 	} else {
@@ -361,6 +378,8 @@ function switchUIToCompact() {
 		if (userInterfaceMode === 'notebookbar') {
 			cy.cGet('#View-tab-label').click();
 			getNbIcon('toggleuimode', 'View').click();
+			// Wait for the compact toolbar to load
+			cy.cGet('#toolbar-up').should('be.visible');
 		}
 	});
 
@@ -507,13 +526,11 @@ function scrollWriterDocumentToTop() {
 	assertScrollbarPosition('vertical', 0, 10);
 }
 
-function scrollViewDown() {
-	cy.getFrameWindow()
-		.its('L')
-		.then(function(L) {
-			L.Map.THIS.panBy({x: 0, y: 4000});
-			updateFollowingUsers();
-		});
+function scrollViewDown(win) {
+	cy.then(function() {
+		win.L.Map.THIS.panBy({x: 0, y: 4000});
+		win.app.updateFollowingUsers();
+	});
 }
 
 function updateFollowingUsers() {
@@ -545,7 +562,7 @@ function getCompactIcon(unoCommand) {
 
 /// get icon for given uno command from notebookbar
 function getNbIcon(unoCommand, tabName) {
-	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button:visible');
+	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button.unobutton:visible');
 }
 
 /// get icon arrow for given uno command from classic toolbar to open the dropdown
@@ -563,6 +580,26 @@ function getDropdown(dropdownId) {
 	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
 }
 
+// Undo all changes until undo is no longer possible
+function undoAll() {
+	cy.log('>> undoAll - start');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+		cy.cGet('#Home-container .unoUndo').then(function undoStep($undo) {
+			if ($undo.attr('disabled') === undefined) {
+				cy.cGet('#Home-container .unoUndo button').click({force: true});
+				helper.processToIdle(win);
+				cy.cGet('#Home-container .unoUndo').then(undoStep);
+			}
+		});
+	});
+
+	cy.cGet('#Home-container .unoUndo').should('not.have','disabled');
+
+	cy.log('<< undoAll - end');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
@@ -577,6 +614,7 @@ module.exports.zoomOut = zoomOut;
 module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
+module.exports.fitWidthZoom = fitWidthZoom;
 module.exports.insertImage = insertImage;
 module.exports.insertVideo = insertVideo;
 module.exports.deleteImage = deleteImage;
@@ -601,3 +639,4 @@ module.exports.getNbIcon = getNbIcon;
 module.exports.getCompactIconArrow = getCompactIconArrow;
 module.exports.getNbIconArrow = getNbIconArrow;
 module.exports.getDropdown = getDropdown;
+module.exports.undoAll = undoAll;

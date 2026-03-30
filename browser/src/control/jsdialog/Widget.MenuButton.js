@@ -72,6 +72,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
+		if (!window.L.DomUtil.hasClass(control.container, 'selected')) {
+			control.button.removeAttribute('aria-pressed');
+		}
+
 		var isSplitButton = !!data.applyCallback;
 		// can be function or string with command identifier
 		const applyCallback =
@@ -98,30 +102,29 @@ function _menubuttonControl (parentContainer, data, builder) {
 			if (control.container.hasAttribute('disabled'))
 				return;
 
-			var callback = function(objectType, eventType, object, data, entry) {
-				if ((eventType === 'selected' && entry.items) || eventType === 'showsubmenu') {
+			var callback = function(objectType, eventType, object, data, entry /* : MenuDefinition | JSBuilder */) {
+				if ((eventType === 'selected' && entry && entry.items) || eventType === 'showsubmenu') {
 					return true;
-				} else if (eventType === 'selected' && entry.uno) {
+				} else if (eventType === 'selected' && entry && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
 					builder.map.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
-				} else if (eventType === 'selected' && entry.action) {
-					app.dispatcher.dispatch(entry.action);
-					JSDialog.CloseDropdown(dropdownId);
+				} else if (eventType === 'selected' && entry && entry.action) {
+					app.dispatcher.dispatch(entry.action, entry);
+					const opensExternal = entry.action.startsWith('exportas-') || entry.action.startsWith('saveas-');
+					JSDialog.CloseDropdown(dropdownId, opensExternal);
 					return true;
-				} else if (eventType === 'selected') {
+				} else if (eventType === 'selected' && entry && entry.id) {
 					builder.callback('menubutton', 'select', control.container, entry.id, builder);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
-				} else if (!entry){
+				} else /* note: entry can be a builder instance as in regular JSDialog callback */ {
 					// custom popup - execute generic action
 					builder.callback(objectType, eventType, object, data, builder);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				}
-
-				return false;
 			};
 
 			var freshMenu = builder._menus.get(menuId); // refetch to apply dynamic changes
@@ -142,10 +145,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 		// make it possible to setup separate callbacks for split button
 		if (isSplitButton) {
 			JSDialog.AddOnClick(control.button, applyCallback);
-			if (control.label)
-				JSDialog.AddOnClick(control.label, applyCallback);
-			if (control.arrow)
-				control.arrow.tabIndex = 0;
 		} else {
 			JSDialog.AddOnClick(control.button, clickFunction);
 			if (control.label)
@@ -166,16 +165,14 @@ function _menubuttonControl (parentContainer, data, builder) {
 		button.title = data.text;
 		button.setAttribute('aria-haspopup', true);
 
-		if (data.aria && data.aria.label) {
-			button.setAttribute('aria-label', data.aria.label);
-		}
+		JSDialog.SetupA11yLabelForNonLabelableElement(button, data, builder);
 
 		if (data.image) {
 			var image = window.L.DomUtil.create('img', '', button);
 			image.src = data.image;
 			image.setAttribute('alt', '');
 		}
-		var label = window.L.DomUtil.create('span', '', button);
+		var label = window.L.DomUtil.create('span', 'unolabel', button);
 		label.innerText = data.text ? data.text : '';
 		window.L.DomUtil.create('i', 'arrow', button);
 
@@ -190,6 +187,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		if (data.enabled === false)
 			button.disabled = true;
+
+		if (data.visible === false)
+			button.classList.add('hidden');
+
 	} else {
 		window.app.console.warn('Not found menu "' + menuId + '"');
 	}

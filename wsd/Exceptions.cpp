@@ -9,7 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Implementation of exception classes and counters.
+ * Classes: CoolException
+ */
+
+#include <config.h>
 
 #include "Exceptions.hpp"
 
@@ -19,13 +24,12 @@
 #define EXCEPTION_DECL(type,unused) \
     std::atomic<size_t> type::count;
 
-EXCEPTION_DECL(StorageSpaceLowException,LoolException)
-EXCEPTION_DECL(StorageConnectionException,LoolException)
-EXCEPTION_DECL(BadRequestException,LoolException)
-EXCEPTION_DECL(BadArgumentException,BadRequestException)
-EXCEPTION_DECL(UnauthorizedRequestException,LoolException)
-EXCEPTION_DECL(ServiceUnavailableException,LoolException)
-EXCEPTION_DECL(ParseError,LoolException)
-
+EXCEPTION_DECL(StorageSpaceLowException, CoolException)
+EXCEPTION_DECL(StorageConnectionException, CoolException)
+EXCEPTION_DECL(BadRequestException, CoolException)
+EXCEPTION_DECL(BadArgumentException, BadRequestException)
+EXCEPTION_DECL(UnauthorizedRequestException, CoolException)
+EXCEPTION_DECL(ServiceUnavailableException, CoolException)
+EXCEPTION_DECL(ParseError, CoolException)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

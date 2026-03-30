@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Manages document lifecycle and coordinates client/kit communication.
+ * Classes: DocumentBroker, ConvertToBroker
+ */
+
 #pragma once
 
 #include <common/Authorization.hpp>
@@ -276,7 +281,7 @@ public:
                        SocketDisposition::MoveFunction transferFn) const;
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
-    void stop(const std::string& reason);
+    void stop(std::string_view reason);
 
     /// Hard removes a session, only for ClientSession.
     void finalRemoveSession(const std::shared_ptr<ClientSession>& session);
@@ -318,6 +323,9 @@ public:
     /// Returns an error message in case of failure, otherwise an empty string.
     std::string handleRenameFileCommand(std::string sessionId, std::string newFilename);
 
+    /// Get whether the next save operation is an autosave.
+    bool isNextSaveAutosave() const;
+
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
     void handleSaveResponse(const std::shared_ptr<ClientSession>& session,
@@ -355,7 +363,7 @@ public:
     bool autoSave(bool force, bool dontSaveIfUnmodified, bool finalWrite = false);
 
     /// Saves the document and stops if there was nothing to autosave.
-    void autoSaveAndStop(const std::string& reason);
+    void autoSaveAndStop(std::string_view reason);
 
     bool isAsyncUploading() const;
 
@@ -367,12 +375,12 @@ public:
     const std::string& getConfigId() const { return _configId; }
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
-    bool hasTileCache() { return _tileCache != nullptr; }
+    bool hasTileCache() const { return _tileCache != nullptr; }
     bool isAlive() const;
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(const char* filename = "?", int line = 0) const;
+    void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const;
 
     /// Pretty print internal state to a stream.
     void dumpState(std::ostream& os);
@@ -465,7 +473,7 @@ public:
                                                  const std::string &tag, bool sendError = false);
 
     void handleMediaRequest(std::string_view range, const std::shared_ptr<Socket>& socket,
-                            const std::string& tag);
+                            const std::string& tag, const std::string& field);
 
     /// True if any flag to close, terminate, or to unload is set.
     bool isUnloading() const { return isUnloadingUnrecoverably() || _docState.isUnloadRequested(); }
@@ -718,11 +726,11 @@ private:
     void endRenameFileCommand();
 
     /// Shutdown all client connections with the given reason.
-    void shutdownClients(const std::string& closeReason);
+    void shutdownClients(std::string_view closeReason);
 
     /// This gracefully terminates the connection
     /// with the child and cleans up ChildProcess etc.
-    void terminateChild(const std::string& closeReason);
+    void terminateChild(std::string_view closeReason);
 
 #if !MOBILEAPP && !WASMAPP
     /// Invoked to switch from Online to Offline mode.
@@ -1684,7 +1692,7 @@ private:
             _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
         bool _isFollowmeSlideShowOn = false;
-        int _currentLeaderEffect = -1;
+        int _currentLeaderEffect = 0;
         int _currentLeaderSlide = -1;
     };
 
@@ -1727,10 +1735,7 @@ private:
     /// Called when document conflict is detected (i.e. it changed in storage).
     void handleDocumentConflict();
 
-    /// if _isViewSettingsAccessibilityEnabled is set then set
-    /// accessibilityState=true in @message and force-enable
-    /// accessibility on for viewId
-    std::string applyViewAccessibility(const std::string& message,
+    std::string applyBrowserAccessibility(const std::string& message,
                                        const std::string& viewId);
 
     /// Apply signature view settings to the message
@@ -1875,8 +1880,6 @@ private:
     /// True for file that COOLWSD::IsViewFileExtension return true.
     /// These files, such as PDF, don't have a reliable ModifiedStatus.
     bool _isViewFileExtension;
-
-    bool _isViewSettingsAccessibilityEnabled;
 
     bool _isViewSettingsUpdated;
 

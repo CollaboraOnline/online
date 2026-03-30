@@ -32,9 +32,11 @@ class PresenterConsole {
 			next: _('Next'),
 			notes: _('Notes'),
 			slides: _('Slides'),
+			exchange: _('Exchange'),
 			pause: _('Pause'),
 			restart: _('Restart'),
 			resume: _('Resume'),
+			presentToAll: _('Present to all'),
 			goBack: _('Go Back'),
 			zoomIn: _('Zoom In'),
 			zoomOut: _('Zoom Out'),
@@ -71,6 +73,9 @@ class PresenterConsole {
 												<button type="button" id="restart" data-cooltip="${this.labels.restart}" aria-label="${this.labels.restart}">
 													<img src="${LOUtil.getImageURL('presenterscreen-ButtonRestartTimerNormal.svg')}">
 												</button>
+												<button type="button" id="presentToAll" data-cooltip="${this.labels.presentToAll}" aria-label="${this.labels.presentToAll}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonFollowMeNormal.svg')}">
+												</button>
 											 </div>
 											<div id="today"></div>
 										</div>
@@ -92,6 +97,9 @@ class PresenterConsole {
 												</button>
 												<button type="button" id="slides" data-cooltip="${this.labels.slides}" aria-label="${this.labels.slides}">
 													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSlideSorterNormal.svg')}">
+												</button>
+												<button type="button" id="exchange" data-cooltip="${this.labels.exchange}" aria-label="${this.labels.exchange}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSwitchMonitorNormal.svg')}">
 												</button>
 											</div>
 										</div>
@@ -213,6 +221,18 @@ class PresenterConsole {
 		}
 	}
 
+	_openPresenterWindow() {
+		const windowopen =
+			window.mode.isCODesktop() && window.origOpen
+				? window.origOpen
+				: window.open;
+		return windowopen(
+			'',
+			'_blank',
+			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
+		);
+	}
+
 	_onPresentInConsole() {
 		if (app.impress.notesMode) {
 			app.console.debug(
@@ -234,11 +254,7 @@ class PresenterConsole {
 			return;
 		}
 
-		this._proxyPresenter = window.open(
-			'',
-			'_blank',
-			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
-		);
+		this._proxyPresenter = this._openPresenterWindow();
 		if (!this._proxyPresenter) {
 			this._presenter._notifyBlockedPresenting();
 			return;
@@ -559,8 +575,21 @@ class PresenterConsole {
 				button.style.justifyContent = 'center';
 				button.style.backgroundColor = 'transparent';
 				button.style.borderColor = 'none';
+
+				const img = button.querySelector('img');
+				if (img) {
+					img.style.width = '32px';
+					img.style.height = '32px';
+				}
 			}.bind(this),
 		);
+
+		// By default hide the exchange monitors button
+		if (!window.mode.isCODesktop()) {
+			let exchangeMonitorsButton =
+				this._proxyPresenter.document.querySelector('#exchange');
+			exchangeMonitorsButton.style.display = 'none';
+		}
 
 		elem = this._proxyPresenter.document.querySelector('#today');
 		elem.style.textAlign = 'right';
@@ -847,6 +876,9 @@ class PresenterConsole {
 					1000,
 				);
 				break;
+			case 'presentToAll':
+				this._onPresentToAll();
+				break;
 			case 'help':
 				// TODO. add help.collaboraonline.com
 				window.open('https://collaboraonline.com', '_blank', 'noopener');
@@ -860,6 +892,9 @@ class PresenterConsole {
 				break;
 			case 'slides':
 				this._onShowSlides();
+				break;
+			case 'exchange':
+				this._exchangeMonitors();
 				break;
 			case 'close-slides':
 				this._onHideSlides();
@@ -953,6 +988,10 @@ class PresenterConsole {
 		this._onResize();
 	}
 
+	_exchangeMonitors() {
+		window.postMobileMessage('EXCHANGEMONITORS');
+	}
+
 	_selectImg(img) {
 		if (this._selectedImg) {
 			this._selectedImg.style.border = '3px solid transparent';
@@ -1025,6 +1064,12 @@ class PresenterConsole {
 		if (e) {
 			e.stopPropagation();
 		}
+	}
+
+	_onPresentToAll() {
+		app.map.slideShowPresenter.setLeader(true);
+		app.map.slideShowPresenter._fromPresenterConsole = true;
+		app.map.fire('newpresentinwindow');
 	}
 
 	_disableButton(elem) {
@@ -1141,6 +1186,7 @@ class PresenterConsole {
 		if (this._proxyPresenter && !this._proxyPresenter.closed)
 			this._proxyPresenter.close();
 
+		app.map.slideShowPresenter._fromPresenterConsole = false;
 		window.removeEventListener('beforeunload', this._boundOnWindowClose);
 
 		this._presenter.endPresentation(true);
@@ -1155,6 +1201,7 @@ class PresenterConsole {
 		this._proxyPresenter.removeEventListener('keydown', this._boundOnKeyDown);
 		this._proxyPresenter.clearInterval(this._timer);
 		this._proxyPresenter.close();
+		app.map.slideShowPresenter._fromPresenterConsole = false;
 
 		delete this._proxyPresenter;
 		delete this._currentIndex;

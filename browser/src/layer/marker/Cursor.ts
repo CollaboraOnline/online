@@ -137,7 +137,7 @@ class Cursor {
 	}
 
 	public update() {
-		if (!this.container || !this.map || !this.map.hasDocBounds())
+		if (!this.container || !this.map || !app.activeDocument || app.activeDocument.fileSize.x === 0)
 			return;
 
 		if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
@@ -281,8 +281,7 @@ class Cursor {
 
 		if (Cursor.isCustomCursor(cursorName)) {
 			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
-			customCursor = window.L.Browser.ie ? // IE10 does not like item with left/top position in the url list
-				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
+			customCursor =
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 		}
 		return customCursor;

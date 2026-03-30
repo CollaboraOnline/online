@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Main server application class and entry point.
+ * Classes: COOLWSD
+ */
+
 #pragma once
 
 #include <common/ConfigUtil.hpp>
@@ -84,6 +89,8 @@ public:
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string TmpFontDir;
     static std::string LOKitVersion;
+    static std::string LOKitVersionNumber;
+    static std::string LOKitVersionHash;
     static bool EnableTraceEventLogging;
     static bool EnableAccessibility;
     static bool EnableMountNamespaces;
@@ -99,6 +106,9 @@ public:
     static bool AnonymizeUserData;
     static bool CheckCoolUser;
     static bool CleanupOnly;
+#if ENABLE_DEBUG
+    static bool FindFreePort;
+#endif
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
@@ -129,6 +139,7 @@ public:
 #endif
 
     static std::unordered_set<std::string> EditFileExtensions;
+    static std::string ViewModeFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string HardwareResourceWarning;
@@ -140,12 +151,6 @@ public:
     static std::mutex FetchUpdateMutex;
     static bool IsBindMountingEnabled;
     static std::mutex RemoteConfigMutex;
-#if MOBILEAPP
-#ifndef IOS
-    /// This is used to be able to wait until the lokit main thread has finished (and it is safe to load a new document).
-    static std::mutex lokit_main_mutex;
-#endif
-#endif
 
     /// For testing only [!]
     static int getClientPortNumber();
@@ -179,6 +184,7 @@ public:
         }
         return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
     }
+
 
     /// Trace a new session and take a snapshot of the file.
     static void dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path);
@@ -250,6 +256,8 @@ public:
                                          const std::string& json);
 #endif
 
+    static void setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguration& conf);
+
 #if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server
     static std::string getServerURL();
@@ -286,6 +294,7 @@ protected:
 private:
 #if !MOBILEAPP
     void processFetchUpdate(const std::shared_ptr<SocketPoll>& poll);
+    static bool testMountingNSInFork();
     static void setupChildRoot(bool UseMountNamespaces);
     void initializeEnvOptions();
 #endif // !MOBILEAPP
@@ -299,8 +308,8 @@ private:
     /// The actual main implementation.
     void innerMain();
 
-    static void appendAllowedHostsFrom(Poco::Util::LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed);
-    static void appendAllowedAliasGroups(Poco::Util::LayeredConfiguration& conf, std::vector<std::string>& allowed);
+    static void appendAllowedHostsFrom(const Poco::Util::LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed);
+    static void appendAllowedAliasGroups(const Poco::Util::LayeredConfiguration& conf, std::vector<std::string>& allowed);
 
 private:
     /// UnitWSDInterface

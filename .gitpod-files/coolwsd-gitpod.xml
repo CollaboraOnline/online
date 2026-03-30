@@ -131,7 +131,7 @@
         <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="/tmp/coolwsd.trace.json">/tmp/coolwsd.trace.json</path>
     </trace_event>
 
-    <browser_logging desc="Logging in the browser console" default="true">true</browser_logging>
+    <browser_logging desc="When enabled, shows internal console output in the browser's developer console and forwards JS errors to the server log." default="true">true</browser_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
         <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/cooltrace-%.gz" compress="true" snapshot="false"></path>
@@ -223,7 +223,6 @@
       <jwt_expiry_secs desc="Time in seconds before the Admin Console's JWT token expires" type="int" default="1800">1800</jwt_expiry_secs>
       <enable_macros_execution desc="Specifies whether the macro execution is enabled in general. This will enable Basic and Python scripts to execute both installed and from documents. If it is set to false, the macro_security_level is ignored. If it is set to true, the mentioned entry specified the level of macro security." type="bool" default="false">false</enable_macros_execution>
       <macro_security_level desc="Level of Macro security. 1 (Medium) Confirmation required before executing macros from untrusted sources. 0 (Low, not recommended) All macros will be executed without confirmation." type="int" default="1">1</macro_security_level>
-      <enable_websocket_urp desc="Should we enable URP (UNO remote protocol) communication over the websocket. This allows full control of the Kit child server to anyone with access to the websocket including executing macros without confirmation or running arbitrary shell commands in the jail." type="bool" default="false">false</enable_websocket_urp>
       <enable_metrics_unauthenticated desc="When enabled, the /cool/getMetrics endpoint will not require authentication." type="bool" default="false">false</enable_metrics_unauthenticated>
     </security>
 

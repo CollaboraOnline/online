@@ -8,11 +8,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+/*
+ * Server-side utility implementations.
+ * Functions: spawnProcess(), getMemoryUsage(), DirectoryCounter
+ */
+
 #include <config.h>
 
-#include "Log.hpp"
-#include "StringVector.hpp"
-#include "Util.hpp"
+#include <common/Log.hpp>
+#include <common/NumUtil.hpp>
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/Exception.h>
 
@@ -20,6 +27,7 @@
 #include <fstream>
 #include <iomanip>
 #include <spawn.h>
+#include <unistd.h>
 
 #ifdef __linux__
 #include <sys/time.h>
@@ -27,8 +35,13 @@
 #elif defined __FreeBSD__
 #include <sys/resource.h>
 #include <sys/user.h>
-#include <unistd.h>
 extern char** environ;
+#endif
+
+// 'environ' is not directly available on macOS, but using _NSGetEnviron() should be good enough
+#ifdef __APPLE__
+#  include <crt_externs.h>
+#  define environ (*_NSGetEnviron())
 #endif
 
 namespace
@@ -138,71 +151,6 @@ std::size_t getFromCGroupV2(const std::string& key)
 
 namespace Util
 {
-DirectoryCounter::DirectoryCounter(const char* procPath)
-    : _tasks(opendir(procPath))
-{
-    if (!_tasks)
-        LOG_ERR("No proc mounted, can't count threads");
-}
-
-DirectoryCounter::~DirectoryCounter() { closedir(reinterpret_cast<DIR*>(_tasks)); }
-
-int DirectoryCounter::count()
-{
-    auto dir = reinterpret_cast<DIR*>(_tasks);
-
-    if (!dir)
-        return -1;
-
-    rewinddir(dir);
-
-    int tasks = 0;
-    struct dirent* i;
-    while ((i = readdir(dir)))
-    {
-        if (i->d_name[0] != '.')
-            tasks++;
-    }
-
-    return tasks;
-}
-
-#ifdef __FreeBSD__
-ThreadCounter::ThreadCounter() { pid = getpid(); }
-
-ThreadCounter::~ThreadCounter() {}
-
-int ThreadCounter::count()
-{
-    size_t len = 0, olen = 0;
-    struct kinfo_proc* kipp = NULL;
-    int name[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID | KERN_PROC_INC_THREAD, pid };
-    int error = sysctl(name, 4, NULL, &len, NULL, 0);
-    if (len == 0 || (error < 0 && errno != EPERM)) {
-        goto fail;
-    }
-    do
-    {
-        len += len / 10;
-        kipp = (struct kinfo_proc *) reallocf(kipp, len);
-        if (kipp == NULL)
-        {
-            goto fail;
-        }
-        olen = len;
-        error = sysctl(name, 4, kipp, &len, NULL, 0);
-    } while (error < 0 && errno == ENOMEM && olen == len);
-
-    if (error < 0 && errno != EPERM) {
-        goto fail;
-    }
-    return len / sizeof(*kipp);
-
-fail:
-    if (kipp)
-        free(kipp);
-    return 0;}
-#endif
 
 int spawnProcess(const std::string& cmd, const StringVector& args)
 {
@@ -402,7 +350,7 @@ std::size_t getProcessTreePss(pid_t pid)
             std::string child;
             while (children >> child)
             {
-                const auto pair = Util::i32FromString(child);
+                const auto pair = NumUtil::i32FromString(child);
                 if (pair.second)
                 {
                     pss += getProcessTreePss(pair.first);
@@ -487,7 +435,7 @@ std::size_t getStatFromPid(const pid_t pid, int ind)
                     if (index == ind)
                     {
                         fclose(fp);
-                        return strtol(&s[pos], nullptr, 10);
+                        return NumUtil::u64FromString(&s[pos], 0);
                     }
                     ++index;
                     pos = s.find(' ', pos + 1);

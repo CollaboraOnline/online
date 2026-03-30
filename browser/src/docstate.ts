@@ -15,7 +15,7 @@
 		* app.sectionContainer.addSection(new app.definitions.CellFillMarkerSection());
 		* var cellFillSection = new app.definitions.CellFillMarkerSection();
 */
-window.app = {
+(window.app as any) = {
 	/*
 	 * These are from <vcl/keycodes.h>. Correspond to the published
 	 * com::sun::star::awt::KeyModifier constants, left-shifted by 12.
@@ -54,11 +54,17 @@ window.app = {
 		partHashes: null, // hashes used to distinguish parts (we use sheet name)
 		autoFilterCell: null, // The cell of the current autofilter popup.
 		pivotTableFilterCell: null, // The cell of the current pivot table filter popup.
+		partWithActiveSheetView: -1, // Default part index with an active sheet view, or -1 if none.
 	},
 	impress: {
 		partList: null, // Info for parts.
+		hasOverviewPage: false, //Whether the file has an overview page
 		notesMode: false, // Opposite of "NormalMultiPaneGUI".
 		twipsCorrection: 0.567, // There is a constant ratio between tiletwips and impress page twips. For now, this seems safe to use.
+	},
+	writer: {
+		compareDocumentProperties: null,
+		compareDocumentOldFileName: null,
 	},
 	map: null, // Make map object a part of this.
 	util: null, // Attach the Util class.
@@ -104,6 +110,7 @@ window.app = {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.
 		},
 		exportFormats: [], // possible output formats
+		viewModeExtensions: '',
 	},
 	following: {
 		// describes which cursor we follow with the view
@@ -281,6 +288,7 @@ window.app = {
 		ThemeColors: { name: _('Theme colors'), colors: [] },
 		DocumentColors: { name: _('Document colors'), colors: [] },
 	},
+	tableStyles: null, // TableStylesService
 	colorLastSelection: {}, // last used colors for uno commands
 
 	serverAudit: null, // contains list of warnings / errors detected on the server instance
@@ -292,6 +300,17 @@ window.app = {
 	// Below are only used for Cypress tests
 	allDialogs: undefined, // List of UNO commands for dialogs
 	a11yValidator: undefined, // Accessibility validator
+	serverInfo: {
+		coolwsdVersion: '',
+		coolwsdHash: '',
+		lokitVersionName: '',
+		lokitVersionNumber: '',
+		lokitVersionSuffix: '',
+		lokitHash: '',
+		serverId: '',
+		osInfo: '',
+		wsdOptions: '',
+	},
 };
 
 var activateValidation = false;

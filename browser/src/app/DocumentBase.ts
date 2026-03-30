@@ -16,6 +16,7 @@ class DocumentBase {
 	public tableMiddleware: TableMiddleware;
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	public mouseControl: MouseControl | null = null;
+	private _activeModes: number[] = [0];
 	protected views: Map<number, DocumentViewBase> = new Map<
 		number,
 		DocumentViewBase
@@ -60,6 +61,8 @@ class DocumentBase {
 		if (this.activeViewID !== activeViewID) {
 			this.activeViewID = activeViewID;
 			this.activeView.clearTextSelection();
+			// Remove the old active view's section before creating a new one.
+			app.sectionContainer.removeSection(this.activeView.selectionSection.name);
 			this.activeView = new DocumentViewBase(this.activeViewID);
 			this.activeView.setColor(this.activeViewSelectionColor);
 		}
@@ -68,6 +71,13 @@ class DocumentBase {
 	private addSections() {
 		this.mouseControl = new MouseControl(app.CSections.MouseControl.name);
 		app.sectionContainer.addSection(this.mouseControl);
+
+		if (
+			app.map._docLayer._docType === 'text' &&
+			app.map.uiManager?.isRulerVisible()
+		) {
+			app.sectionContainer.addSection(new cool.RulerSpacerSection());
+		}
 	}
 
 	public get fileSize(): cool.SimplePoint {
@@ -95,5 +105,17 @@ class DocumentBase {
 			this.views.set(viewID, new DocumentViewBase(viewID));
 			return this.views.get(viewID) as DocumentViewBase;
 		}
+	}
+
+	public set activeModes(modes: number[]) {
+		this._activeModes = modes.slice();
+	}
+
+	public get activeModes() {
+		return this._activeModes.slice();
+	}
+
+	public isModeActive(mode: number): boolean {
+		return this._activeModes.includes(mode);
 	}
 }

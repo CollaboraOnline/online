@@ -306,7 +306,7 @@ window.L.Control.LokDialog = window.L.Control.extend({
 		}
 
 		if (e.action === 'created') {
-			if ((e.winType === 'dialog' || e.winType === 'dropdown') && !window.mode.isMobile()) {
+			if ((e.winType === 'dialog' || e.winType === 'dropdown') && !window.mode.isSmallScreenDevice()) {
 				// When left/top are invalid, the dialog shows in the center.
 				this._launchDialog(e.id, left, top, width, height, e.title, null, e.unique_id);
 			} else if (e.winType === 'child' || e.winType === 'tooltip') {
@@ -352,7 +352,7 @@ window.L.Control.LokDialog = window.L.Control.extend({
 		}
 
 		// We don't want dialogs on smartphones, only calc input window is allowed
-		if (window.mode.isMobile())
+		if (window.mode.isSmallScreenDevice())
 			return;
 
 		if (e.action === 'invalidate') {
@@ -752,7 +752,7 @@ window.L.Control.LokDialog = window.L.Control.extend({
 		var offsetX = 0;
 		var offsetY = 0;
 
-		if ((window.mode.isMobile() || window.mode.isTablet()) && width > window.screen.width) {
+		if ((window.mode.isSmallScreenDevice() || window.mode.isTablet()) && width > window.screen.width) {
 			ratio = window.screen.width / (width + 40);
 			offsetX = -(width - window.screen.width) / 2;
 			offsetY = -(height - window.screen.height) / 2;
@@ -774,7 +774,7 @@ window.L.Control.LokDialog = window.L.Control.extend({
 
 		// on mobile, force the positioning to the top, so that it is not
 		// covered by the virtual keyboard
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			$(dialogContainer).dialog('option', 'position', { my: 'center top', at: 'center top', of: '#document-container' });
 			transformation.origin = 'center top';
 			transformation.translate.y = 0;

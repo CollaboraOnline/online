@@ -9,24 +9,29 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Common helper functions and utilities for testing. Independent implementations to avoid
+ * reusing code under test.
+ */
+
 #pragma once
 
-#include <Common.hpp>
-#include <JsonUtil.hpp>
-#include <Socket.hpp>
-#include <WebSocketSession.hpp>
+#include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Syscall.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <net/Uri.hpp>
+#include <test/WebSocketSession.hpp>
 #include <test/lokassert.hpp>
 #include <test/testlog.hpp>
 #include <tools/COOLWebSocket.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include <Poco/BinaryReader.h>
 #include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Path.h>
@@ -38,6 +43,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <thread>
 
 #ifndef TDOC
@@ -180,10 +186,29 @@ inline std::string getTempFileCopyPath(const std::string& srcDir, const std::str
         try {
             std::filesystem::copy(srcPath, dstPath);
         }
+        catch (const std::filesystem::filesystem_error& ex)
+        {
+            if (ex.code() == std::errc::file_exists)
+            {
+                LOG_DBG("Failed to copy temp file and will retry: " << ex.what());
+                retry = true;
+                continue;
+            }
+
+            LOG_SYS("ERROR: " << ex.what());
+
+            // Permanent failure.
+            if (ex.code() == std::errc::no_such_file_or_directory ||
+                ex.code() == std::errc::filename_too_long ||
+                ex.code() == std::errc::invalid_argument)
+            {
+                throw;
+            }
+        }
         catch (const std::exception& ex)
         {
             LOG_SYS("ERROR: unexpected conflict creating file: " << ex.what());
-            retry = true;;
+            retry = true;
         }
     } while (retry);
 
@@ -216,22 +241,22 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
     TST_LOG("Test file: " << documentPath);
 }
 
-inline
-void sendTextFrame(COOLWebSocket& socket, const std::string& string, const std::string& testname)
+inline void sendTextFrame(COOLWebSocket& socket, const std::string_view string,
+                          const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
     socket.sendFrame(string.data(), string.size());
 }
 
-inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket, const std::string& string,
-                          const std::string& testname)
+inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket,
+                          const std::string_view string, const std::string_view testname)
 {
     sendTextFrame(*socket, string, testname);
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
-                          const std::string& string, const std::string& testname = std::string())
+                          const std::string_view string, const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
@@ -248,68 +273,44 @@ inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::U
     return std::make_unique<Poco::Net::HTTPClientSession>(uri.getHost(), uri.getPort());
 }
 
-/// Uses Poco to make an HTTP GET from the given URI.
-inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGet(const Poco::URI& uri)
+/// Uses the internal http::Session to make an HTTP GET request.
+inline std::shared_ptr<const http::Response>
+httpGet(const std::string& uri)
 {
-    LOG_INF("pocoGet: " << uri.toString());
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(),
-                                   Poco::Net::HTTPMessage::HTTP_1_1);
-    session->sendRequest(request);
-    auto response = std::make_shared<Poco::Net::HTTPResponse>();
-    std::istream& rs = session->receiveResponse(*response);
-
-    LOG_DBG("pocoGet response for [" << uri.toString() << "]: " << response->getStatus() << ' '
-                                     << response->getReason()
-                                     << ", hasContentLength: " << response->hasContentLength()
-                                     << ", ContentLength: " << response->getContentLength64());
-
-    for (const auto& pair : *response)
+    LOG_INF("httpGet: " << uri);
+    auto httpSession = http::Session::create(uri);
+    if (!httpSession)
     {
-        LOG_TRC(pair.first << '=' << pair.second);
+        LOG_ERR("Failed to create http::Session for [" << uri << "]");
+        return nullptr;
     }
 
-    std::string responseString;
-    try
-    {
-        std::ostringstream outputStringStream;
-        Poco::StreamCopier::copyStream(rs, outputStringStream);
-        responseString = outputStringStream.str();
-        LOG_DBG("pocoGet [" << uri.toString() << "]: " << responseString);
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_ERR("Exception while reading Poco stream: " << ex.what());
-    }
-
-    return std::make_pair(response, responseString);
+    const std::string path(net::parseUrl(uri));
+    return httpSession->syncRequest(http::Request(path.empty() ? "/" : path));
 }
 
-/// Uses Poco to make an HTTP GET from the given URI.
-/// And optionally retries up to @retry times with
-/// @delayMs between attempts.
-inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGetRetry(const Poco::URI& uri, int retry = 3,
+/// Uses the internal http::Session to make an HTTP GET request.
+/// Optionally retries up to @retry times with @delayMs between attempts.
+inline std::shared_ptr<const http::Response>
+httpGetRetry(const std::string& uri, int retry = 3,
              std::chrono::milliseconds delayMs = std::chrono::seconds(1))
 {
     for (int attempt = 1; attempt <= retry; ++attempt)
     {
         try
         {
-            LOG_INF("pocoGet #" << attempt << ": " << uri.toString());
-            auto res = pocoGet(uri);
-            if (!res.first)
+            LOG_INF("httpGet #" << attempt << ": " << uri);
+            auto res = httpGet(uri);
+            if (!res || res->statusCode() == http::StatusCode::None)
             {
-                throw std::runtime_error("Server unavilable");
+                throw std::runtime_error("Server unavailable");
             }
 
             return res;
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("pocoGet #" << attempt << " failed for [" << uri.toString()
-                                << "]: " << ex.what());
+            LOG_ERR("httpGet #" << attempt << " failed for [" << uri << "]: " << ex.what());
             if (attempt == retry)
                 throw;
 
@@ -317,19 +318,84 @@ pocoGetRetry(const Poco::URI& uri, int retry = 3,
         }
     }
 
-    auto response = std::make_shared<Poco::Net::HTTPResponse>();
-    std::string responseString;
-    return std::make_pair(response, responseString);
+    return nullptr;
 }
 
-/// Uses Poco to make an HTTP GET from the given URI components.
-inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGet(bool secure, const std::string& host, const int port, const std::string& url)
+/// Builds a multipart/form-data body for http::Request.
+/// Replaces Poco::Net::HTMLForm + FilePartSource + StringPartSource.
+struct MultipartFormBody
 {
-    const char* scheme = (secure ? "https://" : "http://");
-    Poco::URI uri(scheme + host + ':' + std::to_string(port) + url);
-    return pocoGet(uri);
-}
+    MultipartFormBody()
+        : _boundary("----CoolFormBoundary" + Util::rng::getHexString(16))
+    {
+    }
+
+    /// Add a simple name=value form field.
+    void addField(const std::string& name, const std::string& value)
+    {
+        _parts.emplace_back(Part{ name, value, std::string(), std::string() });
+    }
+
+    /// Add a file part, reading from the given file path.
+    void addFile(const std::string& name, const std::string& filePath,
+                 const std::string& contentType = "application/octet-stream")
+    {
+        std::ifstream ifs(filePath, std::ios::binary);
+        std::string content((std::istreambuf_iterator<char>(ifs)),
+                            std::istreambuf_iterator<char>());
+        std::string filename = filePath;
+        const auto pos = filePath.find_last_of('/');
+        if (pos != std::string::npos)
+            filename = filePath.substr(pos + 1);
+        _parts.emplace_back(Part{ name, std::move(content), filename, contentType });
+    }
+
+    /// Add a string part with explicit content type and filename (replaces StringPartSource).
+    void addStringPart(const std::string& name, const std::string& content,
+                       const std::string& contentType, const std::string& filename)
+    {
+        _parts.emplace_back(Part{ name, content, filename, contentType });
+    }
+
+    /// Build the multipart body and set it on the request.
+    void applyTo(http::Request& request) const
+    {
+        std::string body;
+        for (const auto& part : _parts)
+        {
+            body += "--" + _boundary + "\r\n";
+            if (part.filename.empty())
+            {
+                body += "Content-Disposition: form-data; name=\"" + part.name + "\"\r\n";
+            }
+            else
+            {
+                body += "Content-Disposition: form-data; name=\"" + part.name +
+                        "\"; filename=\"" + part.filename + "\"\r\n";
+                if (!part.contentType.empty())
+                    body += "Content-Type: " + part.contentType + "\r\n";
+            }
+            body += "\r\n";
+            body += part.value;
+            body += "\r\n";
+        }
+        body += "--" + _boundary + "--\r\n";
+
+        request.setBody(std::move(body), "multipart/form-data; boundary=" + _boundary);
+    }
+
+private:
+    struct Part
+    {
+        std::string name;
+        std::string value;
+        std::string filename;
+        std::string contentType;
+    };
+
+    std::string _boundary;
+    std::vector<Part> _parts;
+};
 
 // Sets read / write timeout for the given file descriptor.
 inline void setSocketTimeOut(int socketFD, int timeMS)
@@ -352,7 +418,7 @@ inline int connectToLocalServer(int portNumber, int socketTimeOutMS, bool blocki
     int socketFD = 0;
     struct sockaddr_in serv_addr;
 
-    if ((socketFD = socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0)) < 0)
+    if ((socketFD = Syscall::socket_cloexec_nonblock(AF_INET, 0 /*SOCK_STREAM | SOCK_CLOEXEC*/, 0)) < 0)
     {
         LOG_ERR("helpers::connectToLocalServer: Server client could not be created.");
         return -1;
@@ -405,9 +471,9 @@ inline std::string const& getTestServerURI(const std::string& proto = "http")
     return serverURI;
 }
 
-
 inline std::vector<char>
-getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::string& testname,
+getResponseMessage(COOLWebSocket& ws, const std::string_view prefix,
+                   const std::string_view testname,
                    const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     try
@@ -478,18 +544,18 @@ getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::stri
     return std::vector<char>();
 }
 
-inline std::vector<char> getResponseMessage(const std::shared_ptr<http::WebSocketSession>& ws,
-                                     const std::string& prefix, const std::string& testname,
-                                     const std::chrono::milliseconds timeoutMs
-                                     = std::chrono::seconds(10))
+inline std::vector<char>
+getResponseMessage(const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view prefix,
+                   const std::string_view testname,
+                   const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     return ws->waitForMessage(prefix, timeoutMs, testname);
 }
 
-inline std::shared_ptr<TileDesc> getResponseDesc(const std::shared_ptr<http::WebSocketSession>& ws,
-                                                 const std::string& prefix, const std::string& testname,
-                                                 const std::chrono::milliseconds timeoutMs
-                                                 = std::chrono::seconds(10))
+inline std::shared_ptr<TileDesc>
+getResponseDesc(const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view prefix,
+                const std::string_view testname,
+                const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     std::vector<char> tile = getResponseMessage(ws, prefix, testname, timeoutMs);
 
@@ -500,10 +566,10 @@ inline std::shared_ptr<TileDesc> getResponseDesc(const std::shared_ptr<http::Web
         TileDesc::parse(StringVector::tokenize(tile.data(), tile.size())));
 }
 
-inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
-                                     const std::string& prefix, const std::string& testname,
-                                     const std::chrono::milliseconds timeoutMs
-                                     = std::chrono::seconds(10))
+inline std::string
+getResponseString(const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view prefix,
+                  const std::string_view testname,
+                  const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const std::vector<char> response = ws->waitForMessage(prefix, timeoutMs, testname);
 
@@ -512,7 +578,7 @@ inline std::string getResponseString(const std::shared_ptr<http::WebSocketSessio
 
 inline std::string
 getResponseStringAny(const std::shared_ptr<http::WebSocketSession>& ws,
-                     const std::vector<std::string>& prefixes, const std::string& testname,
+                     const std::vector<std::string_view>& prefixes, const std::string_view testname,
                      const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const std::vector<char> response = ws->waitForMessageAny(prefixes, timeoutMs, testname);
@@ -520,10 +586,10 @@ getResponseStringAny(const std::shared_ptr<http::WebSocketSession>& ws,
     return std::string(response.data(), response.size());
 }
 
-inline std::vector<std::string> getAllResponsesTimed(const std::shared_ptr<http::WebSocketSession>& ws,
-                                                     const std::string& prefix, const std::string& testname,
-                                                     const std::chrono::milliseconds timeoutMs
-                                                     = std::chrono::seconds(5))
+inline std::vector<std::string>
+getAllResponsesTimed(const std::shared_ptr<http::WebSocketSession>& ws,
+                     const std::string_view prefix, const std::string_view testname,
+                     const std::chrono::milliseconds timeoutMs = std::chrono::seconds(5))
 {
     std::vector<std::string> responses;
 
@@ -540,19 +606,18 @@ inline std::vector<std::string> getAllResponsesTimed(const std::shared_ptr<http:
     return responses;
 }
 
-
-inline std::string assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
-                                        const std::string& prefix, const std::string& testname,
-                                        const std::chrono::milliseconds timeoutMs
-                                        = std::chrono::seconds(10))
+inline std::string
+assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
+                     const std::string_view prefix, const std::string_view testname,
+                     const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     auto res = getResponseString(ws, prefix, testname, timeoutMs);
-    LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
+    LOK_ASSERT_EQUAL_STR(prefix, res.substr(0, prefix.length()));
     return res;
 }
 
 inline int countMessages(const std::shared_ptr<http::WebSocketSession>& ws,
-                         const std::string& prefix, const std::string& testname,
+                         const std::string_view prefix, const std::string_view testname,
                          const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     int count = 0;
@@ -563,7 +628,7 @@ inline int countMessages(const std::shared_ptr<http::WebSocketSession>& ws,
 }
 
 template <typename T>
-std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname,
+std::string getResponseString(T& ws, const std::string_view prefix, const std::string_view testname,
                               const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const auto response = getResponseMessage(ws, prefix, testname, timeoutMs);
@@ -572,16 +637,17 @@ std::string getResponseString(T& ws, const std::string& prefix, const std::strin
 
 /// Assert that we don't get a response with the given prefix.
 template <typename T>
-std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string& testname)
+std::string assertNotInResponse(T& ws, const std::string_view prefix,
+                                const std::string_view testname)
 {
     const auto res = getResponseString(ws, prefix, testname, std::chrono::milliseconds(1000));
-    LOK_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
+    LOK_ASSERT_MESSAGE("Did not expect getting message [" + res + ']', res.empty());
     return res;
 }
 
-inline bool getProgressWithIdValue(const std::string &msg, const std::string &idValue)
+inline bool getProgressWithIdValue(const std::string_view msg, const std::string_view idValue)
 {
-    const std::string prefix = "progress:";
+    static constexpr std::string_view prefix = "progress:";
     if (!COOLProtocol::matchPrefix(prefix, msg))
         return false;
 
@@ -594,7 +660,7 @@ inline bool getProgressWithIdValue(const std::string &msg, const std::string &id
 }
 
 inline bool isDocumentLoaded(
-    const std::shared_ptr<http::WebSocketSession>& ws, const std::string& testname,
+    const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view testname,
     bool isView = true,
     const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
@@ -607,7 +673,7 @@ inline bool isDocumentLoaded(
     }
     else
     {
-        const std::string prefix = "progress:";
+        static constexpr std::string_view prefix = "progress:";
         while (true)
         {
             const std::string message = getResponseString(ws, prefix, testname, timeout);
@@ -630,7 +696,7 @@ inline bool isDocumentLoaded(
 // connectLOKit ensures the websocket is connected to a kit process.
 inline std::shared_ptr<http::WebSocketSession>
 connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
-             const std::string& url, const std::string& testname)
+             const std::string& url, const std::string_view testname)
 {
     TST_LOG("Connecting to " << uri.toString() << " with URL: " << url);
     constexpr int max_retries = 11;
@@ -690,7 +756,7 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
 /// By default, allow longer time for loading.
 inline std::shared_ptr<http::WebSocketSession> loadDocAndGetSession(
     const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
-    const std::string& documentURL, const std::string& testname, bool isView = true,
+    const std::string& documentURL, const std::string_view testname, bool isView = true,
     bool isAssert = true, const std::string& loadParams = std::string(),
     const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
@@ -942,8 +1008,8 @@ inline bool svgMatch(const std::string& testname, const std::vector<char>& respo
 
 /// Sends a command and waits for an event in response, with retrying.
 inline bool sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
-                        const std::string& testname, const std::string& command,
-                        const std::string& response,
+                        const std::string_view testname, const std::string_view command,
+                        const std::string_view response,
                         std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                         int repeat = COMMAND_RETRY_COUNT)
 {
@@ -997,7 +1063,7 @@ inline bool sendAndDrain(const std::shared_ptr<http::WebSocketSession>& ws,
 
 /// Select all and wait for the text selection update.
 inline bool selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
-                      const std::string& testname,
+                      const std::string_view testname,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                       int retry = COMMAND_RETRY_COUNT)
 {
@@ -1007,7 +1073,7 @@ inline bool selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
 
 /// Delete all and wait for the text selection update.
 inline bool deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
-                      const std::string& testname,
+                      const std::string_view testname,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                       int retry = COMMAND_RETRY_COUNT)
 {
@@ -1023,11 +1089,12 @@ inline bool deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
 }
 
 inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& socket,
-                              const std::string& testname,
-                              const std::string& expected = std::string(),
+                              const std::string_view testname,
+                              const std::string_view expected = std::string_view(),
                               int retry = COMMAND_RETRY_COUNT)
 {
-    static const std::string prefix = "textselectioncontent: ";
+    static constexpr std::string_view prefix = "textselectioncontent: ";
+    const std::string match = std::string(prefix) + std::string(expected);
 
     for (int i = 1; i <= retry; ++i)
     {
@@ -1036,12 +1103,12 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
         selectAll(socket, testname);
 
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        std::string text = getResponseString(socket, prefix, testname);
+        const std::string text = getResponseString(socket, prefix, testname);
         if (!text.empty())
         {
             if (expected.empty())
                 return text;
-            else if ((prefix + expected) == text)
+            else if (match == text)
                 return text;
             else
                 LOG_DBG("text selection mismatch text received: '" << text <<

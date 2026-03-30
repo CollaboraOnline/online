@@ -18,6 +18,33 @@ beforeEach(function() {
 // not get printed
 afterEach(function() {
 	cy.log('Finishing test: ' + getFullTestName());
+
+	if (this.currentTest.state === 'failed') {
+		// Report system load
+		cy.exec('cat /proc/loadavg', { log: false, failOnNonZeroExit: false }).then((result) => {
+			if (result.code === 0)
+				Cypress.log({ name: 'loadavg', message: result.stdout });
+		});
+		// Dump app.Log on test failure for debugging
+		cy.getFrameWindow().then((win) => {
+			if (win && win.app && win.app.Log && win.app.Log._logs) {
+				var logs = win.app.Log._logs;
+				Cypress.log({name: 'app.Log', message: 'Dumping ' + logs.length + ' log entries'});
+				for (var i = 0; i < logs.length; i++) {
+					var entry = logs[i];
+					Cypress.log({name: entry.direction, message: entry.msg});
+				}
+			}
+			// Skip remaining tests in this spec once a test has definitively
+			// failed, but only after all retries are exhausted.
+			var retries = this.currentTest._retries || 0;
+			var currentRetry = this.currentTest._currentRetry || 0;
+			if (currentRetry >= retries) {
+				Cypress.stop();
+				return;
+			}
+		});
+	}
 });
 
 installLogsCollector({

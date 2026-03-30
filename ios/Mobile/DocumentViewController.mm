@@ -31,6 +31,9 @@
 #import "Clipboard.hpp"
 #import "CoolURLSchemeHandler.h"
 
+#define LIBO_INTERNAL_ONLY
+#import <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #import "DocumentViewController.h"
 
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
@@ -590,13 +593,10 @@ static IMP standardImpOfInputAccessoryView = nil;
             // First we simply send the Online C++ parts the URL and the appDocId. This corresponds
             // to the GET request with Upgrade to WebSocket.
             std::string url([[self.document->copyFileURL absoluteString] UTF8String]);
-            p.fd = self.document->fakeClientFd;
-            p.events = POLLOUT;
-            fakeSocketPoll(&p, 1, -1);
 
-            // This is read in the iOS-specific code in ClientRequestDispatcher::handleIncomingMessage() in COOLWSD.cpp
+            // This is read in the code in ClientRequestDispatcher::handleIncomingMessage()
             std::string message(url + " " + std::to_string(self.document->appDocId));
-            fakeSocketWrite(self.document->fakeClientFd, message.c_str(), message.size());
+            fakeSocketWriteQueue(self.document->fakeClientFd, message.c_str(), message.size());
 
             return;
         } else if ([message.body isEqualToString:@"BYE"]) {

@@ -188,48 +188,10 @@
 	border-top: 1px solid var(--color-border);
 }
 
-.w2ui-icon-check:before {
-	color: var(--color-primary);
-}
-
-.w2ui-toolbar table.w2ui-button .w2ui-tb-down > div,
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-	border-top: 5px solid var(--color-main-text);
-}
 #toolbar-down .ToolbarStatusInactive {
 	color: var(--color-text-lighter);
 	box-shadow: inset 0px 0px 0px 10px var(--color-background-dark), 0px 0px 0px 2px var(--color-background-dark), 4px 0px 0px 1px var(--color-background-lighter), -4px 0px 0px 1px #fff, 0px 0px 0px 5px var(--color-background-lighter);
 }
-.w2ui-overlay {
-	-webkit-box-shadow: 0 0 3px var(--color-border);
-	box-shadow: 0 0 3px var(--color-box-shadow);
-	border-radius: var(--border-radius);
-	background-color: var(--color-background-lighter);
-}
-.w2ui-overlay.bottom-arrow:before {
-	border-top: 6px solid var(--color-border-dark);
-}
-.w2ui-overlay .menu {
-	overflow: hidden auto;
-	border-radius: var(--border-radius);
-	position: static !important;
-}
-.w2ui-overlay > div {
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-}
-.w2ui-overlay table.w2ui-drop-menu {
-	color: var(--color-main-text);
-	background-color: var(--color-main-background);
-}
-.w2ui-overlay table.w2ui-drop-menu tr:hover {
-	color: var(--color-text-darker);
-	background-color: var(--color-background-darker);
-}
-.w2ui-overlay.bottom-arrow:after {
-	border-top-color: var(--color-background-lighter);
-}
-
 #presentation-toolbar {
 	bottom: 0;
 	background-color: var(--color-background-lighter);
@@ -248,26 +210,6 @@
 	display: flex !important;
 	flex: 1;
 	justify-content: space-between;
-}
-
-.w2ui-toolbar .w2ui-break {
-	height: 18px;
-	background-image: none;
-	background-color: var(--color-border-lighter);
-}
-
-/* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
- * Ideal would be to add the class to select2-container <span>, but
- * https://github.com/select2/select2/issues/285
- * So, for now just define the z-index here separately for the same class that select2 uses
- * as a container
- */
-.select2-container {
-	z-index: 1000;
-}
-
-.select2-container .select2-selection--single {
-	height: 100%;
 }
 
 /* scroll wrapper */
@@ -433,17 +375,9 @@
 	width: 95%;
 }
 
-.w2ui-button {
-	margin: 0 !important;
-}
-
 .w2ui-tb-image {
 	width: 24px !important;
 	height: 24px !important;
-}
-
-.w2ui-break {
-	margin: 0 4px !important;
 }
 
 .leaflet-bar a {
@@ -515,85 +449,42 @@ button.leaflet-control-search-next
 	font-size: var(--default-font-size);
 }
 
-/* select box */
-.select2 span {
-	font-family: var(--cool-font);
-}
-.select2-results__option {
-	padding: 5px;
-	font-family: var(--cool-font);
-	color: var(--color-main-text);
-	font-size: var(--default-font-size);
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.select2-selection__rendered {
-	font-family: var(--cool-font);
-	font-size: var(--default-font-size);
-}
-.select2-container--default .select2-selection--single,
 .sidebar.jsdialog.ui-listbox {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
 	border: 1px solid var(--color-border-dark);
 }
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-	line-height: 24px;
-	background-color: var(--color-background-dark);
-	color: var(--color-text-dark);
-	border-radius: var(--border-radius);
-}
-.select2-container--default .select2-selection--single .select2-selection__rendered:hover,
-.sidebar.jsdialog.ui-listbox:hover,
-.w2ui-toolbar table.w2ui-button.checked:hover {
+.sidebar.jsdialog.ui-listbox:hover {
 	background-color: var(--color-background-lighter);
 	color: var(--color-text-darker);
 }
-.select2-dropdown {
-	background-color: var(--color-main-background);
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
+#toolbar-up .ui-combobox-button {
+	padding-left: 10px;
 }
-.select2-container--default .select2-results__option[aria-selected='true'] {
-	background-color: var(--color-background-dark);
-	color: var(--color-text-dark);
-}
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-	background-color: var(--color-background-darker);
-	color: var(--color-text-darker);
-}
-.select2-container--default .select2-search--dropdown .select2-search__field {
-	background-color: var(--color-background-lighter);
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-	color: var(--color-text-dark);
-}
-.select2-container--default .select2-results__option[aria-disabled='true'] {
-	color: var(--color-border-lighter);
-}
-#styles-input {
-	width: 150px !important;
-}
-#toolbar-up #fontnamecombobox .select2-container {
-	margin-left: 5px;
-	margin-right: 5px;
-	width: 150px !important;
-}
-#fontnamecombobox.select2 {
-	border-color: transparent;
-	background-color: transparent;
-	line-height: 24px;
-	padding-right: 8px;
-}
-#toolbar-up #fontsizecombobox .select2-container {
-	min-width: 55px !important;
-	margin: 0px 4px;
-}
-#fontsizecombobox-input-notebookbar,
-#fontsizecombobox-input-sidebar,
 #fontsizecombobox-input-context-toolbar {
 	width: 55px !important;
+}
+#toolbar-up #fontnamecombobox {
+	width: 170px;
+	max-width: 170px;
+	margin: auto 5px;
+}
+#toolbar-up #fontsizecombobox {
+	min-width: 90px;
+	width: 90px;
+	margin: auto 4px;
+}
+#fontsizecombobox-dropdown .ui-grid {
+	width: 6.5em;
+}
+#fontsizecombobox-dropdown .ui-combobox-search-container {
+	display: none;
+}
+#toolbar-up #styles {
+	width: 150px;
+	max-width: 150px;
+	margin: auto 4px;
 }
 .evo-cp-wrap {
 	/* hide the color pick div */
@@ -664,22 +555,6 @@ button.leaflet-control-search-next
 	width: fit-content;
 }
 
-.w2ui-toolbar table.w2ui-button {
-	background-color: transparent;
-	border: 1px solid transparent;
-	color: var(--color-main-text);
-}
-.w2ui-toolbar table.w2ui-button:hover {
-	background-color: var(--color-border-darker);
-}
-.w2ui-toolbar table.w2ui-button.over {
-	border: 1px solid var(--color-border-darker) !important;
-}
-.w2ui-toolbar table.w2ui-button.checked {
-	background-color: var(--color-background-dark);
-	border: 1px solid var(--color-border-dark);
-	color: var(--color-text-dark);
-}
 
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center; }
 .w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_rect_rounded.svg') no-repeat center; }
@@ -1026,45 +901,11 @@ button.leaflet-control-search-next
 	width: 32px !important;
 	height: 32px !important; }
 
-#layout0-button,
-#layout1-button,
-#layout2-button,
-#layout3-button,
-#layout4-button,
-#layout5-button,
-#layout6-button,
-#layout7-button,
-#layout8-button,
-#layout9-button,
-#layout10-button,
-#layout11-button,
-#layout12-button,
-#layout13-button,
-#layout14-button,
-#layout15-button {
+[id^='slidelayoutgrid'] [modelId^='layout'] button,
+[id^='slidelayoutgrid'] [modelId^='layout'] img {
 	background-size: 64px 64px !important;
-	width: 64px;
-	height: 64px;
-}
-
-#layout0-button img,
-#layout1-button img,
-#layout2-button img,
-#layout3-button img,
-#layout4-button img,
-#layout5-button img,
-#layout6-button img,
-#layout7-button img,
-#layout8-button img,
-#layout9-button img,
-#layout10-button img,
-#layout11-button img,
-#layout12-button img,
-#layout13-button img,
-#layout14-button img,
-#layout15-button img {
-	width: 100%;
-	height: 100%;
+	width: 64px !important;
+	height: 64px !important;
 }
 
 .w2ui-icon.print { background: url('images/lc_print.svg') no-repeat center; }
@@ -1089,8 +930,6 @@ button.leaflet-control-search-next
 .w2ui-icon.cellverttop { background: url('images/lc_cellverttop.svg') no-repeat center; }
 .w2ui-icon.cellvertcenter { background: url('images/lc_cellvertcenter.svg') no-repeat center; }
 .w2ui-icon.cellvertbottom { background: url('images/lc_cellvertbottom.svg') no-repeat center; }
-.w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara15 { background: url('images/lc_linespacing.svg') no-repeat center; }
-.w2ui-icon.spacepara2 { background: url('images/lc_spacepara2.svg') no-repeat center; }
 .w2ui-icon.paraspaceincrease { background: url('images/lc_paraspaceincrease.svg') no-repeat center; }
 .w2ui-icon.paraspacedecrease { background: url('images/lc_paraspacedecrease.svg') no-repeat center; }
 .w2ui-icon.numbering { background: url('images/lc_defaultnumbering.svg') no-repeat center; }
@@ -1380,8 +1219,6 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.cellverttop { background: url('images/dark/lc_cellverttop.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.cellvertcenter { background: url('images/dark/lc_cellvertcenter.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.cellvertbottom { background: url('images/dark/lc_cellvertbottom.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara15 { background: url('images/dark/lc_linespacing.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.spacepara2 { background: url('images/dark/lc_spacepara2.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.paraspaceincrease { background: url('images/dark/lc_paraspaceincrease.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.paraspacedecrease { background: url('images/dark/lc_paraspacedecrease.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.numbering { background: url('images/dark/lc_defaultnumbering.svg') no-repeat center; }
@@ -1922,17 +1759,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	#userListHeader {
 		display: none;
 	}
-}
-
-.w2ui-color {
-	background-color: transparent;
-}
-
-.w2ui-toolbar table.w2ui-button .w2ui-tb-caption,
-.w2ui-toolbar table.w2ui-button.checked .w2ui-tb-caption,
-.w2ui-reset table tr th, .w2ui-reset table tr td {
-	font-size: var(--default-font-size);
-	color: var(--color-main-text);
 }
 
 .slidelayout-button {

@@ -9,20 +9,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Dispatches incoming client HTTP/WebSocket requests to appropriate handlers.
+ * Classes: ClientRequestDispatcher
+ */
+
 #pragma once
 
-#include <RequestVettingStation.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
+#include <net/Socket.hpp>
+#include <wsd/RequestDetails.hpp>
+#include <wsd/RequestVettingStation.hpp>
 #if !MOBILEAPP
 #include <wopi/WopiProxy.hpp>
 #endif // !MOBILEAPP
 
 #include <cstdint>
-#include <string>
 #include <memory>
-
-enum class CheckStatus : char;
+#include <string>
 
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
@@ -44,6 +47,11 @@ public:
     }
 
 private:
+    // NB: these names are part of the published API, and should not be renamed or altered but can be expanded
+    STATE_ENUM(CheckStatus, Ok, NotHttpSuccess, HostNotFound, WopiHostNotAllowed, UnspecifiedError,
+               ConnectionAborted, CertificateValidation, SelfSignedCertificate, ExpiredCertificate,
+               SslHandshakeFail, MissingSsl, NotHttps, NoScheme, Timeout, );
+
     /// Set the socket associated with this ResponseClient.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override;
 
@@ -102,7 +110,8 @@ private:
     /// @return true if request has been handled synchronously and response sent, otherwise false
     static bool handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                    SocketDisposition& /*disposition*/,
-                                   const std::shared_ptr<StreamSocket>& socket);
+                                   const std::shared_ptr<StreamSocket>& socket,
+                                   bool bVTT);
 
     static std::string getContentType(const std::string& fileName);
 
@@ -118,7 +127,7 @@ private:
                                   const RequestDetails& requestDetails,
                                   std::istream& message, SocketDisposition& disposition);
 
-    void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
+    static void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
     enum class MessageResult : std::uint8_t
     {

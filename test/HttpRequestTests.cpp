@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit tests for HTTP request parsing and handling.
+ * Classes: HttpRequestTests, HttpSyncTests
+ */
+
 #include <config.h>
 
 #include <HttpTestServer.hpp>
@@ -29,12 +34,6 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Poco/URI.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/InvalidCertificateHandler.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/StreamCopier.h>
 
 #include <chrono>
 #include <condition_variable>
@@ -105,23 +104,10 @@ public:
         , _port(0)
     {
         net::AsyncDNS::startAsyncDNS();
-#if ENABLE_SSL
-        Poco::Net::initializeSSL();
-        // Just accept the certificate anyway for testing purposes
-        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler
-            = new Poco::Net::AcceptCertificateHandler(false);
-        Poco::Net::Context::Params sslParams;
-        Poco::Net::Context::Ptr sslContext
-            = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-        Poco::Net::SSLManager::instance().initializeClient(nullptr, std::move(invalidCertHandler), std::move(sslContext));
-#endif
     }
 
     ~HttpRequestTests()
     {
-#if ENABLE_SSL
-        Poco::Net::uninitializeSSL();
-#endif
         net::AsyncDNS::stopAsyncDNS();
     }
 
@@ -230,7 +216,7 @@ void HttpRequestTests::testBadResponse()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Error);
+        LOK_ASSERT_EQUAL(http::Response::State::Error, httpResponse->state());
     }
 }
 
@@ -259,7 +245,7 @@ void HttpRequestTests::testGoodResponse()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
@@ -319,22 +305,22 @@ void HttpRequestTests::testSimpleGet()
 
         LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread, false));
 
-        // Use Poco to get the same URL in parallel.
-        const auto pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + URL));
+        // Use the internal HTTP API to get the same URL in parallel.
+        const auto altResponse = helpers::httpGetRetry(_localUri + URL);
 
         cv.wait_for(lock, DefTimeoutSeconds, [&]() { return timedout == false; });
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         LOK_ASSERT_EQUAL_MESSAGE("Timed out waiting for the onFinished handler", false, timedout);
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
 
-        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        LOK_ASSERT_EQUAL(altResponse->getBody(), httpResponse->getBody());
     }
 
     pollThread->joinThread();
@@ -348,7 +334,7 @@ void HttpRequestTests::testSimpleGetSync()
     std::string URL = "/echo/" + body;
     TST_LOG("Requesting URI: [" << URL << ']');
 
-    const auto pocoResponse = helpers::pocoGet(Poco::URI(_localUri + URL));
+    const auto altResponse = helpers::httpGet(_localUri + URL);
 
     http::Request httpRequest(std::move(URL));
 
@@ -361,7 +347,7 @@ void HttpRequestTests::testSimpleGetSync()
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -371,7 +357,7 @@ void HttpRequestTests::testSimpleGetSync()
         LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
         LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
 
-        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        LOK_ASSERT_EQUAL(altResponse->getBody(), httpResponse->getBody());
         LOK_ASSERT_EQUAL(body, httpResponse->getBody());
     }
 }
@@ -384,7 +370,7 @@ void HttpRequestTests::testChunkedGetSync()
     std::string URL = "/echo/chunked/" + body;
     TST_LOG("Requesting URI: [" << URL << ']');
 
-    const auto pocoResponse = helpers::pocoGet(Poco::URI(_localUri + URL));
+    const auto altResponse = helpers::httpGet(_localUri + URL);
 
     http::Request httpRequest(std::move(URL));
 
@@ -397,7 +383,7 @@ void HttpRequestTests::testChunkedGetSync()
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -407,7 +393,7 @@ void HttpRequestTests::testChunkedGetSync()
         LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
         LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
 
-        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        LOK_ASSERT_EQUAL(altResponse->getBody(), httpResponse->getBody());
         LOK_ASSERT_EQUAL(body, httpResponse->getBody());
     }
 }
@@ -420,7 +406,7 @@ void HttpRequestTests::testChunkedGetSync_External()
     std::string URL = "/Chunked";
     TST_LOG("Requesting URI: [" << hostname << URL << ']');
 
-    const auto pocoResponse = helpers::pocoGet(Poco::URI(hostname + URL));
+    const auto altResponse = helpers::httpGet(hostname + URL);
 
     http::Request httpRequest(std::move(URL));
 
@@ -433,7 +419,7 @@ void HttpRequestTests::testChunkedGetSync_External()
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -443,20 +429,16 @@ void HttpRequestTests::testChunkedGetSync_External()
         LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
         LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
 
-        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        LOK_ASSERT_EQUAL(altResponse->getBody(), httpResponse->getBody());
     }
 }
 
 
-/// Compare the response from Poco with ours.
+/// Compare two internal HTTP responses.
 /// @checkReasonPhrase controls whether we compare the Reason Phrase too or not.
-/// This is useful for when a status code is recognized by one and not the other.
 /// @checkBody controls whether we compare the body content or not.
-/// This is useful when we don't care about the content of the body, just that
-/// there is some content at all or not.
-static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::string& pocoBody,
-                    const http::Response& httpResponse, bool checkReasonPhrase, bool checkBody,
-                    const std::string_view testname)
+static void compare(const http::Response& altResponse, const http::Response& httpResponse,
+                    bool checkReasonPhrase, bool checkBody, const std::string_view testname)
 {
     LOK_ASSERT_EQUAL_MESSAGE("Response state", httpResponse.state(),
                              http::Response::State::Complete);
@@ -464,23 +446,27 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
     LOK_ASSERT(!httpResponse.statusLine().reasonPhrase().empty());
 
     if (checkBody)
-        LOK_ASSERT_EQUAL_MESSAGE("Body", pocoBody, httpResponse.getBody());
+        LOK_ASSERT_EQUAL_MESSAGE("Body", altResponse.getBody(), httpResponse.getBody());
     else
-        LOK_ASSERT_EQUAL_MESSAGE("Body empty?", pocoBody.empty(), httpResponse.getBody().empty());
+        LOK_ASSERT_EQUAL_MESSAGE("Body empty?", altResponse.getBody().empty(),
+                                 httpResponse.getBody().empty());
 
-    LOK_ASSERT_EQUAL_MESSAGE("Status Code", static_cast<unsigned>(pocoResponse.getStatus()),
+    LOK_ASSERT_EQUAL_MESSAGE("Status Code",
+                             static_cast<unsigned>(altResponse.statusLine().statusCode()),
                              static_cast<unsigned>(httpResponse.statusLine().statusCode()));
     if (checkReasonPhrase)
-        LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase", Util::toLower(pocoResponse.getReason()),
+        LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase",
+                                 Util::toLower(altResponse.statusLine().reasonPhrase()),
                                  Util::toLower(httpResponse.statusLine().reasonPhrase()));
     else
-        LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase empty?", pocoResponse.getReason().empty(),
+        LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase empty?",
+                                 altResponse.statusLine().reasonPhrase().empty(),
                                  httpResponse.statusLine().reasonPhrase().empty());
 
-    LOK_ASSERT_EQUAL_MESSAGE("hasContentLength", pocoResponse.hasContentLength(),
+    LOK_ASSERT_EQUAL_MESSAGE("hasContentLength", altResponse.header().hasContentLength(),
                              httpResponse.header().hasContentLength());
-    if (checkBody && pocoResponse.hasContentLength())
-        LOK_ASSERT_EQUAL_MESSAGE("ContentLength", pocoResponse.getContentLength(),
+    if (checkBody && altResponse.header().hasContentLength())
+        LOK_ASSERT_EQUAL_MESSAGE("ContentLength", altResponse.header().getContentLength(),
                                  httpResponse.header().getContentLength());
 }
 
@@ -518,9 +504,9 @@ void HttpRequestTests::test500GetStatuses()
         http::StatusLine::StatusCodeClass::Server_Error
     };
 
-    int curStatusCodeClass = -1;
+    int curStatusCodeClass = 0; // Start at Informational (skip 100 Continue, which is intermediate).
     int retry = 0;
-    for (unsigned statusCode = 100; statusCode < 512; ++statusCode)
+    for (unsigned statusCode = 101; statusCode < 512; ++statusCode)
     {
         auto httpSession = http::Session::create(_localUri);
         httpSession->setTimeout(DefTimeoutSeconds);
@@ -541,20 +527,14 @@ void HttpRequestTests::test500GetStatuses()
 
         LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread, false));
 
-        // Get via Poco in parallel.
-        std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponse;
-        if (statusCode > 100)
-            pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + url));
+        // Get via a separate internal HTTP session in parallel.
+        const auto altResponse = helpers::httpGetRetry(_localUri + url);
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
-        std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponseExt;
-        if (statusCode > 100)
-        {
 #if ENABLE_SSL
-            pocoResponseExt = helpers::pocoGetRetry(Poco::URI("https://httpbin.org:443" + url));
+        const auto altResponseExt = helpers::httpGetRetry("https://httpbin.org:443" + url);
 #else
-            pocoResponseExt = helpers::pocoGetRetry(Poco::URI("http://httpbin.org:80" + url));
+        const auto altResponseExt = helpers::httpGetRetry("http://httpbin.org:80" + url);
 #endif // ENABLE_SSL
-        }
 #endif
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -594,30 +574,25 @@ void HttpRequestTests::test500GetStatuses()
 
         if (statusCode % 100 == 0)
             ++curStatusCodeClass;
-        assert(curStatusCodeClass >= 0 && "statusCode starts as 100");
+        assert(curStatusCodeClass >= 0 && "statusCode starts at 101");
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == statusCodeClasses[curStatusCodeClass]);
 
         LOK_ASSERT_EQUAL(statusCode,
                          static_cast<unsigned>(httpResponse->statusLine().statusCode()));
 
-        // Poco throws exception "No message received" for 1xx Status Codes.
-        if (statusCode > 100)
-        {
-            compare(*pocoResponse.first, pocoResponse.second, *httpResponse, true, true, testname);
+        compare(*altResponse, *httpResponse, true, true, testname);
 
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
-            // These Status Codes are not recognized by httpbin.org,
-            // so we get "unknown" and must skip comparing them.
-            const bool checkReasonPhrase
-                = (statusCode != 103 && statusCode != 208 && statusCode != 413 && statusCode != 414
-                   && statusCode != 416 && statusCode != 421 && statusCode != 425
-                   && statusCode != 440 && statusCode != 508 && statusCode != 511);
-            const bool checkBody = (statusCode != 402 && statusCode != 418);
-            compare(*pocoResponseExt.first, pocoResponseExt.second, *httpResponse,
-                    checkReasonPhrase, checkBody, testname);
+        // These Status Codes are not recognized by httpbin.org,
+        // so we get "unknown" and must skip comparing them.
+        const bool checkReasonPhrase
+            = (statusCode != 103 && statusCode != 208 && statusCode != 413 && statusCode != 414
+               && statusCode != 416 && statusCode != 421 && statusCode != 425
+               && statusCode != 440 && statusCode != 508 && statusCode != 511);
+        const bool checkBody = (statusCode != 402 && statusCode != 418);
+        compare(*altResponseExt, *httpResponse, checkReasonPhrase, checkBody, testname);
 #endif
-        }
     }
 
     pollThread->joinThread();
@@ -671,7 +646,7 @@ void HttpRequestTests::testSimplePost_External()
     cv.wait_for(lock, DefTimeoutSeconds, [&]() { return timedout == false; });
 
     const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
@@ -701,7 +676,7 @@ void HttpRequestTests::testTimeout()
     const std::shared_ptr<const http::Response> httpResponse
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
+    LOK_ASSERT_EQUAL(http::Response::State::Timeout, httpResponse->state());
 }
 
 void HttpRequestTests::testInvalidPoll()
@@ -724,12 +699,12 @@ void HttpRequestTests::testInvalidPoll()
                                        { calledFailed = true; });
 
     std::weak_ptr<SocketPoll> poll;
-    LOK_ASSERT(httpSession->asyncRequest(httpRequest, poll, false) == false);
+    LOK_ASSERT_EQUAL(false, httpSession->asyncRequest(httpRequest, poll, false));
 
-    LOK_ASSERT(httpSession->response() == nullptr);
+    LOK_ASSERT(!httpSession->response());
 
-    LOK_ASSERT(calledFailed == true);
-    LOK_ASSERT(calledFinished == false); //FIXME: We should call onFinished.
+    LOK_ASSERT_EQUAL(true, calledFailed);
+    LOK_ASSERT_EQUAL(false, calledFinished); //FIXME: We should call onFinished.
 }
 
 void HttpRequestTests::testOnFinished_Complete()
@@ -745,7 +720,7 @@ void HttpRequestTests::testOnFinished_Complete()
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
         LOK_ASSERT(session->response()->done());
-        LOK_ASSERT(session->response()->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, session->response()->state());
         completed = true;
         return true;
     });
@@ -754,7 +729,7 @@ void HttpRequestTests::testOnFinished_Complete()
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(completed);
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 }
 
 void HttpRequestTests::testOnFinished_Timeout()
@@ -772,7 +747,7 @@ void HttpRequestTests::testOnFinished_Timeout()
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
         LOK_ASSERT(session->response()->done());
-        LOK_ASSERT(session->response()->state() == http::Response::State::Timeout);
+        LOK_ASSERT_EQUAL(http::Response::State::Timeout, session->response()->state());
         completed = true;
         return true;
     });
@@ -781,7 +756,7 @@ void HttpRequestTests::testOnFinished_Timeout()
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(completed);
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
+    LOK_ASSERT_EQUAL(http::Response::State::Timeout, httpResponse->state());
 }
 
 void HttpRequestTests::testPost()
@@ -809,7 +784,7 @@ void HttpRequestTests::testPost()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());

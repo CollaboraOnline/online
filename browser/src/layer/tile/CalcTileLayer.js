@@ -422,13 +422,14 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
 
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
-			const temp = this._lastStatusJSON ? Object.assign({}, this._lastStatusJSON): null;
+			const previousStatusJSON = this._lastStatusJSON ? Object.assign({}, this._lastStatusJSON): null;
 			this._lastStatusJSON = statusJSON;
 			this._documentInfo = textMsg;
 
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
 
-			if (statusJSON.readonly) this._map.setPermission('readonly');
+			if (statusJSON.readonly && !this._documentInfo)
+				this._map.setPermission('readonly');
 
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
 			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
@@ -449,7 +450,9 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 			this._lastColumn = statusJSON.lastcolumn;
 			this._lastRow = statusJSON.lastrow;
-			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+			const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+			app.activeDocument.activeModes = [mode];
 
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
@@ -485,7 +488,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			this._refreshPartHashes(statusJSON);
 
 			// if the number of parts, or order has changed then refresh comment positions
-			if (this._hasPartsCountOrNamesChanged(temp, statusJSON))
+			if (this._hasPartsCountOrNamesChanged(previousStatusJSON, statusJSON))
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 
 
@@ -510,7 +513,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 					this._printRanges[info[i]['sheet']] = info[i]['ranges'];
 			}
 
-			if (firstSelectedPart)
+			if (firstSelectedPart || (previousStatusJSON && previousStatusJSON.selectedpart !== statusJSON.selectedpart))
 				this._switchSplitPanesContext();
 
 			this._map.fire('statusupdated');
@@ -802,8 +805,17 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._replayPrintTwipsMsgs(differentSheet);
 
-		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
-			this._pixelsToTwips(this._map.getSize()));
+		if (this.sheetGeometry.autoFilterChanged) {
+			this.sheetGeometry.autoFilterChanged = false;
+			let firstVisibleRow = this.sheetGeometry.getFirstNewVisibleRow();
+			app.activeDocument.activeLayout.scrollTo(
+				this._map._getTopLeftPoint().x,
+				this.sheetGeometry.getRowsGeometry().getElementData(firstVisibleRow).startpos);
+		} else {
+			this.sheetGeometry.setViewArea(
+				this._pixelsToTwips(this._map._getTopLeftPoint()),
+				this._pixelsToTwips(this._map.getSize()));
+		}
 
 		this._addRemoveGroupSections();
 
@@ -930,6 +942,10 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		}
 		else if (e.commandName === 'AutoFilterInfo') {
 			app.calc.autoFilterCell = { 'row': e.state.row, 'column': e.state.column };
+		}
+		else if (e.commandName === 'AutoFilterChange')
+		{
+			this.sheetGeometry.autoFilterChanged = true;
 		}
 		else if (e.commandName === 'PivotTableFilterInfo') {
 			app.calc.pivotTableFilterCell = { 'row': e.state.row, 'column': e.state.column };
@@ -1090,17 +1106,10 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			// When insertMode is false, this is a cell selection message.
 			textMsg = textMsg.replace('textselection:', '').trim();
 			if (textMsg !== 'EMPTY' && textMsg !== '') {
-				this._cellSelections = textMsg.split(';');
-				var that = this;
-				this._cellSelections = this._cellSelections.map(function(element) {
-					element = element.split(',');
-					var topLeftTwips = new cool.Point(parseInt(element[0]), parseInt(element[1]));
-					var offset = new cool.Point(parseInt(element[2]), parseInt(element[3]));
-					var bottomRightTwips = topLeftTwips.add(offset);
-					var boundsTwips = that._convertToTileTwipsSheetArea(new cool.Bounds(topLeftTwips, bottomRightTwips));
+				this._cellSelections = this._getRawRectangles(textMsg);
 
-					element = app.LOUtil.createRectangle(boundsTwips.min.x * app.twipsToPixels, boundsTwips.min.y * app.twipsToPixels, boundsTwips.getSize().x * app.twipsToPixels, boundsTwips.getSize().y * app.twipsToPixels);
-					return element;
+				this._cellSelections = this._cellSelections.map(function(element) {
+					return new cool.SimpleRectangle(element[0], element[1], element[2], element[3]);
 				});
 			}
 			else {

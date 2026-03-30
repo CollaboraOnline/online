@@ -11,7 +11,9 @@ add_library(androidapp SHARED
             ../../../../../common/Crypto-stub.cpp
             ../../../../../common/FileUtil.cpp
             ../../../../../common/FileUtil-unix.cpp
-            ../../../../../common/Log.cpp
+            ../../../../../common/Log-poco.cpp
+            ../../../../../common/Log-common.cpp
+            ../../../../../common/MobileApp.cpp
             ../../../../../common/TraceEvent.cpp
             ../../../../../common/Protocol.cpp
             ../../../../../common/RegexUtil.cpp

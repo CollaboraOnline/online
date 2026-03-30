@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * COOL protocol parsing and message formatting.
+ * Functions: ParseVersion(), getAbbreviatedMessage(), tokenize()
+ */
+
 #include <config.h>
 
 #include "Protocol.hpp"
@@ -56,10 +61,9 @@ namespace COOLProtocol
             token.compare(0, name.size(), name) == 0 &&
             token[name.size()] == '=')
         {
-            const char* str = token.data() + name.size() + 1;
-            char* endptr = nullptr;
-            value = strtol(str, &endptr, 10);
-            return (endptr > str);
+            bool success;
+            std::tie(value, success) = NumUtil::i32FromString(token.substr(name.size() + 1));
+            return success;
         }
 
         return false;

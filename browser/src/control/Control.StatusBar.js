@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -81,17 +81,19 @@ class StatusBar extends JSDialog.Toolbar {
 				this.map.setZoom(selected[0].scale, null, true /* animate? */);
 			return;
 		} else if (object.id === 'StateTableCellMenu') {
-			// TODO: multi-selection
-			var selected = [];
-			if (data === '1') { // 'None' was clicked, remove all other options
-				selected = ['1'];
-			} else { // Something else was clicked, remove the 'None' option from the array
-				selected = [data];
-			}
+			var clicked = parseInt(data);
+			var current = parseInt(app.map['stateChangeHandler'].getItemValue('.uno:StatusBarFunc')) || 0;
 
-			var value = 0;
-			for (var it = 0; it < selected.length; it++) {
-				value = +value + parseInt(selected[it]);
+			var value;
+			if (clicked === 1) {
+				// 'None' was clicked — clear everything
+				value = 0;
+			} else {
+				// Toggle the clicked bit
+				value = current ^ clicked;
+				// Clear the 'None' bit (1) if any function is now active
+				if (value & ~1)
+					value = value & ~1;
 			}
 
 			var command = {
@@ -113,7 +115,7 @@ class StatusBar extends JSDialog.Toolbar {
 		if (e.count === 0) {
 			this.enableItem('searchprev', false);
 			this.enableItem('searchnext', false);
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				this.enableItem('cancelsearch', false);
 			} else {
 				this.showItem('cancelsearch', false);
@@ -248,10 +250,13 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'spacer',  id: 'permissionspacer'},
 			this._generateHtmlItem('documentstatus', 2),					// spreadsheet, text, presentation, drawing
 			{type: 'customtoolitem',  id: 'multi-page-view', command: 'multipageview', text: _('Multi Page View'), dataPriority: 10,  visible: false}, // text
-			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
-			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
+			{type: 'customtoolitem',  id: 'prevpage', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
+			{type: 'customtoolitem',  id: 'nextpage', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical', dataPriority: 9},
+			{type: 'toolitem',  id: 'overview', command: '.uno:InsertCanvasSlide', text: _('Overview'), dataPriority: 9, visible: !app.isReadOnly()},
+			{type: 'separator', id: 'overviewbreak', orientation: 'vertical', dataPriority: 9, visible: !app.isReadOnly()},
 		].concat(window.mode.isTablet() ? [] : [
+			{type: 'customtoolitem',  id: 'fitwidthzoom', command: 'fitwidthzoom', text: _('Zoom to Fit Page Width'), icon: 'pagewidth.svg', dataPriority: 8, visible: false},
 			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom'), icon: 'zoomreset.svg', dataPriority: 8},
 			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', text: _UNO('.uno:ZoomMinus'), icon: 'minus.svg'},
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems(), image: false},
@@ -292,8 +297,10 @@ class StatusBar extends JSDialog.Toolbar {
 			this.showItem('prev', false);
 			this.showItem('next', false);
 			this.showItem('prevnextbreak', false);
+			this.showItem('overview', false);
+			this.showItem('overviewbreak', false);
 
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('statusdocpos-container', true);
 				this.showItem('rowcolselcount-container', true);
 				this.showItem('insertmode-container', true);
@@ -309,7 +316,10 @@ class StatusBar extends JSDialog.Toolbar {
 			break;
 
 		case 'text':
-			if (!window.mode.isMobile()) {
+			this.showItem('overview', false);
+			this.showItem('overviewbreak', false);
+
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('statepagenumber-container', true);
 				this.showItem('statewordcount-container', true);
 				this.showItem('insertmode-container', true);
@@ -319,14 +329,15 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('permissionmode-container', true);
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
+				this.showItem('fitwidthzoom', true);
+				this.showItem('zoomreset', false);
 
-				// Disable for now.
-				//this.showItem('multi-page-view', true);
+				this.showItem('multi-page-view', true);
 			}
 			break;
 
 		case 'presentation':
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('slidestatus-container', true);
 				this.showItem('languagestatus', !app.map.isReadOnlyMode());
 				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
@@ -335,7 +346,7 @@ class StatusBar extends JSDialog.Toolbar {
 			}
 			break;
 		case 'drawing':
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('pagestatus-container', true);
 				this.showItem('languagestatus', !app.map.isReadOnlyMode());
 				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
@@ -401,8 +412,19 @@ class StatusBar extends JSDialog.Toolbar {
 		var NotEditDocMode = false;
 		if (app.map['stateChangeHandler'].getItemValue('EditDoc') !== undefined) {
 			NotEditDocMode = app.map['stateChangeHandler'].getItemValue('EditDoc') === "false"; // can be true, false or disabled
-			if (NotEditDocMode)
-				app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
+			if (NotEditDocMode) {
+				if (window.mode.isCODesktop()) {
+					app.map.uiManager.showSnackbar(_('The document is probably locked and has been opened as view-only'));
+					// Don't let the user even try to make the document
+					// editable, as that will lead to things Online is not
+					// prepared to handle.
+					const button = document.querySelector('#mobile-edit-button');
+					if (button)
+						button.style.setProperty('display', 'none');
+				}
+				else
+					app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
+			}
 		}
 
 		canUserWrite = canUserWrite && !NotEditDocMode;
@@ -423,6 +445,23 @@ class StatusBar extends JSDialog.Toolbar {
 		});
 
 		JSDialog.RefreshScrollables();
+
+		if (!window.mode.isSmallScreenDevice()) {
+			this.showItem('languagestatus', !isReadOnlyMode);
+			this.showItem('languagestatusbreak', !isReadOnlyMode);
+			if (this.map.getDocType() === 'spreadsheet') {
+				this.showItem('StateTableCellMenu', !isReadOnlyMode);
+				this.showItem('statetablebreak', !isReadOnlyMode);
+			}
+
+			// updateLanguageItem() is a no-op in read-only mode, so the
+			// widget may never have received its text.  Populate it now.
+			if (!isReadOnlyMode) {
+				var language = app.map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
+				if (language)
+					this.updateLanguageItem(this.extractLanguageFromStatus(language));
+			}
+		}
 	}
 
 	extractLanguageFromStatus(state) {

@@ -18,8 +18,7 @@ namespace cool {
 
 export class TilesSection extends CanvasSectionObject {
 
-	// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-	anchor: any = [[app.CSections.ColumnHeader.name, 'bottom', 'top'], [app.CSections.RowHeader.name, 'right', 'left']];
+	anchor: any = [[app.CSections.RulerSpacer.name, 'bottom', app.CSections.ColumnHeader.name, 'bottom', 'top'], [app.CSections.RowHeader.name, 'right', 'left']];
 	expand: any = ['top', 'left', 'bottom', 'right'];
 	processingOrder: number = app.CSections.Tiles.processingOrder;
 	drawingOrder: number = app.CSections.Tiles.drawingOrder;
@@ -40,6 +39,14 @@ export class TilesSection extends CanvasSectionObject {
 		this.sectionProperties.pageBackgroundBorderColor = 'lightgrey';
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
+
+		/*
+			Seems that this number is equal to 45 twips in core.
+			Page rectangles are sent from core side.
+			Tiles also overlap with page rectangles but they don't overlap entirely.
+			Tiles render a slightly longer page.
+		*/
+		this.sectionProperties.multiPageViewMagicHeightFix = 3;
 
 		this.isJSDOM = typeof window === 'object' && window.name === 'nodejs';
 
@@ -108,45 +115,6 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	// the bounding box of this set of tiles
-	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
-
-		// don't do anything for this atypical variant
-		if (app.file.fileBasedView)
-			return null;
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-
-		var bounds: cool.Bounds;
-		for (const coords of Array.from(tileSubset)) {
-			var topLeft = new cool.Point(coords.getPos().x, coords.getPos().y);
-			var rightBottom = new cool.Point(topLeft.x + TileManager.tileSize, topLeft.y + TileManager.tileSize);
-
-			if (bounds === undefined)
-				bounds = new cool.Bounds(topLeft, rightBottom);
-			else {
-				bounds.extend(topLeft).extend(rightBottom);
-			}
-		}
-
-		return bounds;
-	}
-
-	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-		ctx.viewBounds.round();
-
-		canvasCtx.beginPath();
-		var rect = subsetBounds.toRectangle();
-
-		this.beforeDraw(canvasCtx);
-		canvasCtx.rect(rect[0] - ctx.viewBounds.min.x, rect[1] - ctx.viewBounds.min.y, rect[2], rect[3]);
-		this.afterDraw(canvasCtx);
-
-		canvasCtx.clip();
-	}
-
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean): void {
 		// intersect - to avoid state thrash through clipping
@@ -213,7 +181,7 @@ export class TilesSection extends CanvasSectionObject {
 			tilePos.pY = tile.coords.part * partHeightPixels + tile.coords.y;
 		}
 
-		this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
+		this.drawTileToCanvas(tile, this.context, tilePos.vX - this.myTopLeft[0], tilePos.vY - this.myTopLeft[1], TileManager.tileSize, TileManager.tileSize);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -366,8 +334,6 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawForViewLayoutMultiPage() {
-		if (!app.activeDocument.activeLayout.areViewTilesReady()) return; // Draw after we have all the tiles.
-
 		const view = app.activeDocument.activeLayout as ViewLayoutMultiPage;
 
 		const visibleCoordList: Array<TileCoordData> = view.getCurrentCoordList();
@@ -385,13 +351,29 @@ export class TilesSection extends CanvasSectionObject {
 					this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
 				else {
 					// A tile in Writer may intersect 2 pages.
-					const height1 = layoutRectangle1.pY2 - tilePos.pY;
+					const height1 = layoutRectangle1.pY2 - tilePos.pY + this.sectionProperties.multiPageViewMagicHeightFix;
 					this.drawTileToCanvasCrop(tile, this.context, 0, 0, TileManager.tileSize, height1, tilePos.vX, tilePos.vY, TileManager.tileSize, height1);
 
 					tilePos.pY += TileManager.tileSize;
 					const height2 = TileManager.tileSize - height1;
 					this.drawTileToCanvasCrop(tile, this.context, 0, height1, TileManager.tileSize, height2, tilePos.vX, tilePos.vY - height2, TileManager.tileSize, height2);
 				}
+			}
+		}
+	}
+
+	private drawForViewLayoutCompareChanges() {
+		const view = app.activeDocument.activeLayout as ViewLayoutCompareChanges;
+
+		const visibleCoordList: Array<TileCoordData> = view.getCurrentCoordList();
+
+		for (let i = 0; i < visibleCoordList.length; i++) {
+			const tile = TileManager.get(visibleCoordList[i]);
+
+			if (tile && tile.isReadyToDraw()) {
+				const tilePos = tile.coords.getPosSimplePoint();
+
+				this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
 			}
 		}
 	}
@@ -408,14 +390,22 @@ export class TilesSection extends CanvasSectionObject {
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
 		if (app.activeDocument && app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+			this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 			this.drawPageBackgrounds(ctx);
 			this.drawForViewLayoutMultiPage();
+			this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
+			return;
+		}
+		else if (app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges') {
+			this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+			this.drawForViewLayoutCompareChanges();
+			this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 			return;
 		}
 
 		var zoom = Math.round(this.map.getZoom());
 		var part = this.sectionProperties.docLayer._selectedPart;
-		var mode = this.sectionProperties.docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, mode, ctx))
@@ -735,7 +725,7 @@ export class TilesSection extends CanvasSectionObject {
 		var docLayer = this.sectionProperties.docLayer;
 		var zoom = Math.round(this.map.getZoom());
 		var part = docLayer._selectedPart;
-		var mode = docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 		var splitPos = ctx.splitPos;
 
 		this.containerObject.setPenPosition(this);

@@ -84,6 +84,8 @@ interface Options {
 abstract class Ruler {
 	protected options: Options;
 
+	_updateTask: TaskId | null = null;
+
 	constructor(options: Partial<Options>) {
 		// Init default values for ruler options
 		this.options = {
@@ -123,6 +125,16 @@ abstract class Ruler {
 		);
 	}
 
+	protected abstract _updateParagraphIndentationsImpl(): void;
+
+	public _updateParagraphIndentations() {
+		if (this._updateTask)
+			app.layoutingService.cancelLayoutingTask(this._updateTask);
+		this._updateTask = app.layoutingService.appendLayoutingTask(
+			this._updateParagraphIndentationsImpl.bind(this),
+		);
+	}
+
 	getWindowProperty<T>(propertyName: string): T | undefined {
 		return (window as any)[propertyName];
 	}
@@ -152,9 +164,16 @@ abstract class Ruler {
 			});
 		}
 
-		// Fire the 'rulerchanged' event
-		map.fire('rulerchanged');
+		if (showRuler) map.uiManager.showRuler();
 	}
+
+	public fixOffset() {
+		app.layoutingService.appendLayoutingTask(() => {
+			this._fixOffsetImpl();
+		});
+	}
+
+	protected abstract _fixOffsetImpl(): void;
 }
 
 app.definitions.ruler = Ruler;

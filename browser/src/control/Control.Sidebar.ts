@@ -17,6 +17,7 @@
 class Sidebar extends SidebarBase {
 	targetDeckCommand: string;
 	isUserRequest: boolean; /// automatic or user request to show the sidebar
+	sidebarShownTheFirstTime: boolean = true;
 
 	constructor(map: MapInterface) {
 		super(map, SidebarType.Sidebar);
@@ -90,7 +91,6 @@ class Sidebar extends SidebarBase {
 
 	onSidebar(data: FireEvent) {
 		var sidebarData = data.data;
-		$(this.container).empty();
 
 		if (
 			sidebarData.action === 'close' ||
@@ -140,29 +140,55 @@ class Sidebar extends SidebarBase {
 				}
 
 				this.model.fullUpdate(sidebarData as JSDialogJSON);
-				this.builder.build(this.container, [this.model.getSnapshot()], false);
 
-				if (!this.isVisible()) {
-					if ((this.builder as any).windowId === WindowId.Sidebar)
-						$('#sidebar-dock-wrapper').addClass('coreBased');
-					$('#sidebar-dock-wrapper').addClass('visible');
+				const documentFragment = new DocumentFragment(); // do not modify dom yet
+				const tempContainer = window.L.DomUtil.create(
+					'div',
+					'',
+					documentFragment,
+				);
 
-					// schedule focus after animation so it will not shift the browser page
-					if (this.isUserRequest) {
-						setTimeout(() => {
-							app.layoutingService.appendLayoutingTask(() => {
-								const focusables = JSDialog.GetFocusableElements(
-									this.container,
-								);
-								if (focusables && focusables.length) {
-									focusables[0].focus();
-								}
-							});
-						}, 250); // see animation time in #sidebar-dock-wrapper.visible
-					}
-				}
+				this.builder.build(tempContainer, [this.model.getSnapshot()], false);
+
+				if (!this.isVisible()) this.showSidebar();
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
+
+				// cache - check happens in task and we will update value later in this function
+				const wasUserRequest = this.isUserRequest;
+
+				app.layoutingService.appendLayoutingTask(() => {
+					// now attach to the DOM built content
+					this.container.replaceChildren(tempContainer.firstChild);
+
+					// schedule focus after animation so it will not shift the browser page
+					if (wasUserRequest) {
+						app.timerRegistry.setTimeout(
+							'sidebarstealfocus',
+							() => {
+								app.layoutingService.appendLayoutingTask(() => {
+									if (
+										this.map.dialog.hasOpenedDialog() ||
+										(this.map.jsdialog && this.map.jsdialog.hasDialogOpened())
+									)
+										return;
+									const focusables = JSDialog.GetFocusableElements(
+										this.container,
+									);
+									if (focusables && focusables.length) {
+										focusables[0].focus();
+									}
+								});
+							},
+							250,
+						); // see animation time in #sidebar-dock-wrapper.visible
+					}
+
+					if (this.sidebarShownTheFirstTime) {
+						app.serverConnectionService.onShowSidebar();
+						this.sidebarShownTheFirstTime = false;
+					}
+				});
 			} else {
 				this.closeSidebar();
 			}

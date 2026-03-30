@@ -29,15 +29,15 @@ interface PageMarginOptions {
 	[id: string]: PageMarginOption;
 }
 
-function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
+JSDialog.PageMarginEntry = function (
+	parentContainer: Element,
+	data: any,
+	builder: any,
+): boolean {
 	const inchesToHMM = (inches: number) => Math.round(inches * 25.4 * 100);
 	const options: PageMarginOptions = data.options;
-	const container = document.createElement('div');
 	const map = builder.map;
 	const isCalc = map._docLayer.isCalc();
-	container.className = 'margins-popup-container';
-	container.setAttribute('role', 'listbox');
-	container.setAttribute('aria-label', _('Page margin options'));
 
 	const lang = window.coolParams.get('lang') || 'en-US';
 	const useImperial = lang === 'en-US' || lang === 'en'; // we need to consider both short form as some user can user lang=en-US using document URL
@@ -56,7 +56,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		return `${formatted}${unit}`;
 	}
 
-	const onMarginClick = (evt: MouseEvent) => {
+	const onMarginClick = (evt: MouseEvent | KeyboardEvent) => {
 		const elm = evt.currentTarget as HTMLElement;
 		const key = elm.id;
 		if (!key || !options[key]) return;
@@ -88,16 +88,34 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		builder.callback('dialog', 'close', { id: data.id }, null);
 	};
 
-	Object.keys(options).forEach((key) => {
+	Object.keys(options).forEach((key, index) => {
 		const opt = options[key];
+		const isFirstItem = index === 0;
 
 		const item = document.createElement('div');
 		item.className = 'margin-item';
 		item.id = key;
 		item.setAttribute('role', 'option');
-		item.setAttribute('tabindex', '0');
+		item.setAttribute('tabindex', '-1');
 		item.setAttribute('aria-selected', 'false');
 		item.addEventListener('click', onMarginClick);
+
+		item.addEventListener('keydown', function (event: KeyboardEvent) {
+			if (event.key === 'Enter' || event.key === ' ') {
+				onMarginClick(event);
+				event.preventDefault();
+			} else if (event.key === 'Tab') {
+				JSDialog.CloseDropdown(data.id);
+				event.preventDefault();
+			}
+		});
+
+		if (isFirstItem) {
+			item.classList.add('selected');
+			item.setAttribute('aria-selected', 'true');
+
+			data.initialSelectedId = item.id;
+		}
 
 		const img = document.createElement('img');
 		img.className = 'margin-icon';
@@ -152,35 +170,38 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 
 		item.appendChild(img);
 		item.appendChild(textWrap);
-		container.appendChild(item);
+		parentContainer.appendChild(item);
 	});
 
 	const hr = document.createElement('hr');
 	hr.className = 'jsdialog ui-separator horizontal';
-	container.appendChild(hr);
+	parentContainer.appendChild(hr);
 
 	const custom = document.createElement('div');
 	custom.className = 'margin-item custom-margins-link';
 	custom.id = 'customMarginsLink';
 	custom.textContent = _('Custom Margins…');
-	custom.setAttribute('role', 'button');
-	custom.setAttribute('tabindex', '0');
+	custom.setAttribute('aria-selected', 'false');
+	custom.setAttribute('aria-haspopup', 'dialog');
+	custom.setAttribute('role', 'option');
+	custom.setAttribute('tabindex', '-1');
 
-	custom.addEventListener('click', (evt: MouseEvent) => {
+	const customClickEventHdl = () => {
 		map.sendUnoCommand(isCalc ? '.uno:PageFormatDialog' : '.uno:PageDialog');
 		builder.callback('dialog', 'close', { id: data.id }, null);
+	};
+
+	custom.addEventListener('click', customClickEventHdl);
+	custom.addEventListener('keydown', function (event: KeyboardEvent) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			customClickEventHdl();
+			event.preventDefault();
+		} else if (event.key === 'Tab') {
+			JSDialog.CloseDropdown(data.id);
+			event.preventDefault();
+		}
 	});
-	container.appendChild(custom);
+	parentContainer.appendChild(custom);
 
-	return container;
-}
-
-JSDialog.pageMarginEntry = function (
-	parentContainer: Element,
-	data: any,
-	builder: any,
-): boolean {
-	const element = createPageMarginEntryWidget(data, builder);
-	parentContainer.appendChild(element);
 	return false;
 };

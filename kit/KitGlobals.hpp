@@ -13,7 +13,7 @@
 
 #if !MOBILEAPP
 
-#include "kit/BgSaveWatchDog.hpp"
+#include <kit/BgSaveWatchDog.hpp>
 
 std::unique_ptr<BackgroundSaveWatchdog> BackgroundSaveWatchdog::Instance;
 

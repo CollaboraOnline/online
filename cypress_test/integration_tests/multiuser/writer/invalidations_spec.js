@@ -7,7 +7,7 @@ var writerHelper = require('../../common/writer_helper');
 
 function waitForInit(hasClass) {
 	// TODO: skipDocumentCheck=FALSE in beforeEach, let's do it here once for now
-	//       somehow it doesnt work for second iframe
+	//       somehow it doesn't work for second iframe
 	if (hasClass) {
 		cy.cGet('#map', { timeout: 60 })
 			.should('have.class', 'initialized');

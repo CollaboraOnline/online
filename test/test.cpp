@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Main test runner for client tests.
+ */
+
 #include <config.h>
 
 #define TST_LOG_REDIRECT
@@ -31,7 +35,7 @@
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/FileStream.h>
-#include <Poco/RegularExpression.h>
+#include <regex>
 #include <Poco/StreamCopier.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
@@ -41,13 +45,12 @@
 #include <Ssl.hpp>
 #include <SslSocket.hpp>
 #endif
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <common/ConfigUtil.hpp>
 
 bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string& testName)
 {
-    Poco::RegularExpression re(testName, Poco::RegularExpression::RE_CASELESS);
-    Poco::RegularExpression::Match reMatch;
+    std::regex re(testName, std::regex_constants::icase);
 
     bool haveTests = false;
     for (int i = 0; i < testRegistry->getChildTestCount(); ++i)
@@ -58,7 +61,7 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
             CPPUNIT_NS::Test* testCase = testSuite->getChildTestAt(j);
             try
             {
-                if (re.match(testCase->getName(), reMatch))
+                if (std::regex_search(testCase->getName(), re))
                 {
                     runner.addTest(testCase);
                     haveTests = true;

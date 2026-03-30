@@ -9,12 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit tests for various internal components.
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Protocol.hpp>
 #include <common/RegexUtil.hpp>
@@ -25,6 +30,7 @@
 #include <wsd/TileDesc.hpp>
 
 #include <test/lokassert.hpp>
+#include <test/testlog.hpp>
 
 #include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -59,17 +65,14 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRectanglesIntersect);
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
-    CPPUNIT_TEST(testIso8601Time);
-    CPPUNIT_TEST(testGetTimeForLog);
-    CPPUNIT_TEST(testClockAsString);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
-    CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
     CPPUNIT_TEST(testStateEnum);
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testJoinPair);
     CPPUNIT_TEST(testThreadPool);
+    CPPUNIT_TEST(testLogCaptureCaller);
     CPPUNIT_TEST_SUITE_END();
 
     void testCOOLProtocolFunctions();
@@ -88,17 +91,14 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRectanglesIntersect();
     void testJson();
     void testAnonymization();
-    void testIso8601Time();
-    void testGetTimeForLog();
-    void testClockAsString();
     void testStat();
     void testStringCompare();
-    void testSafeAtoi();
     void testJsonUtilEscapeJSONValue();
     void testStateEnum();
     void testFindInVector();
     void testJoinPair();
     void testThreadPool();
+    void testLogCaptureCaller();
 
     size_t waitForThreads(size_t count);
 };
@@ -366,13 +366,13 @@ void WhiteBoxTests::testPathPrefixTrimming()
 
 #ifdef IOS
 
-    LOK_ASSERT_EQUAL(std::size_t(23), skipPathToFilename("./path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(21), skipPathToFilename("path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(22), skipPathToFilename("/path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(24), skipPathToFilename("../path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename(""));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("/"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("."));
+    LOK_ASSERT_EQUAL(23UL, skipPathToFilename("./path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(21UL, skipPathToFilename("path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(22UL, skipPathToFilename("/path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(24UL, skipPathToFilename("../path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(0UL, skipPathToFilename(""));
+    LOK_ASSERT_EQUAL(0UL, skipPathToFilename("/"));
+    LOK_ASSERT_EQUAL(0UL, skipPathToFilename("."));
 
     LOK_ASSERT_EQUAL_STR("filename.cpp",
                          std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
@@ -386,13 +386,13 @@ void WhiteBoxTests::testPathPrefixTrimming()
 
 #else
 
-    LOK_ASSERT_EQUAL(std::size_t(2), skipPathPrefix("./path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathPrefix("path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(3), skipPathPrefix("../path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathPrefix(""));
-    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/"));
-    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("."));
+    LOK_ASSERT_EQUAL(2UL, skipPathPrefix("./path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(0UL, skipPathPrefix("path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(1UL, skipPathPrefix("/path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(3UL, skipPathPrefix("../path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(0UL, skipPathPrefix(""));
+    LOK_ASSERT_EQUAL(1UL, skipPathPrefix("/"));
+    LOK_ASSERT_EQUAL(1UL, skipPathPrefix("."));
 
     LOK_ASSERT_EQUAL_STR("path/to/a/looooooong/filename.cpp",
                          std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
@@ -623,47 +623,47 @@ void WhiteBoxTests::testTileData()
     data.appendBlob(44, "Dbaa", 4);
     LOK_ASSERT_EQUAL(size_t(6), data.size());
 
-    LOK_ASSERT_EQUAL(data.isPng(), false);
+    LOK_ASSERT_EQUAL(false, data.isPng());
 
     // validation.
-    LOK_ASSERT_EQUAL(data.isValid(), true);
+    LOK_ASSERT_EQUAL(true, data.isValid());
     data.invalidate();
-    LOK_ASSERT_EQUAL(data.isValid(), false);
+    LOK_ASSERT_EQUAL(false, data.isValid());
 
     std::vector<char> out;
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 128), false);
-    LOK_ASSERT_EQUAL(out.size(), size_t(0));
+    LOK_ASSERT_EQUAL(false, data.appendChangesSince(out, 128));
+    LOK_ASSERT_EQUAL(size_t(0), out.size());
 
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 42), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 42));
     LOK_ASSERT_EQUAL_STR("foobaa", Util::toString(out));
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 43));
     LOK_ASSERT_EQUAL_STR("baa", Util::toString(out));
 
     // append another delta
     data.appendBlob(47, "Dbaz", 4);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 1), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 1));
     LOK_ASSERT_EQUAL_STR("foobaabaz", Util::toString(out));
 
     out.clear();
-    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(true, data.appendChangesSince(out, 43));
     LOK_ASSERT_EQUAL_STR("baabaz", Util::toString(out));
 
     // append an empty delta
     data.appendBlob(52, "D", 1);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
-    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
-    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(52));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
+    LOK_ASSERT_EQUAL(size_t(4), data._wids.size());
+    LOK_ASSERT_EQUAL(unsigned(52), data._wids.back());
 
     // the next empty delta should pack into the last one
     data.appendBlob(54, "D", 1);
-    LOK_ASSERT_EQUAL(data.size(), size_t(9));
-    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
-    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(54));
+    LOK_ASSERT_EQUAL(size_t(9), data.size());
+    LOK_ASSERT_EQUAL(size_t(4), data._wids.size());
+    LOK_ASSERT_EQUAL(unsigned(54), data._wids.back());
 }
 
 void WhiteBoxTests::testRectanglesIntersect()
@@ -792,150 +792,6 @@ void WhiteBoxTests::testAnonymization()
     LOK_ASSERT_EQUAL(urlAnonymized3, Anonymizer::anonymizeUrl(fileUrl));
 }
 
-void WhiteBoxTests::testGetTimeForLog()
-{
-    constexpr std::string_view testname = __func__;
-
-    // getTimeForLog returns the time in local timezone.
-    // To get reliable tests across different timezones, we use GMT.
-    const char* tz = ::getenv("TZ");
-    const std::string timezoneName = (tz ? tz : "");
-    ::setenv("TZ", "GMT", 1);
-    tzset();
-
-    const time_t t = 1760000000;
-    const auto sys = std::chrono::system_clock::from_time_t(t);
-    const auto now = Util::convertChronoClock<std::chrono::system_clock::time_point>(sys);
-
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:20.000 2025 (0ms ago)", Util::getTimeForLog(now, now));
-
-    // Past dates.
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:19.631 2025 (369ms ago)",
-                         Util::getTimeForLog(now, now - 369ms));
-
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:14.631 2025 (5s 369ms ago)",
-                         Util::getTimeForLog(now, now - 5s - 369ms));
-
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:46:14.631 2025 (7m 5s 369ms ago)",
-                         Util::getTimeForLog(now, now - 7min - 5s - 369ms));
-
-    LOK_ASSERT_EQUAL_STR("Wed Oct 08 20:46:14.631 2025 (12h 7m 5s 369ms ago)",
-                         Util::getTimeForLog(now, now - 12h - 7min - 5s - 369ms));
-
-    // Future dates.
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:20.369 2025 (369ms later)",
-                         Util::getTimeForLog(now, now + 369ms));
-
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:25.369 2025 (5s 369ms later)",
-                         Util::getTimeForLog(now, now + 5s + 369ms));
-
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 09:00:25.369 2025 (7m 5s 369ms later)",
-                         Util::getTimeForLog(now, now + 7min + 5s + 369ms));
-
-    LOK_ASSERT_EQUAL_STR("Thu Oct 09 21:00:25.369 2025 (12h 7m 5s 369ms later)",
-                         Util::getTimeForLog(now, now + 12h + 7min + 5s + 369ms));
-
-    ::setenv("TZ", timezoneName.data(), 1); // Restore the timeezone.
-}
-
-void WhiteBoxTests::testIso8601Time()
-{
-    constexpr std::string_view testname = __func__;
-
-    std::ostringstream oss;
-
-    std::chrono::system_clock::time_point t(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1567444337874777375)));
-    LOK_ASSERT_EQUAL_STR("2019-09-02T17:12:17.874777Z", Util::getIso8601FracformatTime(t));
-
-    t = std::chrono::system_clock::time_point(std::chrono::system_clock::duration::zero());
-    LOK_ASSERT_EQUAL_STR("1970-01-01T00:00:00.000000Z", Util::getIso8601FracformatTime(t));
-
-    t = Util::iso8601ToTimestamp("1970-01-01T00:00:00.000000Z", "LastModifiedTime");
-    oss << t.time_since_epoch().count();
-    LOK_ASSERT_EQUAL_STR("0", oss.str());
-    LOK_ASSERT_EQUAL_STR("1970-01-01T00:00:00.000000Z", Util::time_point_to_iso8601(t));
-
-    oss.str(std::string());
-    t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
-    oss << t.time_since_epoch().count();
-    if (std::is_same_v<std::chrono::system_clock::period, std::nano>)
-        LOK_ASSERT_EQUAL_STR("1567444337874777000", oss.str());
-    else
-        LOK_ASSERT_EQUAL_STR("1567444337874777", oss.str());
-    LOK_ASSERT_EQUAL_STR("2019-09-02T17:12:17.874777Z", Util::time_point_to_iso8601(t));
-
-    oss.str(std::string());
-    t = Util::iso8601ToTimestamp("2019-10-24T14:31:28.063730Z", "LastModifiedTime");
-    oss << t.time_since_epoch().count();
-    if (std::is_same_v<std::chrono::system_clock::period, std::nano>)
-        LOK_ASSERT_EQUAL_STR("1571927488063730000", oss.str());
-    else
-        LOK_ASSERT_EQUAL_STR("1571927488063730", oss.str());
-    LOK_ASSERT_EQUAL_STR("2019-10-24T14:31:28.063730Z", Util::time_point_to_iso8601(t));
-
-    t = Util::iso8601ToTimestamp("2020-02-20T20:02:20.100000Z", "LastModifiedTime");
-    LOK_ASSERT_EQUAL_STR("2020-02-20T20:02:20.100000Z", Util::time_point_to_iso8601(t));
-
-    t = std::chrono::system_clock::time_point();
-    LOK_ASSERT_EQUAL_STR("Thu, 01 Jan 1970 00:00:00", Util::getHttpTime(t));
-
-    t = std::chrono::system_clock::time_point(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1569592993495336798)));
-    LOK_ASSERT_EQUAL_STR("Fri, 27 Sep 2019 14:03:13", Util::getHttpTime(t));
-
-    t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583000Z", "LastModifiedTime");
-    LOK_ASSERT_EQUAL_STR("2020-09-22T21:45:12.583000Z", Util::time_point_to_iso8601(t));
-
-    t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583Z", "LastModifiedTime");
-    LOK_ASSERT_EQUAL_STR("2020-09-22T21:45:12.583000Z", Util::time_point_to_iso8601(t));
-
-    for (int i = 0; i < 100; ++i)
-    {
-        t = std::chrono::system_clock::now();
-        const uint64_t t_in_micros = (t.time_since_epoch().count() / 1000) * 1000;
-
-        const std::string s = Util::getIso8601FracformatTime(t);
-        t = Util::iso8601ToTimestamp(s, "LastModifiedTime");
-
-        std::string t_in_micros_str = std::to_string(t_in_micros);
-        std::string time_since_epoch_str = std::to_string(t.time_since_epoch().count());
-        if (!std::is_same_v<std::chrono::system_clock::period, std::nano>)
-        {
-            // If the system clock has nanoseconds precision, the last 3 digits
-            // of these strings may not match. For example,
-            // 1567444337874777000
-            // 1567444337874777123
-            t_in_micros_str.resize(t_in_micros_str.length() - 3);
-            time_since_epoch_str.resize(time_since_epoch_str.length() - 3);
-        }
-
-        LOK_ASSERT_EQUAL(t_in_micros_str, time_since_epoch_str);
-
-        // Allow a small delay to get a different timestamp on next iteration.
-        sleep(0);
-    }
-}
-
-void WhiteBoxTests::testClockAsString()
-{
-    // This test depends on locale and timezone.
-    // It is only here to test changes to these functions,
-    // but the tests can't be run elsewhere.
-    // I left them here to avoid recreating them when needed.
-#if 0
-    constexpr std::string_view testname = __func__;
-
-    const auto steady_tp = std::chrono::steady_clock::time_point(
-        std::chrono::steady_clock::duration(std::chrono::nanoseconds(295708311764285)));
-    LOK_ASSERT_EQUAL_STR("Sat Feb 12 18:58.889 2022",
-                     Util::getSteadyClockAsString(steady_tp));
-
-    const auto sys_tp = std::chrono::system_clock::time_point(
-        std::chrono::system_clock::duration(std::chrono::nanoseconds(1644764467739980124)));
-    LOK_ASSERT_EQUAL_STR("Sat Feb 12 18:58.889 2022",
-                     Util::getSystemClockAsString(sys_tp));
-#endif
-}
-
 void WhiteBoxTests::testStat()
 {
     constexpr std::string_view testname = __func__;
@@ -976,7 +832,7 @@ void WhiteBoxTests::testStat()
                    .time_since_epoch()
                    .count()
                == static_cast<long>(st.modifiedTimeMs() / 1000));
-    LOK_ASSERT(st.modifiedTime().tv_sec == static_cast<long>(st.modifiedTimeMs() / 1000));
+    LOK_ASSERT_EQUAL(static_cast<long>(st.modifiedTimeMs() / 1000), st.modifiedTime().tv_sec);
     LOK_ASSERT(st.modifiedTime().tv_nsec / 1000
                == static_cast<long>(st.modifiedTimeUs())
                       - (st.modifiedTime().tv_sec * 1000 * 1000));
@@ -998,55 +854,6 @@ void WhiteBoxTests::testStringCompare()
     LOK_ASSERT(!Util::iequal("abc", "abcd"));
 
     LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
-}
-
-void WhiteBoxTests::testSafeAtoi()
-{
-    constexpr std::string_view testname = __func__;
-
-    {
-        std::string s("7");
-        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("+7");
-        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("-7");
-        LOK_ASSERT_EQUAL(-7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42");
-        LOK_ASSERT_EQUAL(4, Util::safe_atoi(s.data(), 1));
-    }
-    {
-        std::string s("  42");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42xy");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        // Make sure signed integer overflow doesn't happen.
-        std::string s("9999999990");
-        // Good:       2147483647
-        // Bad:        1410065398
-        LOK_ASSERT_EQUAL(std::numeric_limits<int>::max(), Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("123");
-        s[1] = '\0';
-        LOK_ASSERT_EQUAL(1, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        LOK_ASSERT_EQUAL(0, Util::safe_atoi(nullptr, 0));
-    }
 }
 
 void WhiteBoxTests::testJsonUtilEscapeJSONValue()
@@ -1198,6 +1005,36 @@ void WhiteBoxTests::testThreadPool()
     pool.start();
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
 //    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
+}
+
+void WhiteBoxTests::testLogCaptureCaller()
+{
+    constexpr std::string_view testname = __func__;
+
+    const auto logWithoutCaller = []() -> std::string
+    {
+        std::ostringstream oss;
+        LOG_END(oss);
+        return oss.str();
+    };
+    // Should return an empty string.
+    const std::string withoutCaller = logWithoutCaller();
+    TST_LOG("Without caller: [" << withoutCaller << ']');
+    LOK_ASSERT_MESSAGE("Unexpected to find the parent's source location",
+                       withoutCaller.find("(from") == std::string::npos);
+
+#line __LINE__ "WhiteBoxTests.cpp"
+    const auto logWithCaller = [](LOG_CAPTURE_CALLER_DECLARATION) -> std::string
+    {
+        std::ostringstream oss;
+        LOG_END(oss);
+        return oss.str();
+    };
+    // Should return something like "(from WhiteBoxTests.cpp:1031)|"
+    const std::string withCaller = logWithCaller();
+    TST_LOG("With caller: [" << withCaller << ']');
+    LOK_ASSERT_MESSAGE("Expected to find the parent's source location",
+                       withCaller.find("|(from WhiteBoxTests.cpp:") != std::string::npos);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

@@ -53,7 +53,7 @@ class TextSelectionSection extends CanvasSectionObject {
 	onDraw(frameCount?: number, elapsedTime?: number): void {
 		// Remove when visibility checks are done in layout views (on simple point instances).
 		if (
-			this.mode !== app.map._docLayer._selectedMode ||
+			!app.activeDocument.isModeActive(this.mode) ||
 			this.part !== app.map._docLayer._selectedPart ||
 			this.polygons.length === 0
 		)

@@ -11,13 +11,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	it('Check if we jump the view on new page insertion', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
+		desktopHelper.assertVisiblePage(1, 1, 4);
+
 		helper.typeIntoDocument('{ctrl+enter}');
 		helper.typeIntoDocument('{ctrl+enter}');
 
 		cy.wait(500);
 		desktopHelper.assertVisiblePage(2, 3, 6);
 
-		desktopHelper.assertScrollbarPosition('vertical', 120, 150);
+		desktopHelper.assertScrollbarPosition('vertical', 120, 250);
 	});
 
 	it('Scrolling to bottom/top', function() {

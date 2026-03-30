@@ -15,8 +15,8 @@
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
 
-#include "RequestDetails.hpp"
-#include "wopi/CheckFileInfo.hpp"
+#include <RequestDetails.hpp>
+#include <wopi/CheckFileInfo.hpp>
 #include <Storage.hpp>
 
 #include <istream>
@@ -41,7 +41,7 @@ public:
                        SocketDisposition& disposition);
 
 private:
-    inline void logPrefix(std::ostream& os) const { os << '#' << _logFD << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _logFD << ": "; }
 
     void checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, const Poco::URI& uri,
                        std::optional<std::string> const & postBody, int redirectionLimit);
@@ -54,7 +54,7 @@ private:
     const std::weak_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
-    int _logFD;
+    const int _logFD;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

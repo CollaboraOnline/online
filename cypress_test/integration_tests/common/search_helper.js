@@ -23,7 +23,7 @@ function showSearchBar() {
 function typeIntoSearchField(text) {
 	cy.log('>> typeIntoSearchField - start');
 
-	cy.cGet('input#search-input').clear().type(text);
+	cy.cGet('input#search-input').type('{selectall}{backspace}' + text);
 	cy.cGet('input#search-input').should('have.prop', 'value', text);
 
 	cy.cGet('#searchprev').should('not.be.disabled');

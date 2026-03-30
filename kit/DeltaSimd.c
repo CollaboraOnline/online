@@ -20,11 +20,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <endian.h>
 
 #include "DeltaSimd.h"
 
 #if ENABLE_SIMD
+#  include <endian.h>
 #  include <immintrin.h>
 
 #define DEBUG_LUT 0
@@ -51,7 +51,7 @@ void init_gather_lut()
         while (i<8) // pad to copy first point
                 lut[i++] = 0;
 
-#if DEBUG_LUG
+#if DEBUG_LUT
         fprintf(stderr, "lut mask: 0x%x generates %d %d %d %d %d %d %d %d\n",
                 pattern, lut[7], lut[6], lut[5], lut[4], lut[3], lut[2], lut[1], lut[0]);
 #endif
@@ -181,6 +181,52 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
     for (unsigned int x = 0; x < 4; ++x)
         rleMaskBlockWide[x] = htole64(rleMaskBlockWide[x]);
 
+    return 1;
+#endif // ENABLE_SIMD
+}
+
+// copy and convert RGBA to BGRA using AVX2 acceleration
+int simd_copyRowSwapRB(unsigned char *dest, const unsigned char *src, unsigned int count)
+{
+#if !ENABLE_SIMD
+    (void)dest; (void)src; (void)count;
+    return 0;
+#else // ENABLE_SIMD
+    // Shuffle mask to swap R and B within each 32-bit pixel:
+    // BGRA [B,G,R,A] -> RGBA [R,G,B,A] means: byte 2->0, 1->1, 0->2, 3->3
+    const __m256i shuffleMask = _mm256_set_epi8(
+        // high 128-bit lane (pixels 4-7)
+        15, 12, 13, 14,
+        11,  8,  9, 10,
+         7,  4,  5,  6,
+         3,  0,  1,  2,
+        // low 128-bit lane (pixels 0-3)
+        15, 12, 13, 14,
+        11,  8,  9, 10,
+         7,  4,  5,  6,
+         3,  0,  1,  2
+    );
+
+    size_t i = 0;
+    size_t bytes = count * 4;
+
+    // Process 32 bytes (8 pixels) at a time
+    for (; i + 32 <= bytes; i += 32)
+    {
+        __m256i srcVec = _mm256_loadu_si256(
+            (const __m256i*)(src + i));
+        __m256i swapped = _mm256_shuffle_epi8(srcVec, shuffleMask);
+        _mm256_storeu_si256((__m256i*)(dest + i), swapped);
+    }
+
+    // Handle remaining pixels (< 8) with scalar code
+    for (; i < bytes; i += 4)
+    {
+        dest[i + 0] = src[i + 2];  // R <- B
+        dest[i + 1] = src[i + 1];  // G <- G
+        dest[i + 2] = src[i + 0];  // B <- R
+        dest[i + 3] = src[i + 3];  // A <- A
+    }
     return 1;
 #endif // ENABLE_SIMD
 }

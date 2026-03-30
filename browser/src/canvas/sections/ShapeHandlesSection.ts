@@ -57,14 +57,14 @@ class HelperLineStyles {
 }
 
 class ShapeHandlesSection extends CanvasSectionObject {
-	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.ShapeHandlesSection.processingOrder;
+	drawingOrder: number = app.CSections.ShapeHandlesSection.drawingOrder;
+	zIndex: number = app.CSections.ShapeHandlesSection.zIndex;
 	documentObject: boolean = true;
 	showSection: boolean = false;
 
 	constructor (info: any) {
-        super("shapeHandlesSection");
+		super(app.CSections.ShapeHandlesSection.name);
 
 		this.sectionProperties.info = null;
 		this.sectionProperties.handles = [];
@@ -86,6 +86,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
 		this.sectionProperties.mathObjectBorderColor = 'red'; // Border color for Math objects.
 		this.sectionProperties.lastTapTime = 0;
+		this.sectionProperties.clickTimer = null;
 		this.sectionProperties.viewedRectangleOnMouseDown = new cool.SimpleRectangle(0, 0, 0, 0);
 		this.sectionProperties.initialPosition = this.position.slice();
 		this.sectionProperties.positionOnMouseDown = new cool.SimplePoint(0, 0);
@@ -214,34 +215,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		const center = this.getShapeCenter();
 
-		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
+		const radians = Math.atan2((center.y - topMiddle.y), (topMiddle.x - center.x));
 		return radians - Math.PI * 0.5;
 	}
 
-	getShapeCenter(twips = true) {
+	private getShapeCenter() {
 		let topLeft = this.sectionProperties.info.handles.kinds.rectangle['1'][0];
 		topLeft = new cool.SimplePoint(parseInt(topLeft.point.x), parseInt(topLeft.point.y));
 
 		let bottomRight = this.sectionProperties.info.handles.kinds.rectangle['8'][0];
 		bottomRight = new cool.SimplePoint(parseInt(bottomRight.point.x), parseInt(bottomRight.point.y));
 
-		if (twips)
-			return [Math.round((topLeft.x + bottomRight.x) / 2), Math.round((topLeft.y + bottomRight.y) / 2)]; // number array in twips.
-		else
-			return [Math.round((topLeft.pX + bottomRight.pX) / 2), Math.round((topLeft.pY + bottomRight.pY) / 2)]; // number array in core pixels.
+		const center = new cool.SimplePoint((topLeft.x + bottomRight.x) * 0.5, (topLeft.y + bottomRight.y) * 0.5);
+
+		return center;
 	}
 
 	/*
 		Selection rectangle is different from the object's inner rectangle.
 		Handlers are positioned based on object's inner rectangle (~borders). So we need to get the object's inner rectangle and its rotation angle.
 	*/
-	getShapeRectangleProperties() {
+	private getShapeRectangleProperties() {
 		if (!this.sectionProperties.info.handles?.kinds?.rectangle)
 			return null;
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: this.getShapeCenter(false),
+			center: this.getShapeCenter(),
 			height: this.getShapeHeight(false),
 			width: this.getShapeWidth(false)
 		};
@@ -422,6 +422,9 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		if (GraphicSelection.hasActiveSelection())
 			this.size = [GraphicSelection.rectangle.pWidth, GraphicSelection.rectangle.pHeight];
+
+		if (this.sectionProperties.svg)
+			this.adjustSVGProperties();
 	}
 
 	isSVGVisible() {
@@ -485,7 +488,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
 
-		if (!this.sectionProperties.svg.innerHTML.includes('foreignobject')) {
+		if (!this.sectionProperties.svg.innerHTML.includes('foreignObject')) {
 			console.error('Failed to parse svg for embedded video');
 			return;
 		}
@@ -540,7 +543,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.svg.style.pointerEvents = 'none';
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 
-		this.sectionProperties.svg.innerHTML = data;
+		this.sectionProperties.svg.innerHTML = app.LOUtil.sanitize(data, 'svg');
 		this.sectionProperties.svg.style.position = 'absolute';
 		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto';
 		this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
@@ -563,9 +566,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		for (let i = 0; i < this.sectionProperties.subSections.length; i++)
 			this.sectionProperties.subSections[i].setShowSection(this.showSection);
 
-		if (this.showSection)
-			this.showSVG();
-		else
+		// Don't call showSVG() here: the SVG overlay may contain stale
+		// content from a previous render.  A new shapeselectioncontent
+		// message will arrive and setSVG() will set the up-to-date SVG.
+		// The overlay is only made visible on demand (e.g. during drag).
+		if (!this.showSection)
 			this.hideSVG();
 	}
 
@@ -997,6 +1002,54 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
+	private constrainDragToSheetArea(dragDistance: number[]) {
+		if (app.map.getDocType() === 'spreadsheet') {
+			// Cap the drag distance to the document boundaries
+			const calcGridSection = app.sectionContainer.getSectionWithName(
+				app.CSections.CalcGrid.name,
+			);
+			const rowHeaderSection = app.sectionContainer.getSectionWithName(
+				app.CSections.RowHeader.name,
+			) as cool.RowHeader;
+			const columnHeaderSection = app.sectionContainer.getSectionWithName(
+				app.CSections.ColumnHeader.name,
+			) as cool.ColumnHeader;
+
+			if (calcGridSection && rowHeaderSection && columnHeaderSection) {
+				dragDistance[0] = Math.max(
+					calcGridSection.myTopLeft[0] -
+						this.myTopLeft[0] -
+						columnHeaderSection.getHeaderInfo().getDocVisStart(),
+					dragDistance[0],
+				);
+				dragDistance[1] = Math.max(
+					calcGridSection.myTopLeft[1] -
+						this.myTopLeft[1] -
+						rowHeaderSection.getHeaderInfo().getDocVisStart(),
+					dragDistance[1],
+				);
+				// Clip svg at the header edges
+				if (this.sectionProperties.svg) {
+					const cropLeft =
+						Math.max(
+							calcGridSection.myTopLeft[0] -
+								this.myTopLeft[0] -
+								dragDistance[0],
+							0,
+						) / app.dpiScale;
+					const cropTop =
+						Math.max(
+							calcGridSection.myTopLeft[1] -
+								this.myTopLeft[1] -
+								dragDistance[1],
+							0,
+						) / app.dpiScale;
+					this.sectionProperties.svg.style.clipPath = `inset(${cropTop}px 0px 0px ${cropLeft}px)`;
+				}
+			}
+		}
+	}
+
 	onMouseMove(position: cool.SimplePoint, dragDistance: number[]) {
 		let canDrag = !app.file.textCursor.visible;
 
@@ -1008,6 +1061,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 
 		if (this.containerObject.isDraggingSomething() && canDrag) {
+			this.constrainDragToSheetArea(dragDistance);
+
 			if (!app.activeDocument.activeLayout.viewedRectangle.equals(this.sectionProperties.viewedRectangleOnMouseDown.toArray())) {
 				const diff = new cool.SimplePoint(
 					app.activeDocument.activeLayout.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1,
@@ -1073,6 +1128,18 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				}
 			}
 
+			// New view layouts are not tested for Calc yet. Transition to new structure is not complete.
+			this.updateSVGPosition();
+		}
+		this.hideSVG();
+	}
+
+	// Shared positioning logic used by both adjustSVGProperties (initial
+	// placement) and onNewDocumentTopLeft (viewport change update).
+	private updateSVGPosition(): void {
+		if (!this.sectionProperties.svg || !GraphicSelection.hasActiveSelection()) return;
+
+		if (app.map._docLayer.isCalc()) {
 			const left = GraphicSelection.rectangle.pX1;
 			const top = GraphicSelection.rectangle.pY1;
 
@@ -1080,13 +1147,22 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svgPosition = [left, top];
 		}
-		this.hideSVG();
+		else {
+			const left = GraphicSelection.rectangle.v1X;
+			const top = GraphicSelection.rectangle.v1Y;
+
+			const leftAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[0];
+			const topAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[1];
+
+			this.sectionProperties.svg.style.left = Math.round((left + leftAddition) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top + topAddition) / app.dpiScale) + 'px';
+			this.sectionProperties.svgPosition = [left, top];
+		}
 	}
 
 	onNewDocumentTopLeft(): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.updateSVGPosition();
 		}
 	}
 
@@ -1217,8 +1293,42 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		point.pX += this.position[0];
 		point.pY += this.position[1];
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+		var modifier = MouseControl.readModifier(e);
+
+		// Capture position for the timer callback.
+		const clickX = point.x;
+		const clickY = point.y;
+
+		// Cancel any pending click timer from a previous click.
+		if (this.sectionProperties.clickTimer) {
+			app.timerRegistry.clearTimeout(this.sectionProperties.clickTimer);
+			this.sectionProperties.clickTimer = null;
+		}
+
+		// Delay the click so that a double-click can cancel it.
+		this.sectionProperties.clickTimer = app.timerRegistry.setTimeout(
+			'shapeClickTimer',
+			() => {
+				app.map._docLayer._postMouseEvent(
+					'buttondown',
+					clickX,
+					clickY,
+					1,
+					1,
+					modifier,
+				);
+				app.map._docLayer._postMouseEvent(
+					'buttonup',
+					clickX,
+					clickY,
+					1,
+					1,
+					modifier,
+				);
+				this.sectionProperties.clickTimer = null;
+			},
+			250,
+		);
 
 		// There is no native "double-click" event for touch devices. But we need to support double-tap.
 		if ((e as any).pointerType === 'touch') {
@@ -1243,6 +1353,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		// Cancel the pending click - a double-click replaces it.
+		if (this.sectionProperties.clickTimer) {
+			app.timerRegistry.clearTimeout(this.sectionProperties.clickTimer);
+			this.sectionProperties.clickTimer = null;
+		}
+
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 2, 1, 0);

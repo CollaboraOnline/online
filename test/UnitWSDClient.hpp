@@ -9,10 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "helpers.hpp"
-#include "lokassert.hpp"
-#include "testlog.hpp"
-#include "Unit.hpp"
+#pragma once
+
+/*
+ * Base class for WSD client unit tests.
+ */
+
+#include <helpers.hpp>
+#include <lokassert.hpp>
+#include <testlog.hpp>
+#include <Unit.hpp>
 #include <common/Uri.hpp>
 
 #include <Poco/URI.h>
@@ -62,7 +68,7 @@ public:
 class UnitWSDClient : public UnitWSD
 {
 public:
-    UnitWSDClient(const std::string& name)
+    explicit UnitWSDClient(const std::string& name)
         : UnitWSD(name)
     {
     }

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via mobile wizard.', function() {
-	const defaultStartPoint = [1947, 5308];
+	const defaultStartPoint = [2198, 5559];
 	const defaultBase = 5992;
 	const defaultAltitude = 5992;
 	const unitScale = 2540.37;
@@ -34,8 +34,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		 */
 		match(pathCommandStr) {
 			// M 1953,10839 L 7945,4847 1953,4847 1953,10839 1953,10839 Z
-			const pathCmdSplit = pathCommandStr.split(' ');
-			expect(pathCmdSplit).to.have.length(9);
+			// Filter empty strings to handle SVG path data with or without trailing whitespace
+			const pathCmdSplit = pathCommandStr.split(' ').filter(s => s.length > 0);
+			expect(pathCmdSplit).to.have.length(8);
 			TriangleCoordinatesMatcher.pointMatch(pathCmdSplit[1], this.xStart, this.yStart, this.delta, 'top of hypotenuse');
 			TriangleCoordinatesMatcher.pointMatch(pathCmdSplit[3], this.xEnd, this.yEnd, this.delta, 'bottom of hypotenuse');
 			TriangleCoordinatesMatcher.pointMatch(pathCmdSplit[4], this.xStart, this.yEnd, this.delta, 'left end of base');

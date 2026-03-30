@@ -9,52 +9,65 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of storage backends and WOPI protocol.
+ * Classes: StorageBase, LocalStorage
+ */
+
 #include <config.h>
+
+#include "Storage.hpp"
+
+#if !MOBILEAPP
+
+#include <net/HttpRequest.hpp>
+#include <wopi/WopiStorage.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/HostUtil.hpp>
+#include <wsd/ProofKey.hpp>
+
+#include <cassert>
+#include <cerrno>
+
+#endif // !MOBILEAPP
+
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/NetUtil.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/Exceptions.hpp>
+
+#include <Poco/Exception.h>
+#include <Poco/Path.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
 
 #include <chrono>
 #include <memory>
 #include <string>
 
-#include <Poco/Exception.h>
-
-#if !MOBILEAPP
-
-#include <cassert>
-#include <cerrno>
-
-#include <Auth.hpp>
-#include <HostUtil.hpp>
-#include <ProofKey.hpp>
-#include <HttpRequest.hpp>
-#include <wopi/WopiStorage.hpp>
-
-#endif
-
-#include <Poco/StreamCopier.h>
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-
-#include <CommandControl.hpp>
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <Log.hpp>
-#include <NetUtil.hpp>
-#include <Storage.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/FileUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/TraceEvent.hpp>
-#include <wsd/COOLWSD.hpp>
-
+#if MOBILEAPP
 #ifdef IOS
 #include <ios.h>
+#elif defined(MACOS)
+#include <macos.h>
 #elif defined(__ANDROID__)
-#include "androidapp.hpp"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
-#endif // IOS
+#include <androidapp.hpp>
+#elif defined(_WIN32)
+#include <windows.hpp>
+#elif defined(QTAPP)
+#include <qt.hpp>
+#elif WASMAPP
+#include <wasmapp.hpp>
+#endif
+#endif // MOBILEAPP
 
 #if ENABLE_LOCAL_FILESYSTEM
 bool StorageBase::FilesystemEnabled;

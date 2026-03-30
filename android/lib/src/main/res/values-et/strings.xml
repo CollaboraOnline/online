@@ -20,4 +20,6 @@
     <string name="rate_our_app_title">Tänud, et kasutad rakendust %1$s!</string>
     <string name="rate_our_app_text">Kui ta sulle meeldib, siis hinda meid Google Play teenuses 5 tärniga. Sinu hea arvustus on meile parimaks motivaatoriks.</string>
     <string name="storage_permission_required">Vajalik on andmeruumi kasutamise õigus</string>
+    <string name="file_chromeos_read_only">Seda faili ei saa antud asukohta salvestada ja avame ta vaid lugemisõigustega. Salvestamiseks tõsta ta kausta, kus sul on vastavad õigused.</string>
+    <string name="convert_odf_message">Selles dokumendis tundub leiduma vormindust või sisu, mida ei saa salvestada hetkel valitud tekstivormingus.</string>
 </resources>

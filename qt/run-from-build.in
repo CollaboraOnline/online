@@ -1,0 +1,3 @@
+This is a flag file that is used by getDataDir in qt/qt.hpp, to allow running either qt/coda-qt
+directly (in which case getDataDir will find this file) or an installed coda-qt (in which case
+getDataDir will not find this file).

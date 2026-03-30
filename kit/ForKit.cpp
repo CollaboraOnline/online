@@ -8,12 +8,38 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * A very simple, single threaded helper to efficiently pre-init and
  * spawn lots of kits as children.
  */
 
 #include <config.h>
+
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Simd.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <common/Watchdog.hpp>
+#include <common/security.h>
+#include <kit/DeltaSimd.h>
+#include <kit/Kit.hpp>
+#include <kit/SetupKitEnvironment.hpp>
+#include <net/ServerSocket.hpp>
+#include <net/WebSocketHandler.hpp>
+
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
+#include <Poco/Path.h>
+#include <Poco/URI.h>
 
 #if HAVE_LIBCAP
 #include <sys/capability.h>
@@ -23,35 +49,13 @@
 #include <sysexits.h>
 
 #include <atomic>
+#include <chrono>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <map>
 #include <thread>
-#include <chrono>
 #include <utility>
-
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-
-#include <Common.hpp>
-#include "Kit.hpp"
-#include "SetupKitEnvironment.hpp"
-#include <Log.hpp>
-#include <Simd.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <WebSocketHandler.hpp>
-
-#include <common/FileUtil.hpp>
-#include <common/JailUtil.hpp>
-#include <common/Seccomp.hpp>
-#include <common/SigUtil.hpp>
-#include <common/security.h>
-#include <common/ConfigUtil.hpp>
-#include <common/Uri.hpp>
-#include <common/Watchdog.hpp>
-#include <kit/DeltaSimd.h>
 
 namespace
 {
@@ -346,6 +350,7 @@ void cleanupChildren(const std::string& childRoot)
                 }
                 else if (status == SIGKILL)
                 {
+#if !defined(MACOS)
                     // TODO differentiate with docker
                     if (info.si_code == SI_KERNEL)
                     {
@@ -354,6 +359,7 @@ void cleanupChildren(const std::string& childRoot)
                                          << status);
                     }
                     else
+#endif
                     {
                         ++killedCount;
                         LOG_WRN("Child " << exitedChildPid << " was killed, with status "
@@ -415,7 +421,7 @@ void cleanupChildren(const std::string& childRoot)
             stream << "segfaultcount=" << segFaultCount << ' ' << "killedcount=" << killedCount
                     << ' ' << "oomkilledcount=" << oomKilledCount << '\n';
 
-            int ret = WSHandler->sendMessage(stream.str());
+            const int ret = WSHandler->sendTextMessage(stream.str());
             if (ret == -1)
             {
                 LOG_WRN("Could not send 'segfaultcount' message through websocket");
@@ -529,7 +535,11 @@ int createLibreOfficeKit(const std::string& childRoot, const std::string& sysTem
     std::string jailId = Util::rng::getFilename(16);
 
     // Update the dynamic files as necessary.
+#if ENABLE_CHILDROOTS
     const bool sysTemplateIncomplete = !JailUtil::SysTemplate::updateDynamicFiles(sysTemplate);
+#else
+    const bool sysTemplateIncomplete = false;
+#endif
 
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
@@ -542,7 +552,11 @@ int createLibreOfficeKit(const std::string& childRoot, const std::string& sysTem
     if (Util::isKitInProcess())
     {
         std::thread([childRoot, jailId = std::move(jailId), configId, sysTemplate,
-                     loTemplate, queryVersion, sysTemplateIncomplete] {
+                     loTemplate, queryVersion
+#if ENABLE_CHILDROOTS
+                     , sysTemplateIncomplete
+#endif
+                    ] {
             sleepForDebugger();
             lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
                        true, false, queryVersion, DisplayVersion,
@@ -906,7 +920,7 @@ int forkit_main(int argc, char** argv)
         else if (std::strstr(cmd, "--masterport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            MasterLocation = std::string(eq+1);
+            MasterLocation = UnxSocketPath(std::string(eq+1));
         }
         else if (std::strstr(cmd, "--version") == cmd)
         {
@@ -1019,11 +1033,13 @@ int forkit_main(int argc, char** argv)
     if (Util::ThreadCounter().count() != 1)
         LOG_ERR("forkit has more than a single thread after pre-init" << Util::ThreadCounter().count());
 
+#if ENABLE_CHILDROOTS
     // Link the network and system files in sysTemplate, if possible.
     JailUtil::SysTemplate::setupDynamicFiles(sysTemplate);
 
     // Make dev/[u]random point to the writable devices in tmp/dev/.
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);
+#endif
 
     if (!Util::isKitInProcess())
     {

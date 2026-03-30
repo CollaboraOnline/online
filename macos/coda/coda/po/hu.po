@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: coolwsd 25.04.7.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-06 18:17+0000\n"
+"PO-Revision-Date: 2025-12-06 19:52+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
+"online/collabora-office-macos-app/hu/>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
+
+msgctxt "1UK-8n-QPP.title"
+msgid "Customize Toolbar…"
+msgstr "Eszköztár testreszabása…"
+
+#. Do not change the placeholder ProductName!
+msgctxt "1Xt-HY-uBw.title"
+msgid "ProductName"
+msgstr "ProductName"
+
+msgctxt "4J7-dP-txa.title"
+msgid "Enter Full Screen"
+msgstr "Teljes képernyő"
+
+#. Do not change the placeholder ProductName!
+msgctxt "4sb-4s-VLi.title"
+msgid "Quit ProductName"
+msgstr "Kilépés a ProductName-ból"
+
+msgctxt "5QF-Oa-p0T.title"
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#. Do not change the placeholder ProductName!
+msgctxt "5kV-Vb-QxS.title"
+msgid "About ProductName"
+msgstr "A ProductName névjegye"
+
+msgctxt "6dh-zS-Vam.title"
+msgid "Redo"
+msgstr "Újra"
+
+msgctxt "AYu-sK-qS6.title"
+msgid "Main Menu"
+msgstr "Főmenü"
+
+msgctxt "BOF-NM-1cW.title"
+msgid "Preferences…"
+msgstr "Beállítások…"
+
+msgctxt "Bw7-FT-i3A.title"
+msgid "Save As…"
+msgstr "Mentés másként…"
+
+msgctxt "DVo-aG-piG.title"
+msgid "Close"
+msgstr "Bezárás"
+
+msgctxt "F2S-fz-NVQ.title"
+msgid "Help"
+msgstr "Súgó"
+
+msgctxt "H8h-7b-M4v.title"
+msgid "View"
+msgstr "Nézet"
+
+msgctxt "HyV-fh-RgO.title"
+msgid "View"
+msgstr "Nézet"
+
+msgctxt "IAo-SY-fd9.title"
+msgid "Open…"
+msgstr "Megnyitás…"
+
+msgctxt "KaW-ft-85H.title"
+msgid "Revert to Saved"
+msgstr "Mentett verzió visszaállítása"
+
+msgctxt "Kd2-mp-pUS.title"
+msgid "Show All"
+msgstr "Minden megjelenítése"
+
+msgctxt "LE2-aR-0XJ.title"
+msgid "Bring All to Front"
+msgstr "Mindent az előtérbe"
+
+msgctxt "NMo-om-nkz.title"
+msgid "Services"
+msgstr "Szolgáltatások"
+
+msgctxt "OY7-WF-poV.title"
+msgid "Minimize"
+msgstr "Minimalizálás"
+
+#. Do not change the placeholder ProductName!
+msgctxt "Olw-nP-bQN.title"
+msgid "Hide ProductName"
+msgstr "A ProductName elrejtése"
+
+msgctxt "R4o-n2-Eq4.title"
+msgid "Zoom"
+msgstr "Nagyítás"
+
+msgctxt "Td7-aD-5lo.title"
+msgid "Window"
+msgstr "Ablak"
+
+msgctxt "Vdr-fp-XzO.title"
+msgid "Hide Others"
+msgstr "Többiek elrejtése"
+
+msgctxt "W48-6f-4Dl.title"
+msgid "Edit"
+msgstr "Szerkesztés"
+
+msgctxt "Was-JA-tGl.title"
+msgid "New"
+msgstr "Új"
+
+msgctxt "WeT-3V-zwk.title"
+msgid "Paste and Match Style"
+msgstr "Beillesztés a stílus egyeztetésével"
+
+msgctxt "aTl-1u-JFS.title"
+msgid "Print…"
+msgstr "Nyomtatás…"
+
+msgctxt "aUF-d1-5bR.title"
+msgid "Window"
+msgstr "Ablak"
+
+msgctxt "bib-Uj-vzu.title"
+msgid "File"
+msgstr "Fájl"
+
+msgctxt "dMs-cI-mzQ.title"
+msgid "File"
+msgstr "Fájl"
+
+msgctxt "dRJ-4n-Yzg.title"
+msgid "Undo"
+msgstr "Visszavonás"
+
+msgctxt "gVA-U4-sdL.title"
+msgid "Paste"
+msgstr "Beillesztés"
+
+msgctxt "hz9-B4-Xy5.title"
+msgid "Services"
+msgstr "Szolgáltatások"
+
+msgctxt "kIP-vf-haE.title"
+msgid "Show Sidebar"
+msgstr "Oldalsáv megjelenítése"
+
+msgctxt "oas-Oc-fiZ.title"
+msgid "Open Recent"
+msgstr "Legutóbbi megnyitása"
+
+msgctxt "pxx-59-PXV.title"
+msgid "Save…"
+msgstr "Mentés…"
+
+msgctxt "qIS-W8-SiK.title"
+msgid "Page Setup…"
+msgstr "Oldalbeállítások…"
+
+msgctxt "snW-S8-Cw5.title"
+msgid "Show Toolbar"
+msgstr "Eszköztár megjelenítése"
+
+msgctxt "tXI-mr-wws.title"
+msgid "Open Recent"
+msgstr "Legutóbbi megnyitása"
+
+#. Do not change the placeholder ProductName!
+msgctxt "uQy-DD-JDr.title"
+msgid "ProductName"
+msgstr "ProductName"
+
+msgctxt "uRl-iY-unG.title"
+msgid "Cut"
+msgstr "Kivágás"
+
+msgctxt "vFu-3Y-2xa.title"
+msgid "Window"
+msgstr "Ablak"
+
+msgctxt "vNY-rz-j42.title"
+msgid "Clear Menu"
+msgstr "Menü törlése"
+
+msgctxt "wpr-3q-Mcd.title"
+msgid "Help"
+msgstr "Súgó"
+
+msgctxt "x3v-GG-iWU.title"
+msgid "Copy"
+msgstr "Másolás"

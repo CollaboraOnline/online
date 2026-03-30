@@ -23,6 +23,12 @@ if ENABLE_SSL
 include_paths += ${OPENSSL_CFLAGS}
 endif
 
+if ENABLE_MACOS
+util_platform_cpp = ../common/Util-macos.cpp
+else
+util_platform_cpp = ../common/Util-linux.cpp
+endif
+
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\"$(DIST_FOLDER)\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
@@ -36,78 +42,70 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
-	unit-wopi-async-slow.la \
 	unit-wopi-fail-upload.la \
-	unit-wopi-lock.la \
 	unit-tiletest.la \
 	unit-wopi-documentconflict.la \
 	unit-wopi-stuck-save.la \
-	unit-wopi-transient-connect-fault.la \
+	unit-wopi-async-slow.la \
+	unit-wopi-lock.la \
 	unit-perf.la \
+	unit-invalidation.la \
 	unit-close.la \
-	unit-user-presets.la \
 	unit-wopi-watermark.la \
 	unit-crash.la \
-	unit-invalidation.la \
-	unit-httpws.la \
-	unit-synthetic-lok.la \
-	unit-any-input.la \
-	unit-convert.la \
-	unit-copy-paste.la \
-	unit-wopi-save-on-exit.la \
-	unit-uno-command.la \
-	unit-proxy.la \
-	unit-proxy-protocol.la \
-	unit-each-view.la \
-	unit-load.la \
+	unit-user-presets.la \
 	unit-integration.la \
-	unit-quarantine.la \
-	unit-multi-tenant.la \
-	unit-load-torture.la \
-	unit-save-torture.la \
-	unit-copy-paste-writer.la \
-	unit-wopi-fileurl.la \
-	unit-wopi-languages.la \
-	unit-insert-delete.la \
-	unit-password-protected.la \
-	unit-wopi-httpredirect.la \
-	unit-calc.la \
-	unit-http.la \
-	unit-wopi-temp.la \
-	unit-session.la \
-	unit-render-shape.la \
-	unit-wopi-ownertermination.la \
-	unit-wopi-httpheaders.la \
-	unit-wopi.la \
-	unit-wopi-crash-modified.la \
-	unit-oauth.la \
-	unit-wopi-versionrestore.la \
-	unit-rendering-options.la \
-	unit-paste.la \
-	unit-large-paste.la \
-	unit-typing.la \
-	unit-cursor.la \
-	unit-render-search-result.la \
-	unit-tiff-load.la \
-	unit-save.la \
-	unit-wopi-saveas-with-encoded-file-name.la \
-	unit-storage.la \
-	unit-wopi-async-upload-modifyclose.la \
-	unit-wopi-saveas.la \
-	unit_wopi_renamefile.la \
-	unit-prefork.la \
-	unit-bad-doc-load.la \
-	unit-hosting.la \
-	unit-join-disconnect.la \
 	unit-initial-load-fail.la \
 	unit-timeout.la \
-	unit-timeout_inactive.la \
-	unit-timeout_conn.la \
-	unit-timeout_none.la \
-	unit-serversock_accept1.la \
-	unit-streamsock_ctor1.la \
+	unit-wopi-save-on-exit.la \
+	unit-uno-command.la \
+	unit-quarantine.la \
+	unit-insert-delete.la \
+	unit-wopi.la \
+	unit-each-view.la \
+	unit-copy-paste.la \
+	unit-load-torture.la \
+	unit-httpws.la \
+	unit-wopi-languages.la \
+	unit-load.la \
+	unit-session.la \
+	unit-save-torture.la \
+	unit-wopi-fileurl.la \
+	unit-join-disconnect.la \
+	unit-multi-tenant.la \
+	unit-password-protected.la \
+	unit-calc.la \
+	unit-wopi-temp.la \
+	unit-convert.la \
+	unit-copy-paste-writer.la \
+	unit-render-shape.la \
+	unit-http.la \
+	unit-save.la \
+	unit-cursor.la \
+	unit-large-paste.la \
+	unit-render-search-result.la \
+	unit-convert-csv.la \
+	unit-tiff-load.la \
+	unit-oauth.la \
+	unit-typing.la \
+	unit-prefork.la \
+	unit-synthetic-lok.la \
+	unit-wopi-versionrestore.la \
+	unit-wopi-transient-connect-fault.la \
+	unit-paste.la \
+	unit-wopi-edge-cases.la \
+	unit-any-input.la \
+	unit-clipboard-close.la \
+	unit-convert-to-password-protected.la \
+	unit-wopi-renamefile.la \
+	unit-wopi-saveas.la \
 	unit-kit-child-session.la \
-	unit-base.la
+	unit-socket-failure.la \
+	unit-rendering-options.la \
+	unit-bad-doc-load.la \
+	unit-wopi-httpredirect.la \
+	unit-hosting.la \
+	unit-proxy.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
 
@@ -146,27 +144,33 @@ wsd_sources = \
 	../wsd/TileCache.cpp
 
 test_base_sources = \
+	DeltaTests.cpp \
+	FileServeWhiteBoxTests.cpp \
+	HostUtilTests.cpp \
+	HttpWhiteBoxTests.cpp \
 	KitQueueTests.cpp \
+	LoggingWhiteBoxTests.cpp \
+	NetUtilWhiteBoxTests.cpp \
+	NumUtilWhiteBoxTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
-	FileServeWhiteBoxTests.cpp \
-	NetUtilWhiteBoxTests.cpp \
-	WhiteBoxTests.cpp \
-	HttpWhiteBoxTests.cpp \
-	DeltaTests.cpp \
-	UtilTests.cpp \
-	WopiProofTests.cpp \
-	UriTests.cpp \
 	TestGlobals.cpp \
+	UriTests.cpp \
+	UtilTests.cpp \
+	WhiteBoxTests.cpp \
+	WopiProofTests.cpp \
 	$(wsd_sources)
 
 common_sources = \
+	$(util_platform_cpp) \
 	../common/Authorization.cpp \
+	../common/CommandControl.cpp \
 	../common/ConfigUtil.cpp \
 	../common/DummyTraceEventEmitter.cpp \
-	../common/FileUtil.cpp \
 	../common/FileUtil-unix.cpp \
-	../common/Log.cpp \
+	../common/FileUtil.cpp \
+	../common/Log-common.cpp \
+	../common/Log-poco.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \
 	../common/Session.cpp \
@@ -174,20 +178,22 @@ common_sources = \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/StringVector.cpp \
+	../common/Syscall.cpp \
 	../common/TraceEvent.cpp \
-	../common/Unit.cpp \
 	../common/Unit-server.cpp \
+	../common/Unit.cpp \
 	../common/Uri.cpp \
 	../common/Util-server.cpp \
 	../common/Util-unix.cpp \
 	../common/Util.cpp \
 	../kit/KitQueue.cpp \
 	../kit/LogUI.cpp \
-	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
-	../net/Socket.cpp \
 	../net/NetUtil.cpp \
-	../wsd/Auth.cpp
+	../net/Socket.cpp \
+	../wsd/Auth.cpp \
+	../wsd/Exceptions.cpp \
+	../wsd/HostUtil.cpp
 
 globals_sources = ../common/Globals.cpp
 
@@ -197,29 +203,25 @@ unithttplib_LDADD = $(CPPUNIT_LIBS)
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
-	$(test_base_sources) \
 	$(common_sources) \
-	../common/Globals.cpp \
+	$(test_base_sources) \
 	../wsd/TestStubs.cpp \
 	test.cpp
 
-unittest_LDADD = $(CPPUNIT_LIBS)
-unit_base_la_LIBADD = $(CPPUNIT_LIBS)
+unittest_LDADD = $(top_builddir)/libsimd.a $(CPPUNIT_LIBS)
 if ENABLE_SSL
 unittest_SOURCES += ../net/Ssl.cpp
 unithttplib_SOURCES += ../net/Ssl.cpp
 else
 unittest_LDADD += -lssl -lcrypto
 unithttplib_LDADD += -lssl -lcrypto
-unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
-fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp ../common/Util-unix.cpp ../common/Globals.cpp
+fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log-common.cpp ../common/Log-poco.cpp ../common/Util.cpp ../common/Util-server.cpp $(util_platform_cpp) ../common/Util-unix.cpp ../common/Globals.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
-unit_base_la_SOURCES = UnitClient.cpp ${test_base_sources}
 unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp KitPidHelpers.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
 unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp KitPidHelpers.cpp
@@ -241,47 +243,35 @@ unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
 unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_clipboard_close_la_SOURCES = UnitClipboardClose.cpp
+unit_clipboard_close_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
+unit_convert_csv_la_SOURCES = UnitConvertCSV.cpp
+unit_convert_to_password_protected_la_SOURCES = UnitConvertToPasswordProtected.cpp
 unit_initial_load_fail_la_SOURCES = UnitInitialLoadFail.cpp
 unit_initial_load_fail_la_LIBADD = $(CPPUNIT_LIBS)
 unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
 unit_join_disconnect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_timeout_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_inactive_la_SOURCES = UnitTimeoutInactive.cpp
-unit_timeout_inactive_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_conn_la_SOURCES = UnitTimeoutConnections.cpp
-unit_timeout_conn_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_none_la_SOURCES = UnitTimeoutNone.cpp
-unit_timeout_none_la_LIBADD = $(CPPUNIT_LIBS)
-unit_serversock_accept1_la_SOURCES = UnitServerSocketAcceptFailure1.cpp
-unit_serversock_accept1_la_LIBADD = $(CPPUNIT_LIBS)
-unit_streamsock_ctor1_la_SOURCES = UnitStreamSocketCtorFailure1.cpp
-unit_streamsock_ctor1_la_LIBADD = $(CPPUNIT_LIBS)
+unit_socket_failure_la_SOURCES = UnitSocketFailure.cpp
+unit_socket_failure_la_LIBADD = $(CPPUNIT_LIBS)
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_prefork_la_LIBADD = $(CPPUNIT_LIBS)
-unit_storage_la_SOURCES = UnitStorage.cpp
-unit_storage_la_LIBADD = $(CPPUNIT_LIBS)
 # unit_tilecache_la_SOURCES = UnitTileCache.cpp
 # unit_tilecache_la_LIBADD = $(CPPUNIT_LIBS)
 unit_oauth_la_SOURCES = UnitOAuth.cpp
 unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_la_SOURCES = UnitWOPI.cpp
 unit_wopi_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.cpp
-unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
 unit_wopi_async_slow_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_crash_modified_la_SOURCES = UnitWOPICrashModified.cpp
-unit_wopi_crash_modified_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_saveas_with_encoded_file_name_la_SOURCES = UnitWOPISaveAsWithEncodedFileName.cpp
-unit_wopi_saveas_with_encoded_file_name_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_ownertermination_la_SOURCES = UnitWopiOwnertermination.cpp
-unit_wopi_ownertermination_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_edge_cases_la_SOURCES = UnitWopiEdgeCases.cpp
+unit_wopi_edge_cases_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_versionrestore_la_SOURCES = UnitWOPIVersionRestore.cpp
 unit_wopi_versionrestore_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
@@ -306,8 +296,6 @@ unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fileurl_la_SOURCES = UnitWOPIFileUrl.cpp
 unit_wopi_fileurl_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_httpheaders_la_SOURCES = UnitWOPIHttpHeaders.cpp
-unit_wopi_httpheaders_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_httpredirect_la_SOURCES = UnitWOPIHttpRedirect.cpp
 unit_wopi_httpredirect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
@@ -368,8 +356,6 @@ unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
-unit_proxy_protocol_la_SOURCES = UnitProxyProtocol.cpp
-unit_proxy_protocol_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -397,6 +383,37 @@ LA_LOG_DRIVER = ${top_builddir}/test/run_unit.sh
 LOG_DRIVER = ${top_builddir}/test/run_unit_standalone.sh
 
 EXTRA_DIST = data/delta-text.png data/delta-text2.png data/delta-graphic.png data/delta-graphic2.png data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh run_unit_standalone.sh
+
+build-tests: ${all_la_unit_tests}
+	@echo "All test libraries built."
+
+# compile_commands.json support: collect all test source files.
+all_test_la_sources = $(sort $(foreach t,$(all_la_unit_tests),$($(subst -,_,$(basename $(t)))_SOURCES)))
+
+all_test_compiled_sources = $(sort \
+	$(common_sources) \
+	$(globals_sources) \
+	$(wsd_sources) \
+	$(test_base_sources) \
+	$(unittest_SOURCES) \
+	$(unithttplib_SOURCES) \
+	$(fakesockettest_SOURCES) \
+	$(all_test_la_sources) \
+)
+
+TEST_JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(filter %.cpp,$(all_test_compiled_sources)))
+
+CLANGXX_TEST_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+
+JSON_TEST_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_TEST_COMPILE_FLAGS)))
+
+.cpp.cmd:
+	@echo -n "{\"directory\":\"$(abs_builddir)\",\"command\":\"" > $@
+	@echo -n $(JSON_TEST_COMPILE_FLAGS) >> $@
+	@echo -n " -o $(patsubst %.cpp,%.o,$<) -c $<\",\"file\":\"$<\"}" >> $@
+
+compile_commands: $(TEST_JSON_COMPILE_SRC)
 
 check_valgrind: all
 	@fc-cache "@LO_PATH@"/share/fonts/truetype

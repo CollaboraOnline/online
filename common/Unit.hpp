@@ -22,6 +22,8 @@
 
 #include <test/testlog.hpp>
 
+#include <LibreOfficeKit/LibreOfficeKitInit.h>
+
 class UnitBase;
 class UnitWSD;
 class UnitKit;
@@ -52,14 +54,14 @@ namespace Poco
 class Session;
 class StorageBase;
 
+namespace http { class Session; }
+
 typedef UnitBase *(CreateUnitHooksFunction)();
 typedef UnitBase**(CreateUnitHooksFunctionMulti)();
 extern "C" {
     UnitBase *unit_create_wsd(void);
     UnitBase** unit_create_wsd_multi(void);
     UnitBase *unit_create_kit(void);
-    typedef struct _LibreOfficeKit LibreOfficeKit;
-    typedef LibreOfficeKit *(LokHookFunction2)( const char *install_path, const char *user_profile_url );
 }
 /// Derive your WSD unit test / hooks from me.
 class UnitBase
@@ -148,7 +150,7 @@ public:
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting()
     {
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         return DlHandle;
 #else
         return false; // In non-debug builds unit-tests cannot be run. See test/run_unit.sh.
@@ -183,7 +185,7 @@ public:
     /// Message that is about to be sent via the websocket.
     /// To override, handle onFilterSendWebSocketMessage or any of the onDocument...() handlers.
     /// Returns true to stop processing the message further.
-    bool filterSendWebSocketMessage(const char* data, std::size_t len, WSOpCode code, bool flush,
+    bool filterSendWebSocketMessage(std::string_view data, WSOpCode code, bool flush,
                                     int& unitReturn);
 
     /// Hook the disk space check
@@ -306,7 +308,7 @@ public:
     static std::string getUnitLibPath() { return std::string(UnitLibPath); }
 
     const std::string& getTestname() const { return testname; }
-    void setTestname(const std::string& name) { testname = name; }
+    void setTestname(std::string name) { testname = std::move(name); }
 
     std::shared_ptr<SocketPoll> socketPoll();
 
@@ -317,7 +319,7 @@ private:
     /// Dynamically load the unit-test .so.
     static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
-    /// Close the dynamicallu loaded unit-test .so.
+    /// Close the dynamically loaded unit-test .so.
     static void closeUnit();
 
     /// Initialize the Test Suite options.
@@ -329,7 +331,10 @@ private:
     /// Returns true iff there are more valid test instances to dereference.
     static bool haveMoreTests()
     {
-        return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1];
+        // The last test is the dummy one, used to avoid having a null instance.
+        // Check that we have a valid one after the next one, otherwise it's the dummy.
+        return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1] &&
+               GlobalArray[GlobalIndex + 2];
     }
 
     /// Self-test.
@@ -342,7 +347,7 @@ private:
     virtual bool onFilterLOKitMessage(const std::shared_ptr<Message>& /*message*/) { return false; }
 
     /// Handles messages sent via WebSocket.
-    virtual bool onFilterSendWebSocketMessage(const char* /*data*/, const std::size_t /*len*/,
+    virtual bool onFilterSendWebSocketMessage(std::string_view /*data*/,
                                               const WSOpCode /* code */, const bool /* flush */,
                                               int& /*unitReturn*/)
     {
@@ -357,15 +362,10 @@ private:
 
     std::string getReason() const;
 
-    static UnitBase* get(UnitType type);
-
-    /// setup global instance for get() method
-    static void rememberInstance(UnitType type, UnitBase* instance);
-
     static void* DlHandle; ///< The handle to the unit-test .so.
     static char *UnitLibPath;
     static UnitBase** GlobalArray; ///< All the tests.
-    static int GlobalIndex; ///< The index of the current test.
+    static std::atomic_int_fast64_t GlobalIndex; ///< The index of the current test.
     static TestOptions GlobalTestOptions; ///< The test options for this Test Suite.
     static TestResult GlobalResult; ///< The result of all tests. Latches at first failure.
 
@@ -402,9 +402,10 @@ class UnitWSD : public UnitBase
 {
     UnitWSDInterface *_wsd;
     bool _hasKitHooks;
+    std::atomic_bool _hasDocBroker;
 
 public:
-    UnitWSD(const std::string& testname);
+    explicit UnitWSD(const std::string& testname);
 
     virtual ~UnitWSD();
 
@@ -562,6 +563,17 @@ public:
         return false;
     }
 
+    /// Called before a clipboard download URL is used.
+    /// Override to replace the URL, e.g. with a non-routable address to test timeouts.
+    virtual void filterClipboardDownloadURL(std::string& /*url*/) {}
+
+    /// Called after an async clipboard download request is set up.
+    /// Override to adjust the session, e.g. to set a shorter timeout.
+    virtual void onClipboardDownloadRequest(std::shared_ptr<http::Session>& /*httpSession*/) {}
+
+    /// Called when the clipboard download callback detects its session has already been destroyed.
+    virtual void onClipboardDownloadSessionGone() {}
+
     /// Called before uri is set as a preinstall settings asset
     virtual void filterRegisterPresetAsset(std::string& /*uri*/) {}
 
@@ -576,10 +588,6 @@ public:
     virtual void onAdminQueryMessage(const std::string& /* message */) {}
 
     // ---------------- DocBroker events ----------------
-
-    /// Called when a DocumentBroker is created (from the constructor).
-    /// Useful to detect track the beginning of a document's life cycle.
-    virtual void onDocBrokerCreate(const std::string&) {}
 
     /// Called when the Kit process is attached to a DocBroker.
     virtual void onDocBrokerAttachKitProcess(const std::string&, int) {}
@@ -597,11 +605,20 @@ public:
     virtual void onDocBrokerPresetsInstallEnd(bool /*success*/) {}
 
 protected:
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect track the beginning of a document's life cycle.
+    virtual void onDocBrokerCreate(const std::string&) {}
+
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     virtual void onDocBrokerDestroy(const std::string&) {}
 
 public:
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect when a document was created at all.
+    /// Handle by overriding onDocBrokerCreate.
+    void DocBrokerCreate(const std::string&);
+
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     /// Handle by overriding onDocBrokerDestroy.
@@ -627,6 +644,7 @@ private:
     /// The actual test implementation.
     virtual void invokeWSDTest() {}
 
+    void startNextTest();
     void onExitTest(TestResult result, const std::string& reason = std::string()) override;
 };
 
@@ -726,5 +744,13 @@ private:
 
 #define LOK_ASSERT_STATE(VAR, STATE)                                                               \
     LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " << name(VAR), VAR == STATE)
+
+#ifdef ENABLE_DEBUG
+#define UNITWSD_CALL(X) UnitWSD::get().X
+#define UNITWSD_CALL_INSTANCE(INST, X) ((INST) ? (INST)->X : decltype((INST)->X)())
+#else // !ENABLE_DEBUG
+#define UNITWSD_CALL(X) (void)0
+#define UNITWSD_CALL_INSTANCE(INST, X) false
+#endif // !ENABLE_DEBUG
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

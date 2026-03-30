@@ -9,9 +9,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of tile cache storage and retrieval.
+ * Classes: TileCache
+ */
+
 #include <config.h>
 
 #include "TileCache.hpp"
+
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <wsd/ClientSession.hpp>
 
 #include <cassert>
 #include <climits>
@@ -24,14 +37,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-
-#include "ClientSession.hpp"
-#include <Common.hpp>
-#include <Protocol.hpp>
-#include <StringVector.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/FileUtil.hpp>
 
 using namespace COOLProtocol;
 
@@ -114,12 +119,12 @@ size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<Client
                                                     const std::chrono::steady_clock::time_point now)
 {
     size_t count = 0;
-    for (auto& it : _tilesBeingRendered)
+    for (const auto& it : _tilesBeingRendered)
     {
         if (it.second->isStale(now))
             continue;
 
-        for (auto& s : it.second->getSubscribers())
+        for (const auto& s : it.second->getSubscribers())
         {
             if (s.lock() == session)
                 ++count;
@@ -177,10 +182,9 @@ Tile TileCache::lookupTile(const TileDesc& tile)
 
     Tile ret = findTile(tile);
 
-    UnitWSD::get().lookupTile(tile.getPart(), tile.getEditMode(),
-                              tile.getWidth(), tile.getHeight(),
-                              tile.getTilePosX(), tile.getTilePosY(),
-                              tile.getTileWidth(), tile.getTileHeight(), ret);
+    UNITWSD_CALL(lookupTile(tile.getPart(), tile.getEditMode(), tile.getWidth(), tile.getHeight(),
+                            tile.getTilePosX(), tile.getTilePosY(), tile.getTileWidth(),
+                            tile.getTileHeight(), ret));
 
     return ret;
 }
@@ -545,14 +549,17 @@ size_t TileCache::itemCacheSize(const Tile &tile)
 
 void TileCache::assertCacheSize()
 {
-#if ENABLE_DEBUG
-    size_t recalcSize = 0;
-    for (const auto& it : _cache)
+    if constexpr (Util::isDebugEnabled())
     {
-        recalcSize += itemCacheSize(it.second);
-    }
-    assert(recalcSize == _cacheSize);
+#if !defined NDEBUG
+        size_t recalcSize = 0;
+        for (const auto& it : _cache)
+        {
+            recalcSize += itemCacheSize(it.second);
+        }
+        assert(recalcSize == _cacheSize);
 #endif
+    }
 }
 
 void TileCache::ensureCacheSize()
@@ -668,7 +675,7 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 void TileCache::dumpState(std::ostream& os)
 {
     os << "\n  TileCache:";
-    os << "\n    num: " << _cache.size() << ", size: " << _cacheSize << " (" << _maxCacheSize
+    os << "\n    num: " << _cache.size() << ", size: " << _cacheSize << " (max: " << _maxCacheSize
        << ") bytes\n";
     size_t totalSize = 0;
     size_t totalCapacity = 0;

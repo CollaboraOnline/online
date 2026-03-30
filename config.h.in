@@ -18,10 +18,14 @@
 #undef COOLWSD_BUILDCONFIG
 
 /* Directory that contains configuration of coolwsd */
+#ifndef COOLWSD_CONFIGDIR
 #undef COOLWSD_CONFIGDIR
+#endif
 
 /* Default coolwsd loglevel */
+#ifndef COOLWSD_LOGLEVEL
 #undef COOLWSD_LOGLEVEL
+#endif
 
 /* Default location of coolwsd log file */
 #undef COOLWSD_LOGFILE
@@ -36,7 +40,9 @@
 #undef COOL_USER_ID
 
 /* Default number of pre-spawn children */
+#ifndef NUM_PRESPAWN_CHILDREN
 #undef NUM_PRESPAWN_CHILDREN
+#endif
 
 /* Absolute path to the top-level source directory */
 #undef DEBUG_ABSSRCDIR
@@ -81,6 +87,9 @@
 /* Define to 1 if the `memrchr' function is available, otherwise 0. */
 #define HAVE_MEMRCHR 0
 
+/* Define to 1 if the `pipe2' function is available, otherwise 0. */
+#define HAVE_PIPE2 0
+
 /* Default value of help root URL */
 #undef HELP_URL
 
@@ -111,6 +120,9 @@
 /* Define to 1 if this is a mobileapp (eg. Android) build. */
 #undef MOBILEAPP
 
+/* Define to 1 when we should use systemplate and jails (eg. normal coolwsd server), otherwise 0 (eg. CODA). */
+#undef ENABLE_CHILDROOTS
+
 /* Default value of feature_lock.unlock_description */
 #undef UNLOCK_DESCRIPTION
 
@@ -132,8 +144,22 @@
 /* Define to 1 if this is the WASM app build. */
 #undef WASMAPP
 
+/* Define to 1 if the "fallback to Wasm" capability is enabled: */
+#define ENABLE_WASM_SUPPORT 0
+
+/* Define to 1 if building for macOS */
+#undef MACOS
+
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
 #undef CONFIG_STATIC_TYPE
+
+/* This top-level config.h is used only in "normal" COOL, thus we
+ * don't need the Windows version of EXPORT here, and not EXTERNC
+ * either.
+ */
+
+#define EXTERNC /**/
+#define EXPORT /**/
 
 /* Controls whether or not we allow loading documents from the local filesystem. */
 #ifndef ENABLE_LOCAL_FILESYSTEM
@@ -149,3 +175,5 @@
 #else
 #define CONFIG_STATIC CONFIG_STATIC_TYPE
 #endif
+
+#define ENABLE_RUNTIME_OPTIMIZATIONS 0

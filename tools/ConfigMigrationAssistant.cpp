@@ -9,7 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Configuration file migration utility for upgrading coolwsd.xml.
+ * Functions: migrate(), diffConfig(), help()
+ */
+
+#include <config.h>
 
 #include <cassert>
 #include <iostream>

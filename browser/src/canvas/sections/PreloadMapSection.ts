@@ -26,6 +26,7 @@ class PreloadMapSection extends CanvasSectionObject {
 		elapsedTime?: number,
 		subsetBounds?: Bounds,
 	): void {
+		Util.ensureValue(app.activeDocument);
 		var docLayer = app.map._docLayer;
 		var ctx = docLayer._painter._paintContext();
 
@@ -45,11 +46,11 @@ class PreloadMapSection extends CanvasSectionObject {
 
 		// stop annoying jitter as the view fits different numbers of tiles.
 		var viewWidth = Math.floor(
-			(app.map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
+			(app.sectionContainer.getWidth() + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 		var viewHeight = Math.floor(
-			(app.map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
+			(app.sectionContainer.getHeight() + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 
@@ -103,7 +104,7 @@ class PreloadMapSection extends CanvasSectionObject {
 							j * TileManager.tileSize,
 							zoom,
 							range.part,
-							docLayer._selectedMode,
+							app.activeDocument.activeModes[0],
 						);
 						const tile: Tile = TileManager.get(coords);
 

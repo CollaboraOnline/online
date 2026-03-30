@@ -33,7 +33,7 @@
     <string name="owncloud_settings">Instellingen cloudserver</string>
     <string name="storage_provider_settings">Instellingen opslagprovider</string>
     <string name="otg_missing_error">Ongeldig rootbestand. Controleer uw OTG-apparaat en/of configuratie.</string>
-    <string name="ext_document_provider_error">Ongeldig rootbestand. Controleer uw sd-kaartconfiguratie.</string>
+    <string name="ext_document_provider_error">Ongeldig root-bestand. Controleer uw SD kaartconfiguratie.</string>
     <string name="owncloud_unspecified_error">Onbekende fout bij het verbinden met de cloud-server. Controleer uw configuratie en/of probeer het later.</string>
     <string name="owncloud_unauthorized">Kan niet aanmelden op de cloud-server. Controleer uw configuratie.</string>
     <string name="owncloud_wrong_connection">Kan geen verbinding met de cloud-server maken. Controleer uw configuratie.</string>
@@ -104,9 +104,7 @@
     <string name="remove_from_list">Van de lijst verwijderen</string>
     <string name="file_actions_icon_desc">Bestandsacties</string>
     <string name="pref_category_editor">Editor instellingen</string>
-    <string name="app_version_and_hash">Versie: %1$s
-\nonline git-hash: %2$s
-\ncore git-hash: %3$s</string>
+    <string name="app_version_and_hash">Versie: %1$s \nonline git-hash: %2$s \ncore git-hash: %3$s</string>
     <string name="theme_light">Licht</string>
     <string name="theme_dark">Donker</string>
     <string name="theme_system_default">Systeem standaardinstelling</string>

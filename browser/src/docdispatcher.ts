@@ -132,6 +132,19 @@ class Dispatcher {
 			});
 		};
 
+		this.actionsMap['localcomparedocuments'] = function () {
+			window.L.DomUtil.get('comparedocuments').click();
+		};
+		this.actionsMap['remotecomparedocuments'] = function () {
+			app.map.fire('postMessage', {
+				msgId: 'UI_InsertFile',
+				args: {
+					callback: 'Action_CompareDocuments',
+					mimeTypeFilter: app.LOUtil.documentMimeFilter,
+				},
+			});
+		};
+
 		this.actionsMap['charmapcontrol'] = function () {
 			app.map.sendUnoCommand('.uno:InsertSymbol');
 		};
@@ -232,6 +245,10 @@ class Dispatcher {
 		this.actionsMap['zoomreset'] = () => {
 			app.map.setZoom(app.map.options.zoom, null, true);
 		};
+		this.actionsMap['fitwidthzoom'] = () => {
+			if (app.activeDocument.activeLayout)
+				app.activeDocument.activeLayout.adjustViewZoomLevel();
+		};
 
 		this.actionsMap['searchprev'] = () => {
 			app.searchService.searchPrevious();
@@ -318,6 +335,59 @@ class Dispatcher {
 		this.actionsMap['collapsenotebookbar'] = () => {
 			app.map.uiManager.collapseNotebookbar();
 		};
+
+		this.actionsMap['validatedialogsa11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateAllOpenDialogs();
+			} else {
+				console.warn('A11yValidator not available');
+			}
+		};
+
+		this.actionsMap['validatesidebara11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateSidebar();
+			} else {
+				console.warn('A11yValidator not available');
+			}
+		};
+
+		this.actionsMap['validatenotebookbara11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateNotebookbar();
+			} else {
+				console.warn('A11yValidator not available');
+			}
+		};
+	}
+
+	private addAICommands() {
+		this.actionsMap['aichat'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			sidebar.toggle();
+		};
+
+		this.actionsMap['helpfixformulaerror'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			if (!sidebar.isVisible()) sidebar.show();
+			sidebar.diagnoseFormulaError();
+		};
 	}
 
 	private addExportCommands() {
@@ -351,7 +421,7 @@ class Dispatcher {
 
 	private addCalcCommands() {
 		this.actionsMap['acceptformula'] = function () {
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				app.map.focus();
 				app.map._docLayer.postKeyboardEvent(
 					'input',
@@ -382,7 +452,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['functiondialog'] = function () {
-			if (window.mode.isMobile() && app.map._functionWizardData) {
+			if (window.mode.isSmallScreenDevice() && app.map._functionWizardData) {
 				app.map._docLayer._closeMobileWizard();
 				app.map._docLayer._openMobileWizard(app.map._functionWizardData);
 				app.map.formulabarSetDirty();
@@ -467,7 +537,11 @@ class Dispatcher {
 		this.actionsMap['presentation'] = this.actionsMap[
 			'fullscreen-presentation'
 		] = () => {
-			if ((window as any).canvasSlideshowEnabled) app.map.fire('newfullscreen');
+			if ((window as any).canvasSlideshowEnabled)
+				app.map.fire('newfullscreen', {
+					isWelcomePresentation:
+						window.coolParams.get('welcome') === 'true' ? true : false,
+				});
 			else app.map.fire('fullscreen');
 		};
 
@@ -486,9 +560,16 @@ class Dispatcher {
 
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
+				const welcomePresentation =
+					window.coolParams.get('welcome') === 'true' ? true : false;
 				if ((window as any).canvasSlideshowEnabled)
-					app.map.fire('newpresentinwindow');
-				else app.map.fire('presentinwindow');
+					app.map.fire('newpresentinwindow', {
+						isWelcomePresentation: welcomePresentation,
+					});
+				else
+					app.map.fire('presentinwindow', {
+						isWelcomePresentation: welcomePresentation,
+					});
 			};
 
 		this.actionsMap['followmepresentation'] = this.actionsMap[
@@ -693,6 +774,7 @@ class Dispatcher {
 				let commandState = false;
 				if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
 					app.activeDocument.activeLayout = new ViewLayoutWriter();
+					app.activeDocument.activeLayout.adjustViewZoomLevel();
 				} else {
 					app.activeDocument.activeLayout = new ViewLayoutMultiPage();
 					commandState = true;
@@ -704,6 +786,34 @@ class Dispatcher {
 				});
 				app.activeDocument.activeLayout.sendClientVisibleArea();
 				app.sectionContainer.requestReDraw();
+			}
+		};
+
+		this.actionsMap['comparechanges'] = function () {
+			if (app.activeDocument && app.activeDocument.activeLayout) {
+				Util.ensureValue(app.activeDocument);
+				app.socket.sendMessage('uno .uno:RedlineRenderMode');
+
+				const commandState =
+					app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+
+				app.map.fire('commandstatechanged', {
+					commandName: 'comparechanges',
+					state: !commandState ? 'true' : 'false',
+				});
+
+				app.activeDocument.activeLayout = commandState
+					? new ViewLayoutWriter()
+					: new ViewLayoutCompareChanges();
+
+				// Do this only if we are switching to Writer normal layout.
+				// Try to handle this in constructor for compare-changes layout.
+				if (commandState) {
+					TileManager.redraw();
+					app.map._docLayer._fitWidthZoom(null, null, true);
+					app.activeDocument.activeLayout.sendClientVisibleArea();
+					app.sectionContainer.requestReDraw();
+				}
 			}
 		};
 	}
@@ -793,6 +903,7 @@ class Dispatcher {
 
 		this.addGeneralCommands();
 		this.addExportCommands();
+		this.addAICommands();
 
 		if (docType === 'text') {
 			this.addWriterCommands();
@@ -803,15 +914,17 @@ class Dispatcher {
 			this.addImpressAndDrawCommands();
 		}
 
-		if (window.mode.isMobile()) this.addMobileCommands();
+		if (window.mode.isSmallScreenDevice()) this.addMobileCommands();
 	}
 
 	public dispatch(action: string, data?: any) {
 		// Don't allow to execute new actions while any dialog is visible.
 		// It prevents launching multiple instances of the same dialog.
+		// Exception: validatedialogsa11y needs to run when dialogs are open.
 		if (
-			app.map.dialog.hasOpenedDialog() ||
-			(app.map.jsdialog && app.map.jsdialog.hasDialogOpened())
+			action !== 'validatedialogsa11y' &&
+			(app.map.dialog.hasOpenedDialog() ||
+				(app.map.jsdialog && app.map.jsdialog.hasDialogOpened()))
 		) {
 			app.map.dialog.blinkOpenDialog();
 			console.debug('Cannot dispatch: ' + action + ' when dialog is opened.');
@@ -849,6 +962,11 @@ class Dispatcher {
 
 		if (this.actionsMap[action] !== undefined) {
 			this.actionsMap[action](data);
+			return;
+		}
+
+		if (window.ThisIsTheWindowsApp && action.startsWith('new-')) {
+			window.postMobileMessage(action);
 			return;
 		}
 

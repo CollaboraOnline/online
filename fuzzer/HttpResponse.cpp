@@ -9,7 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Fuzzer for HTTP response parsing.
+ * Functions: LLVMFuzzerTestOneInput() - Tests http::Response parsing
+ */
+
+#include <config.h>
 
 #include <net/HttpRequest.hpp>
 #include <fuzzer/Common.hpp>

@@ -1,0 +1,8 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect id="table-background" x="0.2" y="4.5" width="31.6" height="23" fill="#FFFF"/>
+  <line id="header-bottom" x1="1.7" y1="6"  x2="30.3" y2="6"  stroke="black" stroke-width="0.5" stroke-dasharray="3.73 2.487"/>
+  <line id="row-1-bottom"  x1="1.7" y1="11" x2="30.3" y2="11" stroke="black" stroke-width="0.5" stroke-dasharray="3.73 2.487"/>
+  <line id="row-2-bottom"  x1="1.7" y1="16" x2="30.3" y2="16" stroke="black" stroke-width="0.5" stroke-dasharray="3.73 2.487"/>
+  <line id="row-3-bottom"  x1="1.7" y1="21" x2="30.3" y2="21" stroke="black" stroke-width="0.5" stroke-dasharray="3.73 2.487"/>
+  <line id="row-4-bottom"  x1="1.7" y1="26" x2="30.3" y2="26" stroke="black" stroke-width="0.5" stroke-dasharray="3.73 2.487"/>
+</svg>

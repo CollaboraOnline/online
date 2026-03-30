@@ -13,14 +13,14 @@
 
 #include <common/Log.hpp>
 
+#include <Poco/Path.h>
+
 #include <cerrno>
 #include <chrono>
 #include <fcntl.h>
 #include <fstream>
 #include <string>
 #include <sys/stat.h>
-
-#include <Poco/Path.h>
 
 #if !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG)
 #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
@@ -40,12 +40,15 @@
 
 namespace FileUtil
 {
-    // Wrappers for actual file handling library API.
+    // Wrappers for actual file handling library API. Needed because the file names we handle are in
+    // UTF-8, and on Windows we can't pass such to C and C++ library APIs. We need to convert to
+    // UTF-16 strings and call the proper wide character APIs.
 
     // Also needed because Visual Studio insists on claiming that some POSIXy functions are "deprecated" and
     // wants you to call the variant prefixed with an underscore instead, for example _close().
 
-    // As open(). Returns the file descriptor. On error returns -1 and sets errno.
+    // As open(). Returns the file descriptor (which on Windows is just a thing the C library knows
+    // about, not the OS). On error returns -1 and sets errno.
     int openFileAsFD(const std::string& file, int oflag, int mode = 0);
 
     // As read() and write().
@@ -57,6 +60,9 @@ namespace FileUtil
 
     // As std::ifstream::open.
     void openFileToIFStream(const std::string& file, std::ifstream& stream, std::ios_base::openmode mode = std::ios_base::in);
+
+    // As std::ofstream::open.
+    void openFileToOFStream(const std::string& file, std::ofstream& stream, std::ios_base::openmode mode = std::ios_base::out);
 
     // As stat().
     int getStatOfFile(const std::string& file, struct stat& sb);
@@ -74,12 +80,15 @@ namespace FileUtil
     void createDirectory(const std::string& dir);
 
     // Wraps std::filesystem::temp_directory_path(), and if that fails, uses obvious fallbacks.
+    // Returns as UTF-8 on Windows. (And surely also on any sane Unix?)
     std::string getSysTempDirectoryPath();
 
     /// Returns true iff the path given is writable by our *real* UID.
+    /// On Windows "real UID" is meaningless.
     bool isWritable(const char* path);
 
     /// Update the access-time and modified-time metadata for the given file.
+    /// Not implemented on Windows.
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
 
     // End of wrappers for platform-dependent API.
@@ -155,15 +164,15 @@ namespace FileUtil
     inline bool isWritable(const std::string& path) { return isWritable(path.c_str()); }
 
     /// Copy the source file to the target.
-    bool copy(const std::string& fromPath, const std::string& toPath, bool log,
-              bool throw_on_error);
+    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error,
+              LOG_CAPTURE_CALLER_DECLARATION);
 
     /// Atomically copy a file and optionally preserve its timestamps.
     /// The file is copied with a temporary name, and then atomically renamed.
     /// NOTE: toPath must be a valid filename, not a directory.
     /// Does not log (except errors), does not throw. Returns true on success.
-    bool copyAtomic(const std::string& fromPath, const std::string& toPath,
-                    bool preserveTimestamps);
+    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps,
+                    LOG_CAPTURE_CALLER_DECLARATION);
 
     /// Copy a file from @fromPath to @toPath, throws on failure.
     inline void copyFileTo(const std::string& fromPath, const std::string& toPath)
@@ -187,7 +196,8 @@ namespace FileUtil
     /// Create a temporary directory in the root provided
     std::string createTmpDir(const std::string& dirName, std::string root = std::string());
 
-    /// Returns the realpath(3) of the provided path.
+    /// Returns the realpath(3) of the provided path. This also has a separate implementation for
+    /// Windows.
     std::string realpath(const char* path);
 
     inline std::string realpath(const std::string& path)
@@ -230,6 +240,7 @@ namespace FileUtil
         closeFD(fd);
 
         data.resize(originalSize + (n <= 0 ? 0 : n));
+        data.shrink_to_fit();
 
         return n;
     }
@@ -267,8 +278,11 @@ namespace FileUtil
         /// nanosecond precision, if/when the filesystem supports it.
         timespec modifiedTime() const
         {
-#ifdef IOS
+#if defined(__APPLE__)
             return _sb.st_mtimespec;
+#elif defined(_WIN32)
+            timespec result{ _sb.st_mtime, 0 };
+            return result;
 #else
             return _sb.st_mtim;
 #endif
@@ -306,8 +320,8 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and same contents.
-        static inline bool isIdenticalTo(const Stat& l, const std::string& lPath,
-                                         const Stat& r, const std::string& rPath)
+        static bool isIdenticalTo(const Stat& l, const std::string& lPath, const Stat& r,
+                                  const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,
@@ -319,8 +333,8 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and modified timestamp.
-        static inline bool isUpToDate(const Stat& l, const std::string& lPath,
-                                      const Stat& r, const std::string& rPath)
+        static bool isUpToDate(const Stat& l, const std::string& lPath, const Stat& r,
+                               const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,

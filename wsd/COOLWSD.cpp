@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of main server application logic.
+ * Classes: COOLWSD
+ */
+
 #include <config.h>
 #include <config_version.h>
 
@@ -33,35 +38,38 @@
 // parent process that listens on the TCP port and accepts connections from COOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
 
-#include <unistd.h>
-#include <sysexits.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
-
-#include <sys/types.h>
-
-#include <cassert>
-#include <clocale>
-#include <condition_variable>
-#include <cstdint>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <chrono>
-#include <iostream>
-#include <map>
-#include <memory>
-#include <mutex>
-#include <regex>
-#include <sstream>
-#include <string>
-#include <thread>
-
+#include <common/Anonymizer.hpp>
+#include <common/Clipboard.hpp>
+#include <common/Common.hpp>
 #if ENABLE_FEATURE_LOCK
-#include "CommandControl.hpp"
+#include <common/CommandControl.hpp>
 #endif
-
+#include <common/ConfigUtil.hpp>
+#include <common/Crypto.hpp>
+#include <common/FileUtil.hpp>
+#include <common/HexUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
+#include <common/Protocol.hpp>
+#include <common/RegexUtil.hpp>
+#include <common/Session.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/AsyncDNS.hpp>
+#include <net/DelaySocket.hpp>
+#include <net/ServerSocket.hpp>
+#include <wsd/COOLWSDServer.hpp>
+#include <wsd/ClientRequestDispatcher.hpp>
+#include <wsd/DocumentBroker.hpp>
 #include <wsd/PlatformDesktop.hpp>
+#include <wsd/PlatformMobile.hpp>
+#include <wsd/PlatformUnix.hpp>
+#include <wsd/Process.hpp>
+#include <wsd/TraceFile.hpp>
+#include <wsd/wopi/StorageConnectionManager.hpp>
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Exception.h>
@@ -77,35 +85,30 @@
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/XMLConfiguration.h>
 
-#include <common/Anonymizer.hpp>
-#include <ClientRequestDispatcher.hpp>
-#include <Common.hpp>
-#include <Clipboard.hpp>
-#include <Crypto.hpp>
-#include <DelaySocket.hpp>
-#include <wsd/COOLWSDServer.hpp>
-#include <wsd/DocumentBroker.hpp>
-#include <wsd/Process.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/FileUtil.hpp>
+#include <cassert>
+#include <chrono>
+#include <clocale>
+#include <condition_variable>
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <sstream>
+#include <string>
+#include <thread>
 
-#include <common/Log.hpp>
-#include <MobileApp.hpp>
-#include <Protocol.hpp>
-#include <Session.hpp>
-#include <wsd/wopi/StorageConnectionManager.hpp>
-#include <wsd/TraceFile.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/HexUtil.hpp>
-#include <common/SigUtil.hpp>
-#include <common/Unit.hpp>
-#include <common/Util.hpp>
+#include <sys/types.h>
 
-#include <net/AsyncDNS.hpp>
-
-#include <ServerSocket.hpp>
-
-#include <wsd/PlatformMobile.hpp>
+#ifndef _WIN32
+#include <sys/resource.h>
+#include <sys/wait.h>
+#include <sysexits.h>
+#include <unistd.h>
+#endif
 
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::Option;
@@ -115,7 +118,7 @@ int ClientPortNumber = 0;
 
 #if !MOBILEAPP
 /// UDS address for kits to connect to.
-std::string MasterLocation;
+UnxSocketPath MasterLocation;
 
 std::string COOLWSD::BuyProductUrl;
 std::string COOLWSD::LatestVersion;
@@ -175,6 +178,7 @@ std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
 
 std::atomic<unsigned> COOLWSD::NumConnections;
 std::unordered_set<std::string> COOLWSD::EditFileExtensions;
+std::string COOLWSD::ViewModeFileExtensions;
 
 extern "C"
 {
@@ -182,7 +186,7 @@ extern "C"
     void forwardSigUsr2();
 }
 
-void COOLWSD::appendAllowedHostsFrom(LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
+void COOLWSD::appendAllowedHostsFrom(const LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
 {
     for (size_t i = 0; ; ++i)
     {
@@ -224,21 +228,9 @@ std::string removeProtocolAndPort(const std::string& host)
 
     return result;
 }
-
-bool isValidRegex(const std::string& expression)
-{
-    try
-    {
-        std::regex regex(expression);
-        return true;
-    }
-    catch (const std::regex_error& e) {}
-
-    return false;
-}
 }
 
-void COOLWSD::appendAllowedAliasGroups(LayeredConfiguration& conf, std::vector<std::string>& allowed)
+void COOLWSD::appendAllowedAliasGroups(const LayeredConfiguration& conf, std::vector<std::string>& allowed)
 {
     for (size_t i = 0;; i++)
     {
@@ -297,7 +289,7 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
@@ -313,7 +305,7 @@ void COOLWSD::syncUsersBrowserSettings(const std::string& userId, const pid_t ch
 
     LOG_INF("Syncing browsersettings for all the users");
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         if (docBroker->getPid() == childPid)
@@ -332,7 +324,7 @@ void COOLWSD::alertUserInternal(const std::string& dockey, const std::string& ms
 
     LOG_INF("Alerting document users with dockey: [" << dockey << ']' << " msg: [" << msg << ']');
 
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         if (docBroker->getDocKey() == dockey)
@@ -423,7 +415,7 @@ SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
     LastSubForKitBrokerExitTimes.erase(configId);
     OutstandingForks.erase(configId);
     it = SubForKitProcs.erase(it);
-    UnitWSD::get().killSubForKit(configId);
+    UNITWSD_CALL(killSubForKit(configId));
 
     return it;
 }
@@ -481,30 +473,60 @@ void COOLWSD::cleanupDocBrokers()
                                                              3600);
 
         // consider shutting down unused subforkits
-        for (auto it = SubForKitProcs.begin(); it != SubForKitProcs.end(); )
+        // Always drop those older than IdleServerSettingsTimeoutSecs, and cap
+        // the remainder to a reasonable number of recently-used entries.
+        CONFIG_STATIC const size_t MaxRecentlyUsedSubForKits = []{
+            size_t value = ConfigUtil::getConfigValue<size_t>("serverside_config.max_idle_subforkits", 5);
+            if (value < 1)
+            {
+                LOG_WRN("max_idle_subforkits is 0, clamping to 1.");
+                value = 1;
+            }
+            return value;
+        }();
+
+        // idle candidates: pair of (idle duration, configId)
+        std::vector<std::pair<std::chrono::steady_clock::duration, std::string>> idleCandidates;
+
+        for (const auto& [configId, subForKitProc] : SubForKitProcs)
         {
-            // copy as it will be used after erase()
-            std::string configId = it->first;
 
             if (configId.empty()) {
                 // ignore primordial forkit
-                ++it;
             } else if (activeConfigs.contains(configId)) {
                 LOG_DBG("subforkit " << configId << " has active document, keep it");
-                ++it;
             } else if (OutstandingForks[configId] > 0) {
                 LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
-                ++it;
+            } else {
+                auto idleDuration = now - LastSubForKitBrokerExitTimes[configId];
+                idleCandidates.emplace_back(idleDuration, configId);
             }
-            else if (now - LastSubForKitBrokerExitTimes[configId] < IdleServerSettingsTimeoutSecs)
+        }
+
+        // sort shortest-idle first so we keep the most recently used
+        std::sort(idleCandidates.begin(), idleCandidates.end());
+
+        size_t recentlyUsedKept = 0;
+        for (const auto& [idleDuration, configId] : idleCandidates)
+        {
+            if (idleDuration >= IdleServerSettingsTimeoutSecs)
             {
-                LOG_DBG("subforkit " << configId << " recently used, keep it");
-                ++it;
+                LOG_DBG("subforkit " << configId << " is unused, dropping it");
+                auto it = SubForKitProcs.find(configId);
+                assert(it != SubForKitProcs.end());
+                dropSubForKit(it);
+            }
+            else if (recentlyUsedKept >= MaxRecentlyUsedSubForKits)
+            {
+                LOG_DBG("subforkit " << configId << " recently used but excess idle subforkit, dropping it");
+                auto it = SubForKitProcs.find(configId);
+                assert(it != SubForKitProcs.end());
+                dropSubForKit(it);
             }
             else
             {
-                LOG_DBG("subforkit " << configId << " is unused, dropping it");
-                it = dropSubForKit(it);
+                LOG_DBG("subforkit " << configId << " recently used, keep it");
+                ++recentlyUsedKept;
             }
         }
 
@@ -569,11 +591,10 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 }
 
 /// Cleans up dead children.
-/// Returns true if removed at least one.
-static bool cleanupChildren()
+static void cleanupChildren()
 {
     if (Util::isKitInProcess())
-        return 0;
+        return;
 
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -590,14 +611,15 @@ static bool cleanupChildren()
     if (static_cast<int>(NewChildren.size()) != count)
         SigUtil::addActivity("removed " + std::to_string(count - NewChildren.size()) +
                              " children");
-
-    return static_cast<int>(NewChildren.size()) != count;
 }
 
 /// Decides how many children need spawning and spawns.
 static void rebalanceChildren(const std::string& configId, int64_t balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
+
+    // Remove dead children first so the available count is accurate.
+    cleanupChildren();
 
     int64_t available = 0;
     for (const auto& elem : NewChildren)
@@ -608,9 +630,6 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
 
     LOG_TRC("Rebalance children to " << balance << ", have " << available << " and "
                                      << OutstandingForks[configId] << " outstanding requests");
-
-    // Do the cleanup first.
-    const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTimes[configId]);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -624,15 +643,23 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
         OutstandingForks[configId] = 0;
     }
 
-    balance -= available;
-    balance -= OutstandingForks[configId];
-
-    if (balance > 0 && (rebalance || OutstandingForks[configId] == 0))
+    if (OutstandingForks[configId] != 0)
     {
-        LOG_DBG("prespawnChildren: Have " << available << " spare "
-                                          << (available == 1 ? "child" : "children") << ", and "
-                                          << OutstandingForks[configId] << " outstanding, forking " << balance
-                                          << " more. Time since last request: " << durationMs);
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << OutstandingForks[configId]
+                << " outstanding fork requests. Time since last request: " << durationMs);
+        return;
+    }
+
+    balance -= available;
+
+    if (balance > 0)
+    {
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << available << " spare "
+                << (available == 1 ? "child" : "children")
+                << " (total: " << NewChildren.size() << "), forking " << balance
+                << " more. Time since last request: " << durationMs);
         forkChildren(configId, balance);
     }
 }
@@ -782,7 +809,14 @@ std::string COOLWSD::FileServerRoot;
 std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::TmpFontDir;
 std::string COOLWSD::LOKitVersion;
-std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
+std::string COOLWSD::LOKitVersionNumber;
+std::string COOLWSD::LOKitVersionHash;
+std::string COOLWSD::ConfigFile =
+#if defined(MACOS) && MOBILEAPP
+    getResourcePath("coolwsd", "xml");
+#else
+    COOLWSD_CONFIGDIR "/coolwsd.xml";
+#endif
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
 bool COOLWSD::EnableTraceEventLogging = false;
 bool COOLWSD::EnableAccessibility = false;
@@ -798,6 +832,9 @@ std::string COOLWSD::UserInterface = "default";
 bool COOLWSD::AnonymizeUserData = false;
 bool COOLWSD::CheckCoolUser = true;
 bool COOLWSD::CleanupOnly = false; ///< If we should cleanup and exit.
+#if ENABLE_DEBUG
+bool COOLWSD::FindFreePort = false; ///< If we should find a free port to listen on.
+#endif
 bool COOLWSD::IsProxyPrefixEnabled = false;
 unsigned COOLWSD::MaxConnections;
 unsigned COOLWSD::MaxDocuments;
@@ -826,9 +863,10 @@ public:
 
 #if !MOBILEAPP
     // Resets the forkit process object
-    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc)
+    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc,
+                          LOG_CAPTURE_CALLER_DECLARATION)
     {
-        assertCorrectThread(__FILE__, __LINE__);
+        assertCorrectThread(LOG_PASS_PARENT_CALLER);
         _forKitProc = forKitProc;
         if (forKitProc && !_queuedSendMessages.empty())
         {
@@ -895,12 +933,6 @@ private:
 /// And also cleans up and balances the correct number of children.
 static std::shared_ptr<PrisonPoll> PrisonerPoll;
 
-#if MOBILEAPP
-#ifndef IOS
-std::mutex COOLWSD::lokit_main_mutex;
-#endif
-#endif
-
 std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPoll>& destPoll,
                                                  const std::string& configId,
                                                  unsigned mobileAppDocId)
@@ -934,18 +966,14 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
 
-#ifdef IOS
-    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the mobile build");
 #endif
 
     std::thread([&]
                 {
-#ifndef IOS
-                    std::lock_guard<std::mutex> lock(COOLWSD::lokit_main_mutex);
-                    Util::setThreadName("lokit_main");
-#else
                     Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
-#endif
+
                     // Ugly to have that static global PrisonerServerSocketFD, Otoh we know
                     // there is just one COOLWSD object. (Even in real Online.)
                     lokit_main(PrisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
@@ -1149,21 +1177,21 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
             {
                 LOG_INF(segFaultcount << " coolkit processes crashed with segmentation fault.");
                 SigUtil::addActivity("coolkit(s) crashed");
-                UnitWSD::get().kitSegfault(segFaultcount);
+                UNITWSD_CALL(kitSegfault(segFaultcount));
             }
 
             if (killedCount)
             {
                 LOG_INF(killedCount << " coolkit processes killed.");
                 SigUtil::addActivity("coolkit(s) killed");
-                UnitWSD::get().kitKilled(killedCount);
+                UNITWSD_CALL(kitKilled(killedCount));
             }
 
             if (oomKilledCount)
             {
                 LOG_INF(oomKilledCount << " coolkit processes killed by oom.");
                 SigUtil::addActivity("coolkit(s) killed by oom");
-                UnitWSD::get().kitOomKilled(oomKilledCount);
+                UNITWSD_CALL(kitOomKilled(oomKilledCount));
             }
         }
         else
@@ -1189,7 +1217,7 @@ COOLWSD::~COOLWSD()
     if (UnitBase::isUnitTesting())
     {
         // We won't have a valid UnitWSD::get() when not testing.
-        UnitWSD::get().setWSD(nullptr);
+        UNITWSD_CALL(setWSD(nullptr));
     }
 }
 
@@ -1220,11 +1248,63 @@ void COOLWSD::requestTerminateSpareKits()
     }
 }
 
+// Due to the possibility of enterMountingNS failing at an intermediate stage
+// after entering a usernamespace, but unable to enter a useful mounting namespace
+// do a test mount in another separate child whose failure don't affect the parent
+bool COOLWSD::testMountingNSInFork()
+{
+    Log::preFork();
+
+    pid_t pid = fork();
+    if (!pid)
+    {
+        // Child
+        Log::postFork();
+
+        // setupChildRoot does a test bind mount + umount to see if that fully works
+        // so we have a mount namespace here just for the purposes of that test
+        LOG_DBG("Test moving into user namespace as uid 0 in level 2 child");
+
+        int ret = JailUtil::enterMountingNS(geteuid(), getegid());
+
+        LOG_DBG("Level 2 child enterMountingNS result is: " << ret);
+
+        _exit(ret);
+    }
+
+    // Parent
+
+    if (pid == -1)
+    {
+        LOG_SYS("testMountingNSInFork fork failed");
+        return false;
+    }
+
+    int wstatus;
+    const int rc = waitpid(pid, &wstatus, 0);
+    if (rc == -1)
+    {
+        LOG_SYS("testMountingNSInFork waitpid failed");
+        return false;
+    }
+
+    if (!WIFEXITED(wstatus))
+    {
+        LOG_SYS("testMountingNSInFork abnormal termination");
+        return false;
+    }
+
+    int status = WEXITSTATUS(wstatus);
+    LOG_DBG("testMountingNSInFork status: " << std::hex << status << std::dec);
+    return status == 1;
+}
+
 void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
 {
     JailUtil::disableBindMounting(); // Default to assume failure
     JailUtil::disableMountNamespaces();
 
+#if ENABLE_CHILDROOTS
     Log::preFork();
 
     pid_t pid = fork();
@@ -1242,8 +1322,14 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
         {
             // setupChildRoot does a test bind mount + umount to see if that fully works
             // so we have a mount namespace here just for the purposes of that test
+
+            // First see if it works in (another) throw away child so a successful
+            // NEWUSER, but a failed NEWNS, or an unusable one, doesn't affect this
+            // process. So on failure we can skip the enterMountingNS at this level.
+            const bool childMountWorked = COOLWSD::testMountingNSInFork();
+
             LOG_DBG("Move into user namespace as uid 0");
-            if (JailUtil::enterMountingNS(geteuid(), getegid()))
+            if (childMountWorked && JailUtil::enterMountingNS(geteuid(), getegid()))
                 JailUtil::enableMountNamespaces();
             else
                 LOG_ERR("creating usernamespace for mount user failed.");
@@ -1293,6 +1379,13 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
         JailUtil::enableBindMounting();
     if (EnableMountNamespaces)
         JailUtil::enableMountNamespaces();
+    if (ConfigUtil::getConfigValue<bool>("mount_jail_tree", true))
+        JailUtil::enableBindMountingConfigured();
+    else
+        JailUtil::disableBindMountingConfigured();
+#else
+    (void) UseMountNamespaces;
+#endif
 }
 
 #endif
@@ -1380,6 +1473,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     if (EnableAccessibility)
         UserInterface = "notebookbar";
+
+    // Load view mode file extensions configuration
+    COOLWSD::ViewModeFileExtensions = ConfigUtil::getConfigValue<std::string>(
+        conf, "view_mode.file_extensions", "");
 
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = ConfigUtil::getConfigValue<std::string>(conf, "logging.level", "trace");
@@ -1521,6 +1618,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     std::ostringstream ossConfig;
     ossConfig << "Loaded config file [" << configFilePath << "] (non-default values):\n";
     ossConfig << ConfigUtil::getLoggableConfig(conf);
+    LOG_DBG_S("View mode extensions: [" << COOLWSD::ViewModeFileExtensions << ']');
 
     LoggableConfigEntries = ossConfig.str();
     LOG_INF(LoggableConfigEntries);
@@ -1530,10 +1628,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     {
         throw std::runtime_error("Failed to load wsd unit test library.");
     }
-    UnitWSD::get().setWSD(this);
+    UNITWSD_CALL(setWSD(this));
 
     // Allow UT to manipulate before using configuration values.
-    UnitWSD::get().configure(conf);
+    UNITWSD_CALL(configure(conf));
 
     // Trace Event Logging.
     EnableTraceEventLogging = ConfigUtil::getConfigValue<bool>(conf, "trace_event[@enable]", false);
@@ -1630,15 +1728,21 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                 "Please reduce logging level to debug or lower in coolwsd.xml to prevent leaking sensitive user data.";
             LOG_FTL(failure);
             std::cerr << '\n' << failure << std::endl;
-#if ENABLE_DEBUG
-            std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you have removed "
-                         "'--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
-#endif
+
+            if constexpr (Util::isDebugEnabled())
+            {
+                std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you "
+                             "have removed "
+                             "'--o:logging.level=trace' from the command line in Makefile.am.\n"
+                          << std::endl;
+            }
+
             Util::forcedExit(EX_SOFTWARE);
         }
     }
 
     std::uint64_t anonymizationSalt = 82589933;
+    bool highStrengthAnonymize = false;
     LOG_INF("Anonymization of user-data is " << (AnonymizeUserData ? "enabled." : "disabled."));
     if (AnonymizeUserData)
     {
@@ -1647,13 +1751,24 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             conf, "logging.anonymize.anonymization_salt", 82589933);
         const std::string anonymizationSaltStr = std::to_string(anonymizationSalt);
         setenv("COOL_ANONYMIZATION_SALT", anonymizationSaltStr.c_str(), true);
+
+        highStrengthAnonymize = ConfigUtil::getConfigValue<bool>(
+            conf, "logging.anonymize.high_strength", false);
+        if (highStrengthAnonymize)
+        {
+            LOG_INF("Using high-strength cryptographic anonymization (PBKDF2-HMAC-SHA512).");
+            setenv("COOL_ANONYMIZATION_HIGH_STRENGTH", "1", true);
+        }
     }
 
-    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt);
+    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt, highStrengthAnonymize);
 
     {
         bool enableWebsocketURP =
             ConfigUtil::getConfigValue<bool>("security.enable_websocket_urp", false);
+        if (enableWebsocketURP)
+            LOG_WRN("NOTE: Deprecated config option security.enable_websocket_urp is enabled. "
+                    "This feature is deprecated and will be removed in a future release.");
         setenv("ENABLE_WEBSOCKET_URP", enableWebsocketURP ? "true" : "false", 1);
     }
 
@@ -1694,6 +1809,14 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     setenv("LOK_ALLOWLIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
 #endif // !MOBILEAPP
+
+#if defined(DEBUG)
+    // Enable if you need more logging from core
+    //setenv("SAL_LOG", "+INFO+WARN", 0);
+
+    // Enable if you need to see the top left corner of tile that was rendered
+    //setenv("LOK_DEBUG_TILES", "1", 0);
+#endif
 
     int pdfResolution =
         ConfigUtil::getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
@@ -1958,10 +2081,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
-    {
-        LOG_DBG("net::Defaults: Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
-                << ", maxExtConnections " << net::Defaults.maxExtConnections << "]");
-    }
+
+    LOG_DBG("net::Defaults: Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
+                                                       << ", maxExtConnections "
+                                                       << net::Defaults.maxExtConnections << ']');
 
 #if !MOBILEAPP
     NoSeccomp =
@@ -2067,13 +2190,17 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = COOLWSD::MaxConnections;
     }
 
-#if !WASMAPP
+#if !WASMAPP && !defined(_WIN32)
     struct rlimit rlim;
-    ::getrlimit(RLIMIT_NOFILE, &rlim);
-    LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
-    // 4 fds per document are used for client connection, Kit process communication, and
-    // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
-    LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+    if (::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+    {
+        LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
+        // 4 fds per document are used for client connection, Kit process communication, and
+        // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
+        LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+    }
+    else
+        LOG_SYS("Failed to get RLIMIT_NOFILE");
 #endif
 
     LOG_INF("Maximum concurrent open Documents limit: " << COOLWSD::MaxDocuments);
@@ -2110,41 +2237,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                                                         takeSnapshot, filters);
     }
 
-    // Allowed hosts for being external data source in the documents
-    std::vector<std::string> lokAllowedHosts;
-    appendAllowedHostsFrom(conf, "net.lok_allow", lokAllowedHosts);
-    // For backward compatibility post_allow hosts are also allowed
-    bool postAllowed = conf.getBool("net.post_allow[@allow]", false);
-    if (postAllowed)
-        appendAllowedHostsFrom(conf, "net.post_allow", lokAllowedHosts);
-    // For backward compatibility wopi hosts are also allowed
-    bool wopiAllowed = conf.getBool("storage.wopi[@allow]", false);
-    if (wopiAllowed)
-    {
-        appendAllowedHostsFrom(conf, "storage.wopi", lokAllowedHosts);
-        appendAllowedAliasGroups(conf, lokAllowedHosts);
-    }
-
-    if (lokAllowedHosts.size())
-    {
-        std::string allowedRegex;
-        for (size_t i = 0; i < lokAllowedHosts.size(); i++)
-        {
-            if (isValidRegex(lokAllowedHosts[i]))
-                allowedRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
-            else
-                LOG_ERR("Invalid regular expression for allowed host: \"" << lokAllowedHosts[i] << "\"");
-        }
-
-        setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
-
-#if !MOBILEAPP
-        if (!ConfigUtil::getConfigValue<bool>(conf, "ssl.ssl_verification", true)) {
-            // also disable host verification for allowed hosts
-            ::setenv("LOK_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
-        }
-#endif
-    }
+    setLokitEnvironmentVariables(conf);
 
 #if !MOBILEAPP
     SavedClipboards = std::make_unique<ClipboardCache>();
@@ -2227,6 +2320,50 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #endif
 }
 
+void COOLWSD::setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguration& conf)
+{
+    // Allowed hosts for being external data source in the documents
+    std::vector<std::string> lokAllowedHosts;
+    appendAllowedHostsFrom(conf, "net.lok_allow", lokAllowedHosts);
+    // For backward compatibility post_allow hosts are also allowed
+    bool postAllowed = conf.getBool("net.post_allow[@allow]", false);
+    if (postAllowed)
+        appendAllowedHostsFrom(conf, "net.post_allow", lokAllowedHosts);
+    // For backward compatibility wopi hosts are also allowed
+    bool wopiAllowed = conf.getBool("storage.wopi[@allow]", false);
+    if (wopiAllowed)
+    {
+        appendAllowedHostsFrom(conf, "storage.wopi", lokAllowedHosts);
+        appendAllowedAliasGroups(conf, lokAllowedHosts);
+    }
+
+    if (lokAllowedHosts.size())
+    {
+        std::string allowedRegex;
+        for (size_t i = 0; i < lokAllowedHosts.size(); i++)
+        {
+            if (RegexUtil::isRegexValid(lokAllowedHosts[i]))
+                allowedRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
+            else
+                LOG_ERR("Invalid regular expression for allowed host: \"" << lokAllowedHosts[i] << "\"");
+        }
+
+        setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
+
+#if !MOBILEAPP
+        if (!ConfigUtil::getConfigValue<bool>(conf, "ssl.ssl_verification", true))
+        {
+            // also disable host verification for allowed hosts
+            ::setenv("LOK_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
+        }
+#endif
+    }
+
+#if !MOBILEAPP
+    setenv("LOK_ALLOWED_EXTREF_PATHS", "", true);
+#endif
+}
+
 void COOLWSD::initializeSSL()
 {
 #if ENABLE_SSL
@@ -2291,6 +2428,14 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port_number"));
 
+    if constexpr (Util::isDebugEnabled())
+    {
+        optionSet.addOption(Option("find-free-port", "",
+                                   "Find a free port to listen on, starting from the default.")
+                                .required(false)
+                                .repeatable(false));
+    }
+
     optionSet.addOption(Option("disable-ssl", "", "Disable SSL security layer.")
                         .required(false)
                         .repeatable(false));
@@ -2337,25 +2482,28 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                             .required(false)
                             .repeatable(false));
 
-#if ENABLE_DEBUG
-    optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("unitlib"));
+    if constexpr (Util::isDebugEnabled())
+    {
+        optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
+                                .required(false)
+                                .repeatable(false)
+                                .argument("unitlib"));
 
-    optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("seconds"));
+        optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
+                                .required(false)
+                                .repeatable(false)
+                                .argument("seconds"));
 
-    optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
-                        .required(false)
-                        .repeatable(false));
+        optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
+                                .required(false)
+                                .repeatable(false));
 
-    optionSet.addOption(Option("forcecaching", "", "Force HTML & asset caching even in debug mode: accelerates cypress.")
-                        .required(false)
-                        .repeatable(false));
-#endif
+        optionSet.addOption(
+            Option("forcecaching", "",
+                   "Force HTML & asset caching even in debug mode: accelerates cypress.")
+                .required(false)
+                .repeatable(false));
+    }
 }
 
 void COOLWSD::handleOption(const std::string& optionName,
@@ -2380,6 +2528,10 @@ void COOLWSD::handleOption(const std::string& optionName,
         CleanupOnly = true; // Flag for later as we need the config.
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
+#if ENABLE_DEBUG
+    else if (optionName == "find-free-port")
+        FindFreePort = true;
+#endif
     else if (optionName == "disable-ssl")
         _overrideSettings["ssl.enable"] = "false";
     else if (optionName == "disable-cool-user-checking")
@@ -2638,7 +2790,7 @@ void COOLWSD::setMigrationMsgReceived(const std::string& docKey)
 void COOLWSD::setAllMigrationMsgReceived()
 {
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([docBroker]() { docBroker->setMigrationMsgReceived(); });
@@ -2736,7 +2888,7 @@ bool COOLWSD::createForKit()
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
-    args.push_back("--masterport=" + MasterLocation);
+    args.push_back("--masterport=" + MasterLocation.getName());
 
     const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
@@ -3031,7 +3183,7 @@ private:
                     std::unique_lock<std::mutex> lock(NewChildrenMutex);
                     rebalanceChildren(configId, COOLWSD::NumPreSpawnedChildren);
 
-                    UnitWSD::get().newSubForKit(SubForKitProcs[configId], configId);
+                    UNITWSD_CALL(newSubForKit(SubForKitProcs[configId], configId));
                 }
 
                 return;
@@ -3056,7 +3208,15 @@ private:
                 else if (param.first == "configid")
                     configId = param.second;
                 else if (param.first == "version")
+                {
                     COOLWSD::LOKitVersion = param.second;
+                    Poco::JSON::Object::Ptr object;
+                    if (JsonUtil::parseJSON(COOLWSD::LOKitVersion, object))
+                    {
+                        COOLWSD::LOKitVersionNumber = JsonUtil::getJSONValue<std::string>(object, "ProductVersion") + JsonUtil::getJSONValue<std::string>(object, "ProductExtension");
+                        COOLWSD::LOKitVersionHash = JsonUtil::getJSONValue<std::string>(object, "BuildId").substr(0, 8);
+                    }
+                }
                 else if (param.first.size() > 6 &&
                          param.first.compare(0, 5, "adms_") == 0)
                     admsProps[param.first.substr(5)] = param.second;
@@ -3090,7 +3250,7 @@ private:
             auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request, admsProps);
 
             if constexpr (!Util::isMobileApp())
-                UnitWSD::get().newChild(child);
+                UNITWSD_CALL(newChild(child));
 
             _pid = pid;
             _socketFD = socket->getFD();
@@ -3324,7 +3484,7 @@ void COOLWSDServer::dumpState(std::ostream& os) const
        << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
        << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
        << "\n  UserInterface: " << COOLWSD::UserInterface
-       << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB"
+       << "\n  Total PSS: " << Util::getProcessTreePss(Util::getProcessId()) << " KB"
        << "\n  Config: " << LoggableConfigEntries
         ;
     THREAD_UNSAFE_DUMP_END
@@ -3377,7 +3537,7 @@ void COOLWSDServer::dumpState(std::ostream& os) const
     {
         std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
         os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
-        for (auto& i : DocBrokers)
+        for (const auto& i : DocBrokers)
             i.second->dumpState(os);
     }
 
@@ -3398,8 +3558,8 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
     auto socket = std::make_shared<LocalServerSocket>(
                     std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
-    std::string location = socket->bind();
-    if (!location.length())
+    const UnxSocketPath location = socket->bind();
+    if (!location.isValid())
     {
         LOG_FTL("Failed to create local unix domain socket. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
@@ -3414,8 +3574,8 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
 
     LOG_INF("Listening to prisoner connections on " << location);
     MasterLocation = std::move(location);
-#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-    if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
+#if ENABLE_CHILDROOTS
+    if(!socket->linkTo(COOLWSD::SysTemplate))
     {
         LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
@@ -3463,7 +3623,11 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findServerPort()
 #ifdef BUILDING_TESTS
            true
 #else
-           UnitWSD::isUnitTesting()
+           (UnitWSD::isUnitTesting()
+#if ENABLE_DEBUG
+            || COOLWSD::FindFreePort
+#endif
+           )
 #endif
         )
     {
@@ -3582,10 +3746,7 @@ void COOLWSD::innerMain()
     remoteConfigThread->start();
 #endif
 
-#ifndef IOS
-    // We can open files with non-ASCII names just fine on iOS without this, and this code is
-    // heavily Linux-specific anyway.
-
+#if !defined(IOS) && !defined(MACOS) && !defined(_WIN32) && !defined(QTAPP)
     // Force a uniform UTF-8 locale for ourselves & our children.
     char* locale = std::setlocale(LC_ALL, "C.UTF-8");
     if (!locale)
@@ -3601,7 +3762,7 @@ void COOLWSD::innerMain()
         LOG_INF("Locale is set to " << std::string(locale));
         ::setenv("LC_ALL", locale, 1);
     }
-#endif // !IOS
+#endif // !IOS && !MACOS && !_WIN32 && !QTAPP
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child coolwsd,
@@ -3752,7 +3913,7 @@ void COOLWSD::innerMain()
         << "Edit mode:" << '\n';
 
     auto names = FileUtil::getDirEntries(DEBUG_ABSSRCDIR "/test/samples");
-    for (auto &i : names)
+    for (const auto &i : names)
     {
         if (i.find("-edit") != std::string::npos)
         {
@@ -3809,7 +3970,7 @@ void COOLWSD::innerMain()
 
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {
-            UnitWSD::get().invokeTest();
+            UNITWSD_CALL(invokeTest());
 
             // More frequent polling while testing, to reduce total test time.
             waitMicroS =
@@ -3877,7 +4038,7 @@ void COOLWSD::innerMain()
 #endif
     }
 
-#ifndef IOS // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
+#if !defined(IOS) // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
             // loop never exits.
 
     COOLWSD::alertAllUsersInternal("close: shuttingdown");
@@ -3962,9 +4123,9 @@ void COOLWSD::innerMain()
     // We block until they finish, or the service stopping times out.
     {
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        for (auto& docBrokerIt : DocBrokers)
+        for (const auto& docBrokerIt : DocBrokers)
         {
-            std::shared_ptr<DocumentBroker> docBroker = docBrokerIt.second;
+            const std::shared_ptr<DocumentBroker>& docBroker = docBrokerIt.second;
             if (docBroker && docBroker->isAlive())
             {
                 LOG_DBG("Joining docBroker [" << docBrokerIt.first << "].");
@@ -4026,7 +4187,7 @@ void COOLWSD::innerMain()
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
-    for (auto& child : NewChildren)
+    for (const auto& child : NewChildren)
     {
         child->terminate();
     }
@@ -4185,7 +4346,7 @@ int COOLWSD::getClientPortNumber()
 std::string COOLWSD::getJailRoot(int pid)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-    for (auto &it : DocBrokers)
+    for (const auto &it : DocBrokers)
     {
         if (pid < 0 || it.second->getPid() == pid)
             return it.second->getJailRoot();
@@ -4201,7 +4362,7 @@ std::vector<std::shared_ptr<DocumentBroker>> COOLWSD::getBrokersTestOnly()
     std::vector<std::shared_ptr<DocumentBroker>> result;
 
     result.reserve(DocBrokers.size());
-    for (auto& brokerIt : DocBrokers)
+    for (const auto& brokerIt : DocBrokers)
         result.push_back(brokerIt.second);
     return result;
 }
@@ -4269,14 +4430,14 @@ static void forwardSignal(int signum);
 void dump_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
-    oss << "Start WSD " << getpid() << " Dump State:\n";
+    oss << "Start WSD " << Util::getProcessId() << " Dump State:\n";
 
     if (COOLWSDServer::Instance)
         COOLWSDServer::Instance->dumpState(oss);
 
-    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+    oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
-    oss << "\nEnd WSD " << getpid() << " Dump State.\n";
+    oss << "\nEnd WSD " << Util::getProcessId() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str()); // Log in the journal.
@@ -4344,7 +4505,7 @@ void forwardSignal(const int signum)
 
     for (const auto& pair : DocBrokers)
     {
-        std::shared_ptr<DocumentBroker> docBroker = pair.second;
+        const std::shared_ptr<DocumentBroker>& docBroker = pair.second;
         if (docBroker && docBroker->getPid() > 0)
         {
             LOG_INF("Sending " << name << " to docBroker " << docBroker->getPid());

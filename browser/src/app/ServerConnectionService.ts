@@ -19,6 +19,7 @@ interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
 	signatureCertificate?: string;
+	aiConfigured?: boolean;
 }
 
 class ServerConnectionService {
@@ -30,6 +31,8 @@ class ServerConnectionService {
 
 	public onBasicUI() {
 		app.console.debug('ServerConnectionService: onBasicUI');
+
+		app.tableStyles = new TableStylesService();
 	}
 
 	public onViewSetting(viewSetting: ViewSetting) {
@@ -40,13 +43,15 @@ class ServerConnectionService {
 			return;
 		}
 
+		app.map.isAIConfigured = !!viewSetting.aiConfigured;
+
 		let zoteroPlugin = app.map.zotero;
 		const zoteroAPIKey = viewSetting.zoteroAPIKey;
 		if (
 			window.zoteroEnabled &&
 			zoteroAPIKey &&
 			!zoteroPlugin &&
-			!window.mode.isMobile()
+			!window.mode.isSmallScreenDevice()
 		) {
 			app.console.debug('ServerConnectionService: initialize Zotero plugin');
 
@@ -57,11 +62,6 @@ class ServerConnectionService {
 			app.map.addControl(zoteroPlugin);
 
 			zoteroPlugin.updateUserID();
-		}
-
-		if (viewSetting.accessibilityState) {
-			app.console.debug('ServerConnectionService: initialize accessibility');
-			app.map.lockAccessibilityOn();
 		}
 	}
 
@@ -78,7 +78,7 @@ class ServerConnectionService {
 	public onFirstTileReceived() {
 		app.console.debug('ServerConnectionService: onFirstTileReceived');
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			// show zotero items if needed
 			const zoteroItems = [
 				'zoteroaddeditbibliography',
@@ -103,6 +103,13 @@ class ServerConnectionService {
 
 		// initialize notebookbar in core
 		app.map.uiManager.initializeLateComponents();
+		JSDialog.RefreshScrollables();
+	}
+
+	/// only called the first time the sidebar is shown
+	public onShowSidebar() {
+		app.console.debug('ServerConnectionService: onShowSidebar');
+		app.map._docLayer.recalculateZoomOnResize();
 	}
 
 	public onNotebookbarInCoreInit() {

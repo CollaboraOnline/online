@@ -1,9 +1,11 @@
 # We only directly edit toolbar.js in dist/
 **/js/Autolinker.js
-**/js/select2.js
 **/js/sanitize-url.js
 **/js/l10n.js
 **/src/unocommands.js
-**/src/layer/tile/CanvasTileWorker.js
+**/src/app/TaskWorker.js
+# Prettier breaks the assumption made by unocommands.py.
+**/src/control/jsdialog/Definitions.MenuCommands.ts
+**/._*
 node_modules
 dist/src

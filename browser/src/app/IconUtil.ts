@@ -19,6 +19,8 @@ class IconUtil {
 		'Paste',
 		'Delete',
 		'CompressGraphic',
+		'SaveGraphic',
+		'saveimagetowopi',
 		'Crop',
 		'FormatPaintbrush',
 		'ResetAttributes',

@@ -38,28 +38,40 @@
 
        var form2 = document.getElementById("form2");
        form2.action = wopiUrl
-       form2.submit();
 
         window.addEventListener(
             'message',
             (event) => {
-                if (event.origin !== window.origin) {
+                if (event.origin !== window.origin)
+                    return;
+
+                // check if event is an error message
+                if (typeof event.data === 'object' &&
+                    event.data !== null &&
+                    typeof event.data.name === 'string' &&
+                    event.data.name.endsWith("Error"))
+                    throw event.data;
+
+                var msg;
+                try {
+                    msg = JSON.parse(event.data);
+                    if (!msg)
+                        return;
+                } catch(e) {
                     return;
                 }
 
-                if (typeof event.data !== 'object' || event.data === null) {
-                    return;
+                switch (msg.MessageId) {
+                    case 'App_LoadingStatus':
+                        if (!msg.Values)
+                            return;
+                        // Wait until iframe1 has started loading before loading iframe2, so that
+                        // iframe1 will be the first view.
+                        if (msg.Values.Status === 'Frame_Ready'
+                            && event.source === document.getElementById('iframe1').contentWindow)
+                            form2.submit();
+                        break;
                 }
-
-                if (typeof event.data.name !== 'string') {
-                    return;
-                }
-
-                if (!event.data.name.endsWith("Error")) {
-                    return;
-                }
-
-                throw event.data;
             }
         );
     </script>

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statusbar tests.', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/statusbar.ods');
@@ -16,7 +16,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		desktopHelper.shouldHaveZoomLevel('100');
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A3');
-		cy.wait(100);
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(this.win);
+		});
 	});
 
 	it('Selected sheet.', function() {
@@ -59,6 +62,40 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#StateTableCellMenu .arrowbackground').click();
 		cy.cGet('.jsdialog-overlay').should('exist');
 		cy.cGet('.ui-combobox-entry.selected').contains(/Average|Sum/g);
+	});
+
+	it('Cell function menu multi-selection.', function() {
+		cy.viewport(1280, 720);
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1:A2');
+		cy.cGet('#StateTableCell').should('have.text', 'Average: 15.5; Sum: 31');
+
+		// Default state: Average and Sum are selected
+		desktopHelper.makeZoomItemsVisible();
+		cy.cGet('#StateTableCellMenu .unolabel').contains('Average; Sum');
+
+		// Toggle on Maximum — should add it to the selection
+		cy.cGet('#StateTableCellMenu .arrowbackground').click();
+		cy.cGet('.jsdialog-overlay').should('exist');
+		cy.cGet('body').contains('.ui-combobox-entry', 'Maximum').click();
+		cy.cGet('#StateTableCellMenu .unolabel').contains('Maximum');
+		cy.cGet('#StateTableCell').should('contain.text', 'Max: 21');
+		// Average and Sum should still be there
+		cy.cGet('#StateTableCell').should('contain.text', 'Average: 15.5');
+		cy.cGet('#StateTableCell').should('contain.text', 'Sum: 31');
+
+		// Toggle off Average — should remove it from the selection
+		cy.cGet('#StateTableCellMenu .arrowbackground').click();
+		cy.cGet('.jsdialog-overlay').should('exist');
+		cy.cGet('body').contains('.ui-combobox-entry', 'Average').click();
+		cy.cGet('#StateTableCell').should('not.contain.text', 'Average');
+		cy.cGet('#StateTableCell').should('contain.text', 'Max: 21');
+		cy.cGet('#StateTableCell').should('contain.text', 'Sum: 31');
+
+		// Click None — should clear all selections
+		cy.cGet('#StateTableCellMenu .arrowbackground').click();
+		cy.cGet('.jsdialog-overlay').should('exist');
+		cy.cGet('body').contains('.ui-combobox-entry', 'None').click();
+		cy.cGet('#StateTableCellMenu .unolabel').contains('None');
 	});
 
 	it('Change zoom level.', function() {

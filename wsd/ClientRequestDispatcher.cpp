@@ -9,40 +9,47 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of client request routing and handling.
+ * Classes: ClientRequestDispatcher
+ */
+
 #include <config.h>
 
+#include <wsd/ClientRequestDispatcher.hpp>
+
 #if ENABLE_FEATURE_LOCK
-#include "CommandControl.hpp"
+#include <common/CommandControl.hpp>
 #endif
 
 #include <common/Anonymizer.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StateEnum.hpp>
-#include <COOLWSD.hpp>
-#include <ClientSession.hpp>
-#include <ConfigUtil.hpp>
-#include <Exceptions.hpp>
-#include <FileServer.hpp>
-#include <HttpRequest.hpp>
-#include <JsonUtil.hpp>
-#include <ProofKey.hpp>
-#include <ProxyRequestHandler.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
+#include <net/HttpRequest.hpp>
 #include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
 #include <net/Uri.hpp>
-#include <wsd/ClientRequestDispatcher.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/ProofKey.hpp>
+#include <wsd/ProxyRequestHandler.hpp>
+#include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/UserMessages.hpp>
 
 #if !MOBILEAPP
-#include <Admin.hpp>
-#include <JailUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <wsd/Admin.hpp>
+#include <wsd/HostUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
-#include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
 #include <Poco/DOM/AutoPtr.h>
@@ -75,6 +82,11 @@ std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
 
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
+
+#if !MOBILEAPP
+static constexpr std::string_view MEDIA_STR = "str";
+static constexpr std::string_view MEDIA_MP4 = "url";
+#endif
 
 namespace
 {
@@ -529,7 +541,7 @@ public:
         };
 
         net::AsyncDNS::lookup(_addressesToResolve.front(), std::move(pushHostnameResolvedToPoll),
-                              dumpState);
+                              std::move(dumpState));
     }
 
     void hostnameResolved(const net::HostEntry& hostEntry)
@@ -861,36 +873,51 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
 
-#ifdef IOS
-    // The URL of the document is sent over the FakeSocket by the code in
+    // In the iOS app, the URL of the document is sent over the FakeSocket by the code in
     // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
     // HULLO message from the JavaScript in global.js.
 
-    // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
-    char* space = strchr(socket->getInBuffer().data(), ' ');
-    assert(space != nullptr);
+    // In other mobile apps and in CODA, it is done in some similar place.
 
-    // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
-    // its end, it might be followed in memory by more digits. Is there really no better way to
-    // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
-    // buffer?
-    const size_t appDocIdLen =
-        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
-    char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
-    memcpy(appDocIdBuffer, space + 1, appDocIdLen);
-    appDocIdBuffer[appDocIdLen] = '\0';
-    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
-    free(appDocIdBuffer);
+    // It's currently relevant only for iOS, macOS, and Windows, so fallback if it is not found
+    // (Android?).
 
-    handleClientWsUpgrade(
-        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
-        disposition, socket, appDocId);
-#else // IOS
-    handleClientWsUpgrade(
-        request,
-        RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
-        disposition, socket);
-#endif // !IOS
+    // Unwrap what StreamSocket::readIncomingData() did
+    ssize_t len;
+    memcpy(&len, socket->getInBuffer().data(), sizeof(ssize_t));
+    const char* payload = socket->getInBuffer().data() + sizeof(ssize_t);
+    auto const space = std::string_view(payload, len).find(' ');
+    if (space != std::string_view::npos)
+    {
+        // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
+        // its end, it might be followed in memory by more digits. Is there really no better way to
+        // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
+        // buffer?
+        const size_t appDocIdLen = len - (space + 1);
+        char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
+        memcpy(appDocIdBuffer, payload + space + 1, appDocIdLen);
+        appDocIdBuffer[appDocIdLen] = '\0';
+        auto [mobileAppDocId, docIdOk] = NumUtil::u64FromString(appDocIdBuffer);
+        if (!docIdOk)
+        {
+            mobileAppDocId = 0;
+            LOG_ERR("Bad document ID \"" << appDocIdBuffer << "\" in \""
+                                         << std::string_view(payload, len) << "\"");
+        }
+        free(appDocIdBuffer);
+
+        handleClientWsUpgrade(request,
+                              RequestDetails(std::string(payload, space)),
+                              disposition, socket, mobileAppDocId);
+    }
+    else
+    {
+        // no appDocId provided
+        handleClientWsUpgrade(
+            request,
+            RequestDetails(std::string(payload, len)),
+            disposition, socket);
+    }
     socket->getInBuffer().clear();
 #endif // MOBILEAPP
 }
@@ -912,7 +939,14 @@ bool allowedOriginByHost(const std::string& host, const std::string& actualOrigi
 
 template <typename T> bool allowedOrigin(const T& request, const RequestDetails& requestDetails)
 {
-    const std::string actualOrigin = request.get("Origin");
+    auto const it = request.find("Origin");
+    if (it == request.end())
+    {
+        LOG_ERR("Rejecting message with no Origin header");
+        return false;
+    }
+
+    const std::string actualOrigin = it->second;
     const ServerURL cnxDetails(requestDetails);
 
     if (net::sameOrigin(cnxDetails.getWebServerUrl(), actualOrigin))
@@ -972,7 +1006,7 @@ void ClientRequestDispatcher::handleFullMessage(Poco::Net::HTTPRequest& request,
     _lastSeenHTTPHeader = now;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection: " << closeConnection);
 
     ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
     if (result == MessageResult::Ignore)
@@ -994,7 +1028,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                                                                               ssize_t headerSize)
 {
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    LOG_DBG("Handling request: " << request << ", closeConnection: " << closeConnection);
 
     // denotes whether the request has been served synchronously
     bool servedSync = false;
@@ -1203,7 +1237,11 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-            servedSync = handleMediaRequest(request, disposition, socket);
+            servedSync = handleMediaRequest(request, disposition, socket, false);
+
+        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 requestDetails.equals(1, "mediaVTT"))
+            servedSync = handleMediaRequest(request, disposition, socket, true);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
@@ -1218,9 +1256,13 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
             servedSync = handleClientProxyRequest(request, requestDetails, message, disposition);
-        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
-                 requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
+        else if (requestDetails.isWebSocket() &&
+                 requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 (requestDetails.equals(1, "ws") || requestDetails.equals(2, "ws")))
+        {
+            // The new WebSocket URL has 'ws' as the second segment; support both old and new.
             servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
+        }
 
         else if (!requestDetails.isWebSocket() &&
                  (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
@@ -1255,11 +1297,12 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
             return MessageResult::Ignore;
         }
     }
-    catch (const BadRequestException& ex)
+    catch (const BadRequestException& exc)
     {
-        LOG_ERR('#' << socket->getFD() << " bad request: ["
-                    << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
-                    << "]: " << ex.what());
+        LOG_ERR("Bad request: " << request << ", closeConnection: " << closeConnection
+                                << ", socket-data: ["
+                                << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
+                                << "]: " << exc.what());
 
         // Bad request.
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
@@ -1267,9 +1310,10 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR('#' << socket->getFD() << " Exception while processing incoming request: ["
-                    << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
-                    << "]: " << exc.what());
+        LOG_ERR("Exception while processing incoming request: "
+                << request << ", closeConnection: " << closeConnection << ", socket-data: ["
+                << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
+                << "]: " << exc.what());
 
         // Bad request.
         // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
@@ -1359,17 +1403,19 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_DBG("Wopi discovery request: " << requestDetails.getURI());
 
     std::string xml = getFileContent("discovery.xml");
-    std::string srvUrl =
+    bool isSsl =
 #if ENABLE_SSL
-        ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) ? "https://" : "http://")
+        (ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination());
 #else
-        "http://"
+        false;
 #endif
+    std::string srvUrl = (isSsl ? "https://" : "http://")
         + (COOLWSD::ServerName.empty() ? requestDetails.getHostUntrusted() : COOLWSD::ServerName) +
         COOLWSD::ServiceRoot;
     if (requestDetails.isProxy())
         srvUrl = requestDetails.getProxyPrefix();
     Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
+    Poco::replaceInPlace(xml, std::string("%SRV_PROTO%"), std::string(isSsl ? "https" : "http"));
 
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
@@ -1384,25 +1430,7 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     return true;
 }
 
-
-// NB: these names are part of the published API, and should not be renamed or altered but can be expanded
-STATE_ENUM(CheckStatus,
-    Ok,
-    NotHttpSuccess,
-    HostNotFound,
-    WopiHostNotAllowed,
-    UnspecifiedError,
-    ConnectionAborted,
-    CertificateValidation,
-    SelfSignedCertificate,
-    ExpiredCertificate,
-    SslHandshakeFail,
-    MissingSsl,
-    NotHttps,
-    NoScheme,
-    Timeout,
-);
-
+//static
 void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
 {
     std::string output = R"({"status": ")" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
@@ -1414,7 +1442,7 @@ void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& so
     jsonResponse.set("X-Content-Type-Options", "nosniff");
 
     socket->sendAndShutdown(jsonResponse);
-    LOG_INF("Wopi Access Check request, result: " << nameShort(result));
+    LOG_INF_S("Wopi Access Check request, result: " << nameShort(result));
 }
 
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
@@ -1538,9 +1566,10 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
+    const std::string logPfx = getLogPrefix();
 
     httpProbeSession->setConnectFailHandler(
-        [socketWeak, callbackUrlStr, this](const std::shared_ptr<http::Session>& probeSession)
+        [socketWeak, callbackUrlStr, logPfx](const std::shared_ptr<http::Session>& probeSession)
         {
             CheckStatus status = CheckStatus::UnspecifiedError;
 
@@ -1565,34 +1594,32 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                     status = CheckStatus::ExpiredCertificate;
                 } else {
                     status = CheckStatus::CertificateValidation;
-                    LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                    LOG_DBG_S(logPfx << "Result ssl: " << probeSession->getSslVerifyMessage());
                 }
             }
-#else
-            (void) this; // to make the compiler happy wrt. the lambda capture
 #endif
 
             std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
             if (!destSocket)
             {
-                LOG_ERR("Invalid socket while sending wopi access check result for: "
+                LOG_ERR_S(logPfx << "Invalid socket while sending wopi access check result for: "
                         << callbackUrlStr);
                 return;
             }
             sendResult(destSocket, status);
     });
 
-    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr),
-                          this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr), logPfx]
+                          (const std::shared_ptr<http::Session>& probeSession)
     {
-        LOG_TRC("finishHandler ");
+        LOG_TRC_S(logPfx << "finishHandler ");
 
         const auto lastErrno = errno;
 
         const std::shared_ptr<http::Response> httpResponse = probeSession->response();
         const http::Response::State responseState = httpResponse->state();
         const http::StatusCode statusCode = httpResponse->statusCode();
-        LOG_DBG("Wopi Access Check: got response state: " << responseState << " "
+        LOG_DBG_S(logPfx << "Wopi Access Check: got response state: " << responseState << " "
                                             << ", response status code: " << statusCode << " "
                                             << ", last errno: " << lastErrno);
 
@@ -1625,7 +1652,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                 status = CheckStatus::Ok;
             } else {
                 status = CheckStatus::CertificateValidation;
-                LOG_WRN("Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
+                LOG_WRN_S(logPfx << "Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
             }
         }
 #endif
@@ -1633,8 +1660,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
-            LOG_ERR(
-                "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
+            LOG_ERR_S(logPfx
+                << "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
             return;
         }
         sendResult(destSocket, status);
@@ -1862,7 +1889,8 @@ bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
 
 bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                                  SocketDisposition& /*disposition*/,
-                                                 const std::shared_ptr<StreamSocket>& socket)
+                                                 const std::shared_ptr<StreamSocket>& socket,
+                                                 bool bVTT)
 {
     assert(socket && "Must have a valid socket");
 
@@ -1946,7 +1974,8 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         LOG_TRC_S("Move media request " << tag << " to docbroker thread");
 
         std::string range = request.get("Range", "none");
-        docBroker->handleMediaRequest(std::move(range), socket, tag);
+        docBroker->handleMediaRequest(std::move(range), socket, tag, (bVTT ? std::string(MEDIA_STR)
+                                                                      : std::string(MEDIA_MP4)));
     }
     return false; // async
 }
@@ -2164,7 +2193,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
         if (!fromPath.empty() && hasRequiredParameters)
         {
-            Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+            Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
             AdditionalFilePocoUris additionalFileUrisPublic;
             for (const auto& key : {"template", "compare"})
             {
@@ -2174,7 +2203,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                     continue;
                 }
 
-                additionalFileUrisPublic[key] = RequestDetails::sanitizeURI(it->second);
+                additionalFileUrisPublic[key] = RequestDetails::sanitizeLocalPath(it->second);
             }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
@@ -2436,7 +2465,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (fromPath.empty())
             return false;
 
-        Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+        Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
         const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
         // This lock could become a bottleneck.
@@ -2605,9 +2634,9 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = R"(progress: { "id":"find" })";
+        static constexpr std::string_view status = R"(progress: { "id":"find" })";
         LOG_TRC("Sending to Client [" << status << ']');
-        ws->sendMessage(status);
+        ws->sendTextMessage(status);
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
@@ -2617,8 +2646,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
     catch (const std::exception& exc)
     {
         LOG_ERR("Error while handling Client WS Request: " << exc.what());
-        const std::string msg = "error: cmd=internal kind=load";
-        ws->sendMessage(msg);
+        constexpr std::string_view msg = "error: cmd=internal kind=load";
+        ws->sendTextMessage(msg);
         ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
         socket->ignoreInput();
         return true;
@@ -2794,6 +2823,12 @@ std::string getCapabilitiesJson(bool convertToAvailable)
 
     // Set the product version hash
     capabilities->set("productVersionHash", Util::getCoolVersionHash());
+
+    // Set the kit version
+    capabilities->set("productKitVersion", COOLWSD::LOKitVersionNumber);
+
+    // Set the kit version hash
+    capabilities->set("productKitVersionHash", COOLWSD::LOKitVersionHash);
 
     // Set that this is a proxy.php-enabled instance
     capabilities->set("hasProxyPrefix", COOLWSD::IsProxyPrefixEnabled);

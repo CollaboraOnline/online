@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright the Collabora Online contributors.
 #
@@ -20,7 +20,8 @@ class DiscoveryHandler(xml.sax.handler.ContentHandler):
         # Dict of app -> {extension -> action}
         self.appActions = {}
         self.app = None
-        self.allExtensions = set()
+        # A dict of 'extension, (actions)'
+        self.allExtensions = dict()
 
     def startElement(self, name, attrs):
         if name == "app":
@@ -46,10 +47,16 @@ class DiscoveryHandler(xml.sax.handler.ContentHandler):
                     # specific extensions are imported using
                     # New-SPWOPIBinding's parameters, avoiding
                     # the duplication.
-                    print("warning: extension '" + ext +
-                          "' exists for '" + self.app + "', " +
-                          "but already used earlier in discovery.xml")
-                self.allExtensions.add(ext)
+                    # Note 2026: we register them with two different actions.
+                    if action not in self.allExtensions[ext]:
+                        print("info: Registering extension '{}' for {} with a different action '{}' (current: '{}'.".format(ext, self.app, action, self.allExtensions[ext]))
+                        self.allExtensions[ext].append(action)
+                    else:
+                        print("warning: extension '" + ext +
+                              "' exists for '" + self.app + "', " +
+                              "but already used earlier in discovery.xml")
+                else:
+                    self.allExtensions[ext] = [action]
 
     def endElement(self, name):
         if name == "app" and self.app:
@@ -84,7 +91,7 @@ class FilterTypeHandler(xml.sax.handler.ContentHandler):
         if name == "prop" and self.inExtensions:
             self.inExtensions = False
             self.extensions = "".join(self.content).strip()\
-                                .encode("utf-8").split(self.extensionsSep)
+                                .encode("utf-8").split(bytes(self.extensionsSep, "utf-8"))
             self.extensionsSep = " "
             self.content = []
 
@@ -123,7 +130,7 @@ class FilterFragmentHandler(xml.sax.handler.ContentHandler):
         elif name == "prop" and self.inFlags:
             self.inFlags = False
             encodedFlags = "".join(self.content).strip().encode("utf-8")
-            self.flags = encodedFlags.split(" ")
+            self.flags = encodedFlags.split(b" ")
             self.content = []
         elif name == "prop" and self.inDocumentService:
             self.inDocumentService = False
@@ -210,7 +217,9 @@ extensionsSkipList = {
 
 def main():
     discoveryXml = "discovery.xml"
-    repoGuess = os.path.join(os.environ["HOME"], "git/libreoffice/master")
+    repoGuess = os.environ["LOCOREPATH"]
+    if repoGuess is None:
+        repoGuess = os.path.join(os.environ["HOME"], "git/libreoffice/master")
     filterDir = os.path.join(repoGuess, "filter/source/config/fragments")
     if len(sys.argv) >= 3:
         discoveryXml = sys.argv[1]
@@ -226,6 +235,10 @@ def main():
     # Parse core.git filter definitions to build a
     # 'document service' -> {'extension' -> 'filter flags'} dictionary.
     extensionProperties = getExtensionProperties(filterDir)
+
+    for ext, actions in discoveryHandler.allExtensions.items():
+        if 'edit' in actions and not 'view' in actions:
+            print(f"warning: extension '{ext}' doesn't have 'view' but has 'edit'.")
 
     proposed = {}
 

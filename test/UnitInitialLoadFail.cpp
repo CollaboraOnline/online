@@ -9,12 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for handling initial document load failures.
+ */
+
 #include <config.h>
 
-#include "lokassert.hpp"
-#include "Unit.hpp"
+#include <lokassert.hpp>
+#include <Unit.hpp>
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <helpers.hpp>
 #include <wsd/ClientSession.hpp>
 
@@ -89,12 +93,9 @@ public:
         fileInfo->set("UserCanWrite", "true");
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         TST_LOG("onFilterSendWebSocketMessage:" << message);
 
         if (message.starts_with("session "))
@@ -188,12 +189,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         TST_LOG("onFilterSendWebSocketMessage:" << message);
 
         if (message.starts_with("error: cmd=internal kind=unauthorized"))

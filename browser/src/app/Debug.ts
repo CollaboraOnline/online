@@ -53,29 +53,29 @@ class DebugManager {
 	private _painter: PainterInterface | null;
 	public debugOn: boolean;
 	public debugNeverStarted: boolean;
-	private _controls: ControlsInterface;
-	private _toolLayers: BaseClass[];
+	private _panel: HTMLDivElement;
+	private _toolEntries: { tool: DebugTool; checkbox: HTMLInputElement }[];
 
 	public overlayOn: boolean;
 	private _overlayData: OverlaysInterface;
 
 	private tileOverlaysOn: boolean;
 
-	private tileInvalidationsOn: boolean;
+	public tileInvalidationsOn: boolean;
 	private _tileInvalidationMessages: Map<number, string>;
 	private _tileInvalidationId: number;
 	private _tileInvalidationKeypressQueue: number[];
 	private _tileInvalidationKeypressTimes: DebugTimeArray;
 	private _tileInvalidationTimeoutId: TimeoutHdl;
 
-	private tileDataOn: boolean;
+	public tileDataOn: boolean;
 	private _tileDataTotalMessages: number;
 	private _tileDataTotalLoads: number;
 	private _tileDataTotalUpdates: number;
 	private _tileDataTotalDeltas: number;
 	private _tileDataTotalInvalidates: number;
 
-	private pingOn: boolean;
+	public pingOn: boolean;
 	private _pingQueue: number[];
 	private _pingTimes: DebugTimeArray;
 	private _pingTimeoutId: TimeoutHdl;
@@ -120,6 +120,16 @@ class DebugManager {
 
 		// redraw canvas with changed debug overlays
 		this._painter.update();
+
+		if (this._map.uiManager.notebookbar) {
+			if (this.debugOn) {
+				this._map.uiManager.notebookbar.showItem('validatesidebara11y');
+				this._map.uiManager.notebookbar.showItem('validatedialogsa11y');
+			} else {
+				this._map.uiManager.notebookbar.hideItem('validatesidebara11y');
+				this._map.uiManager.notebookbar.hideItem('validatedialogsa11y');
+			}
+		}
 	}
 
 	private _start(): void {
@@ -129,17 +139,24 @@ class DebugManager {
 		this.debugOn = true;
 		this.debugNeverStarted = false;
 
-		this._controls = {};
-		// Add header
-		this._controls['header'] = window.L.control
-			.layers({}, {}, { collapsed: false })
-			.addTo(this._map);
-		const b = document.createElement('b');
-		b.append(_('Debug Tools'));
-		this._controls['header']._container.prepend(b);
-		this._controls['header']._container.append(_('Ctrl+Shift+Alt+D to exit'));
+		// Build custom debug panel
+		this._panel = document.createElement('div');
+		this._panel.id = 'debug-panel';
 
-		this._toolLayers = [];
+		const header = document.createElement('div');
+		header.className = 'debug-panel-header';
+		header.textContent = _('Debug Tools');
+		this._panel.appendChild(header);
+
+		const hint = document.createElement('div');
+		hint.className = 'debug-panel-hint';
+		hint.textContent = _('Ctrl+Shift+Alt+D to exit');
+		this._panel.appendChild(hint);
+
+		const container = document.getElementById('document-container');
+		if (container) container.appendChild(this._panel);
+
+		this._toolEntries = [];
 		this._addDebugTools();
 
 		// Initialize here because tasks can add themselves to the queue even
@@ -158,17 +175,18 @@ class DebugManager {
 	private _stop(): void {
 		this.debugOn = false;
 
-		// Remove layers
-		for (const tool of this._toolLayers) {
-			this._map.removeLayer(tool);
+		// Deactivate all checked tools
+		for (const entry of this._toolEntries) {
+			if (entry.checkbox.checked) {
+				entry.tool.onRemove();
+			}
 		}
+		this._toolEntries = [];
 
-		// Remove controls
-		const keys = Object.keys(this._controls);
-		for (const category of keys) {
-			this._controls[category].remove();
+		// Remove panel from DOM
+		if (this._panel) {
+			this._panel.remove();
 		}
-		this._controls = {};
 
 		// Hide debug info in About box
 		const wopiHostId = document.getElementById('wopi-host-id-cloned');
@@ -179,43 +197,43 @@ class DebugManager {
 	}
 
 	private _addDebugTool(tool: DebugTool) {
-		// Create control if it doesn't exist
-		if (!(tool.category in this._controls)) {
-			this._controls[tool.category] = window.L.control
-				.layers({}, {}, { collapsed: false })
-				.addTo(this._map);
-			// Add a title
-			const b = document.createElement('b');
-			b.append(tool.category);
-			this._controls[tool.category]._container.prepend(b);
+		// Create category fieldset if it doesn't exist
+		let fieldset = this._panel.querySelector(
+			'fieldset[data-category="' + tool.category + '"]',
+		) as HTMLFieldSetElement | null;
+		if (!fieldset) {
+			fieldset = document.createElement('fieldset');
+			fieldset.className = 'debug-panel-group';
+			fieldset.dataset.category = tool.category;
+			const legend = document.createElement('legend');
+			legend.textContent = tool.category;
+			fieldset.appendChild(legend);
+			this._panel.appendChild(fieldset);
 		}
 
-		// Create layer
-		const layer = new window.L.LayerGroup();
-		this._toolLayers.push(layer);
-		this._controls[tool.category]._addLayer(layer, tool.name, true);
-		this._controls[tool.category]._update();
+		// Create checkbox + label
+		const label = document.createElement('label');
+		const checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		const span = document.createElement('span');
+		span.textContent = tool.name;
+		label.appendChild(checkbox);
+		label.appendChild(span);
+		fieldset.appendChild(label);
 
-		this._map.on(
-			'layeradd',
-			function (e: EventBaseType) {
-				if (e.layer === layer) {
-					tool.onAdd();
-				}
-			},
-			this,
-		);
-		this._map.on(
-			'layerremove',
-			function (e: EventBaseType) {
-				if (e.layer === layer) {
-					tool.onRemove();
-				}
-			},
-			this,
-		);
+		this._toolEntries.push({ tool, checkbox });
+
+		checkbox.addEventListener('change', function () {
+			if (checkbox.checked) {
+				tool.onAdd();
+			} else {
+				tool.onRemove();
+			}
+		});
+
 		if (tool.startsOn) {
-			this._map.addLayer(layer);
+			checkbox.checked = true;
+			tool.onAdd();
 		}
 	}
 
@@ -395,7 +413,7 @@ class DebugManager {
 				startsOn: false,
 				onAdd: function () {
 					Util.ensureValue(self._painter);
-					TileManager.disableWorkers();
+					app.socket.disableTaskWorkers();
 				},
 				onRemove: function () {
 					Util.ensureValue(self._painter);

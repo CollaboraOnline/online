@@ -157,8 +157,8 @@ interface PropertyGetterSetter {
 	type: PropertyValueType;
 	get: string;
 	set: string;
-	getmod?: string;
-	setmod?: string;
+	getmod?: (nWidth: number, nHeight: number) => (v: number) => number;
+	setmod?: (nWidth: number, nHeight: number) => (v: number) => number;
 }
 
 const aPropertyGetterSetterMap = {
@@ -166,8 +166,8 @@ const aPropertyGetterSetterMap = {
 		type: PropertyValueType.Number,
 		get: 'getHeight',
 		set: 'setHeight',
-		getmod: 'makeScaler( 1/nHeight )',
-		setmod: 'makeScaler( nHeight)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nHeight),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nHeight),
 	},
 
 	opacity: {
@@ -210,24 +210,24 @@ const aPropertyGetterSetterMap = {
 		type: PropertyValueType.Number,
 		get: 'getWidth',
 		set: 'setWidth',
-		getmod: 'makeScaler( 1/nWidth )',
-		setmod: 'makeScaler( nWidth)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nWidth),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nWidth),
 	},
 
 	x: {
 		type: PropertyValueType.Number,
 		get: 'getX',
 		set: 'setX',
-		getmod: 'makeScaler( 1/nWidth )',
-		setmod: 'makeScaler( nWidth)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nWidth),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nWidth),
 	},
 
 	y: {
 		type: PropertyValueType.Number,
 		get: 'getY',
 		set: 'setY',
-		getmod: 'makeScaler( 1/nHeight )',
-		setmod: 'makeScaler( nHeight)',
+		getmod: (nWidth: number, nHeight: number) => makeScaler(1 / nHeight),
+		setmod: (nWidth: number, nHeight: number) => makeScaler(nHeight),
 	},
 
 	visibility: {
@@ -509,6 +509,18 @@ class AnimatedElement {
 		layer: ImageBitmap,
 		bounds: BoundingBoxType,
 	): AnimatedObjectType {
+		if (!layer) {
+			window.app.console.error(
+				'AnimatedElement.createBaseElement: layer is null/undefined',
+			);
+			return null;
+		}
+		if (!bounds || bounds.width <= 0 || bounds.height <= 0) {
+			window.app.console.error(
+				`AnimatedElement.createBaseElement: invalid bounds: ${JSON.stringify(bounds)}`,
+			);
+			return null;
+		}
 		const canvas = new OffscreenCanvas(bounds.width, bounds.height);
 		const context = canvas.getContext('2d');
 		context.drawImage(
@@ -597,6 +609,12 @@ class AnimatedElement {
 	}
 
 	private getTextureFromElement(element: AnimatedObjectType) {
+		if (!element || element.width <= 0 || element.height <= 0) {
+			window.app.console.error(
+				`AnimatedElement.getTextureFromElement: invalid element (null or zero-sized)`,
+			);
+			return null;
+		}
 		return this.tfContext.loadTexture(element);
 	}
 

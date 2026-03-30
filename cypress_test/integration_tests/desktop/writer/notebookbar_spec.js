@@ -16,6 +16,9 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		}
 
 		writerHelper.selectAllTextOfDoc();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function checkCollapsedGroups() {
@@ -28,12 +31,43 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 
 	it('Check collapsed state after mode switch', function() {
 		cy.viewport(1280, 600);
-		cy.wait(100); // stabilize
+		helper.processToIdle(this.win); // stabilize
 
 		checkCollapsedGroups();
 		desktopHelper.switchUIToCompact();
 		desktopHelper.switchUIToNotebookbar();
 		checkCollapsedGroups();
+	});
+
+	it('OverflowGroup collapse state preserved after mode switch', function() {
+		cy.viewport(1280, 600);
+		helper.processToIdle(this.win);
+
+		// At this width some groups should be collapsed and some expanded
+		cy.cGet('.notebookbar .ui-overflow-group:not(.nofold):not(.ui-overflow-group-container-with-label)')
+			.should('have.length.greaterThan', 0);
+		cy.cGet('.notebookbar .ui-overflow-group.ui-overflow-group-container-with-label')
+			.should('have.length.greaterThan', 0);
+
+		// Save the number of expanded groups before switching
+		cy.cGet('.notebookbar .ui-overflow-group.ui-overflow-group-container-with-label')
+			.then($expanded => cy.wrap($expanded.length).as('expandedCount'));
+
+		// Switch to compact UI via View tab
+		desktopHelper.switchUIToCompact();
+		// Switch back to notebookbar via View menu
+		desktopHelper.switchUIToNotebookbar();
+
+		// Wait for layout stabilization after mode switch
+		cy.getFrameWindow().then((win) => {
+			helper.processToIdle(win);
+		});
+
+		// Verify the number of expanded groups is preserved (bug: all were collapsed)
+		cy.get('@expandedCount').then(expandedCount => {
+			cy.cGet('.notebookbar .ui-overflow-group.ui-overflow-group-container-with-label')
+				.should('have.length', expandedCount);
+		});
 	});
 
 	it('Apply bold font from dropdown in Format tab', function() {
@@ -56,13 +90,15 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		// with label
 		cy.cGet('.notebookbar #Review-tab-label').click();
 		cy.cGet('.notebookbar .unoSpellOnline').should('be.visible');
-		cy.cGet('.notebookbar .unoSpellOnline span').contains('Automatic Spell Checking');
+		cy.cGet('.notebookbar .unoSpellOnline span').contains('Auto Spell Check');
 	});
 });
 
 describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
+	var newFilePath;
+
 	beforeEach(function() {
-		helper.setupAndLoadDocument('writer/notebookbar.odt');
+		newFilePath = helper.setupAndLoadDocument('writer/notebookbar.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#View-tab-label').click();
 	});
@@ -106,9 +142,36 @@ describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
 			cy.get('@x1').should('not.be.equal', x);
 		});
 
+		// Check that there are no tab stops.
+		cy.cGet('.cool-ruler-tabstop-left').should('not.exist');
+		// Add a tab stop with a double click.
+		cy.cGet('.cool-ruler-horizontal-tabstopcontainer').dblclick();
+		// Check that a new tab stop is added.
+		cy.cGet('.cool-ruler-tabstop-left').should('exist');
+
 		cy.cGet('#showruler-input').uncheck();
 		cy.cGet('#showruler-input').should('not.be.checked');
 		cy.cGet('.cool-ruler').should('not.be.visible');
+	});
+
+	it('Ruler visible after reload', function() {
+		cy.cGet('#showruler').should('be.visible');
+
+		// Enable if not checked
+		cy.cGet('#showruler-input').then(($input) => {
+			if (!$input.is(':checked')) {
+				cy.wrap($input).check();
+			}
+		});
+
+		cy.cGet('#showruler-input').should('be.checked');
+		cy.cGet('.cool-ruler').should('be.visible');
+
+		// Reload
+		helper.reloadDocument(newFilePath);
+
+		// Verify ruler is still visible
+		cy.cGet('.cool-ruler').should('be.visible');
 	});
 
 	it('StatusBar Toggle', function() {

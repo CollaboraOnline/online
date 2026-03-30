@@ -22,12 +22,16 @@ interface WidgetJSON {
 	children?: Array<WidgetJSON>; // child nodes
 	title?: string;
 	text?: string; // TODO: remove, its for not yet defined widget types
+	tooltip?: string; // tooltip text (QuickHelpText from VCL)
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
 	labelledBy?: string;
 	allyRole?: string;
+	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
+	ariaLive?: 'polite' | 'assertive' | 'off';
+	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }
 
 interface JSBuilderOptions {
@@ -46,12 +50,16 @@ interface JSBuilderOptions {
 
 interface JSBuilder {
 	_currentDepth: number; // mobile-wizard only FIXME: encapsulate
+	_responses: any;
+
+	_unoToolButton: UnoToolButtonHandler; // special handler which returns toolitem object
 	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
 	_menus: Map<string, Array<MenuDefinition>>;
 
 	options: JSBuilderOptions; // current state
 	map: MapInterface; // reference to map
 	rendersCache: any; // on demand content cache
+	windowId?: WindowId | number;
 
 	build: (
 		parentContainer: Element,
@@ -72,6 +80,9 @@ interface JSBuilder {
 	_getGridRows: (data: WidgetJSON[]) => number;
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
+	_setAccessKey: (element: HTMLElement, key: string) => void;
+	_getAccessKeyFromText: (text: string) => string;
+	_stressAccessKey: (element: HTMLElement, accessKey: string) => void;
 	_expanderHandler: any; // FIXME: use handlers getter instead
 }
 
@@ -83,6 +94,17 @@ type JSWidgetHandler = (
 	customCallback?: () => void,
 ) => boolean;
 
+type UnoToolButtonHandler = (
+	parentContainer: Element,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) => {
+	container: HTMLElement;
+	button: HTMLElement;
+	label: HTMLElement;
+	arrow?: HTMLElement;
+};
+
 // callback triggered by user actions
 type JSDialogCallback = (
 	objectType: string,
@@ -92,15 +114,25 @@ type JSDialogCallback = (
 	builder: JSBuilder,
 ) => void;
 
+type JSDialogCallbackConsumer = (
+	objectType: string,
+	eventType: string,
+	object: any,
+	data: any,
+	builder: JSBuilder,
+) => boolean;
+
+type JSDialogMenuCallback = (
+	objectType: string,
+	eventType: string,
+	object: any,
+	data: any,
+	entry: JSBuilder | MenuDefinition,
+) => boolean;
+
 interface DialogResponse {
 	id: string;
 	response: number;
-}
-
-interface DialogJSON extends WidgetJSON {
-	dialogid: string; // unique id for a dialog type, not instance
-	collapsed?: boolean; // if dialog is in collapsed mode
-	responses?: Array<DialogResponse>;
 }
 
 interface ActionData {
@@ -110,12 +142,13 @@ interface ActionData {
 }
 
 // JSDialog message (full, update or action)
-interface JSDialogJSON extends DialogJSON {
+interface JSDialogJSON extends WidgetJSON {
 	id: string; // unique windowId
 	jsontype: string; // specifies target component, on root level only
 	action?: string; // optional name of an action
 	control?: WidgetJSON;
 	data?: ActionData;
+	init_focus_id?: string; // id of initially focused widget
 }
 
 // JSDialog message for popup
@@ -132,12 +165,18 @@ interface PopupData extends JSDialogJSON {
 	posy: number;
 }
 
+interface DialogJSON extends JSDialogJSON {
+	dialogid: string; // unique id for a dialog type, not instance
+	collapsed?: boolean; // if dialog is in collapsed mode
+	responses?: Array<DialogResponse>;
+}
+
 // Notebookbar
 
 type NotebookbarAccessibilityDescriptor = {
 	focusBack: boolean;
 	combination: string;
-	de?: string | null; // combination specific for german
+	[language: string]: string | boolean | null | undefined; // language-specific combinations (e.g. 'de' for German)
 };
 
 type NotebookbarTabEntry = {
@@ -153,15 +192,22 @@ interface NotebookbarTab {
 	getName: () => string;
 	getEntry: () => NotebookbarTabEntry;
 	getContent: () => NotebookbarTabContent;
+	onCallback?: JSDialogCallbackConsumer;
 }
 
 // callback triggered for custom rendered entries
 type CustomEntryRenderCallback = (pos: number | string) => void;
 
 // used to define menus
-type MenuDefinition = {
-	id?: string; // unique identifier
-	type: 'action' | 'menu' | 'separator' | 'html' | 'json'; // type of entry
+interface MenuDefinition extends WidgetJSON {
+	type:
+		| 'action'
+		| 'colorpicker'
+		| 'menu'
+		| 'separator'
+		| 'html'
+		| 'json'
+		| 'comboboxentry'; // type of entry
 	text?: string; // displayed text
 	hint?: string; // hint text
 	uno?: string; // uno command
@@ -171,8 +217,19 @@ type MenuDefinition = {
 	img?: string; // icon name
 	icon?: string; // icon name FIXME: duplicated property, used in exportMenuButton
 	checked?: boolean; // state of check mark
-	items?: Array<any>; // submenu
-};
+	items?: Array<any>;
+	selected?: boolean; // selected state for entry
+	statusCommand?: string; // UNO command used to retrieve the status/value of the entry
+	pos?: number | string; // identifier of an entry
+}
+
+interface HtmlContentJson extends WidgetJSON {
+	htmlId: string;
+	closeCallback?: EventListenerOrEventListenerObject;
+	isReadOnlyMode?: boolean;
+	canUserWrite?: boolean;
+	text?: string;
+}
 
 type FunctionNameAlias = {
 	en: string;
@@ -204,6 +261,8 @@ interface OverflowGroupContainer extends Element {
 interface GridWidgetJSON extends ContainerWidgetJSON {
 	cols: number; // number of grid columns
 	rows: number; // numer of grid rows
+	tabIndex?: number;
+	initialSelectedId?: string; // id of the first selected element
 }
 
 interface ToolboxWidgetJSON extends WidgetJSON {
@@ -213,6 +272,7 @@ interface ToolboxWidgetJSON extends WidgetJSON {
 interface ToolItemWidgetJSON extends WidgetJSON {
 	class?: string; // css class
 	noLabel?: boolean;
+	inlineLabel?: boolean;
 	command?: string; // command to trigger options for a panel
 	text?: string; // title to show or for tooltip
 	icon?: string; // url to an svg
@@ -256,12 +316,19 @@ interface PushButtonWidget extends WidgetJSON {
 	symbol?: string;
 	text?: string;
 	image?: string;
+	isToggle?: boolean;
+	checked?: boolean;
+	command?: string;
+	hidden?: boolean; // todo: deprecate it in favor of WidgetJson.visible
 }
 
 // type: 'menubutton'
 interface MenuButtonWidgetJSON extends WidgetJSON {
 	menu?: Array<MenuDefinition>; // custom menu
 	applyCallback?: () => void; // split button callback for left part
+	class?: string;
+	image?: string | boolean;
+	accessKey?: string;
 }
 
 // type: 'buttonbox'
@@ -272,6 +339,7 @@ interface ButtonBoxWidget extends WidgetJSON {
 // type: 'listbox'
 interface ListBoxWidget extends WidgetJSON {
 	entries: Array<string>;
+	selectedEntries?: Array<string> | Array<number>;
 }
 
 // type: 'radiobutton'
@@ -283,9 +351,17 @@ interface RadioButtonWidget extends WidgetJSON {
 	hidden?: boolean;
 }
 
+interface ComboBoxEntry extends MenuDefinition {
+	customRenderer?: boolean; // can render custom preview
+	selected?: boolean; // is selected
+	comboboxId?: string; // used to reference parent
+	pos: string | number; // identifier of an entry
+	initialSelectedId?: string;
+}
+
 interface ComboBoxWidget extends WidgetJSON {
 	text?: string;
-	entries?: Array<string | number>;
+	entries?: Array<string | number | ComboBoxEntry>;
 	selectedCount?: number;
 	selectedEntries?: Array<number>;
 	command?: string;
@@ -297,7 +373,7 @@ interface TreeColumnJSON {
 	link?: string;
 	collapsed?: string | boolean;
 	expanded?: string | boolean;
-	customEntryRenderer?: boolean; // has custome rendering enabled
+	customEntryRenderer?: boolean; // has custom rendering enabled
 	collapsedimage?: string;
 	expandedimage?: string;
 	editable?: boolean;
@@ -318,6 +394,7 @@ interface TreeEntryJSON {
 interface TreeHeaderJSON {
 	text: string;
 	sortable: boolean; // can be sorted by column
+	arrow?: 'up' | 'down'; // sorting arrow to show
 }
 
 interface TreeWidgetJSON extends WidgetJSON {
@@ -330,24 +407,52 @@ interface TreeWidgetJSON extends WidgetJSON {
 	entries: Array<TreeEntryJSON>;
 	headers: Array<TreeHeaderJSON>; // header columns
 	highlightTerm?: string; // what, if any, entries are we highlighting?
-	ignoreFocus?: boolean; // When true, does't focus to selected item automatically.
 	customEntryRenderer?: boolean;
+	noSearchField?: boolean; // When true, the widget shouldn't have a search field added
+	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS instead of callback (lists only)
+	role?: string; // ARIA role from core: 'tree', 'treegrid', 'listbox', or 'grid'
 }
 
 interface IconViewEntry {
 	row: number | string; // unique id of the entry
-	separator: boolean; // is separator
-	selected: boolean; // is currently selected
+	separator?: boolean; // is separator
+	selected?: boolean; // is currently selected
 	image: string; // base64 encoded image
+	width?: number; // width in pixels; used for on demand rendering
+	height?: number; // height in pixels; used for on demand rendering
 	text: string; // label of an entry
-	tooltip: string; // tooltip of an entry
-	ondemand: boolean; // if true then we ignore image property and request it on demand (when shown)
+	tooltip?: string; // tooltip of an entry
+	ondemand?: boolean; // if true then we ignore image property and request it on demand (when shown)
 }
 
 interface IconViewJSON extends WidgetJSON {
 	entries: Array<IconViewEntry>;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
+	selectionmode: string; // single or multiple
+}
+
+interface IconViewListJSON extends WidgetJSON {
+	children: Array<IconViewJSON>;
+}
+
+interface IconViewElement extends HTMLElement {
+	requestRenders: (
+		entry: IconViewEntry,
+		placeholder: Element,
+		entryContainer: Element,
+	) => void;
+
+	updateRenders: (pos: number) => void;
+
+	updateRendersImpl: (pos: number, id: string, where: HTMLElement) => void;
+
+	builderCallback: (
+		objectType: string,
+		eventType: string,
+		entryData: any,
+		builder: JSBuilder,
+	) => void;
 }
 
 interface EditWidgetJSON extends WidgetJSON {
@@ -356,6 +461,7 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+	widthInChars: number; // width hint in characters
 }
 
 // type: 'checkbox'
@@ -369,8 +475,9 @@ interface CheckboxWidgetJSON extends WidgetJSON {
 interface AriaLabelAttributes {
 	label?: string;
 	description?: string;
+	role?: string;
 }
 
 interface SeparatorWidgetJSON extends WidgetJSON {
-	orientation: string;
+	orientation: 'horizontal' | 'vertical';
 }

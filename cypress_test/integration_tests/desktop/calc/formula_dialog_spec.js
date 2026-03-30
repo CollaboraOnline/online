@@ -7,6 +7,9 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/formula_dialog.ods');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Formula dialog visual regression test', function() {
@@ -18,17 +21,19 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 		cy.cGet('#FormulaDialog #function .ui-treeview-expander:nth(2)').click();
 		cy.cGet('#FormulaDialog #function span').contains('ACCRINTM').dblclick();
 		cy.cGet('#FormulaDialog #function .ui-treeview-entry.selected span').contains('ACCRINTM').should('exist');
+		cy.cGet('#FormulaDialog label').contains('Settlement').should('be.visible');
 
-		cy.wait(500); /* wait for position changes */
+		cy.wait(1000); /* wait for position changes */
 
 		cy.cGet('.ui-dialog').compareSnapshot('formula_dialog_accrintm', 0.1);
 
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// collapse to selection mode
 		cy.cGet('#FormulaDialog #RB_ARG1-button').click();
 
-		cy.wait(500); /* wait for position changes */
+		cy.cGet('#FormulaDialog #function').should('not.be.visible');
+		cy.wait(1000); /* wait for position changes */
 
 		cy.cGet('.ui-dialog').compareSnapshot('formula_dialog_accrintm_collapsed', 0.1);
 	});

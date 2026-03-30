@@ -31,6 +31,9 @@ class DocumentViewBase {
 			0,
 			this.color,
 		);
+		// Remove any stale section with the same name so addSection succeeds.
+		if (app.sectionContainer.doesSectionExist(this._selectionSection.name))
+			app.sectionContainer.removeSection(this._selectionSection.name);
 		app.sectionContainer.addSection(this._selectionSection);
 		this._selectionSection.setShowSection(false);
 	}
@@ -91,6 +94,8 @@ class DocumentViewBase {
 		part: number,
 		rectangles: Array<Array<number>>,
 	) {
+		Util.ensureValue(app.activeDocument);
+
 		if (rectangles.length > 0) {
 			this.hasTextSelection = true;
 
@@ -136,7 +141,7 @@ class DocumentViewBase {
 			this.selectionSection.setPosition(position[0], position[1]);
 
 			if (
-				mode === app.map._docLayer._selectedMode &&
+				app.activeDocument.isModeActive(mode) &&
 				part === app.map._docLayer._selectedPart
 			)
 				this.selectionSection.setShowSection(true);

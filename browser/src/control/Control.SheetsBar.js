@@ -101,7 +101,7 @@ class SheetsBar {
 	onDocLayerInit() {
 		var docType = this.map.getDocType();
 		if (docType == 'spreadsheet') {
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.show();
 			}
 		}
@@ -134,12 +134,16 @@ class SheetsBar {
 				continue;
 			}
 
+			if (app.calc.isPartSheetView(i)) {
+				continue;
+			}
+
 			let displayText = this.partNames[i];
 
 			sheetEntries.push({
 				id: 'selectsheet-' + i,
 				text: displayText,
-				selected: (i === this.selectedPart)
+				selected: (i === this.selectedPart || app.calc.isDefaultPartOfSelectedSheetView(i))
 			});
 		}
 		

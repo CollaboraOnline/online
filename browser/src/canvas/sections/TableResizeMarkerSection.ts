@@ -41,6 +41,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	private calculateLeftMostAndRightMostAvailableX() {
+		Util.ensureValue(app.activeDocument);
 		const previous =
 			this.sectionProperties.index === 0
 				? null
@@ -75,6 +76,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	private calculateTopMostAndBottomMostAvailableY() {
+		Util.ensureValue(app.activeDocument);
 		const previous =
 			this.sectionProperties.index === 0
 				? null
@@ -128,7 +130,10 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		this.sectionProperties.dragStartPosition = point;
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+		if (
+			(<any>window).mode.isSmallScreenDevice() ||
+			(<any>window).mode.isTablet()
+		) {
 			this.calculateLeftMostAndRightMostAvailableX();
 			this.calculateTopMostAndBottomMostAvailableY();
 		}
@@ -136,6 +141,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 
 	private getParametersForRow() {
 		let index: number, type: string;
+		Util.ensureValue(app.activeDocument);
 		if (
 			this.sectionProperties.index ===
 			app.activeDocument.tableMiddleware.tableResizeRowMarkers.length - 1
@@ -152,6 +158,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 
 	private getParametersForColumn() {
 		let index: number, type: string;
+		Util.ensureValue(app.activeDocument);
 		if (this.sectionProperties.index === 0) {
 			type = 'column-left';
 			index = 0;
@@ -277,6 +284,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name
 		) {
+			Util.ensureValue(app.activeDocument);
 			if (this.sectionProperties.markerType === 'column') {
 				const bottomy =
 					app.activeDocument.tableMiddleware.getTableBottomY() -

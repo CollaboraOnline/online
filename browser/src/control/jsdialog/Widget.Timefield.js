@@ -29,6 +29,8 @@ JSDialog.timeField = function (parentContainer, data, builder) {
 	inputTimeField.setAttribute('id', data.id);
 	inputTimeField.value = data.text;
 
+	JSDialog.SetupA11yLabelForLabelableElement(parentContainer, inputTimeField, data, builder);
+
 	inputTimeField.addEventListener('change', function (event) {
 		var timefield = event.target;
 

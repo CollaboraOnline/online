@@ -43,14 +43,19 @@ class TextSelections {
 		if (!this.active) return;
 
 		this.active = false;
+		app.map.fire('textselectionchange', { active: this.active });
 		this.start.setShowSection(false);
 		this.end.setShowSection(false);
+
+		// Schedule a redraw if there's not any.
+		app.sectionContainer.requestReDraw();
 	}
 
 	public static activate() {
 		if (this.active) return;
 
 		this.active = true;
+		app.map.fire('textselectionchange', { active: this.active });
 
 		if (this.startRectangle && this.endRectangle) {
 			this.start.setShowSection(true);
@@ -102,6 +107,7 @@ class TextSelections {
 		var endPos = { x: this.endRectangle.pX1, y: this.endRectangle.pY2 };
 
 		if (app.map._docLayer.isCalcRTL()) {
+			Util.ensureValue(app.activeDocument);
 			// Mirror position from right to left.
 			startPos.x =
 				app.activeDocument.activeLayout.viewedRectangle.pX2 -
@@ -140,6 +146,9 @@ class TextSelections {
 			*/
 			this.switchStartEndHandles();
 		}
+
+		// Schedule a redraw if there's not any.
+		app.sectionContainer.requestReDraw();
 	}
 
 	public static switchStartEndHandles() {

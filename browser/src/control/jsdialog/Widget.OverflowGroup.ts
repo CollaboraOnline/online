@@ -86,7 +86,8 @@ function createMoreButton(
 	moreOptionsButton.addEventListener('click', (e) => {
 		e.stopPropagation();
 		e.preventDefault();
-		app.map.sendUnoCommand(more.command);
+		if (more.command.startsWith('.uno:')) app.map.sendUnoCommand(more.command);
+		else app.dispatcher.dispatch(more.command);
 	});
 
 	return expanderIconRightDiv;
@@ -184,9 +185,24 @@ function setupOverflowMenu(
 		isCollapsed = false;
 	};
 
+	const updateAriaExpandedAttr = (
+		container: HTMLElement,
+		expectedValue: boolean,
+	) => {
+		const buttons = container.querySelectorAll<HTMLElement>(
+			`[aria-expanded="${!expectedValue}"]`,
+		);
+		buttons.forEach((button: HTMLElement) => {
+			button.setAttribute('aria-expanded', String(expectedValue));
+		});
+	};
+
 	// fill the updated menu after it is open
 	(overflowMenuButton as any)._onDropDown = (opened: boolean) => {
 		if (opened) {
+			overflowMenuButton.classList.add('overflow-dropdown-active');
+			updateAriaExpandedAttr(overflowMenuButton, opened);
+
 			// we need to schedule it 2 times as the first one happens just before
 			// layouting task adds menu container to the DOM
 			app.layoutingService.appendLayoutingTask(() => {
@@ -213,10 +229,22 @@ function setupOverflowMenu(
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
+
+					// calculate baseline-aligned position specifically for overflow menus
+					const tabContainer = overflowMenuButton.closest(
+						'.ui-tabs-content, [id$="-container"]',
+					);
+
+					if (tabContainer) {
+						// use tab container's bottom as baseline for overflow menus only
+						const tabRect = tabContainer.getBoundingClientRect();
+						menu.style.marginTop = tabRect.bottom + 'px';
+					}
+
 					overflowGroupContainer.appendChild(overflowNode);
-					menu?.replaceChildren();
-					menu?.classList.add('ui-toolbar');
-					menu?.classList.add('ui-overflow-group-popup');
+					menu.replaceChildren();
+					menu.classList.add('ui-toolbar');
+					menu.classList.add('ui-overflow-group-popup');
 
 					migrateItems(hiddenItems, menu);
 					menu.addEventListener('keydown', function (e: KeyboardEvent) {
@@ -248,22 +276,19 @@ function setupOverflowMenu(
 									elementToFocus.focus();
 								} else {
 									// When ray-casting reaches container boundaries
-									const focusables = Array.from(
-										menu.querySelectorAll('[tabindex="-1"]:not([disabled])'),
-									);
-									if (focusables.length) {
-										let targetIndex;
-										if (key === 'ArrowRight' || key === 'ArrowDown') {
-											// Moving forward but hit boundary - cycle to first
-											targetIndex = 0;
-										} else if (key === 'ArrowLeft' || key === 'ArrowUp') {
-											// Moving backward but hit boundary - cycle to last
-											targetIndex = focusables.length - 1;
-										}
+									const forwardDir =
+										key === 'ArrowRight' || key === 'ArrowDown';
+									const focusables = JSDialog.GetFocusableElements(menu);
+									if (focusables && focusables.length > 0) {
+										const currentIndex = focusables.indexOf(currentElement);
+										let targetIndex = forwardDir
+											? currentIndex + 1
+											: currentIndex - 1;
 
-										if (targetIndex !== undefined) {
-											(focusables[targetIndex] as HTMLElement).focus();
-										}
+										if (targetIndex < 0) targetIndex = focusables.length - 1;
+										else if (targetIndex >= focusables.length) targetIndex = 0;
+
+										(focusables[targetIndex] as HTMLElement).focus();
 									}
 								}
 								// If we handled the event here, stop propagation and prevent default
@@ -276,6 +301,9 @@ function setupOverflowMenu(
 				});
 			});
 		} else {
+			overflowMenuButton.classList.remove('overflow-dropdown-active');
+			updateAriaExpandedAttr(overflowMenuButton, opened);
+
 			const menu = JSDialog.GetDropdown(dropdownId);
 			migrateItems(menu, hiddenItems);
 		}

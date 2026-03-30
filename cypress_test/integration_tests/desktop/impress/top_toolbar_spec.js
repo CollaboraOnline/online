@@ -16,7 +16,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 			desktopHelper.hideSidebarImpress();
 		}
 
-		cy.wait(1000);
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(win);
+		});
 
 		impressHelper.selectTextShapeInTheCenter();
 	});
@@ -30,6 +33,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply italic on text shape.', function() {
+		desktopHelper.getCompactIconArrow('Bold').click();
 		desktopHelper.getCompactIcon('Italic').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -38,6 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply underline on text shape.', function() {
+		desktopHelper.getCompactIconArrow('Bold').click();
 		desktopHelper.getCompactIcon('Underline').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -46,6 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply strikethrough on text shape.', function() {
+		desktopHelper.getCompactIconArrow('Bold').click();
 		desktopHelper.getCompactIcon('Strikeout').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -54,6 +60,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply font color on text shape.', function() {
+		desktopHelper.getCompactIconArrow('FontColor').click();
 		desktopHelper.getCompactIconArrow('Color').click();
 		desktopHelper.selectColorFromPalette('FFFF00');
 
@@ -63,6 +70,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply highlight color on text shape.', function() {
+		desktopHelper.getCompactIconArrow('FontColor').click();
 		desktopHelper.getCompactIconArrow('CharBackColor').click();
 		desktopHelper.selectColorFromPalette('FFBF00');
 
@@ -73,7 +81,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply a selected font name on the text shape', function() {
-		cy.cGet('#fontnamecombobox').click();
+		cy.cGet('#fontnamecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('Liberation Mono');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -82,7 +90,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply a selected font size on the text shape', function() {
-		cy.cGet('#fontsizecombobox').click();
+		cy.cGet('#fontsizecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('22');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -141,14 +149,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Click shape hyperlink.', function() {
-		// Insert shape
+		// Insert shape - this creates and selects the shape
+		// immediately, no additional click needed to select it.
 		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		desktopHelper.getCompactIconArrow('BasicShapes').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_round-quadrat').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
-
-		// Select shape at center of document
-		impressHelper.clickCenterOfSlide( { } );
+		helper.processToIdle(this.win);
 
 		helper.typeIntoDocument('{ctrl}k');
 		cy.cGet('#target').should('exist').should('be.visible');
@@ -157,12 +164,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		cy.cGet('#target-input').type('www.something.com');
 		cy.cGet('#ok').click();
+		cy.cGet('#target').should('not.exist');
+
+		helper.processToIdle(this.win);
 
 		impressHelper.removeShapeSelection();
 
 		// Ctrl-click to open hyperlink pop-up
 		impressHelper.clickCenterOfSlide( {ctrlKey: true} );
-		cy.wait(500);
+		helper.processToIdle(this.win);
 
 		cy.cGet('[id^="info-modal-label2"]').should('have.text', 'http://www.something.com/');
 		cy.cGet('#openlink-response').should('exist');

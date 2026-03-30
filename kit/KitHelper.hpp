@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <string>
-#include <unordered_map>
-#include <cstdlib>
-
-#include <JsonUtil.hpp>
-#include <Util.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
+#include <cstdlib>
+#include <string>
+#include <unordered_map>
 
 namespace LOKitHelper
 {
@@ -28,7 +28,7 @@ namespace LOKitHelper
 
     struct StringDeleter
     {
-        inline void operator()(char* string) { std::free(string); }
+        void operator()(char* string) { std::free(string); }
     };
     using ScopedString = std::unique_ptr<char, StringDeleter>;
 
@@ -80,6 +80,16 @@ namespace LOKitHelper
         return 0;
     }
 
+    inline std::string partHasComments(const std::string &partData)
+    {
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var partJsonVar = parser.parse(partData);
+        const Poco::SharedPtr<Poco::JSON::Object>& partObject = partJsonVar.extract<Poco::JSON::Object::Ptr>();
+        if (partObject->has("partHasComments"))
+            return partObject->get("partHasComments").toString();
+        return "false";
+    }
+
     inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount, int &mode)
     {
         /*
@@ -103,7 +113,8 @@ namespace LOKitHelper
         resultInfo["parts"] = std::move(resultingPartsArray);
     }
 
-    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode)
+    // TODO: create a struct with all the resultInfo properties and
+    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode, std::string& hasComments)
     {
         std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
 
@@ -114,6 +125,7 @@ namespace LOKitHelper
         // Fetch mode for a potentially non-standard redline render mode.
         std::string partData = getPartData(loKitDocument, 0);
         mode = getMode(partData);
+        hasComments = partHasComments(partData);
     }
 
     inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
@@ -123,16 +135,7 @@ namespace LOKitHelper
         resultInfo["lastcolumn"] = std::to_string(lastColumn);
         resultInfo["lastrow"] = std::to_string(lastRow);
 
-        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
-        if (value)
-        {
-            const std::string isReadOnly = std::string(value.get());
-
-            bool readOnly = (isReadOnly.find("true") != std::string::npos);
-            resultInfo["readonly"] = readOnly ? "true": "false";
-        }
-
-        value.reset(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
         if (value)
         {
             resultInfo["printranges"] = std::string(value.get());
@@ -160,19 +163,28 @@ namespace LOKitHelper
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
         int viewId = loKitDocument->pClass->getView(loKitDocument);
 
-        resultInfo["type"] = "\"" + documentTypeToString(type) + "\"";
+        resultInfo["type"] = '"' + documentTypeToString(type) + '"';
         resultInfo["partscount"] = std::to_string(partsCount);
         resultInfo["selectedpart"] = std::to_string(selectedPart);
         resultInfo["width"] = std::to_string(width);
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
 
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
+        if (value)
+        {
+            const std::string isReadOnly = std::string(value.get());
+
+            bool readOnly = (isReadOnly.find("true") != std::string::npos);
+            resultInfo["readonly"] = readOnly ? "true": "false";
+        }
+
         ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
         if (values)
         {
             Poco::JSON::Parser parser;
             const auto var = parser.parse(values.get());
-            const auto obj = var.extract<Poco::JSON::Object::Ptr>();
+            const auto& obj = var.extract<Poco::JSON::Object::Ptr>();
             if (obj && obj->has("parts"))
             {
                 const auto parts = obj->getArray("parts");
@@ -189,16 +201,18 @@ namespace LOKitHelper
         }
 
         int mode = 0;
+        std::string hasComments = "false";
 
         if (type == LOK_DOCTYPE_SPREADSHEET)
             fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
         else if (type == LOK_DOCTYPE_TEXT)
-            fetchWriterSpecificData(loKitDocument, resultInfo, mode);
+            fetchWriterSpecificData(loKitDocument, resultInfo, mode, hasComments);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
             fetchPartsData(loKitDocument, resultInfo, partsCount, mode);
 
         resultInfo["mode"] = std::to_string(mode);
+        resultInfo["partHasComments"] = std::move(hasComments);
 
         return MapToJSONString(resultInfo);
     }

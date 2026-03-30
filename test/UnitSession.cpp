@@ -9,10 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for session-related functionality including XML/DOM parsing.
+ */
+
 #include <config.h>
 
-#include <HttpRequest.hpp>
-#include <Socket.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <wsd/UserMessages.hpp>
+
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Document.h>
@@ -21,12 +31,6 @@
 #include <Poco/DOM/NodeIterator.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/URI.h>
-#include <test/lokassert.hpp>
-
-#include <Unit.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
 
 #include <memory>
 #include <regex>
@@ -105,7 +109,7 @@ UnitBase::TestResult UnitSession::testBadRequest()
         // TST_LOG("Response: " << response->header().toString());
         LOK_ASSERT_EQUAL(http::StatusCode::BadRequest, response->statusCode());
         LOK_ASSERT_EQUAL(false, session->isConnected());
-        LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
+        LOK_ASSERT_EQUAL(http::Header::ConnectionToken::Close, response->header().getConnectionToken());
     }
     catch (const Poco::Exception& exc)
     {
@@ -137,7 +141,7 @@ UnitBase::TestResult UnitSession::testHandshake()
                 const std::string msg(std::string(message.begin(), message.end()));
                 if (!msg.starts_with("error:"))
                 {
-                    LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix("progress:", msg), true);
+                    LOK_ASSERT_EQUAL(true, COOLProtocol::matchPrefix("progress:", msg));
                     LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                 }
                 else
@@ -192,13 +196,13 @@ UnitBase::TestResult UnitSession::testFilesOpenConnection()
             {
                 LOK_ASSERT_EQUAL(true, session->isConnected());
             }
-            TST_LOG("Test: " << testname << "[" << docIdx << "]: `" << documentURL << "`");
+            TST_LOG("Test " << docIdx << "]: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response: " << response->header().toString());
-            TST_LOG("Response size: " << testname << "[" << docIdx << "]: `" << documentURL
-                                      << "`: " << response->header().getContentLength());
+            TST_LOG("Response size " << docIdx << "]: `" << documentURL
+                                     << "`: " << response->header().getContentLength());
             LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
             LOK_ASSERT_EQUAL(true, session->isConnected());
             LOK_ASSERT(http::Header::ConnectionToken::None ==
@@ -237,15 +241,15 @@ UnitBase::TestResult UnitSession::testFilesCloseConnection()
     {
         for (const std::string& documentURL : documentURLs)
         {
-            TST_LOG("Test: " << testname << "[" << docIdx << "]: `" << documentURL << "`");
+            TST_LOG("Test " << docIdx << "]: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             request.setConnectionToken(http::Header::ConnectionToken::Close);
             std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response: " << response->header().toString());
-            TST_LOG("Response size: " << testname << "[" << docIdx << "]: `" << documentURL
-                                      << "`: " << response->header().getContentLength());
+            TST_LOG("Response size " << docIdx << "]: `" << documentURL
+                                     << "`: " << response->header().getContentLength());
             LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
             LOK_ASSERT_EQUAL(false, session->isConnected());
             LOK_ASSERT(http::Header::ConnectionToken::Close ==
@@ -287,13 +291,13 @@ UnitBase::TestResult UnitSession::testFileServer()
             {
                 LOK_ASSERT_EQUAL(true, session->isConnected());
             }
-            TST_LOG("Test: " << testname << "[" << docIdx << "]: `" << documentURL << "`");
+            TST_LOG("Test " << docIdx << "]: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response: " << response->header().toString());
-            TST_LOG("Response size: " << testname << "[" << docIdx << "]: " << documentURL << ": "
-                                      << response->header().getContentLength());
+            TST_LOG("Response size " << docIdx << "]: " << documentURL << ": "
+                                     << response->header().getContentLength());
             LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
             LOK_ASSERT_EQUAL(true, session->isConnected());
             LOK_ASSERT(http::Header::ConnectionToken::None ==
@@ -551,13 +555,16 @@ UnitBase::TestResult UnitSession::testGetMetrics()
 
         http::Request request(documentURL);
         request.setBasicAuth("admin", "admin");
+        LOK_ASSERT_EQUAL_STR("admin", request.getBasicAuth().first);
+        LOK_ASSERT_EQUAL_STR("admin", request.getBasicAuth().second);
+
         const std::shared_ptr<const http::Response> response =
             session->syncRequest(request, *socketPoller);
         LOK_ASSERT_EQUAL(http::Response::State::Complete, response->state());
         LOK_ASSERT(response->header().hasContentLength());
         LOK_ASSERT(0 < response->header().getContentLength());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-        LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
+        LOK_ASSERT_EQUAL(http::Header::ConnectionToken::Close, response->header().getConnectionToken());
 
         // check metrics format and a few key values
         auto body = std::istringstream(response->getBody());
@@ -566,7 +573,7 @@ UnitBase::TestResult UnitSession::testGetMetrics()
         // line examples:
         // coolwsd_count 1
         // doc_info{host=\"\",key=\"%2Ftmp%2FtestHandshake6cb43aac_hello.odt\",filename=\"testHandshake6cb43aac_hello.odt\",pid=\"2267723\"} 1
-        const std::regex line_regex("([\\w_]+(\\{([\\w_]+=\"[\\w_%\\.]*\",?)+\\})?) (\\d+(\\.\\d+)?)");
+        const std::regex line_regex(R"(([\w_]+(\{([\w_]+="[\w_%\.]*",?)+\})?) (\d+(\.\d+)?))");
         std::smatch match;
         int line_count = 0;
         while (std::getline(body, line)) {

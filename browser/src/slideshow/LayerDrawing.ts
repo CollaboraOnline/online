@@ -109,6 +109,9 @@ class LayerDrawing {
 	private videoRenderers: Map<string, Array<VideoRenderer>> = new Map();
 	private isTransitionActive: boolean = false;
 	private queuedLayers: any[] = [];
+	private isDecompressing: boolean = false;
+	private decompressionQueue: any[] = [];
+	private completionQueue: any[] = [];
 
 	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
@@ -453,7 +456,7 @@ class LayerDrawing {
 				'CompressedCache: fetching slides from CompressedCache, SlideHash :',
 				slideHash,
 			);
-			SlideBitmapManager.renderCachedCompressSlide(
+			SlideBitmapManager.renderCachedCompressedSlide(
 				this.compressedSlideCache.get(slideHash),
 			);
 			return;
@@ -501,6 +504,11 @@ class LayerDrawing {
 			this.queuedLayers.push(e);
 			return;
 		}
+		if (this.isDecompressing) {
+			this.decompressionQueue.push(e);
+			return;
+		}
+
 		const info = e.message;
 		if (!info) {
 			window.app.console.log(
@@ -523,18 +531,41 @@ class LayerDrawing {
 			return;
 		}
 
+		if (e.imgBytes) {
+			const promise = SlideBitmapManager.decompressSlideLayer(info, e.imgBytes);
+			if (promise) {
+				this.isDecompressing = true;
+				promise
+					.then((img: ImageBitmap) => {
+						this.handleMsg(info, img);
+					})
+					.finally(() => {
+						this.isDecompressing = false;
+						while (this.decompressionQueue.length) {
+							this.onSlideLayerMsg(this.decompressionQueue.shift());
+							if (this.isDecompressing) return;
+						}
+						while (this.completionQueue.length)
+							this.onSlideRenderingComplete(this.completionQueue.shift());
+					});
+			}
+			return;
+		} else this.handleMsg(info, e.image);
+	}
+
+	handleMsg(info: LayerInfo, img: any) {
 		switch (info.group) {
 			case 'Background':
-				this.handleBackgroundMsg(info, e.image);
+				this.handleBackgroundMsg(info, img);
 				break;
 			case 'MasterPage':
-				this.handleMasterPageLayerMsg(info, e.image);
+				this.handleMasterPageLayerMsg(info, img);
 				break;
 			case 'DrawPage':
-				this.handleDrawPageLayerMsg(info, e.image);
+				this.handleDrawPageLayerMsg(info, img);
 				break;
 			case 'TextFields':
-				this.handleTextFieldMsg(info, e.image);
+				this.handleTextFieldMsg(info, img);
 		}
 	}
 
@@ -778,12 +809,31 @@ class LayerDrawing {
 
 	onSlideRenderingComplete(e: any) {
 		if (this.isDisposed()) return;
+		if (this.isDecompressing) {
+			this.completionQueue.push(e);
+			return;
+		}
+
+		if (e.message) {
+			const promise = SlideBitmapManager.waitForSlideDecompression(e.message);
+			if (promise) {
+				promise.then(() => {
+					app.map.fire('sliderenderingcomplete', {
+						success: e.success,
+						compressedLayers: e.message.compressedLayers,
+					});
+				});
+				return;
+			}
+		}
+
 		this.map.fire('handleslideshowprogressbar', { isVisible: false });
 
+		const slideHash = this.requestedSlideHash || this.prefetchedSlideHash;
+		const slideInfo = this.getSlideInfo(slideHash);
+		const index = slideInfo ? slideInfo.index : undefined;
+
 		if (!e.success) {
-			const slideHash = this.requestedSlideHash || this.prefetchedSlideHash;
-			const slideInfo = this.getSlideInfo(slideHash);
-			const index = slideInfo ? slideInfo.index : undefined;
 			this.requestedSlideHash = null;
 			this.prefetchedSlideHash = null;
 			app.console.debug(
@@ -793,26 +843,27 @@ class LayerDrawing {
 			return;
 		}
 
-		if (e.compressedLayers) {
-			this.prefetchNextCompressedSlide();
-			return;
-		}
-
 		if (this.prefetchedSlideHash) {
 			var currSlideHash = this.prefetchedSlideHash;
 			this.prefetchedSlideHash = null;
-			if (app.isExperimentalMode()) {
+			if (e.compressedLayers) {
 				this.compressedPrefetchSlideHash = currSlideHash;
 				this.prefetchNextCompressedSlide();
 			}
 			return;
 		}
+
+		if (e.compressedLayers) {
+			this.prefetchNextCompressedSlide();
+			return;
+		}
+
 		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash);
 
 		this.cacheAndNotify();
 
 		// fetch next slide and draw it on offscreen canvas
-		if (reqSlideInfo.next && !this.slideCache.has(reqSlideInfo.next)) {
+		if (reqSlideInfo?.next && !this.slideCache.has(reqSlideInfo.next)) {
 			this.requestSlideImpl(reqSlideInfo.next, true);
 		}
 	}

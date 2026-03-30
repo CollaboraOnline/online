@@ -45,6 +45,14 @@ JSDialog.container = function (
 
 	if (parentContainer && !parentContainer.id) parentContainer.id = id;
 
+	// ARIA support for non-grid containers
+	if (parentContainer) {
+		if (data.allyRole) parentContainer.setAttribute('role', data.allyRole);
+		if (data.aria?.label)
+			parentContainer.setAttribute('aria-label', data.aria.label);
+		if (data.ariaLive) parentContainer.setAttribute('aria-live', data.ariaLive);
+	}
+
 	return true;
 };
 
@@ -70,7 +78,13 @@ JSDialog.grid = function (
 
 	if (data.allyRole) {
 		table.role = data.allyRole;
+
+		if (data.allyRole === 'listbox' && data.initialSelectedId)
+			table.setAttribute('aria-activedescendant', data.initialSelectedId);
 	}
+
+	if (data.tabIndex !== undefined)
+		table.setAttribute('tabindex', data.tabIndex);
 
 	const gridRowColStyle =
 		'grid-template-rows: repeat(' +
@@ -120,11 +134,26 @@ JSDialog.grid = function (
 		if (processedChildren.indexOf(child) === -1) {
 			const sandbox = window.L.DomUtil.create('div');
 			builder.build(sandbox, [child], false);
-			const control = sandbox.firstChild;
-			if (control) {
-				window.L.DomUtil.addClass(control, 'ui-grid-cell');
-				table.appendChild(control);
+
+			// For listbox role, process all children from sandbox
+			// all children will be of role="option"
+			if (data.allyRole === 'listbox') {
+				const controls = Array.from(sandbox.children);
+				for (let j = 0; j < controls.length; j++) {
+					const control = controls[j];
+					if (control) {
+						window.L.DomUtil.addClass(control, 'ui-grid-cell');
+						table.appendChild(control);
+					}
+				}
+			} else {
+				const control = sandbox.firstChild;
+				if (control) {
+					window.L.DomUtil.addClass(control, 'ui-grid-cell');
+					table.appendChild(control);
+				}
 			}
+
 			processedChildren.push(child);
 		}
 	}
@@ -155,6 +184,10 @@ JSDialog.toolbox = function (
 		}
 	}
 
+	if (data.aria?.role) {
+		toolbox.setAttribute('role', data.aria.role);
+	}
+
 	const enabledCallback = function (enable: boolean) {
 		for (const j in data.children) {
 			const childId = data.children[j].id;
@@ -178,6 +211,15 @@ JSDialog.toolbox = function (
 	const inlineLabels = builder.options.useInLineLabelsForUnoButtons;
 	if (data.hasVerticalParent === true && data.children.length === 1)
 		builder.options.useInLineLabelsForUnoButtons = true;
+
+	if (data.children.length === 1) {
+		if (!data.children[0].labelledBy && data.labelledBy)
+			data.children[0].labelledBy = data.labelledBy;
+		else if (!data.children[0].aria && data.aria)
+			data.children[0].aria = data.aria;
+	} else {
+		JSDialog.SetupA11yLabelForNonLabelableElement(toolbox, data, builder);
+	}
 
 	builder.build(toolbox, data.children, false);
 

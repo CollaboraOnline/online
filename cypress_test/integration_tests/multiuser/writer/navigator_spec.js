@@ -19,8 +19,8 @@ describe.skip(['tagmultiuser'], 'Navigator follow the change of document', funct
 
 		// User 1 Change 'text' style to heading 1
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#select2-styles-select-container').click();
-		cy.cGet('#select2-styles-select-results').contains('.select2-results__option', 'Heading 1').click();
+		cy.cGet('#styles .ui-combobox-button').click();
+		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', 'Heading 1').click();
 
 		// Create a Table
 		cy.cGet('#menu-table').click();
@@ -45,8 +45,8 @@ describe.skip(['tagmultiuser'], 'Navigator follow the change of document', funct
 
 		// User 1 delete heading
 		cy.cGet('#document-container').click();
-		cy.cGet('#select2-styles-select-container').click();
-		cy.cGet('#select2-styles-select-results').contains('.select2-results__option', 'Title').click();
+		cy.cGet('#styles .ui-combobox-button').click();
+		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', 'Title').click();
 
 		// User 2 check if the heading removed from navigator
 		cy.cSetActiveFrame('#iframe2');

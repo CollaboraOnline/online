@@ -58,8 +58,8 @@
 #include <iomanip>
 #include <fstream>
 
-#include "Log.hpp"
-#include "TraceEvent.hpp"
+#include <common/Log.hpp>
+#include <common/TraceEvent.hpp>
 
 namespace Png
 {

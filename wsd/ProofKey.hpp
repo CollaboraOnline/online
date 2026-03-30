@@ -13,6 +13,8 @@
 
 #pragma once
 
+#include <common/Util.hpp>
+
 #include <string>
 #include <utility>
 #include <vector>
@@ -41,12 +43,18 @@ class Proof {
     Proof(Type);
 public:
     Proof();
-    VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;
+    [[nodiscard]] VecOfStringPairs GetProofHeaders(const std::string& access_token,
+                                                   const std::string& uri) const;
     const VecOfStringPairs& GetProofKeyAttributes() const { return _aAttribs; }
 private:
     static std::string ProofKeyPath();
 
-    static std::string BytesToBase64(const std::vector<unsigned char>& bytes);
+    static std::string BytesToBase64(const std::vector<unsigned char>& bytes)
+    {
+        return Util::base64Encode(
+            std::string_view(reinterpret_cast<const char*>(bytes.data()), bytes.size()));
+    }
+
     static std::vector<unsigned char> Base64ToBytes(const std::string &str);
 
     // modulus and exponent are big-endian vectors

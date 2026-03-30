@@ -9,10 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Asynchronous HTTP/1.1 client implementation with request/response handling.
+ * Classes: http::Session, http::Request, http::Response, http::Header
+ */
+
 #pragma once
 
 #include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StateEnum.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
@@ -236,6 +242,20 @@ enum class StatusCode : unsigned
     NetworkAuthenticationRequired = 511, // RFC 6585
 };
 
+/// Returns true if the given StatusCode is a redirect (301, 302, 307, 308).
+constexpr bool isRedirectStatusCode(StatusCode code)
+{
+    return code == StatusCode::MovedPermanently || code == StatusCode::Found ||
+           code == StatusCode::TemporaryRedirect || code == StatusCode::PermanentRedirect;
+}
+
+/// Returns true for status codes that indicate authorization failure (401, 403, 404).
+constexpr bool isUnauthorizedStatusCode(StatusCode code)
+{
+    return code == StatusCode::Unauthorized || code == StatusCode::Forbidden ||
+           code == StatusCode::NotFound;
+}
+
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
 /// The Reason Phrase is informational only, but it helps
@@ -353,6 +373,7 @@ public:
     static constexpr std::string_view CONTENT_TYPE = "Content-Type";
     static constexpr std::string_view CONTENT_LENGTH = "Content-Length";
     static constexpr std::string_view TRANSFER_ENCODING = "Transfer-Encoding";
+    static constexpr std::string_view Authorization = "Authorization";
     static constexpr std::string_view COOKIE = "Cookie";
     static constexpr std::string_view HOST = "Host";
 
@@ -419,11 +440,18 @@ public:
     }
 
     // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string_view key) const
+    [[nodiscard]] bool has(const std::string_view key) const
     {
         const ConstIterator end = this->end();
         return std::find_if(begin(), end, [&key](const Pair& pair) -> bool
                             { return Util::iequal(pair.first, key); }) != end;
+    }
+
+    [[nodiscard]] ConstIterator find(const std::string_view key) const
+    {
+        const ConstIterator end = this->end();
+        return std::find_if(begin(), end, [&key](const Pair& pair) -> bool
+                            { return Util::iequal(pair.first, key); });
     }
 
     /// Remove the first matching HTTP header field (case insensitive), returning true if found and removed.
@@ -442,7 +470,8 @@ public:
     }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string_view key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string_view key,
+                                  const std::string& def = std::string()) const
     {
         // There are typically half a dozen header
         // entries, rarely much more. A map would
@@ -456,30 +485,30 @@ public:
     }
 
     /// Return the HOST header.
-    std::string getHost() const { return get(HOST); }
+    [[nodiscard]] std::string getHost() const { return get(HOST); }
 
     /// Set the Content-Type header.
     void setContentType(std::string type) { set(CONTENT_TYPE, std::move(type)); }
     /// Get the Content-Type header.
-    std::string getContentType() const { return get(CONTENT_TYPE); }
+    [[nodiscard]] std::string getContentType() const { return get(CONTENT_TYPE); }
     /// Returns true iff a Content-Type header exists.
-    bool hasContentType() const { return has(CONTENT_TYPE); }
+    [[nodiscard]] bool hasContentType() const { return has(CONTENT_TYPE); }
 
     /// Set the Content-Length header.
     void setContentLength(int64_t length) { set(CONTENT_LENGTH, std::to_string(length)); }
     /// Get the Content-Length header.
-    int64_t getContentLength() const;
+    [[nodiscard]] int64_t getContentLength() const;
     /// Returns true iff a Content-Length header exists.
-    bool hasContentLength() const { return has(CONTENT_LENGTH); }
+    [[nodiscard]] bool hasContentLength() const { return has(CONTENT_LENGTH); }
 
     /// Get the Transfer-Encoding header, if any.
-    std::string getTransferEncoding() const { return get(TRANSFER_ENCODING); }
+    [[nodiscard]] std::string getTransferEncoding() const { return get(TRANSFER_ENCODING); }
 
     /// Return true iff Transfer-Encoding is set to chunked (the last entry).
     bool getChunkedTransferEncoding() const { return _chunked; }
 
-    bool hasConnectionToken() const { return has(CONNECTION); }
-    ConnectionToken getConnectionToken() const
+    [[nodiscard]] bool hasConnectionToken() const { return has(CONNECTION); }
+    [[nodiscard]] ConnectionToken getConnectionToken() const
     {
         const std::string token = get(CONNECTION);
         if (Util::iequal("close", token))
@@ -543,7 +572,7 @@ public:
     }
 
     /// Gets the name=value pairs of all "Cookie" header entries.
-    Container getCookies() const
+    [[nodiscard]] Container getCookies() const
     {
         Container cookies;
         for (const auto& pair : _headers)
@@ -589,7 +618,7 @@ public:
     }
 
     /// Serialize the header to string. For logging only.
-    std::string toString() const
+    [[nodiscard]] std::string toString() const
     {
         std::ostringstream oss;
         return serialize(oss).str();
@@ -643,11 +672,19 @@ public:
     /// The header object.
     const Header& header() const { return _header; }
 
-    // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string& key) const { return _header.has(key); }
+    /// Returns true if the HTTP header field exists (case insensitive).
+    [[nodiscard]] bool has(const std::string_view key) const { return _header.has(key); }
+
+    /// Returns the iterator to the header's key in question, if found. Otherwise end().
+    [[nodiscard]] Header::ConstIterator find(const std::string_view key) const
+    {
+        return _header.find(key);
+    }
+    Header::ConstIterator end() const { return _header.end(); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string& key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string_view key,
+                                  const std::string& def = std::string()) const
     {
         return _header.get(key, def);
     }
@@ -655,7 +692,7 @@ public:
     Stage stage() const { return _stage; }
 
     /// True if we are a Keep-Alive request.
-    bool isKeepAlive() const
+    [[nodiscard]] bool isKeepAlive() const
     {
         const std::string token = get(Header::CONNECTION);
         if (!token.empty())
@@ -797,12 +834,33 @@ public:
     /// Serialize the Request into the buffer.
     bool writeData(Buffer& out, std::size_t capacity);
 
+    /// Sets the username and password in the Authorization header, per RFC-7235.
     void setBasicAuth(std::string_view username, std::string_view password)
     {
         std::string basicAuth{ username };
         basicAuth.append(":");
         basicAuth.append(password);
-        editHeader().add("Authorization", "Basic " + Util::base64Encode(basicAuth));
+        editHeader().add(std::string(Header::Authorization),
+                         "Basic " + Util::base64Encode(basicAuth));
+    }
+
+    /// Returns the username and password from the Authorization header, per RFC-7235.
+    /// Only 'Basic' Authentication is supported. Retuns empty pair if not found.
+    [[nodiscard]] std::pair<std::string, std::string> getBasicAuth() const
+    {
+        const auto& [scheme, param] = getCredentials();
+        if (Util::iequal(scheme, "Basic"))
+        {
+            return Util::split(Util::base64Decode(param), ':');
+        }
+
+        return {};
+    }
+
+    /// Returns the auth-scheme and auth-param from the Authorization header, per RFC-7235.
+    [[nodiscard]] std::pair<std::string, std::string> getCredentials() const
+    {
+        return Util::split(get(Header::Authorization));
     }
 
 private:
@@ -816,7 +874,7 @@ class MultipartDataParser final
     static constexpr std::size_t MaxLineLength = 512;
 
 public:
-    MultipartDataParser(const std::string& boundary)
+    explicit MultipartDataParser(const std::string& boundary)
         : _delimiter("\r\n--" + boundary)
         , _dashBoundary(&_delimiter[2], _delimiter.size() - 2) // Skip CRLF
         , _boundary(&_delimiter[4], _delimiter.size() - 4) // Skip CRLF--
@@ -871,7 +929,7 @@ public:
 
     /// Construct a parser from a Request instance.
     /// Typically used for testing.
-    RequestParser(http::Request& request)
+    explicit RequestParser(http::Request& request)
         : _recvBodySize(0)
     {
         // By default we store the body in memory.
@@ -970,7 +1028,7 @@ public:
 
     /// Construct a StatusLine with a given code and
     /// the default protocol version.
-    StatusLine(unsigned statusCodeNumber)
+    explicit StatusLine(unsigned statusCodeNumber)
         : _httpVersion(HTTP_1_1)
         , _versionMajor(1)
         , _versionMinor(1)
@@ -979,7 +1037,7 @@ public:
     {
     }
 
-    StatusLine(StatusCode statusCode)
+    explicit StatusLine(StatusCode statusCode)
         : StatusLine(static_cast<unsigned>(statusCode))
     {
     }
@@ -995,7 +1053,7 @@ public:
                Server_Error ///< Bad server, cannot respond.
     );
 
-    StatusCodeClass statusCategory() const
+    [[nodiscard]] StatusCodeClass statusCategory() const
     {
         if (_statusCode >= 500 && _statusCode < 600)
             return StatusCodeClass::Server_Error;
@@ -1127,7 +1185,8 @@ public:
     void addCookie(const std::string& cookie) { _header.addCookie(cookie); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string& key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string& key,
+                                  const std::string& def = std::string()) const
     {
         return _header.get(key, def);
     }
@@ -1313,13 +1372,16 @@ private:
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
                "Invalid hostname and portNumber for http::Sesssion");
-#if ENABLE_DEBUG
-        std::string scheme;
-        std::string hostString;
-        std::string portString;
-        assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() && portString.empty()
-               && hostString == _host && "http::Session expects a hostname and not a URI");
-#endif
+
+        if constexpr (Util::isDebugEnabled())
+        {
+            std::string scheme;
+            std::string hostString;
+            std::string portString;
+            assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() &&
+                   portString.empty() && hostString == _host &&
+                   "http::Session expects a hostname and not a URI");
+        }
     }
 
     /// Returns the given protocol's scheme.
@@ -1373,9 +1435,9 @@ public:
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
 
-        const std::pair<std::int32_t, bool> portPair = Util::i32FromString(portString);
-        if (portPair.second && portPair.first > 0)
-            return create(std::move(hostname), protocol, portPair.first);
+        const auto [port, success] = NumUtil::i32FromString(portString);
+        if (success && port > 0)
+            return create(std::move(hostname), protocol, port);
 
         LOG_ERR_S("Invalid port [" << portString << "] in URI [" << uri
                                    << "] to http::Session::create");
@@ -1558,7 +1620,7 @@ public:
         }
     }
 
-    std::string getSslVerifyMessage()
+    std::string getSslVerifyMessage() const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1570,7 +1632,7 @@ public:
 #endif
     }
 
-    long getSslVerifyResult()
+    long getSslVerifyResult() const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1582,7 +1644,7 @@ public:
 #endif
     }
 
-    std::string getSslCert(std::string& subjectHash)
+    std::string getSslCert(std::string& subjectHash) const
     {
 #if ENABLE_SSL
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -1594,7 +1656,7 @@ public:
         return std::string();
     }
 
-    net::AsyncConnectResult connectionResult()
+    net::AsyncConnectResult connectionResult() const
     {
         return _result;
     }
@@ -1765,7 +1827,7 @@ private:
         }
     }
 
-    void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
+    void shutdown(bool /*goingAway*/, const std::string_view /*statusMessage*/) override
     {
         LOG_TRC("shutdown");
     }
@@ -2021,8 +2083,8 @@ private:
         return false;
     }
 
-    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
-    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendTextMessage(std::string_view, bool) const override { return 0; }
+    int sendBinaryMessage(std::string_view, bool) const override { return 0; }
 
 private:
     const std::string _host;
@@ -2077,6 +2139,12 @@ inline std::ostream& operator<<(std::ostream& os, const http::StatusCode& status
 inline std::ostringstream& operator<<(std::ostringstream& os, const http::StatusCode& statusCode)
 {
     os << static_cast<int>(statusCode) << " (" << getReasonPhraseForCode(statusCode) << ')';
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const http::Header::ConnectionToken& token)
+{
+    os << http::Header::name(token);
     return os;
 }
 

@@ -9,10 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP utility functions for sending error responses and files.
+ * Functions: sendError(), sendErrorAndShutdown(), sendFileAndShutdown()
+ */
+
 #pragma once
 
+#include <common/Log.hpp>
 #include <common/Uri.hpp>
-#include <HttpRequest.hpp>
+#include <net/HttpRequest.hpp>
 
 #include <memory>
 #include <string>
@@ -61,7 +67,8 @@ void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& pa
 /// The idea is to only warn in release builds, but to help developers in debug builds.
 /// Returns false only in debug build.
 inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
-                          [[maybe_unused]] const std::shared_ptr<StreamSocket>& socket = {})
+                          [[maybe_unused]] const std::shared_ptr<StreamSocket>& socket = {},
+                          LOG_CAPTURE_CALLER_DECLARATION)
 {
     // getQueryParameters(), which is used to extract wopiSrc, decodes the values.
     // Compare with the URI. WopiSrc is complex enough to require encoding.
@@ -69,16 +76,11 @@ inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
     if (uri.find(wopiSrc) != std::string::npos && Uri::needsEncoding(wopiSrc))
     {
 #if !ENABLE_DEBUG
-        (void)socket;
-        static bool warnedOnce = false;
-        if (!warnedOnce)
-        {
-            LOG_WRN_S("WOPISrc validation error: unencoded WOPISrc ["
-                      << wopiSrc << "] in URL [" << uri
-                      << "]. WOPISrc must be URI-encoded. This is highly problematic with proxies, "
-                         "load balancers, and when tunneling. Will not warn again");
-            warnedOnce = true;
-        }
+        LOG_WRN_ONCE_S(
+            "WOPISrc validation error: unencoded WOPISrc ["
+            << wopiSrc << "] in URL [" << uri
+            << "]. WOPISrc must be URI-encoded. This is highly problematic with proxies, "
+               "load balancers, and when tunneling. Will not warn again");
 #else
         // In debug mode, be assertive. Logs might go unnoticed.
         LOG_ERR_S("WOPISrc validation error: unencoded WOPISrc ["

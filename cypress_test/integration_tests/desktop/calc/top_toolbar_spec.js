@@ -11,6 +11,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		newFilePath = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Save.', function () {
@@ -55,6 +58,28 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		});
 	});
 
+	it('Clone Formatting persistent mode via double-click.', function() {
+		// Move to A2 and apply bold.
+		helper.typeIntoDocument('{downarrow}');
+		desktopHelper.getCompactIcon('Bold').click();
+
+		// Double-click FormatPaintbrush for persistent mode.
+		desktopHelper.getCompactIcon('FormatPaintbrush').dblclick();
+
+		cy.cGet('#document-canvas').should('have.class', 'bucket-cursor');
+
+		// Apply formatting to A1.
+		calcHelper.clickOnFirstCell(true, false);
+		helper.processToIdle(this.win);
+
+		// Bucket cursor should remain - this is persistent mode.
+		cy.cGet('#document-canvas').should('have.class', 'bucket-cursor');
+
+		// Press Escape to exit persistent mode.
+		helper.typeIntoDocument('{esc}');
+		cy.cGet('#document-canvas').should('not.have.class', 'bucket-cursor');
+	});
+
 	it('Print', function() {
 		// A new window should be opened with the PDF.
 		cy.getFrameWindow()
@@ -86,17 +111,18 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
+		desktopHelper.getCompactIconArrow('LeftPara').click();
 		desktopHelper.getCompactIcon('WrapText').click();
 
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Get cursor position at end of line after wrap
 		calcHelper.dblClickOnFirstCell();
@@ -141,7 +167,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #fontnamecombobox').click();
+		cy.cGet('#toolbar-up #fontnamecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('Alef');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -150,7 +176,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font size.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #fontsizecombobox').click();
+		cy.cGet('#toolbar-up #fontsizecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('12');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -265,6 +291,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
 		// Set right alignment first
+		desktopHelper.getCompactIconArrow('LeftPara').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
 		calcHelper.selectEntireSheet();
@@ -274,6 +301,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Change alignment back
 		calcHelper.clickOnFirstCell();
 
+		desktopHelper.getCompactIconArrow('LeftPara').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click();
 

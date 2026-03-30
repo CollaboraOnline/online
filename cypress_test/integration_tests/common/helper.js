@@ -1,6 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /* global cy Cypress expect */
 
+// Maximum viewport height for consistent screenshots across environments.
+// Some Chrome/Chromium headless configurations reserve space for UI (or
+// something of that nature) so viewport must be <= 581px to fit within that
+// max available space to produce identical screenshots.
+// See cypress-io/cypress#27260.
+const maxScreenshotableViewportHeight = 581;
+
 /*
  * Prepares the test document by copying or uploading it
  * filePath: test document file path
@@ -19,7 +26,10 @@ function setupDocument(filePath, copyCertificates = false) {
 	} else {
 		// Rename and copy file to use a clean test document for every test case.
 		var randomText = (Math.random() + 1).toString(36).substring(2,7);
-		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.]/g, '-'); // replace slashes and spaces and dots
+		// The filename is used in a URI query string where characters like
+		// '/' and '+' have special meaning, and spaces are invalid. Replace
+		// these with hyphens so the path survives URL parsing unchanged.
+		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.+]/g, '-');
 
 		// Check for extension. The '.' has to be in fileName specifically, not earlier in filePath
 		if (getFileName(filePath).includes('.')) {
@@ -51,7 +61,7 @@ function setupDocument(filePath, copyCertificates = false) {
  *   document is loaded, such as clearing a warning about macros.
  * isMultiUser: Set to true for multiuser tests.
  */
-function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
+function loadDocument(filePath, skipDocumentChecks, isMultiUser, lang) {
 	cy.log('>> loadDocument - start');
 	cy.log('Param - filePath: ' + filePath);
 	if (skipDocumentChecks) {
@@ -81,7 +91,7 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadDocumentNextcloud(filePath);
 	} else {
-		loadDocumentNoIntegration(filePath, isMultiUser);
+		loadDocumentNoIntegration(filePath, isMultiUser, lang);
 	}
 
 	const isDraw = filePath.indexOf('draw') === 0;
@@ -107,14 +117,14 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
  * call setupDocument and loadDocument directly
  * filePath: test document path, for example: 'calc/hello-world.ods'
  */
-function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false) {
+function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false, lang = undefined) {
 	cy.log('>> setupAndLoadDocument - start');
 
 	var newFilePath = setupDocument(filePath, copyCertificates);
 	if (isMultiUser) {
-		loadDocument(newFilePath, undefined, isMultiUser);
+		loadDocument(newFilePath, undefined, isMultiUser, lang);
 	} else {
-		loadDocument(newFilePath);
+		loadDocument(newFilePath, undefined, undefined, lang);
 	}
 
 	cy.log('<< setupAndLoadDocument - end');
@@ -157,7 +167,7 @@ function logError(event) {
 /*
  * Loads the test document directly in Collabora Online.
  */
-function loadDocumentNoIntegration(filePath, isMultiUser) {
+function loadDocumentNoIntegration(filePath, isMultiUser, lang) {
 	cy.log('>> loadDocumentNoIntegration - start');
 
 	var URI = '';
@@ -167,7 +177,7 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 	}
 
 	URI += '/browser/' + Cypress.env('WSD_VERSION_HASH') + '/debug.html'
-		+ '?lang=en-US'
+		+ '?lang=' + (lang || 'en-US')
 		+ '&file_path=' + Cypress.env('DATA_WORKDIR') + filePath;
 
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -366,8 +376,9 @@ function waitForInterferingUser() {
 function documentChecks(skipInitializedCheck = false) {
 	cy.log('>> documentChecks - start');
 
-	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	var canvasCheck = cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 	if (!skipInitializedCheck) {
+		canvasCheck.should('be.visible');
 		cy.cGet('#map', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
 			.should('have.class', 'initialized');
 	}
@@ -388,7 +399,7 @@ function documentChecks(skipInitializedCheck = false) {
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
 			if (Cypress.env('pdf-view') !== true)
-				cy.cGet('#sidebar-panel').should('be.visible').should('not.be.empty');
+				cy.cGet('#sidebar-panel', { timeout: 20000 }).should('be.visible').should('not.be.empty');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
@@ -416,6 +427,11 @@ function documentChecks(skipInitializedCheck = false) {
 			cy.cGet('#pos_window-input-address.addressInput').should('exist');
 			//cy.cGet('#pos_window-input-address.addressInput').should('not.be.empty');
 		});
+	}
+
+	// Ensure the busypopup overlay is gone so it doesn't swallow clicks.
+	if (!skipInitializedCheck) {
+		cy.cGet('#busypopup-overlay').should('not.exist');
 	}
 
 	if (Cypress.env('INTERFERENCE_TEST') === true) {
@@ -462,10 +478,19 @@ function assertCursorAndFocus() {
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText() {
+// options.isTable: when true, use multiple ctrl+a to select all text beyond current table
+function selectAllText(options) {
+	var isTable = options && options.isTable;
+
 	cy.log('>> selectAllText - start');
 
-	typeIntoDocument('{ctrl}a');
+	if (isTable) {
+		typeIntoDocument('{ctrl}a');
+		typeIntoDocument('{ctrl}a');
+		typeIntoDocument('{ctrl}a');
+	} else {
+		typeIntoDocument('{ctrl}a');
+	}
 
 	textSelectionShouldExist();
 
@@ -473,13 +498,14 @@ function selectAllText() {
 }
 
 // Clear all text by selecting all and deleting.
-function clearAllText() {
+// options.isTable: when true, use multiple ctrl+a to select all text beyond current table
+function clearAllText(options) {
 	cy.log('>> clearAllText - start');
 
 	//assertCursorAndFocus();
 
 	// Trigger select all
-	selectAllText();
+	selectAllText(options);
 
 	// Then remove
 	typeIntoDocument('{backspace}');
@@ -718,6 +744,11 @@ function isImageWhite(selector, expectWhite = true) {
 	cy.cGet(selector)
 		.should(function(images) {
 			var img = images[0];
+
+			// Ensure the image has actual rendered content, not a
+			// placeholder (e.g. SVG loading spinner for slide previews).
+			expect(img.complete).to.be.true;
+			expect(img.naturalWidth).to.be.greaterThan(0);
 
 			// Create an offscreen canvas to check the image's pixels
 			var canvas = document.createElement('canvas');
@@ -1151,7 +1182,7 @@ function setDummyClipboardForCopy(type) {
 // Clicks the Copy button on the UI.
 function copy() {
 	cy.log('helper.copy()');
-	cy.window({log: false}).then(win => {
+	return cy.window({log: false}).then(win => {
 		const app = win['0'].app;
 		const clipboard = app.map._clip;
 		clipboard.filterExecCopyPaste('.uno:Copy');
@@ -1184,13 +1215,34 @@ function getSubFolder(filePath) {
 	return subFolder;
 }
 
+// Return the center of the shape SVG overlay in coordinates suitable for
+// clicking on #document-canvas.  The outer SVG (created by
+// ShapeHandlesSection.setSVG) carries left/top relative to
+// #canvas-container; width/height may be on the inner SVG (when a viewBox
+// is present) or on the outer SVG.
+function getShapeSVGCenter() {
+	return cy.cGet('#canvas-container > svg')
+		.then(function(outerSvg) {
+			var outer = outerSvg[0];
+			var inner = outer.querySelector('svg');
+			var width = parseInt(inner && inner.style.width) || parseInt(outer.style.width);
+			var height = parseInt(inner && inner.style.height) || parseInt(outer.style.height);
+			expect(width).to.be.greaterThan(0);
+			expect(height).to.be.greaterThan(0);
+			return {
+				x: parseInt(outer.style.left) + width / 2,
+				y: parseInt(outer.style.top) + height / 2,
+			};
+		});
+}
+
 /*
  * Assert image svg
  */
 function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('>> assertImageSize - start');
 
-	cy.cGet('#canvas-container > svg')
+	cy.cGet('#canvas-container > svg', {timeout: 1000})
 		.then(function (element) {
 			expect(element).to.have.length(1);
 			const actualWidth = parseInt(element[0].style.width.replace('px', ''));
@@ -1199,6 +1251,9 @@ function assertImageSize(expectedWidth, expectedHeight) {
 			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
 			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
 		});
+
+	// wait for above async result
+	cy.wait(3000);
 
 	cy.log('<< assertImageSize - end');
 }
@@ -1212,6 +1267,170 @@ function containsFocusElement(container, doesContain) {
 function getMenuEntry(index) {
 	cy.log('>> getMenuEntry - ' + index);
 	return cy.cGet('.ui-dialog-content div.ui-combobox-entry span').eq(index);
+}
+
+var idleCounter = 0;
+
+function waitUntilCoreIsIdle(win) {
+	var expectedIdleID = String(++idleCounter);
+	var spy;
+	var ownSpy = false;
+
+	cy.then(function() {
+		// Check if _onMessage is already wrapped/spied
+		if (win.app.socket._onMessage.restore) {
+			// Already wrapped, use the existing spy
+			spy = win.app.socket._onMessage;
+		} else {
+			// Create our own spy
+			spy = Cypress.sinon.spy(win.app.socket, '_onMessage');
+			ownSpy = true;
+		}
+
+		var idleArgs = {
+			'idleID': { 'type': 'string', 'value': expectedIdleID }
+		};
+		// Use sendMessage directly to avoid side effects from sendUnoCommand
+		// (e.g. re-enabling following state)
+		win.app.socket.sendMessage('uno .uno:ReportWhenIdle ' + JSON.stringify(idleArgs));
+	});
+
+	cy.wrap(null).should(function() {
+		var matchingCall = spy.getCalls().find(function(call) {
+			var evt = call.args && call.args[0];
+			var textMsg = evt && evt.textMsg;
+			if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
+				return false;
+			}
+			var jsonPart = textMsg.replace('unocommandresult:', '').trim();
+			var data = JSON.parse(jsonPart);
+			if (data.commandName !== '.uno:ReportWhenIdle') {
+				return false;
+			}
+			return data.idleID === expectedIdleID;
+		});
+
+		expect(matchingCall, '.uno:ReportWhenIdle result with idleID ' + expectedIdleID).to.be.an('object');
+	});
+
+	return cy.then(function() {
+		// Only restore if we created our own spy
+		if (ownSpy && spy && spy.restore) {
+			spy.restore();
+		}
+	});
+}
+
+function waitUntilLayoutingIsIdle(win) {
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.app.layoutingService.onDrain(function() {
+				resolve();
+			});
+		});
+	});
+}
+
+// Wait for any pending ResizeObserver callbacks to fire.  After a UI
+// mode switch the document-container div changes size via CSS; the
+// ResizeObserver in CanvasTileLayer (which calls _syncTileContainerSize
+// and then sectionContainer.onResize) will fire asynchronously, and
+// we want to wait until the onResize has fired and sectionContainer
+// is updated.
+//
+// Two requestAnimationFrame calls are needed because of the order
+// within a single rendering frame:
+//   1. Run requestAnimationFrame callbacks
+//   2. Recalculate styles / layout
+//   3. Run ResizeObserver callbacks
+//   4. Paint
+// The first RAF runs at step 1 - before the ResizeObserver callback
+// at step 3.  From there it schedules a second RAF which runs at
+// step 1 of the next frame, by which time step 3 of the previous
+// frame has completed and sectionContainer.onResize has executed.
+function waitForResizeObserver(win) {
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.requestAnimationFrame(function() {
+				win.requestAnimationFrame(function() {
+					resolve();
+				});
+			});
+		});
+	});
+}
+
+function processToIdle(win) {
+	return waitUntilCoreIsIdle(win).then(function() {
+		return waitForTimers(win, 'jsdialog-deferred');
+	}).then(function() {
+		return waitUntilLayoutingIsIdle(win);
+	}).then(function() {
+		return waitForResizeObserver(win);
+	});
+}
+
+// Wait until no timers of the given tag exist.
+// If no timers with the tag exist at call time resolve immediately.
+function waitForTimers(win, tag) {
+	return cy.waitUntil(function() {
+		return !win.app.timerRegistry.hasActive(tag);
+	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
+}
+
+// Waits for a map stateChangeHandler item to reach the expected value.
+// Useful after sending uno commands where the state change message from
+// core may arrive asynchronously based on a state change timer from core
+function waitForMapState(command, expectedValue) {
+	cy.log('>> waitForMapState - start');
+	cy.log('Param - command: ' + command + ', expectedValue: ' + expectedValue);
+	cy.getFrameWindow().should(win => {
+		expect(win.app.map['stateChangeHandler'].getItemValue(command)).to.equal(expectedValue);
+	});
+	cy.log('<< waitForMapState - end');
+}
+
+// cy.realPress('Enter') via CDP bypasses preventDefault on keydown,
+// which causes implicit form submission and spurious button clicks
+// that don't happen with real keyboard input. This helper blocks
+// those side effects for a single keypress.
+function realPressInDialog(key) {
+	cy.cGet('.jsdialog-window form').then($form => {
+		// Block implicit form submission for this keypress
+		function blockSubmit(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+		$form[0].addEventListener('submit', blockSubmit, true);
+
+		// Block the close button from being clicked
+		var closeBtn = $form[0].querySelector('.ui-dialog-titlebar-close');
+		var origOnclick = closeBtn ? closeBtn.onclick : null;
+		if (closeBtn) {
+			closeBtn.onclick = function(e) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+			};
+		}
+
+		cy.realPress(key).then(() => {
+			$form[0].removeEventListener('submit', blockSubmit, true);
+			if (closeBtn) closeBtn.onclick = origOnclick;
+		});
+	});
+}
+
+// Useful to get an item in the context-menu (currently only for document-area
+// context menus). This context menu uses jsdialog dropdown as the
+// implementation.
+function getContextMenuItem(menuItemText) {
+	return cy.cGet('#jsd-context-menu-dropdown-overlay')
+		.contains('.ui-combobox-entry.jsdialog.ui-grid-cell span',
+			menuItemText);
+}
+
+function getContextMenuItemList() {
+	return cy.cGet('#jsd-context-menu-dropdown-overlay').find('.ui-combobox-entry.jsdialog.ui-grid-cell span');
 }
 
 module.exports.setupDocument = setupDocument;
@@ -1264,3 +1483,59 @@ module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
 module.exports.containsFocusElement = containsFocusElement;
 module.exports.getMenuEntry = getMenuEntry;
+module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
+module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
+module.exports.processToIdle = processToIdle;
+module.exports.waitForTimers = waitForTimers;
+module.exports.waitForMapState = waitForMapState;
+module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
+module.exports.getContextMenuItem = getContextMenuItem;
+module.exports.getContextMenuItemList = getContextMenuItemList;
+module.exports.getMatchedCSSRules = getMatchedCSSRules;
+module.exports.realPressInDialog = realPressInDialog;
+module.exports.getShapeSVGCenter = getShapeSVGCenter;
+
+// Find all author CSS rules that match an element, with the source
+// stylesheet filename and the full selector for each matching rule.
+// Usage:
+//   helper.getMatchedCSSRules('.spinfieldbutton-up').then(function(output) {
+//       console.error(output);
+//   });
+function getMatchedCSSRules(selector) {
+	return cy.cGet(selector).first().then(function($el) {
+		var el = $el[0];
+		var doc = el.ownerDocument;
+		var lines = [];
+
+		for (var s = 0; s < doc.styleSheets.length; s++) {
+			var sheet = doc.styleSheets[s];
+			var href = sheet.href || 'inline';
+			if (href !== 'inline') {
+				var parts = href.split('/');
+				href = parts[parts.length - 1];
+			}
+
+			var rules;
+			try { rules = sheet.cssRules; } catch (e) { continue; }
+
+			for (var r = 0; r < rules.length; r++) {
+				var rule = rules[r];
+				if (!rule.selectorText) continue;
+				try {
+					if (!el.matches(rule.selectorText)) continue;
+				} catch (e) { continue; }
+
+				var props = [];
+				for (var p = 0; p < rule.style.length; p++) {
+					var name = rule.style[p];
+					var val = rule.style.getPropertyValue(name);
+					var priority = rule.style.getPropertyPriority(name);
+					props.push('  ' + name + ': ' + val + (priority ? ' !' + priority : ''));
+				}
+				lines.push(href + ' | ' + rule.selectorText);
+				lines.push(props.join('\n'));
+			}
+		}
+		return lines.join('\n');
+	});
+}

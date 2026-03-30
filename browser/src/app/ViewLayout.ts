@@ -12,7 +12,8 @@
 class ScrollProperties {
 	yOffset: number = 0;
 	verticalScrollLength: number = 0;
-	verticalScrollSize: number = 0;
+	verticalScrollSize: number = 0; // Clamped to minimum, used for drawing.
+	verticalScrollSizeForScrolling: number = 0; // Unclamped, used for scroll calculations.
 	minimumVerticalScrollSize: number = 80 * app.roundedDpiScale;
 	verticalScrollRatio: number = 0;
 	startY: number = 0; // Start position of the vertical scroll bar on canvas.
@@ -21,7 +22,8 @@ class ScrollProperties {
 
 	xOffset: number = 0;
 	horizontalScrollLength: number = 0;
-	horizontalScrollSize: number = 0;
+	horizontalScrollSize: number = 0; // Clamped to minimum, used for drawing.
+	horizontalScrollSizeForScrolling: number = 0; // Unclamped, used for scroll calculations.
 	minimumHorizontalScrollSize: number = 80 * app.roundedDpiScale;
 	horizontalScrollRatio: number = 0;
 	startX: number = 0;
@@ -36,6 +38,8 @@ class ScrollProperties {
 	moveBy: number[] | null = null; // Pending move event (pX, pY).
 }
 
+// FIXME: should be abstract to split Writer and other layouts
+// so we can have abstract methods and be warned about missing bits
 class ViewLayoutBase {
 	public readonly type: string = 'ViewLayoutBase';
 
@@ -72,6 +76,11 @@ class ViewLayoutBase {
 		return (
 			point.pX - this._viewedRectangle.pX1 + this._documentAnchorPosition[0]
 		);
+	}
+
+	public adjustViewZoomLevel() {
+		if (app.map._docLayer)
+			app.map._docLayer._fitWidthZoom(undefined, undefined, true);
 	}
 
 	public documentToViewY(point: cool.SimplePoint): number {
@@ -185,10 +194,17 @@ class ViewLayoutBase {
 		return app.sectionContainer.getDocumentAnchorSection();
 	}
 
+	/// used in Views which can show pages (Writer) to determine left alignment
+	// FIXME: confusing name, should be abstract
+	public getDocumentScrollOffset(): number {
+		app.console.error('not implemented');
+		return 0;
+	}
+
 	private calculateHorizontalScrollLength(
 		documentAnchor: CanvasSectionObject,
 	): void {
-		const result: number = documentAnchor.size[0];
+		const canvasWidth: number = documentAnchor.size[0];
 		this.scrollProperties.xOffset = documentAnchor.myTopLeft[0];
 
 		if (app.map._docLayer._docType === 'spreadsheet') {
@@ -201,10 +217,12 @@ class ViewLayoutBase {
 
 			this.scrollProperties.xOffset += splitPos.x;
 			this.scrollProperties.horizontalScrollLength =
-				result - splitPos.x - this.scrollProperties.horizontalScrollRightOffset;
+				canvasWidth -
+				splitPos.x -
+				this.scrollProperties.horizontalScrollRightOffset;
 		} else {
 			this.scrollProperties.horizontalScrollLength =
-				result - this.scrollProperties.horizontalScrollRightOffset;
+				canvasWidth - this.scrollProperties.horizontalScrollRightOffset;
 		}
 	}
 
@@ -240,6 +258,13 @@ class ViewLayoutBase {
 				this.viewSize.pX,
 		);
 
+		// Store unclamped values for scroll calculations.
+		this.scrollProperties.verticalScrollSizeForScrolling =
+			this.scrollProperties.verticalScrollSize;
+		this.scrollProperties.horizontalScrollSizeForScrolling =
+			this.scrollProperties.horizontalScrollSize;
+
+		// Clamp to minimum for drawing.
 		if (
 			this.scrollProperties.horizontalScrollSize <
 			this.scrollProperties.minimumHorizontalScrollSize
@@ -289,14 +314,49 @@ class ViewLayoutBase {
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
 	}
 
+	// This function doesn't do well. It seems we don't need this function.
+	// Tiles middleware seems to manage redraw requests when tiles are ready.
 	public areViewTilesReady(): boolean {
+		let allReady = true;
+
 		for (let i = 0; i < this.currentCoordList.length; i++) {
 			const tempTile = TileManager.get(this.currentCoordList[i]);
 
-			if (!tempTile || tempTile.needsFetch()) return false;
+			if (!tempTile || !tempTile.isReady()) allReady = false;
 		}
 
-		return true;
+		return allReady;
+	}
+
+	protected refreshCurrentCoordList() {
+		this.currentCoordList.length = 0;
+		const zoom = Math.round(app.map.getZoom());
+
+		const columnCount = Math.ceil(
+			this._viewedRectangle.pWidth / TileManager.tileSize,
+		);
+		const rowCount = Math.ceil(
+			this._viewedRectangle.pHeight / TileManager.tileSize,
+		);
+		const startX =
+			Math.floor(this._viewedRectangle.pX1 / TileManager.tileSize) *
+			TileManager.tileSize;
+		const startY =
+			Math.floor(this._viewedRectangle.pY1 / TileManager.tileSize) *
+			TileManager.tileSize;
+
+		for (let i = 0; i <= columnCount; i++) {
+			for (let j = 0; j <= rowCount; j++) {
+				const coords = new TileCoordData(
+					startX + i * TileManager.tileSize,
+					startY + j * TileManager.tileSize,
+					zoom,
+					0,
+				);
+
+				if (TileManager.isValidTile(coords)) this.currentCoordList.push(coords);
+			}
+		}
 	}
 
 	public getCurrentCoordList(): Array<TileCoordData> {
@@ -308,6 +368,20 @@ class ViewLayoutBase {
 		return false;
 	}
 
+	private addToMoveBy(pX: number, pY: number) {
+		if (this.scrollProperties.moveBy !== null) {
+			// Add offset to the pending move event.
+			if (pX !== 0) {
+				this.scrollProperties.moveBy[0] += pX;
+			}
+			if (pY !== 0) {
+				this.scrollProperties.moveBy[1] += pY;
+			}
+		} else {
+			// Create a new pending move event.
+			this.scrollProperties.moveBy = [pX, pY];
+		}
+	}
 	/*
 		`ignoreScrollbarLength` constraints while scrolling the document to make some space for the comments.
 		see `ViewLayoutWriter.adjustDocumentMarginsForComments`
@@ -351,16 +425,14 @@ class ViewLayoutBase {
 			}
 		}
 
-		if (scrollProps.moveBy !== null)
-			scrollProps.moveBy[0] += pX; // Add offset to the pending move event.
-		else scrollProps.moveBy = [pX, 0]; // Create a new pending move event.
+		this.addToMoveBy(pX, 0);
 	}
 
 	// For scrolling with screen offset.
 	// This function shouldn't care about the document content, size etc.
 	// All this cares is the current scroll position and the scroll length.
 	// For making a portion of the document visible, use other methods.
-	private scrollVertical(pY: number): void {
+	protected scrollVertical(pY: number): void {
 		const scrollProps: ScrollProperties = this.scrollProperties;
 
 		let control = scrollProps.moveBy ? scrollProps.moveBy[1] : 0; // Add pending offset.
@@ -395,9 +467,7 @@ class ViewLayoutBase {
 			if (pY > 0) pY = 0;
 		}
 
-		if (scrollProps.moveBy !== null)
-			scrollProps.moveBy[1] += pY; // Add offset to the pending move event.
-		else scrollProps.moveBy = [0, pY]; // Create a new pending move event.
+		this.addToMoveBy(0, pY);
 	}
 
 	public canScrollHorizontal(documentAnchor: CanvasSectionObject): boolean {
@@ -418,6 +488,7 @@ class ViewLayoutBase {
 		if (pY !== 0 && this.canScrollVertical(documentAnchor))
 			this.scrollVertical(pY);
 
+		this.refreshCurrentCoordList();
 		app.sectionContainer.requestReDraw();
 	}
 

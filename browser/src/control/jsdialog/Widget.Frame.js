@@ -31,8 +31,8 @@ function _extractLabelText(data) {
 		return data.text;
 	}
 
-	for (var i = 0; i < data.children.length; i++) {
-		var label = _extractLabelText(data.children[i]);
+	for (let i = 0; i < data.children.length; i++) {
+		const label = _extractLabelText(data.children[i]);
 		if (label) return label;
 	}
 
@@ -41,7 +41,7 @@ function _extractLabelText(data) {
 
 JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 	if (data.children.length > 1) {
-		buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend(data));
+		buildFrame(parentContainer, data, builder);
 	} else {
 		return builder._controlHandlers['container'](
 			parentContainer,
@@ -53,21 +53,70 @@ JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 	return false;
 };
 
-function shouldUseFieldsetLegend(data) {
+function isGroupControl(data) {
 	if (!data.children || data.children.length < 2) return false;
 
-	// First child must be a fixedtext (label) to eligible as group
-	if (data.children[0].type !== 'fixedtext') return false;
+	// Eligible as group if:
+	// First child is a fixedtext (label)
+	// OR first child is container whose children are all fixedtext
+	const firstChild = data.children[0];
+	if (
+		firstChild.type !== 'fixedtext' &&
+		(!firstChild.children ||
+			firstChild.children.some((item) => item.type !== 'fixedtext'))
+	) {
+		return false;
+	}
 
 	return true;
 }
 
-function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
-	let container, frame, label;
+function shouldUseFieldsetLegend(data) {
+	let formControlCount = 0;
+	const minRequiredControls = 2;
 
-	if (shouldUseFieldsetLegend) {
+	/**
+	 * Recursively counts form controls within a dialog structure tree.
+	 * This function handles the hierarchical nature of JSDialog JSON structures where
+	 * form controls can be nested within various container types.
+	 * Uses early termination to optimize performance once the minimum threshold is reached.
+	 */
+	function countFormControls(node) {
+		if (!node.children) return 0;
+
+		let count = 0;
+		for (const child of node.children) {
+			if (JSDialog.GetFormControlTypesInLO().has(child.type)) {
+				count++;
+			} else if (JSDialog.TreeViewHasSearchField(child)) {
+				count++;
+			} else {
+				count += countFormControls(child);
+			}
+			if (count >= minRequiredControls) return count;
+		}
+		return count;
+	}
+
+	// Skip the first child (label) and count form controls in remaining children
+	for (let i = 1; i < data.children.length; i++) {
+		formControlCount += countFormControls(data.children[i]);
+
+		if (formControlCount >= minRequiredControls) return true;
+	}
+
+	return false;
+}
+
+function buildFrame(parentContainer, data, builder) {
+	const groupControl = isGroupControl(data);
+	const fieldsetLegend = groupControl ? shouldUseFieldsetLegend(data) : false;
+
+	let container, frame, label, groupLabelCandidateId;
+
+	if (groupControl) {
 		container = window.L.DomUtil.create(
-			'fieldset',
+			fieldsetLegend ? 'fieldset' : 'div',
 			'ui-frame-container ui-fieldset ' + builder.options.cssClass,
 			parentContainer,
 		);
@@ -75,11 +124,31 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 
 		frame = container; // No inner frame for form control group
 
-		label = window.L.DomUtil.create(
-			'legend',
-			'ui-frame-label ui-legend ' + builder.options.cssClass,
-			frame,
-		);
+		const firstChild = data.children[0];
+
+		const fixedTexts =
+			firstChild.type === 'fixedtext'
+				? [firstChild]
+				: firstChild.children || [];
+
+		for (const fixedText of fixedTexts) {
+			label = window.L.DomUtil.create(
+				fieldsetLegend ? 'legend' : 'div',
+				'ui-frame-label ui-legend ' + builder.options.cssClass,
+				frame,
+			);
+
+			label.innerText = builder._cleanText(_extractLabelText(fixedText));
+			label.id = fixedText.id;
+
+			if (fixedText.visible === false) {
+				window.L.DomUtil.addClass(label, 'hidden');
+			} else {
+				groupLabelCandidateId = fixedText.id;
+			}
+
+			builder.postProcess(frame, fixedText);
+		}
 	} else {
 		container = window.L.DomUtil.create(
 			'div',
@@ -94,19 +163,7 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 			container,
 		);
 		frame.id = data.id + '-frame';
-
-		label = window.L.DomUtil.create(
-			'label',
-			'ui-frame-label ' + builder.options.cssClass,
-			frame,
-		);
-		label.htmlFor = data.id + '-content';
 	}
-	label.innerText = builder._cleanText(_extractLabelText(data.children[0]));
-	label.id = data.children[0].id;
-	if (data.children[0].visible === false)
-		window.L.DomUtil.addClass(label, 'hidden');
-	builder.postProcess(frame, data.children[0]);
 
 	const frameChildren = window.L.DomUtil.create(
 		'div',
@@ -116,7 +173,17 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 	frameChildren.id = data.id + '-content';
 	$(frameChildren).addClass('expanded');
 
-	// skipping the first child(label/legend)
-	const children = data.children.slice(1);
+	const children = groupControl ? data.children.slice(1) : data.children;
 	builder.build(frameChildren, children);
+
+	if (
+		groupControl &&
+		!fieldsetLegend &&
+		JSDialog.FindFocusableWithin(frameChildren, 'next')
+	) {
+		frame.setAttribute('role', 'group');
+		if (groupLabelCandidateId) {
+			frame.setAttribute('aria-labelledby', groupLabelCandidateId);
+		}
+	}
 }

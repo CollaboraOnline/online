@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /* A debugging tool to detect un-shared pages between
  * forkit and its children */
 
@@ -20,11 +21,12 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-#ifndef __FreeBSD__
+#if defined(__GLIBC__)
 #include <error.h>
 #endif
 #include <fcntl.h>
@@ -36,9 +38,10 @@
 #include <math.h>
 
 #include <common/HexUtil.hpp>
-#include <Util.hpp>
+#include <common/NumUtil.hpp>
+#include <common/Util.hpp>
 
-#ifdef __FreeBSD__
+#if !defined(__GLIBC__)
 void error(int status, int errnum, const char *format, ...)
 {
     va_list args;
@@ -246,7 +249,7 @@ public:
     bool isStringAtOffset(const std::vector<unsigned char> &data, size_t i,
                           uint32_t len, bool isUnicode, std::string &str)
     {
-        str = isUnicode ? "U_" : "S_";
+        str = std::string(isUnicode ? "U_" : "S_");
         int step = isUnicode ? 2 : 1;
         for (size_t j = i; j < i + len*step && j < data.size(); j += step)
         {
@@ -517,7 +520,7 @@ static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
         {
             char num[16];
             output.push_back('[');
-            sprintf(num, "%d", cnt);
+            snprintf(num, sizeof(num), "%d", cnt);
             for (int cpy = 0; num[cpy] != '\0'; ++cpy)
                 output.push_back(num[cpy]);
             output.push_back(']');
@@ -784,7 +787,7 @@ int main(int argc, char **argv)
 
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
-            unsigned pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
+            const unsigned pid_proc = NumUtil::u64FromString(dir_proc->d_name, 0);
 
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&

@@ -14,9 +14,9 @@
  * JSDialog.ScrollableBar - helper for creating toolbars with scrolling left/right
  */
 
-/* global JSDialog $ */
-
 declare var JSDialog: any;
+
+let pendingTask: TaskId | null = null;
 
 function createScrollButtons(parent: Element, scrollable: Element) {
 	window.L.DomUtil.addClass(scrollable, 'ui-scroll-wrapper');
@@ -52,7 +52,9 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 	var isRTL: boolean = document.documentElement.dir === 'rtl';
 	var timer: any; // for shift + mouse wheel up/down
 
-	const handler = function () {
+	const handlerImpl = () => {
+		pendingTask = null;
+
 		const rootContainer = scrollable.querySelector('div');
 		if (!rootContainer) return;
 
@@ -77,7 +79,12 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 			showArrow(left, false);
 			showArrow(right, false);
 		}
-	}.bind(this);
+	};
+
+	const handler = () => {
+		if (pendingTask) app.layoutingService.cancelLayoutingTask(pendingTask);
+		pendingTask = app.layoutingService.appendLayoutingTask(handlerImpl);
+	};
 
 	// handler for toolbar and statusbar
 	// runs if shift + mouse wheel up/down are used
@@ -130,7 +137,9 @@ function setupPriorityStatusHandler(scrollable: Element, toolItems: any[]) {
 			item.classList.remove('status-hidden');
 		});
 
-		const availableWidth = window.innerWidth;
+		const availableWidth = scrollable.parentElement
+			? scrollable.parentElement.clientWidth
+			: window.innerWidth;
 		let contentWidth = rootContainer.scrollWidth;
 
 		if (contentWidth > availableWidth) {
@@ -190,5 +199,6 @@ JSDialog.MakeStatusPriority = function (scrollable: Element, toolItems: any[]) {
 };
 
 JSDialog.RefreshScrollables = function () {
+	app.console.debug('JSDialog.RefreshScrollables');
 	window.dispatchEvent(new Event('resize'));
 };

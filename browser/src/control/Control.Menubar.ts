@@ -14,6 +14,9 @@ interface MenuItem {
 	id?: string;
 	name?: string;
 	uno?: string;
+	// Tag a menu item as being for the uno command, but don't do anything.  If `uno` is set
+	// this shouldn't be. It is used by `_getItemsForCommand()`.
+	unoid?: string;
 	type?: string;
 	menu?: MenuItem[];
 	disabled?: boolean;
@@ -92,7 +95,7 @@ class Menubar extends window.L.Control {
 		],
 		text:  [
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'text'), unoid: '.uno:Save', id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: window.prefs.get('saveAsMode') === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF text document (.odt)'), id: 'saveas-odt', type: 'action'},
 					{name: _('Word 2003 Document (.doc)'), id: 'saveas-doc', type: 'action'},
@@ -119,7 +122,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:Signature', 'text'), uno: '.uno:Signature', id: 'signature'},
 				{name: _('Options'), id: 'settings-dialog', type: 'action', mobileapp: false},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'text'), unoid: '.uno:Print', id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
@@ -137,6 +140,7 @@ class Menubar extends window.L.Control {
 				{type: 'separator'},
 				{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 					{uno: '.uno:TrackChanges'},
+					{name: _('Compare Changes'), id: 'comparechanges', type: 'action'},
 					{uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
 					{uno: '.uno:AcceptTrackedChanges'},
@@ -157,11 +161,11 @@ class Menubar extends window.L.Control {
 			 menu: (window.mode.isTablet() ? [
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[] : [
-					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+					{name: _UNO('.uno:FullScreen', 'text'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action'},
 					{type: 'separator'},
-					{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
-					{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
-					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+					{name: _UNO('.uno:ZoomPlus', 'text'), unoid: '.uno:ZoomPlus', id: 'zoomin', type: 'action'},
+					{name: _UNO('.uno:ZoomMinus', 'text'), unoid: '.uno:ZoomMinus', id: 'zoomout', type: 'action',},
+					{name: _('Fit to Screen'), id: 'fitwidthzoom', type: 'action'},
 				] as MenuItem[]).concat([
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
@@ -174,14 +178,14 @@ class Menubar extends window.L.Control {
 					{uno: '.uno:SidebarDeck.StyleListDeck', name: _('Style list')},
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{type: 'separator'},
-					{name: _UNO('.uno:ShowAnnotations', 'text'), id: 'showannotations', type: 'action'},
-					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
+					{name: _UNO('.uno:ShowAnnotations', 'text'), unoid: '.uno:ShowAnnotations', id: 'showannotations', type: 'action'},
+					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), unoid: '.uno:ShowResolvedAnnotations', id: 'showresolved', type: 'action'},
 					{uno: '.uno:ControlCodes'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertGraphic', 'text'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'text'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 				{name: _UNO('.uno:DrawText'), uno: '.uno:DrawText'},
@@ -214,7 +218,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:InsertBreak'},
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
 				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{type: 'separator'},
@@ -262,6 +266,7 @@ class Menubar extends window.L.Control {
 					{uno: '.uno:ParaRightToLeft'}]},
 				{name: _UNO('.uno:FormatSpacingMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:SpacePara1'},
+					{uno: '.uno:SpacePara115'},
 					{uno: '.uno:SpacePara15'},
 					{uno: '.uno:SpacePara2'},
 					{type: 'separator'},
@@ -399,7 +404,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:WordCountDialog'},
 				window.enableAccessibility ?
 					{name: _('Screen Reading'), id: 'togglea11ystate', type: 'action'} : {},
-				{uno: '.uno:AccessibilityCheck'},
+				{uno: '.uno:SidebarDeck.A11yCheckDeck'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:OnlineAutoFormat'}]},
@@ -411,13 +416,17 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
-				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -425,7 +434,7 @@ class Menubar extends window.L.Control {
 
 		presentation: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'presentation'), unoid: '.uno:Save', id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: window.prefs.get('saveAsMode') === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF presentation (.odp)'), id: 'saveas-odp', type: 'action'},
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'saveas-ppt', type: 'action'},
@@ -478,10 +487,10 @@ class Menubar extends window.L.Control {
 			 menu: (window.mode.isTablet() ? [
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[] : [
-				   {name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
+					{name: _UNO('.uno:FullScreen', 'presentation'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action'},
 				   {type: 'separator'},
-				   {name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
-				   {name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
+					{name: _UNO('.uno:ZoomPlus', 'presentation'), unoid: '.uno:ZoomPlus', id: 'zoomin', type: 'action'},
+					{name: _UNO('.uno:ZoomMinus', 'presentation'), unoid: '.uno:ZoomMinus', id: 'zoomout', type: 'action'},
 				   {name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[]).concat([
 				   {type: 'separator'},
@@ -500,23 +509,23 @@ class Menubar extends window.L.Control {
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
 				   {uno: '.uno:ModifyPage'},
-					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), id: 'transitiondeck', type: 'action'},
+					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), unoid: '.uno:SlideChangeWindow', id: 'transitiondeck', type: 'action'},
 					 {uno: '.uno:MasterSlidesPanel'},
 					 {uno: '.uno:CustomAnimation'}, // core version
 				   //{name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'}, // online version
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+				{name: _UNO('.uno:InsertGraphic', 'presentation'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
 				{name: _('Local Multimedia...'), id: 'insertmultimedia', type: 'action'},
-				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:SelectBackground', 'presentation'), unoid: '.uno:SelectBackground', id: 'selectbackground', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'presentation'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
-				{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
+				{name: _UNO('.uno:Text', 'presentation'), unoid: '.uno:Text', id: 'inserttextbox', type: 'action'},
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{type: 'separator'},
-				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
 				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{type: 'separator'},
@@ -569,18 +578,18 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:TableDialog'}]
 			},
 			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slide', type: 'menu', menu: [
-				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
-				{name: _UNO('.uno:ShowSlide', 'presentation'), id: 'showslide', type: 'action'},
-				{name: _UNO('.uno:HideSlide', 'presentation'), id: 'hideslide', type: 'action'},
+				{name: _UNO('.uno:InsertSlide', 'presentation'), unoid: '.uno:InsertSlide', id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicateSlide', 'presentation'), unoid: '.uno:DuplicateSlide', id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), unoid: '.uno:DeleteSlide', id: 'deletepage', type: 'action'},
+				{name: _UNO('.uno:ShowSlide', 'presentation'), unoid: '.uno:ShowSlide', id: 'showslide', type: 'action'},
+				{name: _UNO('.uno:HideSlide', 'presentation'), unoid: '.uno:HideSlide', id: 'hideslide', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:GotoSlide', 'presentation'), uno: '.uno:GotoPage'},
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'},
 				{name: _('Present in new window'), id: 'present-in-window', type: 'action'},
-				...(!window.ThisIsAMobileApp ? [
+				...((!window.ThisIsAMobileApp || window.mode.isCODesktop()) ? [
 					{name: _('Presenter Console'), id: 'presentation-in-console', type: 'action'}
 				] : [])
 			]
@@ -596,11 +605,16 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -608,14 +622,14 @@ class Menubar extends window.L.Control {
 
 		drawing: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Save', 'presentation'), unoid: '.uno:Save', id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), unoid: '.uno:SaveAs', id: 'saveas', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
 				{name: _('Save Comments'), id: 'savecomments', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
-				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'presentation'), unoid: '.uno:Print', id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', type: 'action'},
@@ -645,10 +659,10 @@ class Menubar extends window.L.Control {
 			 menu: (window.mode.isTablet() ? [
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[] : [
-					{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
+					{name: _UNO('.uno:FullScreen', 'presentation'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action'},
 					{type: 'separator'},
-					{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
-					{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
+					{name: _UNO('.uno:ZoomPlus', 'presentation'), unoid: '.uno:ZoomPlus', id: 'zoomin', type: 'action'},
+					{name: _UNO('.uno:ZoomMinus', 'presentation'), unoid: '.uno:ZoomMinus', id: 'zoomout', type: 'action'},
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[]).concat([
 					{type: 'separator'},
@@ -665,12 +679,12 @@ class Menubar extends window.L.Control {
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
-				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertGraphic', 'presentation'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
+				{name: _UNO('.uno:SelectBackground', 'presentation'), unoid: '.uno:SelectBackground', id: 'selectbackground', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'presentation'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
-				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
 				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{type: 'separator'},
@@ -686,7 +700,7 @@ class Menubar extends window.L.Control {
 					{name: _UNO('.uno:InsertPageTitleField', 'presentation'), uno: '.uno:InsertPageTitleField'},
 					{name: _UNO('.uno:InsertPagesField', 'presentation'), uno: '.uno:InsertPagesField'},
 				]},
-				{name: _UNO('.uno:InsertSignatureLine'), id: 'insert-signatureline', type: 'action'},
+				{name: _UNO('.uno:InsertSignatureLine'), unoid: '.uno:InsertSignatureLine', id: 'insert-signatureline', type: 'action'},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
@@ -722,9 +736,9 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:TableDialog', 'presentation'), uno: '.uno:TableDialog'}]
 			},
 			{name: _UNO('.uno:PageMenu', 'presentation'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertPage', 'presentation'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicatePage', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeletePage', 'presentation'), id: 'deletepage', type: 'action'},
+				{name: _UNO('.uno:InsertPage', 'presentation'), unoid: '.uno:InsertPage', id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicatePage', 'presentation'), unoid: '.uno:DuplicatePage', id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeletePage', 'presentation'), unoid: '.uno:DeletePage', id: 'deletepage', type: 'action'},
 				{name: _UNO('.uno:GotoPage', 'presentation'), uno: '.uno:GotoPage'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
@@ -735,11 +749,16 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -747,7 +766,7 @@ class Menubar extends window.L.Control {
 
 		spreadsheet: [
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'spreadsheet'), unoid: '.uno:Save', id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: window.prefs.get('saveAsMode') === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF spreadsheet (.ods)'), id: 'saveas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'saveas-xls', type: 'action'},
@@ -793,10 +812,10 @@ class Menubar extends window.L.Control {
 			 menu: (window.mode.isTablet() ? [
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[] : [
-				   {name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
+					{name: _UNO('.uno:FullScreen', 'spreadsheet'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action'},
 				   {type: 'separator'},
-				   {name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
-				   {name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
+				   {name: _UNO('.uno:ZoomPlus', 'text'), unoid: '.uno:ZoomPlus', id: 'zoomin', type: 'action'},
+				   {name: _UNO('.uno:ZoomMinus', 'text'), unoid: '.uno:ZoomMinus', id: 'zoomout', type: 'action',},
 				   {name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				] as MenuItem[]).concat([
 				   {type: 'separator'},
@@ -819,11 +838,12 @@ class Menubar extends window.L.Control {
 				])},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
+				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:DataDataPilotRun', 'spreadsheet'), uno: '.uno:DataDataPilotRun'},
+				{name: _UNO('.uno:CalculatedFieldRun', 'spreadsheet'), uno: '.uno:CalculatedFieldRun'},
 				{name: _UNO('.uno:InsertCalcTable', 'spreadsheet'), uno: '.uno:InsertCalcTable'},
 				{name: _UNO('.uno:InsertSparkline', 'spreadsheet'), uno: '.uno:InsertSparkline'},
-				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 				{name: _UNO('.uno:DrawText'), uno: '.uno:DrawText'},
@@ -983,6 +1003,7 @@ class Menubar extends window.L.Control {
 				{type: 'separator'},
 				{name: _UNO('.uno:DataPilotMenu', 'spreadsheet'), type: 'menu', menu: [
 					{name: _UNO('.uno:InsertPivotTable', 'spreadsheet'), uno: '.uno:DataDataPilotRun'},
+					{name: _UNO('.uno:InsertCalculation', 'spreadsheet'), uno: '.uno:CalculatedFieldRun'},
 					{name: _UNO('.uno:RecalcPivotTable', 'spreadsheet'), uno: '.uno:RecalcPivotTable'},
 					{name: _UNO('.uno:DeletePivotTable', 'spreadsheet'), uno: '.uno:DeletePivotTable'}]},
 				{type: 'separator'},
@@ -1033,11 +1054,16 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -1046,8 +1072,8 @@ class Menubar extends window.L.Control {
 		mobiletext:  [
 			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Save', 'text'), unoid: '.uno:Save', id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'text'), unoid: '.uno:SaveAs', id: 'saveas', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'},
 					{name: _('EPUB (.epub)'), id: 'exportas-epub', type: 'action'}
@@ -1055,7 +1081,7 @@ class Menubar extends window.L.Control {
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'text'), unoid: '.uno:Print', id: 'print', type: 'action'},
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', type: 'action'},
@@ -1086,7 +1112,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:NextTrackedChange'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{name: _UNO('.uno:FullScreen', 'text'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action', mobileapp: false},
 				{uno: '.uno:ControlCodes', id: 'formattingmarks'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', uno: '.uno:ShowResolvedAnnotations'},
@@ -1112,15 +1138,15 @@ class Menubar extends window.L.Control {
 		mobilepresentation: [
 			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Save', 'presentation'), unoid: '.uno:Save', id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), unoid: '.uno:SaveAs', id: 'saveas', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'presentation'), uno: '.uno:Print', id: 'print', type: 'action'},
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', type: 'action'},
@@ -1142,7 +1168,7 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{name: _UNO('.uno:FullScreen', 'presentation'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
 			]
@@ -1163,9 +1189,9 @@ class Menubar extends window.L.Control {
 			]
 			},
 			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slidemenu', type: 'menu', menu: [
-				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
+				{name: _UNO('.uno:InsertSlide', 'presentation'), unoid: '.uno:InsertSlide', id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicateSlide', 'presentation'), unoid: '.uno:DuplicateSlide', id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), unoid: '.uno:DeleteSlide', id: 'deletepage', type: 'action'}]
 			},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
@@ -1177,13 +1203,13 @@ class Menubar extends window.L.Control {
 		mobiledrawing: [
 			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Save', 'presentation'), unoid: '.uno:Save', id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), unoid: '.uno:SaveAs', id: 'saveas', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
-				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'presentation'), unoid: '.uno:Print', id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
@@ -1203,7 +1229,7 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{name: _UNO('.uno:FullScreen', 'presentation'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
 			]
@@ -1219,9 +1245,9 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:MergeCells', 'presentation'), uno: '.uno:MergeCells'}]
 			},
 			{name: _UNO('.uno:PageMenu', 'presentation'), id: 'pagemenu', type: 'menu', menu: [
-				{name: _UNO('.uno:InsertPage', 'presentation'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicatePage', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeletePage', 'presentation'), id: 'deletepage', type: 'action'}]
+				{name: _UNO('.uno:InsertPage', 'presentation'), unoid: '.uno:InsertPage', id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicatePage', 'presentation'), unoid: '.uno:DuplicatePage', id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeletePage', 'presentation'), unoid: '.uno:DeletePage', id: 'deletepage', type: 'action'}]
 			},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
@@ -1232,15 +1258,15 @@ class Menubar extends window.L.Control {
 		mobilespreadsheet: [
 			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Save', 'spreadsheet'), unoid: '.uno:Save', id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'spreadsheet'), unoid: '.uno:SaveAs', id: 'saveas', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'spreadsheet'), unoid: '.uno:Print', id: 'print', type: 'action'},
 				{name: _('Define print area'), uno: '.uno:DefinePrintArea' },
 				{name: _('Remove print area'), uno: '.uno:DeletePrintArea' },
 			]},
@@ -1263,7 +1289,7 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{name: _UNO('.uno:FullScreen', 'presentation'), unoid: '.uno:FullScreen', id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
 			]
@@ -1308,10 +1334,10 @@ class Menubar extends window.L.Control {
 			'text' : {
 				name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-					{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'text'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
 					{uno: '.uno:InsertObjectChart'},
-					{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
-					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'text'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
+					{name: _UNO('.uno:TableMenu'), unoid: '.uno:TableMenu', id: 'inserttable', type: 'action'},
 					{type: 'separator'},
 					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 						{uno: '.uno:InsertPageNumberField'},
@@ -1334,8 +1360,8 @@ class Menubar extends window.L.Control {
 					{uno: '.uno:InsertPagebreak'},
 					{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 					{type: 'separator'},
-					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
+					{name: _UNO('.uno:ShapesMenu'), unoid: '.uno:ShapesMenu', id: 'insertshape', type: 'action'},
 					{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 					{name: _UNO('.uno:FormattingMarkMenu', 'text'), id: 'formattingmark', type: 'menu', menu: [
 						{uno: '.uno:InsertNonBreakingSpace'},
@@ -1358,12 +1384,12 @@ class Menubar extends window.L.Control {
 			'spreadsheet' : {
 				name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-					{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
 					{uno: '.uno:InsertObjectChart'},
-					{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
 					{type: 'separator'},
-					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
+					{name: _UNO('.uno:ShapesMenu'), unoid: '.uno:ShapesMenu', id: 'insertshape', type: 'action'},
 					{uno: '.uno:InsertCurrentDate'},
 					{uno: '.uno:InsertCurrentTime'},
 					// other fields need EditEngine context & can't be disabled in the menu.
@@ -1372,14 +1398,14 @@ class Menubar extends window.L.Control {
 			'presentation' : {
 				name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-					{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'presentation'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
 					{uno: '.uno:InsertObjectChart'},
-					{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
-					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
-					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'presentation'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
+					{name: _UNO('.uno:TableMenu'), unoid: '.uno:TableMenu', id: 'inserttable', type: 'action'},
+					{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
+					{name: _UNO('.uno:ShapesMenu'), unoid: '.uno:ShapesMenu', id: 'insertshape', type: 'action'},
 					{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
-					{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
+					{name: _UNO('.uno:Text', 'presentation'), unoid: '.uno:Text', id: 'inserttextbox', type: 'action'},
 					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 						{uno: '.uno:InsertDateFieldFix'},
 						{uno: '.uno:InsertDateFieldVar'},
@@ -1395,14 +1421,14 @@ class Menubar extends window.L.Control {
 			drawing : {
 				name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-					{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'presentation'), unoid: '.uno:InsertGraphic', id: 'insertgraphicremote', type: 'action'},
 					{uno: '.uno:InsertObjectChart'},
-					{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
-					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
-					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'presentation'), unoid: '.uno:InsertAnnotation', id: 'insertcomment', type: 'action'},
+					{name: _UNO('.uno:TableMenu'), unoid: '.uno:TableMenu', id: 'inserttable', type: 'action'},
+					{name: _UNO('.uno:HyperlinkDialog'), unoid: '.uno:HyperlinkDialog', id: 'inserthyperlink', type: 'action'},
+					{name: _UNO('.uno:ShapesMenu'), unoid: '.uno:ShapesMenu', id: 'insertshape', type: 'action'},
 					{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
-					{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
+					{name: _UNO('.uno:Text', 'presentation'), unoid: '.uno:Text', id: 'inserttextbox', type: 'action'},
 					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 						{name: _UNO('.uno:InsertDateFieldFix', 'presentation'), uno: '.uno:InsertDateFieldFix'},
 						{name: _UNO('.uno:InsertDateFieldVar', 'presentation'), uno: '.uno:InsertDateFieldVar'},
@@ -1420,8 +1446,8 @@ class Menubar extends window.L.Control {
 		commandStates: {},
 
 		// Only these menu options will be visible in readonly mode
-		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help', 'print'],
-		allowedRedlineManagementMenus: ['editmenu', 'changesmenu', ],
+		allowedReadonlyMenus: window.mode.isCODesktop() ? ['file', 'view', 'slide', 'help'] : ['file', 'downloadas', 'view', 'insert', 'slide', 'help', 'print'],
+		allowedRedlineManagementMenus: window.mode.isCODesktop() ? [] : ['editmenu', 'changesmenu', ],
 
 		math: ['.uno:ChangeFont', '.uno:ChangeFontSize', '.uno:ChangeDistance', '.uno:ChangeAlignment'],
 
@@ -1438,7 +1464,7 @@ class Menubar extends window.L.Control {
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			() => !(window.L.Browser.ie || window.L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
+			() => !window.L.Browser.edge ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'fitwidthzoom', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
 			'insert-signatureline', // insert menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
@@ -1742,7 +1768,7 @@ class Menubar extends window.L.Control {
 			var pageStyles = e.commandValues['HeaderFooter'];
 			for (var iterator in pageStyles) {
 				style = pageStyles[iterator];
-				if (!window.mode.isMobile()) {
+				if (!window.mode.isSmallScreenDevice()) {
 					$menuHeader.append(this._createUnoMenuItem(_(style), constHeader + encodeURIComponent(style) + constArg, style));
 					$menuFooter.append(this._createUnoMenuItem(_(style), constFooter + encodeURIComponent(style) + constArg, style));
 				} else {
@@ -1787,7 +1813,7 @@ class Menubar extends window.L.Control {
 		this._bindEventIfNotBound('#main-menu', 'click', 'smapi', {self: this}, this._onClicked);
 		this._bindEventIfNotBound('#main-menu', 'keydown', '', {self: this}, this._onKeyDown);
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			$('#main-menu').parent().css('height', '0');
 			$('#toolbar-wrapper').addClass('mobile');
 		}
@@ -1802,12 +1828,12 @@ class Menubar extends window.L.Control {
 					var $menu = $('#main-menu');
 					var $nav = $menu.parent();
 					if ((event.target as HTMLInputElement).checked) {
-						if (!window.mode.isMobile()) {
+						if (!window.mode.isSmallScreenDevice()) {
 							// Surely this code, if it really is related only to the hamburger menu,
 							// will never be invoked on non-mobile browsers? I might be wrong though.
 							// If you notice this logging, please modify this comment to indicate what is
 							// going on.
-							window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
+							window.app.console.log('======> Assertion failed!? Not window.mode.isSmallScreenDevice()? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, () => { $menu.css('display', ''); });
 						} else {
@@ -1818,9 +1844,9 @@ class Menubar extends window.L.Control {
 							$('#toolbar-mobile-back').css('visibility', 'hidden');
 							$('#formulabar').hide();
 						}
-					} else if (!window.mode.isMobile()) {
+					} else if (!window.mode.isSmallScreenDevice()) {
 						// Ditto.
-						window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
+						window.app.console.log('======> Assertion failed!? Not window.mode.isSmallScreenDevice()? Control.Menubar.js #2');
 						$menu.show().slideUp(250, () => { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
 					} else {
@@ -1860,6 +1886,9 @@ class Menubar extends window.L.Control {
 		if (!$(menu).hasClass('has-submenu') && ($mainMenuState[0] as HTMLInputElement).checked) {
 			$mainMenuState[0].click();
 		}
+
+		if (menu?.parentElement?.id === 'menu-file' && window.mode.isCODesktop() && app.map.backstageView)
+			app.map.backstageView.toggle();
 	}
 
 	/**
@@ -1886,7 +1915,7 @@ class Menubar extends window.L.Control {
        * @param menu - The submenu element.
        */
 	private _beforeShow(e: any, menu: any): void {
-		const items = $(menu).children().children('a').not('.has-submenu');
+		const items = this._getMenuItems(menu);
 		$(items).each((index, aItem) => {
 			const type = $(aItem).data('type');
 			const id = $(aItem).data('id');
@@ -1915,7 +1944,13 @@ class Menubar extends window.L.Control {
 					if (unoCommand.startsWith(constLanguage)) {
 						unoCommand = constLanguage;
 						languageAndCode = this._map[constState].getItemValue(unoCommand);
-						lang = languageAndCode.split(';')[0];
+						lang = languageAndCode.split(';');
+						if (lang.length) {
+							lang = lang[0];
+						} else {
+							lang = '';
+							app.console.error('Menubar _beforeShow: missing language');
+						}
 						data = decodeURIComponent($(aItem).data(constUno));
 						if (data.indexOf(lang) !== -1) {
 							$(aItem).addClass(constChecked);
@@ -1938,12 +1973,12 @@ class Menubar extends window.L.Control {
 					} else {
 						$(aItem).removeClass(constChecked);
 					}
-					if (this.options.math.includes(unoCommand) && app.map.context.context !== 'Math') {
+					if (this.options.math.includes(unoCommand) && app.map.context && app.map.context.context !== 'Math') {
 						$(aItem).addClass('disabled');
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
-					if (id === 'fullscreen') { // Full screen works weirdly on IE 11 and on Edge
-						if (window.L.Browser.ie || window.L.Browser.edge) {
+					if (id === 'fullscreen') { // Full screen works weirdly on Edge
+						if (window.L.Browser.edge) {
 							$(aItem).addClass('disabled');
 						} else if (this._map.uiManager.isFullscreen()) {
 							$(aItem).addClass(constChecked);
@@ -2107,6 +2142,33 @@ class Menubar extends window.L.Control {
 						}
 					}
 				}
+
+				const $menuItems = $(menu).children('li');
+
+				$menuItems.each((index, li) => {
+					const $aItem = $(li).children('a').first();
+					if (!$aItem.hasClass('separator')) return;
+
+					const $prevVisible = $(li).prevAll('li').filter(function() {
+						const $a = $(this).children('a').first();
+						return !$a.hasClass('separator') &&
+							$a.css('display') !== 'none' &&
+							$(this).css('display') !== 'none';
+					}).first();
+
+					const $nextVisible = $(li).nextAll('li').filter(function() {
+						const $a = $(this).children('a').first();
+						return !$a.hasClass('separator') &&
+							$a.css('display') !== 'none' &&
+							$(this).css('display') !== 'none';
+					}).first();
+
+					if ($prevVisible.length === 0 || $nextVisible.length === 0) {
+						$aItem.hide();
+					} else {
+						$aItem.show();
+					}
+				});
 			}
 
 			if (id === 'remotelink') {
@@ -2121,6 +2183,38 @@ class Menubar extends window.L.Control {
 					$(aItem).show();
 				else
 					$(aItem).hide();
+			}
+		});
+		// We hide adjacent, leading, and trailing separators that might occur due to hidden items above.
+		var visibleItems = this._getMenuItems(menu).filter(function(this: HTMLElement) {
+			return $(this).css('display') !== 'none';
+		});
+
+		visibleItems.each((index: number, aItem: HTMLElement) => {
+			// Always show first, might be hidden by previous pass
+			if ($(aItem).hasClass('separator')) {
+				$(aItem).show();
+			}
+
+			// Hide leading separator
+			if (index === 0 && $(aItem).hasClass('separator')) {
+				$(aItem).hide();
+				return;
+			}
+
+			// Hide trailing separator
+			if (index === visibleItems.length - 1 && $(aItem).hasClass('separator')) {
+				$(aItem).hide();
+				return;
+			}
+
+			// Hide double/adjacent separators
+			// If this is a separator, and the previous visible item was also a separator, hide this one.
+			if (index > 0) {
+				var prevItem = visibleItems[index - 1];
+				if ($(aItem).hasClass('separator') && $(prevItem).hasClass('separator')) {
+					$(aItem).hide();
+				}
 			}
 		});
 	}
@@ -2218,7 +2312,10 @@ class Menubar extends window.L.Control {
 				};
 				app.map.sendUnoCommand('.uno:InsertSignatureLine', args);
 				const finishMessage = _('The signature line can now be moved or resized as needed.');
-				const finishFunc = () => app.map.eSignature.insert();
+				const finishFunc = () => {
+					Util.ensureValue(app.map.eSignature);
+					app.map.eSignature.insert();
+				};
 				app.map.uiManager.showSnackbar(finishMessage, _('Finish electronic signing'), finishFunc, -1);
 			} else {
 				app.map.sendUnoCommand('.uno:InsertSignatureLine');
@@ -2252,6 +2349,8 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch('zoomout');
 		} else if (id === 'zoomreset') {
 			app.dispatcher.dispatch('zoomreset');
+		} else if (id === 'fitwidthzoom') {
+			app.dispatcher.dispatch('fitwidthzoom');
 		} else if (id === 'fullscreen') {
 			app.util.toggleFullScreen();
 		} else if (id === 'showruler') {
@@ -2285,7 +2384,8 @@ class Menubar extends window.L.Control {
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
 		} else if (id === 'latestupdates' && this._map.welcome) {
-			this._map.welcome.showWelcomeDialog();
+			if (window.mode.isCODesktop()) this._map.welcome.showWelcomeSlideshow();
+			else this._map.welcome.showWelcomeDialog();
 		} else if (id === 'feedback' && this._map.feedback) {
 			this._map.feedback.showFeedbackDialog();
 		} else if (id === 'report-an-issue') {
@@ -2321,6 +2421,8 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch(command);
 		} else if (id === 'columnrowhighlight') {
 			app.dispatcher.dispatch('columnrowhighlight');
+		} else if (id === 'comparechanges') {
+			app.dispatcher.dispatch('comparechanges');
 		} else {
 			// not found
 			app.console.warn('Menubar: unknown action for id: ' + id);
@@ -2368,7 +2470,7 @@ class Menubar extends window.L.Control {
 			this._executeAction(item);
 		}
 
-		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment' && self && this._map)
+		if (!window.mode.isSmallScreenDevice() && $(item).data('id') !== 'insertcomment' && self && this._map)
 			this._map.focus();
 	}
 
@@ -2397,17 +2499,21 @@ class Menubar extends window.L.Control {
 			$(aItem).data('type', 'action');
 			aItem.setAttribute('role', 'img');
 			aItem.setAttribute('aria-label', _('file type icon'));
-			aItem.href = '#';
 			aItem.target = '_blank';
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
+			} else {
+				const docType = this._map.getDocType();
+				const [iconClass, iconTooltip] = app.LOUtil.getDocumentLogoClass(docType);
+				aItem.classList.add(iconClass);
+				aItem.setAttribute('data-cooltip', iconTooltip);
 			}
 
 			if (this._menubarCont != null)
 				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 
-			var $docLogo = $(aItem);
+			const $docLogo = $(aItem);
 			$docLogo.bind('click', {self: this}, this._createDocument);
 			$docLogo.bind('click', this._createDocument.bind(this));
 		}
@@ -2589,9 +2695,12 @@ class Menubar extends window.L.Control {
 
 			var liItem = window.L.DomUtil.create('li', '');
 			liItem.setAttribute('role', 'menuitem');
+			if (menu[i].type === 'separator') {
+				liItem.setAttribute('aria-hidden', 'true');
+			}
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
-				if (menu[i].id === 'closedocument' && this._map.isReadOnlyMode()) {
+				if (menu[i].id === 'closedocument' && isReadOnly) {
 					// see corresponding css rule for readonly class usage
 					window.L.DomUtil.addClass(liItem, 'readonly');
 				}
@@ -2633,6 +2742,8 @@ class Menubar extends window.L.Control {
 				$(aItem).data('id', menu[i].id);
 				if (menu[i].uno !== undefined)
 					$(aItem).data('uno', menu[i].uno);
+				if (menu[i].unoid !== undefined)
+					$(aItem).data('unoid', menu[i].unoid);
 				aItem.tabIndex = 0;
 			}
 
@@ -2735,6 +2846,7 @@ class Menubar extends window.L.Control {
 		var items = this._getItems();
 		if (items == null)
 			return null;
+		const isUno = commandId.startsWith('.uno:');
 		var found = $(items).filter(function() {
 			var item = $(this.children[0]);
 			var type = item.data('type');
@@ -2742,7 +2854,15 @@ class Menubar extends window.L.Control {
 			if (type == 'unocommand') {
 				id = $(item).data('uno');
 			} else if (type == 'action') {
-				id = $(item).data('id');
+				if (isUno) {
+					id = $(item).data('unoid');
+					if (!id) {
+						id = $(item).data('uno');
+					}
+				}
+				if (!id) {
+					id = $(item).data('id');
+				}
 			}
 			if (id && id == commandId) {
 				return true;
@@ -2932,6 +3052,10 @@ class Menubar extends window.L.Control {
 	 * @param nameString - The name to search for.
 	 * @returns The found submenu or null.
 	 */
+	private _getMenuItems(menu: any): any {
+		return $(menu).children().children('a').not('.has-submenu');
+	}
+
 	private _findSubMenuByName(menuTarget: any, nameString: string): any {
 		if (menuTarget.name === nameString)
 			return menuTarget;

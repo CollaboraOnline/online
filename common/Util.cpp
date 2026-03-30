@@ -9,22 +9,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * General utility functions and helpers.
+ * Functions: String manipulation, encoding, process management, system info
+ */
+
 #include <config.h>
 #include <config_version.h>
 
-#include "Log.hpp"
-#include "Protocol.hpp"
-#include "Rectangle.hpp"
-#include "TraceEvent.hpp"
-#include "Util.hpp"
-#include "common/Common.hpp"
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Rectangle.hpp>
+#include <common/SigUtil.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Util.hpp>
+#include <common/base64.hpp>
 
-#include <Poco/Base64Encoder.h>
-#include <Poco/ConsoleChannel.h>
-#include <Poco/Exception.h>
-#include <Poco/Format.h>
 #include <Poco/HexBinaryEncoder.h>
-#include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
@@ -35,31 +37,25 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <dirent.h>
-#include <fcntl.h>
 #include <iomanip>
 #include <iostream>
-#include <limits>
 #include <mutex>
 #include <random>
-#include <spawn.h>
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/uio.h>
 #include <thread>
-#include <unistd.h>
 
 #ifndef COOLWSD_BUILDCONFIG
 #define COOLWSD_BUILDCONFIG
 #endif
 
 #if !MOBILEAPP
-#include "SigHandlerTrap.hpp"
+#include <common/SigHandlerTrap.hpp>
 #endif
 
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if defined(__GLIBC__)
 #  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
@@ -68,11 +64,20 @@
 #  include <sys/syscall.h>
 #  include <sys/vfs.h>
 #  include <sys/resource.h>
+#  include <dlfcn.h>
 #elif defined __FreeBSD__
 #  include <sys/resource.h>
 #  include <sys/thr.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
+#endif
+
+#ifndef _WIN32
+#include <sys/uio.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <spawn.h>
 #endif
 
 #if defined __GLIBC__
@@ -84,6 +89,10 @@
 
 #if defined __EMSCRIPTEN__
 #include <emscripten/console.h>
+#endif
+
+#ifdef _WIN32
+#include <processthreadsapi.h>
 #endif
 
 // for version info
@@ -151,10 +160,9 @@ namespace Util
         /// Note: May contain '/' characters.
         std::string getB64String(const std::size_t length)
         {
-            std::stringstream ss;
-            Poco::Base64Encoder b64(ss);
-            b64.write(getBytes(length).data(), length);
-            return ss.str().substr(0, length);
+            auto bytes = getBytes(length);
+            return macaron::Base64::Encode(
+                std::string_view(bytes.data(), length)).substr(0, length);
         }
 
         std::string getFilename(const std::size_t length)
@@ -180,7 +188,7 @@ namespace Util
     void setKitInProcess(bool value) { kitInProcess = value; }
     bool isKitInProcess() { return isFuzzing() || isMobileApp() || kitInProcess; }
 
-    std::string replace(std::string result, const std::string& from, const std::string& to)
+    std::string replace(std::string result, const std::string_view from, const std::string_view to)
     {
         const std::size_t fromSize = from.size();
         if (fromSize > 0)
@@ -238,10 +246,10 @@ namespace Util
         return replaceAllOf(filename, mtch, repl);
     }
 
-    std::string formatLinesForLog(const std::string& s)
+    std::string formatLinesForLog(const std::string_view s)
     {
         std::string r;
-        std::string::size_type n = s.size();
+        std::string_view::size_type n = s.size();
         if (n > 0 && s.back() == '\n')
             r = s.substr(0, n-1);
         else
@@ -262,6 +270,22 @@ namespace Util
         if (!ThreadTid)
             thr_self(&ThreadTid);
         return ThreadTid;
+#elif defined __APPLE__
+        if (!ThreadTid)
+        {
+            uint64_t tid;
+            if (pthread_threadid_np(NULL, &tid) == 0)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
+#elif defined _WIN32
+        if (!ThreadTid)
+        {
+            DWORD tid = GetThreadId(GetCurrentThread());
+            if (tid)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
 #else
         static long threadCounter = 1;
         if (!ThreadTid)
@@ -275,6 +299,7 @@ namespace Util
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
 #else
+        (void) signal;
         LOG_WRN("No tgkill for thread " << tid);
 #endif
     }
@@ -308,9 +333,12 @@ namespace Util
                               << " is now called [" << s << ']');
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
-        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #elif defined __EMSCRIPTEN__
         emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
+#elif defined _WIN32
+        SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
@@ -333,6 +361,11 @@ namespace Util
 #elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
             strncpy(ThreadName, name, sizeof(ThreadName) - 1);
+#elif defined _WIN32
+            PWSTR description;
+            if (SUCCEEDED(GetThreadDescription(GetCurrentThread(), &description)))
+                strncpy(ThreadName, wide_string_to_string(description).c_str(), sizeof(ThreadName) - 1);
+            LocalFree(description);
 #endif
             ThreadName[sizeof(ThreadName) - 1] = '\0';
         }
@@ -372,7 +405,7 @@ namespace Util
         zstdVersion += std::to_string(ZSTD_VERSION_MINOR) + ".";
         zstdVersion += std::to_string(ZSTD_VERSION_RELEASE);
 
-        std::string json = "{ \"Version\":     \"" + version +
+        std::string json = R"({ "Version":     ")" + version +
                            "\", "
                            "\"Hash\":        \"" +
                            hash +
@@ -401,9 +434,9 @@ namespace Util
                            Util::getProcessIdentifier() + "\", ";
 
         if (!timezone.empty())
-            json += "\"TimeZone\":     \"" + timezone + "\", ";
+            json += R"("TimeZone":     ")" + timezone + "\", ";
 
-        json += "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+        json += R"("Options":     ")" + std::string(enableExperimental ? " (E)" : "") + "\" }";
         return json;
     }
 
@@ -656,7 +689,7 @@ namespace Util
 
 #endif // !MOBILEAPP
 
-    /// Returns the given system_clock time_point as string in the local time.
+    /// Returns the given system_clock time_point as string in GMT.
     /// Format: Thu Jan 27 03:45:27.123 2022
     std::string getSystemClockAsString(const std::chrono::system_clock::time_point time)
     {
@@ -668,7 +701,7 @@ namespace Util
         const int msFraction = msSinceEpoch.count() % 1000;
 
         std::tm tm;
-        time_t_to_localtime(t, tm);
+        time_t_to_gmtime(t, tm);
 
         char buffer[128] = { 0 };
         std::strftime(buffer, 80, "%a %b %d %H:%M:%S", &tm);
@@ -712,56 +745,6 @@ namespace Util
         return ApplicationPath;
     }
 
-    int safe_atoi(const char* p, int len)
-    {
-        long ret{};
-        if (!p || !len)
-        {
-            return ret;
-        }
-
-        int multiplier = 1;
-        int offset = 0;
-        while (isspace(p[offset]))
-        {
-            ++offset;
-            if (offset >= len)
-            {
-                return ret;
-            }
-        }
-
-        switch (p[offset])
-        {
-            case '-':
-                multiplier = -1;
-                ++offset;
-                break;
-            case '+':
-                ++offset;
-                break;
-        }
-        if (offset >= len)
-        {
-            return ret;
-        }
-
-        while (isdigit(p[offset]))
-        {
-            std::int64_t next = ret * 10 + (p[offset] - '0');
-            if (next >= std::numeric_limits<int>::max())
-                return multiplier * std::numeric_limits<int>::max();
-            ret = next;
-            ++offset;
-            if (offset >= len)
-            {
-                return multiplier * ret;
-            }
-        }
-
-        return multiplier * ret;
-    }
-
     void forcedExit(int code)
     {
         if (code)
@@ -769,16 +752,16 @@ namespace Util
         else
             LOG_INF("Forced Exit with code: " << code);
 
-        Log::shutdown();
-
-#if CODE_COVERAGE
-        __gcov_dump();
-#endif
-
 #if !MOBILEAPP
         /// Wait for the signal handler, if any,
         /// and prevent _Exit while collecting backtrace.
         SigUtil::SigHandlerTrap::wait();
+#endif
+
+        Log::shutdown();
+
+#if CODE_COVERAGE
+        __gcov_dump();
 #endif
 
         std::_Exit(code);
@@ -826,7 +809,7 @@ namespace Util
 #endif
     }
 
-    void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo)
+    void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER)
     {
         // uninitialized owner means detached and can be invoked by any thread.
         const bool sameThread = (owner == std::thread::id() || owner == std::this_thread::get_id());
@@ -834,7 +817,7 @@ namespace Util
             LOG_ERR("Incorrect thread affinity. Expected: "
                     << Log::to_string(owner) << " but called from "
                     << Log::to_string(std::this_thread::get_id()) << " (" << Util::getThreadId()
-                    << "). (" << fileName << ":" << lineNo << ")");
+                    << ')');
 
         assert(sameThread);
     }
@@ -916,7 +899,7 @@ namespace Util
     Backtrace::Backtrace([[maybe_unused]] const int maxFrames, const int skip)
         : skipFrames(skip)
     {
-#if defined(__linux) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if defined(__GLIBC__)
         std::vector<void*> backtraceBuffer(maxFrames + skip, nullptr);
 
         const int numSlots = ::backtrace(backtraceBuffer.data(), backtraceBuffer.size());
@@ -943,6 +926,8 @@ namespace Util
                 free(rawSymbols);
             }
         }
+#else
+        (void) maxFrames;
 #endif
         if (0 == _frames.size())
         {
@@ -1008,13 +993,16 @@ namespace Util
         }
     }
 
-    std::string base64Encode(std::string_view input)
+    std::string base64Encode(const std::string_view input)
     {
-        std::ostringstream oss;
-        Poco::Base64Encoder encoder(oss);
-        encoder << input;
-        encoder.close();
-        return oss.str();
+        return macaron::Base64::Encode(input);
+    }
+
+    std::string base64Decode(const std::string& input)
+    {
+        std::string decoded;
+        macaron::Base64::Decode(input, decoded);
+        return decoded;
     }
 
 } // namespace Util

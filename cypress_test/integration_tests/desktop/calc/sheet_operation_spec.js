@@ -61,7 +61,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'Sheet1');
 		calcHelper.selectOptionFromContextMenu('Rename Sheet...');
 		cy.cGet('#modal-dialog-rename-calc-sheet').should('exist');
-		cy.cGet('#input-modal-input').clear().type('renameSheet');
+		cy.cGet('#input-modal-input').type('{selectall}{backspace}renameSheet');
 		cy.cGet('#response-ok').click();
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
 	});
@@ -71,7 +71,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'Sheet1');
 		calcHelper.selectOptionFromContextMenu('Rename Sheet...');
 		cy.cGet('#modal-dialog-rename-calc-sheet').should('exist');
-		cy.cGet('#input-modal-input').should('have.focus').clear().type('renameSheet{Enter}');
+		cy.cGet('#input-modal-input').should('have.focus').type('{selectall}{backspace}renameSheet{Enter}');
 		cy.cGet('#modal-dialog-rename-calc-sheet').should('not.exist');
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
 	});

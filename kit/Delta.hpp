@@ -150,10 +150,7 @@ class DeltaGenerator {
                 free(_rleData);
         }
 
-        size_t sizeBytes()
-        {
-            return sizeof(DeltaBitmapRow) + _rleSize * 4;
-        }
+        size_t sizeBytes() const { return sizeof(DeltaBitmapRow) + _rleSize * 4; }
 
         // <rle data size> (byte), <bitmask>, [<unique pixel data>]
         size_t packForNetwork(unsigned char *output,
@@ -191,7 +188,7 @@ class DeltaGenerator {
     private:
         void initPixRowCpu(const uint32_t *from, uint32_t *scratch,
                            size_t *scratchLen, uint64_t *rleMaskBlock,
-                           unsigned int width)
+                           unsigned int width) const
         {
             uint32_t lastPix = 0x00000000; // transparency
             unsigned int x = 0, outp = 0;
@@ -377,7 +374,9 @@ class DeltaGenerator {
             , _height(height)
             , _rows(new DeltaBitmapRow[height])
         {
+            assert(width > 0 && width <= 256);
             assert (startX + width <= (size_t)bufferWidth);
+            assert(height > 0 && height <= 256);
             assert (startY + height <= (size_t)bufferHeight);
 
             LOGA_TRC(Pixel, "Converting pixel data to delta data of size "
@@ -520,19 +519,28 @@ class DeltaGenerator {
         }
     }
 
-    static void
-    copy_row (unsigned char *dest, const unsigned char *srcBytes, unsigned int count, LibreOfficeKitTileMode mode)
+    static void copy_row(unsigned char *dest, const unsigned char *srcBytes,
+                         unsigned int count, LibreOfficeKitTileMode mode)
     {
         switch (mode)
         {
-            case LOK_TILEMODE_RGBA:
-                std::memcpy(dest, srcBytes, count * 4);
+        case LOK_TILEMODE_RGBA:
+            std::memcpy(dest, srcBytes, count * 4);
+            break;
+        case LOK_TILEMODE_BGRA:
+            if (simd::HasAVX2 &&
+                simd_copyRowSwapRB(dest, srcBytes, count))
                 break;
-            case LOK_TILEMODE_BGRA:
-                std::memcpy(dest, srcBytes, count * 4);
-                for (size_t j = 0; j < count * 4; j += 4)
-                    std::swap(dest[j], dest[j+2]);
-                break;
+
+            // Scalar fallback
+            for (size_t i = 0; i < count * 4; i += 4)
+            {
+                dest[i + 0] = srcBytes[i + 2];
+                dest[i + 1] = srcBytes[i + 1];
+                dest[i + 2] = srcBytes[i + 0];
+                dest[i + 3] = srcBytes[i + 3];
+            }
+            break;
         }
     }
 
@@ -540,7 +548,7 @@ class DeltaGenerator {
         const DeltaData &prev,
         const DeltaData &cur,
         std::vector<char>& outStream,
-        LibreOfficeKitTileMode mode)
+        LibreOfficeKitTileMode mode) const
     {
         // TODO: should we split and compress alpha separately ?
         if (prev.getWidth() != cur.getWidth() || prev.getHeight() != cur.getHeight())
@@ -678,7 +686,7 @@ class DeltaGenerator {
         rebalanceDeltasT(true);
     }
 
-    void dumpState(std::ostream& oss)
+    void dumpState(std::ostream& oss) const
     {
         oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max "
             << _maxEntries << '\n';
@@ -716,7 +724,7 @@ class DeltaGenerator {
             return false;
         }
 
-        if (width > 256 || height > 256)
+        if (width <= 0 || width > 256 || height <= 0 || height > 256)
         {
             LOG_TRC("Bad size << " << width << " x " << height << " to create deltas ");
             assert(false && "shouldn't be possible to get tiles > 256x256");

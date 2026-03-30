@@ -9,13 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Client session management in WSD process.
+ * Classes: ClientSession
+ */
+
 #pragma once
 
-#include "Session.hpp"
-#include "Storage.hpp"
-#include "SenderQueue.hpp"
-#include "ServerURL.hpp"
-#include "DocumentBroker.hpp"
+#include <Session.hpp>
+#include <Storage.hpp>
+#include <SenderQueue.hpp>
+#include <ServerURL.hpp>
+#include <DocumentBroker.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>
@@ -24,11 +29,12 @@
 #include <Rectangle.hpp>
 #include <deque>
 #include <utility>
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 #include <optional>
 
 class DocumentBroker;
+namespace http { class Session; }
 
 /// Represents a session to a COOL client, in the WSD process.
 class ClientSession final : public Session
@@ -234,7 +240,7 @@ public:
 
     const std::pair<int, int>& getThumbnailPosition() const { return _thumbnailPosition; }
 
-    bool thumbnailSession() { return _thumbnailSession; }
+    bool thumbnailSession() const { return _thumbnailSession; }
 
     /// Do we recognize this clipboard ?
     bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
@@ -296,7 +302,7 @@ public:
         _browserSettingsJSON = jsonObject;
     }
 
-    Poco::SharedPtr<Poco::JSON::Object> getBrowserSettingJSON()
+    Poco::SharedPtr<Poco::JSON::Object> getBrowserSettingJSON() const
     {
         return _browserSettingsJSON;
     }
@@ -342,6 +348,22 @@ private:
 
     bool handleSignatureAction(const StringVector& tokens);
 
+    bool handleAIAction(const StringVector& tokens);
+
+    bool handleAIChatAction(const std::string& firstLine);
+    bool handleAIChatCancel(const std::string& firstLine);
+    bool handleUpdateViewSettings(const std::string& firstLine);
+    void sendAIChatResult(bool success, const std::string& text,
+                          const std::string& requestId);
+
+    bool handleAIImageGeneration(const std::string& prompt,
+                                  const std::string& requestId);
+
+    /// Map an HTTP status code from an AI API response to a user-facing error string.
+    static std::string mapAIHttpStatusToError(http::StatusCode statusCode,
+                                              const std::string& reasonPhrase,
+                                              const std::string& context = "");
+
     bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
     bool getStatus(const char* buffer, int length,
@@ -366,6 +388,9 @@ private:
     /// Returns true if given message from the client should be allowed or not
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
+
+    /// Returns true if the download message of type 'id' should be allowed or not
+    bool filterDownloadAs(const std::string& id) const;
 
     void dumpState(std::ostream& os) override;
 
@@ -509,6 +534,9 @@ private:
     bool _isConvertTo;
 
     Poco::SharedPtr<Poco::JSON::Object> _viewSettingsJSON;
+
+    /// Active AI chat HTTP session for cancellation support
+    std::shared_ptr<http::Session> _activeAIChatSession;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

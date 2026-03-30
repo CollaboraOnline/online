@@ -9,12 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Tile descriptor for tile requests and metadata.
+ * Classes: TileDesc, TileCombined
+ */
+
 #pragma once
 
 #include <Exceptions.hpp>
 #include <Protocol.hpp>
 #include <Rectangle.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 
 #include <cassert>
 #include <unordered_map>
@@ -172,7 +177,7 @@ public:
     }
 
     // used to cache a hash of the key elements compared in ==
-    uint32_t equalityHash() const
+    [[nodiscard]] uint32_t equalityHash() const
     {
         uint32_t a = to_underlying(_canonicalViewId) << 17;
         uint32_t b = _tilePosX << 7;
@@ -187,7 +192,7 @@ public:
     }
 
     /// Returns the tile's AABBox, i.e. tile-position + tile-extend
-    Util::Rectangle toAABBox() const
+    [[nodiscard]] Util::Rectangle toAABBox() const
     {
         long x2 = getTilePosX();
         if (x2 + getTileWidth() <= std::numeric_limits<int>::max())
@@ -211,30 +216,30 @@ public:
     }
 
     /// Returns whether this Tile's AABBox intersects (partially contains) given rectangle.
-    bool intersectsWithRect(int x, int y, int w, int h) const
+    [[nodiscard]] bool intersectsWithRect(int x, int y, int w, int h) const
     {
         return toAABBox().intersects( Util::Rectangle::create(x, y, x+w, y+h) );
     }
 
     /// Returns whether this Tile's AABBox intersects (partially contains) given Tile's AABBox.
-    bool intersects(const TileDesc& other) const
+    [[nodiscard]] bool intersects(const TileDesc& other) const
     {
         return toAABBox().intersects(other.toAABBox());
     }
 
     /// Returns whether this Tile's AABBox intersects (partially contains) given AABBox.
-    bool intersects(const Util::Rectangle& otherAABBox) const
+    [[nodiscard]] bool intersects(const Util::Rectangle& otherAABBox) const
     {
         return toAABBox().intersects(otherAABBox);
     }
 
     /// Returns whether this Tile's AABBox is fully contained by the given AABBox.
-    bool isContained(const Util::Rectangle& otherAABBox) const
+    [[nodiscard]] bool isContained(const Util::Rectangle& otherAABBox) const
     {
         return otherAABBox.contains(toAABBox());
     }
 
-    bool isAdjacent(const TileDesc& other) const
+    [[nodiscard]] bool isAdjacent(const TileDesc& other) const
     {
         if (other.getPart() != getPart() ||
             other.getEditMode() != getEditMode() ||
@@ -251,7 +256,7 @@ public:
 
     // return false if the TileDesc cannot appear in the same TileCombine
     // because their fields differ for the shared tilecombine case
-    bool sameTileCombineParams(const TileDesc& other) const
+    [[nodiscard]] bool sameTileCombineParams(const TileDesc& other) const
     {
         if (other.getPart() != getPart() ||
             other.getEditMode() != getEditMode() ||
@@ -268,8 +273,8 @@ public:
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
-    std::string serialize(std::string_view prefix = std::string_view(),
-                          std::string_view suffix = std::string_view()) const
+    [[nodiscard]] std::string serialize(std::string_view prefix = std::string_view(),
+                                        std::string_view suffix = std::string_view()) const
     {
         std::ostringstream oss;
         oss << prefix
@@ -309,7 +314,7 @@ public:
     }
 
     /// short name for a tile for debugging.
-    std::string debugName() const
+    [[nodiscard]] std::string debugName() const
     {
         std::ostringstream oss;
         oss << '(' << getCanonicalViewId() << ',' << getPart() << ',' << getEditMode() << ',' << getTilePosX() << ',' << getTilePosY() << ')';
@@ -396,14 +401,6 @@ public:
     static TileDesc parse(std::string_view message)
     {
         return parse(StringVector::tokenize(message.data(), message.size()));
-    }
-
-    std::string generateID() const
-    {
-        std::ostringstream tileID;
-        tileID << getPart() << ':' << getEditMode() << ':' << getTilePosX() << ':' << getTilePosY()
-                << ':' << getTileWidth() << ':' << getTileHeight() << ':' << getCanonicalViewId();
-        return tileID.str();
     }
 
 private:
@@ -572,7 +569,7 @@ public:
         _canonicalViewId = viewId;
     }
 
-    bool hasDuplicates() const
+    [[nodiscard]] bool hasDuplicates() const
     {
         if (_tiles.size() < 2)
             return false;
@@ -598,8 +595,8 @@ public:
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
-    std::string serialize(std::string_view prefix = std::string_view(),
-                          std::string_view suffix = std::string_view()) const
+    [[nodiscard]] std::string serialize(std::string_view prefix = std::string_view(),
+                                        std::string_view suffix = std::string_view()) const
     {
         std::ostringstream oss;
         int num = 0;

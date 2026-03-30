@@ -37,7 +37,7 @@ abstract class AutoCompletePopup {
 	protected newPopupData: PopupData;
 	protected data: MessageEvent<any>;
 	protected popupId: string;
-	protected isMobile: boolean;
+	protected isSmallScreenDevice: boolean;
 
 	constructor(popupId: string, map: any) {
 		this.map = map;
@@ -61,7 +61,7 @@ abstract class AutoCompletePopup {
 			persistKeyboard: true,
 		} as PopupData;
 
-		this.isMobile = (<any>window).mode.isMobile();
+		this.isSmallScreenDevice = (<any>window).mode.isSmallScreenDevice();
 		this.onAdd();
 		this.map.on('closepopup', this.closePopup, this);
 	}
@@ -99,6 +99,7 @@ abstract class AutoCompletePopup {
 			singleclickactivate: false,
 			fireKeyEvents: true,
 			entries: [] as Array<TreeEntryJSON>,
+			noSearchField: true,
 		} as TreeWidgetJSON;
 	}
 
@@ -110,7 +111,7 @@ abstract class AutoCompletePopup {
 	}
 
 	sendJSON(data: any): void {
-		const fireEvent = this.isMobile ? 'mobilewizard' : 'jsdialog';
+		const fireEvent = this.isSmallScreenDevice ? 'mobilewizard' : 'jsdialog';
 		this.map.fire(fireEvent, {
 			data: data,
 			callback: this.callback.bind(this),

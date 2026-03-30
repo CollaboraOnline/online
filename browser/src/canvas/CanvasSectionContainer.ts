@@ -196,6 +196,7 @@ class CanvasSectionContainer {
 	private drawRequest: number = null;
 	private drawingPaused: number = 0;
 	private drawingEnabled: boolean = true;
+	private deferredDrawCallback: () => void = null;
 	private sectionsDirty: boolean = false;
 	private framesRendered: number = 0; // Total frame count for debugging
 
@@ -209,6 +210,8 @@ class CanvasSectionContainer {
 	private frameCount: number = null; // Frame count of the current animation.
 	private duration: number = null; // Duration for the animation.
 	private elapsedTime: number = null; // Time that passed since the animation started.
+
+	private dpiMediaQuery: MediaQueryList = null;
 
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
@@ -229,6 +232,7 @@ class CanvasSectionContainer {
 		this.canvas.ontouchcancel = this.onTouchCancel.bind(this);
 		this.canvas.ondrop = this.onDrop.bind(this);
 		this.canvas.ondragover = this.onDragOver.bind(this);
+		window.addEventListener('blur', this.onWindowBlur.bind(this));
 
 		// Some explanation first.
 		// When the user uses the mouse wheel for scrolling, different browsers use different technics for calculating the deltaY and deltaX values.
@@ -255,6 +259,27 @@ class CanvasSectionContainer {
 
 			this.disableDrawing();
 		}
+
+		this.setupDPIChangeListener();
+	}
+
+	private setupDPIChangeListener(): void {
+		if (!window.matchMedia) return;
+
+		const updateDPI = (): void => {
+			if (window.devicePixelRatio !== app.dpiScale) {
+				this.onResize(0, 0);
+			}
+			// Re-register since the query is for a specific dppx value
+			this.setupDPIChangeListener();
+		};
+		if (this.dpiMediaQuery) {
+			this.dpiMediaQuery.removeEventListener('change', updateDPI);
+		}
+		this.dpiMediaQuery = window.matchMedia(
+			'(resolution: ' + window.devicePixelRatio + 'dppx)'
+		);
+		this.dpiMediaQuery.addEventListener('change', updateDPI, { once: true });
 	}
 
 	private clearCanvas() {
@@ -386,6 +411,12 @@ class CanvasSectionContainer {
 		if (this.drawingEnabled && wasNonZero && this.drawingPaused === 0) {
 			this.paintOnResumeOrEnable();
 		}
+	}
+
+	// Drawing requests will call this callback instead of queueing a redraw. Set the
+	// callback to null to resume the standard drawing chain.
+	public deferDrawing (callback: () => void) {
+		this.deferredDrawCallback = callback;
 	}
 
 	private paintOnResumeOrEnable() {
@@ -590,6 +621,9 @@ class CanvasSectionContainer {
 			layoutingService.cancelFrame();
 
 		while (layoutingService.runTheTopTask());
+
+		// Trigger drain callbacks since we bypassed the normal async flow
+		layoutingService.triggerDrainCallbacks();
 	}
 
 	private isCanvasSizeValidAfterDisplayChange(): boolean {
@@ -642,10 +676,17 @@ class CanvasSectionContainer {
 		this.drawSections();
 		this.flushLayoutingTasks();
 		this.canvas.style.visibility = 'unset';
+
+		// need to check if we should continue animation
+		this.animate(timestamp);
 	}
 
 	public requestReDraw() {
 		if (!this.drawingAllowed()) return;
+		if (this.deferredDrawCallback) {
+			this.deferredDrawCallback();
+			return;
+		}
 		if (this.drawRequest === null)
 			this.drawRequest = requestAnimationFrame(this.redrawCallback.bind(this));
 	}
@@ -1075,6 +1116,13 @@ class CanvasSectionContainer {
 	}
 
 	public onClick (e: MouseEvent) {
+		if (this.touchEventInProgress) {
+			Object.defineProperty(e, 'pointerType', {
+				value: 'touch',
+				writable: false
+			});
+		}
+
 		if (!this.draggingSomething) { // Prevent click event after dragging.
 			if (this.positionOnMouseDown !== null && this.positionOnMouseUp !== null) {
 				this.positionOnClick = this.convertPositionToCanvasLocale(e);
@@ -1180,7 +1228,7 @@ class CanvasSectionContainer {
 	}
 
 	public onMouseDown (e: MouseEvent) { // Ignore this event, just rely on this.draggingSomething variable.
-		if (e.button === 0 && !this.touchEventInProgress) { // So, we only handle left button.
+		if (e.button === 0 && !this.touchEventInProgress && this.mouseIsInside ) { // So, we only handle left button (and only when mouse is inside).
 			this.clearMousePositions();
 			this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
 
@@ -1289,6 +1337,31 @@ class CanvasSectionContainer {
 			if (windowSection.interactable)
 				windowSection.onMouseEnter(null, e);
 		}
+	}
+
+	// When the browser window/tab loses focus during a drag, we never receive the mouseup event.
+	// This leaves draggingSomething=true and sections (e.g. MouseControl) never send 'buttonup' to the core.
+	// This may cause a stuck selection in some cases.
+	private onWindowBlur () {
+		if (!this.draggingSomething)
+			return;
+
+		// Propagate a synthetic mouseUp to the section that received the original
+		// mouseDown so it can clean up (e.g. MouseControl sends 'buttonup' to core).
+		if (this.sectionOnMouseDown) {
+			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+			if (section) {
+				var position = this.positionOnMouseUp || this.mousePosition || this.positionOnMouseDown;
+				// Create a synthetic MouseEvent so section handlers can safely access
+				// event properties (e.g. stopPropagation, modifiers).
+				var syntheticEvent = new MouseEvent('mouseup', { button: 0, buttons: 0 });
+				this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, position), syntheticEvent);
+			}
+		}
+
+		this.clearMousePositions();
+		this.mousePosition = null;
+		this.mouseIsInside = false;
 	}
 
 	public onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
@@ -1595,8 +1668,8 @@ class CanvasSectionContainer {
 			this.createUpdateDivElements();
 		if (redraw && this.drawingAllowed())
 			this.requestReDraw();
-		else if (window.L && window.L.Browser.safari && window.L.Browser.mobile)
-			this.resizeCanvas(); // HACK: On Mobile/Tablet Safari, not resizing the canvas here causes it to blur later... I have seen no evidence that this is a problem on Desktop Safari
+		else
+			this.resizeCanvas(); // Ensure canvas backing store is correctly sized even when drawing is disabled, to prevent blurriness on HiDPI displays
 	}
 
 	private roundPositionAndSize(section: CanvasSectionObject) {
@@ -2030,7 +2103,7 @@ class CanvasSectionContainer {
 		if (this.continueAnimating) {
 			if (section) section.onAnimate(this.frameCount, this.elapsedTime);
 			this.frameCount++;
-			requestAnimationFrame(this.animate.bind(this));
+			this.requestReDraw();
 		}
 		else {
 			if (section) {

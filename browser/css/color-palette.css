@@ -35,7 +35,7 @@
 	--color-primary-lighter: #83beec; /* background-color */
 
 	--color-border: #b6b6b6;
-	--color-border-dark: #cecece; /* select */
+	--color-border-dark: #949494; /* select */
 	--color-border-darker: #c0bfbc;  /* hover */
 	--color-border-dark-63: #a1a1a1;
 	--color-border-lighter: #f1f1f1; /* disabled */
@@ -64,7 +64,6 @@
 	--color-calc-header-sheetview: #0a0a0a;
 	--color-calc-header-sheetview-selected: #646464;
 	--color-calc-header-sheetview-hover: #646464;
-	--color-calc-header-sheetview-unsynced: #500000;
 
 	--color-text-calc-header-selected: var(--color-text-darker);
 	--color-text-calc-header-sheetview-selected: #fff;
@@ -85,6 +84,9 @@
 	--color-quickfind-border: #e1dfdd;
 	--scrollbar-color: #c0bfbc transparent;
 	--color-background-hover: #F5F5F5;
+
+	--color-backstage-background : #f5f5f5;
+	--color-backstage-background-dark : #f0f0f0;
 }
 
 [data-bg-theme='light'] {

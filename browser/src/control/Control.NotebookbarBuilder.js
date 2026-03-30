@@ -24,11 +24,25 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
+		var builder = this;
+		const comboboxesFocusingDocument = ['fontnamecombobox', 'fontsizecombobox', 'styles'];
+		const originalCallback = builder.callback;
+		this.callback = function(objectType, eventType, object, data, builderArg) {
+			if (eventType === 'selected'
+				&& comboboxesFocusingDocument.indexOf(object.id) >= 0) {
+				builder._defaultCallbackHandler(objectType, eventType, object, data, builderArg);
+				builder.map.focus();
+				return 'focusHandled';
+			}
+			// allow for customization
+			return originalCallback(objectType, eventType, object, data, builderArg);
+		};
+
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
-		this._controlHandlers['iconview'] = JSDialog.notebookbarIconView;
+		this._controlHandlers['iconviewlist'] = JSDialog.notebookbarIconViewList;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 
 		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
@@ -80,7 +94,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:AutoSum'] = function() {};
 		this._toolitemHandlers['.uno:ReplyComment'] = function() {};
 		this._toolitemHandlers['.uno:DeleteComment'] = function() {};
-		this._toolitemHandlers['.uno:CompareDocuments'] = function() {};
+		this._toolitemHandlers['.uno:CompareDocuments'] = this._compareDocumentsControl;
 		this._toolitemHandlers['.uno:MergeDocuments'] = function() {};
 		this._toolitemHandlers['.uno:FunctionBox'] = function() {};
 		this._toolitemHandlers['.uno:EditAnnotation'] = function() {};
@@ -188,10 +202,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			var row = window.L.DomUtil.create('div', 'notebookbar row', table);
 			var button = window.L.DomUtil.createWithId('button', data.id + 'ios', row);
 
-			$(table).addClass('select2 select2-container select2-container--default');
-			// Fix issue #5838 Don't add the "select2-selection--single" class
-			$(row).addClass('select2-selection');
-			$(button).addClass('select2-selection__rendered');
+			$(table).addClass('ui-combobox jsdialog');
+			$(row).addClass('ui-combobox-content');
+			$(button).addClass('ui-combobox-content');
 
 			if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
 				button.innerText = data.entries[data.selectedEntries[0]];
@@ -224,10 +237,29 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		const isDesktop = window.mode.isDesktop();
 		const tooltipCollapsed = isDesktop ? _('Click to expand') : _('Tap to expand');
 		const tooltipExpanded = isDesktop ? _('Click to collapse') : _('Tap to collapse');
-		if ($(tabs[t]).hasClass('selected'))
-			tabs[t].setAttribute('data-cooltip', tooltipExpanded);
-		window.L.control.attachTooltipEventListener(tabs[t], builder.map);
+
+
+		var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
+		var isFileTabForCoda = isFileTab && window.mode.isCODesktop();
+		if (!isFileTabForCoda) {
+			if ($(tabs[t]).hasClass('selected'))
+				tabs[t].setAttribute('data-cooltip', tooltipExpanded);
+			window.L.control.attachTooltipEventListener(tabs[t], builder.map);
+		} else {
+			tabs[t].removeAttribute('data-cooltip');
+		}
 		return function(event) {
+			if (isFileTabForCoda) {
+				if (builder.map.backstageView) {
+					console.log('NotebookbarBuilder: Calling backstageView.toggle()');
+					builder.map.backstageView.toggle();
+				} else {
+					console.error('NotebookbarBuilder: backstageView is NOT initialized!');
+				}
+				event.preventDefault();
+				return;
+			}
+
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
 
@@ -367,18 +399,20 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
-				},
-				{
-					'action': 'downloadas-html',
-					'text': _('HTML File (.html)')
-				},
-			].concat(!window.ThisIsTheAndroidApp ? [
-				{
-					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
-					'command': 'exportpdf'
 				}
-			] : []);
+			];
+			submenuOpts.push({
+				'action': 'downloadas-html',
+				'text': _('HTML File (.html)')
+			});
+			if (!window.ThisIsTheAndroidApp)
+				submenuOpts.push({
+					'action': 'exportpdf' ,
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
+					'command': 'exportpdf'
+				});
 		} else if (docType === 'spreadsheet') {
 			submenuOpts = [
 				{
@@ -405,14 +439,16 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
-				},
-			].concat(!window.ThisIsTheAndroidApp ? [
-				{
-					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
-					'command': 'exportpdf'
 				}
-			] : []);
+			];
+			if (!window.ThisIsTheAndroidApp)
+				submenuOpts.push({
+					'action': 'exportpdf' ,
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
+					'command': 'exportpdf'
+				});
 		} else if (docType === 'presentation') {
 			submenuOpts = [
 				{
@@ -436,100 +472,49 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 					'text': _('HTML Document (.html)')
 				},
 				{
-					'action': !window.ThisIsAMobileApp
-						? 'exportdirectpdf'
-						: 'downloadas-pdf',
+					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
-					'command': !window.ThisIsAMobileApp
-						? 'exportdirectpdf'
-						: 'downloadas-pdf',
-				},
-			]
-				.concat(
-					!window.ThisIsTheAndroidApp
-						? [
-								{
-									'action': 'exportpdf',
-									'text': _(
-										'PDF Document (.pdf) as...',
-									),
-									'command': 'exportpdf',
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_swf')
-						? [
-								{
-									'action': 'downloadas-swf',
-									'text': _(
-										'Shockwave Flash (.swf)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_svg')
-						? [
-								{
-									'action': 'downloadas-svg',
-									'text': _(
-										'Scalable Vector Graphics (.svg)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_bmp')
-						? [
-								{
-									'action': 'downloadas-bmp',
-									'text': _(
-										'Current slide as Bitmap (.bmp)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_gif')
-						? [
-								{
-									'action': 'downloadas-gif',
-									'text': _(
-										'Current slide as Graphics Interchange Format (.gif)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_png')
-						? [
-								{
-									'action': 'downloadas-png',
-									'text': _(
-										'Current slide as Portable Network Graphics (.png)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_tiff')
-						? [
-								{
-									'action': 'downloadas-tiff',
-									'text': _(
-										'Current slide as Tag Image File Format (.tiff)',
-									),
-								},
-							]
-						: [],
-				);
+					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
+				}
+			];
+			if (!window.ThisIsTheAndroidApp)
+				submenuOpts.push({
+					'action': 'exportpdf',
+					'text': !window.mode.isCODesktop ?
+						_('PDF Document (.pdf) as...') :
+						_('PDF Document (.pdf) with options'),
+					'command': 'exportpdf'
+				});
+			if (window.extraExportFormats.includes('impress_swf'))
+				submenuOpts.push({
+					'action': 'downloadas-swf',
+					'text': _('Shockwave Flash (.swf)')
+				});
+			if (window.extraExportFormats.includes('impress_svg'))
+				submenuOpts.push({
+					'action': 'downloadas-svg',
+					'text': _('Scalable Vector Graphics (.svg)')
+				});
+			if (window.extraExportFormats.includes('impress_bmp'))
+				submenuOpts.push({
+					'action': 'downloadas-bmp',
+					'text': _('Current slide as Bitmap (.bmp)')
+				});
+			if (window.extraExportFormats.includes('impress_gif'))
+				submenuOpts.push({
+					'action': 'downloadas-gif',
+					'text': _('Current slide as Graphics Interchange Format (.gif)')
+				});
+			if (window.extraExportFormats.includes('impress_png'))
+				submenuOpts.push({
+					'action': 'downloadas-png',
+					'text': _('Current slide as Portable Network Graphics (.png)')
+				});
+			if (window.extraExportFormats.includes('impress_tiff'))
+				submenuOpts.push({
+					'action': 'downloadas-tiff',
+					'text': _('Current slide as Tag Image File Format (.tiff)')
+				});
 		} else if (docType === 'drawing') {
 			submenuOpts = [
 				{
@@ -724,6 +709,18 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
+	_compareDocumentsControl: function(parentContainer, data, builder) {
+		const options = {hasDropdownArrow: false};
+		const control = builder._unoToolButton(parentContainer, data, builder, options);
+
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
+		$(control.container).click(function () {
+			window.L.DomUtil.get('comparedocuments').click();
+		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
+	},
+
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 		$(control.button).unbind('click');
@@ -742,6 +739,26 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.button).unbind('click');
+
+		if (!control.label) {
+			const tooltip = document.createElement('span');
+			tooltip.id = 'save-status';
+			tooltip.className = 'tooltip-label visuallyhidden';
+			tooltip.setAttribute('role', 'tooltip');
+			control.label = tooltip;
+
+			control.button.parentElement.appendChild(tooltip);
+
+			builder.map.on('updatemodificationindicator', function(e) {
+				if (e.lastSaved) {
+					tooltip.textContent = e.lastSaved;
+				}
+			});
+
+			control.button.setAttribute('aria-describedby', tooltip.id);
+			control.label = tooltip;
+		}
+
 		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			// Save only when not read-only.
@@ -835,7 +852,8 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			if (hasManyChildren) {
+			var isContainer = this.isContainerType(childData.type);
+			if (hasManyChildren && isContainer) {
 				if (childData.id && childData.id.indexOf(' ') >= 0)
 					console.error('notebookbar: space in the id: "' + childData.id + '"');
 				var tableId = childData.id ? childData.id.replace(' ', '') : '';

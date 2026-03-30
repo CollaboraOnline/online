@@ -9,6 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Network-related utility functions and helper classes.
+ * Classes: net::HostEntry, net::DefaultValues
+ * Functions: connect(), resolve(), localhostIPv4/IPv6()
+ */
+
 #pragma once
 
 #include <chrono>
@@ -56,7 +62,11 @@ class HostEntry
     std::string makeIPAddress(const sockaddr* ai_addr);
 
 public:
-    HostEntry(const std::string& desc);
+    explicit HostEntry(std::string desc);
+    HostEntry(const HostEntry&) = default;
+    HostEntry(HostEntry&&) = default;
+    HostEntry& operator=(const HostEntry&) = default;
+    HostEntry& operator=(HostEntry&&) = default;
     ~HostEntry();
 
     bool good() const { return _saved_errno == 0 && _eaino == 0; }
@@ -104,7 +114,7 @@ enum class AsyncConnectResult : std::uint8_t {
 using asyncConnectCB =
     std::function<void(std::shared_ptr<StreamSocket>, AsyncConnectResult result)>;
 
-void asyncConnect(const std::string& host, const std::string& port, bool isSSL,
+void asyncConnect(std::string host, const std::string& port, bool isSSL,
                   const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler,
                   const asyncConnectCB& asyncCb);
 

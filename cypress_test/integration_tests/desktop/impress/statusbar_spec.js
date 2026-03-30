@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statusbar tests.', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/statusbar.odp');
@@ -15,9 +15,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 
 	it('Selected slide.', function() {
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 1 of 2');
-		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#toolbar-down #nextpage').click();
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
-		cy.cGet('#toolbar-down #prev').click();
+		cy.cGet('#toolbar-down #prevpage').click();
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 1 of 2');
 	});
 

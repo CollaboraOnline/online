@@ -9,22 +9,25 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for hosting-related functionality.
+ */
+
 #include <config.h>
 
+#include <common/Png.hpp>
+#include <common/Unit.hpp>
 #include <net/HttpRequest.hpp>
-
-#include <memory>
-#include <string>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/NodeList.h>
-#include <test/lokassert.hpp>
 
-#include <Png.hpp>
-#include <Unit.hpp>
-#include <helpers.hpp>
+#include <memory>
+#include <string>
 
 /// Test suite for /hosting, etc.
 class UnitHosting : public UnitWSD
@@ -48,7 +51,7 @@ UnitBase::TestResult UnitHosting::testDiscovery()
         = http::get(helpers::getTestServerURI(), "/hosting/discovery");
 
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -65,7 +68,7 @@ UnitBase::TestResult UnitHosting::testDiscovery()
         = http::get(helpers::getTestServerURI(), "/hosting/discovery/");
 
     LOK_ASSERT(httpResponse2->done());
-    LOK_ASSERT(httpResponse2->state() == http::Response::State::Complete);
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse2->state());
 
     LOK_ASSERT(!httpResponse2->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse2->statusLine().reasonPhrase().empty());
@@ -89,7 +92,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         = httpSession->syncRequest(http::Request("/hosting/discovery"));
 
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
     // Get discovery first and extract the urlsrc of the capabilities end point
     std::string capabilitiesURI;
@@ -126,7 +129,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         httpResponse = httpSession->syncRequest(http::Request(CAPABILITIES_END_POINT));
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT_EQUAL_STR("application/json", httpResponse->header().getContentType());
@@ -135,7 +138,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
 
         Poco::JSON::Parser parser;
         Poco::Dynamic::Var jsonFile = parser.parse(responseString);
-        Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
+        const Poco::JSON::Object::Ptr& features = jsonFile.extract<Poco::JSON::Object::Ptr>();
         LOK_ASSERT(features);
         LOK_ASSERT(features->has("convert-to"));
 

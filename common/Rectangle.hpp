@@ -67,7 +67,7 @@ public:
     }
 
     /// Ctor from comma separated values
-    Rectangle(const std::string &rectangle);
+    explicit Rectangle(const std::string &rectangle);
 
     /// Ctor via top/left and bottom/right coordinates
     static Rectangle create(int x1, int y1, int x2, int y2)

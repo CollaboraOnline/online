@@ -5,11 +5,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Efficient string tokenization without memory allocation.
+ * Classes: StringVector - Zero-copy string token management
+ */
+
+#include <config.h>
 
 #include "StringVector.hpp"
 
-#include "Util.hpp"
+#include <common/NumUtil.hpp>
 
 bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {
@@ -44,7 +49,7 @@ bool StringVector::getUInt32(std::size_t index, const std::string& key, uint32_t
             _string.compare(token._index, key.size(), key, 0, key.size()) == 0 &&
             _string[token._index + key.size()] == '=')
     {
-        value = Util::safe_atoi(&_string[token._index + offset], token._length - offset);
+        value = NumUtil::safe_atoi(&_string[token._index + offset], token._length - offset);
         return value < std::numeric_limits<uint32_t>::max();
     }
 
@@ -77,7 +82,7 @@ bool StringVector::getNameIntegerPair(std::size_t index, std::string& name, int&
 
     name = _string.substr(token._index, mid - token._index);
     size_t offset = mid + 1;
-    value = Util::safe_atoi(&_string[offset], token._index + token._length - offset);
+    value = NumUtil::safe_atoi(&_string[offset], token._index + token._length - offset);
     return value > std::numeric_limits<int>::min() && value < std::numeric_limits<int>::max();
 }
 

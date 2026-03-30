@@ -311,6 +311,7 @@ function getInsertTablePopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'inserttable-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onmouseover = highlightTableFunction;
 	grid.onclick = sendInsertTableFunction;
 
@@ -344,10 +345,12 @@ function insertTable(grid = document.getElementsByClassName('inserttable-grid')[
 	for (var r = 0; r < rows; r++) {
 		const row = document.createElement('div');
 		row.className = 'row';
+		row.setAttribute('role', 'row');
 		grid.appendChild(row);
 
 		for (var c = 0; c < cols; c++) {
 			const col = document.createElement('button');
+			col.setAttribute('role', 'gridcell');
 			col.setAttribute('aria-label', (1 + r) + 'x' + (1 + c));
 			col.onfocus = highlightTableFunction;
 			col.className = 'col';
@@ -569,18 +572,18 @@ var onShapeClickFunction = function(e) {
 	e.stopPropagation();
 };
 
-var onShapeKeyUpFunction = function(event) {
-	if (event.code === 'Enter' || event.code === 'Space') {
-		app.map.sendUnoCommand('.uno:' + event.target.dataset.uno);
-		closePopup();
-	}
-	event.stopPropagation();
-};
-
 var onShapeKeyDownFunction = function(event) {
 	if (event.code === 'Escape') {
 		closePopup();
 		app.map.focus();
+	}
+	else if (event.code === 'Enter' || event.code === 'Space') {
+		let name = $(event.target).data().uno;
+		if (name) {
+			app.map.sendUnoCommand('.uno:' + name);
+			closePopup();
+		}
+		event.preventDefault();
 	}
 };
 
@@ -595,18 +598,27 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 		return;
 
 	var collection = shapes[shapeType];
-
+	let cIdx = 1;
+	let isFirstItem = true;
 	for (let s in collection) {
+		const group = document.createElement('div');
+		group.setAttribute('role', 'group');
+
 		const rowHeader = document.createElement('div');
+		rowHeader.setAttribute('role', 'presentation');
+		rowHeader.id = `${shapeType}_row_${cIdx++}`;
 		rowHeader.className = 'row-header cool-font';
 		rowHeader.textContent = _(s);
-		grid.appendChild(rowHeader);
+		group.appendChild(rowHeader);
+		grid.appendChild(group);
+
+		group.setAttribute('aria-labelledby', rowHeader.id);
 
 		var rows = Math.ceil(collection[s].length / width);
 		var idx = 0;
 		const row = document.createElement('div');
 		row.className = 'row';
-		grid.appendChild(row);
+		group.appendChild(row);
 		for (let r = 0; r < rows; r++) {
 
 			for (let c = 0; c < width; c++) {
@@ -618,10 +630,15 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 				const col = document.createElement('div');
 
 				col.className = 'col w2ui-icon ' + shape.img;
+				col.setAttribute('role', 'gridcell');
 				col.dataset.uno = shape.uno;
 				col.setAttribute('data-cooltip', shape.text);
+				col.setAttribute('aria-label', shape.text);
 				window.L.control.attachTooltipEventListener(col, map);
 				col.tabIndex = 0;
+				col.setAttribute('role', 'option');
+				col.setAttribute('aria-selected', isFirstItem);
+				isFirstItem = false;
 				col.setAttribute('index', r + ':' + c);
 				row.appendChild(col);
 			}
@@ -638,7 +655,6 @@ function getShapesPopupElements(closeCallback) {
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
 	grid.onclick = onShapeClickFunction;
-	grid.onkeyup = onShapeKeyUpFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
 
 	const container = document.createElement('div');
@@ -672,7 +688,6 @@ function getConnectorsPopupElements(closeCallback) {
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
 	grid.onclick = onShapeClickFunction;
-	grid.onkeyup = onShapeKeyUpFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
 
 	gridContainer.appendChild(grid);
@@ -827,6 +842,21 @@ function onInsertBackground() {
 	return false;
 }
 
+function onCompareDocuments() {
+	const compareDocuments = window.L.DomUtil.get('comparedocuments');
+	if ('files' in compareDocuments) {
+		for (let i = 0; i < compareDocuments.files.length; i++) {
+			const file = compareDocuments.files[i];
+			// Remember old file name for CompareChangesLabelSection
+			app.writer.compareDocumentOldFileName = file.name;
+			map.compareDocuments(file);
+		}
+	}
+
+	compareDocuments.value = null;
+	return false;
+}
+
 function onWopiProps(e) {
 	if (e.DisableCopy) {
 		$('#addressInput input').bind('copy', function(evt) {
@@ -836,7 +866,7 @@ function onWopiProps(e) {
 }
 
 function processStateChangedCommand(commandName, state) {
-	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
+	var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (!toolbar)
 		return;
 
@@ -898,8 +928,8 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 
-	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
-		|| commandName === '.uno:SpacePara2') {
+	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara115'
+		|| commandName === '.uno:SpacePara15' || commandName === '.uno:SpacePara2') {
 		// TODO
 		//if (toolbar) toolbar.refresh();
 	}
@@ -989,7 +1019,7 @@ function onCommandResult(e) {
 }
 
 function onUpdatePermission(e) {
-	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
+	var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (toolbar) {
 		// always enabled items
 		var enabledButtons = ['closemobile', 'undo', 'redo', 'fold'];
@@ -1051,6 +1081,7 @@ $(document).ready(function() {
 	// Update supported media mime type insertion
 	const supportedGraphicMime = app.LOUtil.graphicMimeFilter.join(",");
 	const supportedMediaMime = app.LOUtil.mediaMimeFilter.join(",");
+	const supportedDocumentMime = app.LOUtil.documentMimeFilter.join(",");
 
 	const insertgraphic = window.L.DomUtil.get('insertgraphic');
 	if (insertgraphic) {
@@ -1069,6 +1100,12 @@ $(document).ready(function() {
 		selectbackground.accept = supportedGraphicMime;
 		selectbackground.addEventListener('change', onInsertBackground);
 	}
+
+	const comparedocuments = window.L.DomUtil.get('comparedocuments');
+	if (comparedocuments) {
+		comparedocuments.accept = supportedDocumentMime;
+		comparedocuments.addEventListener('change', onCompareDocuments);
+	}
 });
 
 function setupToolbar(e) {
@@ -1076,7 +1113,7 @@ function setupToolbar(e) {
 
 	map.on('search', function (e) {
 		var searchInput = window.L.DomUtil.get('search-input');
-		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
+		var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileSearchBar: app.map.statusBar;
 		if (!toolbar) {
 			console.debug('Cannot find search bar');
 			return;
@@ -1084,7 +1121,7 @@ function setupToolbar(e) {
 		if (e.count === 0) {
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				toolbar.enableItem('cancelsearch', false);
 			} else {
 				toolbar.showItem('cancelsearch', false);
@@ -1123,7 +1160,7 @@ function setupToolbar(e) {
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
 
-	if (map.options.wopi && window.L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+	if (map.options.wopi && window.L.Params.closeButtonEnabled && !window.mode.isSmallScreenDevice()) {
 		$('#closebuttonwrapper').css('display', 'flex');
 		var button = window.L.DomUtil.get('closebutton');
 		if (button) {
@@ -1135,7 +1172,7 @@ function setupToolbar(e) {
 	} else if (!window.L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 		$('#closebuttonwrapperseparator').hide();
-	} else if (window.L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+	} else if (window.L.Params.closeButtonEnabled && !window.mode.isSmallScreenDevice()) {
 		$('#closebuttonwrapper').css('display', 'flex');
 	}
 

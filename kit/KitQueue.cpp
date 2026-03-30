@@ -9,18 +9,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Kit process callback queue management and optimization.
+ * Classes: KitQueue, Callback - LOK callback handling and deduplication
+ */
+
 #include <config.h>
 
 #include "KitQueue.hpp"
 
+#include <common/JsonUtil.hpp>
+
+#include <algorithm>
 #include <climits>
 #include <cstring>
-#include <algorithm>
+#include <iostream>
 #include <string>
 #include <string_view>
-#include <iostream>
-
-#include "JsonUtil.hpp"
 
 /* static */ std::string KitQueue::Callback::toString(int view, int type,
                                                       const std::string& payload)
@@ -89,21 +94,15 @@ void KitQueue::put(const Payload& value)
         _queue.emplace_back(value);
 }
 
-std::vector<TileDesc>* KitQueue::getTileQueue(CanonicalViewId viewid)
+std::vector<TileDesc>& KitQueue::ensureTileQueue(CanonicalViewId viewid)
 {
     for (auto& queue : _tileQueues)
     {
         if (queue.first == viewid)
-            return &queue.second;
+            return queue.second;
     }
-    return nullptr;
-}
 
-std::vector<TileDesc>& KitQueue::ensureTileQueue(CanonicalViewId viewid)
-{
-    std::vector<TileDesc>* tileQueue = getTileQueue(viewid);
-    if (tileQueue)
-        return *tileQueue;
+    // Create and return a new one.
     return _tileQueues.emplace_back(viewid, std::vector<TileDesc>()).second;
 }
 
@@ -116,19 +115,6 @@ std::string extractViewId(const std::string& payload)
     const Poco::Dynamic::Var result = parser.parse(payload);
     const auto& json = result.extract<Poco::JSON::Object::Ptr>();
     return json->get("viewId").toString();
-}
-
-/// Extract the .uno: command ID from the potential command.
-std::string extractUnoCommand(const std::string& command)
-{
-    if (!COOLProtocol::matchPrefix(".uno:", command))
-        return std::string();
-
-    size_t equalPos = command.find('=');
-    if (equalPos != std::string::npos)
-        return command.substr(0, equalPos);
-
-    return command;
 }
 
 /// Extract rectangle from the invalidation callback payload
@@ -147,6 +133,8 @@ bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h
     if (tokens.equals(0, "EMPTY,"))
     {
         part = std::atoi(tokens[1].c_str());
+        if (tokens.size() > 2)
+            mode = std::atoi(tokens[2].c_str());
         return true;
     }
 
@@ -178,7 +166,7 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     const auto callbackType = static_cast<LibreOfficeKitCallbackType>(type);
 
     // Nothing to combine in this case:
-    if (_callbacks.size() == 0)
+    if (_callbacks.empty())
         return false;
 
     switch (callbackType)
@@ -298,9 +286,16 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
 
         case LOK_CALLBACK_STATE_CHANGED: // state changed
         {
-            std::string unoCommand = extractUnoCommand(payload);
-            if (unoCommand.empty())
+            constexpr std::string_view unoPrefix(".uno:");
+            if (!payload.starts_with(unoPrefix))
                 return false;
+
+            // Only elide .uno commands that have a value.
+            const size_t equalPos = payload.find('=', unoPrefix.size());
+            if (equalPos == std::string::npos)
+                return false;
+
+            const std::string_view unoCommand = std::string_view(payload).substr(0, equalPos);
 
             // This is needed because otherwise it creates some problems when
             // a save occurs while a cell is still edited in Calc.
@@ -308,17 +303,16 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
                 return false;
 
             // remove obsolete states of the same .uno: command
-            size_t unoCommandLen = unoCommand.size();
+            const size_t unoCommandLen = unoCommand.size();
             for (size_t i = 0; i < _callbacks.size(); ++i)
             {
-                Callback& it = _callbacks[i];
+                const Callback& it = _callbacks[i];
                 if (it._type != type || it._view != view)
                     continue;
 
-                size_t payloadLen = it._payload.size();
-                if (payloadLen < unoCommandLen + 1 ||
-                    unoCommand.compare(0, unoCommandLen, it._payload) != 0 ||
-                    it._payload[unoCommandLen] != '=')
+                // Skip if the current callback payload doesn't start with '<unoCommand>='.
+                if (it._payload.size() < unoCommandLen + 1 || it._payload[unoCommandLen] != '=' ||
+                    !it._payload.starts_with(unoCommand))
                     continue;
 
                 LOG_TRC("Remove obsolete uno command: " << it << " -> "
@@ -562,17 +556,15 @@ namespace {
     struct SpeculativeTileDesc
     {
         const TileDesc& _prioTile;
-        int _tilePosX;
-        int _tilePosY;
+        const int _tilePosX;
+        const int _tilePosY;
 
-        SpeculativeTileDesc(const TileDesc& prioTile,
-                            int leftGridX, int vertDirection)
+        SpeculativeTileDesc(const TileDesc& prioTile, int leftGridX, int vertDirection)
             : _prioTile(prioTile)
+            , _tilePosX(leftGridX * prioTile.getTileWidth())
+            , _tilePosY(prioTile.getTilePosY() + (prioTile.getTileHeight() * vertDirection))
         {
-            _tilePosX = leftGridX * prioTile.getTileWidth();
-            _tilePosY = prioTile.getTilePosY() + (prioTile.getTileHeight() * vertDirection);
         }
-
     };
 
     bool operator<(const TileDesc& candidate, const SpeculativeTileDesc& other)
@@ -617,29 +609,26 @@ TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, TilePriori
 
     LOG_TRC("KitQueue depth: " << tileQueue.size());
 
-    TileDesc msg = tileQueue.front();
-
     // vector of tiles we will render
     std::vector<TileDesc> tiles;
 
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
-    TilePrioritizer::Priority prioritySoFar = TilePrioritizer::Priority::NONE;
-    for (size_t i = 0; i < tileQueue.size(); ++i)
+    priority = _prio.getTilePriority(tileQueue[0]);
+    for (std::size_t i = 1; i < tileQueue.size(); ++i)
     {
-        auto& prio = tileQueue[i];
+        const auto& tile = tileQueue[i];
 
-        const TilePrioritizer::Priority p = _prio.getTilePriority(prio);
-        if (p > prioritySoFar)
+        const TilePrioritizer::Priority p = _prio.getTilePriority(tile);
+        if (p > priority)
         {
-            prioritySoFar = p;
-            prioritized = i;
-            msg = prio;
+            priority = p;
+            prioritized = static_cast<int>(i);
         }
     }
 
-    priority = prioritySoFar;
+    const TileDesc msg = tileQueue[prioritized];
 
     LOG_TRC("Priority tile: " << msg.serialize() <<
             " x-grid=" << msg.getTilePosX() / msg.getTileWidth() <<
@@ -753,7 +742,7 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
 
     // Breakup tilecombine and deduplicate (we are re-combining
     // the tiles inside popTileQueue() again)
-    const std::string msg = std::string(value.data(), value.size());
+    const std::string_view msg(value.data(), value.size());
     const TileCombined tileCombined = TileCombined::parse(msg);
 
     std::vector<TileDesc>& tileQueue = ensureTileQueue(tileCombined.getCanonicalViewId());
@@ -765,7 +754,7 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
 
 void KitQueue::pushTileQueue(const Payload &value)
 {
-    const std::string msg = std::string(value.data(), value.size());
+    const std::string_view msg(value.data(), value.size());
     const TileDesc desc = TileDesc::parse(msg);
     std::vector<TileDesc>& tileQueue = ensureTileQueue(desc.getCanonicalViewId());
     sortedInsert(tileQueue, desc);
@@ -779,16 +768,6 @@ size_t KitQueue::getTileQueueSize() const
         queuedTiles += queue.second.size();
 
     return queuedTiles;
-}
-
-bool KitQueue::isTileQueueEmpty() const
-{
-    for (const auto& queue : _tileQueues)
-    {
-        if (!queue.second.empty())
-            return false;
-    }
-    return true;
 }
 
 std::string KitQueue::combineRemoveText(const StringVector& tokens)
@@ -851,11 +830,11 @@ void KitQueue::dumpState(std::ostream& oss)
 {
     oss << "\tIncoming Queue size: " << _queue.size() << "\n";
     size_t i = 0;
-    for (Payload &it : _queue)
+    for (const Payload &it : _queue)
         oss << "\t\t" << i++ << ": " << COOLProtocol::getFirstLine(it) << "\n";
 
     oss << "\tTile Queues count: " << _tileQueues.size() << "\n";
-    for (auto& queue : _tileQueues)
+    for (const auto& queue : _tileQueues)
     {
         CanonicalViewId viewId = queue.first;
         const std::vector<TileDesc>& tileQueue = queue.second;
@@ -867,7 +846,7 @@ void KitQueue::dumpState(std::ostream& oss)
 
     oss << "\tCallbacks size: " << _callbacks.size() << "\n";
     i = 0;
-    for (auto &it : _callbacks)
+    for (const auto &it : _callbacks)
         oss << "\t\t" << i++ << ": " << it << "\n";
 }
 

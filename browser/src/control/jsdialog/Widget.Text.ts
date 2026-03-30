@@ -22,7 +22,7 @@ function staticTextControl(
 ) {
 	var statictext = window.L.DomUtil.create(
 		'span',
-		builder.options.cssClass,
+		builder.options.cssClass + ' static-label',
 		parentContainer,
 	);
 
@@ -37,6 +37,9 @@ function staticTextControl(
 	}
 
 	if (data.hidden) $(statictext).hide();
+
+	if (data.allyRole) statictext.setAttribute('role', data.allyRole);
+	if (data.ariaLive) statictext.setAttribute('aria-live', data.ariaLive);
 
 	return false;
 }

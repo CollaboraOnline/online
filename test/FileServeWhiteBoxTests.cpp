@@ -9,8 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit test for file server functionality.
+ */
+
 #include <config.h>
 
+#include <wsd/ContentSecurityPolicy.hpp>
 #include <wsd/FileServer.hpp>
 #include <common/FileUtil.hpp>
 #include <test/lokassert.hpp>
@@ -33,6 +38,7 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPreProcessedFile);
     CPPUNIT_TEST(testPreProcessedFileRoundtrip);
     CPPUNIT_TEST(testPreProcessedFileSubstitution);
+    CPPUNIT_TEST(testCSPMergeNewlines);
     CPPUNIT_TEST_SUITE_END();
 
     void testUIDefaults();
@@ -40,10 +46,11 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     void testPreProcessedFile();
     void testPreProcessedFileRoundtrip();
     void testPreProcessedFileSubstitution();
+    void testCSPMergeNewlines();
 
     void preProcessedFileSubstitution(const std::string_view testname,
                                       const std::unordered_map<std::string, std::string> variables);
-    // Helper replace each occurence of from in str to variables[to_key] except if to_key is not in variables
+    // Helper replace each occurrence of from in str to variables[to_key] except if to_key is not in variables
     std::string& replaceIfExist(std::string& str, const std::string& from,
                                 const std::string& to_key,
                                 const std::unordered_map<std::string, std::string> variables);
@@ -453,6 +460,26 @@ void FileServeTests::testPreProcessedFileSubstitution()
     preProcessedFileSubstitution(testname, std::move(variables));
     preProcessedFileSubstitution(std::string(testname) + "_empty",
                                  std::unordered_map<std::string, std::string>());
+}
+
+void FileServeTests::testCSPMergeNewlines()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Same line: the simple case.
+    {
+        ContentSecurityPolicy csp("frame-ancestors https://example.com; img-src https://example.com");
+        LOK_ASSERT_EQUAL_STR(" https://example.com", csp.getDirective("frame-ancestors"));
+        LOK_ASSERT_EQUAL_STR(" https://example.com", csp.getDirective("img-src"));
+    }
+
+    // Value on new line, as Poco XMLConfiguration returns when the XML
+    // config value is on a separate line from the opening tag.
+    {
+        ContentSecurityPolicy csp("\n        frame-ancestors https://example.com; img-src https://example.com\n    ");
+        LOK_ASSERT_EQUAL_STR(" https://example.com", csp.getDirective("frame-ancestors"));
+        LOK_ASSERT_EQUAL_STR(" https://example.com", csp.getDirective("img-src"));
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FileServeTests);

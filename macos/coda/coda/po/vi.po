@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-06 18:17+0000\n"
+"PO-Revision-Date: 2025-12-24 13:00+0000\n"
+"Last-Translator: Loc Huynh <huynhloc.contact@gmail.com>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/collabora-"
+"online/collabora-office-macos-app/vi/>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.15.1\n"
+
+msgctxt "1UK-8n-QPP.title"
+msgid "Customize Toolbar…"
+msgstr "Tùy chỉnh thanh công cụ…"
+
+#. Do not change the placeholder ProductName!
+msgctxt "1Xt-HY-uBw.title"
+msgid "ProductName"
+msgstr "Tên sản phẩm"
+
+msgctxt "4J7-dP-txa.title"
+msgid "Enter Full Screen"
+msgstr "Vào toàn màn hình"
+
+#. Do not change the placeholder ProductName!
+msgctxt "4sb-4s-VLi.title"
+msgid "Quit ProductName"
+msgstr "Thoát khỏi tên sản phẩm"
+
+msgctxt "5QF-Oa-p0T.title"
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#. Do not change the placeholder ProductName!
+msgctxt "5kV-Vb-QxS.title"
+msgid "About ProductName"
+msgstr "Giới thiệu về tên sản phẩm"
+
+msgctxt "6dh-zS-Vam.title"
+msgid "Redo"
+msgstr "Làm lại"
+
+msgctxt "AYu-sK-qS6.title"
+msgid "Main Menu"
+msgstr "Menu chính"
+
+msgctxt "BOF-NM-1cW.title"
+msgid "Preferences…"
+msgstr "Tùy chỉnh…"
+
+msgctxt "Bw7-FT-i3A.title"
+msgid "Save As…"
+msgstr "Lưu dưới dạng…"
+
+msgctxt "DVo-aG-piG.title"
+msgid "Close"
+msgstr "Đóng"
+
+msgctxt "F2S-fz-NVQ.title"
+msgid "Help"
+msgstr "Trợ giúp"
+
+msgctxt "H8h-7b-M4v.title"
+msgid "View"
+msgstr "Xem"
+
+msgctxt "HyV-fh-RgO.title"
+msgid "View"
+msgstr "Xem"
+
+msgctxt "IAo-SY-fd9.title"
+msgid "Open…"
+msgstr "Mở…"
+
+msgctxt "KaW-ft-85H.title"
+msgid "Revert to Saved"
+msgstr "Hoàn nguyên về Đã lưu"
+
+msgctxt "Kd2-mp-pUS.title"
+msgid "Show All"
+msgstr "Hiển thị tất cả"
+
+msgctxt "LE2-aR-0XJ.title"
+msgid "Bring All to Front"
+msgstr "Đưa tất cả lên phía trước"
+
+msgctxt "NMo-om-nkz.title"
+msgid "Services"
+msgstr "Dịch vụ"
+
+msgctxt "OY7-WF-poV.title"
+msgid "Minimize"
+msgstr "Thu nhỏ"
+
+#. Do not change the placeholder ProductName!
+msgctxt "Olw-nP-bQN.title"
+msgid "Hide ProductName"
+msgstr "Ẩn tên sản phẩm"
+
+msgctxt "R4o-n2-Eq4.title"
+msgid "Zoom"
+msgstr "Zoom"
+
+msgctxt "Td7-aD-5lo.title"
+msgid "Window"
+msgstr "Cửa sổ"
+
+msgctxt "Vdr-fp-XzO.title"
+msgid "Hide Others"
+msgstr "Ẩn người khác"
+
+msgctxt "W48-6f-4Dl.title"
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+msgctxt "Was-JA-tGl.title"
+msgid "New"
+msgstr "Mới"
+
+msgctxt "WeT-3V-zwk.title"
+msgid "Paste and Match Style"
+msgstr "Dán và kết hợp kiểu"
+
+msgctxt "aTl-1u-JFS.title"
+msgid "Print…"
+msgstr "In…"
+
+msgctxt "aUF-d1-5bR.title"
+msgid "Window"
+msgstr "Cửa sổ"
+
+msgctxt "bib-Uj-vzu.title"
+msgid "File"
+msgstr "Tệp"
+
+msgctxt "dMs-cI-mzQ.title"
+msgid "File"
+msgstr "Tệp"
+
+msgctxt "dRJ-4n-Yzg.title"
+msgid "Undo"
+msgstr "Hoàn tác"
+
+msgctxt "gVA-U4-sdL.title"
+msgid "Paste"
+msgstr "Dán"
+
+msgctxt "hz9-B4-Xy5.title"
+msgid "Services"
+msgstr "Dịch vụ"
+
+msgctxt "kIP-vf-haE.title"
+msgid "Show Sidebar"
+msgstr "Hiển thị thanh bên"
+
+msgctxt "oas-Oc-fiZ.title"
+msgid "Open Recent"
+msgstr "Mở Gần đây"
+
+msgctxt "pxx-59-PXV.title"
+msgid "Save…"
+msgstr "Lưu…"
+
+msgctxt "qIS-W8-SiK.title"
+msgid "Page Setup…"
+msgstr "Thiết lập trang…"
+
+msgctxt "snW-S8-Cw5.title"
+msgid "Show Toolbar"
+msgstr "Hiển thị thanh công cụ"
+
+msgctxt "tXI-mr-wws.title"
+msgid "Open Recent"
+msgstr "Mở Gần đây"
+
+#. Do not change the placeholder ProductName!
+msgctxt "uQy-DD-JDr.title"
+msgid "ProductName"
+msgstr "Tên sản phẩm"
+
+msgctxt "uRl-iY-unG.title"
+msgid "Cut"
+msgstr "Cắt"
+
+msgctxt "vFu-3Y-2xa.title"
+msgid "Window"
+msgstr "Cửa sổ"
+
+msgctxt "vNY-rz-j42.title"
+msgid "Clear Menu"
+msgstr "Xóa menu"
+
+msgctxt "wpr-3q-Mcd.title"
+msgid "Help"
+msgstr "Trợ giúp"
+
+msgctxt "x3v-GG-iWU.title"
+msgid "Copy"
+msgstr "Sao chép"

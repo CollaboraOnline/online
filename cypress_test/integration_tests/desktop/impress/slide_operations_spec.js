@@ -10,19 +10,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/slide_operations.odp');
 		desktopHelper.switchUIToNotebookbar();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Add slides', function() {
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 	});
 
 	it('Remove slides', function() {
 		// Add slides
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 
 		// Remove Slides
 		cy.cGet('#presentation-toolbar #deletepage')
@@ -36,13 +39,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#presentation-toolbar #deletepage')
 			.should('have.attr', 'disabled')
 
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 
 	});
 
 	it('Check slide sorter focus', function() {
 		cy.cGet('#insertpage-button').click();
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Set the focus to slide sorter.
 		cy.cGet('#preview-frame-part-0').click();
@@ -71,7 +74,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#Insert-tab-label').click();
 		desktopHelper.getNbIcon('DuplicatePage', 'Insert').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
 		cy.cGet('[id^=annotation-content-area-]').should('include.text', 'some text0');
 

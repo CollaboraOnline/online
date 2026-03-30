@@ -31,7 +31,16 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map.on('commandstatechanged', this._onCommandStateChanged, this);
 		map.uiManager.initializeSpecializedUI('text');
+	},
+
+	_onCommandStateChanged: function (e) {
+		if (e.commandName === 'CompareDocumentsProperties') {
+			if (e.state) {
+				app.writer.compareDocumentProperties = e.state;
+			}
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -78,7 +87,15 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		}
 	},
 
+	_shouldIgnoreServerPageSync: function () {
+		return !this._map.isEditMode() && !app.file.textCursor.visible;
+	},
+
 	_onSetPartMsg: function (textMsg) {
+		if (this._shouldIgnoreServerPageSync()) {
+			return;
+		}
+
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (part !== this._currentPage) {
 			this._currentPage = part;
@@ -105,11 +122,24 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
 
+		if (statusJSON.readonly && !this._documentInfo)
+			this._map.setPermission('readonly');
+
 		var sizeChanged = statusJSON.width !== app.activeDocument.fileSize.x || statusJSON.height !== app.activeDocument.fileSize.y;
 
 		if (statusJSON.viewid !== undefined) {
 			this._viewId = statusJSON.viewid;
 			app.activeDocument.setActiveViewID(this._viewId);
+		}
+
+		if (statusJSON.partHasComments !== undefined &&  statusJSON.partHasComments !== app.activeDocument.partHasComments) {
+			const hadValue = app.activeDocument.partHasComments !== undefined;
+			app.activeDocument.partHasComments = statusJSON.partHasComments;
+			// Only re-fit zoom when comment presence genuinely
+			// changes (added or removed), not on the first status
+			// message where it goes from undefined to a real value.
+			if (hadValue)
+				this._fitWidthZoom();
 		}
 
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
@@ -124,11 +154,24 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._documentInfo = textMsg;
 		this._selectedPart = 0;
-		this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+		const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+		if (mode === 2)
+			app.activeDocument.activeModes = [1, 2];
+		else
+			app.activeDocument.activeModes = [mode];
+
 		this._parts = 1;
-		this._currentPage = statusJSON.selectedpart;
+		if (!this._shouldIgnoreServerPageSync()) {
+			this._currentPage = statusJSON.selectedpart;
+		}
 		this._pages = statusJSON.partscount;
 		app.file.writer.pageRectangleList = statusJSON.pagerectangles.slice(); // Copy the array.
+		// Recalculate view layout so view size reflects the new pages.
+		// Needed for ViewLayoutMultiPage where the viewSize setter is a no-op.
+		if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage')
+			app.activeDocument.activeLayout.reset();
 		this._map.fire('pagenumberchanged', {
 			currentPage: this._currentPage,
 			pages: this._pages,

@@ -1,4 +1,4 @@
-/* global describe it cy require beforeEach */
+/* global describe it cy require beforeEach expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -53,6 +53,48 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
+	});
+
+	it('Click on comment emits Clicked_Comment postMessage', function() {
+		desktopHelper.insertComment();
+
+		// This will record usage of window.postMessage (called from
+		// _postMessage in browser/src/map/handler/Map.WOPI.js
+		cy.getFrameWindow().then(win => {
+			cy.stub(win.parent, 'postMessage').as('postMessage');
+		});
+
+		// <div class="cool-annotation-content-wrapper" ...> is the topmost element of the comment
+		cy.cGet('.cool-annotation-content-wrapper').should('be.visible');
+		cy.cGet('.cool-annotation-content-wrapper').click();
+
+		cy.get('@postMessage').should(stub => {
+			const found = stub.getCalls().some(call => {
+				const msg = JSON.parse(call.args[0]);
+				return msg.MessageId === 'Clicked_Comment'
+					&& msg.Values && msg.Values.Id !== undefined;
+			});
+			expect(found, "Clicked_Comment was not posted").to.be.true;
+		});
+	});
+
+	it('Action_ResolveComment postMessage resolves a comment', function() {
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').should('be.visible');
+		cy.cGet('.cool-annotation-content-resolved').should('have.text', '');
+
+		// Send Action_ResolveComment postMessage with the comment's Id
+		cy.getFrameWindow().then(win => {
+			const message = {
+				'MessageId': 'Action_ResolveComment',
+				'Values': {'Id': '1'}
+			};
+			win.postMessage(JSON.stringify(message), '*');
+		});
+
+		// The comment should now show as resolved
+		cy.cGet('.cool-annotation-content-resolved').should('have.text', 'Resolved');
 	});
 
 	it('Toggle Resolved/Unresolved', function() {
@@ -134,7 +176,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 		for (let width = 1420; width < 1500; width += 20) {
 			cy.viewport(width, 600);
-			cy.cGet('#comment-container-1').should('be.not.visible');
+			cy.cGet('#comment-container-1').should('be.visible');
 		}
 
 		for (let width = 1500; width < 1620; width += 20) {
@@ -204,7 +246,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			can't move left anymore, so we collapse the comments.
 		*/
 		cy.viewport(1284, 600);
-		cy.cGet('#comment-container-1').should('be.not.visible');
+		cy.cGet('#comment-container-1').should('be.visible');
 
 		cy.viewport(1285, 600);
 		cy.cGet('#comment-container-1').should('be.visible');
@@ -313,11 +355,12 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 
 	it('Autosave Collapse', function() {
 		desktopHelper.selectZoomLevel('100', false);
+		helper.typeIntoDocument('placeholder text');
 		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
 		cy.cGet('.cool-annotation-info-collapsed').should('have.text','!');
-		cy.cGet('.cool-annotation-info-collapsed').should('be.visible');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.annotation-button-autosaved').should('be.visible');
 		cy.cGet('.annotation-button-delete').should('be.visible');

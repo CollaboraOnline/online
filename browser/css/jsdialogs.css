@@ -70,7 +70,7 @@ div.ui-treeview-icon-column {
 	margin: 5px;
 }
 
-#AcceptRejectChangesDialog .ui-treeview-headers { 
+#AcceptRejectChangesDialog .ui-treeview-headers {
 	grid-template-columns: 120px 120px 150px 130px;
 	position: sticky;
 	top: 0;
@@ -78,7 +78,7 @@ div.ui-treeview-icon-column {
 	z-index: 1;
 }
 
-#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry { 
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry {
 	padding: 0 !important;
 	height: 26px;
 }
@@ -163,11 +163,23 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	background-color: var(--color-background-lighter);
 }
 
+/* Draw close "X" icon with SVG instead of bitmap sprite.
+   Branding layers override this background-image via higher specificity. */
+.ui-dialog-titlebar-close .ui-icon-closethick {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M3 3 L13 13 M13 3 L3 13' stroke='%23222' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 16px 16px;
+}
+
+[data-theme='dark'] .ui-dialog-titlebar-close .ui-icon-closethick {
+	filter: invert(1);
+}
+
 .jsdialog-container .ui-dialog-content {
 	max-height: calc( 90vh - 34px);
 	overflow-y: auto !important;
 	background-color: var(--color-background-lighter) !important;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	line-height: 1.5;
 	scrollbar-color: var(--scrollbar-color);
 	scrollbar-width: var(--scrollbar-width);
@@ -334,6 +346,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	background-color: var(--color-background-darker);
 }
 
+[data-userinterfacemode='classic'] #toolbar-up .jsdialog.ui-separator.vertical {
+	opacity: 0.4;
+}
+
 .ui-toolbar .ui-separator.vertical {
 	height: 14px;
 	width: 1px;
@@ -447,6 +463,7 @@ algned to the bottom */
 	margin-bottom: 14px !important;
 }
 
+#table-style-options .notebookbar.ui-overflow-group-inner,
 .unotoolbutton.notebookbar.ui-content.has-label > *:not(.arrowbackground) {
 	height: var(--notebookbar-element-height) !important;
 	align-content: center;
@@ -454,6 +471,14 @@ algned to the bottom */
 
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
 	justify-content: center;
+}
+
+/* Overflow dropdown highlighting */
+.overflow-dropdown-active {
+	background-color: rgba(var(--doc-type), 0.1) !important;
+	border: 1px solid rgb(var(--doc-type)) !important;
+	color: var(--color-text-dark) !important;
+	border-radius: var(--border-radius) !important;
 }
 
 .ui-toggle button,
@@ -502,6 +527,7 @@ algned to the bottom */
 
 /* Expander */
 
+.jsdialog.ui-linkbutton,
 .jsdialog.ui-expander {
 	box-shadow: 0 1px 0px 0 var(--color-border-lighter);
 	background-color: transparent;
@@ -519,12 +545,19 @@ algned to the bottom */
 	margin-top: 8px;
 }
 
+.ui-expander-heading {
+	margin: 0;
+	padding: 0;
+	font: inherit;
+	display: contents;
+}
+
 .ui-expander-label {
 	color: #666;
 }
 
 .ui-expander-label.jsdialog {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .ui-expander-label::before,
@@ -640,7 +673,33 @@ algned to the bottom */
 	scrollbar-color: var(--scrollbar-color);
 }
 
-.modalpopup .ui-treeview {
+.ui-treeview:has(> .ui-treeview-search-container) {
+	padding-top: 0;
+	/* otherwise position: sticky will leave a gap. We can't top: -1 on the search container or it'll scroll... */
+}
+
+.ui-treeview-search-container {
+	/* we're using position: sticky at all since as we don't want to nest this in
+		 another div and we don't want to scroll offscreen... it's a little ugly, but I
+		 didn't think position: fixed and margin hacks would go down any more nicely...
+	*/
+	position: sticky;
+	top: 0;
+	background-color: var(--color-background-lighter);
+
+	/* margin-left and margin-right can counterbalance the .ui-treeview padding here */
+	margin-left: -1px;
+	margin-right: -1px;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+[id^='ui-treeview-search-input'] {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#__MENU__.ui-treeview {
 	min-height: min-content;
 }
 
@@ -653,9 +712,11 @@ algned to the bottom */
 }
 
 .ui-treeview.disabled,
-.ui-treeview-entry div.disabled {
+.ui-treeview-entry div.disabled,
+.ui-treeview-entry.disabled {
 	background-color: var(--color-background-dark) !important;
 	color: var(--color-text-lighter) !important;
+	pointer-events: none;
 }
 
 #custom_animation_label_parent {
@@ -976,7 +1037,11 @@ img.context-menu-icon {
 	padding-inline: 4px;
 }
 
-#search_edit.ui-edit.autofilter {
+.ui-treeview-search-input.jsdialog.ui-edit {
+	line-height: var(--default-height);
+}
+.autofilter .ui-treeview-search-input.jsdialog.ui-edit,
+.autofilter .ui-treeview-search-input.jsdialog.ui-edit:hover {
 	width: 100%;
 	width: -moz-available;
 	width: -webkit-fill-available;
@@ -1076,64 +1141,91 @@ img.context-menu-icon {
 /* spinfield */
 
 .spinfieldcontainer {
+	display: flex;
+	align-items: center;
 	margin-inline-end: 5px;
 	min-width: 70px;
 	width: 100%;
-}
-
-.spinfieldcontainer input {
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	background: var(--color-background-dark);
 	color: var(--color-text-dark);
+	box-sizing: border-box;
+	height: 28px;
 }
 
-.spinfieldcontainer input:not([disabled]):hover {
+.spinfieldcontainer:not([disabled]):hover {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
 }
 
-.jsdialog.spinfieldcontainer[disabled] input {
+.ui-dialog .spinfieldcontainer:has(.spinfield:focus-visible) {
+	outline: auto Highlight;
+	outline: auto -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+.jsdialog.spinfieldcontainer[disabled] {
 	border: 1px solid var(--color-border-lighter);
+	color: var(--color-text-lighter);
+	background: var(--color-background-lighter);
 }
 
 .spinfield {
-	padding: 4px 0 4px 4px;
-	height: 28px;
+	flex: 1;
+	width: 0;
+	min-width: 0;
+	padding: 0;
+	padding-inline-start: 4px;
+	height: 100%;
 	box-sizing: border-box;
-	margin-right: 1px;
-	min-width: 70px;
-	width: 100%;
+	border: none;
+	background: transparent;
+	color: inherit;
+	outline: none;
 }
 
-:dir(rtl) .spinfield {
-	padding: 4px 4px 4px 0;
+.spinfieldbuttons {
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+	flex-shrink: 0;
 }
 
-.spinfieldunit {
-	font-size: var(--default-font-size);
-	color: var(--color-text-dark);
-	margin: 5px;
-	margin-inline-start: calc(-50px);
-}
-/* spinfield (number) */
-input[type='number'] {
-	padding-top: 0 !important;
-	padding-bottom: 0 !important;
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-	opacity: 0.5;
-	height: 28px;
-	margin: 0;
-}
-
-input[type='number']:hover::-webkit-inner-spin-button,
-input[type='number']:hover::-webkit-outer-spin-button {
-	opacity: 1;
+.spinfieldbutton-up,
+.spinfieldbutton-down {
+	border: none;
+	background: none;
+	padding: 0 4px;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
+}
+
+.spinfieldbutton-up::after,
+.spinfieldbutton-down::after {
+	content: '';
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+}
+
+.spinfieldbutton-up::after {
+	border-bottom: 5px solid var(--color-text-lighter);
+}
+
+.spinfieldbutton-down::after {
+	border-top: 5px solid var(--color-text-lighter);
+}
+
+.spinfieldcontainer:not([disabled]):hover .spinfieldbutton-up::after {
+	border-bottom-color: var(--color-text-dark);
+}
+
+.spinfieldcontainer:not([disabled]):hover .spinfieldbutton-down::after {
+	border-top-color: var(--color-text-dark);
 }
 /* listbox */
 .ui-listbox-container,
@@ -1156,7 +1248,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-listbox,
-.ui-combobox,
+.ui-combobox-wrapper,
 .ui-timefield {
 	box-sizing: border-box;
 	-webkit-appearance: none;
@@ -1165,17 +1257,23 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 1.5rem;
 	line-height: normal;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
+	display: flex;
+}
+
+.ui-combobox-label {
+	font-size: var(--default-font-size);
+	font-family: var(--cool-font);
 }
 
 .jsdialog-window .ui-listbox,
 .jsdialog-window .ui-combobox,
 .jsdialog-window .ui-timefield {
 	height: 32px;/* Use the same height as in .jsdialog.ui-edit */
-	min-width: 100px;
+	min-width: 50px;
 	width: 100%;
 }
 
@@ -1225,7 +1323,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* ui-combobox */
-.ui-combobox,
+.ui-combobox-wrapper,
 .ui-timefield {
 	border: 1px solid var(--color-border);
 }
@@ -1285,6 +1383,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-gap: 0px;
 }
 
+.ui-combobox-search-container {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: var(--color-background-lighter);
+	padding: 4px;
+}
+
+.ui-combobox-search-input {
+	width: 100%;
+	box-sizing: border-box;
+	line-height: var(--default-height);
+}
+
 .ui-combobox-entry {
 	width: calc(100% + 15px); /* + padding for scrollbar */
 	display: flex;
@@ -1292,14 +1404,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-combobox-entry:hover {
-	background-color: var(--color-background-dark);
+	background-color: var(--color-background-hover);
 }
 
 .ui-combobox-entry.selected:not(:hover) span,
 .margin-item.selected {
-	border: 1px solid var(--color-primary);
-	background-color: var(--color-primary);
-	color: var(--color-primary-text);
+	background-color: var(--color-background-darker);
 }
 
 .ui-combobox-entry span {
@@ -1308,7 +1418,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: block;
 	width: 100%;
 	font-size: var(--default-font-size);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	color: var(--color-text-dark);
 }
 
@@ -1426,7 +1536,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 
 .ui-overflow-group-label {
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	font-size: var(--overflow-group-font-size);
 	color: var(--color-text-lighter);
 	flex-grow: 1;
@@ -1469,7 +1579,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	text-wrap: nowrap;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .ui-iconview-entry.selected {
@@ -1485,6 +1595,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-iconview-entry img {
 	vertical-align: middle;
+	justify-self: center;
 }
 
 .ui-iconview-separator {
@@ -1523,7 +1634,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	position: absolute;
 	z-index: 1105;
 	padding: 0;
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 }
 
 .autofilter-container > .root-container,
@@ -1795,7 +1906,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	box-sizing: border-box;
 	line-height: normal;
 	font-size: calc(var(--default-font-size)*1.2);
-	font-family: var(--jquery-ui-font);
+	font-family: var(--cool-font);
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	padding: 8px 10px;
@@ -1810,6 +1921,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px;
 }
 
+[data-userinterfacemode='classic'] #toolbar-wrapper .jsdialog.menubutton img {
+	margin-inline-end: 0;
+}
+
 button.menubutton.sidebar > span {
 	box-shadow: none !important;
 	font-size: var(--default-font-size) !important;
@@ -1818,6 +1933,11 @@ button.menubutton.sidebar > span {
 .jsdialog .unobutton img {
 	width: var(--btn-img-size);
 	height: var(--btn-img-size);
+}
+
+button.has-img img {
+	min-width: 16px;
+	min-height: 16px;
 }
 
 .menubutton .arrow {
@@ -1882,8 +2002,8 @@ button.menubutton.sidebar > span {
 .ui-color-picker-entry {
 	border: 1px solid transparent;
 	cursor: pointer;
-	width: 16px;
-	height: 16px;
+	width: 24px;
+	height: 24px;
 	appearance: none;
 	webkit-appearance: none;
 	margin: 0;
@@ -2125,7 +2245,6 @@ button.menubutton.sidebar > span {
 	width: max-content;
 }
 
-.unoarrow::after,
 .jsdialog .ui-content.unobutton::after {
 	--click-increment: -1px;
 	position: absolute;
@@ -2134,6 +2253,7 @@ button.menubutton.sidebar > span {
 	right: var(--click-increment);
 	bottom: var(--click-increment);
 	left: var(--click-increment);
+	pointer-events: none;
 }
 
 /* targetting buttons inside of split button */
@@ -2790,7 +2910,7 @@ kbd,
 	max-height: 19vh;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img,
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry :is(img, span),
 :is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry img {
 	padding: 1px;
 }
@@ -2836,9 +2956,7 @@ kbd,
 	align-items: center;
 }
 
-/* Writer - Format - Paragraph - Text Flow */
 /* Writer - Format - Paragraph - Tabs */
-#ParagraphPropertiesDialog #textflow #checkAcrossPage.checkbutton,
 #ParagraphPropertiesDialog #labelTP_TABULATOR #ParagraphTabsPage {
 	grid-column-gap: 0;
 }
@@ -2971,9 +3089,7 @@ kbd,
 }
 
 /* Apply label styling to static text for consistent appearance */
-#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
-#FormulaDialog #ALTBOX #funcdesc,
-#GotoPageDialog #grid1 #page_count {
+.static-label {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
@@ -3024,6 +3140,25 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 	grid-template-columns: repeat(16, 1fr);
 }
 
+/* Writer - Select Table Cell - Sidebar - Table - Miscellaneous - Border */
+#borders.ui-iconview.one-child-popup {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+/* Calc - Format Cells - Borders - Line - Style */
+#iconview_lines.ui-iconview {
+	grid-template-columns: repeat(1, 1fr);
+}
+
+/* Writer - References - Table of Content... - Entries - Level */
+#TocDialog #entries #box1 span.ui-text {
+	font-weight: bold;
+}
+
 #imSetInsMode {
 	content: url('images/queryinsmode.svg');
+}
+
+#ManageStylePage #box1 #desc {
+	display: block;
 }

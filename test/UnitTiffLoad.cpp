@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for TIFF image loading functionality.
+ */
+
 #include <config.h>
 
 #include <memory>
@@ -18,7 +22,7 @@
 #include <test/lokassert.hpp>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
 /// TIFF load testcase.

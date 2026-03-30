@@ -11,24 +11,17 @@
 
 #pragma once
 
-#include <cassert>
-#include <memory>
-#include <queue>
-#include <thread>
-#include <condition_variable>
-#include <fstream>
-#include <unordered_map>
-#include <vector>
+#include <common/Png.hpp>
+#include <common/Rectangle.hpp>
+#include <common/ThreadPool.hpp>
+#include <kit/Delta.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include <common/ThreadPool.hpp>
-
-#include "Png.hpp"
-#include "Delta.hpp"
-#include "Rectangle.hpp"
-#include "TileDesc.hpp"
-
+#include <cassert>
+#include <memory>
+#include <vector>
 namespace RenderTiles
 {
     struct Buffer {
@@ -103,13 +96,21 @@ namespace RenderTiles
 
         assert(tiles.size() == tileRecs.size());
 
-        const size_t tilesByX = renderArea.getWidth() / tileCombined.getTileWidth();
-        const size_t tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
+        const int areaWidth = renderArea.getWidth();
+        const int areaHeight = renderArea.getHeight();
+        if (areaWidth <= 0 || areaHeight <= 0)
+        {
+            LOG_ERR("Invalid render area " << areaWidth << 'x' << areaHeight);
+            return false;
+        }
+
+        const size_t tilesByX = static_cast<size_t>(areaWidth) / tileCombined.getTileWidth();
+        const size_t tilesByY = static_cast<size_t>(areaHeight) / tileCombined.getTileHeight();
         const int pixelWidth = tileCombined.getWidth();
         const int pixelHeight = tileCombined.getHeight();
         assert (pixelWidth > 0 && pixelHeight > 0);
-        const size_t pixmapWidth = tilesByX * pixelWidth;
-        const size_t pixmapHeight = tilesByY * pixelHeight;
+        const size_t pixmapWidth = tilesByX * static_cast<size_t>(pixelWidth);
+        const size_t pixmapHeight = tilesByY * static_cast<size_t>(pixelHeight);
 
         if (pixmapWidth > 4096 || pixmapHeight > 4096)
             LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << 'x' << pixmapHeight

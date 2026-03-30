@@ -9,11 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for WOPI language handling.
+ */
+
 #include <config.h>
 
-#include "Unit.hpp"
+#include <Unit.hpp>
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 class UnitWopiLanguages : public WopiTestServer
 {
@@ -152,12 +156,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         if (message.starts_with("cellformula:"))
         {
             if (_currentUserId == 0)
@@ -288,12 +289,9 @@ public:
         return true;
     }
 
-    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
-                                      const WSOpCode /* code */, const bool /* flush */,
-                                      int& /*unitReturn*/) override
+    bool onFilterSendWebSocketMessage(const std::string_view message, const WSOpCode /* code */,
+                                      const bool /* flush */, int& /*unitReturn*/) override
     {
-        const std::string message(data, len);
-
         if (message.starts_with("cellformula:"))
         {
             if (_currentUserId == 0)

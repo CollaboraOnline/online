@@ -142,18 +142,30 @@ enum UNO_BorderLineStyle {
 
 function getLineStyleModificationCommand(
 	LineStyle: UNO_BorderLineStyle,
-	n1: number, // Corresponds to SvxBorderLineWidth
-	n2: number,
-	n3: number,
+	nOut: number, // outer line width, maps to SvxBorderLine nOut
+	nIn: number, // inner line width, maps to SvxBorderLine nIn
+	nDist: number, // distance between lines
 ): string {
-	const borderLine2Properties = {
-		LineStyle: { type: 'short', value: LineStyle },
-		InnerLineWidth: { type: 'short', value: n1 },
-		OuterLineWidth: { type: 'short', value: n2 },
-		LineDistance: { type: 'short', value: n3 },
+	// The LineStyle property must be a BorderLine2 struct for
+	// SvxLineItem::PutValue to parse it correctly (nMemId == 0).
+	const params = {
+		LineStyle: {
+			type: 'com.sun.star.table.BorderLine2',
+			value: {
+				Color: { type: 'com.sun.star.util.Color', value: 0 },
+				InnerLineWidth: { type: 'short', value: nIn },
+				OuterLineWidth: { type: 'short', value: nOut },
+				LineDistance: { type: 'short', value: nDist },
+				LineStyle: { type: 'short', value: LineStyle },
+				LineWidth: {
+					type: 'unsigned long',
+					value: nOut + nIn + nDist,
+				},
+			},
+		},
 	};
 
-	const jsonParams = JSON.stringify(borderLine2Properties);
+	const jsonParams = JSON.stringify(params);
 
 	// The UNO command name itself, from `scslots.hxx`
 	return `.uno:LineStyle ${jsonParams}`;
@@ -1473,14 +1485,16 @@ menuDefinitions.set('MenuPrintRanges', [
 ] as Array<MenuDefinition>);
 menuDefinitions.set('MenuMargins', [
 	{
+		id: 'MarginMenu',
 		type: 'json',
 		content: {
 			id: 'Layout-MarginMenu',
 			type: 'pagemarginentry',
 			options: pageMarginOptions,
+			initialSelectedId: 'normal',
 		},
 	},
-	{ type: 'separator' },
+	{ id: 'MarginMenuSeparator', type: 'separator' },
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('MenuOrientation', [
@@ -1545,6 +1559,7 @@ const pageSizes = [
 
 menuDefinitions.set('MenuPageSizesCalc', [
 	{
+		id: 'PageSizeMenu',
 		type: 'json',
 		content: {
 			id: 'Layout-PageSizeMenu',
@@ -1556,7 +1571,7 @@ menuDefinitions.set('MenuPageSizesCalc', [
 			})),
 		},
 	},
-	{ type: 'separator' },
+	{ id: 'PageSizeMenuSeparator', type: 'separator' },
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set(
@@ -1681,6 +1696,12 @@ menuDefinitions.set('LineSpacingMenu', [
 		uno: 'SpacePara1',
 	},
 	{
+		id: 'spacepara115',
+		img: 'spacepara115',
+		text: _UNO('.uno:SpacePara115'),
+		uno: 'SpacePara115',
+	},
+	{
 		id: 'spacepara15',
 		img: 'spacepara15',
 		text: _UNO('.uno:SpacePara15'),
@@ -1704,6 +1725,13 @@ menuDefinitions.set('LineSpacingMenu', [
 		img: 'paraspacedecrease',
 		text: _UNO('.uno:ParaspaceDecrease'),
 		uno: 'ParaspaceDecrease',
+	},
+	{ type: 'separator' },
+	{
+		id: 'paragraphdialog',
+		img: 'paragraphdialog',
+		text: _UNO('.uno:ParagraphDialog'),
+		uno: 'ParagraphDialog',
 	},
 ] as Array<MenuDefinition>);
 
@@ -1734,6 +1762,12 @@ menuDefinitions.set('InsertMultimediaMenu', [
 	// remote entries added in Map.WOPI
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('CompareDocumentsMenu', [
+	{ action: 'localcomparedocuments', text: _('Compare Local Document') },
+	// local entry may be removed
+	// remote entries added in Map.WOPI
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('CharSpacingMenu', [
 	{ id: 'space1', text: _('Very Tight'), uno: 'Spacing?Spacing:short=-60' },
 	{ id: 'space1', text: _('Tight'), uno: 'Spacing?Spacing:short=-30' },
@@ -1758,6 +1792,21 @@ menuDefinitions.set('PasteMenu', [
 			_UNO('.uno:PasteSpecial', 'text'),
 			'.uno:PasteSpecial',
 		),
+	},
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('ViewChangesMenu', [
+	{
+		id: 'review-show-tracked-changes',
+		img: 'showtrackedchanges',
+		text: _('Inline'),
+		uno: '.uno:ShowTrackedChanges',
+	},
+	{
+		id: 'compare-tracked-change',
+		img: 'comparechanges',
+		text: _('Side by Side'),
+		action: 'comparechanges',
 	},
 ] as Array<MenuDefinition>);
 
@@ -2264,6 +2313,7 @@ function generatePictureTransparencyMenu(
 
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
+		id: 'NewSlideLayoutMenu',
 		type: 'json',
 		content: {
 			id: 'Layout-NewSlideLayoutMenu',
@@ -2273,15 +2323,16 @@ menuDefinitions.set('NewSlideLayoutMenu', [
 			gridContent: generateLayoutPopupGrid('InsertPage'),
 		},
 	},
-	{ type: 'separator' }, // required to show dropdown arrow
+	{ id: 'NewSlideLayoutMenuSeparator', type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('ChangeSlideLayoutMenu', [
 	{
+		id: 'ChangeSlideLayoutMenu',
 		type: 'json',
 		content: generateLayoutPopupGrid('AssignLayout'),
 	},
-	{ type: 'separator' }, // required to show dropdown arrow
+	{ id: 'ChangeSlideLayoutMenuSeparator', type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set(

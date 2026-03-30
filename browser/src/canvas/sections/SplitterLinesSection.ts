@@ -61,9 +61,11 @@ class SplitterLinesSection extends CanvasSectionObject {
 	private setBoxGradient(splitPos: any, isVertical: boolean) {
 		let selectionBackgroundGradient = null;
 
+		Util.ensureValue(app.map._docLayer.sheetGeometry);
 		// last row geometry data will be a good for setting deafult raw height
-		const spanlist =
-			app.map._docLayer.sheetGeometry.getRowsGeometry()._visibleSizes._spanlist;
+		const spanlist = app.map._docLayer.sheetGeometry
+			.getRowsGeometry()
+			.getVisibleSizes()._spanlist;
 		const rowData = spanlist[spanlist.length - 1];
 
 		// Create a linear gradient based on the extracted color stops
@@ -160,6 +162,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 				if (splitPos.x) {
 					let width, style;
+					Util.ensureValue(app.activeDocument);
 					if (app.activeDocument.activeLayout.viewedRectangle.pX1 === 0) {
 						width = this.sectionProperties.thickness;
 						style = this.sectionProperties.fillColor;
@@ -180,6 +183,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 				if (splitPos.y) {
 					let width, style;
+					Util.ensureValue(app.activeDocument);
 					if (app.activeDocument.activeLayout.viewedRectangle.pY1 === 0) {
 						width = this.sectionProperties.thickness;
 						style = this.sectionProperties.fillColor;

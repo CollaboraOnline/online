@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WebSocket protocol handler for frame parsing, masking, and message handling.
+ * Classes: WebSocketHandler
+ */
+
 #pragma once
 
 #include <common/HexUtil.hpp>
@@ -28,6 +33,7 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 class WebSocketHandler : public ProtocolHandlerInterface
@@ -194,7 +200,7 @@ protected:
 
     /// Sends WS Close frame to the peer.
     void sendCloseFrame(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
-                        const std::string& statusMessage = std::string())
+                        const std::string_view statusMessage = std::string_view())
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
@@ -231,7 +237,7 @@ protected:
         }
     }
 
-    void shutdown(bool goingAway, const std::string &statusMessage) override
+    void shutdown(bool goingAway, const std::string_view statusMessage) override
     {
         ASSERT_CORRECT_THREAD();
         shutdownImpl(_socket.lock(),
@@ -254,7 +260,7 @@ protected:
 
 public:
     void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
-                  const std::string& statusMessage = std::string(),
+                  const std::string_view statusMessage = std::string_view(),
                   bool hardShutdown = false)
     {
         shutdownImpl(_socket.lock(),
@@ -264,9 +270,8 @@ public:
     /// Don't wait for the remote Websocket to handshake with us; go down fast.
     void shutdownAfterWriting()
     {
-        shutdownImpl(_socket.lock(),
-                     WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
-                     true /* hard async shutdown & close */, false);
+        shutdownImpl(_socket.lock(), WebSocketHandler::StatusCodes::NORMAL_CLOSE,
+                     std::string_view(), true /* hard async shutdown & close */, false);
     }
 
     /// Returns true if the underlying socket is connected.
@@ -279,16 +284,12 @@ public:
 private:
     void shutdownSilent(const std::shared_ptr<StreamSocket>& socket)
     {
-        shutdownImpl(socket,
-                     WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
-                     std::string(), true /* hard async shutdown & close */, true);
+        shutdownImpl(socket, WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
+                     std::string_view(), true /* hard async shutdown & close */, true);
     }
 
-    void shutdownImpl(const std::shared_ptr<StreamSocket>& socket,
-                      const StatusCodes statusCode,
-                      const std::string& statusMessage,
-                      bool hardShutdown,
-                      bool silentShutdown)
+    void shutdownImpl(const std::shared_ptr<StreamSocket>& socket, const StatusCodes statusCode,
+                      const std::string_view statusMessage, bool hardShutdown, bool silentShutdown)
     {
         if (socket)
         {
@@ -498,10 +499,12 @@ private:
         //Process data frame
         readPayload(data, payloadLen, mask, _wsPayload);
 #else
-        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data());
-        _wsPayload.insert(_wsPayload.end(), p, p + len);
-        const size_t headerLen = 0;
-        const size_t payloadLen = len;
+        // Unwrap what StreamSocket::readIncomingData() did
+        const size_t headerLen = sizeof(ssize_t);
+        ssize_t payloadLen;
+        memcpy(&payloadLen, socket->getInBuffer().data(), headerLen);
+        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data() + headerLen);
+        _wsPayload.insert(_wsPayload.end(), p, p + payloadLen);
 #endif
 
         socket->eraseFirstInputBytes(headerLen + payloadLen);
@@ -702,29 +705,18 @@ public:
             _msgHandler->onDisconnect();
     }
 
-    /// Sends a WebSocket Text message.
-    int sendMessage(const std::string& msg) const
+    /// Implementation of the ProtocolHandlerInterface.
+    int sendTextMessage(const std::string_view msg, bool flush = false) const override
     {
-        return sendTextMessage(msg.c_str(), msg.size());
-    }
-
-    template <std::size_t N> int sendMessage(const char (&msg)[N]) const
-    {
-        return sendTextMessage(msg, N - 1); // Minus the null-terminator.
+        ASSERT_CORRECT_THREAD();
+        return sendMessage(msg.data(), msg.size(), WSOpCode::Text, flush);
     }
 
     /// Implementation of the ProtocolHandlerInterface.
-    int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
+    int sendBinaryMessage(const std::string_view data, bool flush = false) const override
     {
         ASSERT_CORRECT_THREAD();
-        return sendMessage(msg, len, WSOpCode::Text, flush);
-    }
-
-    /// Implementation of the ProtocolHandlerInterface.
-    int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override
-    {
-        ASSERT_CORRECT_THREAD();
-        return sendMessage(data, len, WSOpCode::Binary, flush);
+        return sendMessage(data.data(), data.size(), WSOpCode::Binary, flush);
     }
 
     /// Sends a WebSocket message of WPOpCode type.
@@ -735,7 +727,8 @@ public:
         if (UnitBase::isUnitTesting() && !Util::isFuzzing())
         {
             int unitReturn = -1;
-            if (_unit->filterSendWebSocketMessage(data, len, code, flush, unitReturn))
+            if (_unit->filterSendWebSocketMessage(std::string_view(data, len), code, flush,
+                                                  unitReturn))
                 return unitReturn;
         }
 
@@ -755,7 +748,7 @@ public:
         return true;
     }
 
-    void flush()
+    void flush() const
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
@@ -817,7 +810,7 @@ protected:
             ssize_t i = 0, toSend;
             while (true)
             {
-                toSend = std::min(sizeof(copy), len - i);
+                toSend = std::min(static_cast<uint64_t>(sizeof(copy)), len - i);
                 if (toSend == 0)
                     break;
                 for (ssize_t j = 0; j < toSend; ++j, ++i)
@@ -964,7 +957,7 @@ protected:
 
     bool isControlFrame(WSOpCode code) const { return code >= WSOpCode::Close; }
 
-    void readPayload(unsigned char *data, size_t dataLen, unsigned char* mask, std::vector<char>& payload)
+    void readPayload(unsigned char *data, size_t dataLen, unsigned char* mask, std::vector<char>& payload) const
     {
         if (dataLen == 0)
             return;
@@ -996,7 +989,7 @@ protected:
         return _socket;
     }
 
-    void ignoreInput()
+    void ignoreInput() const
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)

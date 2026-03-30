@@ -13,7 +13,7 @@
     <string name="later">Later</string>
     <string name="rate_now">Beoordeel nu</string>
     <string name="exiting">Afsluiten...</string>
-    <string name="ask_for_copy">Dit document is alleen-lezen. Wil je een kopie maken om te bewerken\?</string>
+    <string name="ask_for_copy">Dit document is alleen-lezen. Wil je een kopie maken om te bewerken?</string>
     <string name="edit_copy">Bewerk een kopie</string>
     <string name="view_only">Alleen bekijken</string>
     <string name="restarting">Opnieuw starten...</string>

@@ -15,10 +15,14 @@
 /// <reference path="../src/core/geometry.ts" />
 /// <reference path="../src/layer/tile/SheetGeometry.ts" />
 /// <reference path="../src/layer/tile/CanvasTileUtils.ts" />
+/// <reference path="../src/app/TileCoordData.ts" />
+/// <reference path="../src/app/PaneBorder.ts" />
+/// <reference path="../src/app/Tile.ts" />
 /// <reference path="../src/app/TilesMiddleware.ts" />
 /// <reference path="../src/app/Rectangle.ts" />
 /// <reference path="../src/app/LOUtil.ts" />
 /// <reference path="../src/app/ViewLayout.ts" />
+/// <reference path="../src/app/ViewLayoutNewBase.ts" />
 /// <reference path="../src/app/ViewLayoutMultiPage.ts" />
 /// <reference path="../src/app/Util.ts"/>
 /// <reference path="../src/app/DocUtil.ts"/>
@@ -27,6 +31,7 @@
 /// <reference path="../src/app/Events.ts" />
 /// <reference path="../src/canvas/CanvasSectionContainer.ts" />
 /// <reference path="../src/canvas/CanvasSectionObject.ts" />
+/// <reference path="../src/app/ViewLayoutCompareChanges.ts" />
 /// <reference path="../src/canvas/sections/TilesSection.ts" />
 /// <reference path="../src/app/iface/MapZoom.Interface.ts" />
 /// <reference path="../src/app/ServerCommand.ts" />

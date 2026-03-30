@@ -12,6 +12,7 @@
 #pragma once
 
 #include <common/Anonymizer.hpp>
+#include <common/Log.hpp>
 #include <common/StaticLogHelper.hpp>
 
 // Order of construction is unspecified when static objects are defined in different translation units, so
@@ -24,6 +25,8 @@ namespace Log {
     StaticUIHelper StaticUILog;
 
     thread_local GenericLogger* StaticHelper::_threadLocalLogger = nullptr;
+
+    thread_local Prefix Prefix::Instance;
 }
 
 std::unique_ptr<Anonymizer> Anonymizer::_instance;

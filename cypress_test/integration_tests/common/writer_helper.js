@@ -22,7 +22,7 @@ function selectAllTextOfDoc() {
 	cy.log('<< selectAllTextOfDoc - end');
 }
 
-function openFileProperties() {
+function openFileProperties(win) {
 	cy.log('>> openFileProperties - start');
 
 	cy.cGet('.jsdialog-window').should('not.exist');
@@ -33,6 +33,8 @@ function openFileProperties() {
 
 		cy.cGet('#File-container .unoSetDocumentProperties').click();
 	});
+
+	helper.processToIdle(win);
 
 	cy.cGet('.jsdialog-window').should('exist');
 
@@ -61,7 +63,7 @@ function openQuickFind() {
 function searchInQuickFind(text) {
 	cy.log('>> searchInQuickFind - start');
 
-	cy.cGet('input#navigator-search-input').clear().type(text);
+	cy.cGet('input#navigator-search-input').type('{selectall}{backspace}' + text);
 	cy.cGet('input#navigator-search-input').should('have.prop', 'value', text);
 
 	cy.cGet('#navigator-search-button').click();

@@ -9,9 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for WOPI upload failure scenarios.
+ */
+
 #include <config.h>
 
-#include "WOPIUploadConflictCommon.hpp"
+#include <WOPIUploadConflictCommon.hpp>
 
 #include <chrono>
 #include <string>
@@ -19,8 +23,8 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "Log.hpp"
-#include "lokassert.hpp"
+#include <common/Log.hpp>
+#include <lokassert.hpp>
 
 using namespace std::literals;
 

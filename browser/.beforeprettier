@@ -28,7 +28,6 @@
 /src/control/Control.JSDialog.js
 /src/control/Control.JSDialogBuilder.js
 /src/control/Control.LanguageDialog.js
-/src/control/Control.Layers.js
 /src/control/Control.LokDialog.js
 /src/control/Control.Menubar.ts
 /src/control/Control.MobileBottomBar.js
@@ -61,7 +60,6 @@
 /src/control/Control.UserList.js
 /src/control/Control.Zotero.js
 /src/control/IFrameDialog.js
-/src/control/jsdialog/Util.Dropdown.js
 /src/control/jsdialog/Util.FocusCycle.js
 /src/control/jsdialog/Util.ModalHelper.js
 /src/control/jsdialog/Util.StateChange.ts
@@ -114,7 +112,6 @@
 /src/geometry/Transformation.ts
 /src/layer/CalcSplitPanesContext.ts
 /src/layer/Layer.js
-/src/layer/LayerGroup.js
 /src/layer/marker/A11yTextInput.js
 /src/layer/marker/Cursor.ts
 /src/layer/marker/ProgressOverlay.js
@@ -179,7 +176,6 @@
 /src/map/Map.js
 /src/UNO/Key.js
 /js/global.js
-/js/ResizeObserverPolyfill.js
 /admin/src/AdminClusterOverview.js
 /admin/src/AdminClusterOverviewAbout.js
 /admin/src/AdminSocketAnalytics.js

@@ -9,17 +9,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Configuration file utilities and helpers.
+ * Functions: getString(), getInt(), getBool() - Config value accessors
+ */
+
 #include <config.h>
 
 #include <ConfigUtil.hpp>
-#include <Util.hpp>
+
+#include <common/Util.hpp>
 
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/XMLConfiguration.h>
 
 #include <cassert>
-#include <string>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 
 
@@ -227,6 +233,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "quarantine_files.max_versions_to_maintain", "5" },
     { "quarantine_files.path", "" },
     { "quarantine_files[@enable]", "false" },
+    { "view_mode.file_extensions", "" },
     { "remote_asset_config.url", "" },
     { "remote_config.remote_url", "" },
     { "remote_font_config.url", "" },
@@ -244,6 +251,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "security.server_signature", "false" },
     { "server_name", "" },
     { "serverside_config.idle_timeout_secs", "3600" },
+    { "serverside_config.max_idle_subforkits", "5" },
     { "ssl.ca_file_path", COOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
     { "ssl.cert_file_path", COOLWSD_CONFIGDIR "/cert.pem" },
     { "ssl.cipher_list", "" },

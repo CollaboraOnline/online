@@ -11,6 +11,7 @@
 
 #define LIBO_INTERNAL_ONLY
 #import <LibreOfficeKit/LibreOfficeKitInit.h>
+#import <LibreOfficeKit/LibreOfficeKit.h>
 
 #import "ios.h"
 #import "AppDelegate.h"

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Special document brokers for system operations.
+ * Classes: ThumbnailBroker, SystemTemplatesBroker
+ */
+
 #pragma once
 
 #if MOBILEAPP
@@ -46,7 +51,8 @@ public:
 class ConvertToBroker : public StatelessBatchBroker
 {
     const std::string _format;
-    const std::string _sOptions;
+    const std::string _options;
+    const std::string _inFilterOptions;
     const std::string _lang;
 
 public:

@@ -17,7 +17,7 @@
 #ifdef TEST_TRACEEVENT_EXE
 #include <iostream>
 #else
-#include <Log.hpp>
+#include <common/Log.hpp>
 #endif
 
 // The base class for objects generating Trace Events when enabled.

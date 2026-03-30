@@ -31,6 +31,8 @@ window.L.Map.include({
 			return;
 		}
 
+		app.idleHandler.notifyActive();
+
 		var docLayer = this._docLayer;
 		var docType = docLayer._docType;
 		var isTheSamePart = false;
@@ -86,10 +88,11 @@ window.L.Map.include({
 				app.socket.sendMessage('setclientpart part=' + part);
 		};
 
-		if (app.file.fileBasedView)
-		{
+		if (app.file.fileBasedView) {
+			if (!external) {
+				this._docLayer._checkSelectedPart();
+			}
 			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
-			this._docLayer._checkSelectedPart();
 			notifyServer(part);
 			return;
 		}
@@ -149,6 +152,7 @@ window.L.Map.include({
 	},
 
 	deselectAll: function() {
+		this._docLayer._preview._selectedPartRange = undefined;
 		for (let i = 0; i < app.impress.partList.length; i++) {
 			this.selectPart(i, 0, false, false);
 		}
@@ -243,7 +247,7 @@ window.L.Map.include({
 		else maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 
 		if (fetchThumbnail) {
-			var mode = docLayer._selectedMode;
+			var mode = app.activeDocument.activeModes[0];
 			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + String(part) + ' ' +
@@ -273,7 +277,7 @@ window.L.Map.include({
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate, invalid: false};
 
-		var mode = this._docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 		this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
@@ -288,30 +292,52 @@ window.L.Map.include({
 		this._processPreviewQueue();
 	},
 
+	_resolveCurrentPage: function (page, currentPage, pageRects) {
+		if ((page !== 'prev' && page !== 'next') || this.isEditMode() || !pageRects || pageRects.length === 0) {
+			return currentPage;
+		}
+
+		// In the mode where the cursor is absent, _currentPage may be stale.
+		// Determine the currently visible page from the viewport instead.
+		for (let i = 0; i < pageRects.length; i++) {
+			if (!app.isRectangleVisibleInTheDisplayedArea(pageRects[i]))
+				continue;
+
+			return i;
+		}
+
+		return currentPage;
+	},
+
 	goToPage: function (page) {
-		var docLayer = this._docLayer;
+		const docLayer = this._docLayer;
+		const pageRects = app.file && app.file.writer && app.file.writer.pageRectangleList;
+		const sourcePage = this._resolveCurrentPage(page, docLayer._currentPage, pageRects);
+		app.idleHandler.notifyActive();
+
 		if (page === 'prev') {
-			if (docLayer._currentPage > 0) {
-				docLayer._currentPage -= 1;
+			if (sourcePage > 0) {
+				docLayer._currentPage = sourcePage - 1;
 			}
 		}
 		else if (page === 'next') {
-			if (docLayer._currentPage < docLayer._pages - 1) {
-				docLayer._currentPage += 1;
+			if (sourcePage < docLayer._pages - 1) {
+				docLayer._currentPage = sourcePage + 1;
 			}
 		}
 		else if (typeof (page) === 'number' && page >= 0 && page < docLayer._pages) {
 			docLayer._currentPage = page;
 		}
-		if (!this.isEditMode() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
-			const posY = Math.round(app.file.writer.pageRectangleList[docLayer._currentPage][1] / app.dpiScale);
+
+		if (!this.isEditMode() && pageRects && pageRects.length > docLayer._currentPage) {
+			const posY = Math.round(pageRects[docLayer._currentPage][1] / app.dpiScale);
 
 			const section = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (section)
 				section.onScrollTo({x: 0, y: posY});
 
-			var state = 'Page ' + (docLayer._currentPage + 1) + ' of ' + app.file.writer.pageRectangleList.length;
-			this.fire('updatestatepagenumber',{
+			const state = 'Page ' + (docLayer._currentPage + 1) + ' of ' + pageRects.length;
+			this.fire('updatestatepagenumber', {
 				state: state
 			});
 		}
@@ -335,6 +361,7 @@ window.L.Map.include({
 			return;
 		}
 
+		app.idleHandler.notifyActive();
 		if (this.isPresentationOrDrawing()) {
 			if (nPos === undefined) {
 				app.socket.sendMessage('uno .uno:InsertPage');
@@ -392,6 +419,7 @@ window.L.Map.include({
 		if (!this.isPresentationOrDrawing()) {
 			return;
 		}
+		app.idleHandler.notifyActive();
 
 		if (pos === undefined) {
 			app.socket.sendMessage('uno .uno:DuplicatePage');
@@ -423,6 +451,7 @@ window.L.Map.include({
 		else {
 			return;
 		}
+		app.idleHandler.notifyActive();
 
 		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.

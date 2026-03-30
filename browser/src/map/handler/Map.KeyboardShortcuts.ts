@@ -10,6 +10,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* Surely these should be in some common .ts file where all similar lines would be centralised? */
+declare var ThisIsTheMacOSApp: any;
+declare var ThisIsTheQtApp: any;
+declare var ThisIsTheWindowsApp: any;
 
 function isCtrlKey (e: KeyboardEvent) {
     if ((window as any).ThisIsTheiOSApp || window.L.Browser.mac)
@@ -41,10 +45,13 @@ enum ViewType {
 enum Platform {
     ANDROIDAPP  = 1,
     IOSAPP      = 2,
-    MAC         = 4,
-    WINDOWS     = 8,
-    LINUX       = 16, // There is no "Linux" option, so just !mac && !windows
+    MAC         = 4, // Browser on macOS
+    WINDOWS     = 8, // Browser on Windows
+    LINUX       = 16, // Actually means "none of the others", presumably browser on Linux
     CHROMEOSAPP = 32,
+    CODAWINDOWS = 64,
+    CODAMAC     = 128,
+    CODAQT      = 256,
 }
 
 type shortcutCallback = () => void;
@@ -83,7 +90,7 @@ class ShortcutDescriptor {
 
         On Mac, command is seen as Mod.CTRL and there is a separate Mod.MACCTRL to read control
 
-        If ommitted, no modifier will be required
+        If omitted, no modifier will be required
 
         @default Mod.NONE */
         modifier?: Mod,
@@ -105,15 +112,15 @@ class ShortcutDescriptor {
 
         If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
 
-        If ommitted, no uno command will be run when this keybind is pressed */
+        If omitted, no uno command will be run when this keybind is pressed */
         unoAction?: string,
         /** The action to dispatch when the keybind is pressed
 
         If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
 
-        If ommitted, no action will be dispatched when this keybind is pressed */
+        If omitted, no action will be dispatched when this keybind is pressed */
         dispatchAction?: string,
-        /** The optional data to pass to the sipatcher if dispatchAction is used*/
+        /** The optional data to pass to the dispatcher if dispatchAction is used*/
         dispatchData?: any,
         /** The view type (Edit or ReadOnly) to restrict this keybind to
 
@@ -213,6 +220,9 @@ class KeyboardShortcuts {
         const platform = window.mode.isChromebook() ? Platform.CHROMEOSAPP :
                          window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : // Cannot come before window.mode.isChromebook() as all Chromebook app users are necessarily also Android app users
                          window.ThisIsTheiOSApp ? Platform.IOSAPP :
+                         window.ThisIsTheWindowsApp ? Platform.CODAWINDOWS :
+                         window.ThisIsTheMacOSApp ? Platform.CODAMAC :
+                         window.ThisIsTheQtApp ? Platform.CODAQT :
                          window.L.Browser.mac ? Platform.MAC :
                          window.L.Browser.win ? Platform.WINDOWS :
                          Platform.LINUX;
@@ -220,6 +230,19 @@ class KeyboardShortcuts {
         const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
 
         if (shortcut) {
+            // In read-only mode, block shortcuts that send uno commands
+            // to core unless they are explicitly meant for read-only use.
+
+            // FIXME: For some reason we need to check for .uno:CloseWin separately here. That is
+            // supposed to work both in viewing mode (called ViewType.ReadOnly) and editing mode.
+
+            if (!this.map.isEditMode() && shortcut.unoAction &&
+                shortcut.unoAction !== '.uno:CloseWin' &&
+                shortcut.viewType !== ViewType.ReadOnly) {
+                event.preventDefault();
+                return true;
+            }
+
             let action = 'disabled';
             if (shortcut.unoAction) {
                 action = shortcut.unoAction;
@@ -297,16 +320,31 @@ const keyboardShortcuts = new KeyboardShortcuts();
 
 // Default shortcuts.
 keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
+
+    // FIXME: Should we mark shortcuts that are supposed to work *only* in editing mode with
+    // viewType: ViewType.Edit? Having viewType as null means the shortcut is supposed to work in
+    // either viewing or editing mode, and having it as ViewType.ReadOnly means it is supposed to
+    // work only in viewing mode. At least if you believe the comment for viewType in the
+    // ShortcutDescriptor constructor.
+
+    // All document types.
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'o', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT, unoAction: '.uno:Open' }),
+
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', platform: Platform.CODAWINDOWS | Platform.CODAQT, unoAction: '.uno:CloseWin' }),
+
     /*
         Disable F5 or assign it something to prevent browser refresh.
         Disable multi-sheet selection shortcuts in Calc.
         Disable F2 in Writer, formula bar is unsupported, and messes with further input.
+        Disable CTRL+SHIFT+N because core side template dialog is not supported on Online.
     */
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'N' }),
     new ShortcutDescriptor({ eventType: 'keydown', key: 'F1', dispatchAction: 'showhelp' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT, key: 'F1', dispatchAction: 'focustonotebookbar' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'f', dispatchAction: 'home-search' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'p', dispatchAction: 'print' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 's', dispatchAction: 'save', dispatchData: 'keyboard' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT | Mod.ALT, key: 'V', unoAction: '.uno:PasteSpecial', platform: Platform.WINDOWS | Platform.LINUX | Platform.MAC | Platform.CHROMEOSAPP}),
 
     // Calc.
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageUp' }),
@@ -334,6 +372,9 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'Home', dispatchAction: 'firstpart', viewType: ViewType.ReadOnly }),
 
 
+    // Prevent F7 from triggering Caret Browsing in desktop apps.
+    new ShortcutDescriptor({ eventType: 'keydown', key: 'F7', unoAction: '.uno:SpellingAndGrammarDialog', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT }),
+
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT | Mod.CTRL, key: 'p', dispatchAction: 'userlist' }),
 
     // Passthrough some system shortcuts
@@ -344,7 +385,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
 	new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'R', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Refresh browser tab & clear cache
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'm', preventDefault: false, platform: Platform.MAC }), // On MacOS, minimize window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'q', preventDefault: false, platform: Platform.MAC }), // On MacOS, quit browser
-    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', preventDefault: false }), // Close current tab
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', platform: Platform.LINUX | Platform.WINDOWS | Platform.MAC, preventDefault: false }), // Close current tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'n', preventDefault: false }), // Open new browser window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 't', preventDefault: false }), // Open new browser tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
@@ -374,6 +415,11 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
 
     // Passthrough some system shortcuts
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
+));
+
+// French shortcuts.
+keyboardShortcuts.definitions.set('fr', new Array<ShortcutDescriptor>(
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'g', unoAction: '.uno:Bold' }),
 ));
 
 window.KeyboardShortcuts = keyboardShortcuts;

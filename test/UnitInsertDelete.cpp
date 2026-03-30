@@ -9,10 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for insert and delete operations.
+ */
+
 #include <config.h>
 
 #include <Poco/Exception.h>
-#include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
 
@@ -39,6 +42,21 @@ std::vector<std::string> getPartHashCodes(const Poco::SharedPtr<Poco::JSON::Obje
     }
 
     return partHashes;
+}
+
+// .uno:InsertPage can sometimes send status: messages more than once, so drain the
+// previous messages, explicitly ask for current status and get the part hash codes.
+std::vector<std::string> drainAndGetPartHashCodes(
+    const std::shared_ptr<http::WebSocketSession>& socket, const std::string& testname,
+    Poco::JSON::Parser& parser)
+{
+    helpers::drain(socket, testname);
+    helpers::sendTextFrame(socket, "status", testname);
+    const std::string response = helpers::getResponseString(socket, "status:", testname);
+    LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+    const Poco::Dynamic::Var statusJsonVar = parser.parse(response.substr(7));
+    const auto& status = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+    return getPartHashCodes(status);
 }
 }
 
@@ -111,6 +129,9 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             //LOK_ASSERT_EQUAL(it + 1, currentPartHashes.size());
         }
 
+        currentPartHashes = drainAndGetPartHashCodes(socket, testname, parser);
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(11), currentPartHashes.size());
+
         LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after inserting extra slides.",
                                currentPartHashes[0] == slide1Hash);
 
@@ -154,6 +175,9 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 
             LOK_ASSERT_EQUAL(it + 1, currentPartHashes.size());
         }
+
+        currentPartHashes = drainAndGetPartHashCodes(socket, testname, parser);
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(11), currentPartHashes.size());
 
         LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after undoing slide delete.",
                                currentPartHashes[0] == slide1Hash);

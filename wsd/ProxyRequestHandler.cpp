@@ -9,14 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of proxy request handling.
+ * Classes: ProxyRequestHandler
+ */
+
 #include <config.h>
 
-#include <Poco/URI.h>
-
-#include <COOLWSD.hpp>
 #include "ProxyRequestHandler.hpp"
-#include <net/HttpRequest.hpp>
+
 #include <net/HttpHelper.hpp>
+#include <net/HttpRequest.hpp>
+#include <wsd/COOLWSD.hpp>
+
+#include <Poco/URI.h>
 
 std::unordered_map<std::string, std::shared_ptr<http::Response>> ProxyRequestHandler::CacheFileHash;
 std::chrono::system_clock::time_point ProxyRequestHandler::MaxAge;

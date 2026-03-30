@@ -118,6 +118,7 @@
         <anonymize>
             <anonymize_user_data type="bool" desc="Enable to anonymize/obfuscate of user-data in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@COOLWSD_ANONYMIZE_USER_DATA@">@COOLWSD_ANONYMIZE_USER_DATA@</anonymize_user_data>
             <anonymization_salt type="uint" desc="The salt used to anonymize/obfuscate user-data in logs. Use a secret 64-bit random number." default="82589933">82589933</anonymization_salt>
+            <high_strength type="bool" desc="Use cryptographic one-way hashing (PBKDF2-HMAC-SHA512) for anonymization instead of the default fast FNV-1a hash. This makes it computationally infeasible to reverse the anonymized values, even with knowledge of the salt. Slower but suitable when logs may be shared with third parties." default="false">false</high_strength>
         </anonymize>
         <docstats type="bool" desc="Enable to see document handling information in logs." default="false">false</docstats>
         <userstats desc="Enable user stats. i.e: logs the details of a file and user" type="bool" default="false">false</userstats>
@@ -147,7 +148,7 @@
         <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@COOLWSD_TRACEEVENTFILE@">@COOLWSD_TRACEEVENTFILE@</path>
     </trace_event>
 
-    <browser_logging desc="Logging in the browser console" default="@BROWSER_LOGGING@">@BROWSER_LOGGING@</browser_logging>
+    <browser_logging desc="When enabled, shows internal console output in the browser's developer console and forwards JS errors to the server log." default="@BROWSER_LOGGING@">@BROWSER_LOGGING@</browser_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
         <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/cooltrace-%.gz" compress="true" snapshot="false"></path>
@@ -246,7 +247,6 @@
       <jwt_expiry_secs desc="Time in seconds before the Admin Console's JWT token expires" type="int" default="1800">1800</jwt_expiry_secs>
       <enable_macros_execution desc="Specifies whether the macro execution is enabled in general. This will enable Basic and Python scripts to execute both installed and from documents. If it is set to false, the macro_security_level is ignored. If it is set to true, the mentioned entry specified the level of macro security." type="bool" default="false">false</enable_macros_execution>
       <macro_security_level desc="Level of Macro security. 1 (Medium) Confirmation required before executing macros from untrusted sources. 0 (Low, not recommended) All macros will be executed without confirmation." type="int" default="1">1</macro_security_level>
-      <enable_websocket_urp desc="Should we enable URP (UNO remote protocol) communication over the websocket. This allows full control of the Kit child server to anyone with access to the websocket including executing macros without confirmation or running arbitrary shell commands in the jail." type="bool" default="false">false</enable_websocket_urp>
       <enable_metrics_unauthenticated desc="When enabled, the /cool/getMetrics endpoint will not require authentication." type="bool" default="false">false</enable_metrics_unauthenticated>
       <server_signature desc="Whether to send server signature in HTTP response headers" type="bool" default="@SERVER_SIGNATURE@">@SERVER_SIGNATURE@</server_signature>
     </security>
@@ -260,6 +260,8 @@
       <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
     </watermark>
 
+    <comment_avatar desc="URL of an image to use as the avatar for all comments, overriding per-user avatars. When empty (default), normal user avatars are shown" type="string" default=""></comment_avatar>
+
     @WELCOME_CONFIG_FRAGMENT@
 
     <user_interface>
@@ -270,6 +272,11 @@
       @CONFIG_INTERFACE_FRAGMENT@
 
     </user_interface>
+
+    <view_mode desc="View mode settings">
+        <!-- Example: "docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx" -->
+        <file_extensions desc="List of file extensions that should be opened in view mode by default." type="string" default=""></file_extensions>
+    </view_mode>
 
     <storage desc="Backend storage">
         <filesystem allow="false" />
@@ -346,6 +353,7 @@
 
     <serverside_config>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle sub forkit. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
+        <max_idle_subforkits desc="The maximum number of recently-used idle sub forkits to keep alive. Defaults to 5. Clamped to at least 1." type="uint" default="5">5</max_idle_subforkits>
     </serverside_config>
 
     <remote_config>

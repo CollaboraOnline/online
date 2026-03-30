@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Tile caching for rendered document tiles.
+ * Classes: TileCache
+ */
+
 #pragma once
 
 #include <iosfwd>
@@ -20,9 +25,9 @@
 
 #include <Rectangle.hpp>
 
-#include "Log.hpp"
-#include "Common.hpp"
-#include "TileDesc.hpp"
+#include <common/Log.hpp>
+#include <Common.hpp>
+#include <TileDesc.hpp>
 
 class ClientSession;
 
@@ -167,7 +172,7 @@ struct TileData
         return since < _wids[0];
     }
 
-    bool appendChangesSince(std::vector<char> &output, TileWireId since)
+    bool appendChangesSince(std::vector<char>& output, TileWireId since) const
     {
         size_t i;
         for (i = 0; since != 0 && i < _wids.size() && _wids[i] <= since; ++i);
@@ -188,11 +193,15 @@ struct TileData
                         " from wid: " << _wids[i] << " to wid: " << since <<
                         " from offset: " << offset << " to " << _deltas.size());
 
-            size_t extra = _deltas.size() - offset;
-            size_t dest = output.size();
-            output.resize(output.size() + extra);
+            assert(offset <= _deltas.size());
+            if (offset < _deltas.size())
+            {
+                const size_t extra = _deltas.size() - offset;
+                const size_t dest = output.size();
+                output.resize(dest + extra);
+                std::memcpy(output.data() + dest, _deltas.data() + offset, extra);
+            }
 
-            std::memcpy(output.data() + dest, _deltas.data() + offset, extra);
             return true;
         }
     }

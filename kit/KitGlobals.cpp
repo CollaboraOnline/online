@@ -9,9 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Kit process global variable definitions.
+ */
+
 #include <config.h>
 
-#include <common/Globals.hpp>
 #include <kit/KitGlobals.hpp>
+
+#include <common/Globals.hpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

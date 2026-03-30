@@ -56,7 +56,7 @@
     <string name="usb_connected_configure">USB ceangailte, cumraigh do ghléas.</string>
     <string name="owncloud_wrong_connection">Ní féidir ceangal leis an bhfreastalaí scamall. Seiceáil do chumraíocht.</string>
     <string name="owncloud_unauthorized">Ní féidir logáil isteach sa fhreastalaí scamall. Seiceáil do chumraíocht.</string>
-    <string name="ext_document_provider_error">Comhad fréimhe neamhbhailí. Seiceáil cumraíocht do chárta sd.</string>
+    <string name="ext_document_provider_error">Comhad fréimhe neamhbhailí. Seiceáil cumraíocht do chárta SD.</string>
     <string name="otg_missing_error">Comhad fréimhe neamhbhailí. Seiceáil do ghléas OTG agus/nó cumraíocht.</string>
     <string name="storage_provider_settings">Socruithe soláthraí stórála</string>
     <string name="owncloud_settings">Socruithe freastalaí scamall</string>
@@ -104,7 +104,7 @@
     <string name="directory_browser_label">Roghnaigh Eolaire</string>
     <string name="bad_directory">Conair eolaire nebhailí</string>
     <string name="unable_to_go_further">Ní féidir dul níos faide.</string>
-    <string name="bmp_null">Tá BMP neall!</string>
+    <string name="bmp_null">Tá bmp neamhní!</string>
     <string name="theme">Téama</string>
     <string name="choose_theme">Roghnaigh téama</string>
     <string name="theme_system_default">Réamhshocrú córas</string>

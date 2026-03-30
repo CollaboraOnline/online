@@ -9,7 +9,7 @@ SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 # sort and uniqify the list
 # filter out whitelist entries (manually checked)
 
-grep -rEho "//.*|/\*.*?\*/" . --include "*.css" --include "*.js" --include "*.ts" --include "*.*pp" | \
+git ls-files '*.css' '*.js' '*.ts' '*.*pp' | xargs grep -Eho "//.*|/\*.*?\*/" | \
 hunspell -l | \
 grep -E '^[A-Z]?[a-z]*$' | \
 sort | uniq | \

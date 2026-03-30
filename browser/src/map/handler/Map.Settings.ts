@@ -29,7 +29,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 
 	_getLocalSettingsUrl: function (): string {
 		const settingsLocation: string = app.LOUtil.getURL(
-			'/admin/adminIntegratorSettings.html',
+			'adminIntegratorSettings.html',
 		);
 		return settingsLocation;
 	},
@@ -61,11 +61,22 @@ window.L.Map.Settings = window.L.Handler.extend({
 		const params: Array<Record<string, any>> = [
 			{ ui_theme: theme },
 			{ lang: window.langParam },
-			{ mobile: window.mode.isMobile() },
+			{ mobile: window.mode.isSmallScreenDevice() },
 			{ access_token: window.accessToken },
 			{ access_token_ttl: window.accessTokenTTL },
 			{ wopi_setting_base_url: window.wopiSettingBaseUrl },
+			{ disable_ai_settings: this._map.wopi.DisableAISettings },
 		];
+
+		if (window.mode.isCODesktop())
+			window.postMobileMessage(
+				'PROCESSINTEGRATORADMINFILE ' +
+					JSON.stringify({
+						ui_theme: theme,
+						lang: window.langParam,
+						mobile: window.mode.isSmallScreenDevice(),
+					}),
+			);
 
 		const options = {
 			prefix: 'iframe-settings',
@@ -114,9 +125,6 @@ window.L.Map.Settings = window.L.Handler.extend({
 				this._iframeDialog.postMessage({
 					MessageId: 'settings-save-all',
 				});
-				setTimeout(() => {
-					this.removeIframe();
-				}, 300);
 			},
 			this,
 		);
@@ -132,6 +140,13 @@ window.L.Map.Settings = window.L.Handler.extend({
 			this.removeIframe();
 		} else if (data.MessageId === 'settings-ready') {
 			this._iframeDialog.postMessage(data);
+		} else if (data.MessageId === 'settings-save-complete') {
+			this.removeIframe();
+			if (data.viewSettings) {
+				app.socket.sendMessage(
+					'updateviewsettings ' + JSON.stringify(data.viewSettings),
+				);
+			}
 		}
 	},
 });

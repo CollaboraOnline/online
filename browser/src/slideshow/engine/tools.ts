@@ -53,9 +53,6 @@ function booleanParser(sValue: string) {
 }
 
 function colorParser(sValue: string): RGBColor | HSLColor {
-	// The following 3 color functions are used in evaluating sValue string
-	// so don't remove them.
-	/* eslint-disable no-unused-vars */
 	function hsl(
 		nHue: number,
 		nSaturation: number,
@@ -71,10 +68,9 @@ function colorParser(sValue: string): RGBColor | HSLColor {
 	function prgb(nRed: number, nGreen: number, nBlue: number): RGBColor {
 		return new RGBColor(nRed / 100, nGreen / 100, nBlue / 100);
 	}
-	/* eslint-enable no-unused-vars */
 
 	const sCommaPattern = ' *[,] *';
-	const sNumberPattern = '[+-]?[0-9]+[.]?[0-9]*';
+	const sNumberPattern = '([+-]?[0-9]+[.]?[0-9]*)';
 	const sHexDigitPattern = '[0-9A-Fa-f]';
 
 	const sHexColorPattern =
@@ -132,13 +128,14 @@ function colorParser(sValue: string): RGBColor | HSLColor {
 
 		return new RGBColor(nRed, nGreen, nBlue);
 	} else if (reHSLPercent.test(sValue)) {
-		sValue = sValue.replace(/%/g, '');
-		return eval(sValue);
+		const m = reHSLPercent.exec(sValue);
+		return hsl(parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3]));
 	} else if (reRGBInteger.test(sValue)) {
-		return eval(sValue);
+		const m = reRGBInteger.exec(sValue);
+		return rgb(parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3]));
 	} else if (reRGBPercent.test(sValue)) {
-		sValue = 'p' + sValue.replace(/%/g, '');
-		return eval(sValue);
+		const m = reRGBPercent.exec(sValue);
+		return prgb(parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3]));
 	} else {
 		return null;
 	}

@@ -11,33 +11,36 @@
 
 #pragma once
 
+#include <common/StringVector.hpp>
+#include <common/Log.hpp>
+
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
+#include <typeinfo>
+
+#include <Poco/File.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Path.h>
+
+#include <algorithm>
 #include <cassert>
+#include <cctype>
 #include <cerrno>
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
-#include <algorithm>
 #include <iomanip>
 #include <limits>
+#include <map>
+#include <memory.h>
 #include <mutex>
 #include <sstream>
 #include <string>
-#include <map>
 #include <string_view>
-#include <utility>
-#include <cctype>
-#include <memory.h>
 #include <thread>
-
-#include <Poco/File.h>
-#include <Poco/Path.h>
-#include <Poco/RegularExpression.h>
-
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
-#include <StringVector.hpp>
+#include <utility>
 
 #define STRINGIFY(X) #X
 
@@ -139,7 +142,7 @@ namespace Util
         /// Returns the time that has elapsed since starting, in the units required.
         /// Units defaults to milliseconds.
         template <typename T = std::chrono::milliseconds>
-        T
+        [[nodiscard]] T
         elapsed(std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
         {
             return std::chrono::duration_cast<T>(now - _startTime);
@@ -164,7 +167,7 @@ namespace Util
     public:
         SysStopwatch();
         void restart();
-        std::chrono::microseconds elapsedTime() const;
+        [[nodiscard]] std::chrono::microseconds elapsedTime() const;
 
     private:
         static void readTime(uint64_t &cpu, uint64_t &sys);
@@ -172,41 +175,28 @@ namespace Util
         uint64_t _startSys;
     };
 
-    class DirectoryCounter
-    {
-        void *_tasks;
-    public:
-        DirectoryCounter(const char *procPath);
-        ~DirectoryCounter();
-        /// Get number of items in this directory or -1 on error
-        int count();
-    };
+    class CounterImpl;
 
-    #ifdef __FreeBSD__
     /// Needs to open dirent before forking in Kit process
     class ThreadCounter
     {
-        pid_t pid;
+        std::unique_ptr<CounterImpl> _impl;
     public:
         ThreadCounter();
         ~ThreadCounter();
         /// Get number of items in this directory or -1 on error
         int count();
     };
-    #else
-    /// Needs to open dirent before forking in Kit process
-    class ThreadCounter : public DirectoryCounter
-    {
-    public:
-        ThreadCounter() : DirectoryCounter("/proc/self/task") {}
-    };
-    #endif
 
     /// Needs to open dirent before forking in Kit process
-    class FDCounter : public DirectoryCounter
+    class FDCounter
     {
+        std::unique_ptr<CounterImpl> _impl;
     public:
-        FDCounter() : DirectoryCounter("/proc/self/fd") {}
+        FDCounter();
+        ~FDCounter();
+        /// Get number of items in this directory or -1 on error
+        int count();
     };
 
     /// Spawn a process.
@@ -352,7 +342,7 @@ namespace Util
     void setProcessAndThreadPriorities(pid_t pid, int prio);
 
     /// Replace substring @a in string @s with string @b.
-    std::string replace(std::string s, const std::string& a, const std::string& b);
+    std::string replace(std::string s, std::string_view a, std::string_view b);
 
     /// Replace character @a in string @s, in place, with character @b.
     inline std::string& replaceInPlace(std::string& s, char a, char b)
@@ -379,7 +369,7 @@ namespace Util
 
     void replaceAllSubStr(std::string& input, const std::string& target, const std::string& replacement);
 
-    std::string formatLinesForLog(const std::string& s);
+    std::string formatLinesForLog(std::string_view s);
 
     void setThreadName(const std::string& s);
 
@@ -405,7 +395,9 @@ namespace Util
     std::string getVersionJSON(bool enableExperimental, const std::string& timezone);
 
 #if ENABLE_DEBUG
-    // for debugging validation only.
+    /// Returns the offset of the first invalid-UTF8 character.
+    /// Otherwise, returns > len for all-valid UTF8 characters.
+    /// for debugging validation only.
     inline size_t isValidUtf8(const unsigned char *data, size_t len)
     {
         for (size_t i = 0; i < len; ++i)
@@ -430,10 +422,12 @@ namespace Util
         return len + 1;
     }
 
-    // for debugging validation only.
-    inline bool isValidUtf8(const std::string_view str)
+    /// Returns the offset of the first invalid-UTF8 character.
+    /// Otherwise, returns > len for all-valid UTF8 characters.
+    /// for debugging validation only.
+    inline size_t isValidUtf8(const std::string_view str)
     {
-        return Util::isValidUtf8((unsigned char*)str.data(), str.size()) > str.size();
+        return Util::isValidUtf8((unsigned char*)str.data(), str.size());
     }
 #endif
 
@@ -495,7 +489,7 @@ namespace Util
     }
 
     /// Trim spaces from both left and right and copy. Just spaces.
-    inline std::string trimmed(const std::string& s)
+    inline std::string_view trimmed(const std::string_view s)
     {
         const size_t first = s.find_first_not_of(' ');
         const size_t last = s.find_last_not_of(' ');
@@ -514,10 +508,16 @@ namespace Util
             return s.substr(0, last + 1);
         }
 
-        return std::string();
+        return std::string_view();
     }
 
     /// Trim spaces from left and right. Just spaces.
+    inline std::string trimmed(const std::string& s)
+    {
+        return std::string(trimmed(std::string_view(s)));
+    }
+
+    /// Trim spaces from left and right. Just spaces. FIXME: REMOVE!
     inline std::string trimmed(const char* s)
     {
         return trimmed(std::string(s));
@@ -1011,8 +1011,8 @@ int main(int argc, char**argv)
             std::string mangled;
             std::string offset;
             std::string demangled;
-            std::string toString() const;
-            std::string toMangledString() const;
+            [[nodiscard]] std::string toString() const;
+            [[nodiscard]] std::string toMangledString() const;
             bool isDemangled() const { return !demangled.empty(); }
         };
 
@@ -1038,7 +1038,7 @@ int main(int argc, char**argv)
         std::ostream& send(std::ostream& os) const;
 
         /// Produces a string representation, one line per frame
-        std::string toString() const;
+        [[nodiscard]] std::string toString() const;
 
         /* constexpr */ size_t size() const { return _frames.size(); }
         /* constexpr */ const Symbol& operator[](size_t idx) const
@@ -1078,6 +1078,7 @@ int main(int argc, char**argv)
     template <typename Dst, typename Src, typename Enable = void>
     Dst convertChronoClock(const Src time)
     {
+        [[maybe_unused]] const auto prime = Dst::clock::now();
         const auto before = Src::clock::now();
         const auto now = Dst::clock::now();
         const auto after = Src::clock::now();
@@ -1188,6 +1189,15 @@ int main(int argc, char**argv)
 #endif
     }
 
+    constexpr bool isDebugEnabled()
+    {
+#ifdef ENABLE_DEBUG
+        return ENABLE_DEBUG;
+#else
+        return false;
+#endif
+    }
+
     void setKitInProcess(bool value);
     bool isKitInProcess();
 
@@ -1222,46 +1232,6 @@ int main(int argc, char**argv)
 
     // If OS is not mobile, it must be Linux.
     std::string getLinuxVersion();
-
-    /// Convert a string to 32-bit signed int.
-    /// Returns the parsed value and a boolean indicating success or failure.
-    inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
-    {
-        const char* str = input.data();
-        char* endptr = nullptr;
-        errno = 0;
-        const auto value = std::strtol(str, &endptr, 10);
-        return std::make_pair(value, endptr > str && errno != ERANGE);
-    }
-
-    /// Convert a string to 32-bit signed int. On failure, returns the default
-    /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input,
-                                                       const std::int32_t def)
-    {
-        const auto pair = i32FromString(input);
-        return pair.second ? pair : std::make_pair(def, false);
-    }
-
-    /// Convert a string to 64-bit unsigned int.
-    /// Returns the parsed value and a boolean indicating success or failure.
-    inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input)
-    {
-        const char* str = input.data();
-        char* endptr = nullptr;
-        errno = 0;
-        const auto value = std::strtoul(str, &endptr, 10);
-        return std::make_pair(value, endptr > str && errno != ERANGE);
-    }
-
-    /// Convert a string to 64-bit unsigned int. On failure, returns the default
-    /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input,
-                                                        const std::uint64_t def)
-    {
-        const auto pair = u64FromString(input);
-        return pair.second ? pair : std::make_pair(def, false);
-    }
 
     /// Converts and returns the argument to lower-case.
     inline std::string toLower(std::string s)
@@ -1334,27 +1304,6 @@ int main(int argc, char**argv)
         return std::string(s);
     }
 
-    /// Concatenate the given elements in a container to each other using
-    /// the delimiter of choice.
-    template <typename T, typename U = const char*>
-    inline std::string join(const T& elements, const U& delimiter)
-    {
-        std::ostringstream oss;
-        bool first = true;
-        for (const auto& elem : elements)
-        {
-            if (!first)
-            {
-                oss << delimiter;
-            }
-
-            oss << elem;
-            first = false;
-        }
-
-        return oss.str();
-    }
-
     // Create a ostringstream with desired ostream format set
     inline std::ostringstream makeDumpStateStream()
     {
@@ -1373,8 +1322,8 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to a stream.
-    template <typename S, typename T, typename... Delimiters>
-    void joinPair(S& stream, T&& container, Delimiters&&... delimiters)
+    template <std::ranges::forward_range T, typename... Delimiters>
+    void joinPair(std::ostream& stream, T&& container, Delimiters&&... delimiters)
     {
         unsigned i = 0;
         for (const auto& pair : container)
@@ -1389,7 +1338,7 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to string.
-    template <typename T, typename... Delimiters>
+    template <std::ranges::forward_range T, typename... Delimiters>
     std::string joinPair(T&& container, Delimiters&&... delimiters)
     {
         std::ostringstream oss;
@@ -1398,7 +1347,7 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to string.
-    template <typename T> std::string joinPair(T&& container)
+    template <std::ranges::forward_range T> std::string joinPair(T&& container)
     {
         std::ostringstream oss;
         joinPair(oss, std::forward<T>(container), " / ");
@@ -1406,21 +1355,14 @@ int main(int argc, char**argv)
     }
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo);
+    void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER_DECLARATION);
 
 #ifndef ASSERT_CORRECT_THREAD
-#define ASSERT_CORRECT_THREAD() assertCorrectThread(__FILE__, __LINE__)
+#define ASSERT_CORRECT_THREAD() assertCorrectThread()
 #endif
 #ifndef ASSERT_CORRECT_THREAD_OWNER
-#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER, __FILE__, __LINE__)
+#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER)
 #endif
-
-    /**
-     * Similar to std::atoi() but does not require p to be null-terminated.
-     *
-     * Returns std::numeric_limits<int>::min/max() if the result would overflow.
-     */
-    int safe_atoi(const char* p, int len);
 
     /// Sleep based on count of seconds in env. var
     void sleepFromEnvIfSet(const char *domain, const char *envVar);
@@ -1443,12 +1385,24 @@ int main(int argc, char**argv)
 
 #define N_ELEMENTS(arr)     (sizeof(Util::n_array_size(arr)))
 
-    // Wrap localtime_r() and gmtime_t() which are not portable
-    std::tm *time_t_to_localtime(std::time_t t, std::tm& tm);
+    // Wrap gmtime_r() which is not portable
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm);
 
+    /// Base-64 encode the given input
     std::string base64Encode(std::string_view input);
+    inline std::string base64Encode(const std::vector<unsigned char>& input)
+    {
+        return base64Encode(
+            std::string_view(reinterpret_cast<const char*>(input.data()), input.size()));
+    }
 
+    /// Base-64 decode the given input.
+    std::string base64Decode(const std::string& input);
+
+#ifdef _WIN32
+    std::wstring string_to_wide_string(const std::string& string);
+    std::string wide_string_to_string(const std::wstring& wide_string);
+#endif
 } // end namespace Util
 
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)
@@ -1458,6 +1412,15 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
+
+inline std::ostream& operator<<(std::ostream& os, const Poco::Net::HTTPRequest& request)
+{
+    os << request.getMethod() << ' ' << request.getVersion() << ' ' << request.getURI()
+       << ", content-length: " << request.getContentLength64()
+       << ", chunked: " << request.getChunkedTransferEncoding() << ", ";
+    Util::joinPair(os, request, " / ");
+    return os;
+}
 
 // std::to_underlying will be available in C++23
 template <typename Enum> constexpr std::underlying_type_t<Enum> to_underlying(Enum e)

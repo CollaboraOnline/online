@@ -9,13 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Common fuzzing initialization and utilities.
+ * Functions: DoInitialization() - Sets up fuzzing environment
+ */
+
+#include <config.h>
+
 #include <fuzzer/Common.hpp>
 
 #include <map>
 #include <string>
 
-#include "config.h"
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Ssl.hpp>
 
 namespace fuzzer

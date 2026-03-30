@@ -61,7 +61,6 @@
 	--color-calc-header-sheetview: #57685D;
 	--color-calc-header-sheetview-selected: #11370B;
 	--color-calc-header-sheetview-hover: #fff;
-	--color-calc-header-sheetview-unsynced: #f00000;
 
 	--color-text-calc-header-selected: #fff;
 	--color-text-calc-header-sheetview-selected: #f0f0f0;
@@ -76,6 +75,9 @@
 	--color-quickfind-border: #444;
 	--scrollbar-color: #c0bfbc transparent;
 	--color-background-hover: #363636;
+
+	--color-backstage-background: #1E1E1E;
+	--color-backstage-background-dark: #121212;
 }
 
 [data-bg-theme='dark'] {

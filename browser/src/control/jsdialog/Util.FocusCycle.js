@@ -45,6 +45,9 @@ function getFocusableElements(container) {
 		ret = container.querySelectorAll('select:not([disabled]):not(.hidden)');
 	if (!ret.length)
 		ret = container.querySelectorAll('button:not([disabled]):not(.hidden)');
+
+	ret = Array.from(ret).filter(function(elem) { return elem.checkVisibility() });
+
 	return ret;
 }
 
@@ -64,6 +67,8 @@ function isFocusable(element) {
 		'input[type="checkbox"]:not([disabled]):not(.hidden)',
 		'select:not([disabled]):not(.hidden)',
 		'[tabindex]:not([tabindex="-1"]):not(.jsdialog-begin-marker):not(.jsdialog-end-marker):not([disabled]):not(.hidden)',
+		'[role="radiogroup"] [role="radio"]:not([disabled]):not(.hidden)',
+		'[role="listbox"] [role="option"]:not([disabled]):not(.hidden)',
 	];
 
 	return focusableElements.some((selector) => element.matches(selector));
@@ -203,7 +208,7 @@ function findNextElementInContainer(container, currentElement, direction) {
 
 	let diffX = 0;
 	let diffY = 0;
-	
+
 	// Ray casting sensitivity for spatial navigation
 	var rayCastingSensitivity = 10; // Pixels
 

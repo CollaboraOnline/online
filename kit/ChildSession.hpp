@@ -16,11 +16,14 @@
 #include <kit/StateRecorder.hpp>
 #include <kit/Watermark.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-
 #include <chrono>
 #include <queue>
+
+namespace lok
+{
+class Document;
+class Office;
+}
 
 class Document;
 class ChildSession;
@@ -120,7 +123,7 @@ public:
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Text);
+        return _docManager->sendFrame(msg, WSOpCode::Text);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
@@ -132,7 +135,7 @@ public:
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
+        return _docManager->sendFrame(msg, WSOpCode::Binary);
     }
 
     bool sendProgressFrame(const char* id, const std::string& jsonProps,
@@ -159,7 +162,7 @@ public:
 
     void setDumpTiles(bool dumpTiles) { _isDumpingTiles = dumpTiles; }
 
-    std::string getViewRenderState() { return _viewRenderState; }
+    const std::string& getViewRenderState() const { return _viewRenderState; }
 
     TilePrioritizer::Priority getTilePriority(const TileDesc &desc) const;
 
@@ -215,9 +218,9 @@ private:
     bool askSignatureStatus(const char* buffer, int length, const StringVector& tokens);
     bool renderShapeSelection(const StringVector& tokens);
     bool removeTextContext(const StringVector& tokens);
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION || ENABLE_DEBUG
     bool updateBlockingCommandStatus(const StringVector& tokens);
-    std::string getBlockedCommandType(std::string command);
+    std::string getBlockedCommandType(const std::string& command);
 #endif
     bool handleZoteroMessage(const StringVector& tokens);
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);

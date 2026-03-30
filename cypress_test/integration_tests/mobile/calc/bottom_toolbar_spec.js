@@ -15,6 +15,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		cy.cGet('#toolbar-down').should('exist');
 
 		calcHelper.clickOnFirstCell();
+
+		cy.getFrameWindow().then(function(win) {
+			this.win = win;
+		});
 	});
 
 	function getTextEndPosForFirstCell() {
@@ -22,14 +26,15 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 		helper.getCursorPos('left', 'currentTextEndPos')
 
-		mobileHelper.getCompactIcon('AcceptFormula').click();
+		mobileHelper.getCompactIcon('AcceptFormula').should('not.be.disabled').click();
 
 		cy.cGet('.cursor-overlay .blinking-cursor').should('not.exist');
 	}
 
 	it('Apply bold.', function() {
 		helper.setDummyClipboardForCopy();
-		mobileHelper.getCompactIcon('Bold').click();
+		helper.processToIdle(this.win);
+		mobileHelper.getCompactIcon('Bold').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
@@ -37,7 +42,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
-		mobileHelper.getCompactIcon('Italic').click();
+		helper.processToIdle(this.win);
+		mobileHelper.getCompactIcon('Italic').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
@@ -45,21 +51,23 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		mobileHelper.getCompactIcon('Underline').click();
+		helper.processToIdle(this.win);
+		mobileHelper.getCompactIcon('Underline').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td u').should('exist');
 	});
 
 	it.skip('Apply strikeout.', function() {
-		mobileHelper.getCompactIcon('Strikeout').click();
+		mobileHelper.getCompactIcon('Strikeout').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td s').should('exist');
 	});
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #fontcolor').click();
+		helper.processToIdle(this.win);
+		cy.cGet('#toolbar-down #fontcolor').should('not.be.disabled').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -68,7 +76,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #backcolor').click();
+		helper.processToIdle(this.win);
+		cy.cGet('#toolbar-down #backcolor').should('not.be.disabled').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
 		helper.copy();

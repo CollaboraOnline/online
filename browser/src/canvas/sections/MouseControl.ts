@@ -46,7 +46,7 @@ class MouseControl extends CanvasSectionObject {
 		super(name);
 	}
 
-	private readModifier(e: MouseEvent) {
+	static readModifier(e: MouseEvent) {
 		let modifier = 0;
 		const shift = e.shiftKey ? app.UNOModifier.SHIFT : 0;
 		const ctrl = e.ctrlKey ? app.UNOModifier.CTRL : 0;
@@ -75,6 +75,7 @@ class MouseControl extends CanvasSectionObject {
 		modifier: number,
 	) {
 		let viewToDocumentPos = point.clone();
+		Util.ensureValue(app.activeDocument);
 
 		// Convert to pure canvas html element coordinate.
 		viewToDocumentPos.pX +=
@@ -87,26 +88,32 @@ class MouseControl extends CanvasSectionObject {
 		viewToDocumentPos =
 			app.activeDocument.activeLayout.canvasToDocumentPoint(viewToDocumentPos);
 
-		app.map._docLayer._postMouseEvent(
-			eventType,
-			viewToDocumentPos.x,
-			viewToDocumentPos.y,
-			clickCount,
-			buttons,
-			modifier,
-		);
+		if (Number.isNaN(viewToDocumentPos.x) || Number.isNaN(viewToDocumentPos.y))
+			return;
+		else {
+			app.map._docLayer._postMouseEvent(
+				eventType,
+				viewToDocumentPos.x,
+				viewToDocumentPos.y,
+				clickCount,
+				buttons,
+				modifier,
+			);
+		}
 	}
 
 	public onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
 		// We need this to prevent native context menu.
 		e.preventDefault();
 
+		$.contextMenu('destroy', '#canvas-container');
+
 		// We will remove below ones after we remove map HTML element.
 		e.stopPropagation();
 		e.stopImmediatePropagation();
 
 		const buttons = app.LOButtons.right;
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		if (modifier === 0) {
 			this.postCoreMouseEvent(
@@ -119,20 +126,46 @@ class MouseControl extends CanvasSectionObject {
 		}
 	}
 
+	// Gets the mouse position either on browser page or within the
+	// canvas in css pixels.
+	private _getMousePosition(browserPage: boolean): cool.PointLike {
+		Util.ensureValue(app.activeDocument);
+		const pagePosition = this.currentPosition.clone();
+		let docTLx = app.activeDocument.activeLayout.viewedRectangle.pX1;
+		let docTLy = app.activeDocument.activeLayout.viewedRectangle.pY1;
+		if (app.map.getDocType() === 'spreadsheet') {
+			if (app.isXOrdinateInFrozenPane(pagePosition.pX)) {
+				docTLx = 0;
+			}
+
+			if (app.isYOrdinateInFrozenPane(pagePosition.pY)) {
+				docTLy = 0;
+			}
+		}
+		pagePosition.pX -= docTLx - this.containerObject.getDocumentAnchor()[0];
+		pagePosition.pY -= docTLy - this.containerObject.getDocumentAnchor()[1];
+		if (browserPage) {
+			const boundingClientRectangle =
+				this.context.canvas.getBoundingClientRect();
+			return {
+				x: pagePosition.cX + boundingClientRectangle.x,
+				y: pagePosition.cY + boundingClientRectangle.y,
+			};
+		}
+		return {
+			x: pagePosition.cX,
+			y: pagePosition.cY,
+		};
+	}
+
 	// Gets the mouse position on browser page in CSS pixels.
 	public getMousePagePosition() {
-		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
-		const pagePosition = this.currentPosition.clone();
-		pagePosition.pX -=
-			app.activeDocument.activeLayout.viewedRectangle.pX1 -
-			this.containerObject.getDocumentAnchor()[0];
-		pagePosition.pY -=
-			app.activeDocument.activeLayout.viewedRectangle.pY1 -
-			this.containerObject.getDocumentAnchor()[1];
-		return {
-			x: pagePosition.cX + boundingClientRectangle.left,
-			y: pagePosition.cY + boundingClientRectangle.top,
-		};
+		return this._getMousePosition(true);
+	}
+
+	// Gets the mouse position on canvas in CSS pixels.
+	public getMouseCanvasPosition() {
+		return this._getMousePosition(false);
 	}
 
 	// This is useful when a section handles the event but wants to set the document mouse position.
@@ -141,6 +174,7 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private refreshPosition(point: cool.SimplePoint) {
+		Util.ensureValue(app.activeDocument);
 		let topLeftX = app.activeDocument.activeLayout.viewedRectangle.pX1;
 		let topLeftY = app.activeDocument.activeLayout.viewedRectangle.pY1;
 
@@ -155,12 +189,18 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private setCursorType() {
+		// If the core has set a specific pointer (e.g. 'pointer' for hyperlinks),
+		// let it take precedence over our client-side cursor.
+		const corePointer = app.map._docLayer._coreMousePointer;
+		if (corePointer && corePointer !== 'default') return;
+
 		// If we have blinking cursor visible
 		// we need to change cursor from default style
 		if (app.file.textCursor.visible) this.context.canvas.style.cursor = 'text';
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const textCursor =
 				app.file.textCursor.visible &&
+				app.calc.cellCursorRectangle &&
 				app.calc.cellCursorRectangle.pContainsPoint(
 					this.currentPosition.pToArray(),
 				);
@@ -201,6 +241,8 @@ class MouseControl extends CanvasSectionObject {
 				this.amplitude[0] * Math.exp(-elapsed / 650),
 				this.amplitude[1] * Math.exp(-elapsed / 650),
 			];
+
+			Util.ensureValue(app.activeDocument);
 
 			if (Math.abs(delta[0]) > 0.2 || Math.abs(delta[1]) > 0.2) {
 				app.activeDocument.activeLayout.scrollTo(
@@ -270,7 +312,7 @@ class MouseControl extends CanvasSectionObject {
 		clearTimeout(this.mouseMoveTimer);
 
 		const count = 1;
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		if (!this.containerObject.isDraggingSomething()) {
 			this.mouseMoveTimer = setTimeout(() => {
@@ -291,6 +333,7 @@ class MouseControl extends CanvasSectionObject {
 			diff.x -= this.positionOnMouseDown.x;
 			diff.y -= this.positionOnMouseDown.y;
 
+			Util.ensureValue(app.activeDocument);
 			const viewedRectangle =
 				app.activeDocument.activeLayout.viewedRectangle.clone();
 
@@ -352,7 +395,7 @@ class MouseControl extends CanvasSectionObject {
 				this.currentPosition,
 				1,
 				app.LOButtons.left,
-				this.readModifier(e),
+				MouseControl.readModifier(e),
 			);
 
 			app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
@@ -399,11 +442,29 @@ class MouseControl extends CanvasSectionObject {
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const acceptInput =
 				app.calc.cellCursorVisible &&
+				app.calc.cellCursorRectangle &&
 				app.calc.cellCursorRectangle.containsPoint(
 					this.currentPosition.toArray(),
 				);
-			return acceptInput;
+			return acceptInput as boolean;
 		} else return false;
+	}
+
+	private sendClick(clickInfo: any, count: number) {
+		this.postCoreMouseEvent(
+			'buttondown',
+			clickInfo.sendingPosition,
+			count,
+			clickInfo.buttons,
+			clickInfo.modifier,
+		);
+		this.postCoreMouseEvent(
+			'buttonup',
+			clickInfo.sendingPosition,
+			count,
+			clickInfo.buttons,
+			clickInfo.modifier,
+		);
 	}
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
@@ -418,7 +479,7 @@ class MouseControl extends CanvasSectionObject {
 		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
 		let buttons = app.LOButtons.left;
 
-		let modifier = this.readModifier(e);
+		let modifier = MouseControl.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
 
 		// Turn ctrl-left-click into right-click for browsers on macOS
@@ -429,23 +490,16 @@ class MouseControl extends CanvasSectionObject {
 			}
 		}
 
-		if (this.clickTimer) clearTimeout(this.clickTimer);
+		const clickInfo = {
+			sendingPosition: sendingPosition,
+			buttons: buttons,
+			modifier: modifier,
+		};
+
+		if (this.clickTimer) app.timerRegistry.clearTimeout(this.clickTimer);
 		else {
 			// Old code always sends the first click, so do we.
-			this.postCoreMouseEvent(
-				'buttondown',
-				sendingPosition,
-				1,
-				buttons,
-				modifier,
-			);
-			this.postCoreMouseEvent(
-				'buttonup',
-				sendingPosition,
-				1,
-				buttons,
-				modifier,
-			);
+			this.sendClick(clickInfo, 1);
 
 			// For future: Here, we are checking the window size to determine the view mode, we can also check the event type (touch/click).
 			app.map.focus(
@@ -455,27 +509,22 @@ class MouseControl extends CanvasSectionObject {
 			);
 		}
 
-		this.clickTimer = setTimeout(() => {
-			if (this.clickCount > 1) {
-				this.postCoreMouseEvent(
-					'buttondown',
-					sendingPosition,
-					this.clickCount,
-					buttons,
-					modifier,
-				);
-				this.postCoreMouseEvent(
-					'buttonup',
-					sendingPosition,
-					this.clickCount,
-					buttons,
-					modifier,
-				);
-			}
+		this.clickTimer = app.timerRegistry.setTimeout(
+			'clicktimer',
+			() => {
+				if (this.clickCount === 3 && app.map._docLayer.isCalc()) {
+					// Also send a double click for a triple click in Calc.
+					this.sendClick(clickInfo, 2);
+					this.sendClick(clickInfo, 3);
+				} else if (this.clickCount > 1) {
+					this.sendClick(clickInfo, this.clickCount);
+				}
 
-			this.clickTimer = null;
-			this.clickCount = 0;
-		}, 250);
+				this.clickTimer = null;
+				this.clickCount = 0;
+			},
+			250,
+		);
 	}
 
 	onMultiTouchStart(e: TouchEvent): void {
@@ -576,7 +625,7 @@ class MouseControl extends CanvasSectionObject {
 	onDrop(position: cool.SimplePoint, e: DragEvent): void {
 		this.refreshPosition(position);
 
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
 		this.postCoreMouseEvent(

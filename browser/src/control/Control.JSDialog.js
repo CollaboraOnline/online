@@ -87,7 +87,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		return builder;
 	},
 
-	close: function(id, sendCloseEvent) {
+	close: function(id, sendCloseEvent, focusHandled) {
 		if (id !== undefined && this.dialogs[id]) {
 			const dialog = this.dialogs[id];
 			if (!sendCloseEvent && dialog.overlay && !dialog.isSubmenu) {
@@ -99,10 +99,12 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				clearTimeout(dialog.timeoutId);
 
 			if (dialog.isPopup)
-				this.closePopover(id, sendCloseEvent);
+				this.closePopover(id, sendCloseEvent, focusHandled);
 			else
 				this.closeDialog(id, sendCloseEvent);
+			return true;
 		}
+		return false;
 	},
 
 	closeAll: function(leaveSnackbar) {
@@ -134,13 +136,34 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		this.focusToLastElement(id);
 
 		var builder = this.clearDialog(id);
+
+		// Special case: this dialog can be opened by toolbutton
+		if (builder.dialogId == 'BulletsAndNumberingDialog')
+		{
+			const toolButtons = document.querySelectorAll('.unotoolbutton[modelid="SetOutline"] .unobutton');
+
+			toolButtons.forEach(btn => {
+				if (btn.hasAttribute('aria-expanded'))
+					btn.setAttribute('aria-expanded', 'false');
+			});
+		}
+		else if (builder.dialogId == 'CharacterPropertiesDialog')
+		{
+			const toolButtons = document.querySelectorAll('.unotoolbutton[modelid="Spacing"] .unobutton');
+
+			toolButtons.forEach(btn => {
+				if (btn.hasAttribute('aria-expanded'))
+					btn.setAttribute('aria-expanded', 'false');
+			});
+		}
+
 		if (sendCloseEvent !== false && builder)
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 	},
 
 	// sendCloseEvent means that we only send a command to the server
 	// we want to kill HTML popup when we receive feedback from the server
-	closePopover: function(id, sendCloseEvent) {
+	closePopover: function(id, sendCloseEvent, focusHandled) {
 		if (id === undefined || !this.dialogs[id]) {
 			app.console.warn('missing popover data');
 			return;
@@ -167,12 +190,14 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				popupParent._onDropDown(false);
 
 			// Need to change focus to last element before we clear the current dialog
-			this.focusToLastElement(id);
+			if (!focusHandled)
+				this.focusToLastElement(id);
 			this.clearDialog(id);
 			return;
 		}
 
-		this.focusToLastElement(id);
+		if (!focusHandled)
+			this.focusToLastElement(id);
 	},
 
 	onCloseAll: function() {
@@ -186,6 +211,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			return;
 
 		const dialog = this.dialogs[id];
+		if (!dialog)
+			return;
+
 		app.layoutingService.appendLayoutingTask(() => {
 			if (!dialog.lastFocusedElement) {
 				this.map.focus();
@@ -193,13 +221,40 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			}
 
 			try {
-				dialog.lastFocusedElement.focus();
+				if (dialog.lastFocusedElement.isConnected) {
+					dialog.lastFocusedElement.focus();
+				} else {
+					var focusId = document.getElementById(dialog.lastFocusedElementId);
+					if (focusId) {
+						focusId.focus();
+					}
+				}
 			}
 			catch (error) {
 				app.console.debug('Cannot focus last element in dialog with id: ' + id);
 				this.map.focus();
 			}
 		});
+	},
+
+	// Manage focus after a close
+	// hadOpenedDialog: whether there were dialogs open before the close
+	// dialogKeys: snapshot of dialog keys taken before the close
+	focusAfterClose: function(hadOpenedDialog, dialogKeys) {
+		if (hadOpenedDialog && dialogKeys.length) {
+			var lastKey = dialogKeys[dialogKeys.length - 1];
+			const lastDialog = this.dialogs[lastKey];
+			const lastContainer = lastDialog ? lastDialog.container : null;
+			if (lastDialog && lastDialog.canHaveFocus && lastContainer) {
+				var initialFocusElement = JSDialog.GetFocusableElements(lastContainer);
+				if (initialFocusElement && initialFocusElement.length)
+					initialFocusElement[0].focus();
+				else
+					lastContainer.focus();
+			}
+		} else if (hadOpenedDialog) {
+			this.map.focus();
+		}
 	},
 
 	setTabs: function() {
@@ -243,19 +298,25 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			let timeoutId = null;
 			const finallyClose = () => {
 				instance.that.close(instance.id, false);
-				clearTimeout(timeoutId);
+				app.timerRegistry.clearTimeout(timeoutId);
 			};
 
 			container.onanimationend = finallyClose;
 			// be sure it will be removed if onanimationend will not be executed
-			timeoutId = setTimeout(finallyClose, 700);
+			timeoutId = app.timerRegistry.setTimeout(
+				'jsdialog-deferred',
+				finallyClose,
+				700,
+			);
 		});
 	},
 
 	getOrCreateOverlay: function(instance) {
 		// Submenu is created inside the same overlay as parent dropdown
 		if (instance.isDropdown && instance.isSubmenu) {
-			instance.overlay = document.body.querySelector('.jsdialog-overlay');
+			// use the last instance
+			const allOverlays = document.body.querySelectorAll('.jsdialog-overlay');
+			instance.overlay = allOverlays.length ? allOverlays[allOverlays.length - 1] : null;
 			return;
 		}
 
@@ -297,8 +358,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 		instance.form = window.L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
 		instance.form.setAttribute('role', 'dialog');
-		instance.form.setAttribute('aria-labelledby', instance.title);
 		instance.form.setAttribute('autocomplete', 'off');
+		if (instance.title)
+			instance.form.setAttribute('aria-labelledby', instance.title);
 		// Prevent overlay from getting the click, except if we want click to dismiss
 		// Like in the case of the inactivity message.
 		// https://github.com/CollaboraOnline/online/issues/7403
@@ -443,8 +505,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		this.addFocusHandler(instance); // Loop focus for all dialogues.
 
 		var clickToCloseId = instance.clickToClose ? window.L.Util.sanitizeElementId(instance.clickToClose) : null;
-		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
-			clickToCloseId = clickToCloseId.substr('.uno:'.length);
+		const sanitizedPrefix = window.L.Util.sanitizeElementId('.uno:');
+		if (clickToCloseId && clickToCloseId.indexOf(sanitizedPrefix) === 0)
+			clickToCloseId = clickToCloseId.substr(sanitizedPrefix.length);
 
 		var clickToCloseElement = null;
 		if (clickToCloseId && popupParent) {
@@ -481,7 +544,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// this will only search in current instance and not in whole document
 		const tabControlWidget = this.findTabControl(instance);
 
-		let focusWidget, firstFocusableElement ;
+		let focusWidget, firstFocusableElement;
 
 		if (tabControlWidget && !instance.init_focus_id) {
 			// get DOM element of tabControl from current instance
@@ -498,7 +561,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				if (focusables && focusables.length) firstFocusableElement = focusables[0];
 			}
 
-			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)){
+			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)) {
 				firstFocusableElement = JSDialog.FindFocusableWithin(firstFocusableElement, 'next');
 			}
 		}
@@ -769,8 +832,10 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// Save last focused element, we will set the focus back to this element after this popup is closed.
 		if (this.dialogs[instance.id] && this.dialogs[instance.id].lastFocusedElement) {
 			instance.lastFocusedElement = this.dialogs[instance.id].lastFocusedElement;
+			instance.lastFocusedElementId = this.dialogs[instance.id].lastFocusedElementId;
 		} else if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) { // Avoid to reset while updates.
 			instance.lastFocusedElement = document.activeElement;
+			instance.lastFocusedElementId = document.activeElement.id;
 		}
 
 		instance.callback = e.callback;
@@ -814,22 +879,11 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			const dialogs = Object.keys(this.dialogs);
 			const hadOpenedDialog = dialogs.length > 0;
 
-			this.close(instance.id, false);
+			const didClose = this.close(instance.id, false, instance.focusHandled);
 
-			// Manage focus
-			if (hadOpenedDialog && dialogs.length) {
-				var lastKey = dialogs[dialogs.length - 1];
-				const lastDialog = this.dialogs[lastKey];
-				const lastContainer = lastDialog.container;
-				if (lastDialog.canHaveFocus && lastContainer) {
-					var initialFocusElement = JSDialog.GetFocusableElements(lastContainer);
-					if (initialFocusElement && initialFocusElement.length)
-						initialFocusElement[0].focus();
-					else
-						lastContainer.focus();
-				}
-			} else if (hadOpenedDialog){
-				this.map.focus();
+			if (didClose && !instance.focusHandled) {
+				// Manage focus
+				this.focusAfterClose(hadOpenedDialog, dialogs);
 			}
 		}
 		else {
@@ -982,7 +1036,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 		if (entryChanges) {
 			app.layoutingService.appendLayoutingTask(() => {
-				// After entry changes we might have bigger/smaller content and need to repositon the dialog.
+				// After entry changes we might have bigger/smaller content and need to reposition the dialog.
 				dialog.updatePos(dialog);
 			});
 		}

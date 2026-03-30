@@ -11,16 +11,15 @@
 
 #pragma once
 
+#include <atomic>
 #include <cassert>
-#include <memory>
+#include <condition_variable>
+#include <functional>
 #include <queue>
 #include <thread>
-#include <condition_variable>
-#include <fstream>
-#include <unordered_map>
 #include <vector>
 
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 class ThreadPool
 {
@@ -46,7 +45,7 @@ public:
     {
 #if WASMAPP
         // Leave it at that.
-#elif MOBILEAPP && !defined(GTKAPP)
+#elif MOBILEAPP
         _maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
         // coverity[tainted_data_return] - we trust the contents of this variable
@@ -89,13 +88,13 @@ public:
 
     size_t count() const { return _work.size(); }
 
-    void pushWork(const ThreadFn& fn)
+    void pushWork(ThreadFn fn)
     {
         std::unique_lock<std::mutex> lock(_mutex);
         assert(!_running);
         assert(!_shutdown);
         assert(_working == 0);
-        _work.push(fn);
+        _work.emplace(std::move(fn));
     }
 
     void runOne(std::unique_lock<std::mutex>& lock)

@@ -16,7 +16,7 @@
 #include <COOLWSD.hpp>
 #include <common/HexUtil.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <WebSocketSession.hpp>
@@ -349,7 +349,9 @@ public:
 // 1544818858022 INCOMING: tile: nviewid=0 part=0 width=256 height=256 tileposx=15360 tileposy=38400 tilewidth=3840 tileheight=3840 oldwid=0 wid=232 ver=913 imgsize=1002
 // Socket.js:123 1544818858027 OUTGOING: tileprocessed tile=0:15360:38400:3840:3840
                             TileDesc desc = TileDesc::parse(StringVector::tokenize(tile.data(), tile.size()));
-                            sendTextFrame(sock, "tileprocessed tile=" + desc.generateID(), testname);
+                            sendTextFrame(sock,
+                                          "tileprocessed wids=" + std::to_string(desc.getWireId()),
+                                          testname);
                         }
 
                         if (!(num & 0x300)) // occasionally sleep some more - why not.

@@ -1,11 +1,11 @@
 /* For btns hover status see device-desktop.css */
 
-.jsdialog:not(.sidebar) *[disabled] {
+.jsdialog:not(.sidebar) *[disabled]:not(.spinfieldbutton-up):not(.spinfieldbutton-down):not(.spinfield) {
 	color: var(--color-text-lighter) !important;
 	background: var(--color-background-lighter);
 }
 
-.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container):not(.ui-pushbutton-wrapper) {
+.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container):not(.ui-pushbutton-wrapper):not(.spinfieldbutton-up):not(.spinfieldbutton-down):not(.spinfield) {
 	border: 1px solid var(--color-border-lighter);
 }
 
@@ -44,6 +44,43 @@
 	border: 1px solid var(--color-btn-border);
 }
 
+/* view mode dropdown (jsdialog menubutton) */
+#viewModeDropdown .unotoolbutton {
+	border: 1px solid var(--color-btn-border);
+	background-color: transparent;
+	color: var(--color-main-text);
+	padding: 0;
+}
+
+#viewModeDropdown .unobutton {
+	border: none;
+	padding: 4px 8px;
+	height: var(--btn-size-s);
+}
+
+#viewModeDropdown .arrowbackground {
+	min-width: 18px;
+	border-left: 1px solid var(--color-btn-border);
+	background-color: transparent;
+}
+
+#viewModeDropdown .unotoolbutton:hover {
+	border: 1px solid var(--color-btn-border);
+	color: var(--color-text-darker);
+	background-color: var(--color-background-tabs-group);
+}
+
+@keyframes viewmode-attention {
+	0%, 100% { translate: 0; }
+	30% { translate: -2px; }
+	60% { translate: 1px; }
+	80% { translate: -0.5px; }
+}
+
+#viewModeDropdown.attention .unotoolbutton {
+	animation: viewmode-attention 200ms cubic-bezier(0.2, 0, 0, 1) 2;
+}
+
 /* toolbuttons non selected hover */
 .hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
 .hasnotebookbar .ui-content.unotoolbutton.inline:hover,
@@ -55,6 +92,7 @@
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-tabs-group);
+	overflow: hidden;
 }
 
 /* toolbuttons selected */
@@ -93,9 +131,19 @@
 	background-color: var(--color-background-tabs-group);
 }
 
+/* if menubutton has text - be sure it is fully visible */
+.menubutton.has-label button {
+	min-width: fit-content;
+}
+
 /*limit icon to button height*/
 button.jsdialog img {
 	max-height: 100%;
+}
+
+button.jsdialog[disabled] img {
+	filter: grayscale(100%);
+	opacity: 0.5;
 }
 
 .annotation-btns-container {
@@ -107,13 +155,12 @@ button.jsdialog img {
 
 :not(.main-nav) .button-secondary,
 :not(.main-nav) .button-secondary:not(.arrowbackground),
-:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button) {
+:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander-btn):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button):not(.ui-linkbutton):not(.spinfieldbutton-up):not(.spinfieldbutton-down) {
 	box-sizing: border-box;
 	height: 32px;
 	line-height: normal;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
-	min-width: 62px;
 	background-color: var(--color-background-dark);
 	border: 1px solid var(--color-btn-border);
 	border: 1px solid var(--color-border-dark);
@@ -123,8 +170,10 @@ button.jsdialog img {
 	width: max-content;
 }
 
-:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button).has-img {
-	width: var(--btn-size);
+/* dialog main action buttons should have equal minimal width */
+.ui-button-box .button-secondary,
+.ui-button-box .ui-pushbutton {
+	min-width: 62px !important;
 }
 
 .button-primary {
@@ -188,11 +237,6 @@ button.jsdialog img {
 	margin-inline-start: -5px;
 }
 
-/* Eg: Sidebar -> Animation -> Effects buttons shouldn't overflow the content */
-button.has-img {
-	min-width: auto !important;
-}
-
 #container .ui-grid-cell button.jsdialog.has-img:not(.sidebar) {
 	display: grid;
 	grid-template-columns: 24px 1fr;
@@ -218,7 +262,10 @@ button#left.has-img > img {
 
 /* Writer - Format - Page Style - Columns */
 /* Writer - Format - Columns */
-div[id^='TemplateDialog'] #Columns :is(#back, #next) button.has-img,
-#ColumnDialog :is(#back, #next) button.has-img {
+/* Insert field using Writer - Reference - Cross-Reference, double click on inserted field to edit */
+div[id^='TemplateDialog'] #Columns :is(#back, #next) button.has-img img,
+div[id^='ColumnDialog'] :is(#back, #next) button.has-img img,
+div[id^='FieldRefPage'] :is(#prev, #next) button.has-img img {
 	width: 100%;
+	height: 100%;
 }

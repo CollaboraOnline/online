@@ -25,7 +25,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		app.events.on('contextchange', this.onContextChange.bind(this));
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
 	}
@@ -41,7 +41,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		this.map.off('wopiprops', this.onWopiProps, this);
 		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			this.map.off('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
 	}
@@ -62,8 +62,30 @@ class TopToolbar extends JSDialog.Toolbar {
 	}
 
 	callback(objectType, eventType, object, data, builder) {
-		if (object.id === 'fontnamecombobox' || object.id === 'fontsizecombobox' || object.id === 'styles') {
-			// managed by non-JSDialog code
+		if (object.id === 'fontnamecombobox') {
+			if (eventType === 'selected')
+				this.map.applyFont(data.substr(data.indexOf(';') + 1));
+			else if (eventType === 'change')
+				this.map.applyFont(data);
+			this.map.focus();
+			return 'focusHandled';
+		}
+		if (object.id === 'fontsizecombobox') {
+			if (eventType === 'selected')
+				this.map.applyFontSize(data.substr(data.indexOf(';') + 1));
+			else if (eventType === 'change')
+				this.map.applyFontSize(data);
+			this.map.focus();
+			return 'focusHandled';
+		}
+		if (object.id === 'styles') {
+			if (eventType === 'selected') {
+				this.onStyleSelect({target: {value: data.substr(data.indexOf(';') + 1)}});
+				return 'focusHandled';
+			} else if (eventType === 'change') {
+				this.onStyleSelect({target: {value: data}});
+				return 'focusHandled';
+			}
 			return;
 		}
 
@@ -82,7 +104,12 @@ class TopToolbar extends JSDialog.Toolbar {
 			this.map.applyStyle(style, 'CellStyles');
 		}
 		else if (this.map.getDocType() === 'presentation' || this.map.getDocType() === 'drawing') {
-			this.map.applyLayout(style);
+			var layoutId = style;
+			window.L.Styles.impressLayout.forEach(function(layout) {
+				if (_(layout.text) === style)
+					layoutId = layout.id;
+			});
+			this.map.applyLayout(layoutId);
 		}
 		this.map.focus();
 	}
@@ -102,9 +129,11 @@ class TopToolbar extends JSDialog.Toolbar {
 	getToolItems() {
 		var saveGroup = [
 			{type: 'customtoolitem',  id: 'closemobile', desktop: false, mobile: false, tablet: true, visible: false},
-			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save'},
-			{type: 'customtoolitem',  id: 'print', command: 'print', text: _UNO('.uno:Print'), mobile: false, tablet: false, lockUno: '.uno:Print'},
-			{type: 'menubutton',  id: 'printoptions',  command: 'printoptions', noLabel: true, text: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print',
+			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save', icon: 'compact_save.svg'},
+		];
+		var printGroup = [
+			{type: 'customtoolitem',  id: 'print', command: 'print', text: _UNO('.uno:Print'), mobile: false, tablet: false, lockUno: '.uno:Print', icon: 'compact_print.svg'},
+			{type: 'menubutton',  id: 'printoptions',  command: 'printoptions', noLabel: true, text: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print', icon: 'compact_print.svg',
 				menu: [
 					{id: 'print-active-sheet', action: 'print-active-sheet', text: _('Active Sheet')},
 					{id: 'print-all-sheets', action: 'print-all-sheets', text: _('All Sheets')},
@@ -112,17 +141,17 @@ class TopToolbar extends JSDialog.Toolbar {
 			}
 		];
 		var undoGroup = [
-			{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', mobile: false},
-			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false}
+			{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', mobile: false, icon: 'compact_undo.svg'},
+			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false, icon: 'compact_redo.svg'}
 		];
 		var fontGroup = [
-			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), command: '.uno:FormatPaintbrush', mobile: false},
-			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false},
-			{type: 'toolitem',  id: 'resetimpress', class: 'unoResetAttributes', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false},
+			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), tooltip: _('Clone Formatting (double click to keep active)'), activeTooltip: _('Clone Formatting is active (click again or press Esc to exit)'), command: '.uno:FormatPaintbrush', doubleClickCommand: '.uno:FormatPaintbrush', doubleClickCommandArgs: { PersistentCopy: { type: 'boolean', value: true } }, mobile: false, icon: 'compact_formatpaintbrush.svg'},
+			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false, icon: 'compact_setdefault.svg'},
+			{type: 'toolitem',  id: 'resetimpress', class: 'unoResetAttributes', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
-			{type: 'listbox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false},
-			{type: 'listbox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false},
-			{type: 'listbox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false,}
+			{type: 'combobox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false, changeOnEnterOnly: true},
+			{type: 'combobox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false, changeOnEnterOnly: true},
+			{type: 'combobox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false, changeOnEnterOnly: true, entries: ['6','7','8','9','10','10.5','11','12','13','14','15','16','18','20','22','24','26','28','32','36','40','44','48','54','60','66','72','80','88','96']}
 		];
 		var formatGroup = [
 			{type: 'toolitem',  id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold'},
@@ -131,21 +160,21 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'strikeout', text: _UNO('.uno:Strikeout'), command: '.uno:Strikeout'},
 		];
 		const fontColorGroup = [
-			{type: 'colorlistbox',  id: 'fontcolorwriter:ColorPickerMenu', command: '.uno:FontColor', text: _UNO('.uno:FontColor'), visible: false, lockUno: '.uno:FontColor'},
-			{type: 'colorlistbox',  id: 'fontcolor:ColorPickerMenu', command: '.uno:Color', text: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor'},
-			{type: 'colorlistbox',  id: 'backcolor:ColorPickerMenu', command: '.uno:CharBackColor', text: _UNO('.uno:CharBackColor', 'text'), visible: false, lockUno: '.uno:CharBackColor'},
-			{type: 'colorlistbox',  id: 'backgroundcolor:ColorPickerMenu', command: '.uno:BackgroundColor', text: _UNO('.uno:BackgroundColor'), visible: false, lockUno: '.uno:BackgroundColor'},
+			{type: 'colorlistbox',  id: 'fontcolorwriter:ColorPickerMenu', command: '.uno:FontColor', text: _UNO('.uno:FontColor'), visible: false, lockUno: '.uno:FontColor', icon: 'compact_fontcolor.svg'},
+			{type: 'colorlistbox',  id: 'fontcolor:ColorPickerMenu', command: '.uno:Color', text: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor', icon: 'compact_fontcolor.svg'},
+			{type: 'colorlistbox',  id: 'backcolor:ColorPickerMenu', command: '.uno:CharBackColor', text: _UNO('.uno:CharBackColor', 'text'), visible: false, lockUno: '.uno:CharBackColor', icon: 'compact_backcolor.svg'},
+			{type: 'colorlistbox',  id: 'backgroundcolor:ColorPickerMenu', command: '.uno:BackgroundColor', text: _UNO('.uno:BackgroundColor'), visible: false, lockUno: '.uno:BackgroundColor', icon: 'compact_fillcolor.svg'},
 		];
 		const indentGroup = [
-			{type: 'toolitem',  id: 'leftpara',  command: '.uno:LeftPara', text: _UNO('.uno:LeftPara', '', true), visible: false},
-			{type: 'toolitem',  id: 'centerpara',  command: '.uno:CenterPara', text: _UNO('.uno:CenterPara', '', true), visible: false},
-			{type: 'toolitem',  id: 'rightpara',  command: '.uno:RightPara', text: _UNO('.uno:RightPara', '', true), visible: false},
-			{type: 'toolitem',  id: 'justifypara',  command: '.uno:JustifyPara', text: _UNO('.uno:JustifyPara', '', true), visible: false},
+			{type: 'toolitem',  id: 'leftpara',  command: '.uno:LeftPara', text: _UNO('.uno:LeftPara', '', true), visible: false, icon: 'compact_leftpara.svg'},
+			{type: 'toolitem',  id: 'centerpara',  command: '.uno:CenterPara', text: _UNO('.uno:CenterPara', '', true), visible: false, icon: 'compact_centerpara.svg'},
+			{type: 'toolitem',  id: 'rightpara',  command: '.uno:RightPara', text: _UNO('.uno:RightPara', '', true), visible: false, icon: 'compact_rightpara.svg'},
+			{type: 'toolitem',  id: 'justifypara',  command: '.uno:JustifyPara', text: _UNO('.uno:JustifyPara', '', true), visible: false, icon: 'compact_justifypara.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakpara', visible: false},
-			{type: 'menubutton',  id: 'setborderstyle:BorderStyleMenu', noLabel: true, command: '.uno:SetBorderStyle', text: _('Borders'), visible: false},
-			{type: 'toolitem',  id: 'togglemergecells', text: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), visible: false, command: '.uno:ToggleMergeCells'},
+			{type: 'menubutton',  id: 'setborderstyle:BorderStyleMenu', noLabel: true, command: '.uno:SetBorderStyle', text: _('Borders'), visible: false, icon: 'compact_setborderstyle.svg'},
+			{type: 'toolitem',  id: 'togglemergecells', text: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), visible: false, command: '.uno:ToggleMergeCells', icon: 'compact_togglemergecells.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakmergecells', visible: false},
-			{type: 'menubutton', id: 'textalign', command: 'justifypara', noLabel: true, text: _UNO('.uno:TextAlign'), visible: false, lockUno: '.uno:TextAlign',
+			{type: 'menubutton', id: 'textalign', command: 'justifypara', noLabel: true, text: _UNO('.uno:TextAlign'), visible: false, lockUno: '.uno:TextAlign', icon: 'compact_justifypara.svg',
 				menu: [
 					{id: 'alignleft', text: _UNO('.uno:AlignLeft', 'spreadsheet', true), icon: 'alignleft', uno: '.uno:AlignLeft'},
 					{id: 'alignhorizontalcenter', text: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), icon: 'alignhorizontal', uno: '.uno:AlignHorizontalCenter'},
@@ -156,28 +185,31 @@ class TopToolbar extends JSDialog.Toolbar {
 					{id: 'alignvcenter', text: _UNO('.uno:AlignVCenter', 'spreadsheet', true), icon: 'alignvcenter', uno: '.uno:AlignVCenter'},
 					{id: 'alignbottom', text: _UNO('.uno:AlignBottom', 'spreadsheet', true), icon: 'alignbottom', uno: '.uno:AlignBottom'},
 				]},
-			{type: 'menubutton',  id: 'linespacing',  command: 'linespacing', noLabel: true, text: _UNO('.uno:FormatSpacingMenu'), visible: false, lockUno: '.uno:FormatSpacingMenu',
+			{type: 'menubutton',  id: 'linespacing',  command: 'linespacing', noLabel: true, text: _UNO('.uno:FormatSpacingMenu'), visible: false, lockUno: '.uno:FormatSpacingMenu', icon: 'compact_linespacing.svg',
 				menu: [
 					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: '.uno:SpacePara1'},
+					{id: 'spacepara115', text: _UNO('.uno:SpacePara115'), uno: '.uno:SpacePara115'},
 					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: '.uno:SpacePara15'},
 					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: '.uno:SpacePara2'},
 					{type: 'separator'},
 					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: '.uno:ParaspaceIncrease'},
-					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: '.uno:ParaspaceDecrease'}
+					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: '.uno:ParaspaceDecrease'},
+					{type: 'separator'},
+					{id: 'paragraphdialog', text: _UNO('.uno:ParagraphDialog'), uno: '.uno:ParagraphDialog'}
 				],
 			},
-			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText'}
+			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText', icon: 'compact_wraptext.svg'}
 		];
 		var otherGroup = [
-			{type: 'toolitem',  id: 'defaultnumbering', text: _UNO('.uno:DefaultNumbering', '', true), visible: false, command: '.uno:DefaultNumbering'},
-			{type: 'toolitem',  id: 'defaultbullet', text: _UNO('.uno:DefaultBullet', '', true), visible: false, command: '.uno:DefaultBullet'},
+			{type: 'toolitem',  id: 'defaultnumbering', text: _UNO('.uno:DefaultNumbering', '', true), visible: false, command: '.uno:DefaultNumbering', icon: 'compact_defaultnumbering.svg'},
+			{type: 'toolitem',  id: 'defaultbullet', text: _UNO('.uno:DefaultBullet', '', true), visible: false, command: '.uno:DefaultBullet', icon: 'compact_defaultbullet.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakbullet', visible: false},
-			{type: 'toolitem',  id: 'incrementindent', text: _UNO('.uno:IncrementIndent', '', true), command: '.uno:IncrementIndent', visible: false},
-			{type: 'toolitem',  id: 'decrementindent', text: _UNO('.uno:DecrementIndent', '', true), command: '.uno:DecrementIndent', visible: false},
+			{type: 'toolitem',  id: 'incrementindent', text: _UNO('.uno:IncrementIndent', '', true), command: '.uno:IncrementIndent', visible: false, icon: 'compact_leftindent.svg'},
+			{type: 'toolitem',  id: 'decrementindent', text: _UNO('.uno:DecrementIndent', '', true), command: '.uno:DecrementIndent', visible: false, icon: 'compact_decrementindent.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakindent', visible: false},
-			{type: 'menubutton', id: 'conditionalformatdialog:ConditionalFormatMenu', noLabel: true, text: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), visible: false, lockUno: '.uno:ConditionalFormatMenu'},
-			{type: 'toolitem',  id: 'sortascending', text: _UNO('.uno:SortAscending', 'spreadsheet', true), command: '.uno:SortAscending', visible: false},
-			{type: 'toolitem',  id: 'sortdescending', text: _UNO('.uno:SortDescending', 'spreadsheet', true), command: '.uno:SortDescending', visible: false},
+			{type: 'menubutton', id: 'conditionalformatdialog:ConditionalFormatMenu', noLabel: true, text: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), visible: false, lockUno: '.uno:ConditionalFormatMenu', icon: 'compact_conditionalformatmenu.svg'},
+			{type: 'toolitem',  id: 'sortascending', text: _UNO('.uno:SortAscending', 'spreadsheet', true), command: '.uno:SortAscending', visible: false, icon: 'compact_sortascending.svg'},
+			{type: 'toolitem',  id: 'sortdescending', text: _UNO('.uno:SortDescending', 'spreadsheet', true), command: '.uno:SortDescending', visible: false, icon: 'compact_sortdescending.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breaksorting', visible: false},
 			{type: 'toolitem',  id: 'numberformatcurrency', text: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatCurrency'},
 			{type: 'toolitem',  id: 'numberformatpercent', text: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatPercent'},
@@ -186,17 +218,17 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'separator', orientation: 'vertical',   id: 'break-number', visible: false},
 			{type: 'button', id: 'gridvisible', img: 'gridvisible', hint: _UNO('.uno:GridVisible'), uno: 'GridVisible', hidden: true},
 			{type: 'button', id: 'griduse', img: 'griduse', hint: _UNO('.uno:GridUse'), uno: 'GridUse', hidden: true},
-			{type: 'menubutton',  id: 'inserttable:InsertTableMenu', command: 'inserttable', noLabel: true, text: _('Insert table'), visible: false, lockUno: '.uno:InsertTable'},
-			{type: 'menubutton', id: 'menugraphic:InsertImageMenu', noLabel: true, command: '.uno:InsertGraphic', text: _UNO('.uno:InsertGraphic', '', true), visible: false, lockUno: '.uno:InsertGraphic'},
-			{type: 'toolitem',  id: 'insertobjectchart', text: _UNO('.uno:InsertObjectChart', '', true), command: '.uno:InsertObjectChart'},
-			{type: 'menubutton',  id: 'insertshapes:InsertShapesMenu', command: '.uno:BasicShapes', noLabel: true, text: _('Insert shapes')},
-			{type: 'toolitem',  id: 'insertline', text: _UNO('.uno:Line', '', true), command: '.uno:Line'},
+			{type: 'menubutton',  id: 'inserttable:InsertTableMenu', command: 'inserttable', noLabel: true, text: _('Insert table'), visible: false, lockUno: '.uno:InsertTable', icon: 'compact_inserttable.svg'},
+			{type: 'menubutton', id: 'menugraphic:InsertImageMenu', noLabel: true, command: '.uno:InsertGraphic', text: _UNO('.uno:InsertGraphic', '', true), visible: false, lockUno: '.uno:InsertGraphic', icon: 'compact_insertgraphic.svg'},
+			{type: 'toolitem',  id: 'insertobjectchart', text: _UNO('.uno:InsertObjectChart', '', true), command: '.uno:InsertObjectChart', icon: 'compact_drawchart.svg'},
+			{type: 'menubutton',  id: 'insertshapes:InsertShapesMenu', command: '.uno:BasicShapes', noLabel: true, text: _('Insert shapes'), icon: 'compact_basicshapes.svg'},
+			{type: 'toolitem',  id: 'insertline', text: _UNO('.uno:Line', '', true), command: '.uno:Line', icon: 'compact_line.svg'},
 			{type: 'menubutton',  id: 'insertconnectors:InsertConnectorsMenu', command: 'connector', noLabel: true, text: _('Insert connectors'), visible: false},
 			{type: 'separator', orientation: 'vertical',   id: 'breakinsert', desktop: true},
-			{type: 'customtoolitem',  id: 'inserttextbox', text: _UNO('.uno:Text', '', true), command: 'inserttextbox', visible: false},
-			{type: 'customtoolitem',  id: 'insertannotation', text: _UNO('.uno:InsertAnnotation', '', true), visible: false, lockUno: '.uno:InsertAnnotation'},
-			{type: 'customtoolitem',  id: 'inserthyperlink',  command: 'inserthyperlink', text: _UNO('.uno:HyperlinkDialog', '', true), lockUno: '.uno:HyperlinkDialog'},
-			{type: 'toolitem',  id: 'insertsymbol', text: _UNO('.uno:InsertSymbol', '', true), command: '.uno:InsertSymbol'},
+			{type: 'customtoolitem',  id: 'inserttextbox', text: _UNO('.uno:Text', '', true), command: 'inserttextbox', visible: false, icon: 'compact_text.svg'},
+			{type: 'customtoolitem',  id: 'insertannotation', text: _UNO('.uno:InsertAnnotation', '', true), visible: false, lockUno: '.uno:InsertAnnotation', icon: 'compact_shownote.svg'},
+			{type: 'customtoolitem',  id: 'inserthyperlink',  command: 'inserthyperlink', text: _UNO('.uno:HyperlinkDialog', '', true), lockUno: '.uno:HyperlinkDialog', icon: 'compact_inserthyperlink.svg'},
+			{type: 'toolitem',  id: 'insertsymbol', text: _UNO('.uno:InsertSymbol', '', true), command: '.uno:InsertSymbol', icon: 'compact_insertsymbol.svg'},
 			];
 
 		var items = [
@@ -205,6 +237,8 @@ class TopToolbar extends JSDialog.Toolbar {
 				{type: 'separator', orientation: 'vertical', id: 'savebreak', mobile: false},
 				{type: 'overflowgroup', id: 'undo-toptoolbar', children: undoGroup},
 				{type: 'separator', orientation: 'vertical', id: 'redobreak', mobile: false, tablet: false,},
+				{type: 'overflowgroup', id: 'save-toptoolbar', children: printGroup},
+				{type: 'separator', orientation: 'vertical', id: 'printbreak', mobile: false},
 				{type: 'overflowgroup', id: 'font-toptoolbar', children: fontGroup},
 				{type: 'separator', orientation: 'vertical', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false},
 				{type: 'overflowgroup', id: 'format-toptoolbar', children: formatGroup},
@@ -217,11 +251,11 @@ class TopToolbar extends JSDialog.Toolbar {
 			]},
 			{type: 'spacer', id: 'topspacer'},
 			{type: 'separator', orientation: 'vertical', id: 'breaksidebar', visible: false},
-			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false},
-			{type: 'toolitem',  id: 'modifypage', text: _UNO('.uno:ModifyPage', 'presentation', true), command: '.uno:ModifyPage', visible: false},
-			{type: 'customtoolitem',  id: 'slidechangewindow', text: _UNO('.uno:SlideChangeWindow', 'presentation', true), command: 'transitiondeck', icon: 'lc_slidechangewindow.svg', visible: false},
-			{type: 'toolitem',  id: 'customanimation', text: _UNO('.uno:CustomAnimation', 'presentation', true), command: '.uno:CustomAnimation', visible: false},
-			{type: 'toolitem',  id: 'masterslidespanel', text: _UNO('.uno:MasterSlidesPanel', 'presentation', true), command: '.uno:MasterSlidesPanel', visible: false},
+			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false, icon: 'compact_sidebar.svg'},
+			{type: 'toolitem',  id: 'modifypage', text: _UNO('.uno:ModifyPage', 'presentation', true), command: '.uno:ModifyPage', visible: false, icon: 'compact_sidebar.svg'},
+			{type: 'customtoolitem',  id: 'slidechangewindow', text: _UNO('.uno:SlideChangeWindow', 'presentation', true), command: 'transitiondeck', icon: 'compact_slidechangewindow.svg', visible: false},
+			{type: 'toolitem',  id: 'customanimation', text: _UNO('.uno:CustomAnimation', 'presentation', true), command: '.uno:CustomAnimation', visible: false, icon: 'compact_customanimation.svg'},
+			{type: 'toolitem',  id: 'masterslidespanel', text: _UNO('.uno:MasterSlidesPanel', 'presentation', true), command: '.uno:MasterSlidesPanel', visible: false, icon: 'compact_masterslides.svg'},
 			{type: 'customtoolitem',  id: 'fold', desktop: false, mobile: false, tablet: true, iosapptablet: false, visible: false},
 		];
 
@@ -287,7 +321,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
 			JSDialog.RefreshScrollables();
 		}
@@ -308,7 +342,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			}
 		}
 
-		this.map.createFontSelector('#fontnamecombobox-input');
+		this.map.createFontSelector('fontnamecombobox');
 
 		// on mode switch NB -> Compact
 		if (this.map._docLoadedOnce)
@@ -357,21 +391,16 @@ class TopToolbar extends JSDialog.Toolbar {
 			}
 			break;
 		case 'presentation':
-			// Fill the style select box if not yet filled
-			if ($('#styles-input')[0] && $('#styles-input')[0].length === 1) {
-				var data = [''];
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
-
-				window.L.Styles.impressLayout.forEach(function(layout) {
-					data = data.concat({id: layout.id, text: _(layout.text)});
-				}, this);
-
-				$('#styles-input').select2({
-					data: data,
-					placeholder: _UNO('.uno:LayoutStatus', 'presentation')
-				});
-				$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
+			{
+				// Fill the style combobox with Impress layouts
+				var stylesContainer = document.getElementById('styles');
+				if (stylesContainer && stylesContainer.updateEntries) {
+					var layoutEntries = [];
+					window.L.Styles.impressLayout.forEach(function(layout) {
+						layoutEntries.push(_(layout.text));
+					});
+					stylesContainer.updateEntries(layoutEntries);
+				}
 			}
 
 			if (this.parentContainer) {
@@ -403,23 +432,22 @@ class TopToolbar extends JSDialog.Toolbar {
 
 		this.updateVisibilityForToolbar();
 
-		this.map.createFontSizeSelector('#fontsizecombobox-input');
+		this.map.createFontSizeSelector('fontsizecombobox');
 
 		JSDialog.RefreshScrollables();
 	}
 
 	onUpdatePermission(e) {
-		if (e.detail.perm === 'edit') {
-			// Enable list boxes
-			$('#styles-input').prop('disabled', false);
-			$('#fontnamecombobox-input').prop('disabled', false);
-			$('#fontsizecombobox-input').prop('disabled', false);
-		} else {
-			// Disable list boxes
-			$('#styles-input').prop('disabled', true);
-			$('#fontnamecombobox-input').prop('disabled', true);
-			$('#fontsizecombobox-input').prop('disabled', true);
-		}
+		var ids = ['styles', 'fontnamecombobox', 'fontsizecombobox'];
+		ids.forEach(function(id) {
+			var el = document.getElementById(id);
+			if (el) {
+				if (e.detail.perm === 'edit')
+					el.removeAttribute('disabled');
+				else
+					el.setAttribute('disabled', 'true');
+			}
+		});
 	}
 
 	onWopiProps(e) {
@@ -446,112 +474,80 @@ class TopToolbar extends JSDialog.Toolbar {
 		}
 	}
 
-	// TODO: create dedicated widget for styles listbox
 	updateCommandValues(e) {
-		var data = [];
-		var commandValues;
-		// 1) For .uno:StyleApply
-		// we need an empty option for the place holder to work
-		if (e.commandName === '.uno:StyleApply') {
-			var styles = [];
-			var topStyles = [];
-			commandValues = this.map.getToolbarCommandValues(e.commandName);
-			if (typeof commandValues === 'undefined')
-				return;
-			var commands = commandValues.Commands;
-			if (commands && commands.length > 0) {
+		if (e.commandName !== '.uno:StyleApply')
+			return;
 
-				commands.forEach(function (command) {
-					var translated = command.text;
-					if (window.L.Styles.styleMappings[command.text]) {
-						// if it's in English, translate it
-						translated = window.L.Styles.styleMappings[command.text].toLocaleString();
-					}
-					data = data.concat({id: command.id, text: translated });
-				}, this);
-			}
+		var commandValues = this.map.getToolbarCommandValues(e.commandName);
+		if (typeof commandValues === 'undefined')
+			return;
 
-			if (this.map.getDocType() === 'text') {
-				styles = commandValues.ParagraphStyles.slice(7);
-				topStyles = commandValues.ParagraphStyles.slice(0, 7);
-			}
-			else if (this.map.getDocType() === 'spreadsheet') {
-				styles = commandValues.CellStyles;
-			}
-			else if (this.map.getDocType() === 'presentation') {
-				// styles are not applied for presentation
-				return;
-			}
+		if (this.map.getDocType() === 'presentation') {
+			// styles are not applied for presentation
+			return;
+		}
 
-			if (topStyles.length > 0) {
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
-
-				topStyles.forEach(function (style) {
-					data = data.concat({id: style, text: window.L.Styles.styleMappings[style].toLocaleString()});
-				}, this);
-			}
-
-			if (styles !== undefined && styles.length > 0) {
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
-
-				styles.forEach(function (style) {
-					var localeStyle;
-					if (style.startsWith('outline')) {
-						var outlineLevel = style.split('outline')[1];
-						localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
-					} else {
-						localeStyle = window.L.Styles.styleMappings[style];
-						localeStyle = localeStyle === undefined ? style : localeStyle.toLocaleString();
-					}
-
-					data = data.concat({id: style, text: localeStyle});
-				}, this);
-			}
-
-			$('#styles-input').select2({
-				data: data,
-				placeholder: _('Style')
+		var entries = [];
+		var commands = commandValues.Commands;
+		if (commands && commands.length > 0) {
+			commands.forEach(function (command) {
+				var translated = command.text;
+				if (window.L.Styles.styleMappings[command.text]) {
+					translated = window.L.Styles.styleMappings[command.text].toLocaleString();
+				}
+				entries.push(translated);
 			});
-			$('#styles-input').val(this.stylesSelectValue).trigger('change');
-			$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
+		}
+
+		var styles = [];
+		var topStyles = [];
+		if (this.map.getDocType() === 'text') {
+			styles = commandValues.ParagraphStyles.slice(7);
+			topStyles = commandValues.ParagraphStyles.slice(0, 7);
+		}
+		else if (this.map.getDocType() === 'spreadsheet') {
+			styles = commandValues.CellStyles;
+		}
+
+		topStyles.forEach(function (style) {
+			entries.push(window.L.Styles.styleMappings[style].toLocaleString());
+		});
+
+		if (styles !== undefined && styles.length > 0) {
+			styles.forEach(function (style) {
+				var localeStyle;
+				if (style.startsWith('outline')) {
+					var outlineLevel = style.split('outline')[1];
+					localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
+				} else {
+					localeStyle = window.L.Styles.styleMappings[style];
+					localeStyle = localeStyle === undefined ? style : localeStyle.toLocaleString();
+				}
+				entries.push(localeStyle);
+			});
+		}
+
+		var container = document.getElementById('styles');
+		if (container && container.updateEntries) {
+			container.updateEntries(entries);
+			if (this.stylesSelectValue)
+				container.onSetText(this.stylesSelectValue);
 		}
 	}
 
 	processStateChangedCommand(commandName, state) {
-		var found = false;
-
 		if (commandName === '.uno:StyleApply') {
-			if (!state) {
+			if (!state)
 				return;
-			}
 
 			// For impress documents, no styles is supported.
-			if (this.map.getDocType() === 'presentation') {
+			if (this.map.getDocType() === 'presentation')
 				return;
-			}
-
-			$('#styles-input option').each(function () {
-				var value = this.value;
-				// For writer we get UI names; ideally we should be getting only programmatic ones
-				// For eg: 'Text body' vs 'Text Body'
-				// (likely to be fixed in core to make the pattern consistent)
-				if (state && value.toLowerCase() === state.toLowerCase()) {
-					state = value;
-					found = true;
-					return;
-				}
-			});
-			if (!found) {
-				// we need to add the size
-				$('#styles-input')
-					.append($('<option></option>')
-						.text(state));
-			}
 
 			this.stylesSelectValue = state;
-			$('#styles-input').val(state).trigger('change');
+			var container = document.getElementById('styles');
+			if (container && container.onSetText)
+				container.onSetText(state);
 		}
 
 		window.processStateChangedCommand(commandName, state);

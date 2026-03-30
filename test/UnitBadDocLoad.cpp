@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for document loading error handling and bad document scenarios.
+ */
+
 #include <config.h>
 
 #include <Png.hpp>
@@ -17,6 +21,7 @@
 #include <helpers.hpp>
 
 #include <Poco/Exception.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
@@ -116,7 +121,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxDocuments()
 
     if (MAX_DOCUMENTS > 20)
     {
-        std::cerr << "Skipping " << testname << "test since MAX_DOCUMENTS (" << MAX_DOCUMENTS
+        std::cerr << "skipping test since MAX_DOCUMENTS (" << MAX_DOCUMENTS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so."
                   << std::endl;
         return TestResult::Ok;
@@ -175,7 +180,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxConnections()
 
     if (MAX_CONNECTIONS > 40)
     {
-        std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
+        std::cerr << "skipping test since MAX_CONNECTION (" << MAX_CONNECTIONS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so."
                   << std::endl;
         return TestResult::Ok;
@@ -245,7 +250,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxViews()
 
     if (MAX_CONNECTIONS > 40)
     {
-        std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
+        std::cerr << "skipping test since MAX_CONNECTION (" << MAX_CONNECTIONS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so."
                   << std::endl;
         return TestResult::Ok;

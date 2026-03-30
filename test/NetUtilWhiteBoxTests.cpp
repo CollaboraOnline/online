@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit test for network utilities including buffers and URI handling.
+ */
+
 #include <config.h>
 
 #include <net/Buffer.hpp>
@@ -45,7 +49,7 @@ void NetUtilWhiteBoxTests::testBufferClass()
     Buffer buf;
     LOK_ASSERT_EQUAL(0UL, buf.size());
     LOK_ASSERT_EQUAL(true, buf.empty());
-    LOK_ASSERT(buf.getBlock() == nullptr);
+    LOK_ASSERT_EQUAL(static_cast<const char*>(nullptr), buf.getBlock());
     buf.eraseFirst(buf.size());
     LOK_ASSERT_EQUAL(0UL, buf.size());
     LOK_ASSERT_EQUAL(true, buf.empty());

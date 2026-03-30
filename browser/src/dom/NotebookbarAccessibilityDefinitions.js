@@ -47,6 +47,12 @@ var NotebookbarAccessibilityDefinitions = function() {
 					} else if (element) {
 						// regular uno button
 						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else if (document.getElementById(id + '-input')) {
+						// checkbox
+						list.push({ id: id + '-input', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else if (rawList[i].type === 'iconviewlist') {
+						// iconviewlist
+						list.push({ id: id + '-expand-button', focusBack:  rawList[i].accessibility.focusBack, combination: combination });
 					} else {
 						// other
 						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
@@ -101,6 +107,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 				defs[tabs[i].id].combination = language && tabs[i].accessibility[language] ? tabs[i].accessibility[language]: tabs[i].accessibility.combination;
 				defs[tabs[i].id].contentList = [];
 				this.getContentListRecursive(defs[tabs[i].id].rawContentList, defs[tabs[i].id].contentList, language);
+				this.targetedButtonsForTab(tabs[i].id, defs[tabs[i].id].contentList);
 				delete defs[tabs[i].id].rawContentList;
 			}
 		}
@@ -118,7 +125,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 
 	this.checkIntegratorButtons = function(selectedDefinitions) {
 		// The list of containers of the buttons which are added by integrations (via insertbutton post message etc).
-		var containerList = ['save', 'userListHeader', 'shortcutstoolbox', 'closebuttonwrapper', 'navigator-floating-icon'];
+		var containerList = ['save', 'userListHeader', 'shortcutstoolbox', 'closebuttonwrapper', 'navigator-floating-icon', 'viewModeDropdownButton'];
 		for (var i = 0; i < containerList.length; i++) {
 			var container = document.getElementById(containerList[i]);
 
@@ -144,20 +151,45 @@ var NotebookbarAccessibilityDefinitions = function() {
 	};
 
 	this.optionsToolButtons = function(selectedDefinitions) {
-				// add optionstoolbox accesskey information to selected definitions
+		// add optionstoolbox accesskey information to selected definitions
 
-				const optionsToolSectionData = app.map.uiManager.notebookbar.getDefaultToolItems();
-				const language = this.getLanguage();
-		
-				for (let option = 0; option < optionsToolSectionData.length; option++) {
-					let toolOption = optionsToolSectionData[option];
-					toolOption.id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id) + '-button';
-					selectedDefinitions[toolOption.id] = {
-						focusBack : toolOption.accessibility.focusBack,
-						combination : language && toolOption.accessibility[language] ? toolOption.accessibility[language]: toolOption.accessibility.combination,
-						contentList: []
-					};
-				}
+		const optionsToolSectionData = app.map.uiManager.notebookbar.getDefaultToolItems();
+		const language = this.getLanguage();
+
+		for (let option = 0; option < optionsToolSectionData.length; option++) {
+			let toolOption = optionsToolSectionData[option];
+			toolOption.id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id);
+
+			let element = document.getElementById(toolOption.id + '-button');
+			if (!element)
+			{
+				const button = document.querySelector('[modelid="'+ toolOption.id + '"] .unobutton');
+				toolOption.id = button ? button.id : toolOption.id + '-button';
+			}
+			else
+				toolOption.id += '-button';
+
+			selectedDefinitions[toolOption.id] = {
+				focusBack : toolOption.accessibility.focusBack,
+				combination : language && toolOption.accessibility[language] ? toolOption.accessibility[language]: toolOption.accessibility.combination,
+				contentList: []
+			};
+		}
+	}
+
+	this.targetedButtonsForTab = function(tabId, list) {
+		// add targeted accesskey information of specific uno buttons from a tab
+		var buttonList = [];
+
+		// Home tab
+		if (tabId == 'Home-tab-label')
+			buttonList = ['stylesview-expand-button'];
+
+		for (var i = 0; i < buttonList.length; i++) {
+			var button = document.getElementById(buttonList[i]);
+			if (button && button.accessKey !== undefined && button.accessKey.trim())
+				list.push({ id: button.id, focusBack: true, combination: button.accessKey });
+		}
 	}
 
 	this.getDefinitions = function() {

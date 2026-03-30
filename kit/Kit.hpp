@@ -11,30 +11,42 @@
 
 #pragma once
 
+#include <common/Session.hpp>
+#include <common/StateEnum.hpp>
+#include <common/ThreadPool.hpp>
+#include <common/Util.hpp>
+#include <kit/KitQueue.hpp>
+#include <kit/LogUI.hpp>
+#include <net/Socket.hpp>
+#include <wsd/TileDesc.hpp>
+
+#include <LibreOfficeKit/LibreOfficeKitTypes.h>
+
 #include <Poco/Util/XMLConfiguration.h>
+
 #include <map>
 #include <string>
 
-#include <common/Util.hpp>
-#include <common/StateEnum.hpp>
-#include <common/Session.hpp>
-#include <common/ThreadPool.hpp>
-#include <kit/KitQueue.hpp>
-#include <kit/LogUI.hpp>
-
-#include <wsd/TileDesc.hpp>
-
-#include "Socket.hpp"
-
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-
 #if MOBILEAPP
 
-#include "ClientSession.hpp"
-#include "DocumentBroker.hpp"
+#include <future>
+
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
 
 #endif
+
+#ifdef IOS
+void runKitLoopInAThread();
+#endif
+
+namespace lok
+{
+class Document;
+class Office;
+}
+struct LibreOfficeKitStruct;
+using LibreOfficeKit = LibreOfficeKitStruct;
 
 void lokit_main(
 #if !MOBILEAPP
@@ -46,10 +58,6 @@ void lokit_main(
     int docBrokerSocket, const std::string& userInterface,
 #endif
     std::size_t numericIdentifier);
-
-#ifdef IOS
-void runKitLoopInAThread();
-#endif
 
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
@@ -153,7 +161,7 @@ public:
 
     static void cleanupChildProcess();
 
-    virtual void wakeupHook() override;
+    void wakeupHook() override;
 
     static KitSocketPoll* getMainPoll() { return mainPoll; }
 
@@ -169,7 +177,16 @@ public:
         ~ReEntrancyGuard() { _count--; }
     };
 #endif
+
+    /// Handle the poll from the unipoll callback.
     int kitPoll(int timeoutMicroS);
+
+    /// Handle the wake up from the unipoll callback.
+    void kitWakeup();
+
+    /// Handle the 'has any input?' unipoll callback.
+    bool kitHasAnyInput(int mostUrgentPriority);
+
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
     const std::shared_ptr<Document>& getDocument() const { return _document; }
 
@@ -177,14 +194,18 @@ public:
     static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
                                  void* data);
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
     static std::mutex KSPollsMutex;
     static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
 
-    std::mutex terminationMutex;
-    std::condition_variable terminationCV;
-    bool terminationFlag;
+    struct TerminationData
+    {
+        std::mutex mutex;
+        std::condition_variable cv;
+        bool flag;
+    };
+    std::shared_ptr<TerminationData> termination;
 #endif
 };
 
@@ -203,12 +224,12 @@ public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
              const std::string& docKey, const std::string& docId, const std::string& url,
              const std::shared_ptr<WebSocketHandler>& websocketHandler, unsigned mobileAppDocId);
-    virtual ~Document();
+    ~Document() final;
 
     const std::string& getUrl() const { return _url; }
 
     /// Post the message - in the unipoll world we're in the right thread anyway
-    bool postMessage(const char* data, int size, WSOpCode code) const;
+    bool postMessage(const std::string_view data, WSOpCode code) const;
 
     bool createSession(const std::string& sessionId);
 
@@ -221,12 +242,9 @@ public:
 
     void renderTiles(TileCombined& tileCombined);
 
-    bool sendTextFrame(const std::string& message) const
-    {
-        return sendFrame(message.data(), message.size());
-    }
+    bool sendTextFrame(const std::string_view message) const { return sendFrame(message); }
 
-    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) const;
+    bool sendFrame(std::string_view data, WSOpCode opCode = WSOpCode::Text) const;
 
     void alertNotAsync() const
     {
@@ -269,8 +287,8 @@ private:
     static void reapZombieChildren();
 
     /// Calculate tile rendering priority from a TileDesc
-    virtual Priority getTilePriority(const TileDesc &desc) const override;
-    virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
+    Priority getTilePriority(const TileDesc& desc) const override;
+    std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:
     /// Request loading a document, or a new view, if one exists,
@@ -283,7 +301,7 @@ public:
     void onUnload(const ChildSession& session);
 
     /// Get a view ID <-> UserInfo map.
-    std::map<int, UserInfo> getViewInfo() { return _sessionUserInfo; }
+    const std::map<int, UserInfo>& getViewInfo() const { return _sessionUserInfo; }
 
     int getEditorId() const { return _editorId; }
 
@@ -291,7 +309,7 @@ public:
 
     bool haveDocPassword() const { return _haveDocPassword; }
 
-    std::string getDocPassword() const { return _docPassword; }
+    const std::string& getDocPassword() const { return _docPassword; }
 
     DocumentPasswordType getDocPasswordType() const { return _docPasswordType; }
 
@@ -403,12 +421,12 @@ public:
     bool isLoaded() const { return !!_loKitDocument; }
 
     /// Return access to the lok::Office instance.
-    std::shared_ptr<lok::Office> getLOKit() { return _loKit; }
+    std::shared_ptr<lok::Office> getLOKit() const { return _loKit; }
 
     /// Return access to the lok::Document instance.
     std::shared_ptr<lok::Document> getLOKitDocument();
 
-    std::string getObfuscatedFileId() { return _obfuscatedFileId; }
+    const std::string& getObfuscatedFileId() const { return _obfuscatedFileId; }
 
     bool isBackgroundSaveProcess() const { return _isBgSaveProcess; }
 
@@ -547,7 +565,7 @@ std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly();
 #endif
 
-extern _LibreOfficeKit* loKitPtr;
+extern LibreOfficeKit* loKitPtr;
 
 /// Check if URP is enabled
 bool isURPEnabled();

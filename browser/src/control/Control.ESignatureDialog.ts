@@ -221,6 +221,7 @@ namespace cool {
 				const countryCode =
 					this.availableCountries[countries.selectedIndex].code;
 				this.close();
+				Util.ensureValue(app.map.eSignature);
 				app.map.eSignature.handleSelectedProvider(countryCode, providerId);
 			} else if (eventType === 'selected' && object.id === 'countrylb') {
 				// The selected country changed, update the list of providers

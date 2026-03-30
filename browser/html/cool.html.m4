@@ -6,11 +6,13 @@ m4_define([m4_foreachq],[m4_ifelse([$2],[],[],[m4_pushdef([$1])_$0([$1],[$3],[],
 m4_define([_m4_foreachq],[m4_ifelse([$#],[3],[],[m4_define([$1],[$4])$2[]$0([$1],[$2],m4_shift(m4_shift(m4_shift($@))))])])m4_dnl
 m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))m4_dnl
 m4_dnl------------------------------------------------------------------------
-m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the gtk+ "app" testbed
+m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the Collabora Office apps
 m4_define([MOBILEAPP],[])m4_dnl
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
-m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(MACOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(WINDOWSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(QTAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_dnl
 m4_dnl# FIXME: This is temporary and not what we actually eventually want.
 m4_dnl# What we really want is not a separate HTML file (produced with M4 conditionals on the below
@@ -44,6 +46,7 @@ m4_ifelse(MOBILEAPP, [true],
 [
   <input type="hidden" id="init-app-type" value="mobile" />
   <input type="hidden" id="init-help-file" value="m4_syscmd([cat html/cool-help.html | sed 's/"/\&quot;/g'])" />
+  <input type="hidden" id="init-product-branding-url" value="INFO_URL" />
 ],
 [
   <input type="hidden" id="init-welcome-url" value="%WELCOME_URL%" />
@@ -51,11 +54,11 @@ m4_ifelse(MOBILEAPP, [true],
   <input type="hidden" id="init-buy-product-url" value="%BUYPRODUCT_URL%" />
   <input type="hidden" id="init-app-type" value="browser" />
   <input type="hidden" id="init-css-vars" value="<!--%CSS_VARIABLES%-->" />
+  <input type="hidden" id="init-product-branding-url" value="%PRODUCT_BRANDING_URL%" />
 ]
 )
 
 <input type="hidden" id="init-product-branding-name" value="%PRODUCT_BRANDING_NAME%" />
-<input type="hidden" id="init-product-branding-url" value="%PRODUCT_BRANDING_URL%" />
 <input type="hidden" id="init-logo-url" value="%LOGO_URL%" />
 
 <input type="hidden" id="init-uri-prefix" value="m4_ifelse(MOBILEAPP, [], [%SERVICE_ROOT%/browser/%VERSION%/])" />
@@ -63,26 +66,25 @@ m4_ifelse(MOBILEAPP, [true],
 
 m4_dnl# For use in conditionals in JS:
 m4_ifelse(IOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="IOS" />])
-m4_ifelse(GTKAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="GTK" />])
+m4_ifelse(MACOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="MACOS" />])
+m4_ifelse(WINDOWSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="WINDOWS" />])
 m4_ifelse(ANDROIDAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="ANDROID" />])
 m4_ifelse(EMSCRIPTENAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="EMSCRIPTEN" />])
+m4_ifelse(QTAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="QT" />])
 
 m4_ifelse(EMSCRIPTENAPP, [true], [<script type="text/javascript" src="online.js"></script>])
+m4_ifelse(QTAPP, [true], [<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
   m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
 ]),
 [<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][bundle.css" />])
-
-<!--%BRANDING_CSS%--> <!-- add your logo here -->
-m4_ifelse(IOSAPP,[true],
-  [<link rel="stylesheet" href="Branding/branding.css">])
-m4_ifelse(ANDROIDAPP,[true],
-  [<link rel="stylesheet" href="branding.css">])
-m4_ifelse(EMSCRIPTENAPP,[true],
-  [<link rel="stylesheet" href="branding.css">])
-
+m4_dnl
+m4_dnl Add branding.css for mobile apps, or the placeholder for server processing
+m4_ifelse(MOBILEAPP, [true], [<link rel="stylesheet" href="m4_ifelse(IOSAPP, [true], [Branding/])branding.css" />],
+  [<!--%BRANDING_CSS%--> <!-- add your logo here -->])
+m4_dnl
 m4_dnl Handle localization
 m4_ifelse(MOBILEAPP,[true],
   [
@@ -99,6 +101,19 @@ m4_ifelse(MOBILEAPP,[true],
    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
 )m4_dnl
+<script>
+// Apply dark theme immediately if darkTheme query parameter is present
+(function() {
+	var params = new URLSearchParams(window.location.search);
+	if (params.get('darkTheme') === 'true') {
+		document.documentElement.setAttribute('data-theme', 'dark');
+		var link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.setAttribute('href', 'm4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])color-palette-dark.css');
+		document.head.appendChild(link);
+	}
+})();
+</script>
 </head>
 
   <body>
@@ -120,8 +135,7 @@ m4_ifelse(MOBILEAPP,[true],
         <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
         <div id="document-titlebar">
           <div class="document-title">
-            <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
-            <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
+            <label class="visuallyhidden" for="document-name-input">Document name</label>
             <input id="document-name-input" type="text" spellcheck="false" disabled="true" />
             <div class="loading-bar-container">
               <div id="document-name-input-loading-bar"></div>
@@ -137,9 +151,6 @@ m4_ifelse(MOBILEAPP,[true],
           <div id="userListSummaryBackground"><button id="userListSummary"></button></div>
         </div>
         <div id="viewMode">
-          <div class="unotoolbutton notebookbar ui-content unospan readonly inline hidden" tabindex="-1" id="readonlyMode">
-              <span class="ui-content unolabel"></span>
-          </div>
         </div>
         <div id="closebuttonwrapperseparator"></div>
         <div id="closebuttonwrapper">
@@ -166,13 +177,14 @@ m4_ifelse(MOBILEAPP,[true],
         <progress id="mobile-progress-bar" class="progress-bar" value="0" max="99"></progress>
       </div>
 
-      <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*">
-      <input id="insertmultimedia" aria-labelledby="menu-insertmultimedia" type="file" accept="audio/*, video/*">
-      <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*">
+      <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" tabindex="-1">
+      <input id="insertmultimedia" aria-labelledby="menu-insertmultimedia" type="file" accept="audio/*, video/*" tabindex="-1">
+      <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*" tabindex="-1">
+      <input id="comparedocuments" aria-labelledby="menu-comparedocuments" type="file" accept="application/*" tabindex="-1">
     </dialog>
 
     <div id="main-document-content">
-      <div id="navigation-sidebar">
+      <nav id="navigation-sidebar">
         <div id="presentation-controls-wrapper" class="readonly">
           <div id="slide-sorter"></div>
           <div id="presentation-toolbar"></div>
@@ -183,13 +195,16 @@ m4_ifelse(MOBILEAPP,[true],
         <div id="quickfind-dock-wrapper">
           <div id="quickfind-panel" class="sidebar-panel"></div>
         </div>
-      </div>
+      </nav>
       <div id="navigator-floating-icon"></div>
       <div id="document-container" class="readonly" dir="ltr">
         <div id="map"></div>
       </div>
       <div id="sidebar-dock-wrapper">
         <div id="sidebar-panel" class="sidebar-panel"></div>
+      </div>
+      <div id="aichat-dock-wrapper">
+        <div id="aichat-panel"></div>
       </div>
     </div>
 
@@ -227,18 +242,7 @@ m4_ifelse(MOBILEAPP,[true],
           </div>
           <div id="about-dialog-info-container">
             <div id="about-dialog-info">
-              <div id="coolwsd-version-label"></div>
-              <div class="about-dialog-info-div"><div id="coolwsd-version" dir="ltr"></div></div>
-              <div class="spacer"></div>
-              <div id="lokit-version-label"></div>
-              <div class="about-dialog-info-div"><div id="lokit-version" dir="ltr"></div></div>
-              m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
-              <div id="slow-proxy"></div>
-              m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
-              <div id="routeToken"></div>
-              <div id="timeZone"></div>
-              m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div>],[<p></p>])
-              <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
+              <div id="lokit-version" dir="ltr"></div>
             </div>
           </div>
         </div>
@@ -261,45 +265,49 @@ m4_ifelse(MOBILEAPP, [true],
       ],
      [
       <input type="hidden" id="initial-variables"
-      data-host = "%HOST%"
-      data-service-root = "%SERVICE_ROOT%"
-      data-hexify-url = "%HEXIFY_URL%"
-      data-version-path = "%VERSION%"
+      data-access-header = "%ACCESS_HEADER%"
       data-access-token = "%ACCESS_TOKEN%"
       data-access-token-ttl = "%ACCESS_TOKEN_TTL%"
-      data-no-auth-header = "%NO_AUTH_HEADER%"
-      data-access-header = "%ACCESS_HEADER%"
-      data-post-message-origin-ext = "%POSTMESSAGE_ORIGIN%"
+      data-allow-update-notification = "%ENABLE_UPDATE_NOTIFICATION%"
+      data-auto-show-feedback = "%AUTO_SHOW_FEEDBACK%"
+      data-auto-show-welcome = "%AUTO_SHOW_WELCOME%"
+      data-canvas-slideshow-enabled = "%CANVAS_SLIDESHOW_ENABLED%"
+      data-check-file-info-override = "%CHECK_FILE_INFO_OVERRIDE%"
       data-cool-logging = "%BROWSER_LOGGING%"
       data-coolwsd-version = "%COOLWSD_VERSION%"
-      data-enable-welcome-message = "%ENABLE_WELCOME_MSG%"
-      data-auto-show-welcome = "%AUTO_SHOW_WELCOME%"
-      data-auto-show-feedback = "%AUTO_SHOW_FEEDBACK%"
-      data-allow-update-notification = "%ENABLE_UPDATE_NOTIFICATION%"
-      data-user-interface-mode = "%USER_INTERFACE_MODE%"
-      data-use-integration-theme = "%USE_INTEGRATION_THEME%"
-      data-statusbar-save-indicator = "%STATUSBAR_SAVE_INDICATOR%"
-      data-enable-macros-execution = "%ENABLE_MACROS_EXECUTION%"
-      data-enable-accessibility = "%ENABLE_ACCESSIBILITY%"
-      data-out-of-focus-timeout-secs = "%OUT_OF_FOCUS_TIMEOUT_SECS%"
-      data-idle-timeout-secs = "%IDLE_TIMEOUT_SECS%"
-      data-min-saved-message-timeout-secs = "%MIN_SAVED_MESSAGE_TIMEOUT_SECS%";
-      data-protocol-debug = "%PROTOCOL_DEBUG%"
-      data-enable-debug = "%ENABLE_DEBUG%"
-      data-frame-ancestors = "%FRAME_ANCESTORS%"
-      data-socket-proxy = "%SOCKET_PROXY%"
-      data-ui-defaults = "%UI_DEFAULTS%"
-      data-check-file-info-override = "%CHECK_FILE_INFO_OVERRIDE%"
+      data-copyright-year = _YEAR_
       data-deepl-enabled = "%DEEPL_ENABLED%"
-      data-zotero-enabled = "%ZOTERO_ENABLED%"
       data-document-signing-enabled = "%DOCUMENT_SIGNING_ENABLED%"
-      data-saved-ui-state = "%SAVED_UI_STATE%"
+      data-enable-accessibility = "%ENABLE_ACCESSIBILITY%"
+      data-enable-debug = "%ENABLE_DEBUG%"
+      data-enable-experimental-features = "%EXPERIMENTAL_FEATURES%"
+      data-enable-macros-execution = "%ENABLE_MACROS_EXECUTION%"
+      data-enable-welcome-message = "%ENABLE_WELCOME_MSG%"
       data-extra-export-formats = "%EXTRA_EXPORT_FORMATS%"
-      data-wasm-enabled = "%WASM_ENABLED%"
-      data-indirection-url = "%INDIRECTION_URL%"
+      data-frame-ancestors = "%FRAME_ANCESTORS%"
       data-geolocation-setup = "%GEOLOCATION_SETUP%"
-      data-canvas-slideshow-enabled = "%CANVAS_SLIDESHOW_ENABLED%"
+      data-hexify-url = "%HEXIFY_URL%"
+      data-host = "%HOST%"
+      data-idle-timeout-secs = "%IDLE_TIMEOUT_SECS%"
+      data-indirection-url = "%INDIRECTION_URL%"
+      data-min-saved-message-timeout-secs = "%MIN_SAVED_MESSAGE_TIMEOUT_SECS%";
+      data-no-auth-header = "%NO_AUTH_HEADER%"
+      data-out-of-focus-timeout-secs = "%OUT_OF_FOCUS_TIMEOUT_SECS%"
+      data-post-message-origin-ext = "%POSTMESSAGE_ORIGIN%"
+      data-protocol-debug = "%PROTOCOL_DEBUG%"
+      data-saved-ui-state = "%SAVED_UI_STATE%"
+      data-service-root = "%SERVICE_ROOT%"
+      data-socket-proxy = "%SOCKET_PROXY%"
+      data-statusbar-save-indicator = "%STATUSBAR_SAVE_INDICATOR%"
+      data-ui-defaults = "%UI_DEFAULTS%"
+      data-use-integration-theme = "%USE_INTEGRATION_THEME%"
+      data-user-interface-mode = "%USER_INTERFACE_MODE%"
+      data-vendor = VENDOR
+      data-version-path = "%VERSION%"
+      data-wasm-enabled = "%WASM_ENABLED%"
+      data-wopi-host-id = "%WOPI_HOST_ID%"
       data-wopi-setting-base-url = "%WOPI_SETTING_BASE_URL%"
+      data-zotero-enabled = "%ZOTERO_ENABLED%"
       />
     ])
 
@@ -307,6 +315,12 @@ m4_dnl This is GLOBAL_JS:
 m4_ifelse(MOBILEAPP, [true],
   [<script type="text/javascript" src="global.js"></script>],
   [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/global.js"></script>]
+)
+
+m4_dnl Templates manifest (loaded as JS to avoid CORS issues with file:// protocol):
+m4_ifelse(MOBILEAPP, [true],
+  [<script type="text/javascript" src="templates/templates.js"></script>],
+  [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/templates/templates.js"></script>]
 )
 
 m4_ifelse(MOBILEAPP,[true],

@@ -12,100 +12,23 @@
  * Control.ContextMenu
  */
 
-/* global $ _ _UNO app GraphicSelection */
+/* global $ _ _UNO app GraphicSelection JSDialog */
 window.L.Control.ContextMenu = window.L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
-		/*
-		 * Enter UNO commands that should appear in the context menu.
-		 * Entering a UNO command under `general' would enable it for all types
-		 * of documents. If you do not want that, whitelist it in document specific filter.
-		 *
-		 * UNOCOMMANDS_EXTRACT_START <- don't remove this line, it's used by unocommands.py
-		 */
-		whitelist: {
-			/*
-			 * UNO commands for menus are not available sometimes. Presence of Menu commands
-			 * in following list is just for reference and ease of locating uno command
-			 * from context menu structure.
-			 */
-			general: ['Cut', 'Copy', 'Paste', 'PasteSpecial', 'Delete',
-					  'FormatPaintbrush', 'ResetAttributes',
-					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
-					  'OpenHyperlinkOnCursor', 'InsertHyperlink', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
-					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
-					  'SetAnchorToChar', 'SetAnchorToFrame', 'Crop',
-					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
-					  'WrapThroughTransparencyToggle', 'WrapContour', 'WrapAnchorOnly',
-					  'ConvertMenu', 'ChangeBezier',
-					  'DistributeHorzCenter', 'DistributeHorzDistance','DistributeHorzLeft','DistributeHorzRight',
-					  'DistributeVertBottom', 'DistributeVertCenter', 'DistributeVertDistance', 'DistributeVertTop',
-					  'ArrangeFrameMenu', 'ArrangeMenu', 'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack',
-					  'RotateMenu', 'RotateLeft', 'RotateRight', 'TransformDialog', 'FormatLine', 'FormatArea',
-					  'FormatChartArea', 'InsertTitles', 'InsertRemoveAxes',
-					  'DeleteLegend', 'DiagramType', 'DataRanges', 'DiagramData', 'View3D', 'ManageThemes',
-					  'FormatWall', 'FormatFloor', 'FormatLegend', 'FormatTitle', 'FormatDataSeries',
-					  'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid', 'FormatDataLabels',
-					  'FormatDataLabel', 'FormatDataPoint', 'FormatMeanValue', 'FormatXErrorBars', 'FormatYErrorBars',
-					  'FormatTrendline', 'FormatTrendlineEquation', 'FormatSelection', 'FormatStockLoss',
-					  'FormatStockGain', 'InsertDataLabel', 'InsertDataLabels' , 'DeleteDataLabel', 'DeleteDataLabels', 'ResetDataPoint',
-					  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
-					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
-					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
-					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
-					  'AnimationEffects', 'ExecuteAnimationEffect',
-					  'InsertAnnotation', 'FormatGroup', 'FormatUngroup'],
+		allowlist: {
+			general: JSDialog.MenuCommands.allowlist.general,
 
-			tracking: ['NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange'],
+			tracking: JSDialog.MenuCommands.allowlist.tracking,
 
-			text: ['TableInsertMenu',
-				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
-				   'TableDeleteMenu', 'SetObjectToBackground', 'SetObjectToForeground',
-				   'DeleteRows', 'DeleteColumns', 'DeleteTable', 'EditCurrentRegion',
-				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
-				   'UpdateCurIndex','RemoveTableOf',
-				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
-				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
-				   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',
-				   'AddToWordbook'],
+			text: JSDialog.MenuCommands.allowlist.text,
 
-			spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
-					  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'InsertCalcTable', 'RemoveCalcTable',
-					  'DatabaseSettings', 'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
-					  'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
-					  'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines', 'AutoFill'],
+			spreadsheet: JSDialog.MenuCommands.allowlist.spreadsheet,
 
-			presentation: ['SetDefault'],
-			drawing: []
+			presentation: JSDialog.MenuCommands.allowlist.presentation,
+			drawing: JSDialog.MenuCommands.allowlist.drawing,
 		},
-		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
-
-		// This blacklist contains those menu items which should be disabled on mobile
-		// phones even if they are allowed in general. We need to have only those items here
-		// which are also part of the whitelist, otherwise the menu items are not visible
-		// anyway.
-
-		// For clarity, please keep this list in sections that are sorted in the same order
-		// as the items appear in the whitelist arrays above. Also keep items on separate
-		// lines as in the arrays above.
-		mobileBlackList: [
-			// general
-			'PasteSpecial',
-			'TransformDialog', 'FormatLine', 'FormatArea',
-			'InsertTitles', 'InsertRemoveAxes',
-			'DiagramType', 'DataRanges',
-			'FormatWall', 'FormatDataSeries', 'FormatXErrorBars', 'FormatYErrorBars',
-			'FormatDataPoint', 'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid',
-			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars', 'FormatChartArea',
-			'FormatMeanValue', 'DiagramData', 'FormatLegend', 'FormatTrendline',
-			'FormatTrendlineEquation', 'FormatStockLoss', 'FormatStockGain', 'LanguageStatus',
-			'PageDialog',
-			// text
-			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
-			// spreadsheet
-			'FormatCellDialog', 'DataDataPilotRun', 'InsertCalcTable',
-			'GroupSparklines', 'UngroupSparklines', 'AutoFill'
-		],
+		mobileDenylist: JSDialog.MenuCommands.mobileDenylist,
 
 	},
 
@@ -185,7 +108,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				break;
 			}
 		}
-		if (window.mode.isMobile()) {
+		if (window.mode.isSmallScreenDevice()) {
 			window.contextMenuWizard = true;
 			var menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(contextMenu, true, '');
 			map.fire('mobilewizard', {data: menuData});
@@ -200,6 +123,11 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 						callback: function(key) {
 							if (key === '.uno:InsertAnnotation') {
 								app.map.insertComment();
+							} else if (key === 'saveimagetowopi') {
+								var ext = GraphicSelection.extraInfo && GraphicSelection.extraInfo.graphicExtension
+									? GraphicSelection.extraInfo.graphicExtension : 'png';
+								map._saveImageToWopi = true;
+								map.openSaveAs(ext);
 							} else if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
 								map.sendUnoCommand(key);
 								// For spelling context menu we need to remove selection
@@ -252,6 +180,22 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				obj.menu.splice(insertIndex, 0,
 					{ text: _('Delete'), type: 'command', command: '.uno:Delete', enabled: true });
 			}
+
+			// Add "Save Image to Server" after SaveGraphic when WOPI supports save-as
+			if (!this._map['wopi'].UserCanNotWriteRelative) {
+				var saveGraphicIndex = -1;
+				obj.menu.forEach(function(item, index) {
+					if (item.command === '.uno:SaveGraphic') {
+						saveGraphicIndex = index + 1;
+					}
+				});
+
+				if (saveGraphicIndex != -1) {
+					obj.menu.splice(saveGraphicIndex, 0,
+						{ text: _('Save Image to Server'), type: 'command',
+						  command: 'saveimagetowopi', enabled: true });
+				}
+			}
 		}
 	},
 
@@ -298,7 +242,18 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				isLastItemText = false;
 			}
 			else if (item.type === 'command') {
-				// Only show whitelisted items
+				// Custom commands (not .uno:) injected by _amendContextMenuData
+				if (item.command && !item.command.startsWith('.uno:')) {
+					itemName = item.text;
+					contextMenu[item.command] = {
+						name: (window.mode.isSmallScreenDevice() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, item.command)),
+						isHtmlName: true,
+					};
+					isLastItemText = true;
+					continue;
+				}
+
+				// Only show allowlisted items
 				// Command name (excluding '.uno:') starts from index = 5
 				var commandName = item.command.substring(5);
 
@@ -314,22 +269,23 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					continue;
 
 				if (commandName !== 'None' &&
-					this.options.whitelist.general.indexOf(commandName) === -1 &&
-					(this._map['wopi'].HideChangeTrackingControls || this.options.whitelist.tracking.indexOf(commandName) === -1) &&
-					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
-					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
-					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
-					!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
+					this.options.allowlist.general.indexOf(commandName) === -1 &&
+					(this._map['wopi'].HideChangeTrackingControls || this.options.allowlist.tracking.indexOf(commandName) === -1) &&
+					!(docType === 'text' && this.options.allowlist.text.indexOf(commandName) !== -1) &&
+					!(docType === 'spreadsheet' && this.options.allowlist.spreadsheet.indexOf(commandName) !== -1) &&
+					!(docType === 'presentation' && this.options.allowlist.presentation.indexOf(commandName) !== -1) &&
+					!(docType === 'drawing' && this.options.allowlist.drawing.indexOf(commandName) !== -1)) {
 					continue;
 				}
 
-				if (window.mode.isMobile() && this.options.mobileBlackList.indexOf(commandName) !== -1)
+				if (window.mode.isSmallScreenDevice() && this.options.mobileDenylist.indexOf(commandName) !== -1)
 					continue;
 
 				if (commandName == 'None' && !item.text)
 					continue;
 
-				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete' || commandName == 'PasteSpecial') {
+				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete' || commandName == 'PasteSpecial'
+					|| commandName === 'UpdateCurIndex' || commandName === 'RemoveTableOf' || commandName === 'EditCurIndex') {
 					// These commands have a custom item.text, don't overwrite
 					// that with a label based on 'item.command'.
 					itemName = window.removeAccessKey(item.text);
@@ -341,7 +297,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: (window.mode.isMobile() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, commandName)),
+					name: (window.mode.isSmallScreenDevice() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, commandName)),
 					isHtmlName: true,
 				};
 

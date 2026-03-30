@@ -54,8 +54,10 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 		scrollwindow.id = data.id;
 
 	// drawing areas inside scrollwindows should be not cropped so we add special class
-	if (_hasDrawingAreaInside(data.children))
+	if (_hasDrawingAreaInside(data.children)) {
 		window.L.DomUtil.addClass(scrollwindow, 'has-ui-drawing-area');
+		scrollwindow.setAttribute('tabindex', '-1');
+	}
 
 	var content = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow-content', scrollwindow);
 
@@ -75,6 +77,60 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 		scrollwindow.style.overflowX = 'hidden';
 	if (data.horizontal.policy === 'always')
 		scrollwindow.style.overflowX = 'scroll';
+
+	// "External" horizontal scrolling: policy is "never" (no scrollbar) but content
+	// may be wider than the viewport. The browser determines actual overflow.
+	// Allow content to extend and handle scrolling via sibling scroll buttons.
+	if (noHorizontal) {
+		content.style.width = 'max-content';
+		content.style.minWidth = '100%';
+		scrollwindow.style.overflowX = 'hidden';
+
+		var setupExternalScroll = function() {
+			if (scrollwindow._externalScrollSetup)
+				return;
+
+			var hasOverflow = scrollwindow.scrollWidth > scrollwindow.clientWidth;
+			if (!hasOverflow)
+				return;
+
+			// Find sibling scroll buttons - deferred so all siblings exist in DOM.
+			// A scroll-button container is a simple wrapper whose only child
+			// is the button (e.g. a pushbutton widget).  Tab headers, toolbars
+			// and other complex siblings also contain <button> elements but
+			// have more than one child — skip those.
+			var prevSibling = scrollwindow.previousElementSibling;
+			var nextSibling = scrollwindow.nextElementSibling;
+			var isScrollBtn = function(sibling) {
+				if (!sibling)
+					return false;
+				var btn = sibling.querySelector('button');
+				return btn && btn.parentElement === sibling
+					&& sibling.children.length === 1;
+			};
+			var isLeftScrollBtn = isScrollBtn(prevSibling);
+			var isRightScrollBtn = isScrollBtn(nextSibling);
+
+			scrollwindow._externalScrollSetup = true;
+
+			// Hide sibling scroll buttons — only simple single-button
+			// wrappers, not tab headers or other complex widgets.
+			if (isLeftScrollBtn)
+				prevSibling.style.display = 'none';
+			if (isRightScrollBtn)
+				nextSibling.style.display = 'none';
+
+			// Always show a native browser scrollbar when content overflows
+			scrollwindow.style.overflowX = 'auto';
+		};
+
+		// Use ResizeObserver to detect when content overflows the
+		// viewport and enable a native horizontal scrollbar.
+		var observer = new ResizeObserver(function() {
+			setupExternalScroll();
+		});
+		observer.observe(content);
+	}
 
 	var realContentHeight = scrollwindow.scrollHeight;
 	var realContentWidth = scrollwindow.scrollwidth;

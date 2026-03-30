@@ -2,7 +2,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
 	function assertData() {
 		//select all the content of doc
@@ -36,35 +36,41 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		helper.assertImageSize(480, 122);
 	}
 
-	it('Open doc file', { defaultCommandTimeout: 60000 }, function() {
+	it.skip('Open doc file', { defaultCommandTimeout: 60000 }, function() {
 		helper.setupAndLoadDocument('writer/testfile.doc');
 		assertData();
 	});
 
-	it('Open docx file', { defaultCommandTimeout: 60000 }, function() {
+	it.skip('Open docx file', { defaultCommandTimeout: 60000 }, function() {
 		helper.setupAndLoadDocument('writer/testfile.docx');
 		assertData();
 	});
 
-	it('Open docm file', { defaultCommandTimeout: 60000 }, function() {
+	it.skip('Open docm file', { defaultCommandTimeout: 60000 }, function() {
 		helper.setupAndLoadDocument('writer/testfile.docm');
 		assertData();
 	});
 
-	it('Open fodt file', { defaultCommandTimeout: 60000 }, function() {
+	it.skip('Open fodt file', { defaultCommandTimeout: 60000 }, function() {
 		helper.setupAndLoadDocument('writer/testfile.fodt');
 		assertData();
 	});
 
-	it('Open dot file', { defaultCommandTimeout: 60000 }, function() {
+	it.skip('Open dot file', { defaultCommandTimeout: 60000 }, function() {
 		desktopHelper.openReadOnlyFile('writer/testfile.dot');
 	});
 
-	it('Open dotm file', { defaultCommandTimeout: 60000 }, function() {
+	it.skip('Open dotm file', { defaultCommandTimeout: 60000 }, function() {
 		desktopHelper.openReadOnlyFile('writer/testfile.dotm');
 	});
 
-	it('Open dotx file', { defaultCommandTimeout: 60000 }, function() {
-		desktopHelper.openReadOnlyFile('writer/testfile.dotx');
+	it('Open dotx file', function() {
+		helper.setupAndLoadDocument('writer/testfile.dotx');
+		// Template files should open in edit mode, not read-only.
+		// Without the accompanying fix in place, this test would have failed,
+		// the server sent filemode with readOnly: true for dotx files.
+		// This resulted in having no notebookbar:
+		// assertexpected .notebookbar-scroll-wrapper to have class initialized
+		cy.cGet('#viewModeDropdownButton-button').should('be.visible').should('have.text', 'Editing');
 	});
 });

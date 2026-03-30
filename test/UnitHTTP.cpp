@@ -9,21 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for HTTP protocol functionality.
+ */
+
 #include <config.h>
 
 #include <helpers.hpp>
 #include <Poco/Util/Application.h>
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Net/SecureStreamSocket.h>
-#include <Poco/Net/StringPartSource.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/StreamCopier.h>
 
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <Unit.hpp>
 #include <lokassert.hpp>
 
@@ -48,16 +46,16 @@ public:
         TST_LOG("testContinue");
         for (int i = 0; i < 3; ++i)
         {
-            std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(Poco::URI(helpers::getTestServerURI())));
+            auto httpSession = http::Session::create(helpers::getTestServerURI());
 
             std::string sent = "Hello world test\n";
 
-            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to/txt");
+            http::Request request("/cool/convert-to/txt", http::Request::VERB_POST);
 
             switch(i)
             {
             case 0:
-                request.erase("Expect");
+                // No Expect header (default)
                 break;
             case 1:
                 request.set("Expect", "100-continue");
@@ -65,19 +63,14 @@ public:
             default:
                 break;
             }
-            Poco::Net::HTMLForm form;
-            form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-            form.set("format", "txt");
-            form.addPart("data", new Poco::Net::StringPartSource(sent, "text/plain", "foobaa.txt"));
-            form.prepareSubmit(request);
-            form.write(session->sendRequest(request));
 
-            Poco::Net::HTTPResponse response;
-            std::stringstream actualStream;
-            std::istream& responseStream = session->receiveResponse(response);
-            Poco::StreamCopier::copyStream(responseStream, actualStream);
+            helpers::MultipartFormBody form;
+            form.addField("format", "txt");
+            form.addStringPart("data", sent, "text/plain", "foobaa.txt");
+            form.applyTo(request);
 
-            std::string responseStr = actualStream.str();
+            const auto httpResponse = httpSession->syncRequest(request);
+            std::string responseStr(httpResponse->getBody());
             responseStr.erase(0,3); // remove utf-8 bom.
 
             if (sent != responseStr)
@@ -240,7 +233,7 @@ public:
             return;
         }
 
-        if (strcmp(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
+        if (buffer != std::string_view("\357\273\277This is some text.\nAnd some more.\n"))
         {
             TST_LOG("unexpected file content " << got << " '" << buffer);
             exitTest(TestResult::Failed);

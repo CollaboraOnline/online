@@ -24,6 +24,8 @@ class NavigatorPanel extends SidebarBase {
 
 	highlightTerm: string;
 	focusQuickFind: boolean;
+	dirtyWidth: boolean = true;
+	currentWidth: number = 0;
 
 	constructor(map: any) {
 		super(map, SidebarType.Navigator);
@@ -31,10 +33,14 @@ class NavigatorPanel extends SidebarBase {
 
 	onAdd(map: ReturnType<typeof window.L.map>) {
 		super.onAdd(map);
+		this.dirtyWidth = true;
 		this.map.on('navigator', this.onNavigator, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
 		this.map.on('focussearch', this.focusSearch, this);
 		this.navigationPanel = document.getElementById(`navigation-sidebar`);
+		this.navigationPanel.setAttribute('aria-label', _('Navigation Panel'));
+		this.navigationPanel.setAttribute('tabindex', '-1');
+
 		this.floatingNavIcon = document.getElementById(`navigator-floating-icon`);
 		this.presentationControlsWrapper = this.navigationPanel.querySelector(
 			'#presentation-controls-wrapper',
@@ -57,6 +63,7 @@ class NavigatorPanel extends SidebarBase {
 		this.map.off('navigator');
 		this.map.off('zoomend');
 		this.map.off('doclayerinit');
+		this.dirtyWidth = true;
 	}
 
 	onDocLayerInit() {
@@ -64,10 +71,10 @@ class NavigatorPanel extends SidebarBase {
 		// for presentation show slide sorter navigation panel by default
 		if (
 			allowedDocTypes.includes(app.map.getDocType()) &&
-			!window.mode.isMobile()
+			!window.mode.isSmallScreenDevice()
 		) {
 			// Navigator panel should be visible and by default we should open slide sorter in case of impress/draw
-			this.showNavigationPanel();
+			this.showNavigationPanel(false);
 		}
 	}
 
@@ -104,11 +111,7 @@ class NavigatorPanel extends SidebarBase {
 			navContainer,
 		);
 
-		var navTitle = window.L.DomUtil.create(
-			'span',
-			'navigation-title',
-			navHeader,
-		);
+		var navTitle = window.L.DomUtil.create('h2', 'navigation-title', navHeader);
 		navTitle.textContent = _('Navigation');
 
 		// Create wrapper for search
@@ -277,6 +280,8 @@ class NavigatorPanel extends SidebarBase {
 			}
 			this.navigationPanel.prepend(navHeader);
 		}
+
+		this.dirtyWidth = true;
 	}
 
 	createFloatingNavigatorBtn() {
@@ -291,16 +296,17 @@ class NavigatorPanel extends SidebarBase {
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');
 		buttonWrapper.className = 'navigator-btn-wrapper'; // Class for styling
-		buttonWrapper.setAttribute('aria-label', navigatorText);
 
 		// Create the button
 		const button = document.createElement('button');
 		button.className = 'ui-content unobutton';
 		button.id = 'floating-navigator';
 		button.accessKey = 'ZN';
+		button.setAttribute('aria-label', navigatorText);
 
 		// Create the image inside the button
 		const img = document.createElement('img');
+		img.alt = ''; // empty alt for accessibility
 		app.LOUtil.setImage(img, 'lc_navigator.svg', this.map);
 
 		// Append elements
@@ -312,7 +318,7 @@ class NavigatorPanel extends SidebarBase {
 		this.floatingNavIcon.addEventListener(
 			'click',
 			function () {
-				this.showNavigationPanel();
+				this.showNavigationPanel(true);
 				if (app.map.isPresentationOrDrawing()) {
 					this.switchNavigationTab('tab-slide-sorter');
 				} else {
@@ -340,7 +346,7 @@ class NavigatorPanel extends SidebarBase {
 			this.builder.build(this.container, [navigatorData], false);
 			// There is case where user can directly click navigator from notebookbar view option
 			// in that case we first show the navigation panel and then switch to tab view
-			this.showNavigationPanel();
+			this.showNavigationPanel(false);
 			// TODO: remove jQuery animation
 			$('#navigator-dock-wrapper').show(200);
 			app.showNavigator = true;
@@ -360,6 +366,8 @@ class NavigatorPanel extends SidebarBase {
 		} else {
 			this.closeSidebar();
 		}
+
+		this.dirtyWidth = true;
 	}
 
 	onJSUpdate(e: FireEvent) {
@@ -417,7 +425,7 @@ class NavigatorPanel extends SidebarBase {
 	handleFloatingButtonVisibilityOnZoomChange() {
 		// Handle special case for impress as the view there is landscape so better to hide Floating Nav ICON on lower zoom compare to other app
 		if (
-			this.map.getZoom() >= 14 ||
+			this.map.getZoom() > 14 ||
 			(this.map.getZoom() >= 13 && this.map.getDocType() === 'presentation')
 		) {
 			this.floatingNavIcon.classList.remove('visible');
@@ -426,12 +434,36 @@ class NavigatorPanel extends SidebarBase {
 		}
 	}
 
-	showNavigationPanel() {
+	getCurrentWidth() {
+		if (this.dirtyWidth) {
+			// Consider navigations sidebar width to place marker at correct position
+			const presentationControlsWrapper: HTMLDivElement =
+				document.querySelector('#navigation-sidebar');
+			let presentationControlsWrapperWidth: number = 0;
+
+			if (presentationControlsWrapper)
+				presentationControlsWrapperWidth =
+					presentationControlsWrapper.getBoundingClientRect().width;
+
+			this.currentWidth = presentationControlsWrapperWidth;
+			this.dirtyWidth = false;
+		}
+
+		return this.currentWidth;
+	}
+
+	requestShow() {
+		app.socket.sendMessage('uno .uno:Navigator');
+	}
+
+	showNavigationPanel(setFocus: boolean) {
 		app.layoutingService.appendLayoutingTask(() => {
 			this.navigationPanel.classList.add('visible');
 			this.floatingNavIcon.classList.remove('visible');
 			// this will update the indentation marks for elements like ruler
 			app.map.fire('fixruleroffset');
+
+			if (setFocus) this.navigationPanel.focus();
 		});
 	}
 
@@ -484,6 +516,9 @@ class NavigatorPanel extends SidebarBase {
 							type: 'pushbutton',
 							text: '',
 							image: 'lc_recsearch.svg',
+							aria: {
+								label: _('Search'),
+							},
 						},
 					],
 				},

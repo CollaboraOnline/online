@@ -125,6 +125,9 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

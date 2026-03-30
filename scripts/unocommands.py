@@ -71,6 +71,10 @@ def commandFromMenuLine(line):
     if m:
         return [m.group(1)]
 
+    m = re.search(r"'command': *'\.uno:([^']*)'", line)
+    if m:
+        return [m.group(1)]
+
     return []
 
 
@@ -96,7 +100,7 @@ def extractContextCommands(path):
     commands = []
 
     # extract from the comments whitelist
-    f = open(path + '/browser/src/control/Control.ContextMenu.js', 'r', encoding='utf-8')
+    f = open(path + '/browser/src/control/jsdialog/Definitions.MenuCommands.ts', 'r', encoding='utf-8')
     readingCommands = False
     for line in f:
         if line.find('UNOCOMMANDS_EXTRACT_START') >= 0:
@@ -168,6 +172,11 @@ def extractToolbarCommands(path):
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
+    f = open(path + '/browser/src/control/Notebookbar.WriterReferencesTab.ts', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
     f = open(path + '/browser/src/control/Control.NotebookbarCalc.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
@@ -204,8 +213,38 @@ def extractToolbarCommands(path):
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
+    f = open(path + '/browser/src/control/Control.AboutDialog.ts', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
     # may the list unique
     return set(commands)
+
+
+# Extract uno commands from combobox widgets in notebookbar definitions.
+# These use 'command': '.uno:...' without a _UNO() call, so extractToolbarCommands misses them.
+def extractComboboxCommands(path):
+    commands = []
+    files = [
+        '/browser/src/control/Control.NotebookbarWriter.js',
+        '/browser/src/control/Control.NotebookbarCalc.js',
+        '/browser/src/control/Control.NotebookbarImpress.js',
+        '/browser/src/control/Control.NotebookbarDraw.js',
+    ]
+    for fname in files:
+        f = open(path + fname, 'r', encoding='utf-8')
+        inCombobox = False
+        for line in f:
+            if "'type': 'combobox'" in line:
+                inCombobox = True
+            elif inCombobox and "'command':" in line:
+                commands += commandFromMenuLine(line)
+                inCombobox = False
+            elif inCombobox and '}' in line:
+                inCombobox = False
+    return set(commands)
+
 
 def extractMenubuttonCommands(path):
     commands = []
@@ -262,7 +301,8 @@ def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
 
 # Print commands from all the XCU files, and collect them too
 def writeUnocommandsJS(
-        onlineDir, lofficeDir, menuCommands, contextCommands, toolbarCommands, menubuttonCommands):
+        onlineDir, lofficeDir, menuCommands, contextCommands, toolbarCommands,
+        menubuttonCommands, comboboxCommands):
 
     descriptions = {}
     dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
@@ -316,6 +356,10 @@ def writeUnocommandsJS(
             descriptions = collectCommandsFromXCU(os.path.join(dir, file),
                                                   descriptions,
                                                   menubuttonCommands,
+                                                  'Label', type)
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file),
+                                                  descriptions,
+                                                  comboboxCommands,
                                                   'Label', type)
 
     # output the unocommands.js
@@ -494,6 +538,7 @@ if __name__ == "__main__":
     contextCommands = extractContextCommands(onlineDir)
     toolbarCommands = extractToolbarCommands(onlineDir)
     menubuttonCommands = extractMenubuttonCommands(onlineDir)
+    comboboxCommands = extractComboboxCommands(onlineDir)
 
     processedCommands = set([])
     parsed = {}
@@ -502,15 +547,20 @@ if __name__ == "__main__":
         processedCommands = set(parsed.keys())
     else:
         written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands,
-                                     contextCommands, toolbarCommands, menubuttonCommands)
+                                     contextCommands, toolbarCommands,
+                                     menubuttonCommands, comboboxCommands)
         processedCommands = set(written.keys())
 
     # check that we have translations for everything
-    requiredCommands = (menuCommands | contextCommands | toolbarCommands | menubuttonCommands)
+    requiredCommands = (menuCommands | contextCommands | toolbarCommands | menubuttonCommands | comboboxCommands)
     dif = requiredCommands - processedCommands
 
     if len(dif) > 0:
-        sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
+        if check:
+            sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n")
+        else:
+            sys.stderr.write("ERROR: The following commands are referenced in Online but have no description in the core XCU files:\n\n")
+        sys.stderr.write(".uno:" + '\n.uno:'.join(sorted(dif)) + "\n\n")
         exit(1)
 
     if (translate):

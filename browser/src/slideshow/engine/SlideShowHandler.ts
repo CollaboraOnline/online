@@ -282,6 +282,10 @@ class SlideShowHandler {
 		return this.aStartedEffectList.length > 0;
 	}
 
+	getCurrentEffect(): number {
+		return this.nCurrentEffect;
+	}
+
 	notifyNextEffectStart() {
 		assert(
 			!this.bIsNextEffectRunning,
@@ -300,7 +304,7 @@ class SlideShowHandler {
 
 		const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
 		const curMetaSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
-		if (curMetaSlide.animationsHandler) {
+		if (curMetaSlide?.animationsHandler) {
 			const aAnimatedElementMap =
 				curMetaSlide.animationsHandler.getAnimatedElementMap();
 			let effect = 0;
@@ -330,7 +334,10 @@ class SlideShowHandler {
 		ANIMDBG.print('SlideShowHandler.notifyNextEffectEnd invoked.');
 		this.bIsNextEffectRunning = false;
 
-		this.aStartedEffectList[this.aStartedEffectIndexMap.get(-1)].end();
+		const effectIndex = this.aStartedEffectIndexMap.get(-1);
+		if (effectIndex !== undefined && this.aStartedEffectList[effectIndex]) {
+			this.aStartedEffectList[effectIndex].end();
+		}
 		if (this.automaticAdvanceTimeout !== null) {
 			if (this.automaticAdvanceTimeoutRewindedEffect === this.nCurrentEffect) {
 				this.automaticAdvanceTimeout = null;
@@ -346,7 +353,11 @@ class SlideShowHandler {
 		);
 		const sCurrSlideHash = this.theMetaPres.getCurrentSlideHash();
 
-		if (this.theMetaPres.isLastSlide(sCurrSlideHash)) return;
+		if (
+			this.theMetaPres.isLastSlide(sCurrSlideHash) &&
+			!this.presenter._isWelcomePresentation
+		)
+			return;
 
 		assert(
 			this.automaticAdvanceTimeout === null,
@@ -379,7 +390,7 @@ class SlideShowHandler {
 
 		if (nOldSlideIndex !== undefined) {
 			const metaOldSlide = this.theMetaPres.getMetaSlideByIndex(nOldSlideIndex);
-			if (metaOldSlide.animationsHandler) {
+			if (metaOldSlide?.animationsHandler) {
 				const aAnimatedElementMap =
 					metaOldSlide.animationsHandler.getAnimatedElementMap();
 
@@ -389,7 +400,7 @@ class SlideShowHandler {
 			}
 		}
 		const metaNewSlide = this.theMetaPres.getMetaSlideByIndex(nNewSlideIndex);
-		if (metaNewSlide.animationsHandler) {
+		if (metaNewSlide?.animationsHandler) {
 			const aAnimatedElementMap =
 				metaNewSlide.animationsHandler.getAnimatedElementMap();
 
@@ -484,7 +495,10 @@ class SlideShowHandler {
 			'SlideShow.notifyInteractiveAnimationSequenceEnd: no interactive effect playing.',
 		);
 
-		this.aStartedEffectList[this.aStartedEffectIndexMap.get(nNodeId)].end();
+		const effectIndex = this.aStartedEffectIndexMap.get(nNodeId);
+		if (effectIndex !== undefined && this.aStartedEffectList[effectIndex]) {
+			this.aStartedEffectList[effectIndex].end();
+		}
 		--this.nTotalInteractivePlayingEffects;
 	}
 
@@ -523,14 +537,13 @@ class SlideShowHandler {
 
 		if (this.nCurrentEffect >= this.aNextEffectEventArray.size()) return false;
 
-		this.presenter.sendSlideShowFollowMessage(
-			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
-		);
-
 		this.notifyNextEffectStart();
 
 		this.aNextEffectEventArray.at(this.nCurrentEffect).fire();
 		++this.nCurrentEffect;
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
+		);
 		this.update();
 		return true;
 	}
@@ -610,7 +623,7 @@ class SlideShowHandler {
 	}
 
 	skipNEffects(nEffectNumber: number) {
-		for (let i = 0; i <= nEffectNumber; i++) if (!this.skipNextEffect()) break;
+		for (let i = 0; i < nEffectNumber; i++) if (!this.skipNextEffect()) break;
 	}
 
 	/** skipPlayingOrNextEffect
@@ -977,7 +990,11 @@ class SlideShowHandler {
 			}
 
 			this.bIsIdle = false;
-			setTimeout(this.update.bind(this), nNextTimeout * 1000);
+			app.timerRegistry.setTimeout(
+				'slideshowupdate',
+				this.update.bind(this),
+				nNextTimeout * 1000,
+			);
 		} else {
 			this.bIsIdle = true;
 		}

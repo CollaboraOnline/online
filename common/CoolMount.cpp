@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * This is a very tiny helper to allow overlay mounting.
  */
@@ -18,6 +19,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <string_view>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sysexits.h>
@@ -36,7 +38,19 @@
 #define MS_REMOUNT 4
 #define MS_NOSUID 16
 #define MS_RDONLY 32
+#elif defined(__APPLE__)
+#define MOUNT mount_wrapper
+#define MS_MGC_VAL 0         // ignored, no mapping to macOS
+#define MS_NODEV MNT_NODEV
+#define MS_UNBINDABLE 0      // ignored, no mapping to macOS
+#define MS_BIND 0            // ignored, no mapping to macOS
+#define MS_REC 0             // ignored, no mapping to macOS
+#define MS_REMOUNT 0         // ignored, no mapping to macOS
+#define MS_NOSUID MNT_NOSUID
+#define MS_RDONLY MNT_RDONLY
+#endif
 
+#ifdef __FreeBSD__
 void
 build_iovec(struct iovec **iov, int *iovlen, const char *name, const void *val,
         size_t len)
@@ -94,7 +108,32 @@ int mount_wrapper(const char *source, const char *target,
 
     return nmount(iov, iovlen, freebsd_flags);
 }
+#elif defined(__APPLE__)
+int mount_wrapper(const char *source, const char *target,
+          const char *filesystemtype, unsigned long mountflags,
+          const void *data)
+{
+    // Build some "data" for mount(2) if it's suspected that the FS needs a device=SOURCE string:
+    char fallback_data[1024];
+    if (source && *source) {
+        // e.g. "device=/dev/disk2s1" or "device=/path/to/something"
+        snprintf(fallback_data, sizeof(fallback_data), "device=%s", source);
+    } else {
+        fallback_data[0] = '\0';
+    }
 
+    const char *fs = (filesystemtype ? filesystemtype : "hfs");
+
+    // It's expected that the mountflags are built using the above defines,
+    // ie. no translation is needed
+    return mount(fs, target, mountflags,
+                 fallback_data[0] ? (void*)fallback_data : (void*)data);
+}
+#else
+#define MOUNT mount
+#endif
+
+#ifndef __linux__
 #define MNT_DETACH 1
 
 int umount2(const char *target, int flags)
@@ -123,8 +162,6 @@ int umount2(const char *target, int flags)
 
     return unmount(target, flags);
 }
-#else
-#define MOUNT mount
 #endif
 
 void usage(const char* program)
@@ -152,14 +189,14 @@ int domount(int argc, const char* const* argv)
     }
 
     const char* option = argv[1];
-    if ((argc == 3 || argc == 4) && strcmp(option, "-u") == 0) // Unmount
+    if ((argc == 3 || argc == 4) && (option == std::string_view("-u"))) // Unmount
     {
         bool silent = false;
         int argpos = 2;
 
         if (argc == 4)
         {
-            if (strcmp(argv[argpos], "-s") != 0)
+            if (argv[argpos] != std::string_view("-s"))
             {
                 fprintf(stderr, "%s: only -s allowed [%s].\n", program, argv[argpos]);
                 return EX_USAGE;
@@ -208,7 +245,7 @@ int domount(int argc, const char* const* argv)
         }
     }
 #ifdef __FreeBSD__
-    else if (argc == 3 && strcmp(option, "-d") == 0) // Mount devfs
+    else if (argc == 3 && option == std::string_view("-d")) // Mount devfs
     {
         const char* target = argv[2];
 
@@ -257,7 +294,8 @@ int domount(int argc, const char* const* argv)
         if (isCharDev)
         {
             // Even for character devices, we only support the random devices.
-            if (strstr("/dev/random", source) && strstr("/dev/urandom", source))
+            if (source != std::string_view("/dev/random") &&
+                source != std::string_view("/dev/urandom"))
             {
                 fprintf(stderr, "%s: cannot mount untrusted character-device [%s]", program,
                         source);
@@ -295,7 +333,7 @@ int domount(int argc, const char* const* argv)
         // Mount the source path as the target path.
         // First bind to mount an existing directory node into the chroot.
         // MS_BIND ignores other flags.
-        if (strcmp(option, "-b") == 0) // Shared or Bind Mount.
+        if (option == std::string_view("-b")) // Shared or Bind Mount.
         {
             const int retval
                 = MOUNT(source, target, nullptr, (MS_MGC_VAL | MS_BIND | MS_REC), nullptr);
@@ -306,7 +344,7 @@ int domount(int argc, const char* const* argv)
                 return EX_SOFTWARE;
             }
         }
-        else if (strcmp(option, "-r") == 0) // Readonly Mount.
+        else if (option == std::string_view("-r")) // Readonly Mount.
         {
             // Now we need to set read-only and other flags with a remount.
             unsigned long mountflags = (MS_BIND | MS_REMOUNT | MS_NODEV | MS_NOSUID | MS_RDONLY);

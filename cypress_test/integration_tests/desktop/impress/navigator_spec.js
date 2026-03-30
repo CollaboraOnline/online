@@ -52,27 +52,27 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 	it('Jump to element. Document -> Navigator', function() {
 		// Click some items in document, and check if Navigator will jump to it
 		// Risky: it clicks x,y coordinates, if scroll or layout change it may need to be changed
-		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#toolbar-down #nextpage').click();
 		cy.cGet('body').click(600,360);
 		checkIfItemSelectedAndVisible('Shape 6 (Text Frame \'Text3\')');
 
-		cy.cGet('#toolbar-down #next').click();
-		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#toolbar-down #nextpage').click();
+		cy.cGet('#toolbar-down #nextpage').click();
 		cy.cGet('body').click(370,270);
 		checkIfItemSelectedAndVisible('Shape 1 (SVG)');
 
-		cy.cGet('#toolbar-down #prev').click();
+		cy.cGet('#toolbar-down #prevpage').click();
 		cy.cGet('body').click(355,435);
 		// T2 is part of a group. The group will be selected in Navigator.
 		checkIfItemExSelectedAndVisible('Shape 3 (Group object)');
 
-		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#toolbar-down #nextpage').click();
 		cy.cGet('body').click(500,520);	//Object 3
 		checkIfItemSelectedAndVisible('Object 3');
 
-		cy.cGet('#toolbar-down #prev').click();
-		cy.cGet('#toolbar-down #prev').click();
-		cy.cGet('#toolbar-down #prev').click();
+		cy.cGet('#toolbar-down #prevpage').click();
+		cy.cGet('#toolbar-down #prevpage').click();
+		cy.cGet('#toolbar-down #prevpage').click();
 		cy.cGet('body').click(630,330);	//Some text
 		checkIfItemSelectedAndVisible('Shape 2 (Text Frame \'Some text\')');
 	});

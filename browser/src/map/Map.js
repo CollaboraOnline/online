@@ -177,7 +177,7 @@ window.L.Map = window.L.Evented.extend({
 				this._fireInitComplete('doclayerinit');
 			}
 
-			if (window.mode.isMobile())
+			if (window.mode.isSmallScreenDevice())
 			{
 				document.getElementById('document-container').classList.add('mobile');
 				this._size = new cool.Point(0,0);
@@ -291,7 +291,7 @@ window.L.Map = window.L.Evented.extend({
 					commentSection.clearList();
 			}
 
-			if (!window.mode.isMobile())
+			if (!window.mode.isSmallScreenDevice())
 				this.initializeModificationIndicator();
 
 			// We have loaded.
@@ -417,6 +417,10 @@ window.L.Map = window.L.Evented.extend({
 		if (!offset.x && !offset.y)
 			return this;
 
+		if (this._docLayer && this._docLayer._docType === 'text' && offset.x != 0 &&
+			app.activeDocument.activeLayout.type === 'ViewLayoutWriter')
+			offset.x += (app.activeDocument.activeLayout).getDocumentScrollOffset();
+
 		//If we pan too far then chrome gets issues with tiles
 		// and makes them disappear or appear in the wrong place (slightly offset) #2602
 		if (!this.getSize().contains(offset)) {
@@ -540,7 +544,7 @@ window.L.Map = window.L.Evented.extend({
 	},
 
 	zoomToFactor: function (zoom) {
-		return Math.pow(1.2, (zoom - this.options.zoom));
+		return Math.pow(this.options.crs.SCALE, (zoom - this.options.zoom));
 	},
 
 	getDesktopCalcZoomCenter: function() {
@@ -679,6 +683,11 @@ window.L.Map = window.L.Evented.extend({
 			return this;
 		}
 
+		// Do not animate zoom in multi-page or compare changes view.
+		if (animate && app.activeDocument &&
+			['ViewLayoutMultiPage', 'ViewLayoutCompareChanges'].includes(app.activeDocument.activeLayout.type))
+			animate = false;
+
 		var curCenter = this.getCenter();
 		if (this._docLayer && this._docLayer._docType === 'spreadsheet') {
 			// for spreadsheets, when the document is smaller than the viewing area
@@ -778,25 +787,6 @@ window.L.Map = window.L.Evented.extend({
 		if (this._loaded) {
 			this.panInsideBounds(this.options.maxBounds);
 		}
-	},
-
-	setDocBounds: function (bounds) {
-		bounds = window.L.latLngBounds(bounds);
-		this.options.docBounds = bounds;
-	},
-
-	hasDocBounds: function () {
-		return this.options.docBounds;
-	},
-
-	getCorePxDocBounds: function () {
-		if (!this.options.docBounds)
-			return new cool.Bounds(0, 0);
-
-		var topleft = this.project(this.options.docBounds.getNorthWest());
-		var bottomRight = this.project(this.options.docBounds.getSouthEast());
-		return new cool.Bounds(this._docLayer._cssPixelsToCore(topleft),
-			this._docLayer._cssPixelsToCore(bottomRight));
 	},
 
 	panInsideBounds: function (bounds) {
@@ -1020,11 +1010,6 @@ window.L.Map = window.L.Evented.extend({
 			this.latLngToLayerPoint(this.options.maxBounds.getSouthEast()));
 	},
 
-	getLayerDocBounds: function () {
-		return cool.Bounds.toBounds(this.latLngToLayerPoint(this.options.docBounds.getNorthWest()),
-			this.latLngToLayerPoint(this.options.docBounds.getSouthEast()));
-	},
-
 	getSize: function () {
 		if (!this._size || this._sizeChanged) {
 			this._size = new cool.Point(
@@ -1081,7 +1066,7 @@ window.L.Map = window.L.Evented.extend({
 	// Returns true iff the document has input focus,
 	// as opposed to a dialog, sidebar, formula bar, etc.
 	editorHasFocus: function () {
-		return this.getWinId() === 0 && !this.calcInputBarHasFocus();
+		return this.getWinId() === 0 && !this.calcInputBarHasFocus() && !this._iframeDialog;
 	},
 
 	// Returns true iff the formula-bar has the focus.
@@ -1099,7 +1084,7 @@ window.L.Map = window.L.Evented.extend({
 
 	getScaleZoom: function (scale, fromZoom) {
 		fromZoom = fromZoom === undefined ? this.getZoom() : fromZoom;
-		return fromZoom + (Math.log(scale) / Math.log(1.2));
+		return fromZoom + (Math.log(scale) / Math.log(this.options.crs.SCALE));
 	},
 
 
@@ -1337,30 +1322,25 @@ window.L.Map = window.L.Evented.extend({
 
 	// private methods that modify map state
 
-	_resetView: function (center, zoom, preserveMapOffset, afterZoomAnim) {
-
+	_resetView: function (center, zoom) {
 		var zoomChanged = (this._zoom !== zoom);
 
-		if (!afterZoomAnim) {
-			this.fire('movestart');
+		this.fire('movestart');
 
-			if (zoomChanged) {
-				this.fire('zoomstart');
-			}
+		if (zoomChanged) {
+			this.fire('zoomstart');
 		}
 
 		this._zoom = zoom;
 
-		if (!preserveMapOffset) {
-			window.L.DomUtil.setPosition(this._mapPane, new cool.Point(0, 0));
-		}
+		window.L.DomUtil.setPosition(this._mapPane, new cool.Point(0, 0));
 
 		this._pixelOrigin = this._getNewPixelOrigin(center);
 
 		var loading = !this._loaded;
 		this._loaded = true;
 
-		this.fire('viewreset', {hard: !preserveMapOffset});
+		this.fire('viewreset', {hard: true});
 
 		if (loading) {
 			this.fire('load');
@@ -1368,7 +1348,7 @@ window.L.Map = window.L.Evented.extend({
 
 		this.fire('move');
 
-		if (zoomChanged || afterZoomAnim) {
+		if (zoomChanged) {
 			this.fire('zoomend');
 			this.fire('zoomlevelschange');
 		}
@@ -1376,7 +1356,7 @@ window.L.Map = window.L.Evented.extend({
 		// don't allow to turn off the following when moving to other sheet
 		var backupFollowed = app.getFollowedViewId();
 
-		this.fire('moveend', {hard: !preserveMapOffset});
+		this.fire('moveend', {hard: true});
 
 		app.setFollowingUser(backupFollowed);
 	},
@@ -1733,8 +1713,10 @@ window.L.Map = window.L.Evented.extend({
 
 		if (this.getDocType() === 'spreadsheet') {
 			this._docLayer.goToCellViewCursor(id);
-		} else if (this.getDocType() === 'text' || this.getDocType() === 'presentation') {
+		} else if (this.getDocType() === 'text') {
 			this._docLayer.goToViewCursor(id);
+		} else if (this.getDocType() === 'presentation' || this.getDocType() === 'drawing') {
+			this._docLayer.goToOtherUserView(id);
 		}
 	},
 

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Data model for admin console views and document tracking.
+ * Classes: View, DocCleanupSettings, DocProcSettings, Document, Subscriber, AdminModel
+ */
+
 #pragma once
 
 #include <common/Log.hpp>
@@ -40,9 +45,9 @@ public:
     }
 
     void expire() { _end = std::time(nullptr); }
-    std::string getUserName() const { return _userName; }
-    std::string getUserId() const { return _userId; }
-    std::string getSessionId() const { return _sessionId; }
+    const std::string& getUserName() const { return _userName; }
+    const std::string& getUserId() const { return _userId; }
+    const std::string& getSessionId() const { return _sessionId; }
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
     std::chrono::milliseconds getLoadDuration() const { return _loadDuration; }
     void setLoadDuration(std::chrono::milliseconds loadDuration) { _loadDuration = loadDuration; }
@@ -152,11 +157,11 @@ public:
 };
 
 /// A document in Admin controller.
-class Document final
+class AdminDocument final
 {
 public:
-    Document(const std::string& docKey, pid_t pid,
-             const std::string& filename, const Poco::URI& wopiSrc)
+    AdminDocument(const std::string& docKey, pid_t pid, const std::string& filename,
+                  const Poco::URI& wopiSrc)
         : _wopiSrc(wopiSrc.toString())
         , _hostName(wopiSrc.getHost())
         , _docKey(docKey)
@@ -183,15 +188,15 @@ public:
     {
     }
 
-    std::string getDocKey() const { return _docKey; }
+    const std::string& getDocKey() const { return _docKey; }
 
     pid_t getPid() const { return _pid; }
 
-    std::string getFilename() const { return _filename; }
+    const std::string& getFilename() const { return _filename; }
 
-    std::string getHostName() const { return _hostName; }
+    const std::string& getHostName() const { return _hostName; }
 
-    std::string getWopiSrc() const { return _wopiSrc; }
+    const std::string& getWopiSrc() const { return _wopiSrc; }
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
@@ -430,9 +435,9 @@ public:
     bool isDocReadOnly(const std::string&);
     void setMigratingInfo(const std::string& docKey, const std::string& routeToken, const std::string& serverId);
     void resetMigratingInfo();
-    std::string getCurrentMigDoc() const { return _currentMigDoc; }
-    std::string getCurrentMigToken() const { return _currentMigToken; }
-    std::string getTargetMigServerId() const { return _targetMigServerId; }
+    const std::string& getCurrentMigDoc() const { return _currentMigDoc; }
+    const std::string& getCurrentMigToken() const { return _currentMigToken; }
+    const std::string& getTargetMigServerId() const { return _targetMigServerId; }
     void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
     std::string getWopiSrcMap() const;
     std::string getFilename(int pid) const;
@@ -440,7 +445,7 @@ public:
     void sendShutdownReceivedMsg();
 
 private:
-    void doRemove(std::map<std::string, Document>::iterator &docIt);
+    void doRemove(std::map<std::string, AdminDocument>::iterator &docIt);
 
     std::string getMemStats() const;
 
@@ -462,7 +467,7 @@ private:
     DocProcSettings _defDocProcSettings;
 
     std::map<int, Subscriber> _subscribers;
-    std::map<std::string, Document> _documents;
+    std::map<std::string, AdminDocument> _documents;
 
     /// The serialized histories of all expired documents.
     std::vector<std::string> _expiredDocumentsHistories;

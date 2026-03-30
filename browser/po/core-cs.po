@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-cs\n"
-"PO-Revision-Date: 2025-11-23 13:30+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
+"PO-Revision-Date: 2026-03-08 21:09+0000\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/cs/>\n"
 "Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -38,18 +38,48 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See https://collaboraoffice."
-"com"
+"Technology, provided by Collabora Productivity. See "
+"https://collaboraoffice.com"
 msgstr ""
 "Collabora Office, kancelářský balík založený na technologii LibreOffice, "
-"poskytovaný společností Collabora Productivity. Viz https://collaboraoffice."
-"com"
+"poskytovaný společností Collabora Productivity. Viz "
+"https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
 msgstr "Vložit jako"
+
+#. dF6zk
+#: svx/inc/spacing.hrc:16
+msgctxt "RID_ABOVE"
+msgid "Above:"
+msgstr "Nad:"
+
+#. uaiun
+#: svx/inc/spacing.hrc:17
+msgctxt "RID_BELOW"
+msgid "Below:"
+msgstr "Pod:"
+
+#. fvxsX
+#: svx/inc/spacing.hrc:18
+msgctxt "RID_BEFORE"
+msgid "Before:"
+msgstr "Před:"
+
+#. jGRHH
+#: svx/inc/spacing.hrc:19
+msgctxt "RID_AFTER"
+msgid "After:"
+msgstr "Po:"
+
+#. k9CGA
+#: svx/inc/spacing.hrc:20
+msgctxt "RID_FIRST"
+msgid "First:"
+msgstr "První:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -67,13 +97,43 @@ msgstr "Zrušit"
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr "Hledat"
+msgstr "Najít"
 
 #. uknDS
-#: svx/uiconfig/ui/findreplacedialog.ui:80
+#: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
 msgstr "Nahradit"
+
+#. v2oaz
+#: svx/uiconfig/ui/findreplacedialog.ui:172
+msgctxt "findreplacedialog|searchlist-atkobject"
+msgid "Search list"
+msgstr ""
+
+#. BmvBD
+#: svx/uiconfig/ui/findreplacedialog.ui:491
+msgctxt "findreplacedialog|replacelist-atkobject"
+msgid "Replace list"
+msgstr ""
+
+#. gbVGs
+#: svx/uiconfig/ui/headfootformatpage.ui:407
+msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
+msgid "Header and Footer Preview"
+msgstr ""
+
+#. LSYRB
+#: svx/uiconfig/ui/sidebarline.ui:91
+msgctxt "sidebarline|SelectWidth|tooltip_text"
+msgid "Line Thickness"
+msgstr "Tloušťka čáry"
+
+#. cDwyK
+#: svx/uiconfig/ui/sidebarline.ui:97
+msgctxt "sidebarline|SelectWidth-atkobject"
+msgid "Line Thickness"
+msgstr "Tloušťka čáry"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -106,20 +166,20 @@ msgid ""
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
 "Další informace naleznete na domovské stránce produktu ${PRODUCTNAME} na "
-"adrese <a href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</"
-"a>."
+"adrese <a "
+"href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr "Paleta barev"
+msgstr "Barevná paleta"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr "Gradienty"
+msgstr "Přechody"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
@@ -137,13 +197,13 @@ msgstr "Monochromatický"
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr "Světelné variace"
+msgstr "Světlé variace"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr "Temné variace"
+msgstr "Tmavé variace"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
@@ -204,7 +264,7 @@ msgstr "_Spravovat styly grafů"
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
-"Umožnit vybírat barevnou paletu, kterou uplatnit na stávající sérii dat "
+"Umožňuje vybrat barevnou paletu, která se použije na aktuální datovou řadu "
 "grafu."
 
 #. xGjwG
@@ -219,8 +279,8 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
-"Umožnit vybrat paletu přechodů kterou uplatnit na posloupnosti dat "
-"stávajícího grafu."
+"Umožňuje vybrat paletu přechodu, která se použije na aktuální datovou řadu "
+"grafu."
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
@@ -232,25 +292,31 @@ msgstr "Styl ohraničení"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr "Umožnit vybrat vzhled který uplatnit na stávající graf."
+msgstr "Umožňuje vybrat motiv vzhledu, který se použije na aktuální graf."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr "Vzhledy"
+msgstr "Motivy vzhledu"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr "_Uložit do nového vzhledu"
+msgstr "_Uložit do nového motivu"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
 msgstr "3D _schéma:"
+
+#. gTE6L
+#: chart2/uiconfig/ui/sidebartype.ui:323
+msgctxt "sidebartype|cmb_chartType-atkobject"
+msgid "Chart Type"
+msgstr "Typ grafu"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -280,7 +346,7 @@ msgstr "Tmavé variace"
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr "Vyberte dílčí typ základního typu grafu."
+msgstr "Vyberte variantu základního typu grafu."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -294,17 +360,149 @@ msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
 msgstr "Zaměření stylu tabulky"
 
+#. JPfVT
+#: cui/uiconfig/ui/areatabpage.ui:39
+msgctxt "areatabpage|tablelb-atkobject"
+msgid "Apply to"
+msgstr "Použít na"
+
+#. GYGFd
+#: cui/uiconfig/ui/borderpage.ui:94
+msgctxt "borderpage|framesel"
+msgid "Border Preview"
+msgstr ""
+
+#. 3DTib
+#: cui/uiconfig/ui/charnamepage.ui:930
+msgctxt "charnamepage|preview-atkobject"
+msgid "Font preview"
+msgstr "Náhled písma"
+
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
 msgstr "Odkaz:"
 
+#. Ric9F
+#: cui/uiconfig/ui/imagetabpage.ui:503
+msgctxt "imagetabpage|tileofflb"
+msgid "Tiling Offset Type"
+msgstr ""
+
+#. j9NqA
+#: cui/uiconfig/ui/imagetabpage.ui:522
+msgctxt "imagetabpage|tileoffmtr"
+msgid "Tiling Offset Value"
+msgstr ""
+
+#. yN5KM
+#: cui/uiconfig/ui/lineendstabpage.ui:281
+msgctxt "lineendstabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "Příklad"
+
+#. BfBfT
+#: cui/uiconfig/ui/linestyletabpage.ui:462
+msgctxt "linestyletabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "Příklad"
+
+#. cFYxJ
+#: cui/uiconfig/ui/numberingformatpage.ui:541
+msgctxt "numberingformatpage|currencylb-atkobject"
+msgid "Currency"
+msgstr "Měna"
+
+#. YnkND
+#: cui/uiconfig/ui/numberingformatpage.ui:682
+msgctxt "numberingformatpage|preview-atkobject"
+msgid "Preview"
+msgstr "Náhled"
+
+#. vcAoU
+#: cui/uiconfig/ui/pageformatpage.ui:223
+msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
+msgid "Page Direction"
+msgstr ""
+
 #. gfELk
-#: cui/uiconfig/ui/pageformatpage.ui:260
+#: cui/uiconfig/ui/pageformatpage.ui:265
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
 msgstr "Změnit velikost všech stránek"
+
+#. DRBM6
+#: cui/uiconfig/ui/paraindentspacing.ui:399
+msgctxt "paraindentspacing|comboLB_LINEDIST"
+msgid "Line Spacing Type"
+msgstr ""
+
+#. YtiHD
+#: cui/uiconfig/ui/paraindentspacing.ui:446
+msgctxt "paraindentspacing|spinED_LINEDISTPERCENT"
+msgid "Line Spacing Value"
+msgstr ""
+
+#. QE3Ad
+#: cui/uiconfig/ui/paraindentspacing.ui:466
+msgctxt "paraindentspacing|spinED_LINEDISTMETRIC"
+msgid "Line Spacing Value"
+msgstr ""
+
+#. VGEqG
+#: cui/uiconfig/ui/paraindentspacing.ui:487
+msgctxt "paraindentspacing|spinED_BLANK"
+msgid "Line Spacing Value"
+msgstr ""
+
+#. WHAZC
+#: cui/uiconfig/ui/paratabspage.ui:177
+msgctxt "paratabspage|drawingareaWIN_TABLEFT-atkobject"
+msgid "Left tab preview"
+msgstr ""
+
+#. akwMF
+#: cui/uiconfig/ui/paratabspage.ui:192
+msgctxt "paratabspage|drawingareaWIN_TABRIGHT-atkobject"
+msgid "Right tab preview"
+msgstr ""
+
+#. GF4AG
+#: cui/uiconfig/ui/paratabspage.ui:207
+msgctxt "paratabspage|drawingareaWIN_TABCENTER-atkobject"
+msgid "Center tab preview"
+msgstr ""
+
+#. pSa2J
+#: cui/uiconfig/ui/paratabspage.ui:222
+msgctxt "paratabspage|drawingareaWIN_TABDECIMAL-atkobject"
+msgid "Decimal tab preview"
+msgstr ""
+
+#. jt6Gv
+#: cui/uiconfig/ui/password.ui:258
+msgctxt "password|ropasslevelbar-atkobject"
+msgid "Password Level Bar"
+msgstr "Pruh úrovně hesla"
+
+#. FC5te
+#: cui/uiconfig/ui/password.ui:259
+msgctxt "password|extended_tip|ropasslevelbar"
+msgid "Shows the strength of password"
+msgstr "Zobrazuje sílu hesla"
+
+#. FCkVG
+#: cui/uiconfig/ui/password.ui:437
+msgctxt "password|passlevelbar-atkobject"
+msgid "Password Level Bar"
+msgstr "Pruh úrovně hesla"
+
+#. 7XcGF
+#: cui/uiconfig/ui/password.ui:438
+msgctxt "password|extended_tip|passlevelbar"
+msgid "Shows the strength of password"
+msgstr "Zobrazuje sílu hesla"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
@@ -316,7 +514,7 @@ msgstr "Klikněte na styl odrážek, který chcete použít."
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr "Klikněte na grafiky, které chcete použít jako odrážky."
+msgstr "Klikněte na obrázky, které chcete použít jako odrážky."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
@@ -328,13 +526,37 @@ msgstr "Klikněte na schéma číslování, které chcete použít."
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr "Klikněte na styl obrysů, které chcete použít."
+msgstr "Klikněte na styl osnovy, který chcete použít."
+
+#. hLcKE
+#: cui/uiconfig/ui/textflowpage.ui:812
+msgctxt "textflowpage|spinOrphan-atkobject"
+msgid "No split at beginning of paragraph, lines"
+msgstr ""
+
+#. MimEj
+#: cui/uiconfig/ui/textflowpage.ui:832
+msgctxt "textflowpage|spinWidow-atkobject"
+msgid "No split at end of paragraph, lines"
+msgstr ""
+
+#. a9iXr
+#: cui/uiconfig/ui/thesaurus.ui:189
+msgctxt "thesaurus|langcb|accessible_name"
+msgid "Language"
+msgstr ""
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr "Zhuštěné"
+msgstr "Kompaktní"
+
+#. gFzRC
+#: cui/uiconfig/ui/widgettestdialog.ui:161
+msgctxt "widgettestdialog|combo_box_disable-atkobject"
+msgid "Test Type"
+msgstr ""
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -366,11 +588,35 @@ msgstr ""
 "koncovým uživatelem a o předplatném. Přesné podrobnosti (v angličtině) si "
 "zobrazíte zvolením EULA."
 
+#. TCBEp
+#: sfx2/uiconfig/ui/password.ui:200
+msgctxt "password|pass1bar-atkobject"
+msgid "Password Level Bar"
+msgstr "Pruh úrovně hesla"
+
+#. 2Y4Ua
+#: sfx2/uiconfig/ui/password.ui:201
+msgctxt "password|pass1bar-atkobject"
+msgid "Shows the strength of password"
+msgstr "Zobrazuje sílu hesla"
+
+#. EGBBE
+#: sfx2/uiconfig/ui/password.ui:342
+msgctxt "password|pass2bar-atkobject"
+msgid "Password Level Bar"
+msgstr "Pruh úrovně hesla"
+
+#. nvEiq
+#: sfx2/uiconfig/ui/password.ui:343
+msgctxt "password|pass2bar-atkobject"
+msgid "Shows the strength of password"
+msgstr "Zobrazuje sílu hesla"
+
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr "Režim formátu výplně"
+msgstr "Režim vyplňování formátu"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
@@ -382,13 +628,13 @@ msgstr "Nový styl z výběru"
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr "Akce ohledně stylů"
+msgstr "Akce stylů"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr "Zaktualizovat styl"
+msgstr "Aktualizovat styl"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -436,7 +682,7 @@ msgstr "2 sloupce s různou velikostí (levý < pravý)"
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr "Znovu zavést změnu: $1"
+msgstr "Odmítnout, ale sledovat změnu: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
@@ -451,19 +697,102 @@ msgid "Column"
 msgstr "Sloupec"
 
 #. Lurdj
-#: sw/uiconfig/swriter/ui/columnpage.ui:868
+#: sw/uiconfig/swriter/ui/columnpage.ui:871
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
-"Zadejte počet sloupců které chcete, aby byly na stránce, v rámečku nebo "
-"sekci."
+"Zadejte počet sloupců, který chcete míst na stránce, v rámci nebo v sekci."
+
+#. nTezC
+#: sw/uiconfig/swriter/ui/columnpage.ui:913
+msgctxt "columnpage|pageexample-atkobject"
+msgid "Preview"
+msgstr "Náhled"
+
+#. FYPLQ
+#: sw/uiconfig/swriter/ui/columnpage.ui:930
+msgctxt "columnpage|frameexample-atkobject"
+msgid "Preview"
+msgstr "Náhled"
+
+#. yLJG6
+#: sw/uiconfig/swriter/ui/dropcapspage.ui:336
+msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Example"
+msgstr "Příklad"
+
+#. RdG95
+#: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
+msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
+msgid "Numbering"
+msgstr "Číslování"
+
+#. afJmD
+#: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
+msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
+msgid "Numbering"
+msgstr "Číslování"
+
+#. KFGXP
+#: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
+msgctxt "outlinenumberingpage|preview-atkobject"
+msgid "Preview"
+msgstr "Náhled"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
 msgstr "Přidat _do slovníku (standard.dic)"
+
+#. Ngg9E
+#: sw/uiconfig/swriter/ui/textgridpage.ui:155
+msgctxt "textgridpage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Preview"
+msgstr "Náhled"
+
+#. Kvz9V
+#: sw/uiconfig/swriter/ui/tocentriespage.ui:252
+msgctxt "tocentriespage|structure_label"
+msgid "_Structure"
+msgstr ""
+
+#. CW8Eb
+#: sw/uiconfig/swriter/ui/tocentriespage.ui:277
+msgctxt "tocentriespage|characterstyleft"
+msgid "Character style:"
+msgstr "Znakový styl:"
+
+#. GVCXE
+#: sw/uiconfig/swriter/ui/tocentriespage.ui:569
+msgctxt "tocentriespage|authfield-atkobject"
+msgid "Authority field"
+msgstr ""
+
+#. risLD
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:25
+msgctxt "tokenwidget|left|tooltip_text"
+msgid "Move left"
+msgstr "Přesunout doleva"
+
+#. NF9Au
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:30
+msgctxt "tokenwidget|left"
+msgid "Scroll left"
+msgstr "Posunout doleva"
+
+#. fn5SV
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:93
+msgctxt "tokenwidget|right|tooltip_text"
+msgid "Move right"
+msgstr "Přesunout doprava"
+
+#. Efssr
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:98
+msgctxt "tokenwidget|right"
+msgid "Scroll right"
+msgstr "Posunout doprava"
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
@@ -472,85 +801,85 @@ msgid "Comments"
 msgstr "Komentáře"
 
 #. SsL8u
-#: formula/inc/core_resource.hrc:2628
+#: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
 msgstr "CHOOSECOLS"
 
 #. zE6Vt
-#: formula/inc/core_resource.hrc:2629
+#: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
 msgstr "CHOOSEROWS"
 
 #. TxBq7
-#: formula/inc/core_resource.hrc:2630
+#: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
 msgstr "DROP"
 
 #. eTG8r
-#: formula/inc/core_resource.hrc:2631
+#: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
 msgstr "EXPAND"
 
 #. aJk9K
-#: formula/inc/core_resource.hrc:2632
+#: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
 msgstr "HSTACK"
 
 #. 4HnRz
-#: formula/inc/core_resource.hrc:2633
+#: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
 msgstr "VSTACK"
 
 #. JDHX2
-#: formula/inc/core_resource.hrc:2634
+#: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
 msgstr "TAKE"
 
 #. CiTMM
-#: formula/inc/core_resource.hrc:2635
+#: formula/inc/core_resource.hrc:2636
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTAFTER"
 msgstr "TEXTAFTER"
 
 #. Uz9jV
-#: formula/inc/core_resource.hrc:2636
+#: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTBEFORE"
 msgstr "TEXTBEFORE"
 
 #. u2Nq4
-#: formula/inc/core_resource.hrc:2637
+#: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
 msgstr "TEXTSPLIT"
 
 #. FMVjv
-#: formula/inc/core_resource.hrc:2638
+#: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
 msgstr "TOCOL"
 
 #. xKDBC
-#: formula/inc/core_resource.hrc:2639
+#: formula/inc/core_resource.hrc:2640
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
 msgstr "TOROW"
 
 #. UDke3
-#: formula/inc/core_resource.hrc:2642
+#: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
 msgstr "WRAPCOLS"
 
 #. 3Tf94
-#: formula/inc/core_resource.hrc:2643
+#: formula/inc/core_resource.hrc:2644
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
 msgstr "WRAPROWS"
@@ -577,7 +906,7 @@ msgstr "Obsah:"
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr "Seznam šablon rozvržení, které jsou k dispozici."
+msgstr "Seznam dostupných šablon rozvržení."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -651,8 +980,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"Toto nastavení umožňuje exportovat dokument jako soubor .pdf, který obsahuje "
-"dva formáty souboru: PDF a ODF. "
+"Toto nastavení umožňuje exportovat dokument jako soubor .pdf, který obsahuje"
+" dva formáty souboru: PDF a ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -730,7 +1059,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr "Markdown dokument"
+msgstr "Dokument Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -760,7 +1089,77 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr "Stávající zobrazení sešitu"
+msgstr "Aktuální zobrazení listu"
+
+#. MKARo
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:DatabaseSettings\n"
+"Label\n"
+"value.text"
+msgid "Table Style Options"
+msgstr ""
+
+#. 4HzYH
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:DataTableMenu\n"
+"Label\n"
+"value.text"
+msgid "~Table"
+msgstr ""
+
+#. Uhi2h
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:RunInsCalcTable\n"
+"Label\n"
+"value.text"
+msgid "~Insert Table..."
+msgstr ""
+
+#. cFE7i
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:InsertCalcTable\n"
+"Label\n"
+"value.text"
+msgid "Table..."
+msgstr ""
+
+#. ms5Fm
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:InsertCalcTable\n"
+"TooltipLabel\n"
+"value.text"
+msgid "Insert Table"
+msgstr "Vložit tabulku"
+
+#. kZEtN
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:RemoveCalcTable\n"
+"Label\n"
+"value.text"
+msgid "~Remove Table..."
+msgstr ""
+
+#. DiD7K
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:RemoveCalcTable\n"
+"TooltipLabel\n"
+"value.text"
+msgid "Delete Table"
+msgstr "Smazat tabulku"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -790,7 +1189,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr "Nové zobrazení sešitu"
+msgstr "Nové zobrazení listu"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -800,7 +1199,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr "Odebrat zobrazení sešitu"
+msgstr "Odstranit zobrazení listu"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -810,7 +1209,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr "Přepnout na další zobrazení sešitu"
+msgstr "Přepnout na další zobrazení listu"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -820,7 +1219,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr "Přepnout na předchozí zobrazení sešitu"
+msgstr "Přepnout na předchozí zobrazení listu"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -830,7 +1229,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr "Vybrat zobrazení sešitu"
+msgstr "Vybrat zobrazení listu"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -840,7 +1239,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr "Ukončit zobrazení sešitu"
+msgstr "Ukončit zobrazení listu"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -850,7 +1249,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr "Spravovat vzhledy…"
+msgstr "Spravovat motivy vzhledu…"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -930,7 +1329,17 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr "Hlavní stránky"
+msgstr "Předlohy stránky"
+
+#. FBZFX
+#: GenericCommands.xcu
+msgctxt ""
+"GenericCommands.xcu\n"
+"..GenericCommands.UserInterface.Commands..uno:ThemeSelectorPanel\n"
+"Label\n"
+"value.text"
+msgid "Theme..."
+msgstr "Motiv..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -940,7 +1349,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr "~hypertextový odkaz"
+msgstr "~Hypertextový odkaz"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -960,7 +1369,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr "Nav~igátor vybrat komentář."
+msgstr "Vybrat ~komentář v Navigátoru"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -970,7 +1379,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr "Vybrat komentář v okně / postranním panelu Navigátora"
+msgstr "Vybrat komentář v okně / na postranní listě Navigátoru"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1002,27 +1411,35 @@ msgctxt ""
 msgid "Add To Dictionary"
 msgstr "Přidat do slovníku"
 
+#. 69GZH
+#: GenericCommands.xcu
+msgctxt ""
+"GenericCommands.xcu\n"
+"..GenericCommands.UserInterface.Popups..uno:AddTheme\n"
+"Label\n"
+"value.text"
+msgid "Add Theme..."
+msgstr ""
+
 #. zETLd
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
-"pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr "Seřazování/podokno snímku (plátno)"
+msgstr "Pořadač/panel snímku (plátno)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
-"pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr "Hlavní snímek řazení/podokno (plátno)"
+msgstr "Pořadač/panel předlohy snímku (plátno)"
 
 #. kB8Ri
 #: Sidebar.xcu
@@ -1052,7 +1469,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Colors"
-msgstr "Barva"
+msgstr "Barvy"
 
 #. zz34M
 #: Sidebar.xcu
@@ -1062,7 +1479,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr "Vzhled"
+msgstr "Motiv vzhledu"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1082,7 +1499,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr "Obnovit a přesunout na další"
+msgstr "Odmítnout, ale sledovat a přesunout na další"
 
 #. NmvTm
 #: WriterCommands.xcu
@@ -1092,7 +1509,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr "Obnovit sledovanou změnu a vybrat další"
+msgstr "Odmítnout, ale sledovat změnu a vybrat další"
 
 #. KVYrC
 #: WriterCommands.xcu
@@ -1102,7 +1519,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr "Obnovit vše"
+msgstr "Odmítnout, ale sledovat vše"
 
 #. QkP7E
 #: WriterCommands.xcu
@@ -1112,7 +1529,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr "Obnovit všechny sledované změny"
+msgstr "Odmítnout, ale sledovat všechny změny"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1122,7 +1539,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr "Obnovit všechny změny"
+msgstr "Odmítnout, ale sledovat všechny změny"
 
 #. 6w9UB
 #: WriterCommands.xcu
@@ -1132,7 +1549,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate"
-msgstr "Obnovit"
+msgstr "Odmítnout, ale sledovat"
 
 #. RgBxU
 #: WriterCommands.xcu
@@ -1142,7 +1559,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr "Obnovit sledovanou změnu"
+msgstr "Odmítnout, ale sledovat změnu"
 
 #. rTFtt
 #: WriterCommands.xcu
@@ -1152,7 +1569,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr "Obnovit změnu"
+msgstr "Odmítnout, ale sledovat změnu"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1194,26 +1611,80 @@ msgctxt ""
 msgid "~Changes in all views"
 msgstr "Změny ve ~všech zobrazeních"
 
-#. YwxEM
+#. wCDa4
+#: xmlsecurity/uiconfig/ui/certdetails.ui:101
+msgctxt "certdetails|valuedetails-atkobject"
+msgid "Value Details"
+msgstr ""
+
+#. mpBGu
+#: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
+msgctxt "selectcertificatedialog|searchbox-atkobject"
+msgid "Search"
+msgstr "Hledat"
+
+#. dw79G
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
-msgid "Tabletotals"
-msgstr "Součty tabulky"
+msgid "Table Total Row"
+msgstr ""
 
-#. Gip2L
-#: sc/inc/globstr.hrc:211
+#. KAH5t
+#: sc/inc/globstr.hrc:73
+msgctxt "STR_UNDO_DBTABLE"
+msgid "Create table"
+msgstr "Vytvořit tabulku"
+
+#. J2Dh9
+#: sc/inc/globstr.hrc:74
+msgctxt "STR_UNDO_DBTABLE"
+msgid "Delete table"
+msgstr "Smazat tabulku"
+
+#. AvAbD
+#: sc/inc/globstr.hrc:140
+msgctxt "STR_TABLE_ERR_ADD"
+msgid "Cannot add a new table to the sheet."
+msgstr ""
+
+#. kG2SE
+#: sc/inc/globstr.hrc:141
+msgctxt "STR_TABLE_ERR_DEL"
+msgid "Cannot delete table from the sheet."
+msgstr ""
+
+#. t6eDk
+#: sc/inc/globstr.hrc:195
+msgctxt "STR_CALC_TABLE"
+msgid "Table"
+msgstr ""
+
+#. GFiBr
+#: sc/inc/globstr.hrc:196
+msgctxt "STR_INVALIDTABLE"
+msgid "The selected area is already part of another Table."
+msgstr ""
+
+#. 76s4h
+#: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
-msgid "Summary"
-msgstr "Souhrn"
+msgid "Total"
+msgstr "Celkem"
+
+#. wCfcy
+#: sc/inc/globstr.hrc:220
+msgctxt "STR_TABLE_NOTFOUND"
+msgid "No Calc Table found at this position."
+msgstr ""
 
 #. cG7BY
-#: sc/inc/globstr.hrc:594
+#: sc/inc/globstr.hrc:601
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
 msgstr "Výchozí zobrazení"
 
 #. aYwkp
-#: sc/inc/globstr.hrc:595
+#: sc/inc/globstr.hrc:602
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
 msgstr "Dočasné zobrazení %1"
@@ -1310,7 +1781,8 @@ msgstr "Řádky"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the array."
+"The number of rows to drop. A negative value drops from the end of the "
+"array."
 msgstr ""
 "Počet řádků, které se mají vynechat. Záporná hodnota znamená, že se "
 "vynechají řádky od konce matice."
@@ -1374,8 +1846,8 @@ msgstr "Sloupce"
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be "
-"expanded."
+"The number of columns in the expanded array. If missing, columns will not be"
+" expanded."
 msgstr ""
 "Počet sloupců rozšířené matice. Není-li zadán, počet sloupců se nezvětší."
 
@@ -1416,8 +1888,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
-"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně řádků, v "
-"řádcích navíc bude chyba #N/A."
+"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně řádků, v"
+" řádcích navíc bude chyba #N/A."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1444,8 +1916,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
-"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně sloupců, "
-"ve sloupcích navíc bude chyba #N/A."
+"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně sloupců,"
+" ve sloupcích navíc bude chyba #N/A."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1479,10 +1951,11 @@ msgstr "Řádky"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the array."
+"The number of rows to take. A negative value takes from the end of the "
+"array."
 msgstr ""
-"Počet řádků, které se mají převzít. Záporná hodnota znamená, že se převezmou "
-"řádky od konce matice."
+"Počet řádků, které se mají převzít. Záporná hodnota znamená, že se převezmou"
+" řádky od konce matice."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
@@ -1540,8 +2013,8 @@ msgstr "Číslo instance"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1. "
-"A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1."
+" A negative number starts searching from the end."
 msgstr ""
 "Instance oddělovače, po které se má text extrahovat. Výchozí je 1. Záporné "
 "číslo znamená počítání od konce."
@@ -1571,8 +2044,8 @@ msgstr "Porovnávání konce"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí "
-"je 0."
+"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí"
+" je 0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
@@ -1658,8 +2131,8 @@ msgstr "Porovnávání konce"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí "
-"je 0."
+"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí"
+" je 0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
@@ -1761,7 +2234,7 @@ msgstr "Hodnota, která se má doplnit. Výchozí je #N/A."
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr "Přeměnit pole na jeden sloupec."
+msgstr "Transformuje matici na jediný sloupec."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1806,8 +2279,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude "
-"procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
+"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude"
+" procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
@@ -1858,8 +2331,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude "
-"procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
+"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude"
+" procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1973,35 +2446,127 @@ msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
 msgstr "Zvýraznit buňky..."
 
+#. QpmnN
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
+msgctxt "definetablerangedialog|DefineTableRangeDialog"
+msgid "Create Table"
+msgstr ""
+
+#. AGWSW
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
+msgctxt "definetablerangedialog|extended_tip|ok"
+msgid "Saves all changes and closes dialog."
+msgstr "Uloží všechny změny a zavře dialogové okno."
+
+#. YJAAP
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
+msgctxt "definetablerangedialog|extended_tip|cancel"
+msgid "Closes dialog and discards all changes."
+msgstr "Zavře dialogové okno a zruší všechny změny."
+
+#. ugt8G
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
+msgctxt "definetablerangedialog|extended_tip|assign"
+msgid ""
+"Click the Shrink icon to reduce the dialog to the size of the input field. "
+"It is then easier to mark the required reference in the sheet. The icons "
+"then automatically convert to the Maximize icon. Click it to restore the "
+"dialog to its original size."
+msgstr ""
+
+#. xUrKC
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
+msgctxt "definetablerangedialog|extended_tip|assignrb"
+msgid ""
+"Click the Shrink icon to reduce the dialog to the size of the input field. "
+"It is then easier to mark the required reference in the sheet. The icons "
+"then automatically convert to the Maximize icon. Click it to restore the "
+"dialog to its original size."
+msgstr ""
+
+#. 8FLdj
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
+msgctxt "definetablerangedialog|range"
+msgid "Range"
+msgstr ""
+
+#. 3a7g7
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
+msgctxt "definetablerangedialog|containscolumnlabels"
+msgid "Co_ntains column labels"
+msgstr "Obsahuje _popisky sloupců"
+
+#. AEKGN
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
+msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
+msgid "Selected cell ranges contain labels."
+msgstr "Vybrané oblasti buněk obsahují popisky."
+
+#. GCg88
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
+msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
+msgid "Defines a database range based on the selected cells in your sheet."
+msgstr "Definuje databázovou oblast založenou na označených buňkách v sešitu."
+
+#. LVdkf
+#: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
+msgctxt "erroralerttabpage|tsbshow"
+msgid "Handle invalid values"
+msgstr ""
+
+#. KfkR3
+#: sc/uiconfig/scalc/ui/erroralerttabpage.ui:156
+msgctxt "erroralerttabpage|actionCB"
+msgid "Reject silently"
+msgstr ""
+
+#. tdFx2
+#: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
+msgctxt "gotosheetdialog|entry-mask-atkobject"
+msgid "Sheet Name"
+msgstr "Název listu"
+
+#. hMeBi
+#: sc/uiconfig/scalc/ui/numberbox.ui:17
+msgctxt "numberbox|numbertype|accessible_name"
+msgid "Number Format"
+msgstr ""
+
+#. o8pcB
+#: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
+msgctxt "protectsheetdlg|passwordbar-atkobject"
+msgid "Password Level Bar"
+msgstr "Pruh úrovně hesla"
+
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr "Vybrat zobrazení sešitu"
+msgstr "Vybrat zobrazení listu"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr "Uloží všechny změny a zavře dialog."
+msgstr "Uloží všechny změny a zavře dialogové okno."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr "Zavře dialog a zahodí veškeré změny."
+msgstr "Zavře dialogové okno a zahodí všechny změny."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr "Zobrazení sešitu k dispozici."
+msgstr "Dostupná zobrazení listu."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr "Zobrazení sešitu"
+msgstr "Zobrazení listu"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
@@ -2009,23 +2574,23 @@ msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Styl ohraničení"
 
-#. sBXLD
+#. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
-msgid "Show Header Row"
-msgstr "Zobrazit řádek záhlaví"
+msgid "Header Row"
+msgstr ""
 
-#. ECtUM
+#. Pg4uw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
-msgid "Show Total Row"
-msgstr "Zobrazit řádek součtu"
+msgid "Total Row"
+msgstr ""
 
-#. htZbK
+#. CcWAd
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
-msgid "Show Filter Buttons"
-msgstr "Zobrazit tlačítka filtru"
+msgid "Filter Buttons"
+msgstr ""
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
@@ -2434,3 +2999,417 @@ msgstr "Názvy stylů tabulky"
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
 msgstr "Názvy výchozích stylů tabulky"
+
+#. y7K54
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:19
+msgctxt "tablestylebox|chk_header_row"
+msgid "Header Row"
+msgstr ""
+
+#. 8g5nk
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:33
+msgctxt "tablestylebox|chk_total_row"
+msgid "Total Row"
+msgstr ""
+
+#. RCDTD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:47
+msgctxt "tablestylebox|chk_filter_buttons"
+msgid "Filter Buttons"
+msgstr ""
+
+#. zBNtc
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:61
+msgctxt "tablestylebox|chk_first_column"
+msgid "First Column"
+msgstr ""
+
+#. FYKpc
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:75
+msgctxt "tablestylebox|chk_last_column"
+msgid "Last Column"
+msgstr ""
+
+#. A9Eb2
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:89
+msgctxt "tablestylebox|chk_banded_rows"
+msgid "Banded Rows"
+msgstr ""
+
+#. 6mHnD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:103
+msgctxt "tablestylebox|chk_banded_cols"
+msgid "Banded Columns"
+msgstr ""
+
+#. gbBp7
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:121
+msgctxt "tablestylebox|none"
+msgid "None"
+msgstr ""
+
+#. hPKiF
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:122
+msgctxt "tablestylebox|tablestylelight1"
+msgid "Table Style Light 1"
+msgstr ""
+
+#. GA5oq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:123
+msgctxt "tablestylebox|tablestylelight2"
+msgid "Table Style Light 2"
+msgstr ""
+
+#. QNyUR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:124
+msgctxt "tablestylebox|tablestylelight3"
+msgid "Table Style Light 3"
+msgstr ""
+
+#. 6Dg39
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:125
+msgctxt "tablestylebox|tablestylelight4"
+msgid "Table Style Light 4"
+msgstr ""
+
+#. ERFFS
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:126
+msgctxt "tablestylebox|tablestylelight5"
+msgid "Table Style Light 5"
+msgstr ""
+
+#. nC9A3
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:127
+msgctxt "tablestylebox|tablestylelight6"
+msgid "Table Style Light 6"
+msgstr ""
+
+#. vQm8c
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:128
+msgctxt "tablestylebox|tablestylelight7"
+msgid "Table Style Light 7"
+msgstr ""
+
+#. VELfG
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:129
+msgctxt "tablestylebox|tablestylelight8"
+msgid "Table Style Light 8"
+msgstr ""
+
+#. dJTtx
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:130
+msgctxt "tablestylebox|tablestylelight9"
+msgid "Table Style Light 9"
+msgstr ""
+
+#. JEsTR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:131
+msgctxt "tablestylebox|tablestylelight10"
+msgid "Table Style Light 10"
+msgstr ""
+
+#. gvecy
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:132
+msgctxt "tablestylebox|tablestylelight11"
+msgid "Table Style Light 11"
+msgstr ""
+
+#. nhDGR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:133
+msgctxt "tablestylebox|tablestylelight12"
+msgid "Table Style Light 12"
+msgstr ""
+
+#. 3Q7Py
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:134
+msgctxt "tablestylebox|tablestylelight13"
+msgid "Table Style Light 13"
+msgstr ""
+
+#. TjvkW
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:135
+msgctxt "tablestylebox|tablestylelight14"
+msgid "Table Style Light 14"
+msgstr ""
+
+#. Hzbs5
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:136
+msgctxt "tablestylebox|tablestylelight15"
+msgid "Table Style Light 15"
+msgstr ""
+
+#. EDG6W
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:137
+msgctxt "tablestylebox|tablestylelight16"
+msgid "Table Style Light 16"
+msgstr ""
+
+#. uU4F5
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:138
+msgctxt "tablestylebox|tablestylelight17"
+msgid "Table Style Light 17"
+msgstr ""
+
+#. BFm89
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:139
+msgctxt "tablestylebox|tablestylelight18"
+msgid "Table Style Light 18"
+msgstr ""
+
+#. vWYDa
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:140
+msgctxt "tablestylebox|tablestylelight19"
+msgid "Table Style Light 19"
+msgstr ""
+
+#. 7YymU
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:141
+msgctxt "tablestylebox|tablestylelight20"
+msgid "Table Style Light 20"
+msgstr ""
+
+#. iHcr3
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:142
+msgctxt "tablestylebox|tablestylelight21"
+msgid "Table Style Light 21"
+msgstr ""
+
+#. GZraD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:143
+msgctxt "tablestylebox|tablestylemedium1"
+msgid "Table Style Medium 1"
+msgstr ""
+
+#. Dn8Ee
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:144
+msgctxt "tablestylebox|tablestylemedium2"
+msgid "Table Style Medium 2"
+msgstr ""
+
+#. t6CRD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:145
+msgctxt "tablestylebox|tablestylemedium3"
+msgid "Table Style Medium 3"
+msgstr ""
+
+#. KcaiH
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:146
+msgctxt "tablestylebox|tablestylemedium4"
+msgid "Table Style Medium 4"
+msgstr ""
+
+#. hMwuq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:147
+msgctxt "tablestylebox|tablestylemedium5"
+msgid "Table Style Medium 5"
+msgstr ""
+
+#. o938H
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:148
+msgctxt "tablestylebox|tablestylemedium6"
+msgid "Table Style Medium 6"
+msgstr ""
+
+#. 4sHDq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:149
+msgctxt "tablestylebox|tablestylemedium7"
+msgid "Table Style Medium 7"
+msgstr ""
+
+#. kFZ6u
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:150
+msgctxt "tablestylebox|tablestylemedium8"
+msgid "Table Style Medium 8"
+msgstr ""
+
+#. 5ykFM
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:151
+msgctxt "tablestylebox|tablestylemedium9"
+msgid "Table Style Medium 9"
+msgstr ""
+
+#. cBYvR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:152
+msgctxt "tablestylebox|tablestylemedium10"
+msgid "Table Style Medium 10"
+msgstr ""
+
+#. aVd2m
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:153
+msgctxt "tablestylebox|tablestylemedium11"
+msgid "Table Style Medium 11"
+msgstr ""
+
+#. h2fLN
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:154
+msgctxt "tablestylebox|tablestylemedium12"
+msgid "Table Style Medium 12"
+msgstr ""
+
+#. faSZi
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:155
+msgctxt "tablestylebox|tablestylemedium13"
+msgid "Table Style Medium 13"
+msgstr ""
+
+#. SvAiJ
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:156
+msgctxt "tablestylebox|tablestylemedium14"
+msgid "Table Style Medium 14"
+msgstr ""
+
+#. UFPEn
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:157
+msgctxt "tablestylebox|tablestylemedium15"
+msgid "Table Style Medium 15"
+msgstr ""
+
+#. XqMGM
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:158
+msgctxt "tablestylebox|tablestylemedium16"
+msgid "Table Style Medium 16"
+msgstr ""
+
+#. ZQGdq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:159
+msgctxt "tablestylebox|tablestylemedium17"
+msgid "Table Style Medium 17"
+msgstr ""
+
+#. QYB5B
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:160
+msgctxt "tablestylebox|tablestylemedium18"
+msgid "Table Style Medium 18"
+msgstr ""
+
+#. NG8sw
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:161
+msgctxt "tablestylebox|tablestylemedium19"
+msgid "Table Style Medium 19"
+msgstr ""
+
+#. 2TsiD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:162
+msgctxt "tablestylebox|tablestylemedium20"
+msgid "Table Style Medium 20"
+msgstr ""
+
+#. 49nES
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:163
+msgctxt "tablestylebox|tablestylemedium21"
+msgid "Table Style Medium 21"
+msgstr ""
+
+#. 5ckGG
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:164
+msgctxt "tablestylebox|tablestylemedium22"
+msgid "Table Style Medium 22"
+msgstr ""
+
+#. 74ydV
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:165
+msgctxt "tablestylebox|tablestylemedium23"
+msgid "Table Style Medium 23"
+msgstr ""
+
+#. CHGvC
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:166
+msgctxt "tablestylebox|tablestylemedium24"
+msgid "Table Style Medium 24"
+msgstr ""
+
+#. Ax32Z
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:167
+msgctxt "tablestylebox|tablestylemedium25"
+msgid "Table Style Medium 25"
+msgstr ""
+
+#. FN5L9
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:168
+msgctxt "tablestylebox|tablestylemedium26"
+msgid "Table Style Medium 26"
+msgstr ""
+
+#. DoAZW
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:169
+msgctxt "tablestylebox|tablestylemedium27"
+msgid "Table Style Medium 27"
+msgstr ""
+
+#. oEF93
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:170
+msgctxt "tablestylebox|tablestylemedium28"
+msgid "Table Style Medium 28"
+msgstr ""
+
+#. NjD4c
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:171
+msgctxt "tablestylebox|tablestyledark1"
+msgid "Table Style Dark 1"
+msgstr ""
+
+#. DSEdv
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:172
+msgctxt "tablestylebox|tablestyledark2"
+msgid "Table Style Dark 2"
+msgstr ""
+
+#. vGEDF
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:173
+msgctxt "tablestylebox|tablestyledark3"
+msgid "Table Style Dark 3"
+msgstr ""
+
+#. e4FMB
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:174
+msgctxt "tablestylebox|tablestyledark4"
+msgid "Table Style Dark 4"
+msgstr ""
+
+#. NeFVV
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:175
+msgctxt "tablestylebox|tablestyledark5"
+msgid "Table Style Dark 5"
+msgstr ""
+
+#. DwGCo
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:176
+msgctxt "tablestylebox|tablestyledark6"
+msgid "Table Style Dark 6"
+msgstr ""
+
+#. vCGm8
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:177
+msgctxt "tablestylebox|tablestyledark7"
+msgid "Table Style Dark 7"
+msgstr ""
+
+#. e5Aud
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:178
+msgctxt "tablestylebox|tablestyledark8"
+msgid "Table Style Dark 8"
+msgstr ""
+
+#. NdA4K
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:179
+msgctxt "tablestylebox|tablestyledark9"
+msgid "Table Style Dark 9"
+msgstr ""
+
+#. KoCes
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:180
+msgctxt "tablestylebox|tablestyledark10"
+msgid "Table Style Dark 10"
+msgstr ""
+
+#. BsbuB
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:181
+msgctxt "tablestylebox|tablestyledark11"
+msgid "Table Style Dark 11"
+msgstr ""
+
+#. pNhVi
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
+msgctxt "tablestylebox|tablestyles_cb|accessible_name"
+msgid "Table Styles"
+msgstr "Styly tabulky"

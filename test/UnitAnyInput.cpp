@@ -9,18 +9,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for handling arbitrary input events.
+ */
+
 #include <config.h>
+
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <kit/Kit.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+
+#include <Poco/URI.h>
 
 #include <memory>
 #include <string>
-
-#include <Poco/URI.h>
-#include <test/lokassert.hpp>
-#include <kit/Kit.hpp>
-
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
 
 /// Tests the anyInput callback.
 class UnitAnyInput : public UnitWSD
@@ -62,7 +66,7 @@ void UnitAnyInput::invokeWSDTest()
     bool hasInvalidPage = false;
     for (const auto& child : *pages)
     {
-        auto page = child.extract<Poco::JSON::Object::Ptr>();
+        const auto& page = child.extract<Poco::JSON::Object::Ptr>();
         bool isInvalidContent{};
         JsonUtil::findJSONValue(page, "isInvalidContent", isInvalidContent);
         if (isInvalidContent)

@@ -9,10 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unix-specific file utility implementations.
+ * Functions: linkOrCopyFile(), realpath(), file operations
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
+#include <common/Log.hpp>
 #include <dirent.h>
 #include <filesystem>
 #include <ftw.h>
@@ -60,7 +66,7 @@ namespace FileUtil
         return path;
     }
 
-#ifndef IOS // iOS-specific implementation in FileUtil-apple.cpp
+#if !defined(__APPLE__) // iOS-specific implementation in FileUtil-apple.cpp
 
     bool platformDependentCheckDiskSpace(const std::string& path, int64_t enoughSpace)
     {
@@ -88,6 +94,13 @@ namespace FileUtil
             return false;
 #endif
 
+        return true;
+    }
+#elif defined(MACOS) && !MOBILEAPP
+
+    bool platformDependentCheckDiskSpace(const std::string&, int64_t)
+    {
+        // FIXME Use the FileUtil-apple.mm instead
         return true;
     }
 #endif
@@ -254,7 +267,7 @@ namespace FileUtil
 
             entries.emplace_back(statbuf.st_mode, statbuf.st_nlink, uid, gid, statbuf.st_size, statbuf.st_mtime, f->d_name);
 
-            if (strcmp(f->d_name, ".") != 0 && strcmp(f->d_name, "..") != 0 && (statbuf.st_mode & S_IFMT) == S_IFDIR)
+            if (f->d_name != std::string_view(".") && f->d_name != std::string_view("..") && (statbuf.st_mode & S_IFMT) == S_IFDIR)
                 subdirs.push_back(std::move(fullpath));
 
             blocks += statbuf.st_blocks;
@@ -301,7 +314,6 @@ namespace FileUtil
                 default:
                     std::cout << '?';
                     break;
-                break;
             }
 
             std::cout << ((entry._mode & S_IRUSR) ? "r" : "-");
@@ -323,7 +335,7 @@ namespace FileUtil
             std::cout << " " << std::right << std::setw(size_len) << entry._size;
 
             struct tm tm;
-            std::cout << " " << std::put_time(localtime_r(&entry._mtime, &tm), "%F %R");
+            std::cout << " " << std::put_time(gmtime_r(&entry._mtime, &tm), "%F %R");
 
             std::cout << " " << entry._name;
 
@@ -400,6 +412,11 @@ namespace FileUtil
         stream.open(file, mode);
     }
 
+    void openFileToOFStream(const std::string& file, std::ofstream& stream, std::ios_base::openmode mode)
+    {
+        stream.open(file, mode);
+    }
+
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
         return ::stat(file.c_str(), &sb);
@@ -460,14 +477,14 @@ namespace FileUtil
                           {
                               {
                                   tsAccess.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsAccess.tv_nsec / 1000)
                               },
                               {
                                   tsModified.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsModified.tv_nsec / 1000)

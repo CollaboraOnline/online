@@ -1,0 +1,444 @@
+name: collabora-office
+adopt-info: collabora-office
+summary: Collabora Office — create, edit and present with a modern UI
+description: |
+  Collabora Office brings the familiar Collabora Online experience
+  to your computer — so you can create, edit, and present with a beautiful,
+  modern UI. Based on LibreOffice, it delivers excellent interoperability
+  with ODF and Microsoft Office formats (DOCX/XLSX/PPTX), and exports to
+  PDF with ease. Your documents stay on your device unless you choose to
+  share them — privacy by design.
+
+  Why you'll love it:
+  * Instantly familiar: Same interface as Collabora Online — no relearning
+  * Powerful offline working: Work locally with your files, printers, and shortcuts
+  * Great compatibility: DOCX or ODF, we want to work your way, not the other way around
+  * Focused & fast: A clean, streamlined workspace designed for flow
+  * Open source & transparent: Openly developed, no hidden spyware
+
+  Key features:
+  * Writer, Calc, and Impress editing with a consistent, modern UI
+  * Excellent document interoperability; robust ODF & OOXML support
+  * Local file access; print with native system dialogs
+  * Works great alongside Collabora Online for team collaboration
+  * No cloud required
+
+icon: qt/hicolor/scalable/apps/com.collaboraoffice.Office.startcenter.svg
+license: MPL-2.0
+base: core24
+platforms:
+  amd64:
+  arm64:
+grade: devel
+confinement: strict
+compression: lzo
+
+# kde-neon-6 provides Qt6 (including WebEngine) from the kde-qt6-core24
+# content snap and handles desktop integration for Qt apps on core24.
+apps:
+  collabora-office:
+    extensions: [kde-neon-6]
+    command: usr/bin/coda-qt
+    desktop: usr/share/applications/com.collaboraoffice.Office.desktop
+    common-id: com.collaboraoffice.Office
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/collaboraoffice/program:$LD_LIBRARY_PATH
+    plugs:
+      - home
+      - network
+      - cups
+      - removable-media
+      - opengl
+      - browser-support
+      - audio-playback
+
+layout:
+  /usr/lib/collaboraoffice:
+    bind: $SNAP/usr/lib/collaboraoffice
+  /usr/share/coolwsd:
+    bind: $SNAP/usr/share/coolwsd
+  /usr/share/hunspell:
+    bind: $SNAP/usr/share/hunspell
+  /usr/share/hyphen:
+    bind: $SNAP/usr/share/hyphen
+  /usr/share/mythes:
+    bind: $SNAP/usr/share/mythes
+
+parts:
+  core:
+    plugin: nil
+    source: https://gerrit.libreoffice.org/core
+    source-type: git
+    source-branch: distro/collabora/co-26.04
+    source-depth: 1
+    source-submodules: []
+    override-build: |
+      set -e
+      git submodule update --init --depth 1
+      ./autogen.sh \
+        --prefix=$(pwd)/inst \
+        --disable-dbus \
+        --disable-dconf \
+        --disable-epm \
+        --disable-evolution2 \
+        --disable-ext-nlpsolver \
+        --disable-ext-wiki-publisher \
+        --disable-firebird-sdbc \
+        --disable-gio \
+        --disable-gstreamer-1-0 \
+        --disable-gtk3 \
+        --disable-gui \
+        --disable-kf5 \
+        --disable-ldap \
+        --disable-lotuswordpro \
+        --disable-lpsolve \
+        --disable-noto-font \
+        --disable-odk \
+        --disable-online-update \
+        --disable-poppler \
+        --disable-postgresql-sdbc \
+        --disable-qt5 \
+        --disable-randr \
+        --disable-report-builder \
+        --disable-sal-log \
+        --disable-scripting-beanshell \
+        --disable-scripting-javascript \
+        --disable-sdremote \
+        --disable-sdremote-bluetooth \
+        --enable-cairo-rgba \
+        --enable-extension-integration \
+        --enable-hardening-flags \
+        --enable-mergelibs \
+        --enable-mpl-subset \
+        --enable-release-build \
+        --with-branding=icon-themes/galaxy/brand_cp \
+        --with-docrepair-fonts \
+        --with-fonts \
+        --with-galleries=no \
+        "--with-lang=ar ca cs cy da de el en-US en-GB es eu fi fr ga gl he hr hu hy id is it ja kk ko nl pl pt pt-BR ro ru sk sl sq sv tr uk zh-CN zh-TW" \
+        --with-linker-hash-style=both \
+        --with-system-altlinuxhyph \
+        --with-system-curl \
+        --with-system-dicts \
+        --with-system-expat \
+        --with-system-fontconfig \
+        --with-system-freetype \
+        --with-system-graphite \
+        --with-system-harfbuzz \
+        --with-system-hunspell \
+        --with-system-icu \
+        --with-system-lcms2 \
+        --with-system-libpng \
+        --with-system-libtiff \
+        --with-system-libwebp \
+        --with-system-libxml \
+        --with-system-mythes \
+        --with-system-nss \
+        --with-system-openssl \
+        --with-system-zlib \
+        --with-system-zstd \
+        --with-theme="colibre colibre_svg" \
+        --with-vendor=Collabora \
+        --without-buildconfig-recorded \
+        --without-help \
+        --without-java \
+        --without-junit \
+        --without-lxml \
+        --without-myspell-dicts \
+        --without-system-abseil \
+        --without-system-argon2 \
+        --without-system-boost \
+        --without-system-box2d \
+        --without-system-cairo \
+        --without-system-clucene \
+        --without-system-coinmp \
+        --without-system-cppunit \
+        --without-system-dragonbox \
+        --without-system-frozen \
+        --without-system-glm \
+        --without-system-jpeg \
+        --without-system-libabw \
+        --without-system-libcdr \
+        --without-system-libcmis \
+        --without-system-libebook \
+        --without-system-libeot \
+        --without-system-libepubgen \
+        --without-system-libetonyek \
+        --without-system-libexttextcat \
+        --without-system-libfixmath \
+        --without-system-libfreehand \
+        --without-system-liblangtag \
+        --without-system-libmspub \
+        --without-system-libmwaw \
+        --without-system-libnumbertext \
+        --without-system-libodfgen \
+        --without-system-libpagemaker \
+        --without-system-libqxp \
+        --without-system-librevenge \
+        --without-system-libstaroffice \
+        --without-system-libvisio \
+        --without-system-libwpd \
+        --without-system-libwpg \
+        --without-system-libwps \
+        --without-system-libzmf \
+        --without-system-mdds \
+        --without-system-odbc \
+        --without-system-orcus \
+        --without-system-redland \
+        --without-system-sane \
+        --without-system-xmlsec \
+        --without-system-zxcvbn \
+        --without-system-zxing \
+        --without-templates
+
+      make
+      make distro-pack-install
+
+      mkdir -p "$CRAFT_PART_INSTALL/usr/lib"
+      cp -a inst/lib/collaboraoffice "$CRAFT_PART_INSTALL/usr/lib/collaboraoffice"
+      mkdir -p "$CRAFT_PART_INSTALL/usr/include"
+      cp -a include/LibreOfficeKit "$CRAFT_PART_INSTALL/usr/include/LibreOfficeKit"
+    build-packages:
+      - autoconf
+      - automake
+      - libtool
+      - pkg-config
+      - make
+      - g++
+      - bison
+      - flex
+      - gperf
+      - nasm
+      - rsync
+      - uuid-runtime
+      - wget
+      - xsltproc
+      - xz-utils
+      - bzip2
+      - zip
+      - unzip
+      - fontforge
+      - libcppunit-dev
+      - python3-dev
+      - python3-setuptools
+      - python3-lxml
+      - python3-polib
+      - libcurl4-openssl-dev
+      - libexpat1-dev
+      - libfontconfig-dev
+      - libfreetype-dev
+      - libgraphite2-dev
+      - libharfbuzz-dev
+      - libhunspell-dev
+      - libicu-dev
+      - liblcms2-dev
+      - libpng-dev
+      - libtiff-dev
+      - libwebp-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - libmythes-dev
+      - libnss3-dev
+      - libnspr4-dev
+      - libssl-dev
+      - zlib1g-dev
+      - libzstd-dev
+      - libhyphen-dev
+    stage-packages:
+      - libcurl4t64
+      - libexpat1
+      - libfontconfig1
+      - libfreetype6
+      - libgraphite2-3
+      - libharfbuzz0b
+      - libharfbuzz-icu0
+      - libhunspell-1.7-0
+      - libicu74
+      - liblcms2-2
+      - libpng16-16t64
+      - libtiff6
+      - libwebp7
+      - libxml2
+      - libxslt1.1
+      - libmythes-1.2-0
+      - libnss3
+      - libnspr4
+      - libssl3t64
+      - zlib1g
+      - libzstd1
+      - libhyphen0
+      # Spelling dictionaries matching --with-lang (no hunspell packages
+      # exist for cy, fi, ga, hy, ja, sq, zh-CN, zh-TW)
+      - hunspell-ar
+      - hunspell-ca
+      - hunspell-cs
+      - hunspell-da
+      - hunspell-de-de
+      - hunspell-el
+      - hunspell-en-us
+      - hunspell-en-gb
+      - hunspell-es
+      - hunspell-eu
+      - hunspell-fr-classical
+      - hunspell-gl
+      - hunspell-he
+      - hunspell-hr
+      - hunspell-hu
+      - hunspell-id
+      - hunspell-is
+      - hunspell-it
+      - hunspell-kk
+      - hunspell-ko
+      - hunspell-nl
+      - hunspell-pl
+      - hunspell-pt-pt
+      - hunspell-pt-br
+      - hunspell-ro
+      - hunspell-ru
+      - hunspell-sk
+      - hunspell-sl
+      - hunspell-sv
+      - hunspell-tr
+      - hunspell-uk
+      # Hyphenation patterns
+      - hyphen-ca
+      - hyphen-cs
+      - hyphen-da
+      - hyphen-de
+      - hyphen-el
+      - hyphen-en-us
+      - hyphen-en-gb
+      - hyphen-es
+      - hyphen-fi
+      - hyphen-fr
+      - hyphen-ga
+      - hyphen-gl
+      - hyphen-hr
+      - hyphen-hu
+      - hyphen-id
+      - hyphen-is
+      - hyphen-it
+      - hyphen-nl
+      - hyphen-pl
+      - hyphen-pt-br
+      - hyphen-pt-pt
+      - hyphen-ro
+      - hyphen-ru
+      - hyphen-sk
+      - hyphen-sl
+      - hyphen-sv
+      - hyphen-uk
+      # Thesauri
+      - mythes-ar
+      - mythes-ca
+      - mythes-cs
+      - mythes-da
+      - mythes-de
+      - mythes-en-us
+      - mythes-es
+      - mythes-fr
+      - mythes-gl
+      - mythes-hu
+      - mythes-id
+      - mythes-is
+      - mythes-it
+      - mythes-pl
+      - mythes-pt-br
+      - mythes-pt-pt
+      - mythes-ro
+      - mythes-ru
+      - mythes-sk
+      - mythes-sl
+      - mythes-sv
+      - mythes-uk
+    prime:
+      # Dictionary stage-packages pull in system LibreOffice as a transitive
+      # dependency; exclude it to avoid conflicts with our custom-built core.
+      - -usr/lib/libreoffice
+      - -usr/lib/x86_64-linux-gnu/libuno*
+      - -usr/share/doc/libreoffice*
+      - -usr/share/doc/libuno*
+      - -usr/share/doc/ure*
+      - -usr/share/doc/uno*
+  poco:
+    plugin: cmake
+    source: https://github.com/pocoproject/poco.git
+    source-tag: poco-1.12.5-release
+    source-depth: 1
+    cmake-generator: Ninja
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+      - -DBUILD_SHARED_LIBS=OFF
+      - -DENABLE_TESTS=OFF
+      - -DENABLE_ACTIVERECORD=OFF
+      - -DENABLE_ACTIVERECORD_COMPILER=OFF
+      - -DENABLE_APACHECONNECTOR=OFF
+      - -DENABLE_DATA=OFF
+      - -DENABLE_DATA_MYSQL=OFF
+      - -DENABLE_DATA_ODBC=OFF
+      - -DENABLE_DATA_POSTGRESQL=OFF
+      - -DENABLE_DATA_SQLITE=OFF
+      - -DENABLE_ENCODINGS=OFF
+      - -DENABLE_JWT=OFF
+      - -DENABLE_MONGODB=OFF
+      - -DENABLE_PAGECOMPILER=OFF
+      - -DENABLE_PAGECOMPILER_FILE2PAGE=OFF
+      - -DENABLE_PROMETHEUS=OFF
+      - -DENABLE_REDIS=OFF
+      - -DPOCO_UNBUNDLED=ON
+    build-packages:
+      - libexpat1-dev
+      - libpcre2-dev
+      - zlib1g-dev
+    stage:
+      - usr/lib
+      - usr/include
+
+  collabora-office:
+    plugin: nil
+    source: .
+    source-type: local
+    after: [core, poco]
+    build-snaps:
+      - kde-qt6-core24-sdk
+    build-packages:
+      - libzstd-dev
+      - libpng-dev
+      - ca-certificates
+      - curl
+    override-build: |
+      set -e
+      # Ubuntu 24.04 ships Node 18; COOL requires >= 20
+      if ! node --version 2>/dev/null | grep -qE '^v(2[0-9]|[3-9])'; then
+        curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+        apt-get install -y nodejs
+      fi
+      autoreconf -vfi
+      ./configure \
+        --prefix=/usr \
+        --enable-qtapp \
+        --disable-ssl \
+        --with-lo-path=/usr/lib/collaboraoffice \
+        --with-lokit-path="$CRAFT_STAGE/usr/include" \
+        --with-poco-includes="$CRAFT_STAGE/usr/include" \
+        --with-poco-libs="$CRAFT_STAGE/usr/lib" \
+        --with-vendor="Collabora Productivity Limited" \
+        --with-app-name="Collabora Office" \
+        --with-info-url="https://collaboraoffice.com/"
+      craftctl set version="$(sed -n 's/^S\["PACKAGE_VERSION"\]="\(.*\)"/\1/p' config.status)"
+      make
+      make DESTDIR="$CRAFT_PART_INSTALL" install
+
+  branding:
+    plugin: nil
+    source: https://www.collaboraoffice.com/downloads/collabora-office-brand/collabora-office-brand-25.04.7.3.tar.gz
+    source-checksum: sha256/c465ea66f09f6b0085eb5cc996ed5fc65c3c10c3c3141ac5b35d2291bc817069
+    after: [core, collabora-office]
+    override-build: |
+      set -e
+      mkdir -p "$CRAFT_PART_INSTALL/usr/lib/collaboraoffice/share/theme_definitions"
+      cp -a online-theme "$CRAFT_PART_INSTALL/usr/lib/collaboraoffice/share/theme_definitions/online/"
+      mkdir -p "$CRAFT_PART_INSTALL/usr/share/coolwsd/browser/dist"
+      cp -a branding* images welcome "$CRAFT_PART_INSTALL/usr/share/coolwsd/browser/dist/"

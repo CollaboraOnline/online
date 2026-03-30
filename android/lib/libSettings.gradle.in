@@ -7,7 +7,7 @@ ext {
     liboVersionMinor    = '@COOLWSD_VERSION_MAJOR@'
     liboOVersionHash    = '@COOLWSD_VERSION_HASH@'
     liboCoreVersionHash = '@CORE_VERSION_HASH@'
-    liboApplicationId   = '@ANDROID_PACKAGE_NAME@'
+    liboApplicationId   = '@APP_PACKAGE_NAME@'
     liboBrandingDir     = '@APP_BRANDING_DIR@'
     liboGooglePlay      = '@APP_GOOGLE_PLAY@'
     liboAbiSplit        = [@ANDROID_ABI_SPLIT@]

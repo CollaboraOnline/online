@@ -110,7 +110,10 @@ export class ScrollSection extends CanvasSectionObject {
 		// comes from a mouse-wheel or a touchpad.
 		this.sectionProperties.scrollQuirks = true;
 
-		this.sectionProperties.alwaysDrawVerticalScrollBar = this.map._docLayer._docType === 'spreadsheet' && !(<any>window).mode.isDesktop();
+		this.sectionProperties.alwaysDrawVerticalScrollBar =
+			(this.map._docLayer._docType === 'spreadsheet' &&
+				!(<any>window).mode.isDesktop()) ||
+			(app.map.getDocType() === 'text' && (<any>window).mode.isDesktop());
 	}
 
 	public completePendingScroll(): void {
@@ -137,8 +140,10 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public cancelAutoScroll(): void {
-		clearInterval(this.autoScrollTimer);
-		this.autoScrollTimer = null;
+		if (this.autoScrollTimer !== null) {
+			app.timerRegistry.clearInterval(this.autoScrollTimer);
+			this.autoScrollTimer = null;
+		}
 		this.map.isAutoScrolling = false;
 	}
 
@@ -147,9 +152,9 @@ export class ScrollSection extends CanvasSectionObject {
 		if (e.vx === 0 && e.vy === 0) {
 			this.cancelAutoScroll();
 		} else {
-			clearInterval(this.autoScrollTimer);
+			this.cancelAutoScroll();
 			this.map.isAutoScrolling = true;
-			this.autoScrollTimer = setInterval(window.L.bind(function() {
+			this.autoScrollTimer = app.timerRegistry.setInterval('autoscroll', window.L.bind(function() {
 				this.onScrollBy({x: e.vx, y: e.vy});
 			}, this), 100);
 		}
@@ -284,7 +289,7 @@ export class ScrollSection extends CanvasSectionObject {
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - scrollProps.edgeOffset;
 
 		const sizeX = scrollProps.horizontalScrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const docWidth: number = app.sectionContainer.getWidth();
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		if (this.sectionProperties.drawScrollBarRailway) {
@@ -355,7 +360,7 @@ export class ScrollSection extends CanvasSectionObject {
 			this.calculateCurrentAlpha(elapsedTime);
 
 		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.alwaysDrawVerticalScrollBar)) {
-			if ((<any>window).mode.isMobile())
+			if ((<any>window).mode.isSmallScreenDevice())
 				this.DrawVerticalScrollBarMobile();
 			else
 				this.drawVerticalScrollBar();
@@ -512,10 +517,10 @@ export class ScrollSection extends CanvasSectionObject {
 		if (app.activeDocument.activeLayout.canScrollHorizontal(documentAnchor)) {
 			if ((<any>window).mode.isDesktop() || this.sectionProperties.mouseIsOnHorizontalScrollBar)
 				this.showHorizontalScrollBar();
-			else
+			else if (this.sectionProperties.drawHorizontalScrollBar === true)
 				this.hideHorizontalScrollBar();
 		}
-		else this.hideHorizontalScrollBar();
+		else if (this.sectionProperties.drawHorizontalScrollBar === true) this.hideHorizontalScrollBar();
 
 		temp = point.pX >= this.size[0] - scrollProps.usableThickness;
 		temp = temp && (!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness) || (mirrorX && point.pX <= scrollProps.usableThickness);
@@ -607,7 +612,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const docWidth: number =  app.sectionContainer.getWidth();
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 		const endX = startX + sizeX;
 
@@ -724,7 +729,7 @@ export class ScrollSection extends CanvasSectionObject {
 		window.L.DomUtil.addClass(document.documentElement, 'prevent-select');
 		const scrollProps: ScrollProperties = app.activeDocument.activeLayout.scrollProperties;
 		const sizeX = scrollProps.horizontalScrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const docWidth: number = app.sectionContainer.getWidth();
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		if (this.stepByStepScrolling) {
@@ -767,15 +772,23 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseDown (point: cool.SimplePoint, e: MouseEvent): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
+		const layout = (app.activeDocument as DocumentBase).activeLayout;
+		const scrollProps: ScrollProperties = layout.scrollProperties;
 
 		this.clearQuickScrollTimeout();
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
 
 		const mirrorX = this.isRTL();
+		const documentAnchor = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
 
-		if (app.activeDocument.activeLayout.viewedRectangle.pY1 >= 0) {
+		// For CompareChanges view, viewedRectangle.pY1 can be negative (due to
+		// yStart offset) even when scrolling is possible, so use canScrollVertical instead.
+		const canScrollV = layout.type === 'ViewLayoutCompareChanges'
+			? layout.canScrollVertical(documentAnchor)
+			: layout.viewedRectangle.pY1 >= 0;
+
+		if (canScrollV) {
 			if ((!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness)
 				|| (mirrorX && point.pY <= scrollProps.usableThickness)) {
 				if (point.pY > scrollProps.yOffset) {
@@ -795,7 +808,12 @@ export class ScrollSection extends CanvasSectionObject {
 			}
 		}
 
-		if (app.activeDocument.activeLayout.viewedRectangle.pX1 >= 0) {
+		// Same reasoning as vertical: CompareChanges can have negative pX1.
+		const canScrollH = layout.type === 'ViewLayoutCompareChanges'
+			? layout.canScrollHorizontal(documentAnchor)
+			: layout.viewedRectangle.pX1 >= 0;
+
+		if (canScrollH) {
 			if (point.pY >= this.size[1] - scrollProps.usableThickness) {
 				if ((!mirrorX && point.pX >= scrollProps.xOffset && point.pX <= this.size[0] - scrollProps.horizontalScrollRightOffset)
 					|| (mirrorX && point.pX >= scrollProps.xOffset && point.pX >= scrollProps.horizontalScrollRightOffset)) {

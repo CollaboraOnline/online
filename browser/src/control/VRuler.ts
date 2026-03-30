@@ -54,7 +54,7 @@ class VRuler extends Ruler {
 	onAdd() {
 		this._map.on('vrulerupdate', this._updateOptions, this);
 		this._map.on('scrolllimits', this._updatePaintTimer, this);
-		this._map.on('moveend', this._fixOffset, this);
+		this._map.on('moveend', this.fixOffset, this);
 		app.events.on('updatepermission', this._changeInteractions.bind(this));
 		this._map.on(
 			'resettopbottompagespacing',
@@ -81,7 +81,7 @@ class VRuler extends Ruler {
 	onRemove() {
 		this._map.off('vrulerupdate', this._updateOptions, this);
 		this._map.off('scrolllimits', this._updatePaintTimer, this);
-		this._map.off('moveend', this._fixOffset, this);
+		this._map.off('moveend', this.fixOffset, this);
 		app.events.off('updatepermission', this._changeInteractions.bind(this));
 		this._map.off(
 			'resettopbottompagespacing',
@@ -222,7 +222,7 @@ class VRuler extends Ruler {
 		if (this.options.showruler) {
 			// in case of disabled ruler at docload calculation of offset can be ignored
 			// but after enabling the ruler we need to set the offset.
-			this._fixOffset();
+			this.fixOffset();
 		}
 	}
 
@@ -258,7 +258,7 @@ class VRuler extends Ruler {
 		this._updateBreakPoints();
 	}
 
-	public _updateParagraphIndentations() {
+	protected _updateParagraphIndentationsImpl() {
 		// if ruler is hidden no need to calculate the indentation of the para
 		if (!this.options.showruler) return;
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrapper
@@ -315,7 +315,7 @@ class VRuler extends Ruler {
 			docLayer._docPixelSize.y / docLayer._pages -
 			this.options.tileMargin * 2 * scale;
 
-		this._fixOffset();
+		this.fixOffset();
 
 		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
 		this._rFace.style.width = wPixel + 'px';
@@ -402,9 +402,14 @@ class VRuler extends Ruler {
 		}
 	}
 
-	_fixOffset() {
+	protected _fixOffsetImpl(): void {
 		// in case of disabled ruler at docload or event like 'moveend' calculation of offset can be ignored
-		if (!this._map.options.docBounds || !this.options.showruler) return;
+		if (
+			!app.activeDocument ||
+			app.activeDocument.fileSize.x === 0 ||
+			!this.options.showruler
+		)
+			return;
 
 		// we need to also consider  if there is more then 1 page then pageoffset is crucial to consider
 		// i have calculated current page using pageoffset and pageWidth coming from CORE
@@ -499,7 +504,7 @@ class VRuler extends Ruler {
 			this._pVerticalEndMarker.getBoundingClientRect().top
 		) {
 			// do not change anything if Start marker goes beyond the end marker in that case we hold the last original postions or marker
-			this._fixOffset();
+			this.fixOffset();
 		} else if (element.id == 'lo-vertical-pstart-marker') {
 			const topMarginPX: number =
 				this._pVerticalStartMarker.getBoundingClientRect().top -

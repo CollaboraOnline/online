@@ -9,7 +9,35 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of administrative interface and websocket handlers.
+ * Classes: AdminSocketHandler, MonitorSocketHandler, Admin
+ */
+
 #include <config.h>
+
+#include <wsd/Admin.hpp>
+
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/SigUtil.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#if ENABLE_SSL
+#include <SslSocket.hpp>
+#endif
+#include <net/WebSocketHandler.hpp>
+#include <wsd/AdminModel.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/COOLWSD.hpp>
+
+#include <Poco/Net/HTTPRequest.h>
 
 #include <chrono>
 #include <csignal>
@@ -17,32 +45,8 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
-#include <sys/poll.h>
+#include <poll.h>
 #include <unistd.h>
-
-#include <Poco/Net/HTTPRequest.h>
-
-#include "Admin.hpp"
-#include "AdminModel.hpp"
-#include "Auth.hpp"
-#include "ConfigUtil.hpp"
-#include <Common.hpp>
-#include <COOLWSD.hpp>
-#include <Log.hpp>
-#include <Protocol.hpp>
-#include <StringVector.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Uri.hpp>
-
-#include <net/Socket.hpp>
-#if ENABLE_SSL
-#include <SslSocket.hpp>
-#endif
-#include <net/WebSocketHandler.hpp>
-
-#include <common/SigUtil.hpp>
 
 using namespace COOLProtocol;
 
@@ -69,7 +73,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         if (tokens.size() < 2)
         {
             LOG_DBG("Auth command without any token");
-            sendMessage("InvalidAuthToken");
+            sendTextMessage("InvalidAuthToken");
             shutdown();
             ignoreInput();
             return;
@@ -97,7 +101,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         else
         {
             LOG_DBG("Invalid auth token");
-            sendMessage("InvalidAuthToken");
+            sendTextMessage("InvalidAuthToken");
             shutdown();
             ignoreInput();
             return;
@@ -108,7 +112,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     {
         LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
                 tokens.size() << " first: '" << tokens[0] << '\'');
-        sendMessage("NotAuthenticated");
+        sendTextMessage("NotAuthenticated");
         shutdown();
         ignoreInput();
         return;
@@ -453,13 +457,13 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
     if constexpr (!Util::isFuzzing())
     {
-        UnitWSD::get().onAdminQueryMessage(message);
+        UNITWSD_CALL(onAdminQueryMessage(message));
     }
 
     if (_isAuthenticated)
     {
         LOG_TRC("send admin text frame '" << message << '\'');
-        sendMessage(message);
+        sendTextMessage(message);
     }
     else
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << '\'');

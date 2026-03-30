@@ -12,7 +12,7 @@
  * window.L.IFrameDialog
  */
 
-/* global _ cool */
+/* global _ app cool */
 
 window.L.IFrameDialog = window.L.Class.extend({
 
@@ -122,6 +122,14 @@ window.L.IFrameDialog = window.L.Class.extend({
 		if (this.options.stylesheets) {
 			this.addStyleSheets(this.options.stylesheets);
 		}
+
+		// Listen for Escape inside the iframe for when the iframe has focus.
+		var self = this;
+		this._iframe.contentDocument.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape') {
+				self.remove();
+			}
+		});
 	},
 
 	addStyleSheet: function (href) {
@@ -152,7 +160,9 @@ window.L.IFrameDialog = window.L.Class.extend({
 	},
 
 	focus: function() {
-		if (this._container) {
+		if (this._iframe && this._iframe.contentWindow) {
+			this._iframe.contentWindow.focus();
+		} else if (this._container) {
 			this._container.focus();
 		}
 	},
@@ -165,6 +175,8 @@ window.L.IFrameDialog = window.L.Class.extend({
 		window.L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
 		window.L.DomUtil.remove(this._container);
 		this._container = this._iframe = null;
+		app.map._iframeDialog = null;
+		app.map.focus();
 	},
 
 	hasLoaded: function () {
@@ -176,7 +188,7 @@ window.L.IFrameDialog = window.L.Class.extend({
 	},
 
 	postMessage: function (msg) {
-		this._iframe.contentWindow.postMessage(JSON.stringify(msg), '*');
+		this._iframe.contentWindow.postMessage(JSON.stringify(msg), window.origin);
 	},
 
 	isVisible: function () {
@@ -193,6 +205,7 @@ window.L.IFrameDialog = window.L.Class.extend({
 			var pos = new cool.Point(rect.left, rect.top);
 			window.L.DomUtil.setPosition(this._container, pos);
 		}
+		app.map._iframeDialog = this;
 		this.focus();
 	}
 });
@@ -200,8 +213,8 @@ window.L.IFrameDialog = window.L.Class.extend({
 // Close when pressing Escape
 window.addEventListener('keyup', function iframeKeyupListener (e) {
 	if (e.keyCode === 27 || e.key === 'Escape') {
-		window.postMessage('{"MessageId":"welcome-close"}', '*');
-		window.postMessage('{"MessageId":"settings-cancel"}', '*');
+		window.postMessage('{"MessageId":"welcome-close"}', window.origin);
+		window.postMessage('{"MessageId":"settings-cancel"}', window.origin);
 	}
 });
 

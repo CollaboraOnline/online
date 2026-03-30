@@ -271,7 +271,7 @@ public:
     }
 
     /// Compares the nth token with string.
-    template <std::size_t N> bool equals(std::size_t index, const char (&string)[N]) const
+    bool equals(std::size_t index, const std::string_view string) const
     {
         if (index >= _tokens.size())
         {
@@ -279,10 +279,7 @@ public:
         }
 
         const StringToken& token = _tokens[index];
-        constexpr auto len = N - 1; // we don't want to compare the '\0'
-        return token._length == len &&
-               std::string_view(_string.data() + token._index, token._length) ==
-                   std::string_view(string, len);
+        return std::string_view(_string.data() + token._index, token._length) == string;
     }
 
     // Checks if the token text at index starts with the given string

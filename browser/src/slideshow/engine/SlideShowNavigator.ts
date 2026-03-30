@@ -25,7 +25,7 @@ class SlideShowNavigator {
 	private lastClickTime: number = 0;
 	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
 	private currentLeaderSlide: number = -1;
-	private currentLeaderEffect: number = -1;
+	private currentLeaderEffect: number = 0;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -80,7 +80,8 @@ class SlideShowNavigator {
 		return this._canvasClickHandler;
 	}
 
-	dispatchEffect() {
+	dispatchEffect(userInitiated: boolean = true) {
+		if (userInitiated && !this.canUserAdvanceEffect()) return;
 		this.presenter.sendSlideShowFollowMessage('dispatcheffect');
 		const currentTime = Date.now();
 		const timeDiff = currentTime - this.lastClickTime;
@@ -108,19 +109,34 @@ class SlideShowNavigator {
 	}
 
 	skipEffect() {
+		if (!this.canUserAdvanceEffect()) return;
 		NAVDBG.print(
 			'SlideShowNavigator.skipEffect: current index: ' + this.currentSlide,
 		);
 		const bRet = this.slideShowHandler.skipPlayingOrNextEffect();
 		if (!bRet) {
+			if (
+				this.presenter.isFollower() &&
+				this.currentSlide >= this.getLeaderSlide()
+			)
+				return;
 			this.switchSlide(1, true);
 		}
 	}
 
 	skipAllEffects() {
+		if (!this.canUserAdvanceEffect()) return;
 		NAVDBG.print(
 			'SlideShowNavigator.skipAllEffects: current index: ' + this.currentSlide,
 		);
+		if (this.presenter.isFollower()) {
+			// skip only upto leader's current effect
+			const nToSkip =
+				this.currentLeaderEffect - this.slideShowHandler.getCurrentEffect();
+			if (nToSkip > 0) this.slideShowHandler.skipNEffects(nToSkip);
+			if (this.currentSlide < this.getLeaderSlide()) this.switchSlide(1, true);
+			return;
+		}
 		const bRet = this.slideShowHandler.skipAllEffects();
 		if (!bRet) {
 			this.switchSlide(1, true);
@@ -145,6 +161,14 @@ class SlideShowNavigator {
 		this.slideShowHandler.rewindAllEffects();
 	}
 
+	canUserAdvanceEffect(): boolean {
+		if (!this.presenter.isFollower()) return true;
+		return (
+			this.currentSlide < this.getLeaderSlide() ||
+			this.slideShowHandler.getCurrentEffect() < this.currentLeaderEffect
+		);
+	}
+
 	goToFirstSlide() {
 		NAVDBG.print(
 			'SlideShowNavigator.goToFirstSlide: current index: ' + this.currentSlide,
@@ -156,7 +180,11 @@ class SlideShowNavigator {
 		NAVDBG.print(
 			'SlideShowNavigator.goToLastSlide: current index: ' + this.currentSlide,
 		);
-		this.displaySlide(this.theMetaPres.numberOfSlides - 1, true);
+		const lastSlide = this.presenter.isFollower()
+			? this.getLeaderSlide()
+			: this.theMetaPres.numberOfSlides - 1;
+		if (lastSlide < 0) return;
+		this.displaySlide(lastSlide, true);
 	}
 
 	goToSlideAtBookmark(bookmark: string) {
@@ -199,6 +227,10 @@ class SlideShowNavigator {
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
 		NAVDBG.print('SlideShowNavigator.switchSlide: nOffset: ' + nOffset);
+		if (this.currentSlide === undefined) {
+			NAVDBG.print('SlideShowNavigator.switchSlide: currentSlide undefined');
+			return;
+		}
 		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
 	}
 
@@ -242,15 +274,17 @@ class SlideShowNavigator {
 	}
 
 	resetLeaderEffect() {
-		this.currentLeaderEffect = -1;
+		this.currentLeaderEffect = 0;
 	}
 
 	followLeaderSlide() {
+		if (this.presenter.isFollowing()) return;
 		this.presenter.setFollowing(true);
 		// const currentEffect = this.currentLeaderEffect;
-		if (this.currentLeaderSlide === this.currentSlide)
-			this.slideShowHandler.rewindAllEffects();
-		else this.displaySlide(this.currentLeaderSlide, true);
+		if (this.currentLeaderSlide === this.currentSlide) {
+			if (this.slideShowHandler.hasAnyEffectStarted())
+				this.slideShowHandler.rewindAllEffects();
+		} else this.displaySlide(this.currentLeaderSlide, true);
 		this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
 	}
 
@@ -285,7 +319,7 @@ class SlideShowNavigator {
 			this.currentSlide = nNewSlide;
 			const force = nNewSlide > this.theMetaPres.numberOfSlides;
 			if (force) this.quit();
-			else this.endPresentation(false);
+			else this.endPresentation(this.presenter._isWelcomePresentation);
 			return;
 		}
 
@@ -326,12 +360,35 @@ class SlideShowNavigator {
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
+			if (this.presenter.updateControls) {
+				this.presenter.updateControls();
+			}
 
 			if (this.currentSlide === this.prevSlide) {
 				NAVDBG.print(
 					'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: this.currentSlide === this.prevSlide',
 				);
 				return;
+			}
+
+			// show welcome slideshow once 1st slide is rendered
+			if (
+				app.map.slideShowPresenter._isWelcomePresentation &&
+				this.currentSlide === 0 &&
+				window.mode.isCODesktop()
+			) {
+				const loader = document.getElementById('welcome-loader');
+				if (loader) {
+					loader.style.opacity = '0';
+					// Wait for transition to complete before removing
+					loader.addEventListener(
+						'transitionend',
+						function () {
+							loader.parentNode.removeChild(loader);
+						},
+						{ once: true },
+					);
+				}
 			}
 
 			this.slideShowHandler.displaySlide(
@@ -517,6 +574,7 @@ class SlideShowNavigator {
 		if (handler) {
 			aEvent.preventDefault();
 			aEvent.stopPropagation();
+			if (this.presenter.isFollower()) this.presenter.setFollowing(false);
 			handler();
 		}
 	}

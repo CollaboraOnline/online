@@ -5,9 +5,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Base unit testing framework implementation.
+ * Classes: UnitBase, UnitWSD, UnitKit - Test lifecycle management
+ */
+
 #include <config.h>
 
-#include "Unit.hpp"
+#include <Unit.hpp>
 
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
@@ -20,19 +25,19 @@
 #include <Poco/Util/Application.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
+#include <atomic>
 #include <cassert>
 #include <condition_variable>
 #include <csignal>
 #include <iostream>
 #include <mutex>
+#ifndef _WIN32
 #include <sysexits.h>
+#endif
 #include <thread>
 
-std::atomic<UnitKit *>GlobalKit = nullptr;
-std::atomic<UnitWSD *>GlobalWSD = nullptr;
-std::atomic<UnitTool *>GlobalTool = nullptr;
 UnitBase** UnitBase::GlobalArray = nullptr;
-int UnitBase::GlobalIndex = -1;
+std::atomic_int_fast64_t UnitBase::GlobalIndex = -1;
 char* UnitBase::UnitLibPath = nullptr;
 void* UnitBase::DlHandle = nullptr;
 UnitBase::TestOptions UnitBase::GlobalTestOptions;
@@ -104,9 +109,6 @@ void UnitBase::selfTest()
     delete[] GlobalArray;
     GlobalArray = nullptr;
     GlobalIndex = -1;
-    GlobalKit = nullptr;
-    GlobalWSD = nullptr;
-    GlobalTool = nullptr;
 
     assert(init(UnitType::Kit, std::string()));
     assert(!UnitBase::get().isFinished());
@@ -118,19 +120,16 @@ void UnitBase::selfTest()
     delete[] GlobalArray;
     GlobalArray = nullptr;
     GlobalIndex = -1;
-    GlobalKit = nullptr;
-    GlobalWSD = nullptr;
-    GlobalTool = nullptr;
 }
 
 bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::string& unitLibPath)
 {
     if constexpr (!Util::isMobileApp())
-        LOG_ASSERT(!get(type));
+        LOG_ASSERT(GlobalArray == nullptr);
     else
     {
         // The COOLWSD initialization is called in a loop on mobile, allow reuse
-        if (get(type))
+        if (GlobalArray && GlobalArray[GlobalIndex])
             return true;
     }
 
@@ -138,19 +137,27 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
     LOG_ASSERT(GlobalIndex == -1);
     GlobalArray = nullptr;
     GlobalIndex = -1;
-    GlobalKit = nullptr;
-    GlobalWSD = nullptr;
-    GlobalTool = nullptr;
+
+    int testCount = 0;
 
     // Only in debug builds do we support tests.
 #if ENABLE_DEBUG
     if (!unitLibPath.empty())
     {
-        GlobalArray = linkAndCreateUnit(type, unitLibPath);
-        if (GlobalArray == nullptr)
+        auto tests = linkAndCreateUnit(type, unitLibPath);
+        if (tests == nullptr)
         {
             // Error is logged already.
             return false;
+        }
+
+        while (tests[testCount] != nullptr)
+            ++testCount;
+
+        GlobalArray = new UnitBase*[testCount + 2]; // + dummy + null termination.
+        for (int i = 0; tests[i] != nullptr; ++i)
+        {
+            GlobalArray[i] = tests[i];
         }
 
         // For now enable full logging
@@ -167,7 +174,6 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
         UnitBase* instance = GlobalArray[GlobalIndex];
         if (instance)
         {
-            rememberInstance(type, instance);
             TST_LOG_NAME("UnitBase",
                          "Starting test #1: " << GlobalArray[GlobalIndex]->getTestname());
             instance->initialize();
@@ -195,82 +201,35 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
                         }
                     });
             }
-
-            return get(type) != nullptr;
         }
     }
+    else
 #endif // ENABLE_DEBUG
+    {
+        // Fallback.
+        GlobalArray = new UnitBase*[1 + 1]; // Dummy + null termination.
+    }
 
-    // Fallback.
+    // Dummy instance.
     switch (type)
     {
         case UnitType::Wsd:
-            rememberInstance(UnitType::Wsd, new UnitWSD("UnitWSD"));
-            GlobalArray = new UnitBase* [2] { GlobalWSD, nullptr };
-            GlobalIndex = 0;
+            GlobalArray[testCount] = new UnitWSD("DummyUnitWSD");
             break;
         case UnitType::Kit:
-            rememberInstance(UnitType::Kit, new UnitKit("UnitKit"));
-            GlobalArray = new UnitBase* [2] { GlobalKit, nullptr };
-            GlobalIndex = 0;
+            GlobalArray[testCount] = new UnitKit("DummyUnitKit");
             break;
         case UnitType::Tool:
-            rememberInstance(UnitType::Tool, new UnitTool("UnitTool"));
-            GlobalArray = new UnitBase* [2] { GlobalTool, nullptr };
-            GlobalIndex = 0;
+            GlobalArray[testCount] = new UnitTool("DummyUnitTool");
             break;
         default:
             assert(false);
             break;
     }
 
-    return get(type) != nullptr;
-}
-
-UnitBase* UnitBase::get(UnitType type)
-{
-    switch (type)
-    {
-    case UnitType::Wsd:
-        return GlobalWSD;
-        break;
-    case UnitType::Kit:
-        return GlobalKit;
-        break;
-    case UnitType::Tool:
-        return GlobalTool;
-        break;
-    default:
-        assert(false);
-        break;
-    }
-
-    return nullptr;
-}
-
-void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
-{
-    assert(instance->_type == type);
-
-    assert(GlobalWSD == nullptr);
-    assert(GlobalKit == nullptr);
-    assert(GlobalTool == nullptr);
-
-    switch (type)
-    {
-    case UnitType::Wsd:
-        GlobalWSD = static_cast<UnitWSD*>(instance);
-        break;
-    case UnitType::Kit:
-        GlobalKit = static_cast<UnitKit*>(instance);
-        break;
-    case UnitType::Tool:
-        GlobalTool = static_cast<UnitTool*>(instance);
-        break;
-    default:
-        assert(false);
-        break;
-    }
+    GlobalArray[testCount + 1] = nullptr;
+    GlobalIndex = 0;
+    return GlobalArray[GlobalIndex] != nullptr;
 }
 
 int UnitBase::uninit()
@@ -303,10 +262,6 @@ int UnitBase::uninit()
 
     free(UnitBase::UnitLibPath);
     UnitBase::UnitLibPath = nullptr;
-
-    GlobalKit = nullptr;
-    GlobalWSD = nullptr;
-    GlobalTool = nullptr;
 
     // Close the DLL last, after deleting the test instances.
     closeUnit();
@@ -363,10 +318,10 @@ bool UnitBase::filterLOKitMessage(const std::shared_ptr<Message>& message)
     return onFilterLOKitMessage(message);
 }
 
-bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t len,
-                                          const WSOpCode code, const bool flush, int& unitReturn)
+bool UnitBase::filterSendWebSocketMessage(const std::string_view data, const WSOpCode code,
+                                          const bool flush, int& unitReturn)
 {
-    const std::string message(data, len);
+    const std::string message(data);
     if (message.starts_with("unocommandresult:"))
     {
         const std::size_t index = message.find_first_of('{');
@@ -444,7 +399,7 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
             return false;
     }
 
-    return onFilterSendWebSocketMessage(data, len, code, flush, unitReturn);
+    return onFilterSendWebSocketMessage(data, code, flush, unitReturn);
 }
 
 void UnitBase::exitTest(TestResult result, const std::string& reason)
@@ -549,13 +504,15 @@ void UnitBase::endTest([[maybe_unused]] const std::string& reason)
     if (TimeoutThread.joinable())
         TimeoutThread.join();
 
-    TST_LOG("==================== Finished [" << getTestname() << "] ====================");
+    TST_LOG("==================== Finished [" << getTestname() << "] " << name(_result) << " - "
+                                              << reason << " ====================");
 }
 
 UnitWSD::UnitWSD(const std::string& name)
     : UnitBase(name, UnitType::Wsd)
     , _wsd(nullptr)
     , _hasKitHooks(false)
+    , _hasDocBroker(false)
 {
 }
 
@@ -586,6 +543,16 @@ void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX
     }
 }
 
+void UnitWSD::DocBrokerCreate(const std::string& key)
+{
+    if (isUnitTesting())
+    {
+        onDocBrokerCreate(key);
+
+        _hasDocBroker = true;
+    }
+}
+
 void UnitWSD::DocBrokerDestroy(const std::string& key)
 {
     if (isUnitTesting())
@@ -604,44 +571,47 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
         // Check if we have more tests, but keep the current index if it's the last.
         if (haveMoreTests())
         {
-            // We have more tests.
-            ++GlobalIndex;
-            filter();
-
-            // Clear the shortcuts.
-            GlobalKit = nullptr;
-            GlobalWSD = nullptr;
-            GlobalTool = nullptr;
-
-            if (GlobalArray[GlobalIndex] != nullptr && !SigUtil::getShutdownRequestFlag() &&
-                (_result == TestResult::Ok || GlobalTestOptions.getKeepgoing()))
-            {
-                rememberInstance(_type, GlobalArray[GlobalIndex]);
-
-                TST_LOG("Starting test #" << GlobalIndex + 1 << ": "
-                                          << GlobalArray[GlobalIndex]->getTestname());
-                UnitWSD *globalWSD = GlobalWSD;
-                if (globalWSD)
-                    globalWSD->configure(Poco::Util::Application::instance().config());
-                GlobalArray[GlobalIndex]->initialize();
-            }
-
-            // Wake-up so the previous test stops.
-            SocketPoll::wakeupWorld();
+            startNextTest();
         }
     }
 }
 
 UnitWSD& UnitWSD::get()
 {
-    UnitWSD *globalWSD = GlobalWSD;
+    UnitWSD* globalWSD = getMaybeNull();
     assert(globalWSD);
     return *globalWSD;
 }
 
-UnitWSD* UnitWSD::getMaybeNull()
+UnitWSD* UnitWSD::getMaybeNull() { return static_cast<UnitWSD*>(GlobalArray[GlobalIndex]); }
+
+void UnitWSD::startNextTest()
 {
-    return GlobalWSD;
+            // Get the current UnitWSDInterface to pass to the next one.
+            UnitWSD* currentWSD = getMaybeNull();
+            UnitWSDInterface* unitWsdInterface = currentWSD ? currentWSD->_wsd : nullptr;
+
+            // We have more tests.
+            ++GlobalIndex;
+            filter();
+
+            if (GlobalArray[GlobalIndex] != nullptr && !SigUtil::getShutdownRequestFlag() &&
+                (_result == TestResult::Ok || GlobalTestOptions.getKeepgoing()))
+            {
+                TST_LOG("Starting test #" << GlobalIndex + 1 << ": "
+                                          << GlobalArray[GlobalIndex]->getTestname());
+                UnitWSD* globalWSD = getMaybeNull();
+                if (globalWSD)
+                {
+                    globalWSD->setWSD(unitWsdInterface);
+                    globalWSD->configure(Poco::Util::Application::instance().config());
+                }
+
+                GlobalArray[GlobalIndex]->initialize();
+            }
+
+            // Wake-up so the previous test stops.
+            SocketPoll::wakeupWorld();
 }
 
 void UnitWSD::onExitTest(TestResult result, const std::string&)
@@ -661,7 +631,15 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
             return;
         }
 
-        TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        if (_hasDocBroker)
+        {
+            TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        }
+        else
+        {
+            startNextTest();
+        }
+
         return;
     }
 
@@ -688,12 +666,8 @@ UnitKit::~UnitKit() {}
 
 UnitKit& UnitKit::get()
 {
-    if (Util::isKitInProcess() && !GlobalKit)
-        GlobalKit = new UnitKit("UnitKit");
-
-    UnitKit *globalKit = GlobalKit;
-    assert(globalKit);
-    return *globalKit;
+    assert(GlobalArray[GlobalIndex]);
+    return *static_cast<UnitKit*>(GlobalArray[GlobalIndex]);
 }
 
 void UnitKit::onExitTest(TestResult, const std::string&)

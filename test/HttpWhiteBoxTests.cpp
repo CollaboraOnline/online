@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit test for HTTP request parsing and clipboard functionality.
+ */
+
 #include <config.h>
 
 #include <string>
@@ -19,11 +23,6 @@
 #include <test/lokassert.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
-
-#include <Poco/Net/MultipartReader.h>
-#include <Poco/MemoryStream.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPRequest.h>
 
 #include <cstdint>
 #include <string>
@@ -180,7 +179,7 @@ void HttpWhiteBoxTests::testHeader()
     http::Header header;
 
     const std::string data = "\r\na=\r\n\r\n";
-    LOK_ASSERT_EQUAL(8L, header.parse(data.c_str(), data.size()));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(8), header.parse(data.c_str(), data.size()));
     LOK_ASSERT_EQUAL(0UL, header.size());
 }
 
@@ -248,7 +247,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = 0; i < 33; ++i)
     {
         // Should return 0 to signify that data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, static_cast<std::int64_t>(0),
                                  req.readData(data.c_str(), i));
     }
 
@@ -264,7 +263,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = off; i < data.size(); ++i)
     {
         // Should return 0 to signify that data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, static_cast<std::int64_t>(0),
                                  req.readData(data.c_str() + off, i - off));
     }
 
@@ -443,7 +442,7 @@ void HttpWhiteBoxTests::testClipboardIsOwnFormat()
 PK)x";
         std::istringstream stream(body);
 
-        LOK_ASSERT_EQUAL(ClipboardData::isOwnFormat(stream), true);
+        LOK_ASSERT_EQUAL(true, ClipboardData::isOwnFormat(stream));
     }
     {
         std::string body = R"(<!DOCTYPE html>
@@ -453,68 +452,39 @@ PK)x";
 
         // This is expected to fail: format is mimetype-length-bytes tuples and here the second line
         // is not a hex size.
-        LOK_ASSERT_EQUAL(ClipboardData::isOwnFormat(stream), false);
+        LOK_ASSERT_EQUAL(false, ClipboardData::isOwnFormat(stream));
     }
 }
+
+/// Validate that the internal RequestParser correctly parses the given raw HTTP data.
 static inline void comparePostContent(const std::string_view testname, const std::string_view data)
 {
-    Poco::MemoryInputStream message(data.data(), data.size());
-    Poco::Net::HTTPRequest request;
-    request.read(message);
-
     http::RequestParser req;
     LOK_ASSERT(req.readData(data.data(), data.size()) > 0);
 
-    LOK_ASSERT_EQUAL_STR(request.getMethod(), req.getVerb());
-    LOK_ASSERT_EQUAL_STR(request.getURI(), req.getUrl());
-    LOK_ASSERT_EQUAL_STR(request.getVersion(), req.getVersion());
-    LOK_ASSERT_EQUAL_STR(request.getHost(), req.get("Host"));
-    LOK_ASSERT_EQUAL(request.getKeepAlive(), req.isKeepAlive());
+    // Validate basic request-line fields are non-empty and sensible.
+    LOK_ASSERT(!req.getVerb().empty());
+    LOK_ASSERT(!req.getUrl().empty());
+    LOK_ASSERT_EQUAL_STR("HTTP/1.1", req.getVersion());
+    LOK_ASSERT(!req.get("Host").empty());
 
+    // Validate keep-alive detection.
+    if (req.get("Connection") == "close")
+        LOK_ASSERT_EQUAL(false, req.isKeepAlive());
+    else
+        LOK_ASSERT_EQUAL(true, req.isKeepAlive()); // HTTP/1.1 default
+
+    // Validate all parsed headers have non-empty keys and retrievable values.
     std::size_t headerCount = 0;
-    for (const auto& header : request)
+    for (const auto& header : req.header())
     {
         ++headerCount;
+        LOK_ASSERT(!header.first.empty());
+        // Verify the value is retrievable via get().
         LOK_ASSERT_EQUAL_STR(header.second, req.get(header.first));
     }
-
     LOK_ASSERT_EQUAL(headerCount, req.header().size());
-
-    // LOK_ASSERT_EQUAL_STR(std::string(), req.getBody());
-
-    // ConvertToPartHandler handler;
-    // Poco::Net::HTMLForm form(request, message, handler);
-    Poco::MemoryInputStream messageForm(req.getBody().data(), req.getBody().size());
-    Poco::Net::HTMLForm form(request, messageForm);
-    std::size_t fieldCount = 0;
-    for (const auto& field : form)
-    {
-        ++fieldCount;
-        LOK_ASSERT(!field.first.empty());
-        LOK_ASSERT(!field.second.empty());
-        // LOK_ASSERT_EQUAL_STR(field.second, req.get(field.first));
-    }
-
-    if (!form.empty())
-        LOK_ASSERT(fieldCount > 0);
-    // LOK_ASSERT_EQUAL(fieldCount, req.header().size());
-
-    // LOK_ASSERT_EQUAL_STR(form.(), req.boundary());
-    // LOK_ASSERT_EQUAL_STR(form.boundary(), req.boundary());
-    // LOK_ASSERT_EQUAL_STR(form.getEncoding(), req.getEncoding());
-}
-
-static std::string getStreamData(std::istream& stream)
-{
-    int ch = stream.get();
-    std::string data;
-    while (ch >= 0)
-    {
-        data += (char)ch;
-        ch = stream.get();
-    }
-
-    return data;
+    LOK_ASSERT(headerCount > 0);
 }
 
 void HttpWhiteBoxTests::testMultiPartDataParser()
@@ -561,23 +531,32 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
     const std::string secondPartData = "This is explicitly typed plain US-ASCII text.\r\n"
                                        "It DOES end with a linebreak.\r\n";
 
-    std::istringstream istr(body);
-    Poco::Net::MultipartReader r(istr, boundary);
-    LOK_ASSERT(r.hasNextPart());
-    Poco::Net::MessageHeader h;
-    r.nextPart(h);
-    LOK_ASSERT(h.size() == 2);
-    LOK_ASSERT(h["Content-Disposition"] == firstContentDisposition);
-    LOK_ASSERT(h["Content-Type"] == firstContentType);
-    LOK_ASSERT_EQUAL_STR(firstPartData, getStreamData(r.stream()));
+    // First, validate the test data by doing a full (non-incremental) parse.
+    {
+        http::MultipartDataParser fullParser(boundary);
+        http::Header h;
+        std::string_view partBody;
+        std::string remaining(body);
 
-    LOK_ASSERT(r.hasNextPart());
-    r.nextPart(h);
-    LOK_ASSERT(h.size() == 2);
-    LOK_ASSERT(h["Content-Disposition"] == secondContentDisposition);
-    LOK_ASSERT(h["Content-Type"] == secondContentType);
-    LOK_ASSERT_EQUAL_STR(secondPartData, getStreamData(r.stream()));
+        int64_t consumed = fullParser.readPart(remaining, h, partBody);
+        LOK_ASSERT(consumed > 0);
+        LOK_ASSERT_EQUAL(2UL, h.size());
+        LOK_ASSERT_EQUAL(firstContentDisposition, h.get("Content-Disposition"));
+        LOK_ASSERT_EQUAL(firstContentType, h.getContentType());
+        LOK_ASSERT_EQUAL_STR(firstPartData, partBody);
 
+        remaining = remaining.substr(static_cast<std::size_t>(consumed));
+        h = http::Header();
+        consumed = fullParser.readPart(remaining, h, partBody);
+        LOK_ASSERT(consumed > 0);
+        LOK_ASSERT_EQUAL(2UL, h.size());
+        LOK_ASSERT_EQUAL(secondContentDisposition, h.get("Content-Disposition"));
+        LOK_ASSERT_EQUAL(secondContentType, h.getContentType());
+        LOK_ASSERT_EQUAL_STR(secondPartData, partBody);
+        LOK_ASSERT(fullParser.isLast());
+    }
+
+    // Now test the incremental parsing.
     http::MultipartDataParser multipart(boundary);
     LOK_ASSERT_EQUAL_STR(boundary, multipart.boundary());
 

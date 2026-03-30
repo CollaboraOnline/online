@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Mobile platform stub implementations for unit testing framework.
+ * Functions: linkAndCreateUnit(), closeUnit()
+ */
+
 #include <config.h>
 
 #include "Unit.hpp"

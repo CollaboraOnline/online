@@ -138,3 +138,10 @@
 
 /* Version number of package */
 /* #undef VERSION */
+
+/* This config.h is used only for iOS and we don't need the Windows
+ * version of EXPORT here, and not EXTERNC either.
+ */
+
+#define EXTERNC /**/
+#define EXPORT /**/
