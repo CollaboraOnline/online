@@ -117,7 +117,11 @@ UnitPerf::UnitPerf()
     , _done(false)
 {
     // Double of the default.
+#if ENABLE_RUNTIME_OPTIMIZATIONS
     constexpr std::chrono::minutes timeout_minutes(1);
+#else
+    constexpr std::chrono::minutes timeout_minutes(2);
+#endif
     setTimeout(timeout_minutes);
 }
 
