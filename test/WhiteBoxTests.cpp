@@ -1011,6 +1011,11 @@ void WhiteBoxTests::testLogCaptureCaller()
 {
     constexpr std::string_view testname = __func__;
 
+#if defined(__clang__) && __clang_major__ < 19
+    // std::source_location is broken in older clang versions.
+    return;
+#endif
+
     const auto logWithoutCaller = []() -> std::string
     {
         std::ostringstream oss;
