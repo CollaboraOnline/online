@@ -467,7 +467,7 @@ AC_ARG_WITH([wasm-zetajs],
 
 AC_ARG_ENABLE([wasm-zetajs-example],
               AS_HELP_STRING([--enable-wasm-zetajs-example],
-                             [Inclue a zetajs scripting example in the app. Requires
+                             [Include a zetajs scripting example in the app. Requires
                               --with-wasm-zetajs. Relevant only for a Wasm build.]))
 
 AC_ARG_ENABLE([experimental],
@@ -1434,7 +1434,7 @@ for i in $CC; do
     esac
 done
 if test "$ENABLE_RUNTIME_OPTIMIZATIONS" != no; then
-    AC_DEFINE([ENABLE_RUNTIME_OPTIMIZATIONS],1,[Define to 1 if this is not a santitizers build.])
+    AC_DEFINE([ENABLE_RUNTIME_OPTIMIZATIONS],1,[Define to 1 if this is not a sanitizers build.])
 fi
 
 # Check for C++20 support.
