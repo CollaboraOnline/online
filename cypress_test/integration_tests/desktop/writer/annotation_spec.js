@@ -382,6 +382,28 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		});
 	});
 
+	it('Annotation minimum width', function () {
+		cy.viewport(1920, 1080); // Let's have plenty of space
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain', 'some text');
+
+		// Add several nested replies to create a deep thread
+		const replyCount = 5;
+		for (let i = 1; i <= replyCount; i++) {
+			cy.cGet('#comment-annotation-menu-' + i).click();
+			cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+			cy.cGet('#annotation-reply-textarea-' + i).type('reply ' + i);
+			cy.cGet('#annotation-reply-' + i).click();
+			cy.cGet('#annotation-content-area-' + (i + 1)).should('contain', 'reply ' + i);
+		}
+
+		// Check that the last reply content is wide enough
+		cy.cGet('#comment-container-' + (replyCount + 1) + ' .cool-annotation-content')
+			.should(el => expect(el.width()).gte(200));
+	});
+
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
