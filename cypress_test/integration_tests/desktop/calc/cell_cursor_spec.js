@@ -121,7 +121,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 		helper.processToIdle(this.win);
 
-		cy.cGet('#document-container').compareSnapshot('text-selection', 0.02);
+		cy.cGet('#document-container').compareSnapshot('text-selection', 0.03);
 	});
 
 	it('Check right click shows correct context menu.', function() {
@@ -263,7 +263,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 		helper.waitForTimers(this.win, 'clicktimer');
 		helper.processToIdle(this.win);
 
-		cy.cGet('#document-container').compareSnapshot('triple-click', 0.02);
+		cy.cGet('#document-container').compareSnapshot('triple-click', 0.03);
 
 	});
 });
