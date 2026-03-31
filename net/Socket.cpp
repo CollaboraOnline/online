@@ -1831,7 +1831,6 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
     map._messageSize = map._headerSize;
 
     const std::streamsize contentLength = request.getContentLength();
-    const std::streamsize available = bufferSize;
 
     LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request << ", sz[header "
                             << map._headerSize << "], offset " << headerSize
@@ -1847,13 +1846,19 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
             throw std::out_of_range("Invalid content length: " + std::to_string(contentLength));
         }
 
-        if (available < contentLength)
+        // Note: The bufferSize (i.e. the data received in the socket) may be
+        // far less than the contentLength, and we may never get all the data.
+        if (bufferSize < contentLength + headerSize)
         {
             LOG_DBG("parseHeader: Not enough content yet: ContentLength: "
-                    << contentLength << ", available: " << available << ", delay "
-                    << delayMs.count() << "ms");
+                    << contentLength << " (+ headerSize: " << headerSize << " = "
+                    << contentLength + headerSize << "), available: " << bufferSize
+                    << " bytes (missing " << (contentLength + headerSize - bufferSize)
+                    << " bytes), delay " << delayMs.count() << "ms");
             return false;
         }
+
+        // messageSize includes both the header and the content sizes.
         map._messageSize += contentLength;
     }
 
