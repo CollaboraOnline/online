@@ -347,7 +347,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.onkeypress = this.menuOnKeyPress.bind(this);
 		this.sectionProperties.menu.dataset.title = Comment.openMenuLabel;
 		this.sectionProperties.menu.setAttribute('aria-label', Comment.openMenuLabel);
-		this.sectionProperties.menu.annotation = this;
 	}
 
 	public setContainerPos(forceUpdate: boolean, canvasContainerBounds?: DOMRect, left?: number, top?: number): void {
@@ -1046,7 +1045,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnMouseClick (e: any): void {
-		$(this.sectionProperties.menu).contextMenu();
+		this.openContextMenu();
 		window.L.DomEvent.stopPropagation(e);
 	}
 
@@ -1066,8 +1065,126 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
 		if (e.code === 'Space' || e.code === 'Enter')
-			$(this.sectionProperties.menu).contextMenu();
+			this.openContextMenu();
 		window.L.DomEvent.stopPropagation(e);
+	}
+
+	private openContextMenu (): void {
+		const listSection = this.sectionProperties.commentListSection;
+		const data = this.sectionProperties.data;
+		const docLayer = app.map._docLayer;
+		const entries: Array<any> = [];
+		let pos = 0;
+
+		if (data.trackchange) {
+			entries.push({ text: _('Comment'), type: 'action', id: 'modify', pos: String(pos++) });
+		} else {
+			const blockChangeFromDifferentAuthor = this.map.isReadOnlyMode()
+				&& docLayer._docType === 'text'
+				&& this.map.getViewName(docLayer._viewId) !== data.author;
+
+			if (!blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Modify'), type: 'action', id: 'modify', pos: String(pos++) });
+
+			if (docLayer._docType === 'text')
+				entries.push({ text: _('Reply'), type: 'action', id: 'reply', pos: String(pos++) });
+
+			if (!blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Remove'), type: 'action', id: 'remove', pos: String(pos++) });
+
+			if (docLayer._docType === 'text' && this.isRootComment() && !blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Remove Thread'), type: 'action', id: 'removeThread', pos: String(pos++) });
+
+			if (docLayer._docType === 'text')
+				entries.push({
+					text: data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
+					type: 'action', id: 'resolve', pos: String(pos++),
+				});
+
+			if (docLayer._docType === 'text' && this.isRootComment())
+				entries.push({
+					text: listSection.isThreadResolved(this) ? _('Unresolve Thread') : _('Resolve Thread'),
+					type: 'action', id: 'resolveThread', pos: String(pos++),
+				});
+
+			if (docLayer._docType === 'text' && !this.isRootComment() && !blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Promote to top comment'), type: 'action', id: 'promote', pos: String(pos++) });
+
+			if (docLayer._docType === 'text' && !window.mode.isSmallScreenDevice()) {
+				const isShownBig = listSection.isShownBig(this);
+				entries.push({
+					text: isShownBig ? _('Show on the side') : _('Open in full view'),
+					type: 'action', id: 'showBigger', pos: String(pos++),
+				});
+			}
+
+			if ((docLayer._docType === 'text' || docLayer._docType === 'spreadsheet')
+				&& !window.mode.isSmallScreenDevice())
+				entries.push({ text: _('Show in navigator'), type: 'action', id: 'showInNavigator', pos: String(pos++) });
+		}
+
+		if (entries.length === 0)
+			return;
+
+		const menuEl = this.sectionProperties.menu;
+		menuEl._onDropDown = function (open: boolean) {
+			this.sectionProperties.contextMenu = open;
+		}.bind(this);
+
+		if (window.mode.isSmallScreenDevice()) {
+			const menu: any[] = [];
+			entries.forEach((entry: any) => {
+				menu.push({
+					name: entry.text,
+					command: entry.text,
+					callback: () => {
+						this.handleMenuAction(entry.id);
+						if (entry.id !== 'reply' && entry.id !== 'modify')
+							app.map.fire('mobilewizardback');
+					},
+				});
+			});
+			const menuData =
+				window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(
+					menu,
+					true,
+					'',
+				);
+			app.map.fire('mobilewizard', { data: menuData });
+			return;
+		}
+
+		const callback = function (_objectType: string, eventType: string, _object: any, _data: any, entry: any) {
+			if (eventType !== 'selected')
+				return false;
+			this.handleMenuAction(entry?.id);
+			JSDialog.CloseAllDropdowns();
+			return true;
+		}.bind(this);
+
+		JSDialog.OpenDropdown(
+			'comment-menu-' + data.id,
+			menuEl,
+			entries,
+			callback,
+			'',
+			false,
+		);
+	}
+
+	private handleMenuAction (id: string): void {
+		const listSection = this.sectionProperties.commentListSection;
+		switch (id) {
+		case 'modify': listSection.modify(this); break;
+		case 'reply': listSection.reply(this); break;
+		case 'remove': listSection.remove(this.sectionProperties.data.id); break;
+		case 'removeThread': listSection.removeThread(this.sectionProperties.data.id); break;
+		case 'resolve': listSection.resolve(this); break;
+		case 'resolveThread': listSection.resolveThread(this); break;
+		case 'promote': listSection.promote(this); break;
+		case 'showBigger': listSection.toggleShowBigger(this); break;
+		case 'showInNavigator': listSection.showInNavigator(this); break;
+		}
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
