@@ -3,7 +3,7 @@
  * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CursorHeaderSection $ _ CPolyUtil CPolygon Cursor UNOKey cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection FormFieldButton TextCursorSection CStyleData CSelections CReferences OtherViewGraphicSelectionSection */
+/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CursorHeaderSection $ _ CPolyUtil CPolygon Cursor UNOKey cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection FormFieldButton TextCursorSection CStyleData CSelections CReferences OtherViewGraphicSelectionSection CompareChangesLabelSection */
 
 function clamp(num, min, max)
 {
@@ -481,7 +481,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		app.sectionContainer.setDocumentAnchorSection(app.CSections.Tiles.name);
 
 		if (this._docType === 'text')
-			app.sectionContainer.addSection(new app.definitions.compareChangesLabelSection());
+			app.sectionContainer.addSection(new CompareChangesLabelSection());
 
 		app.sectionContainer.getSectionWithName('tiles').onResize();
 
