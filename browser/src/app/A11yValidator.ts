@@ -122,27 +122,36 @@ class A11yValidator {
 
 	private checkElementHasLabel(type: string, element: HTMLElement): void {
 		if (element.hasAttribute('aria-labelledby')) {
-			const labelledbyId = element.getAttribute('aria-labelledby') as string;
+			const labelledbyValue = element.getAttribute('aria-labelledby') as string;
+			const labelledbyIds = labelledbyValue.trim().split(/\s+/);
 
-			const referencedElement = document.getElementById(labelledbyId);
+			for (const labelledbyId of labelledbyIds) {
+				const referencedElement = document.getElementById(labelledbyId);
 
-			if (!referencedElement) {
-				throw new A11yValidatorException(
-					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to non-existing element with id: '${labelledbyId}'`,
-				);
-			} else {
-				const labelHasHtmlFor =
-					referencedElement.tagName === 'LABEL' &&
-					(referencedElement as HTMLLabelElement).htmlFor;
-
-				const htmlForPointsToThisElement =
-					labelHasHtmlFor &&
-					(referencedElement as HTMLLabelElement).htmlFor === element.id;
-
-				if (htmlForPointsToThisElement) {
+				if (!referencedElement) {
 					throw new A11yValidatorException(
-						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to label element with id: '${labelledbyId}', but that label also has htmlFor attribute pointing to this element. Should not duplicate labelling.`,
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to non-existing element with id: '${labelledbyId}'`,
 					);
+				}
+
+				// Only flag htmlFor duplication for single-label case.
+				// Multi-label (grid pattern) legitimately needs both
+				// htmlFor (click-to-focus) and aria-labelledby
+				// (composite accessible name).
+				if (labelledbyIds.length === 1) {
+					const labelHasHtmlFor =
+						referencedElement.tagName === 'LABEL' &&
+						(referencedElement as HTMLLabelElement).htmlFor;
+
+					const htmlForPointsToThisElement =
+						labelHasHtmlFor &&
+						(referencedElement as HTMLLabelElement).htmlFor === element.id;
+
+					if (htmlForPointsToThisElement) {
+						throw new A11yValidatorException(
+							`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to label element with id: '${labelledbyId}', but that label also has htmlFor attribute pointing to this element. Should not duplicate labelling.`,
+						);
+					}
 				}
 			}
 		} else {
@@ -189,13 +198,24 @@ class A11yValidator {
 					referencedElement.hasAttribute('aria-labelledby') ||
 					referencedElement.hasAttribute('aria-label')
 				) {
-					throw new A11yValidatorException(
-						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is associated with element with id: '${htmlFor}' via htmlFor, but that element also has aria-label or aria-labelledby attribute. Should not duplicate labelling.`,
-					);
+					// Allow when the target has multi-label aria-labelledby
+					// (space-separated IDs indicate a grid-layout pattern
+					// where htmlFor provides click-to-focus and
+					// aria-labelledby provides the composite accessible name).
+					const ariaLabelledBy =
+						referencedElement.getAttribute('aria-labelledby');
+					const isMultiLabel =
+						ariaLabelledBy && ariaLabelledBy.trim().split(/\s+/).length > 1;
+
+					if (!isMultiLabel) {
+						throw new A11yValidatorException(
+							`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is associated with element with id: '${htmlFor}' via htmlFor, but that element also has aria-label or aria-labelledby attribute. Should not duplicate labelling.`,
+						);
+					}
 				}
 			} else {
 				const referencedElement = document.querySelector(
-					`[aria-labelledby="${element.id}"]`,
+					`[aria-labelledby~="${element.id}"]`,
 				);
 				if (!referencedElement) {
 					throw new A11yValidatorException(
