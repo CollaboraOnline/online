@@ -195,7 +195,6 @@ export class CommentSection extends CanvasSectionObject {
 		}, this);
 
 		this.backgroundColor = this.containerObject.getClearColor();
-		this.initializeContextMenus();
 
 		if ((<any>window).mode.isSmallScreenDevice()) {
 			this.setShowSection(false);
@@ -1293,111 +1292,9 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private initializeContextMenus (): void {
-		var docLayer = app.map._docLayer;
-		window.L.installContextMenu({
-			selector: '.cool-annotation-menu',
-			trigger: 'none',
-			zIndex: 1500,
-			className: 'cool-font',
-			build: function ($trigger: any) {
-				const blockChangeFromDifferentAuthor = this.map.isReadOnlyMode() && docLayer._docType === 'text' && this.map.getViewName(docLayer._viewId) !== $trigger[0].annotation.sectionProperties.data.author;
-				const isShownBig = this.sectionProperties.showSelectedBigger && this.sectionProperties.selectedComment === this.sectionProperties.commentList[this.getRootIndexOf($trigger[0].annotation.sectionProperties.data.id)];
-				return {
-					autoHide: true,
-					items: {
-						modify: blockChangeFromDifferentAuthor ? undefined : {
-							name: _('Modify'),
-							callback: function (key: any, options: any) {
-								this.modify.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						},
-						reply: (docLayer._docType !== 'text') ? undefined : {
-							name: _('Reply'),
-							callback: function (key: any, options: any) {
-								this.reply.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						},
-						remove: blockChangeFromDifferentAuthor ? undefined : {
-							name: _('Remove'),
-							callback: function (key: any, options: any) {
-								this.remove.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
-							}.bind(this)
-						},
-						removeThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor ? undefined : {
-							name: _('Remove Thread'),
-							callback: function (key: any, options: any) {
-								this.removeThread.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
-							}.bind(this)
-						},
-						resolve: docLayer._docType !== 'text' ? undefined : {
-							name: $trigger[0].annotation.sectionProperties.data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
-							callback: function (key: any, options: any) {
-								this.resolve.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						},
-						resolveThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() ? undefined : {
-							name: this.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
-							callback: function (key: any, options: any) {
-								this.resolveThread.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						},
-						promote: docLayer._docType !== 'text' || $trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor ? undefined : {
-							name: _('Promote to top comment'),
-							callback: function (key: any, options: any) {
-								this.promote.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						},
-						showBigger: docLayer._docType !== 'text' || (<any>window).mode.isSmallScreenDevice() ? undefined : {
-							name: isShownBig ? _('Show on the side') : _('Open in full view'),
-							callback: function (key: any, options: any) {
-								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						},
-						showInNavigator: (docLayer._docType !== 'text' && docLayer._docType !== 'spreadsheet') || (<any>window).mode.isSmallScreenDevice() ? undefined : {
-							name: _('Show in navigator'),
-							callback: function (key: any, options: any) {
-								this.showInNavigator.call(this, options.$trigger[0].annotation);
-							}.bind(this)
-						}
-					},
-				};
-			}.bind(this),
-			events: {
-				show: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
-					setTimeout(function() {
-						options.items.modify.$node[0].tabIndex = 0;
-						options.items.modify.$node[0].focus();
-					}.bind(this), 10);
-				},
-				hide: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = false;
-				}
-			}
-		});
-		window.L.installContextMenu({
-			selector: '.cool-annotation-menu-redline',
-			trigger: 'none',
-			zIndex: 1500,
-			className: 'cool-font',
-			items: {
-				modify: {
-					name: _('Comment'),
-					callback: function (key: any, options: any) {
-						this.modify.call(this, options.$trigger[0].annotation);
-					}.bind(this)
-				}
-			},
-			events: {
-				show: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
-				},
-				hide: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = false;
-				}
-			}
-		});
+	public isShownBig (annotation: any): boolean {
+		return this.sectionProperties.showSelectedBigger
+			&& this.sectionProperties.selectedComment === this.sectionProperties.commentList[this.getRootIndexOf(annotation.sectionProperties.data.id)];
 	}
 
 	public onResize (): void {
