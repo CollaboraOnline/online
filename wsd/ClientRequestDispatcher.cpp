@@ -2761,15 +2761,18 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
     {
         const std::string docKey = requestDetails.getDocKey();
         const std::string wopiSrc = requestDetails.getField(RequestDetails::Field::WOPISrc);
+        bool docIsLocal = false;
 
         {
             std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
             auto it = DocBrokers.find(docKey);
-            if (it != DocBrokers.end() && it->second && it->second->getPid() > 0)
-            {
-                // Document has an active kit process on this pod, handle locally.
-                return completeWsUpgrade(request, requestDetails, socket, mobileAppDocId);
-            }
+            docIsLocal = it != DocBrokers.end() && it->second && it->second->getPid() > 0;
+        }
+
+        if (docIsLocal)
+        {
+            // Document has an active kit process on this pod, handle locally.
+            return completeWsUpgrade(request, requestDetails, socket, mobileAppDocId);
         }
 
         LOG_INF("No local DocBroker for [" << docKey << "], checking controller.");
