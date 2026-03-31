@@ -126,11 +126,19 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
 
     auto targetHandler = std::make_shared<ProxyHandler>(clientSocket);
 
-    // Move the client socket from its current poll to ProxyPoll.
-    fromPoll->transferSocketTo(
-        clientSocket, ProxyPoll::instance(),
-        [](const std::shared_ptr<Socket>&) {},
-        nullptr);
+    // Move the client socket to ProxyPoll. If it's in another poll, transfer
+    // it; otherwise insert directly.
+    if (fromPoll != ProxyPoll::instance())
+    {
+        fromPoll->transferSocketTo(
+            clientSocket, ProxyPoll::instance(),
+            [](const std::shared_ptr<Socket>&) {},
+            nullptr);
+    }
+    else
+    {
+        ProxyPoll::instance()->insertNewSocket(clientSocket);
+    }
 
     // Non-blocking connect to the target pod.
     net::asyncConnect(

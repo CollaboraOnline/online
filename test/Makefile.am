@@ -105,7 +105,8 @@ all_la_unit_tests = \
 	unit-bad-doc-load.la \
 	unit-wopi-httpredirect.la \
 	unit-hosting.la \
-	unit-proxy.la
+	unit-proxy.la \
+	unit-internal-proxy.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
 
@@ -356,6 +357,8 @@ unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
+unit_internal_proxy_la_SOURCES = UnitInternalProxy.cpp
+unit_internal_proxy_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
