@@ -1606,12 +1606,12 @@ public:
     /// Remove the first @count bytes from input buffer
     void eraseFirstInputBytes(const std::size_t count)
     {
-        size_t toErase = std::min(count, _inBuffer.size());
+        const size_t toErase = std::min(count, _inBuffer.size());
         if (toErase < count)
             LOG_ERR("Attempted to remove: " << count << " which is > size: " << _inBuffer.size()
                                             << " clamped to " << toErase);
         if (toErase > 0)
-            _inBuffer.eraseFirst(count);
+            _inBuffer.eraseFirst(toErase);
     }
 
     /// Compacts chunk headers away leaving just the data we want
