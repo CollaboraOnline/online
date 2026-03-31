@@ -14,23 +14,22 @@
 
 /* global $ _ app JSDialog */
 
-JSDialog._createComment = function (container, data) {
+const _createComment = function (container, data) {
 	// Create annotation copy and add it into the container.
 	container.appendChild(data.annotation.sectionProperties.container);
-
 	data.annotation.show();
 	data.annotation.update();
 	data.annotation.setExpanded();
 };
 
-JSDialog._emptyCommentWizard = function (parentContainer, data, builder) {
+const _emptyCommentWizard = function (parentContainer, data, builder) {
 	window.L.DomUtil.addClass(parentContainer, 'content-has-no-comments');
-	var emptyCommentWizard = window.L.DomUtil.create(
+	const emptyCommentWizard = window.L.DomUtil.create(
 		'figure',
 		'empty-comment-wizard-container',
 		parentContainer,
 	);
-	var imgNode = window.L.DomUtil.create(
+	const imgNode = window.L.DomUtil.create(
 		'img',
 		'empty-comment-wizard-img',
 		emptyCommentWizard,
@@ -38,13 +37,14 @@ JSDialog._emptyCommentWizard = function (parentContainer, data, builder) {
 	app.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map);
 	imgNode.alt = data.text;
 
-	var textNode = window.L.DomUtil.create(
+	const textNode = window.L.DomUtil.create(
 		'figcaption',
 		'empty-comment-wizard',
 		emptyCommentWizard,
 	);
 	textNode.innerText = data.text;
 	window.L.DomUtil.create('br', 'empty-comment-wizard', textNode);
+
 	if (app.isCommentEditingAllowed()) {
 		var linkNode = window.L.DomUtil.create(
 			'div',
@@ -58,14 +58,14 @@ JSDialog._emptyCommentWizard = function (parentContainer, data, builder) {
 
 JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 	if (data.type === 'emptyCommentWizard') {
-		builder._emptyCommentWizard(parentContainer, data, builder);
+		_emptyCommentWizard(parentContainer, data, builder);
 		return;
 	}
 
-	var mainContainer = document.getElementById(
+	let mainContainer = document.getElementById(
 		'explorable-entry level-' + builder._currentDepth + ' ' + data.id,
 	);
-	if (!mainContainer)
+	if (!mainContainer) {
 		mainContainer = window.L.DomUtil.create(
 			'div',
 			'ui-explorable-entry level-' +
@@ -74,12 +74,13 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 				builder.options.cssClass,
 			parentContainer,
 		);
+	}
 
 	mainContainer.id =
 		'explorable-entry level-' + builder._currentDepth + ' ' + data.id;
 
-	var container = document.getElementById(data.id);
-	if (!container)
+	let container = document.getElementById(data.id);
+	if (!container) {
 		container = window.L.DomUtil.create(
 			'div',
 			'ui-header cool-annotation-header level-' +
@@ -89,42 +90,43 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 				' ui-widget',
 			mainContainer,
 		);
+	}
 
 	container.annotation = data.annotation;
 	container.id = data.id;
-	builder._createComment(container, data);
+	_createComment(container, data);
+
 	if (
 		data.children.length > 1 &&
 		mainContainer.id !== 'comment-thread' + data.id
 	) {
-		var numberOfReplies = data.children.length - 1;
+		const numberOfReplies = data.children.length - 1;
 		if (numberOfReplies > 0) {
-			var replyCountNode = document.getElementById(
+			let replyCountNode = document.getElementById(
 				'reply-count-node-' + data.id,
 			);
 
-			if (!replyCountNode)
+			if (!replyCountNode) {
 				replyCountNode = window.L.DomUtil.create(
 					'div',
 					'cool-annotation-reply-count cool-annotation-content',
 					$(container).find('.cool-annotation-content-wrapper')[0],
 				);
+			}
 
 			replyCountNode.id = 'reply-count-node-' + data.id;
 			replyCountNode.style.display = 'block';
 
-			var replyCountText;
-			if (numberOfReplies === 1) {
-				replyCountText = numberOfReplies + ' ' + _('reply');
-			} else {
-				replyCountText = numberOfReplies + ' ' + _('replies');
-			}
+			const replyCountText =
+				numberOfReplies === 1
+					? numberOfReplies + ' ' + _('reply')
+					: numberOfReplies + ' ' + _('replies');
+
 			$(replyCountNode).text(replyCountText);
 		}
 
-		var childContainer = document.getElementById('comment-thread' + data.id);
-
-		if (!childContainer)
+		let childContainer = document.getElementById('comment-thread' + data.id);
+		if (!childContainer) {
 			childContainer = window.L.DomUtil.create(
 				'div',
 				'ui-content level-' +
@@ -133,26 +135,27 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 					builder.options.cssClass,
 				mainContainer,
 			);
+		}
 
 		childContainer.id = 'comment-thread' + data.id;
 		childContainer.title = _('Comment');
-
 		$(childContainer).hide();
 
 		if (builder.wizard) {
 			if ($(container).find('.cool-annotation-menubar').length > 0)
 				$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
 
-			var arrowSpan = container.querySelector(
+			let arrowSpan = container.querySelector(
 				"[id='arrow span " + data.id + "']",
 			);
 
-			if (!arrowSpan)
+			if (!arrowSpan) {
 				arrowSpan = window.L.DomUtil.create(
 					'span',
 					'sub-menu-arrow',
 					$(container).find('.cool-annotation-content-wrapper')[0],
 				);
+			}
 
 			arrowSpan.style.display = 'block';
 			arrowSpan.textContent = '>';
@@ -166,8 +169,7 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 					builder.build(childContainer, data.children);
 			};
 
-			var backButton = document.getElementById('mobile-wizard-back');
-
+			const backButton = document.getElementById('mobile-wizard-back');
 			backButton.onclick = function () {
 				if (backButton.className !== 'close-button') {
 					if (!mainContainer.childNodes.length)
@@ -191,7 +193,8 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 	return false;
 };
 
+// eslint-disable-next-line no-unused-vars
 JSDialog.commentControl = function (parentContainer, data, builder) {
-	builder._createComment(parentContainer, data, false);
+	_createComment(parentContainer, data, false);
 	return false;
 };
