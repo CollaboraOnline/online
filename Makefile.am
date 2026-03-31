@@ -204,6 +204,7 @@ coolwsd_sources = \
                   wsd/FileServerUtil.cpp \
                   wsd/HostUtil.cpp \
                   wsd/ProofKey.cpp \
+                  wsd/ProxyPoll.cpp \
                   wsd/ProxyProtocol.cpp \
                   wsd/ProxyRequestHandler.cpp \
                   wsd/QuarantineUtil.cpp \
@@ -457,6 +458,7 @@ wsd_headers = \
               wsd/PresetsInstall.hpp \
               wsd/Process.hpp \
               wsd/ProofKey.hpp \
+              wsd/ProxyPoll.hpp \
               wsd/ProxyProtocol.hpp \
               wsd/ProxyRequestHandler.hpp \
               wsd/QuarantineUtil.hpp \
