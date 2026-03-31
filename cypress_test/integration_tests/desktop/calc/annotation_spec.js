@@ -204,6 +204,59 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 249, 252);
 	});
 
+	it('Action_GoToComment postMessage navigates to a comment across sheets', function() {
+		// Put text and a comment in cell B2 on Sheet 1.
+		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
+		helper.typeIntoDocument('COMMENT_CELL{enter}');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
+		desktopHelper.insertComment();
+		cy.cGet('#comment-container-1').should('exist');
+
+		// Move to a faraway cell, to check that GoToComment will scroll back
+		calcHelper.enterCellAddressAndConfirm(this.win, 'Z1000');
+		helper.typeIntoDocument('FAR_AWAY_CELL{enter}');
+
+		// Create a new sheet and put text there.
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
+		calcHelper.assertNumberofSheets(2);
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A1');
+		helper.typeIntoDocument('SHEET2_CELL{enter}');
+
+		// We are now on Sheet 2; the comment is on Sheet 1.
+
+		// Stub postMessage to capture the response.
+		cy.getFrameWindow().then(win => {
+			cy.stub(win.parent, 'postMessage').as('postMessage');
+		});
+
+		// Send Action_GoToComment postMessage with the comment's Id.
+		cy.getFrameWindow().then(win => {
+			var message = {
+				'MessageId': 'Action_GoToComment',
+				'Values': { 'Id': '1' }
+			};
+			win.postMessage(JSON.stringify(message), '*');
+		});
+
+		// Verify the response postMessage was sent with success and no error.
+		cy.get('@postMessage').should(stub => {
+			var calls = stub.getCalls().filter(call => {
+				try {
+					var msg = typeof call.args[0] === 'string' ? JSON.parse(call.args[0]) : call.args[0];
+					return msg.MessageId === 'Action_GoToComment_Resp';
+				} catch (e) { return false; }
+			});
+			expect(calls.length, 'Action_GoToComment_Resp was not posted').to.be.greaterThan(0);
+			var resp = typeof calls[0].args[0] === 'string' ? JSON.parse(calls[0].args[0]) : calls[0].args[0];
+			expect(resp.Values.success, 'Action_GoToComment_Resp reported error: ' + resp.Values.errorMsg).to.be.true;
+			expect(resp.Values.Id).to.equal('1');
+		});
+
+		// The comment should be visible and the anchor cell (B2) selected.
+		cy.cGet('#comment-container-1').should('be.visible');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'B2');
+	});
+
 });
 
 describe(['tagdesktop'], 'Annotation Autosave Tests', function() {

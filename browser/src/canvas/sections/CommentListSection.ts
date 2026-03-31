@@ -142,6 +142,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.calcLastTab = -1;
 		this.sectionProperties.calcMasterList = [];
 		this.sectionProperties.calcCommandStateChanged = true;
+		this.sectionProperties.doNotHideCommentTimer = null; // For _goToCalcComment, where comment needs to show, despite async events trying to hide it
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
@@ -398,7 +399,9 @@ export class CommentSection extends CanvasSectionObject {
 
 	public hideAllComments (): void {
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
-			this.sectionProperties.commentList[i].hide();
+			if (!this.sectionProperties.doNotHideCommentTimer
+				|| this.sectionProperties.commentList[i] !== this.sectionProperties.selectedComment)
+				this.sectionProperties.commentList[i].hide();
 			var part = app.map._docLayer._selectedPart;
 			if (app.map._docLayer._docType === 'spreadsheet') {
 				// Change drawing order so they don't prevent each other from being shown.
@@ -745,6 +748,11 @@ export class CommentSection extends CanvasSectionObject {
 				this.updateIdIndexMap();
 				break;
 			}
+		}
+		// Synchronize calcMasterList
+		var masterElementIndex = this.sectionProperties.calcMasterList.findIndex(el => el.id == id);
+		if (masterElementIndex >= 0) {
+			this.sectionProperties.calcMasterList.splice(masterElementIndex, 1);
 		}
 		this.checkSize();
 		app.map.fire('deleteannotation');
@@ -1397,7 +1405,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	public onNewDocumentTopLeft (): void {
 		if (app.map._docLayer._docType === 'spreadsheet') {
-			if (this.sectionProperties.selectedComment)
+			if (this.sectionProperties.selectedComment && !this.sectionProperties.doNotHideCommentTimer)
 				this.sectionProperties.selectedComment.hide();
 		}
 
@@ -1714,6 +1722,10 @@ export class CommentSection extends CanvasSectionObject {
 					}
 					return;
 				}
+
+				// Synchronize calcMasterList
+				if (app.map._docLayer._docType === 'spreadsheet' && obj.comment.id !== 'new')
+					this.sectionProperties.calcMasterList.push(structuredClone(obj.comment));
 
 				this.adjustComment(obj.comment);
 				annotation = this.add(obj.comment);
