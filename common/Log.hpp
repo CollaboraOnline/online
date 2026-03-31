@@ -458,8 +458,10 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define SERIALIZE(_, X) STRING(X) ": " << (X) << ", "
 
 /// Logs the given variables and their values as LOG_ANY.
-/// Example: LOG_VARS(size, name); => LOG_ANY("size: " << size << ", name: " << name << ", ");
-#define LOG_VARS(PREFIX, ...) LOG_ANY(PREFIX << FOR_EACH(SERIALIZE, NAME, __VA_ARGS__))
+/// Example: LOG_VARS("Before xyz", size, name); =>
+/// LOG_ANY('[' << __func__ << "] " << PREFIX << ": " << "size: " << size << ", name: " << name << ", ");
+#define LOG_VARS(PREFIX, ...)                                                                      \
+    LOG_ANY('[' << __func__ << "] " << PREFIX << ": " << FOR_EACH(SERIALIZE, NAME, __VA_ARGS__))
 
 #define LOG_CHECK(X)                                                                               \
     do                                                                                             \
