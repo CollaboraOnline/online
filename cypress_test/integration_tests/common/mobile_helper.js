@@ -267,10 +267,7 @@ function selectAnnotationMenuItem(menuItem) {
 	cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-menu')
 		.click({force: true});
 
-	cy.cGet('.context-menu-list')
-		.should('exist');
-
-	cy.cGet('body').contains('.context-menu-item', menuItem)
+	cy.cGet('body').contains('.ui-header.mobile-wizard.ui-widget', menuItem)
 		.click();
 
 	cy.log('<< selectAnnotationMenuItem - end');
