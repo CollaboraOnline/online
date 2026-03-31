@@ -1833,30 +1833,6 @@ export class CommentSection extends CanvasSectionObject {
 		this.checkSize();
 	}
 
-	// This converts the specified number of values into core pixels from twips.
-	// Returns a new array with the length of specified numbers.
-	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number = null): Array<number> {
-		if (!length)
-			length = numberArray.length;
-
-		if (startIndex < 0)
-			startIndex = 0;
-
-		if (length < 0)
-			length = 0;
-
-		if (startIndex + length > numberArray.length)
-			length = numberArray.length - startIndex;
-
-		var result = new Array(length);
-
-		for (var i = startIndex; i < length; i++) {
-			result[i] = Math.round(numberArray[i] * app.twipsToPixels);
-		}
-
-		return result;
-	}
-
 	// In file based view, we need to move comments to their part's position.
 	// Because all parts are drawn on the screen. Core side doesn't have this feature.
 	// Core side sends the information in part coordinates.

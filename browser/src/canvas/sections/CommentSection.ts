@@ -1553,16 +1553,6 @@ export class Comment extends CanvasSectionObject {
 		return this.sectionProperties.commentListSection.sectionProperties.selectedComment === this;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private doesRectangleContainPoint (rectangle: any, point: Array<number>): boolean {
-		if (point[0] >= rectangle[0] && point[0] <= rectangle[0] + rectangle[2]) {
-			if (point[1] >= rectangle[1] && point[1] <= rectangle[1] + rectangle[3]) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	/*
 		point is the core pixel coordinate of the cursor.
 		Not adjusted according to the view.
