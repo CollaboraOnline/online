@@ -350,18 +350,19 @@ std::size_t getProcessTreePss(pid_t pid)
             std::string child;
             while (children >> child)
             {
-                const auto pair = NumUtil::i32FromString(child);
-                if (pair.second)
+                const pid_t childPid = NumUtil::i32FromString(child, 0);
+                if (childPid > 0)
                 {
-                    pss += getProcessTreePss(pair.first);
+                    pss += getProcessTreePss(childPid);
                 }
             }
         }
 
         return pss;
     }
-    catch (const std::exception&)
+    catch (const std::exception& exc)
     {
+        LOG_DBG("Exception while getting TreePss for PID [" << pid << "]: " << exc.what());
     }
 
     return 0;
