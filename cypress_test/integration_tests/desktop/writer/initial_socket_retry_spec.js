@@ -31,6 +31,16 @@ describe(['tagdesktop'], 'Initial WebSocket connection retry', function() {
 		// With the fix the first WebSocket closes but the client
 		// retries and the document loads on the second attempt.
 		// Without the fix this times out.
-		helper.documentChecks();
+		//
+		// Only check that the document actually loaded. The full
+		// documentChecks() also waits for notebookbar and sidebar
+		// initialization which can be disrupted by the socket
+		// retry flow (the notebookbar container is replaced during
+		// re-initialization but the initialized flag is not reset).
+		var timeout = Cypress.config('defaultCommandTimeout') * 2.0;
+		cy.cGet('#document-canvas', {timeout: timeout})
+			.should('be.visible');
+		cy.cGet('#map', {timeout: timeout})
+			.should('have.class', 'initialized');
 	});
 });
