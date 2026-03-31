@@ -1330,6 +1330,31 @@ class TreeViewControl {
 		this._container.addEventListener('keydown', (event) => {
 			this.handleKeyEvent(event, builder, data);
 		});
+
+		this._container.addEventListener('focusin', (event) => {
+			this.handleFocusInEvent(event, builder, data);
+		});
+	}
+
+	handleFocusInEvent(
+		event: FocusEvent,
+		builder: JSBuilder,
+		data: TreeWidgetJSON,
+	) {
+		const focusFrom = event.relatedTarget as HTMLElement;
+		if (!this._container.contains(focusFrom)) {
+			const active = document.activeElement as HTMLElement;
+			const current = this.getCurrentRow(active);
+			if (current && !window.L.DomUtil.hasClass(current, 'selected')) {
+				(builder as any).callback(
+					'treeview',
+					'select',
+					data,
+					(current as any)._row,
+					builder,
+				);
+			}
+		}
 	}
 
 	handleKeyEvent(
