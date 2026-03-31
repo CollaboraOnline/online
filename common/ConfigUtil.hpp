@@ -113,6 +113,9 @@ void initialize(const std::string& xml);
 /// Initialize the config given a pointer to a long-lived pointer.
 void initialize(const Poco::Util::AbstractConfiguration* config);
 
+/// Initialize the config from a file given it's name.
+void initializeFromFile(const std::string& filename);
+
 /// Check if the config has been initialized
 bool isInitialized();
 
