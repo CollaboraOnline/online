@@ -2764,9 +2764,10 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
         {
             std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-            if (DocBrokers.find(docKey) != DocBrokers.end())
+            auto it = DocBrokers.find(docKey);
+            if (it != DocBrokers.end() && it->second && it->second->getPid() > 0)
             {
-                // We own this document, handle locally.
+                // Document has an active kit process on this pod, handle locally.
                 return completeWsUpgrade(request, requestDetails, socket, mobileAppDocId);
             }
         }
