@@ -162,6 +162,18 @@ private:
                                const std::shared_ptr<StreamSocket>& socket,
                                unsigned mobileAppDocId = 0);
 
+    /// Query the controller for the owning pod and proxy the request there.
+    void handleInternalProxy(const std::string& wopiSrc,
+                             const std::string& controllerBaseURL,
+                             const std::shared_ptr<StreamSocket>& socket,
+                             const Poco::Net::HTTPRequest& request);
+
+    /// Complete the WebSocket upgrade after proxy check passes.
+    bool completeWsUpgrade(const Poco::Net::HTTPRequest& request,
+                           const RequestDetails& requestDetails,
+                           const std::shared_ptr<StreamSocket>& socket,
+                           unsigned mobileAppDocId = 0);
+
     /// Lookup cached file content.
     static const std::string& getFileContent(const std::string& filename);
 

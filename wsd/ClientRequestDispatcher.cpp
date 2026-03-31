@@ -40,6 +40,7 @@
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
 #include <wsd/ProofKey.hpp>
+#include <wsd/ProxyPoll.hpp>
 #include <wsd/ProxyRequestHandler.hpp>
 #include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
@@ -64,6 +65,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
+#include <Poco/JSON/Object.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
 
@@ -2581,19 +2583,103 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
 }
 #endif
 
-bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
-                                                    const RequestDetails& requestDetails,
-                                                    SocketDisposition& disposition,
-                                                    const std::shared_ptr<StreamSocket>& socket,
-                                                    unsigned mobileAppDocId)
+void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
+                                                  const std::string& controllerBaseURL,
+                                                  const std::shared_ptr<StreamSocket>& socket,
+                                                  const Poco::Net::HTTPRequest& request)
 {
-    const std::string url = requestDetails.getDocumentURI();
-    assert(socket && "Must have a valid socket");
+    Poco::URI controllerURI(controllerBaseURL);
+    controllerURI.setPath("/internal/lookup");
+    controllerURI.addQueryParameter("WOPISrc", wopiSrc);
 
-    // must be trace for anonymization
-    LOG_TRC("Client WS request: " << requestDetails.getURI() << ", url: " << url << ", socket #"
-                                  << socket->getFD());
+    const std::string host = controllerURI.getHost();
+    const int port = controllerURI.getPort();
+    const auto protocol = controllerURI.getScheme() == "https"
+                              ? http::Session::Protocol::HttpSsl
+                              : http::Session::Protocol::HttpUnencrypted;
+    auto httpSession = http::Session::create(host, protocol, port);
+    httpSession->setTimeout(std::chrono::seconds(5));
 
+    http::Request controllerRequest(controllerURI.getPathAndQuery());
+    LOG_DBG("Looking up pod for WOPISrc via [" << controllerURI.toString() << ']');
+
+    http::Session::FinishedCallback finishedCallback =
+        [this, controllerBaseURL, wopiSrc, weakSocket = std::weak_ptr<StreamSocket>(socket),
+         request](const std::shared_ptr<http::Session>& session)
+    {
+        if (SigUtil::getShutdownRequestFlag())
+            return;
+
+        const auto httpResponse = session->response();
+
+        if (httpResponse->state() == http::Response::State::Error ||
+            httpResponse->state() == http::Response::State::Timeout)
+        {
+            LOG_ERR("Controller lookup failed for WOPISrc [" << wopiSrc << ']');
+            if (auto s = weakSocket.lock())
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable, s);
+            return;
+        }
+
+        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+
+        if (statusCode == http::StatusCode::NoContent)
+        {
+            LOG_DBG("Controller returned 204 for WOPISrc [" << wopiSrc
+                    << "], handling locally");
+            auto lockedSocket = weakSocket.lock();
+            if (!lockedSocket)
+                return;
+
+            Poco::Net::HTTPRequest mutableRequest(request);
+            RequestDetails requestDetails(mutableRequest, COOLWSD::ServiceRoot);
+            completeWsUpgrade(request, requestDetails, lockedSocket, 0);
+            return;
+        }
+
+        if (statusCode != http::StatusCode::OK)
+        {
+            LOG_ERR("Controller returned " << statusCode << " for WOPISrc [" << wopiSrc << ']');
+            if (auto s = weakSocket.lock())
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable, s);
+            return;
+        }
+
+        const std::string& body = httpResponse->getBody();
+        Poco::JSON::Object::Ptr json;
+        if (!JsonUtil::parseJSON(body, json))
+        {
+            LOG_ERR("Failed to parse controller response: " << body);
+            if (auto s = weakSocket.lock())
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable, s);
+            return;
+        }
+
+        const std::string targetPodIP = JsonUtil::getJSONValue<std::string>(json, "pod_ip");
+        const int targetPort = JsonUtil::getJSONValue<int>(json, "port");
+        if (targetPodIP.empty())
+        {
+            LOG_ERR("Empty pod_ip in controller response for WOPISrc [" << wopiSrc << ']');
+            if (auto s = weakSocket.lock())
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable, s);
+            return;
+        }
+
+        LOG_INF("Document [" << wopiSrc << "] is on pod [" << targetPodIP << "]. Proxying.");
+        if (auto lockedSocket = weakSocket.lock())
+            ProxyPoll::startPump(lockedSocket, targetPodIP, targetPort, request,
+                                 COOLWSD::getWebServerPoll());
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(controllerRequest, COOLWSD::getWebServerPoll());
+}
+
+bool ClientRequestDispatcher::completeWsUpgrade(const Poco::Net::HTTPRequest& request,
+                                                const RequestDetails& requestDetails,
+                                                const std::shared_ptr<StreamSocket>& socket,
+                                                unsigned mobileAppDocId)
+{
     // First Upgrade.
     const bool allowed = allowedOrigin(request, requestDetails);
     auto ws = std::make_shared<WebSocketHandler>(socket, request, allowed);
@@ -2640,6 +2726,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
+        SocketDisposition disposition(socket);
         _rvs->handleRequest(_id, requestDetails, ws, socket, mobileAppDocId, disposition);
         return false; // async keep alive
     }
@@ -2652,6 +2739,45 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         socket->ignoreInput();
         return true;
     }
+}
+
+bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
+                                                    const RequestDetails& requestDetails,
+                                                    [[maybe_unused]] SocketDisposition& disposition,
+                                                    const std::shared_ptr<StreamSocket>& socket,
+                                                    unsigned mobileAppDocId)
+{
+    const std::string url = requestDetails.getDocumentURI();
+    assert(socket && "Must have a valid socket");
+
+    // must be trace for anonymization
+    LOG_TRC("Client WS request: " << requestDetails.getURI() << ", url: " << url << ", socket #"
+                                  << socket->getFD());
+
+#if !MOBILEAPP
+    // If this pod doesn't own the document, proxy to the owning pod.
+    const std::string controllerURL = ConfigUtil::getString("indirection_endpoint.url", "");
+    if (!controllerURL.empty() && !request.has("X-COOL-Internal-Proxy"))
+    {
+        const std::string docKey = requestDetails.getDocKey();
+        const std::string wopiSrc = requestDetails.getField(RequestDetails::Field::WOPISrc);
+
+        {
+            std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+            if (DocBrokers.find(docKey) != DocBrokers.end())
+            {
+                // We own this document, handle locally.
+                return completeWsUpgrade(request, requestDetails, socket, mobileAppDocId);
+            }
+        }
+
+        LOG_INF("No local DocBroker for [" << docKey << "], checking controller.");
+        handleInternalProxy(wopiSrc, controllerURL, socket, request);
+        return false; // async
+    }
+#endif
+
+    return completeWsUpgrade(request, requestDetails, socket, mobileAppDocId);
 }
 
 /// Lookup cached file content.
