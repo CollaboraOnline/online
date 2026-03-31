@@ -70,33 +70,55 @@ JSDialog.SetupA11yLabelForLabelableElement = function (
 				return;
 			}
 
-			const element =
-				findLabelElementById(
-					parentContainer,
-					data.labelledBy,
-					builder.options.suffix,
-					content,
-				) ||
-				findLabelElementById(
-					document,
-					data.labelledBy,
-					builder.options.suffix,
-					content,
-				);
+			const labelledByIds: string[] = Array.isArray(data.labelledBy)
+				? data.labelledBy
+				: [data.labelledBy];
 
-			if (!element) {
+			const foundElements: HTMLElement[] = [];
+			for (const labelId of labelledByIds) {
+				const element =
+					findLabelElementById(
+						parentContainer,
+						labelId,
+						builder.options.suffix,
+						content,
+					) ||
+					findLabelElementById(
+						document,
+						labelId,
+						builder.options.suffix,
+						content,
+					);
+				if (element) {
+					foundElements.push(element);
+				}
+			}
+
+			if (foundElements.length === 0) {
 				JSDialog.AddAriaLabel(content, data, builder);
 				return;
 			}
 
-			const labelHasHtmlFor =
-				element.tagName === 'LABEL' && (element as HTMLLabelElement).htmlFor;
+			if (foundElements.length === 1) {
+				const element = foundElements[0];
+				const labelHasHtmlFor =
+					element.tagName === 'LABEL' && (element as HTMLLabelElement).htmlFor;
 
-			const htmlForPointsToThisElement =
-				labelHasHtmlFor && (element as HTMLLabelElement).htmlFor === content.id;
+				const htmlForPointsToThisElement =
+					labelHasHtmlFor &&
+					(element as HTMLLabelElement).htmlFor === content.id;
 
-			if (!htmlForPointsToThisElement) {
-				content.setAttribute('aria-labelledby', element.id);
+				if (!htmlForPointsToThisElement) {
+					content.setAttribute('aria-labelledby', element.id);
+				}
+			} else {
+				// Multiple labels: set aria-labelledby with all IDs.
+				// This is the correct ARIA pattern for grid layouts
+				// where a control is labeled by both a row and column
+				// header. aria-labelledby takes precedence for the
+				// accessible name; htmlFor still provides click-to-focus.
+				const ids = foundElements.map((el) => el.id).join(' ');
+				content.setAttribute('aria-labelledby', ids);
 			}
 		});
 	});
@@ -107,9 +129,14 @@ JSDialog.SetupA11yLabelForNonLabelableElement = function (
 	data: WidgetJSON,
 	builder: JSBuilder,
 ) {
-	if (data.labelledBy)
-		container.setAttribute('aria-labelledby', data.labelledBy);
-	else JSDialog.AddAriaLabel(container, data, builder);
+	if (data.labelledBy) {
+		const ids = Array.isArray(data.labelledBy)
+			? data.labelledBy.join(' ')
+			: data.labelledBy;
+		container.setAttribute('aria-labelledby', ids);
+	} else {
+		JSDialog.AddAriaLabel(container, data, builder);
+	}
 };
 
 JSDialog.AddAriaLabel = function (

@@ -26,7 +26,7 @@ interface WidgetJSON {
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
-	labelledBy?: string;
+	labelledBy?: string | string[];
 	allyRole?: string;
 	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes

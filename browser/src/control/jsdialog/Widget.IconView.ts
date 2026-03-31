@@ -287,8 +287,12 @@ JSDialog.iconView = function (
 		iconview.setAttribute('role', 'radiogroup');
 	}
 
-	if (data.labelledBy)
-		iconview.setAttribute('aria-labelledby', data.labelledBy);
+	if (data.labelledBy) {
+		const ids = Array.isArray(data.labelledBy)
+			? data.labelledBy.join(' ')
+			: data.labelledBy;
+		iconview.setAttribute('aria-labelledby', ids);
+	}
 
 	const disabled = data.enabled === false;
 	if (disabled) window.L.DomUtil.addClass(iconview, 'disabled');
