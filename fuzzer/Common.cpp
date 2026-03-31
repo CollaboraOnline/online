@@ -18,16 +18,29 @@
 
 #include <fuzzer/Common.hpp>
 
-#include <map>
-#include <string>
-
+#include <common/Clipboard.hpp>
+#include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
-#include <Ssl.hpp>
+#include <net/Ssl.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/FileServer.hpp>
+
+#include <Poco/AutoPtr.h>
+
+#include <map>
+#include <memory>
+#include <string>
 
 namespace fuzzer
 {
 bool DoInitialization()
 {
+    ConfigUtil::initializeFromFile("coolwsd.xml");
+
+    COOLWSD::SavedClipboards = std::make_unique<ClipboardCache>();
+    COOLWSD::FileRequestHandler =
+        std::make_unique<FileServerRequestHandler>(COOLWSD::FileServerRoot);
+
     std::string logLevel("fatal");
     bool withColor = false;
     bool logToFile = false;

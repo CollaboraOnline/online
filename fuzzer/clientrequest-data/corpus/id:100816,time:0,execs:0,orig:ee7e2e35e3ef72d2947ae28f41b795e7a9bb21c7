@@ -1,0 +1,7 @@
+GET cool/fle%3A%2F%2Ff%2Ftmp%2FUpty.ods/ws HTTP/1.1
+Host: 127.0.0.1:9985
+Origin: https://127.0.0.1:9985/remote/robotade
+Upgrade: websocket
+Se
+0
+

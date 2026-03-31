@@ -1,0 +1,5 @@
+GT cool/ws H
+Host:
+Upgrade:websocket
+Sec-WebSocket-Key:l
+

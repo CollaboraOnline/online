@@ -1,0 +1,6 @@
+E cool/ws .1
+Host: 127.0.0.1
+Origin: http://127.0.0.1:1³
+Upgrade: websocket
+
+T
