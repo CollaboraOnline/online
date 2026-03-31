@@ -1876,10 +1876,13 @@ bool StreamSocket::compactChunks(MessageMap& map)
 
     char *first = _inBuffer.data();
     char *dest = first;
-    for (const auto &span : map._spans)
+    for (const auto& [offset, length] : map._spans)
     {
-        std::memmove(dest, &_inBuffer[span.first], span.second);
-        dest += span.second;
+        assert(length > 0);
+        assert(offset < _inBuffer.size());
+        assert(offset + length <= _inBuffer.size());
+        std::memmove(dest, &_inBuffer[offset], length);
+        dest += length;
     }
 
     // Erase the duplicate bits.
