@@ -121,26 +121,37 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		);
 	}
 
-	override onDraw(): void {
-		const container = this.getHTMLObject();
+	private checkSettings() {
+		if (app.activeDocument) {
+			this.size = app.activeDocument.fileSize.pToArray();
 
-		if (
-			!app.activeDocument ||
-			app.activeDocument.activeLayout.type !== 'ViewLayoutCompareChanges'
-		) {
-			container.style.display = 'none';
-			return;
-		}
+			const layoutCheck =
+				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+
+			if (!layoutCheck) {
+				if (this.isSectionShown()) this.setShowSection(false);
+				return false;
+			} else {
+				if (!this.isSectionShown()) this.setShowSection(true);
+				return true;
+			}
+		} else return false;
+	}
+
+	public onNewDocumentTopLeft(): void {
+		this.checkSettings();
+	}
+
+	override onDraw(): void {
+		if (!this.checkSettings() || !app.activeDocument) return;
 
 		this.adjustHTMLObjectPosition();
-		container.style.display = '';
 
 		const layout = app.activeDocument.activeLayout as ViewLayoutCompareChanges;
 
 		// Use page rectangle to get actual page position and width (in twips).
 		const pageRects = app.file.writer.pageRectangleList;
 		if (!pageRects || pageRects.length === 0) {
-			container.style.display = 'none';
 			return;
 		}
 		const firstPage = pageRects[0];
@@ -186,8 +197,6 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 			);
 			this.updateSubtitle(this.leftSubtitle, props.metadata.otherDocument);
 			this.updateSubtitle(this.rightSubtitle, props.metadata.thisDocument);
-			this.leftSubtitle.style.display = '';
-			this.rightSubtitle.style.display = '';
 		} else {
 			CompareChangesLabelSection.setTextContent(
 				this.leftTitle,
@@ -197,8 +206,6 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 				this.rightTitle,
 				_('Current Version'),
 			);
-			this.leftSubtitle.style.display = 'none';
-			this.rightSubtitle.style.display = 'none';
 		}
 
 		// We only have a subtitle right after comparing; so if we don't have a subtitle,
@@ -207,16 +214,12 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		this.leftTitle.style.lineHeight = titleHeight + 'px';
 		this.rightTitle.style.lineHeight = titleHeight + 'px';
 
-		this.leftLabel.style.display = '';
 		this.leftLabel.style.left = leftX + 'px';
 		this.leftLabel.style.top = topY + 'px';
 		this.leftLabel.style.width = pageWidth + 'px';
 
-		this.rightLabel.style.display = '';
 		this.rightLabel.style.left = rightX + 'px';
 		this.rightLabel.style.top = topY + 'px';
 		this.rightLabel.style.width = pageWidth + 'px';
 	}
 }
-
-app.definitions.compareChangesLabelSection = CompareChangesLabelSection;
