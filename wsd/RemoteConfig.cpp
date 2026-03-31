@@ -48,14 +48,16 @@ void RemoteJSONPoll::start()
             LOG_INF("Remote " << _expectedKind << " is not specified in coolwsd.xml");
             return; // no remote config server setup.
         }
-#if !ENABLE_DEBUG
-        if (Util::iequal(remoteServerURI.getScheme(), "http"))
+
+        if constexpr (!Util::isDebugEnabled())
         {
-            LOG_ERR(
-                "Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
-            return;
+            if (Util::iequal(remoteServerURI.getScheme(), "http"))
+            {
+                LOG_ERR("Remote config url should only use HTTPS protocol: "
+                        << remoteServerURI.toString());
+                return;
+            }
         }
-#endif
     }
 
     startThread();
@@ -70,14 +72,15 @@ void RemoteJSONPoll::pollingThread()
         // don't try to fetch from an empty URI
         bool valid = !remoteServerURI.empty();
 
-#if !ENABLE_DEBUG
-        if (Util::iequal(remoteServerURI.getScheme(), "http"))
+        if constexpr (!Util::isDebugEnabled())
         {
-            LOG_ERR(
-                "Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
-            valid = false;
+            if (Util::iequal(remoteServerURI.getScheme(), "http"))
+            {
+                LOG_ERR("Remote config url should only use HTTPS protocol: "
+                        << remoteServerURI.toString());
+                valid = false;
+            }
         }
-#endif
 
         if (valid)
         {

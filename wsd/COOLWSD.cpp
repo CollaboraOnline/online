@@ -1490,11 +1490,12 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     setenv("COOL_LOGLEVEL", LogLevel.c_str(), true);
     setenv("COOL_LOGDISABLED_AREAS", LogDisabledAreas.c_str(), true);
 
-#if !ENABLE_DEBUG
-    const std::string salLog =
-        ConfigUtil::getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");
-    setenv("SAL_LOG", salLog.c_str(), 0);
-#endif
+    if constexpr (!Util::isDebugEnabled())
+    {
+        const std::string salLog =
+            ConfigUtil::getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");
+        setenv("SAL_LOG", salLog.c_str(), 0);
+    }
 
 #if WASMAPP
     // In WASM, we want to log to the Log Console.
