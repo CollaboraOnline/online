@@ -1335,30 +1335,6 @@ class TreeViewControl {
 		});
 	}
 
-	setupFocusOutHandler() {
-		this._container.addEventListener('focusout', (event) => {
-			app.layoutingService.appendLayoutingTask(() => {
-				const activeElement = document.activeElement as HTMLElement;
-				const isFocusInTreeView =
-					activeElement && this._container.contains(activeElement);
-
-				if (!isFocusInTreeView) {
-					const listElements = this._container.querySelectorAll(
-						`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
-					);
-					this.restoreInitialTabIndexes(
-						Array.from(listElements) as Array<HTMLElement>,
-					);
-				}
-			});
-		});
-	}
-
-	restoreInitialTabIndexes(listElements: Array<HTMLElement>) {
-		listElements.forEach((entry: HTMLElement) => {
-			entry.tabIndex = 0;
-		});
-	}
 
 	changeFocusedRow(
 		listElements: Array<HTMLElement>,
@@ -1894,7 +1870,6 @@ class TreeViewControl {
 
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);
-		this.setupFocusOutHandler();
 
 		this._container.setAttribute('role', this._containerRole);
 		if (this._isRealTree && (!data.headers || data.headers.length === 0))
