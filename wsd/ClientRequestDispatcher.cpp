@@ -2589,7 +2589,7 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
                                                   const Poco::Net::HTTPRequest& request)
 {
     Poco::URI controllerURI(controllerBaseURL);
-    controllerURI.setPath("/internal/lookup");
+    controllerURI.setPath("/controller/internal/lookup");
     controllerURI.addQueryParameter("WOPISrc", wopiSrc);
 
     const std::string host = controllerURI.getHost();
