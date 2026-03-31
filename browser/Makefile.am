@@ -191,7 +191,7 @@ NODE_MODULES_SRC =\
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
 
-COOL_CSS_LST =\
+COOL_CSS =\
 	$(srcdir)/css/leaflet.css \
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
@@ -227,8 +227,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/tooltip.css \
 	$(srcdir)/css/progressbar.css \
 	$(srcdir)/css/settings.css
-
-COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
 COOL_CSS_DST = $(foreach file,$(COOL_CSS),$(DIST_FOLDER)/$(notdir $(file)))
 COOL_CSS_M4 = $(strip $(foreach file,$(COOL_CSS),$(notdir $(file))))
@@ -706,10 +704,8 @@ COOL_JS_LST =\
 	src/control/Control.Scroll.Annotation.js \
 	src/main.js
 
-COOL_JS_WEBORDER = $(filter %,$(COOL_JS_LST))
-
-COOL_JS_SRC = $(filter %.js,$(COOL_JS_WEBORDER))
-COOL_TS_SRC = $(filter %.ts,$(COOL_JS_WEBORDER))
+COOL_JS_SRC = $(filter %.js,$(COOL_JS_LST))
+COOL_TS_SRC = $(filter %.ts,$(COOL_JS_LST))
 
 # beware these are not helpfully ordered
 COOL_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_TS_SRC))
@@ -740,7 +736,7 @@ dist-hook:
 
 SUBDIRS = l10n images
 
-COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER))
+COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_LST))
 
 define bundle_cool
 	$(if $(IS_SEPARATE),\
@@ -981,7 +977,7 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 	$(QUIET_CMP) if cmp -s $@.tmp $@; then rm $@.tmp; else mv $@.tmp $@; fi
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
-	$(foreach file,$(L10N_ALL_JS_ENTRY) $(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(patsubst $(DIST_FOLDER)/src/%,src/%,$(COOL_JS_WEBORDER))), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
+	$(foreach file,$(L10N_ALL_JS_ENTRY) $(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(patsubst $(DIST_FOLDER)/src/%,src/%,$(COOL_JS_LST))), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
 	@truncate $(if $(filter Darwin FreeBSD,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
