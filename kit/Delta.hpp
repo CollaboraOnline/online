@@ -244,7 +244,7 @@ class DeltaGenerator {
             auto* scratch = static_cast<uint32_t*>(alloca(sizeof(uint32_t) * width));
 
             bool done = false;
-            if (simd::HasAVX2 && width == 256)
+            if (simd::IsEnabled && width == 256)
             {
                 done = simd_initPixRowSimd(from, scratch, &_rleSize, _rleMask);
 
@@ -528,7 +528,7 @@ class DeltaGenerator {
             std::memcpy(dest, srcBytes, count * 4);
             break;
         case LOK_TILEMODE_BGRA:
-            if (simd::HasAVX2 &&
+            if (simd::IsEnabled &&
                 simd_copyRowSwapRB(dest, srcBytes, count))
                 break;
 

@@ -19,20 +19,29 @@
 #include <Simd.hpp>
 
 #if ENABLE_SIMD
-#  include <immintrin.h>
+#  if !defined(__aarch64__)
+#    include <immintrin.h>
+#  endif
 #endif
 
 namespace simd {
 
 bool HasAVX2 = false;
+bool HasNeon = false;
+bool IsEnabled = false;
 
 bool init()
 {
 #if ENABLE_SIMD
+#  if defined(__aarch64__)
+    HasNeon = true; // NEON is mandatory on ARM64
+#  else
     __builtin_cpu_init();
     HasAVX2 = __builtin_cpu_supports ("avx2");
+#  endif
 #endif
-    return HasAVX2;
+    IsEnabled = HasAVX2 || HasNeon;
+    return IsEnabled;
 }
 
 };

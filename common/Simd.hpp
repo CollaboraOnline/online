@@ -14,6 +14,8 @@
 namespace simd {
     bool init();
     extern bool HasAVX2;
+    extern bool HasNeon;
+    extern bool IsEnabled;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
