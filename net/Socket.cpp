@@ -1762,16 +1762,32 @@ bool StreamSocket::checkChunks(const Poco::Net::HTTPRequest& request, size_t hea
 
         // each chunk is preceeded by its length in hex.
         size_t chunkLen = 0;
+        bool haveHexDigits = false;
         for (; itBody != _inBuffer.end(); ++itBody)
         {
             int digit = HexUtil::hexDigitFromChar(*itBody);
             if (digit >= 0)
+            {
+                haveHexDigits = true;
                 chunkLen = chunkLen * 16 + digit;
+                if (chunkLen > http::MaxChunkLen)
+                {
+                    LOG_ERR("Invalid chunk length (" << chunkLen << ") exceeds limit of "
+                                                     << http::MaxChunkLen / 1024 / 1024 << " MB");
+                    return false;
+                }
+            }
             else
                 break;
         }
 
         LOG_CHUNK("parseHeader: Chunk of length " << chunkLen);
+
+        if (chunkLen == 0 && !haveHexDigits)
+        {
+            LOG_ERR("Invalid chunk with no length");
+            return false;
+        }
 
         for (; itBody != _inBuffer.end() && *itBody != '\n'; ++itBody)
             ; // skip to end of line
