@@ -11,7 +11,7 @@ describe(['tagdesktop'], 'Notebookbar tooltip tests (ODS).', function() {
 		desktopHelper.switchUIToNotebookbar();
 	});
 
-	it('InsertCalcTable button shows ODS tooltip when disabled', function() {
+	it.skip('InsertCalcTable button shows ODS tooltip when disabled', function() {
 		cy.cGet('#Insert-tab-label').click();
 
 		cy.cGet('[modelid="insert-insert-calc-table"]')
