@@ -83,7 +83,7 @@ class UserList extends window.L.Control {
 			this.options.noUser = _('0 users');
 		}
 
-		const userListElement = document.getElementById('userListSummary');
+		const userListElement = document.getElementById('userListSummaryButton');
 		userListElement.setAttribute('aria-label', _('User List Summary'));
 
 		this.registerHeaderAvatarEvents();
@@ -221,14 +221,14 @@ class UserList extends window.L.Control {
 		if (canShowDropdown) {
 			JSDialog.OpenDropdown(
 				'userlist',
-				document.getElementById('userListSummary'),
+				document.getElementById('userListSummaryButton'),
 				JSDialog.MenuDefinitions.get('UsersListMenu'),
 			);
 		}
 	}
 
 	registerHeaderAvatarEvents() {
-		document.getElementById('userListSummary').addEventListener(
+		document.getElementById('userListSummaryButton').addEventListener(
 			'click',
 			function (e: MouseEvent) {
 				e.stopPropagation();
@@ -296,7 +296,7 @@ class UserList extends window.L.Control {
 		const userListElementBackground = document.getElementById(
 			'userListSummaryBackground',
 		);
-		const userListElement = document.getElementById('userListSummary');
+		const userListElement = document.getElementById('userListSummaryButton');
 
 		if (
 			window.mode.isMobile() ||
