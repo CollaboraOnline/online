@@ -51,6 +51,15 @@ function getBorderStyleUNOCommand(
 	vert,
 	color,
 ) {
+	// flags are the same as core's SvxBoxInfoItemValidFlags
+	const funParams = [top, bottom, left, right, horiz, vert]
+	const paramFlags = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20]
+	let valid = funParams.reduce((sum, val, i) => sum + +(val === 1)*paramFlags[i], 0);
+	// none set: means clear all borders
+	if (valid === 0) {
+		// 0x7f maps to all flags except DISABLE set
+		valid = 0x7f;
+	}
 	const params = {
 		OuterBorder: {
 			type: '[]any',
@@ -132,7 +141,7 @@ function getBorderStyleUNOCommand(
 					},
 				},
 				{ type: 'short', value: 0 },
-				{ type: 'short', value: 127 },
+				{ type: 'short', value: valid },
 				{ type: 'long', value: 0 },
 			],
 		},
