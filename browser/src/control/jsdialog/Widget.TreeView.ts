@@ -1462,146 +1462,34 @@ class TreeViewControl {
 
 	setupKeyEvents(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container.addEventListener('keydown', (event) => {
-			const listElements = this._container.querySelectorAll(
-				`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
-			);
-			this.handleKeyEvent(event, listElements, builder, data);
+			this.handleKeyEvent(event, builder, data);
 		});
-	}
-
-
-	changeFocusedRow(
-		listElements: Array<HTMLElement>,
-		fromIndex: number,
-		toIndex: number,
-		builder: JSBuilder,
-		data: TreeWidgetJSON,
-	) {
-		var nextElement = listElements.at(toIndex);
-		nextElement.tabIndex = 0;
-		nextElement.focus();
-		(builder as any).callback(
-			'treeview',
-			'select',
-			data,
-			(nextElement as any)._row,
-			builder,
-		);
-
-		// Update tabindex so the new entry is in the tab order and the
-		// old one is removed. Selected entries keep their tabindex so
-		// they remain reachable via Tab.
-		var nextInput = Array.from(
-			listElements
-				.at(toIndex)
-				.querySelectorAll('.ui-treeview-entry > div > input'),
-		) as Array<HTMLElement>;
-		if (nextInput && nextInput.length)
-			nextInput.at(0).removeAttribute('tabindex');
-
-		if (fromIndex >= 0) {
-			var oldElement = listElements.at(fromIndex);
-			if (window.L.DomUtil.hasClass(oldElement, 'selected')) return;
-
-			oldElement.removeAttribute('tabindex');
-			var oldInput = Array.from(
-				listElements
-					.at(fromIndex)
-					.querySelectorAll('.ui-treeview-entry > div > input'),
-			) as Array<HTMLElement>;
-			if (oldInput && oldInput.length) oldInput.at(0).tabIndex = -1;
-		}
-	}
-
-	getCurrentEntry(listElements: Array<HTMLElement>) {
-		var focusedElement = document.activeElement as HTMLElement;
-		// tr - row itself
-		var currIndex = listElements.indexOf(focusedElement);
-		// input - child of a row
-		if (currIndex < 0)
-			currIndex = listElements.indexOf(
-				focusedElement.parentNode.parentNode as HTMLElement,
-			);
-		// no focused entry - try with selected one
-		if (currIndex < 0) {
-			var selected = listElements.filter((o) => {
-				return o.classList.contains('selected');
-			});
-			if (selected && selected.length)
-				currIndex = listElements.indexOf(selected[0]);
-		}
-		if (currIndex < 0) {
-			for (var i in listElements) {
-				var parent = listElements[i].parentNode;
-
-				if (parent) parent = parent.parentNode;
-				else break;
-
-				if (parent && window.L.DomUtil.hasClass(parent, 'selected')) {
-					currIndex = listElements.indexOf(listElements[i]);
-					break;
-				}
-			}
-		}
-
-		return currIndex;
 	}
 
 	handleKeyEvent(
 		event: KeyboardEvent,
-		nodeList: NodeList,
 		builder: JSBuilder,
 		data: TreeWidgetJSON,
 	) {
 		var preventDef = false;
-		var listElements = Array.from(nodeList) as Array<HTMLElement>; // querySelector returns NodeList not array
-		var treeLength = listElements.length;
-		var currIndex = this.getCurrentEntry(listElements);
+		const active = document.activeElement as HTMLElement;
+		const current = this.getCurrentRow(active);
+		if (!current) return;
 
-		if (event.key === 'ArrowDown') {
-			if (currIndex < 0)
-				this.changeFocusedRow(listElements, currIndex, 0, builder, data);
-			else {
-				var nextIndex = currIndex + 1;
-				while (
-					nextIndex < treeLength - 1 &&
-					listElements[nextIndex].clientHeight <= 0
-				)
-					nextIndex++;
-				if (nextIndex < treeLength)
-					this.changeFocusedRow(
-						listElements,
-						currIndex,
-						nextIndex,
-						builder,
-						data,
-					);
-			}
-			preventDef = true;
-		} else if (event.key === 'ArrowUp') {
-			if (currIndex < 0)
-				this.changeFocusedRow(
-					listElements,
-					currIndex,
-					treeLength - 1,
-					builder,
+		if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+			const next = this.getNextFocusableRow(current, event.key === 'ArrowDown');
+			if (next) {
+				next.focus();
+				(builder as any).callback(
+					'treeview',
+					'select',
 					data,
+					(next as any)._row,
+					builder,
 				);
-			else {
-				var nextIndex = currIndex - 1;
-				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
-					nextIndex--;
-				if (nextIndex >= 0)
-					this.changeFocusedRow(
-						listElements,
-						currIndex,
-						nextIndex,
-						builder,
-						data,
-					);
-			}
 
-			preventDef = true;
+				preventDef = true;
+			}
 		} else if (
 			data.fireKeyEvents &&
 			// FIXME: can callback return boolean?
@@ -1609,7 +1497,7 @@ class TreeViewControl {
 				'treeview',
 				'keydown',
 				{ id: data.id, key: event.key },
-				currIndex,
+				(current as any)._row,
 				builder,
 			)
 		) {
@@ -1621,6 +1509,32 @@ class TreeViewControl {
 			event.preventDefault();
 			event.stopPropagation();
 		}
+	}
+
+	private getCurrentRow(el: HTMLElement): HTMLElement | null {
+		let node: HTMLElement | null = el;
+		while (node && node.parentElement !== this._container)
+			node = node.parentElement;
+		return node;
+	}
+
+	private getNextFocusableRow(
+		current: HTMLElement,
+		forward: boolean,
+	): HTMLElement | null {
+		const sibling = forward
+			? current.nextElementSibling
+			: current.previousElementSibling;
+		if (!sibling) return null;
+
+		const element = sibling as HTMLElement;
+		if (element.clientHeight > 0) {
+			current.removeAttribute('tabindex');
+			element.tabIndex = 0;
+			return element;
+		}
+
+		return this.getNextFocusableRow(element, forward);
 	}
 
 	static isRealTree(data: TreeWidgetJSON) {
