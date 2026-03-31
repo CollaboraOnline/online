@@ -391,8 +391,6 @@ class TreeViewControl {
 			this.isPageDivider(entry, this.PAGE_ENTRY_PREFIX, this.PAGE_ENTRY_SUFFIX)
 		) {
 			window.L.DomUtil.addClass(tr, this.PAGE_DIVIDER_ROW_CLASS);
-		} else {
-			tr.setAttribute('tabindex', '0');
 		}
 
 		let selectionElement;
