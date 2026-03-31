@@ -1324,11 +1324,8 @@ void Admin::startMonitors()
         addCallback(
             [this, monitor]
             {
-                std::string monitorUrl = monitor.first + "?ServerId=" + Util::getProcessIdentifier();
-                const char* podIP = std::getenv("POD_IP");
-                if (podIP && podIP[0] != '\0')
-                    monitorUrl += "&PodIP=" + std::string(podIP);
-                scheduleMonitorConnect(monitorUrl, std::chrono::steady_clock::now());
+                scheduleMonitorConnect(monitor.first + "?ServerId=" + Util::getProcessIdentifier(),
+                                       std::chrono::steady_clock::now());
             });
         haveMonitors = true;
     }
