@@ -67,7 +67,7 @@ void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& pa
 /// The idea is to only warn in release builds, but to help developers in debug builds.
 /// Returns false only in debug build.
 inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
-                          [[maybe_unused]] const std::shared_ptr<StreamSocket>& socket = {},
+                          const std::shared_ptr<StreamSocket>& socket = {},
                           LOG_CAPTURE_CALLER_DECLARATION)
 {
     // getQueryParameters(), which is used to extract wopiSrc, decodes the values.
@@ -75,26 +75,29 @@ inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
     // But, if it matches, check if the WOPISrc actually needed encoding.
     if (uri.find(wopiSrc) != std::string::npos && Uri::needsEncoding(wopiSrc))
     {
-#if !ENABLE_DEBUG
-        LOG_WRN_ONCE_S(
-            "WOPISrc validation error: unencoded WOPISrc ["
-            << wopiSrc << "] in URL [" << uri
-            << "]. WOPISrc must be URI-encoded. This is highly problematic with proxies, "
-               "load balancers, and when tunneling. Will not warn again");
-#else
-        // In debug mode, be assertive. Logs might go unnoticed.
-        LOG_ERR_S("WOPISrc validation error: unencoded WOPISrc ["
-                  << wopiSrc << "] in URL [" << uri
-                  << "]. This is highly problematic with proxies, load balancers, and when "
-                     "tunneling");
-        if (socket)
+        if constexpr (!Util::isDebugEnabled())
         {
-            sendErrorAndShutdown(http::StatusCode::BadRequest, socket,
-                                 "WOPISrc must be URI-encoded");
+            LOG_WRN_ONCE_S(
+                "WOPISrc validation error: unencoded WOPISrc ["
+                << wopiSrc << "] in URL [" << uri
+                << "]. WOPISrc must be URI-encoded. This is highly problematic with proxies, "
+                   "load balancers, and when tunneling. Will not warn again");
         }
+        else
+        {
+            // In debug mode, be assertive. Logs might go unnoticed.
+            LOG_ERR_S("WOPISrc validation error: unencoded WOPISrc ["
+                      << wopiSrc << "] in URL [" << uri
+                      << "]. This is highly problematic with proxies, load balancers, and when "
+                         "tunneling");
+            if (socket)
+            {
+                sendErrorAndShutdown(http::StatusCode::BadRequest, socket,
+                                     "WOPISrc must be URI-encoded");
+            }
 
-        return false;
-#endif // ENABLE_DEBUG
+            return false;
+        }
     }
 
     return true;
