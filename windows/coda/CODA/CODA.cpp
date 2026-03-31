@@ -1873,6 +1873,8 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             }
 
             auto srcPath = Poco::URI(fileUrl).getPath();
+            // The usual hack to get rid of the leading slash in what Poco::URI::getPath() returns,
+            // like "/C:/Users/bob/AppData/Local/Temp/image.jpg".
             if (srcPath.length() > 4 && srcPath[0] == '/' && srcPath[2] == ':' && srcPath[3] == '/')
                 srcPath = srcPath.substr(1);
 
@@ -1894,7 +1896,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
 
             if (filenameAndUri.filename != "")
             {
-                auto const destPath = Poco::URI(filenameAndUri.uri).getPath();
+                auto destPath = Poco::URI(filenameAndUri.uri).getPath();
+                // As above
+                if (destPath.length() > 4 && destPath[0] == '/' && destPath[2] == ':' && destPath[3] == '/')
+                    destPath = destPath.substr(1);
                 std::error_code ec;
                 std::filesystem::copy_file(srcPath, destPath,
                                            std::filesystem::copy_options::overwrite_existing, ec);
