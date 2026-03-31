@@ -1895,9 +1895,12 @@ bool StreamSocket::compactChunks(MessageMap& map)
     map._messageSize -= gap;
 
 #if ENABLE_DEBUG
-    std::ostringstream oss(Util::makeDumpStateStream());
-    dumpState(oss);
-    LOG_TRC("Socket state: " << oss.str());
+    LOG_TRC("Socket state: " <<
+            [this](auto& oss)
+            {
+                oss.setf(std::ios_base::boolalpha);
+                dumpState(oss);
+            });
 #endif
 
     return true;
