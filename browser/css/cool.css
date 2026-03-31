@@ -973,7 +973,7 @@ body {
 .cool-annotation-child-line {
 	border-style: none none dashed dashed;
 	border-width: thin;
-	border-color: black;
+	border-color: var(--color-annotation-line);
 }
 /*Tooltips
 ----------------------------------*/
