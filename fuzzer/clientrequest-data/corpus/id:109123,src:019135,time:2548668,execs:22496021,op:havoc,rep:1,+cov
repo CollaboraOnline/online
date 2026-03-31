@@ -1,0 +1,5 @@
+GET cool/ws?WOPISrc=http%20s&access_token=M GE
+Host:
+Upgrade: websocket
+=
+

@@ -239,6 +239,7 @@ noinst_PROGRAMS = \
 if ENABLE_LIBFUZZER
 noinst_PROGRAMS += \
 		   admin_fuzzer \
+		   clientrequest_fuzzer \
 		   clientsession_fuzzer \
 		   httpresponse_fuzzer \
 		   httpecho_fuzzer
@@ -348,6 +349,14 @@ admin_fuzzer_SOURCES = \
 		       fuzzer/Admin.cpp
 admin_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 admin_fuzzer_LDADD = libsimd.a
+
+clientrequest_fuzzer_CPPFLAGS = \
+				$(AM_CPPFLAGS)
+clientrequest_fuzzer_SOURCES = \
+			       $(common_fuzzer_sources) \
+			       fuzzer/ClientRequestDispatcher.cpp
+clientrequest_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+clientrequest_fuzzer_LDADD = libsimd.a
 
 clientsession_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS)

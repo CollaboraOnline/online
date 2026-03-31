@@ -1,0 +1,7 @@
+T cool/d/ws /1
+Host:1/1
+Host:1::
+Origin:+/1
+S1:99
+Upgrade:webSocket
+
