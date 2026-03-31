@@ -82,7 +82,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// toolbar we clicked to create the dropdown in which the
 		// second appears. We want to wait until that second one is
 		// available and click that one, not reclick the first.
-		desktopHelper.getNbIcon('FreezePanes').filter(':visible').should('not.have.length', 1).last().click();
+		desktopHelper.getNbIcon('FreezePanes')
+			.filter(':visible').filter(':not(.arrowbackground)')
+			.should('not.have.length', 1).last().click();
 		closeNotebookbarPopup();
 
 		// Scroll down.
