@@ -1359,7 +1359,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	public showHideComment (annotation: any): void {
+	public showHideComment (annotation: Comment): void {
 		// This manually shows/hides comments
 		if (!this.sectionProperties.showResolved && app.map._docLayer._docType === 'text') {
 			let hide = annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true';
