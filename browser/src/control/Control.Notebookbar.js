@@ -651,7 +651,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 				'command': 'shareas',
 				'inlineLabel': true,
 				'accessibility': { focusBack: false, combination: 'ZS', de: null },
-				'tabIndex': 0,
 			});
 		}
 
