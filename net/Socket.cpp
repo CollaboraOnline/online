@@ -1749,12 +1749,12 @@ bool StreamSocket::checkChunks(const Poco::Net::HTTPRequest& request, size_t hea
     auto itBody = _inBuffer.begin() + headerSize;
 
     // keep the header
-    map._spans.emplace_back(0, itBody - _inBuffer.begin());
+    map._spans.emplace_back(0, headerSize);
 
     int chunk = 0;
     while (itBody != _inBuffer.end())
     {
-        auto chunkStart = itBody;
+        const auto chunkStart = itBody;
 
         // skip whitespace
         for (; itBody != _inBuffer.end() && isascii(*itBody) && isspace(*itBody); ++itBody)
@@ -1780,8 +1780,8 @@ bool StreamSocket::checkChunks(const Poco::Net::HTTPRequest& request, size_t hea
             itBody++; /* \n */;
 
         // skip the chunk.
-        auto chunkOffset = itBody - _inBuffer.begin();
-        auto chunkAvailable = _inBuffer.size() - chunkOffset;
+        const auto chunkOffset = itBody - _inBuffer.begin();
+        const auto chunkAvailable = _inBuffer.size() - chunkOffset;
 
         if (chunkLen == 0) // we're complete.
         {
@@ -1789,7 +1789,7 @@ bool StreamSocket::checkChunks(const Poco::Net::HTTPRequest& request, size_t hea
             return true;
         }
 
-        if (chunkLen > chunkAvailable + 2)
+        if (chunkLen + 2 > chunkAvailable)
         {
             LOG_DBG("parseHeader: Not enough content yet in chunk " << chunk <<
                     " starting at offset " << (chunkStart - _inBuffer.begin()) <<
