@@ -12,9 +12,9 @@
  * JSDialog.rootCommentControl, JSDialog.commentControl - comment widgets
  */
 
-/* global $ _ app JSDialog */
+declare var JSDialog: any;
 
-const _createComment = function (container, data) {
+const _createComment = function (container: HTMLElement, data: any) {
 	// Create annotation copy and add it into the container.
 	container.appendChild(data.annotation.sectionProperties.container);
 	data.annotation.show();
@@ -22,7 +22,11 @@ const _createComment = function (container, data) {
 	data.annotation.setExpanded();
 };
 
-const _emptyCommentWizard = function (parentContainer, data, builder) {
+const _emptyCommentWizard = function (
+	parentContainer: HTMLElement,
+	data: any,
+	builder: JSBuilder,
+) {
 	window.L.DomUtil.addClass(parentContainer, 'content-has-no-comments');
 	const emptyCommentWizard = window.L.DomUtil.create(
 		'figure',
@@ -56,15 +60,20 @@ const _emptyCommentWizard = function (parentContainer, data, builder) {
 	}
 };
 
-JSDialog.rootCommentControl = function (parentContainer, data, builder) {
+JSDialog.rootCommentControl = function (
+	parentContainer: HTMLElement,
+	data: any,
+	builder: JSBuilder,
+) {
 	if (data.type === 'emptyCommentWizard') {
 		_emptyCommentWizard(parentContainer, data, builder);
 		return;
 	}
 
-	let mainContainer = document.getElementById(
-		'explorable-entry level-' + builder._currentDepth + ' ' + data.id,
-	);
+	const mainContainerID =
+		'explorable-entry level-' + builder._currentDepth + ' ' + data.id;
+	let mainContainer = document.getElementById(mainContainerID);
+
 	if (!mainContainer) {
 		mainContainer = window.L.DomUtil.create(
 			'div',
@@ -76,8 +85,14 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 		);
 	}
 
-	mainContainer.id =
-		'explorable-entry level-' + builder._currentDepth + ' ' + data.id;
+	if (!mainContainer) {
+		console.error(
+			'ui-explorable-entry with id: ' + mainContainerID + ' does not exist!',
+		);
+		return;
+	}
+	const nonNullMainContainer = mainContainer;
+	mainContainer.id = mainContainerID;
 
 	let container = document.getElementById(data.id);
 	if (!container) {
@@ -92,7 +107,14 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 		);
 	}
 
-	container.annotation = data.annotation;
+	if (!container) {
+		console.error(
+			'cool-annotation-header with id: ' + data.id + ' does not exist!',
+		);
+		return;
+	}
+
+	(container as any).annotation = data.annotation;
 	container.id = data.id;
 	_createComment(container, data);
 
@@ -102,16 +124,23 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 	) {
 		const numberOfReplies = data.children.length - 1;
 		if (numberOfReplies > 0) {
-			let replyCountNode = document.getElementById(
-				'reply-count-node-' + data.id,
-			);
-
+			const replyCountNodeID = 'reply-count-node-' + data.id;
+			let replyCountNode = document.getElementById(replyCountNodeID);
 			if (!replyCountNode) {
 				replyCountNode = window.L.DomUtil.create(
 					'div',
 					'cool-annotation-reply-count cool-annotation-content',
 					$(container).find('.cool-annotation-content-wrapper')[0],
 				);
+			}
+
+			if (!replyCountNode) {
+				console.error(
+					'cool-annotation-reply-count with id: ' +
+						replyCountNodeID +
+						' does not exist!',
+				);
+				return;
 			}
 
 			replyCountNode.id = 'reply-count-node-' + data.id;
@@ -137,6 +166,13 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 			);
 		}
 
+		if (!childContainer) {
+			console.error(
+				'ui-explorable-entry with id: ' + mainContainerID + ' does not exist!',
+			);
+			return;
+		}
+		const nonNullChildContainer = childContainer;
 		childContainer.id = 'comment-thread' + data.id;
 		childContainer.title = _('Comment');
 		$(childContainer).hide();
@@ -145,7 +181,7 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 			if ($(container).find('.cool-annotation-menubar').length > 0)
 				$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
 
-			let arrowSpan = container.querySelector(
+			let arrowSpan: HTMLSpanElement | null = container.querySelector(
 				"[id='arrow span " + data.id + "']",
 			);
 
@@ -157,44 +193,56 @@ JSDialog.rootCommentControl = function (parentContainer, data, builder) {
 				);
 			}
 
-			arrowSpan.style.display = 'block';
-			arrowSpan.textContent = '>';
-			arrowSpan.style.padding = '0px';
-			arrowSpan.id = 'arrow span ' + data.id;
+			if (arrowSpan) {
+				arrowSpan.style.display = 'block';
+				arrowSpan.textContent = '>';
+				arrowSpan.style.padding = '0px';
+				arrowSpan.id = 'arrow span ' + data.id;
+			}
 
 			$(container).find('.cool-annotation')[0].onclick = function () {
 				builder.wizard.goLevelDown(mainContainer);
-				childContainer.style.display = 'block';
-				if (!childContainer.childNodes.length)
-					builder.build(childContainer, data.children);
+				nonNullChildContainer.style.display = 'block';
+				if (!nonNullChildContainer.childNodes.length)
+					builder.build(nonNullChildContainer, data.children, false);
 			};
 
-			const backButton = document.getElementById('mobile-wizard-back');
-			backButton.onclick = function () {
-				if (backButton.className !== 'close-button') {
-					if (!mainContainer.childNodes.length)
-						builder.build(mainContainer, data);
-					if (data.type === 'rootcomment') {
-						var temp = document.getElementById('comment-thread' + data.id);
-						if (temp) temp.style.display = 'block';
+			const backButtonID = 'mobile-wizard-back';
+			const backButton = document.getElementById(backButtonID);
+			if (backButton) {
+				backButton.onclick = function () {
+					if (backButton.className !== 'close-button') {
+						if (!nonNullMainContainer.childNodes.length)
+							builder.build(nonNullMainContainer, data, false);
+						if (data.type === 'rootcomment') {
+							var temp = document.getElementById('comment-thread' + data.id);
+							if (temp) temp.style.display = 'block';
+						}
 					}
-				}
-			};
+				};
+			} else {
+				console.error('button with id: ' + backButtonID + ' does not exist!');
+			}
 		}
 	}
 
 	$(container)
 		.find('.cool-annotation')[0]
 		.addEventListener('click', function () {
-			app.sectionContainer
-				.getSectionWithName(app.CSections.CommentList.name)
-				.highlightComment(data.annotation);
+			const commentSection = app.sectionContainer.getSectionWithName(
+				app.CSections.CommentList.name,
+			) as cool.CommentSection;
+			commentSection.highlightComment(data.annotation);
 		});
 	return false;
 };
 
 // eslint-disable-next-line no-unused-vars
-JSDialog.commentControl = function (parentContainer, data, builder) {
-	_createComment(parentContainer, data, false);
+JSDialog.commentControl = function (
+	parentContainer: HTMLElement,
+	data: any,
+	_builder: JSBuilder,
+) {
+	_createComment(parentContainer, data);
 	return false;
 };

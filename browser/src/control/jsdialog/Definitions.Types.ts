@@ -59,6 +59,7 @@ interface JSBuilder {
 	options: JSBuilderOptions; // current state
 	map: MapInterface; // reference to map
 	rendersCache: any; // on demand content cache
+	wizard: any;
 	windowId?: WindowId | number;
 
 	build: (
