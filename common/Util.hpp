@@ -1233,12 +1233,14 @@ int main(int argc, char**argv)
     // If OS is not mobile, it must be Linux.
     std::string getLinuxVersion();
 
-    /// Converts and returns the argument to lower-case.
-    inline std::string toLower(std::string s)
+    /// Converts in-place and returns the argument to lower-case.
+    inline std::string& toLowerInplace(std::string& s)
     {
         std::transform(s.begin(), s.end(), s.begin(), ::tolower);
         return s;
     }
+    /// Converts and returns a copy of the argument in lower-case.
+    inline std::string toLower(std::string s) { return toLowerInplace(s); }
 
     /// Case insensitive comparison of two strings.
     /// Returns true iff the two strings are equal, regardless of case.
