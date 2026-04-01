@@ -462,13 +462,6 @@ button.leaflet-control-search-next
 #toolbar-up .ui-combobox-button {
 	padding-left: 10px;
 }
-.ui-combobox label {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	max-width: 50%;
-	flex-shrink: 0;
-}
 #fontsizecombobox-input-context-toolbar {
 	width: 55px !important;
 }
