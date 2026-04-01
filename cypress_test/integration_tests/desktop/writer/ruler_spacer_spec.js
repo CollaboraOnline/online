@@ -39,4 +39,21 @@ describe(['tagdesktop'], 'Ruler spacer section tests.', function() {
 		// Verify ruler spacer test-div is removed.
 		cy.cGet('[id="test-div-ruler spacer"]').should('not.exist');
 	});
+
+	it('Rulers are hidden from assistive technology', function() {
+		// Show the ruler.
+		cy.cGet('#showruler-input').check();
+		cy.cGet('#showruler-input').should('be.checked');
+		cy.cGet('.cool-ruler').should('be.visible');
+
+		// The horizontal ruler wrapper must have aria-hidden so screen
+		// readers skip it.  The accessible alternative is the Paragraph
+		// dialog (Format > Paragraph).
+		cy.cGet('.cool-ruler:not(.vruler)')
+			.should('have.attr', 'aria-hidden', 'true');
+
+		// Same for the vertical ruler.
+		cy.cGet('#vertical-ruler')
+			.should('have.attr', 'aria-hidden', 'true');
+	});
 });
