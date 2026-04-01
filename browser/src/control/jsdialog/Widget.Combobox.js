@@ -205,11 +205,14 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	container.id = data.id;
 	var inputId = data.id + '-input-' + builder.options.suffix;
 
-	var labelText = data.label ? data.label : (data.command ? _UNO(data.command, 'label', true) : null);
-	if (labelText) {
-		var label = L.DomUtil.create('label', 'ui-combobox-label ' + builder.options.cssClass, container);
-		label.textContent = labelText + ':';
-		label.htmlFor = inputId;
+	if (data.command) {
+		// TODO replace with data.label, changing ui file
+		var labelText = _UNO(data.command, 'label', true);
+		if (labelText) {
+			var label = L.DomUtil.create('label', 'ui-combobox-label ' + builder.options.cssClass, container);
+			label.textContent = labelText + ':';
+			label.htmlFor = inputId;
+		}
 	}
 
 	var wrapper = window.L.DomUtil.create('div', 'ui-combobox-wrapper ' + builder.options.cssClass, container);
