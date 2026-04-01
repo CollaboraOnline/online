@@ -273,6 +273,7 @@ class HRuler extends Ruler {
 			'div',
 			'cool-ruler leaflet-bar leaflet-control leaflet-control-custom',
 		);
+		this._rWrapper.setAttribute('aria-hidden', 'true');
 		this._rWrapper.style.visibility = 'hidden';
 
 		// We start it hidden rather than not initialzing at all.

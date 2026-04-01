@@ -172,6 +172,7 @@ class VRuler extends Ruler {
 		);
 		this._rWrapper.id = 'vertical-ruler';
 		this._rWrapper.classList.add('vruler');
+		this._rWrapper.setAttribute('aria-hidden', 'true');
 		this._rWrapper.style.visibility = 'hidden';
 
 		// We start it hidden rather than not initialzing at all.
