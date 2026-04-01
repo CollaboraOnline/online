@@ -1280,7 +1280,7 @@ img.context-menu-icon {
 }
 
 .ui-listbox,
-.ui-combobox-wrapper,
+.ui-combobox,
 .ui-timefield {
 	box-sizing: border-box;
 	-webkit-appearance: none;
@@ -1293,12 +1293,6 @@ img.context-menu-icon {
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
-	display: flex;
-}
-
-.ui-combobox label {
-	font-size: var(--default-font-size);
-	font-family: var(--cool-font);
 }
 
 .jsdialog-window .ui-listbox,
@@ -1355,7 +1349,7 @@ img.context-menu-icon {
 }
 
 /* ui-combobox */
-.ui-combobox-wrapper,
+.ui-combobox,
 .ui-timefield {
 	border: 1px solid var(--color-border);
 }
