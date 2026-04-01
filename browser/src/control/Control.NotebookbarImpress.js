@@ -890,7 +890,6 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 									{
 										'id': 'fontnamecombobox',
 										'type': 'combobox',
-										'label': _('Font'),
 										'text': 'Carlito',
 										'entries': [
 											'Carlito'
@@ -905,7 +904,6 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 									{
 										'id': 'fontsizecombobox',
 										'type': 'combobox',
-										'label': _('Size'),
 										'text': '12 pt',
 										'entries': [
 											'12 pt'

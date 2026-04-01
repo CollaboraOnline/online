@@ -28,17 +28,11 @@ abstract class SidebarBase extends JSDialogComponent {
 
 	documentContainer: HTMLDivElement;
 	wrapper: HTMLElement;
-	private preferredLabels: [string, string][] = [
-		['fontnamecombobox', _('Font')],
-		['fontsizecombobox', _('Size')],
-	];
 
 	constructor(map: MapInterface, type: SidebarType) {
 		super(map, type, type);
 		this.type = type;
 		this.onAdd(map);
-		for (const [id, label] of this.preferredLabels)
-			this.labelsOverride.set(id, label);
 	}
 
 	protected createBuilder() {

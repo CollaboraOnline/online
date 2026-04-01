@@ -186,7 +186,6 @@ class ContextToolbar extends JSDialogComponent {
 							{
 								id: 'fontnamecombobox',
 								type: 'combobox',
-								label: _('Font'),
 								text: currentFontName,
 								entries: fontEntries,
 								selectedCount: 1,
@@ -201,7 +200,6 @@ class ContextToolbar extends JSDialogComponent {
 							{
 								id: 'fontsizecombobox',
 								type: 'combobox',
-								label: _('Size'),
 								text: currentFontSize,
 								entries: sizeEntries,
 								selectedCount: 1,
