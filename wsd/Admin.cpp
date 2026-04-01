@@ -1237,6 +1237,17 @@ void Admin::connectToMonitorSync(const std::string &uri)
     auto handler = std::make_shared<MonitorSocketHandler>(this, uri);
     _monitorSockets.insert({uriWithoutParam, handler});
     insertNewWebSocketSync(Poco::URI(uri), handler);
+
+    // Send pod identity so the controller can map serverId to pod name and IP.
+    const char* podName = std::getenv("POD_NAME");
+    const char* podIP = std::getenv("POD_IP");
+    if (podName && podName[0] != '\0' && podIP && podIP[0] != '\0')
+    {
+        const std::string podInfoMsg = "podinfo " + std::string(podName) + " " + std::string(podIP);
+        LOG_INF("Sending pod identity to controller: " << podInfoMsg);
+        handler->sendTextMessage(podInfoMsg);
+    }
+
     AdminSocketHandler::subscribeAsync(handler);
 }
 
