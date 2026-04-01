@@ -1631,7 +1631,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'text': _('Invert Background'),
 				'accessibility': { focusBack: true, combination: 'BG', de: null }
 			},
-			{ type: 'separator', id: 'layout-invertbackground-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'view-invertbackground-break', orientation: 'vertical' },
 			{
 				'id': 'view-sidebardeck',
 				'type': 'bigtoolitem',
