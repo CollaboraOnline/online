@@ -21,7 +21,7 @@ class Sidebar extends SidebarBase {
 
 	constructor(map: MapInterface) {
 		super(map, SidebarType.Sidebar);
-		this.isUserRequest = true;
+		this.isUserRequest = false;
 	}
 
 	onAdd(map: MapInterface) {
@@ -150,7 +150,12 @@ class Sidebar extends SidebarBase {
 
 				this.builder.build(tempContainer, [this.model.getSnapshot()], false);
 
-				if (!this.isVisible()) this.showSidebar();
+				if (!this.isVisible()) {
+					this.showSidebar();
+
+					// on initial load of file do not focus automatically
+					if (!this.sidebarShownTheFirstTime) this.isUserRequest = true;
+				}
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
 
@@ -189,11 +194,12 @@ class Sidebar extends SidebarBase {
 						this.sidebarShownTheFirstTime = false;
 					}
 				});
+
+				this.isUserRequest = false;
 			} else {
 				this.closeSidebar();
+				this.isUserRequest = true;
 			}
-
-			this.isUserRequest = true;
 		}
 	}
 }
