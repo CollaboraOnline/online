@@ -135,7 +135,7 @@ class ClientRequestDispatcherTests : public CPPUNIT_NS::TestFixture
         LOK_ASSERT_EQUAL_STR("image/svg+xml", ContentType::fromFileName("drawing.svg"));
         LOK_ASSERT_EQUAL_STR("image/png", ContentType::fromFileName("photo.png"));
         LOK_ASSERT_EQUAL_STR("image/jpeg", ContentType::fromFileName("photo.jpeg"));
-        LOK_ASSERT_EQUAL_STR("image/jpg", ContentType::fromFileName("photo.jpg"));
+        LOK_ASSERT_EQUAL_STR("image/jpeg", ContentType::fromFileName("photo.jpg"));
         LOK_ASSERT_EQUAL_STR("image/bmp", ContentType::fromFileName("photo.bmp"));
         LOK_ASSERT_EQUAL_STR("image/gif", ContentType::fromFileName("photo.gif"));
         LOK_ASSERT_EQUAL_STR("image/tiff", ContentType::fromFileName("photo.tiff"));
