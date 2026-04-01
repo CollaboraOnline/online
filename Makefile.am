@@ -389,7 +389,7 @@ common_fuzzer_c = kit/DeltaSimd.c
 # Fuzzer registry: name=source (add new fuzzers here)
 AFL_FUZZERS = \
 	admin=fuzzer/Admin.cpp \
-	clientrequest=fuzzer/ClientRequestDispatcher.cpp \
+	clientrequest=fuzzer/ClientRequestDispatcherFuzz.cpp \
 	clientsession=fuzzer/ClientSession.cpp \
 	httpresponse=fuzzer/HttpResponse.cpp \
 	httpecho=fuzzer/HttpEcho.cpp
@@ -452,7 +452,7 @@ clientrequest_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS)
 clientrequest_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
-			       fuzzer/ClientRequestDispatcher.cpp
+			       fuzzer/ClientRequestDispatcherFuzz.cpp
 clientrequest_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
 clientrequest_fuzzer_LDADD = libsimd.a
 
@@ -934,6 +934,11 @@ else
 
 SYSTEM_STAMP =
 
+endif
+
+if ENABLE_AFL
+all-local: $(AFL_FUZZER_TARGETS)
+clean-local: clean-afl
 endif
 
 .PHONY: cleanup setup-wsd clean-afl
