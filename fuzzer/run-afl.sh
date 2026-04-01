@@ -142,7 +142,7 @@ if test "$MODE" = "update"; then
     FINAL=$(fcount "$CORPUS")
     echo "Done: $BEFORE -> $FINAL files in $CORPUS"
 
-    rm -rf "$MERGED" "$CMIN_OUT" "$TMIN_OUT"
+    rm -rf "$MERGED" "$CMIN_OUT" ${TMIN_OUT:+"$TMIN_OUT"}
     echo "You can now remove the AFL++ output directory: rm -rf $OUTPUT"
     exit 0
 fi

@@ -43,7 +43,7 @@ OR, better:
 == Building with AFL++ ==
 
 ----
-./configure --enable-fuzzers=afl --with-sanitizer=address,undefined [other options]
+./configure --enable-fuzzers=afl [other options]
 make
 ----
 
@@ -67,9 +67,13 @@ Extra afl-fuzz flags can be appended, e.g.:
 fuzzer/run-afl.sh admin -t 2000
 ----
 
-For parallel fuzzing (one main, N-1 secondary instances):
+For parallel fuzzing, just run the script in multiple terminals.
+It auto-selects the right instance type (main, san, cmplog, cmpcov,
+then native secondaries with varied settings):
 
 ----
-afl-fuzz -M main -i fuzzer/admin-data -o /tmp/afl-admin -x fuzzer/kit_fuzzer.dict -- ./admin_fuzzer
-afl-fuzz -S sec01 -i fuzzer/admin-data -o /tmp/afl-admin -x fuzzer/kit_fuzzer.dict -- ./admin_fuzzer
+fuzzer/run-afl.sh admin   # 1st: -M main (native)
+fuzzer/run-afl.sh admin   # 2nd: -S san01 (native + -w san)
+fuzzer/run-afl.sh admin   # 3rd: -S cmplog01 (native + -c cmplog)
+fuzzer/run-afl.sh admin   # ... and so on
 ----

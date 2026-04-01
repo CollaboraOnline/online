@@ -27,6 +27,7 @@
 
 #include <Poco/AutoPtr.h>
 
+#include <cstdlib>
 #include <map>
 #include <memory>
 #include <string>
@@ -41,7 +42,8 @@ bool DoInitialization()
     COOLWSD::FileRequestHandler =
         std::make_unique<FileServerRequestHandler>(COOLWSD::FileServerRoot);
 
-    std::string logLevel("fatal");
+    const char* level = std::getenv("LOG_LEVEL");
+    const std::string logLevel(level ? level : "fatal");
     bool withColor = false;
     bool logToFile = false;
     std::map<std::string, std::string> logProperties;
