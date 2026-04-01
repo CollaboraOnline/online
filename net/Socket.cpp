@@ -43,17 +43,18 @@
 #include <openssl/x509v3.h>
 #endif
 
+#include <cctype>
 #include <cerrno>
 #include <chrono>
 #include <condition_variable>
+#include <cstdio>
 #include <cstring>
-#include <cctype>
 #include <iomanip>
 #include <memory>
 #include <ostream>
 #include <ratio>
 #include <sstream>
-#include <cstdio>
+#include <stdexcept>
 #include <string>
 
 #include <sys/stat.h>
@@ -1833,10 +1834,19 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
     const std::streamsize available = bufferSize;
 
     LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request << ", sz[header "
-                            << map._headerSize << "], offset " << headerSize);
+                            << map._headerSize << "], offset " << headerSize
+                            << ", contentLength: " << contentLength);
 
     if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH)
     {
+        // The only valid -ve value is -1 for "unknown content length."
+        if (contentLength < 0 || contentLength > http::MaxBodyLen)
+        {
+            LOG_WRN("parseHeader: Invalid content length ("
+                    << contentLength << "), limit: " << http::MaxBodyLen / 1024 / 1024 << " MB");
+            throw std::out_of_range("Invalid content length: " + std::to_string(contentLength));
+        }
+
         if (available < contentLength)
         {
             LOG_DBG("parseHeader: Not enough content yet: ContentLength: "
