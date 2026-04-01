@@ -22,7 +22,6 @@ abstract class JSDialogComponent {
 	protected container?: HTMLElement;
 	protected allowedJsonType: string;
 	protected model: JSDialogModelState;
-	protected labelsOverride = new Map<string, string>();
 
 	constructor(map: MapInterface, name: string, allowedJsonType: string) {
 		this.map = map;
@@ -58,9 +57,6 @@ abstract class JSDialogComponent {
 		var data = e.data;
 
 		if (data.jsontype !== this.allowedJsonType) return false;
-
-		if (data.action === 'update' && this.labelsOverride.has(data.control.id))
-			data.control.label = this.labelsOverride.get(data.control.id);
 
 		if (this.model) this.model.widgetUpdate(data);
 
