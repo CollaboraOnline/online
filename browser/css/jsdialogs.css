@@ -1296,7 +1296,7 @@ img.context-menu-icon {
 	display: flex;
 }
 
-.ui-combobox-label {
+.ui-combobox label {
 	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 }
