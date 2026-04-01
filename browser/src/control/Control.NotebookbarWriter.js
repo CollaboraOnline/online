@@ -1249,15 +1249,37 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'command': '.uno:TitlePageDialog',
 						'accessibility': { focusBack: false,	combination: 'TI',	de:	null }
 					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-insert-section',
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertSection', 'text'),
+										'command': '.uno:InsertSection',
+										'accessibility': { focusBack: false,	combination: 'IS',	de:	null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-frame',
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertFrame', 'text'),
+										'command': '.uno:InsertFrame',
+										'accessibility': { focusBack: false,	combination: 'PT',	de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
 				]
-			},
-			{ type: 'separator', id: 'insert-insertpagebreak-break', orientation: 'vertical' },
-			{
-				'id': 'insert-insert-table:InsertTableMenu',
-				'type': 'menubutton',
-				'text': _('Table'),
-				'command': '.uno:InsertTable',
-				'accessibility': { focusBack: false,	combination: 'IT',	de: null }
 			},
 			{ type: 'separator', id: 'insert-inserttable-break', orientation: 'vertical' },
 			{
@@ -1267,6 +1289,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'icon': 'lc_insertgraphic.svg',
 				'accessibility': { focusBack: false,	combination: 'P',	de:	'BI' },
 				'children' : [
+					{
+						'id': 'insert-insert-table:InsertTableMenu',
+						'type': 'menubutton',
+						'text': _('Table'),
+						'command': '.uno:InsertTable',
+						'accessibility': { focusBack: false,	combination: 'IT',	de: null }
+					},
 					{
 						'type': 'container',
 						'children': [
@@ -1287,11 +1316,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'insert-insert-line',
+										'id': 'insert-insert-object-chart',
 										'type': 'toolitem',
-										'text': _UNO('.uno:Line', 'text'),
-										'command': '.uno:Line',
-										'accessibility': { focusBack: true,	combination: 'IL',	de:	null }
+										'text': _UNO('.uno:InsertObjectChart'),
+										'command': '.uno:InsertObjectChart',
+										'accessibility': { focusBack: false,	combination: 'C',	de:	null }
 									}
 								]
 							}
@@ -1318,11 +1347,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'insert-insert-object-chart',
+										'id': 'insert-insert-line',
 										'type': 'toolitem',
-										'text': _UNO('.uno:InsertObjectChart'),
-										'command': '.uno:InsertObjectChart',
-										'accessibility': { focusBack: false,	combination: 'C',	de:	null }
+										'text': _UNO('.uno:Line', 'text'),
+										'command': '.uno:Line',
+										'accessibility': { focusBack: true,	combination: 'IL',	de:	null }
 									}
 								]
 							}
@@ -1332,46 +1361,100 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				]
 			},
 			{ type: 'separator', id: 'insert-insertobjectchart-break', orientation: 'vertical' },
-			(this.map['wopi'].EnableRemoteLinkPicker) ? {
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
+			{
+				'type': 'overflowgroup',
+				'id': 'insert-links',
+				'name':_('Links'),
+				'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' },
+				'children' : [
+					(this.map['wopi'].EnableRemoteLinkPicker) ? {
+						'type': 'container',
 						'children': [
 							{
-								'id': 'insert-hyperlink-dialog',
-								'class': 'unoHyperlinkDialog',
-								'type': 'customtoolitem',
-								'text': _UNO('.uno:HyperlinkDialog'),
-								'command': 'hyperlinkdialog',
-								'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' }
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-hyperlink-dialog',
+										'class': 'unoHyperlinkDialog',
+										'type': 'customtoolitem',
+										'text': _UNO('.uno:HyperlinkDialog'),
+										'command': 'hyperlinkdialog',
+										'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-insert-remote-link',
+										'class': 'unoremotelink',
+										'type': 'customtoolitem',
+										'text': _('Smart Picker'),
+										'command': 'remotelink',
+										'accessibility': { focusBack: true, combination: 'RL', de: null }
+									}
+								]
 							}
-						]
+						],
+						'vertical': 'true'
+					} : {
+						'id': 'insert-hyperlink-dialog',
+						'class': 'unoHyperlinkDialog',
+						'type': 'bigcustomtoolitem',
+						'text': _UNO('.uno:HyperlinkDialog'),
+						'command': 'hyperlinkdialog',
+						'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' }
 					},
 					{
-						'type': 'toolbox',
+						'type': 'container',
 						'children': [
 							{
-								'id': 'insert-insert-remote-link',
-								'class': 'unoremotelink',
-								'type': 'customtoolitem',
-								'text': _('Smart Picker'),
-								'command': 'remotelink',
-								'accessibility': { focusBack: true, combination: 'RL', de: null }
+								'type': 'toolbox',
+								'children': [
+									{
+										id: 'references-insert-bookmark',
+										type: 'toolitem',
+										text: _UNO('.uno:InsertBookmark', 'text'),
+										command: '.uno:InsertBookmark',
+										'accessibility': { focusBack: false,	combination: 'IB',	de:	null}
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										id: 'references-insert-reference-field',
+										type: 'toolitem',
+										text: _UNO('.uno:InsertReferenceField', 'text'),
+										command: '.uno:InsertReferenceField',
+										'accessibility': { focusBack: false,	combination: 'IR',	de:	null }
+									}
+								]
 							}
-						]
-					}
-				],
-				'vertical': 'true'
-			} : {
-				'id': 'insert-hyperlink-dialog',
-				'class': 'unoHyperlinkDialog',
-				'type': 'bigcustomtoolitem',
-				'text': _UNO('.uno:HyperlinkDialog'),
-				'command': 'hyperlinkdialog',
-				'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' }
+						],
+						'vertical': 'true'
+					},
+				]
 			},
 			{ type: 'separator', id: 'insert-hyperlinkdialog-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'insert-annotation',
+				'name':_('Comments'),
+				'accessibility': { focusBack: false,	combination: 'ZC',	de:	'ZC' },
+				'children' : [
+					{
+						'id': 'insert-insert-annotation',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertAnnotation', 'text'),
+						'command': '.uno:InsertAnnotation',
+						'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
+					},
+				]
+			},
+			{ type: 'separator', id: 'insert-insertannotation-break', orientation: 'vertical' },
 			(this.map['wopi'].EnableRemoteAIContent) ? {
 				'id': 'insert-insert-remote-ai-content',
 				'class': 'unoremoteaicontent',
@@ -1385,14 +1468,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'id': 'insert-remoteaicontent-break',
 				'orientation': 'vertical'
 			} : {},
-			{
-				'id': 'insert-insert-annotation',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation', 'text'),
-				'command': '.uno:InsertAnnotation',
-				'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
-			},
-			{ type: 'separator', id: 'insert-insertannotation-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'insert-header-footer',
@@ -1464,45 +1539,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			{ type: 'separator', id: 'header-footer-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'insert-section',
-				'name':_('Section'),
-				'accessibility': { focusBack: false,	combination: 'IS',	de:	null },
-				'children' : [
-				{
-					'type': 'container',
-					'children': [
-						{
-							'type': 'toolbox',
-							'children': [
-								{
-									'id': 'insert-insert-section',
-									'type': 'toolitem',
-									'text': _UNO('.uno:InsertSection', 'text'),
-									'command': '.uno:InsertSection',
-									'accessibility': { focusBack: false,	combination: 'IS',	de:	null }
-								}
-							]
-						},
-						{
-							'type': 'toolbox',
-							'children': [
-								{
-									'id': 'insert-frame',
-									'type': 'toolitem',
-									'text': _UNO('.uno:InsertFrame', 'text'),
-									'command': '.uno:InsertFrame',
-									'accessibility': { focusBack: false,	combination: 'PT',	de: null }
-								}
-							]
-						}
-					],
-					'vertical': 'true'
-				}
-				]
-			},
-			{ type: 'separator', id: 'insert-insertsection-break', orientation: 'vertical' },
-			{
-				'type': 'overflowgroup',
 				'id': 'insert-text',
 				'name':_('Text'),
 				'accessibility': { focusBack: false,	combination: 'X',	de:	null },
@@ -1515,36 +1551,46 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true,	combination: 'X',	de:	null }
 					},
 					{
-						'id': 'insert-insert-vertical-text',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:VerticalText', 'text'),
-						'command': '.uno:VerticalText',
-						'accessibility': { focusBack: false,	combination: 'VT',	de:	null },
+						'id': 'Insert-Text-Fontwork',
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-FormattingMarkMenu:FontworkGalleryFloater',
+										'type': 'toolitem',
+										'text': _UNO('.uno:FontworkGalleryFloater'),
+										'command': '.uno:FontworkGalleryFloater',
+										// Fontwork export/import not supported in other formats.
+										'visible': isODF ? 'true' : 'false',
+										'accessibility': { focusBack: true,	combination: 'FM', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-insert-vertical-text',
+										'type': isODF ? 'toolitem' : 'bigtoolitem',
+										'text': _UNO('.uno:VerticalText', 'text'),
+										'command': '.uno:VerticalText',
+										'accessibility': { focusBack: true,	combination: 'VT', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+					{
+						'id': 'insert-FormattingMarkMenu:FormattingMarkMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:FormattingMarkMenu', 'text'),
+						'command': '.uno:FormattingMarkMenu',
+						'accessibility': { focusBack: false,	combination: 'FM',	de: null }
 					},
 				]
-			},
-			{ type: 'separator', id: 'insert-insertline-break', orientation: 'vertical' },
-			{
-				'id': 'insert-font-gallery-floater',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontworkGalleryFloater'),
-				'command': '.uno:FontworkGalleryFloater',
-				// Fontwork export/import not supported in other formats.
-				'visible': isODF ? 'true' : 'false',
-				'accessibility': { focusBack: false,	combination: 'FG',	de:	null }
-			},
-			{
-				'type': 'separator',
-				'visible': isODF ? 'true' : 'false',
-				'id': 'insert-fontgalleryfloater-break',
-				'orientation': 'vertical'
-			},
-			{
-				'id': 'insert-FormattingMarkMenu:FormattingMarkMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:FormattingMarkMenu', 'text'),
-				'command': '.uno:FormattingMarkMenu',
-				'accessibility': { focusBack: false,	combination: 'FM',	de: null }
 			},
 			{ type: 'separator', id: 'insert-formattingmarkmenu-break', orientation: 'vertical' },
 			{
@@ -1553,6 +1599,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'name':_('Symbols'),
 				'accessibility': { focusBack: false,	combination: 'ZS',	de: null },
 				'children' : [
+					{
+						'id': 'insert-QrCode',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertQrCode', 'text'),
+						'command': '.uno:InsertQrCode',
+						'accessibility': { focusBack: false,	combination: 'IQ',	de: null },
+					},
 					{
 						'type': 'container',
 						'children': [
@@ -1583,13 +1636,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							}
 						],
 						'vertical': 'true'
-					},
-					{
-						'id': 'insert-QrCode',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:InsertQrCode', 'text'),
-						'command': '.uno:InsertQrCode',
-						'accessibility': { focusBack: false,	combination: 'IQ',	de: null },
 					},
 				]
 			},
