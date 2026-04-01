@@ -454,9 +454,8 @@ AC_ARG_ENABLE([feature-restriction],
 
 AC_ARG_ENABLE([wasm-embindtest],
               AS_HELP_STRING([--enable-wasm-embindtest],
-                             [Run the LibreOffice embindtest as part of running the app. Requires
-                              LibreOffice to be built with --enable-dbgutil. Relevant only for a
-                              Wasm build.]))
+                             [Run the LibreOffice embindtest as part of running the app. Relevant
+                              only for a Wasm build.]))
 
 AC_ARG_WITH([wasm-zetajs],
             AS_HELP_STRING([--with-wasm-zetajs=<path>],
@@ -2214,11 +2213,11 @@ if test "$host_os" = emscripten; then
         AC_MSG_CHECKING([whether the LibreOffice installation includes embindtest])
         if test ! -f "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps; then
             AC_MSG_ERROR([cannot find $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
-        elif ! LC_ALL=POSIX grep -E -q -e '(^|[[[:space:]]])-lembindtestlo($|[[[:space:]]])' \
+        elif ! LC_ALL=POSIX grep -E -q -e '(^|[[[:space:]]])-ltestunolo($|[[[:space:]]])' \
                 "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps
         then
             AC_MSG_ERROR(
-                [cannot find -lembindtestlo in $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
+                [cannot find -ltestunolo in $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
         else
             AC_MSG_RESULT([yes])
         fi
