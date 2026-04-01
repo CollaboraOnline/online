@@ -641,7 +641,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
                 // This is a chunked transfer.
                 // Find the start of the chunk, which is
                 // the length of the chunk in hex.
-                // each chunk is preceeded by its length in hex.
+                // each chunk is preceded by its length in hex.
                 while (available)
                 {
 #ifdef DEBUG_HTTP
@@ -880,7 +880,7 @@ int64_t Response::readData(const char* p, int64_t len)
             // This is a chunked transfer.
             // Find the start of the chunk, which is
             // the length of the chunk in hex.
-            // each chunk is preceeded by its length in hex.
+            // each chunk is preceded by its length in hex.
             while (available)
             {
 #ifdef DEBUG_HTTP

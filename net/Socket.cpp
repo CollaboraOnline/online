@@ -1760,7 +1760,7 @@ bool StreamSocket::checkChunks(const Poco::Net::HTTPRequest& request, size_t hea
         for (; itBody != _inBuffer.end() && isascii(*itBody) && isspace(*itBody); ++itBody)
             ; // skip.
 
-        // each chunk is preceeded by its length in hex.
+        // each chunk is preceded by its length in hex.
         size_t chunkLen = 0;
         bool haveHexDigits = false;
         for (; itBody != _inBuffer.end(); ++itBody)
