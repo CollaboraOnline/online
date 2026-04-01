@@ -209,7 +209,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		// TODO replace with data.label, changing ui file
 		var labelText = _UNO(data.command, 'label', true);
 		if (labelText) {
-			var label = L.DomUtil.create('label', 'ui-combobox-label ' + builder.options.cssClass, container);
+			var label = L.DomUtil.create('label', '', container);
 			label.textContent = labelText + ':';
 			label.htmlFor = inputId;
 		}

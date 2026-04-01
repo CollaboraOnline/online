@@ -466,13 +466,13 @@ button.leaflet-control-search-next
 	width: 55px !important;
 }
 #toolbar-up #fontnamecombobox {
-	width: 170px;
-	max-width: 170px;
+	width: 150px;
+	max-width: 150px;
 	margin: auto 5px;
 }
 #toolbar-up #fontsizecombobox {
-	min-width: 90px;
-	width: 90px;
+	min-width: 70px;
+	width: 70px;
 	margin: auto 4px;
 }
 #fontsizecombobox-dropdown .ui-grid {
