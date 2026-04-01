@@ -25,6 +25,8 @@
 
 #include <Poco/Net/HTTPServerRequest.h>
 
+using namespace std::chrono_literals;
+
 // Inside the WSD process
 class UnitFuzz : public UnitWSD
 {
