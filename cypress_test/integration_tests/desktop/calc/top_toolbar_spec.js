@@ -115,7 +115,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
-		desktopHelper.getCompactIconArrow('LeftPara').click();
 		desktopHelper.getCompactIcon('WrapText').click();
 
 		// Leave cell
@@ -291,7 +290,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
 		// Set right alignment first
-		desktopHelper.getCompactIconArrow('LeftPara').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
 		calcHelper.selectEntireSheet();
@@ -301,7 +299,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Change alignment back
 		calcHelper.clickOnFirstCell();
 
-		desktopHelper.getCompactIconArrow('LeftPara').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click();
 
