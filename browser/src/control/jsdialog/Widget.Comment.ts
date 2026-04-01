@@ -130,7 +130,7 @@ JSDialog.rootCommentControl = function (
 				replyCountNode = window.L.DomUtil.create(
 					'div',
 					'cool-annotation-reply-count cool-annotation-content',
-					$(container).find('.cool-annotation-content-wrapper')[0],
+					container.querySelector(':scope .cool-annotation-content-wrapper'),
 				);
 			}
 
@@ -151,7 +151,7 @@ JSDialog.rootCommentControl = function (
 					? numberOfReplies + ' ' + _('reply')
 					: numberOfReplies + ' ' + _('replies');
 
-			$(replyCountNode).text(replyCountText);
+			replyCountNode.textContent = replyCountText;
 		}
 
 		let childContainer = document.getElementById('comment-thread' + data.id);
@@ -175,21 +175,25 @@ JSDialog.rootCommentControl = function (
 		const nonNullChildContainer = childContainer;
 		childContainer.id = 'comment-thread' + data.id;
 		childContainer.title = _('Comment');
-		$(childContainer).hide();
+		childContainer.style.display = 'none';
 
 		if (builder.wizard) {
-			if ($(container).find('.cool-annotation-menubar').length > 0)
-				$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
+			const coolAnnotationMenubar = container.querySelectorAll(
+				':scope .cool-annotation-menubar',
+			) as NodeListOf<HTMLTableRowElement>;
+
+			if (coolAnnotationMenubar.length > 0)
+				coolAnnotationMenubar[0].style.display = 'none';
 
 			let arrowSpan: HTMLSpanElement | null = container.querySelector(
-				"[id='arrow span " + data.id + "']",
+				":scope [id='arrow span " + data.id + "']",
 			);
 
 			if (!arrowSpan) {
 				arrowSpan = window.L.DomUtil.create(
 					'span',
 					'sub-menu-arrow',
-					$(container).find('.cool-annotation-content-wrapper')[0],
+					container.querySelector(':scope .cool-annotation-content-wrapper'),
 				);
 			}
 
@@ -200,7 +204,10 @@ JSDialog.rootCommentControl = function (
 				arrowSpan.id = 'arrow span ' + data.id;
 			}
 
-			$(container).find('.cool-annotation')[0].onclick = function () {
+			const annotationContainer = container.querySelector(
+				':scope .cool-annotation',
+			) as HTMLDivElement;
+			annotationContainer.onclick = function () {
 				builder.wizard.goLevelDown(mainContainer);
 				nonNullChildContainer.style.display = 'block';
 				if (!nonNullChildContainer.childNodes.length)
@@ -226,9 +233,9 @@ JSDialog.rootCommentControl = function (
 		}
 	}
 
-	$(container)
-		.find('.cool-annotation')[0]
-		.addEventListener('click', function () {
+	container
+		.querySelector(':scope .cool-annotation')
+		?.addEventListener('click', function () {
 			const commentSection = app.sectionContainer.getSectionWithName(
 				app.CSections.CommentList.name,
 			) as cool.CommentSection;
