@@ -1961,14 +1961,20 @@ class TreeViewControl {
 	) {
 		this._isRealTree = TreeViewControl.isRealTree(data);
 		this._isListbox = TreeViewControl.isListbox(data);
-		this._containerRole =
-			data.role ||
-			(this._isRealTree ? 'treegrid' : this._isListbox ? 'listbox' : 'grid');
 		this._columns = TreeViewControl.countColumns(data);
 		this._hasState = TreeViewControl.hasState(data);
 		this._hasIcon = TreeViewControl.hasIcon(data);
 		this._isNavigator = this.isNavigator(data);
 		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+		this._containerRole =
+			data.role ||
+			(this._isRealTree
+				? this._isNavigator
+					? 'tree'
+					: 'treegrid'
+				: this._isListbox
+					? 'listbox'
+					: 'grid');
 
 		this._tbody = this._container;
 		(this._container as any).onSelect = (position: number) => {
