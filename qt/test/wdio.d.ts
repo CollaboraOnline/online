@@ -31,5 +31,23 @@ declare const app: {
 	map: {
 		_docLoaded: boolean;
 		getDocType(): string;
+		backstageView?: {
+			show(): void;
+			hide(): void;
+			toggle(): void;
+		};
+	};
+	dispatcher: {
+		dispatch(action: string): void;
+	};
+	activeDocument?: {
+		activeLayout?: {
+			type: string;
+			documentRectangles?: Array<unknown>;
+			viewedRectangle?: { pWidth: number; pHeight: number };
+		};
+	};
+	layoutingService: {
+		hasTasksPending(): boolean;
 	};
 };
