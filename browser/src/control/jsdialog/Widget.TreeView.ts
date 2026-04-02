@@ -1691,7 +1691,37 @@ class TreeViewControl {
 			}
 
 			preventDef = true;
-		} else if (
+		} else if (event.key === 'Home') {
+			var firstIndex = 0;
+			while (
+				firstIndex < treeLength - 1 &&
+				listElements[firstIndex].clientHeight <= 0
+			)
+				firstIndex++;
+			if (firstIndex < treeLength)
+				this.changeFocusedRow(
+					listElements,
+					currIndex,
+					firstIndex,
+					builder,
+					data,
+				);
+			preventDef = true;
+		} else if (event.key === 'End') {
+			var lastIndex = treeLength - 1;
+			while (lastIndex > 0 && listElements[lastIndex].clientHeight <= 0)
+				lastIndex--;
+			if (lastIndex >= 0)
+				this.changeFocusedRow(
+					listElements,
+					currIndex,
+					lastIndex,
+					builder,
+					data,
+				);
+			preventDef = true;
+		} 
+		else if (
 			data.fireKeyEvents &&
 			// FIXME: can callback return boolean?
 			(builder as any).callback(
