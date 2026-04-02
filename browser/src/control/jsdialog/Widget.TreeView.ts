@@ -1636,6 +1636,29 @@ class TreeViewControl {
 		return currIndex;
 	}
 
+	typeAheadSearch(
+		listElements: Array<HTMLElement>,
+		currIndex: number,
+		char: string,
+		builder: JSBuilder,
+		data: TreeWidgetJSON,
+	) {
+		const lowerChar = char.toLowerCase();
+		const startIndex = currIndex >= 0 ? currIndex + 1 : 0;
+		const total = listElements.length;
+
+		for (let i = 0; i < total; i++) {
+			const index = (startIndex + i) % total;
+			const el = listElements[index];
+			if (el.clientHeight <= 0) continue;
+			const text = el.innerText.trim().toLowerCase();
+			if (text.startsWith(lowerChar)) {
+				this.changeFocusedRow(listElements, currIndex, index, builder, data);
+				return;
+			}
+		}
+	}
+
 	expandSiblings(
 		listElements: Array<HTMLElement>,
 		currIndex: number,
@@ -1753,6 +1776,15 @@ class TreeViewControl {
 			preventDef = true;
 		} else if (event.key === '*') {
 			this.expandSiblings(listElements, currIndex, data, builder);
+			preventDef = true;
+		} else if (
+			event.key.length === 1 &&
+			event.key.match(/[a-zA-Z]/) &&
+			!event.ctrlKey &&
+			!event.altKey &&
+			!event.metaKey
+		) {
+			this.typeAheadSearch(listElements, currIndex, event.key, builder, data);
 			preventDef = true;
 		} else if (
 			data.fireKeyEvents &&
