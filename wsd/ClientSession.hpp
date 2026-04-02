@@ -16,22 +16,22 @@
 
 #pragma once
 
-#include <Session.hpp>
-#include <Storage.hpp>
-#include <SenderQueue.hpp>
-#include <ServerURL.hpp>
-#include <DocumentBroker.hpp>
+#include <common/Rectangle.hpp>
+#include <common/Session.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/SenderQueue.hpp>
+#include <wsd/ServerURL.hpp>
+#include <wsd/Storage.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
 
-#include <Rectangle.hpp>
 #include <deque>
-#include <utility>
-#include <common/Util.hpp>
-
 #include <optional>
+#include <utility>
 
 class DocumentBroker;
 namespace http { class Session; }

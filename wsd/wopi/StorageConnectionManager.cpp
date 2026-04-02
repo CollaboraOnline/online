@@ -17,23 +17,23 @@
 
 #include "StorageConnectionManager.hpp"
 
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <Storage.hpp>
-#include <common/Log.hpp>
-#include <Unit.hpp>
-#include <common/Util.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/TraceEvent.hpp>
-#include <NetUtil.hpp>
-#include <CommandControl.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/NetUtil.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/HostUtil.hpp>
+#include <wsd/ProofKey.hpp>
+#include <wsd/Storage.hpp>
 
-#include <Auth.hpp>
-#include <HostUtil.hpp>
-#include <ProofKey.hpp>
-#include <HttpRequest.hpp>
-
+#include <Poco/Exception.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/DNS.h>
@@ -44,12 +44,9 @@
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/SSLManager.h>
-
-#include <cassert>
-
-#include <Poco/Exception.h>
 #include <Poco/URI.h>
 
+#include <cassert>
 #include <string>
 
 bool StorageConnectionManager::SSLAsScheme = true;

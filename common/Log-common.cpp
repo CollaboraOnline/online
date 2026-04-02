@@ -11,13 +11,14 @@
 
 #include <config.h>
 
+#include "Log.hpp"
+
+#include <common/ProcUtil.hpp>
+#include <common/StaticLogHelper.hpp>
+#include <common/Util.hpp>
+
 #include <cstring>
 #include <ctime>
-
-#include "Log.hpp"
-#include "ProcUtil.hpp"
-#include "StaticLogHelper.hpp"
-#include "Util.hpp"
 
 namespace Log
 {

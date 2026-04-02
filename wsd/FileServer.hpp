@@ -16,12 +16,13 @@
 
 #pragma once
 
-#include <COOLWSD.hpp>
-#include <ConfigUtil.hpp>
-#include <FileUtil.hpp>
-#include <HttpRequest.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <wsd/COOLWSD.hpp>
+
 #include <Poco/Net/PartHandler.h>
-#include <Socket.hpp>
 
 #include <string>
 #include <unordered_map>

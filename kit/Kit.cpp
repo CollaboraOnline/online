@@ -19,7 +19,40 @@
 #include "Kit.hpp"
 
 #include <common/Anonymizer.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
+#include <common/Png.hpp>
+#include <common/Protocol.hpp>
+#include <common/Rectangle.hpp>
+#include <common/RenderTiles.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <kit/ChildSession.hpp>
+#include <kit/KitHelper.hpp>
+#include <kit/KitWebSocket.hpp>
 #include <wsd/TileDesc.hpp>
+#include <wsd/UserMessages.hpp>
+
+#if !MOBILEAPP
+#include <common/JailUtil.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Syscall.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Watchdog.hpp>
+#include <common/security.h>
+#include <kit/BgSaveWatchDog.hpp>
+#else // MOBILEAPP
+#include <wsd/COOLWSD.hpp>
+#ifndef IOS
+#include <kit/SetupKitEnvironment.hpp>
+#endif
+#endif // MOBILEAPP
 
 #include <csignal>
 #include <limits>
@@ -80,54 +113,17 @@
 #include <Poco/Exception.h>
 #include <Poco/URI.h>
 
-#include <ChildSession.hpp>
-#include <Common.hpp>
-#include <MobileApp.hpp>
-#include <common/FileUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <KitHelper.hpp>
-#include <Protocol.hpp>
-#include <common/Log.hpp>
-#include <Png.hpp>
-#include <Rectangle.hpp>
-#include <Unit.hpp>
-#include <UserMessages.hpp>
-#include <common/Util.hpp>
-#include <common/JsonUtil.hpp>
-#include <RenderTiles.hpp>
-#include <KitWebSocket.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/Uri.hpp>
-
-#if !MOBILEAPP
-#include <common/JailUtil.hpp>
-#include <common/security.h>
-#include <common/Seccomp.hpp>
-#include <common/SigUtil.hpp>
-#include <common/Syscall.hpp>
-#include <common/TraceEvent.hpp>
-#include <common/Watchdog.hpp>
-#include <BgSaveWatchDog.hpp>
-#endif
-
-#if MOBILEAPP
-#include <COOLWSD.hpp>
-#ifndef IOS
-#include <SetupKitEnvironment.hpp>
-#endif
-#endif
-
 #ifdef QTAPP
-#include "SetupKitEnvironment.hpp"
-#include "DocumentBroker.hpp"
+#include <kit/SetupKitEnvironment.hpp>
+#include <wsd/DocumentBroker.hpp>
 #include <future>
 #endif
 #ifdef IOS
 #include <ios.h>
-#include <DocumentBroker.hpp>
+#include <wsd/DocumentBroker.hpp>
 #elif defined(MACOS) && MOBILEAPP
 #include <macos.h>
-#include <DocumentBroker.hpp>
+#include <wsd/DocumentBroker.hpp>
 #endif
 
 #ifdef _WIN32

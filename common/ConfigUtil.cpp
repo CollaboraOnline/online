@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#include <ConfigUtil.hpp>
+#include "ConfigUtil.hpp"
 
 #include <common/Util.hpp>
 
