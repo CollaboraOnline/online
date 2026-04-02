@@ -71,7 +71,7 @@ inline void setupKitEnvironment(const std::string& userInterface)
 
     options += ":sc_print_twips_msgs";
 
-    ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
+    ::setenv("SAL_KIT_OPTIONS", options.c_str(), 0);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

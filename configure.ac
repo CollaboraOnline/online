@@ -284,7 +284,7 @@ AC_ARG_ENABLE([seccomp],
                               Beware of the security consequences!]))
 AC_ARG_WITH([lokit-path],
             AS_HELP_STRING([--with-lokit-path=<path>],
-                           [Path to the "include" directory with the LibreOfficeKit headers]))
+                           [Path to the "include" directory with the COKit headers]))
 
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
@@ -1791,9 +1791,9 @@ AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
 AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$host_os" != "emscripten"],
-      [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
+      [AC_CHECK_HEADERS([COKit/COKit.h],
                         [],
-                        [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
+                        [AC_MSG_ERROR([header COKit/COKit.h not found, perhaps you want to use --with-lokit-path])])
        AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
                         [],
                         [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])

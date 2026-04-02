@@ -11,10 +11,10 @@
 
 #pragma once
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKitInit.h>
+#include <COKit/COKit.hxx>
+#include <COKit/COKitEnums.h>
 #include <vector>
 #include <common/Log.hpp>
 #include <cstdlib>
@@ -32,7 +32,7 @@ using ScopedBytes = std::unique_ptr<unsigned char, BytesDeleter>;
 class Watermark final
 {
 public:
-    Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text,
+    Watermark(const std::shared_ptr<kit::Document>& loKitDoc, const std::string& text,
               double opacity)
         : _loKitDoc(loKitDoc)
         , _text(Util::replace(text, "\\n", "\n"))
@@ -50,7 +50,7 @@ public:
                    int offsetX, int offsetY,
                    int tilesPixmapWidth, int tilesPixmapHeight,
                    int tileWidth, int tileHeight,
-                   LibreOfficeKitTileMode /*mode*/,
+                   COKitTileMode /*mode*/,
                    bool isSlideShowLayer = false)
     {
         // set requested watermark size a little bit smaller than tile size
@@ -77,7 +77,7 @@ private:
     void alphaBlend(const std::vector<unsigned char>& from, int from_width, int from_height, int from_offset_x, int from_offset_y,
             unsigned char* to, int to_width, int to_height, const bool isFontBlending, bool isSlideShowLayer = false)
     {
-        bool isCalc = (_loKitDoc->getDocumentType() == LOK_DOCTYPE_SPREADSHEET);
+        bool isCalc = (_loKitDoc->getDocumentType() == KIT_DOCTYPE_SPREADSHEET);
         for (int to_y = from_offset_y, from_y = 0; (to_y < to_height) && (from_y < from_height) ; ++to_y, ++from_y)
             for (int to_x = from_offset_x, from_x = 0; (to_x < to_width) && (from_x < from_width); ++to_x, ++from_x)
             {
@@ -229,7 +229,7 @@ private:
     }
 
 private:
-    const std::shared_ptr<lok::Document> _loKitDoc;
+    const std::shared_ptr<kit::Document> _loKitDoc;
     const std::string _text;
     const std::string _font;
     const double _alphaLevel;

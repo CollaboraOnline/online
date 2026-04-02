@@ -14,9 +14,9 @@
 #include <common/JsonUtil.hpp>
 #include <common/Util.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKit.h>
+#include <COKit/COKitEnums.h>
 
 #include <cstdlib>
 #include <string>
@@ -32,24 +32,24 @@ namespace LOKitHelper
     };
     using ScopedString = std::unique_ptr<char, StringDeleter>;
 
-    inline std::string documentTypeToString(LibreOfficeKitDocumentType type)
+    inline std::string documentTypeToString(COKitDocumentType type)
     {
         switch (type)
         {
-        case LOK_DOCTYPE_TEXT:
+        case KIT_DOCTYPE_TEXT:
             return "text";
-        case LOK_DOCTYPE_SPREADSHEET:
+        case KIT_DOCTYPE_SPREADSHEET:
             return "spreadsheet";
-        case LOK_DOCTYPE_PRESENTATION:
+        case KIT_DOCTYPE_PRESENTATION:
             return "presentation";
-        case LOK_DOCTYPE_DRAWING:
+        case KIT_DOCTYPE_DRAWING:
             return "drawing";
         default:
             return "other-" + std::to_string(type);
         }
     }
 
-    inline std::string getPartData(LibreOfficeKitDocument *loKitDocument, int part)
+    inline std::string getPartData(COKitDocument *loKitDocument, int part)
     {
         ScopedString ptrToData(loKitDocument->pClass->getPartInfo(loKitDocument, part));
         std::string result(ptrToData.get());
@@ -90,7 +90,7 @@ namespace LOKitHelper
         return "false";
     }
 
-    inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount, int &mode)
+    inline void fetchPartsData(COKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount, int &mode)
     {
         /*
             Except for Writer.
@@ -114,7 +114,7 @@ namespace LOKitHelper
     }
 
     // TODO: create a struct with all the resultInfo properties and
-    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode, std::string& hasComments)
+    inline void fetchWriterSpecificData(COKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode, std::string& hasComments)
     {
         std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
 
@@ -128,7 +128,7 @@ namespace LOKitHelper
         hasComments = partHasComments(partData);
     }
 
-    inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
+    inline void fetchCalcSpecificData(COKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
     {
         long lastColumn, lastRow;
         loKitDocument->pClass->getDataArea(loKitDocument, part, &lastColumn, &lastRow);
@@ -142,17 +142,17 @@ namespace LOKitHelper
         }
     }
 
-    inline std::string getDocumentTypeAsString(LibreOfficeKitDocument *loKitDocument)
+    inline std::string getDocumentTypeAsString(COKitDocument *loKitDocument)
     {
         assert(loKitDocument && "null loKitDocument");
-        const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
+        const auto type = static_cast<COKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
         return documentTypeToString(type);
     }
 
-    inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument, bool diffSizePages = false)
+    inline std::string documentStatus(COKitDocument *loKitDocument, bool diffSizePages = false)
     {
         assert(loKitDocument && "null loKitDocument");
-        const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
+        const auto type = static_cast<COKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 
         std::unordered_map<std::string, std::string> resultInfo;
 
@@ -203,12 +203,12 @@ namespace LOKitHelper
         int mode = 0;
         std::string hasComments = "false";
 
-        if (type == LOK_DOCTYPE_SPREADSHEET)
+        if (type == KIT_DOCTYPE_SPREADSHEET)
             fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
-        else if (type == LOK_DOCTYPE_TEXT)
+        else if (type == KIT_DOCTYPE_TEXT)
             fetchWriterSpecificData(loKitDocument, resultInfo, mode, hasComments);
 
-        if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
+        if (type == KIT_DOCTYPE_SPREADSHEET || type == KIT_DOCTYPE_PRESENTATION || type == KIT_DOCTYPE_DRAWING)
             fetchPartsData(loKitDocument, resultInfo, partsCount, mode);
 
         resultInfo["mode"] = std::to_string(mode);

@@ -16,7 +16,7 @@
 #import <cstring>
 
 #define LIBO_INTERNAL_ONLY
-#import <LibreOfficeKit/LibreOfficeKit.hxx>
+#import <COKit/COKit.hxx>
 
 #include <comphelper/lok.hxx>
 #include <i18nlangtag/languagetag.hxx>
@@ -109,9 +109,9 @@ NSString *app_text_direction;
     else
         app_text_direction = @"";
 
-    lo_kit = lok_init_2(nullptr, nullptr);
+    lo_kit = cok_init_2(nullptr, nullptr);
 
-    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
+    comphelper::COKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
 
     // This fires off a thread running the LOKit runLoop()
     runKitLoopInAThread();

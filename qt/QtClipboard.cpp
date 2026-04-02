@@ -13,8 +13,8 @@
 
 #include "QtClipboard.hpp"
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKit.hxx>
 
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
@@ -40,7 +40,7 @@ std::atomic<unsigned> sClipboardSourceDocId{0};
 
 static std::unique_ptr<QMimeData> fetchClipboardData(unsigned appDocId)
 {
-    lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+    kit::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
     if (!loKitDoc)
     {
         LOG_DBG("getClipboard: no loKitDocument");
@@ -100,7 +100,7 @@ void getClipboard(unsigned appDocId, std::function<void()> onDone)
 
 void setClipboard(unsigned appDocId)
 {
-    lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+    kit::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
     if (!loKitDoc)
         return;
 

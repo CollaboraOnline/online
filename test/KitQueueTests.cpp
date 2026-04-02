@@ -752,7 +752,7 @@ void KitQueueTests::testCallbackModifiedStatusIsSkipped()
     KitQueue::Callback item;
 
     std::stringstream ss;
-    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+    ss << "callback all " << KIT_CALLBACK_STATE_CHANGED;
 
     const std::vector<std::string> messages =
     {
@@ -1005,7 +1005,7 @@ void KitQueueTests::testCallbackStateChangedDedup()
     KitQueue queue(dummy);
 
     std::stringstream ss;
-    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+    ss << "callback all " << KIT_CALLBACK_STATE_CHANGED;
 
     putCallback(queue, ss.str() + " .uno:Bold=true");
     putCallback(queue, ss.str() + " .uno:Bold=false");
@@ -1025,7 +1025,7 @@ void KitQueueTests::testCallbackStateChangedDifferentCommands()
     KitQueue queue(dummy);
 
     std::stringstream ss;
-    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+    ss << "callback all " << KIT_CALLBACK_STATE_CHANGED;
 
     putCallback(queue, ss.str() + " .uno:Bold=true");
     putCallback(queue, ss.str() + " .uno:Italic=true");
@@ -1042,7 +1042,7 @@ void KitQueueTests::testCallbackStateChangedNoEquals()
     KitQueue queue(dummy);
 
     std::stringstream ss;
-    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+    ss << "callback all " << KIT_CALLBACK_STATE_CHANGED;
 
     putCallback(queue, ss.str() + " .uno:Bold=true");
     putCallback(queue, ss.str() + " .uno:Bold");
@@ -1104,7 +1104,7 @@ void KitQueueTests::testCallbackCursorDedup()
     TilePrioritizer dummy;
     KitQueue queue(dummy);
 
-    // LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR = 1
+    // KIT_CALLBACK_INVALIDATE_VISIBLE_CURSOR = 1
     putCallback(queue, "callback all 1 old_cursor_pos");
     putCallback(queue, "callback all 1 new_cursor_pos");
 
@@ -1122,7 +1122,7 @@ void KitQueueTests::testCallbackViewCursorDedup()
     TilePrioritizer dummy;
     KitQueue queue(dummy);
 
-    // LOK_CALLBACK_CELL_VIEW_CURSOR = 26; payload requires JSON with viewId.
+    // KIT_CALLBACK_CELL_VIEW_CURSOR = 26; payload requires JSON with viewId.
     putCallback(queue, "callback all 26 { \"viewId\": \"1\", \"rectangle\": \"0, 0, 100, 100\" }");
     putCallback(queue, "callback all 26 { \"viewId\": \"1\", \"rectangle\": \"50, 50, 100, 100\" }");
 

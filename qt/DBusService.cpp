@@ -14,7 +14,7 @@
 #include "DBusService.hpp"
 #include <qt/WebView.hpp>
 #include <common/Log.hpp>
-#include <LibreOfficeKit/LibreOfficeKit.h>
+#include <COKit/COKit.h>
 #include <qt/qt.hpp>
 #include <Poco/URI.h>
 #include <Poco/Path.h>

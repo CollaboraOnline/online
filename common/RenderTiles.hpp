@@ -17,7 +17,7 @@
 #include <kit/Delta.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #include <cassert>
 #include <memory>
@@ -58,11 +58,11 @@ namespace RenderTiles
     }
 
     bool doRender(
-        const std::shared_ptr<lok::Document>& document, DeltaGenerator& deltaGen,
+        const std::shared_ptr<kit::Document>& document, DeltaGenerator& deltaGen,
         TileCombined& tileCombined, ThreadPool& pngPool,
         const std::function<void(unsigned char* data, int offsetX, int offsetY, size_t pixmapWidth,
                                  size_t pixmapHeight, int pixelWidth, int pixelHeight,
-                                 LibreOfficeKitTileMode mode)>& blendWatermark,
+                                 COKitTileMode mode)>& blendWatermark,
         const std::function<void(const char* buffer, size_t length)>& outputMessage,
         [[maybe_unused]] unsigned mobileAppDocId, CanonicalViewId canonicalViewId, bool dumpTiles)
     {
@@ -136,7 +136,7 @@ namespace RenderTiles
                 << renderArea.getWidth() << ", " << renderArea.getHeight() << ") "
                 << " took " << elapsedUs << " (" << area / elapsedUs.count() << " MP/s).");
 
-        const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
+        const auto mode = static_cast<COKitTileMode>(document->getTileMode());
 
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<char> output;

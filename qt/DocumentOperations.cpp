@@ -13,8 +13,8 @@
 
 #include "DocumentOperations.hpp"
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKit.hxx>
 
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
@@ -43,7 +43,7 @@ std::vector<SaveAsFormat> getSaveAsFormats(int docType)
 {
     std::vector<SaveAsFormat> formats;
 
-    if (docType == LOK_DOCTYPE_TEXT)
+    if (docType == KIT_DOCTYPE_TEXT)
     {
         formats = {
             {QStringLiteral("saveas-odt"), QStringLiteral("odt"), QObject::tr("ODF text document (.odt)")},
@@ -52,7 +52,7 @@ std::vector<SaveAsFormat> getSaveAsFormats(int docType)
             {QStringLiteral("saveas-doc"), QStringLiteral("doc"), QObject::tr("Word 2003 Document (.doc)")}
         };
     }
-    else if (docType == LOK_DOCTYPE_SPREADSHEET)
+    else if (docType == KIT_DOCTYPE_SPREADSHEET)
     {
         formats = {
             {QStringLiteral("saveas-ods"), QStringLiteral("ods"), QObject::tr("ODF spreadsheet (.ods)")},
@@ -60,7 +60,7 @@ std::vector<SaveAsFormat> getSaveAsFormats(int docType)
             {QStringLiteral("saveas-xls"), QStringLiteral("xls"), QObject::tr("Excel 2003 Spreadsheet (.xls)")}
         };
     }
-    else if (docType == LOK_DOCTYPE_PRESENTATION)
+    else if (docType == KIT_DOCTYPE_PRESENTATION)
     {
         formats = {
             {QStringLiteral("saveas-odp"), QStringLiteral("odp"), QObject::tr("ODF presentation (.odp)")},
@@ -68,7 +68,7 @@ std::vector<SaveAsFormat> getSaveAsFormats(int docType)
             {QStringLiteral("saveas-ppt"), QStringLiteral("ppt"), QObject::tr("PowerPoint 2003 Presentation (.ppt)")}
         };
     }
-    else if (docType == LOK_DOCTYPE_DRAWING)
+    else if (docType == KIT_DOCTYPE_DRAWING)
     {
         formats = {
             {QStringLiteral("saveas-odg"), QStringLiteral("odg"), QObject::tr("ODF drawing (.odg)")}
@@ -84,7 +84,7 @@ void printDocument(unsigned appDocId, QWidget* parent)
     const std::string tempFile = FileUtil::createRandomTmpDir() + "/print.pdf";
     const std::string tempFileUri = Poco::URI(Poco::Path(tempFile)).toString();
 
-    lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+    kit::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
     if (!loKitDoc)
     {
         LOG_ERR("printDocument: no loKitDocument");

@@ -994,26 +994,26 @@ static std::vector<COMDLG_FILTERSPEC>getSaveAsFormats(int docType)
 {
     std::vector<COMDLG_FILTERSPEC> result;
 
-    if (docType == LOK_DOCTYPE_TEXT)
+    if (docType == KIT_DOCTYPE_TEXT)
     {
         result.push_back({L"ODT", L"*.odt"});
         result.push_back({L"RTF", L"*.rtf"});
         result.push_back({L"DOCX", L"*.docx"});
         result.push_back({L"DOC", L"*.doc"});
     }
-    else if (docType == LOK_DOCTYPE_SPREADSHEET)
+    else if (docType == KIT_DOCTYPE_SPREADSHEET)
     {
         result.push_back({L"ODS", L"*.ods"});
         result.push_back({L"XLSX", L"*.xlsx"});
         result.push_back({L"XLS", L"*.xls"});
     }
-    else if (docType == LOK_DOCTYPE_PRESENTATION)
+    else if (docType == KIT_DOCTYPE_PRESENTATION)
     {
         result.push_back({L"ODP", L"*.odp"});
         result.push_back({L"PPTX", L"*.pptx"});
         result.push_back({L"PPT", L"*.ppt"});
     }
-    else if (docType == LOK_DOCTYPE_DRAWING)
+    else if (docType == KIT_DOCTYPE_DRAWING)
     {
         result.push_back({L"ODG", L"*.odg"});
     }
