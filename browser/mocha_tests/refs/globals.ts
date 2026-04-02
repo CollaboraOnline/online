@@ -9,6 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+// Minimal stub so ViewLayoutCompareChanges.ts compiles without pulling in the
+// full CommentSection dependency chain.
+namespace cool {
+    export class CommentSection {
+        public static getCommentWidth(): number { return 200 * 1.3 * app.dpiScale; }
+    }
+}
+
 var L: any = {
     LOUtil: {},
 };
