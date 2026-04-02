@@ -848,6 +848,8 @@ class TreeViewControl {
 				selectionElement,
 				expander,
 				clickFunction,
+				builder,
+				treeViewData,
 			);
 
 			this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
@@ -930,12 +932,37 @@ class TreeViewControl {
 		}
 	}
 
+	selectParentEntry(tr: HTMLElement, builder: JSBuilder, data: TreeWidgetJSON) {
+		const expandedContent = tr.parentElement;
+		if (
+			!expandedContent ||
+			!expandedContent.classList.contains('ui-treeview-expanded-content')
+		)
+			return;
+
+		const parentEntry = expandedContent.previousElementSibling as HTMLElement;
+		if (parentEntry && parentEntry.classList.contains('ui-treeview-entry')) {
+			const listElements = Array.from(
+				this._container.querySelectorAll(
+					`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+				),
+			) as Array<HTMLElement>;
+			const fromIndex = listElements.indexOf(tr);
+			const toIndex = listElements.indexOf(parentEntry);
+			if (toIndex >= 0)
+				this.changeFocusedRow(listElements, fromIndex, toIndex, builder, data);
+		}
+	}
+
+
 	setupEntryKeyboardEvents(
 		tr: HTMLElement,
 		entry: TreeEntryJSON,
 		selectionElement: HTMLInputElement,
 		expander: HTMLElement,
 		clickFunction: any,
+		builder: JSBuilder,
+		data: TreeWidgetJSON,
 	) {
 		if (entry.enabled === false) return;
 
@@ -956,8 +983,10 @@ class TreeViewControl {
 				// Always collapse if expanded
 				if (expander && !window.L.DomUtil.hasClass(tr, 'collapsed')) {
 					expander.click();
-					preventDef = true;
+				} else {
+					this.selectParentEntry(tr, builder, data);
 				}
+				preventDef = true;
 			} else if (event.key === 'ArrowRight') {
 				// Always expand if collapsed
 				if (expander && window.L.DomUtil.hasClass(tr, 'collapsed')) {
