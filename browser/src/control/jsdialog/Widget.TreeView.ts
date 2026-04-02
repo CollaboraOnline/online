@@ -328,22 +328,35 @@ class TreeViewControl {
 			builder.options.cssClass + ' ui-treeview-header',
 			this._thead,
 		);
-		const span = window.L.DomUtil.create(
-			'span',
-			builder.options.cssClass + ' ui-treeview-header-text',
-			th,
-		);
-
 		th.setAttribute('role', 'columnheader');
-		span.innerText = header.text;
 
 		if (header.sortable !== false) {
+			const button = window.L.DomUtil.create(
+				'button',
+				builder.options.cssClass + ' ui-treeview-header-button',
+				th,
+			);
+			button.textContent = header.text;
+			if (header.arrow) {
+				th.setAttribute(
+					'aria-sort',
+					header.arrow === 'up' ? 'ascending' : 'descending',
+				);
+			}
 			const icon = window.L.DomUtil.create(
 				'span',
 				builder.options.cssClass + ' ui-treeview-header-sort-icon',
-				span,
+				button,
 			);
+			icon.setAttribute('aria-hidden', 'true');
 			if (header.arrow) window.L.DomUtil.addClass(icon, header.arrow);
+		} else {
+			const span = window.L.DomUtil.create(
+				'span',
+				builder.options.cssClass + ' ui-treeview-header-text',
+				th,
+			);
+			span.innerText = header.text;
 		}
 	}
 
@@ -1570,6 +1583,10 @@ class TreeViewControl {
 	sortByColumn(icon: HTMLSpanElement, columnIndex: number, up: boolean) {
 		this.clearSorting();
 		window.L.DomUtil.addClass(icon, up ? 'up' : 'down');
+		const headerEl = icon.closest('.ui-treeview-header') as HTMLElement;
+		if (headerEl) {
+			headerEl.setAttribute('aria-sort', up ? 'ascending' : 'descending');
+		}
 
 		var toSort: Array<HTMLDivElement> = [];
 
@@ -1595,6 +1612,10 @@ class TreeViewControl {
 		icons.forEach((icon) => {
 			window.L.DomUtil.removeClass(icon, 'down');
 			window.L.DomUtil.removeClass(icon, 'up');
+		});
+		var headers = this._thead.querySelectorAll('.ui-treeview-header');
+		headers.forEach((header: HTMLElement) => {
+			header.removeAttribute('aria-sort');
 		});
 	}
 
@@ -1647,10 +1668,15 @@ class TreeViewControl {
 				};
 			};
 
-			const last = this._thead.lastChild as HTMLElement;
-			last.onclick = clickFunction(
+			const lastHeader = this._thead.lastChild as HTMLElement;
+			const button = lastHeader.querySelector(
+				'.ui-treeview-header-button',
+			) as HTMLElement;
+			button.onclick = clickFunction(
 				parseInt(index),
-				last.querySelector('.ui-treeview-header-sort-icon'),
+				lastHeader.querySelector(
+					'.ui-treeview-header-sort-icon',
+				) as HTMLSpanElement,
 			);
 		}
 	}
