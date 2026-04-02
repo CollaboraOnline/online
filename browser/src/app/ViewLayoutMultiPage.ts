@@ -176,6 +176,11 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 
 	protected refreshVisibleAreaRectangle(): void {
 		const documentAnchor = this.getDocumentAnchorSection();
+
+		// When the document container is hidden (e.g. BackstageView in CODA), the
+		// anchor section has zero size - bail out to avoid an infinite retry loop.
+		if (documentAnchor.size[0] <= 0 || documentAnchor.size[1] <= 0) return;
+
 		const view = cool.SimpleRectangle.fromCorePixels([
 			this.scrollProperties.viewX,
 			this.scrollProperties.viewY,
