@@ -139,6 +139,7 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 	}
 
 	public onNewDocumentTopLeft(): void {
+		super.onNewDocumentTopLeft();
 		this.checkSettings();
 	}
 
