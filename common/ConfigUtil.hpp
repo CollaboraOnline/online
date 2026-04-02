@@ -166,7 +166,7 @@ inline bool isSSLTermination()
 }
 
 /// Return true if build is support key enabled (ENABLE_SUPPORT_KEY is defined)
-inline constexpr bool isSupportKeyEnabled()
+constexpr bool isSupportKeyEnabled()
 {
 #ifdef ENABLE_SUPPORT_KEY
     return ENABLE_SUPPORT_KEY;

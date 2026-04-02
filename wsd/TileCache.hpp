@@ -33,7 +33,7 @@ class ClientSession;
 // The cache cares about only some properties.
 struct TileDescCacheCompareEq final
 {
-    inline bool operator()(const TileDesc& l, const TileDesc& r) const
+    bool operator()(const TileDesc& l, const TileDesc& r) const
     {
         return l.getPart() == r.getPart() &&
                l.getWidth() == r.getWidth() &&
@@ -50,7 +50,7 @@ struct TileDescCacheCompareEq final
 // The cache cares about only some properties.
 struct TileDescCacheHasher final
 {
-    inline size_t operator()(const TileDesc& t) const
+    size_t operator()(const TileDesc& t) const
     {
         size_t hash = t.getPart();
 

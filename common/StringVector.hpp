@@ -216,8 +216,8 @@ public:
     /// Concats tokens starting from firstOffset, using separator as separator.
     /// An optional lastOffset can be used to decide the last entry, inclusive.
     template <typename T>
-    inline std::string cat(const T& separator, std::size_t firstOffset,
-                           std::size_t lastOffset = std::string::npos) const
+    std::string cat(const T& separator, std::size_t firstOffset,
+                    std::size_t lastOffset = std::string::npos) const
     {
         if (firstOffset >= _tokens.size() || firstOffset > lastOffset)
         {
