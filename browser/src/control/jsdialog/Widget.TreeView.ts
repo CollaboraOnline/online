@@ -1515,6 +1515,37 @@ class TreeViewControl {
 		return currIndex;
 	}
 
+	expandSiblings(
+		listElements: Array<HTMLElement>,
+		currIndex: number,
+		data: TreeWidgetJSON,
+		builder: JSBuilder,
+	) {
+		if (currIndex < 0) return;
+		const currentEntry = listElements[currIndex];
+		const level = currentEntry.getAttribute('aria-level');
+		if (!level) return;
+
+		const parent = currentEntry.parentElement;
+		if (!parent) return;
+
+		const siblings = parent.querySelectorAll(
+			'.ui-treeview-entry',
+		) as NodeListOf<HTMLElement>;
+		siblings.forEach((sibling: HTMLElement) => {
+			if (
+				sibling.getAttribute('aria-level') === level &&
+				sibling.classList.contains('collapsed') &&
+				sibling.hasAttribute('aria-expanded')
+			) {
+				const row = (sibling as any)._row;
+				builder.callback('treeview', 'expand', data, row, builder);
+				sibling.classList.remove('collapsed');
+				sibling.setAttribute('aria-expanded', 'true');
+			}
+		});
+	}
+
 	handleKeyEvent(
 		event: KeyboardEvent,
 		nodeList: NodeList,
@@ -1599,8 +1630,10 @@ class TreeViewControl {
 					data,
 				);
 			preventDef = true;
-		} 
-		else if (
+		} else if (event.key === '*') {
+			this.expandSiblings(listElements, currIndex, data, builder);
+			preventDef = true;
+		} else if (
 			data.fireKeyEvents &&
 			// FIXME: can callback return boolean?
 			(builder as any).callback(
