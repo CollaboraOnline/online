@@ -74,14 +74,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.wait(500);
 		helper.processToIdle(this.win);
 
-		// check that now the whole widget is no more focusable and tab-indexes are restored and
-		// that the next focusable element is the first entry
+		// check that the container is no longer focusable and tabbing back in
+		// lands on the selected entry (roving tabindex pattern)
 		cy.cGet('#link_btn_2').click();
 		helper.processToIdle(this.win);
 
 		helper.assertFocus('id','link_btn_2');
 		cy.realPress('Tab');
-		cy.cGet('#contenttree .ui-treeview-entry:nth-child(1)').should('have.focus');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.focus');
 		cy.cGet('#contenttree').should('not.have.attr', 'tabindex');
 	});
 
