@@ -200,6 +200,51 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             });
     });
 
+    it('Treeview sortable column headers are keyboard accessible', function () {
+        cy.then(function () {
+            win.app.map.sendUnoCommand('.uno:InsertBookmark');
+        });
+
+        a11yHelper.getActiveDialog(1)
+            .then(() => helper.processToIdle(win))
+            .then(() => {
+                // Sortable headers must use a button element for keyboard access
+                cy.cGet('.ui-treeview-header[role="columnheader"] button.ui-treeview-header-button')
+                    .should('have.length.greaterThan', 0);
+
+                // No aria-sort before any sorting action
+                cy.cGet('.ui-treeview-header[role="columnheader"]')
+                    .first()
+                    .should('not.have.attr', 'aria-sort');
+
+                // Click the first sortable header button to sort
+                cy.cGet('.ui-treeview-header-button').first().click();
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                // After sorting, aria-sort must be 'descending' (Default)
+                cy.cGet('.ui-treeview-header[role="columnheader"]')
+                    .first()
+                    .should('have.attr', 'aria-sort')
+                    .and('equal', 'descending');
+
+                // Sort icon should be visible
+                cy.cGet('.ui-treeview-header-sort-icon').first()
+                    .should('be.visible');
+
+                // Click again to reverse sort direction
+                cy.cGet('.ui-treeview-header-button').first().click();
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                // After toggling, aria-sort should 'ascending'
+                cy.cGet('.ui-treeview-header[role="columnheader"]')
+                    .first()
+                    .should('have.attr', 'aria-sort')
+                    .and('equal', 'ascending');
+            });
+    });
+
     it('Treeview Enter key keeps focus in dialog', function () {
         cy.then(function () {
             win.app.map.sendUnoCommand('.uno:ChapterNumberingDialog');
