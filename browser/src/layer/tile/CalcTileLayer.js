@@ -181,7 +181,9 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 				TileManager.tileSize);
 		}
 		this._restrictDocumentSize();
+		this.dontSendSplitPosToCore = true;
 		this.setSplitPosFromCell();
+		this.dontSendSplitPosToCore = false;
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
 		this._replayPrintTwipsMsgs(false);
