@@ -599,6 +599,14 @@ algned to the bottom */
 	display: inline-block;
 }
 
+.ui-treeview-header-button {
+	background: none;
+	border: none;
+	font: inherit;
+	font-weight: bold;
+	cursor: pointer;
+}
+
 .ui-treeview-icon {
 	height: var(--btn-img-size-s);
 	width: var(--btn-img-size-s);
