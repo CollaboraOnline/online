@@ -148,7 +148,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
-		this.sectionProperties.commentWidth = 200 * 1.3 * app.dpiScale;
+		this.sectionProperties.commentWidth = CommentSection.getCommentWidth();
 		this.sectionProperties.commentWidthBigger =  588 * app.dpiScale;
 		this.sectionProperties.collapsedCommentWidth = 32 * 1.5 * app.dpiScale;
 		this.sectionProperties.collapsedMarginToTheEdge = 120; // CSS pixels.
@@ -349,6 +349,10 @@ export class CommentSection extends CanvasSectionObject {
 			this.sectionProperties.commentList[i].setExpanded();
 			$(this.sectionProperties.commentList[i].sectionProperties.container).removeClass('collapsed-comment');
 		}
+	}
+
+	public static getCommentWidth(): number {
+		return 200 * 1.3 * app.dpiScale;
 	}
 
 	/// If the current layout has more than one pages in a row, so the comment should be next to
