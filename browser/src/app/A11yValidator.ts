@@ -228,6 +228,37 @@ class A11yValidator {
 		}
 	}
 
+	private checkDuplicateButtonLabels(container: HTMLElement): number {
+		const buttons = container.querySelectorAll('button[aria-labelledby]');
+		const labelMap = new Map<string, HTMLElement[]>();
+
+		buttons.forEach((btn) => {
+			const labelledBy = btn.getAttribute('aria-labelledby')?.trim();
+			if (!labelledBy) return;
+
+			if (!labelMap.has(labelledBy)) {
+				labelMap.set(labelledBy, []);
+			}
+			labelMap.get(labelledBy)?.push(btn as HTMLElement);
+		});
+
+		let errorCount = 0;
+
+		for (const [labelId, btns] of labelMap) {
+			if (btns.length > 1) {
+				const ids = btns.map((b) => b.id || '(no id)').join(', ');
+				console.error(
+					new A11yValidatorException(
+						`In '${this.getDialogTitle(container)}': buttons [${ids}] share the same aria-labelledby="${labelId}". Each button must have a distinct accessible name to clearly convey its function.`,
+					),
+				);
+				errorCount++;
+			}
+		}
+
+		return errorCount;
+	}
+
 	private shouldCheckChild(child: Element): boolean {
 		return (
 			child instanceof HTMLElement &&
@@ -298,6 +329,8 @@ class A11yValidator {
 				errorCount++;
 			}
 		}
+
+		errorCount += this.checkDuplicateButtonLabels(dialogElement);
 
 		this._directlyValidatedElements = null;
 		return errorCount;
