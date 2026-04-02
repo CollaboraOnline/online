@@ -405,7 +405,7 @@ class TreeViewControl {
 		) {
 			window.L.DomUtil.addClass(tr, this.PAGE_DIVIDER_ROW_CLASS);
 		} else {
-			tr.setAttribute('tabindex', '0');
+			tr.setAttribute('tabindex', '-1');
 		}
 
 		let selectionElement;
@@ -965,7 +965,7 @@ class TreeViewControl {
 					preventDef = true;
 				}
 			} else if (event.key === 'Tab') {
-				if (!window.L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr); // remove tabIndex
+				if (!window.L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr);
 			}
 
 			if (preventDef) {
@@ -1049,7 +1049,7 @@ class TreeViewControl {
 	unselectEntry(item: HTMLElement) {
 		window.L.DomUtil.removeClass(item, 'selected');
 		item.removeAttribute('aria-selected');
-		item.removeAttribute('tabindex');
+		item.tabIndex = -1;
 		var itemCheckbox = item.querySelector('input');
 		if (itemCheckbox) itemCheckbox.tabIndex = -1;
 	}
@@ -1370,9 +1370,13 @@ class TreeViewControl {
 	}
 
 	restoreInitialTabIndexes(listElements: Array<HTMLElement>) {
+		var selectedEntry: HTMLElement = null;
 		listElements.forEach((entry: HTMLElement) => {
-			entry.tabIndex = 0;
+			if (entry.classList.contains('selected')) selectedEntry = entry;
+			entry.tabIndex = -1;
 		});
+		if (selectedEntry) selectedEntry.tabIndex = 0;
+		else if (listElements.length > 0) listElements[0].tabIndex = 0;
 	}
 
 	changeFocusedRow(
@@ -1406,9 +1410,7 @@ class TreeViewControl {
 
 		if (fromIndex >= 0) {
 			var oldElement = listElements.at(fromIndex);
-			if (window.L.DomUtil.hasClass(oldElement, 'selected')) return;
-
-			oldElement.removeAttribute('tabindex');
+			oldElement.tabIndex = -1;
 			var oldInput = Array.from(
 				listElements
 					.at(fromIndex)
