@@ -302,6 +302,7 @@ interface TextWidget extends WidgetJSON {
 	text: string;
 	html?: string;
 	labelFor?: string;
+	labelForType?: string;
 	style?: string;
 	hidden?: boolean;
 	renderAsStatic?: boolean;
