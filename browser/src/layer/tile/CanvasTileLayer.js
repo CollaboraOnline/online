@@ -3899,6 +3899,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (e.detail.perm !== 'edit') {
 				this._clearSelections();
 			}
+			TileManager.update();
 		}.bind(this));
 
 		map.setPermission(app.file.permission);
