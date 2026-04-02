@@ -413,7 +413,13 @@ export class TilesSection extends CanvasSectionObject {
 		} else if (!this.containerObject.isZoomChanged()) {
 			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
 			// after a zoom animation.
+
+			// drawPageBackgroundWriter uses absolute view coordinates (v1X, v1Y etc.)
+			// but the context is already translated by myTopLeft (by the section container).
+			// Compensate for this offset, same as the multipage view path.
+			this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 			this.drawPageBackgrounds(ctx);
+			this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 		}
 
 		var doneTiles = new Set();
