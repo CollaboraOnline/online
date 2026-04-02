@@ -8,8 +8,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { join } from 'path';
-import * as webview from '../lib/webview.js';
+import { openFixture } from '../lib/file-dialog.js';
 
 // Regression test for https://github.com/CollaboraOnline/online/issues/15291
 //
@@ -20,42 +19,7 @@ import * as webview from '../lib/webview.js';
 // making the UI completely unresponsive.
 describe('Multi-page view backstage (issue #15291)', () => {
 	it('should not freeze when opening backstage in multi-page view', async function () {
-		// Open the multi-page fixture via the native file dialog.
-		await browser.webEngine.execute(() => {
-			setTimeout(() => {
-				window.postMobileMessage('uno .uno:Open');
-			}, 100);
-		});
-
-		const fileNameField = await browser.native.$(
-			'//*[@accessibility-id="QApplication.QFileDialog.fileNameEdit"]',
-		);
-		await fileNameField.waitForExist({ timeout: 10000 });
-
-		const filePath = join(
-			process.env.CODA_QT_TEST_DOCUMENTS_DIR!,
-			'scrolling.odt',
-		);
-		await fileNameField.setValue(filePath);
-
-		const openBtn = await browser.native.$(
-			'//*[@accessibility-id="QApplication.QFileDialog.buttonBox.QPushButton"]',
-		);
-		await openBtn.waitForExist({ timeout: 5000 });
-		await openBtn.click();
-
-		await webview.switchToNewWebView(browser.webEngine);
-
-		await browser.webEngine.waitForCondition(
-			() =>
-				typeof app !== 'undefined' &&
-				app.map &&
-				app.map._docLoaded === true,
-			{
-				timeout: 45000,
-				timeoutMsg: 'Document did not load',
-			},
-		);
+		await openFixture(browser.webEngine, browser.native, 'scrolling.odt');
 
 		// Enable multi-page view.
 		await browser.webEngine.execute(() => {
