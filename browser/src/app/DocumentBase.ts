@@ -25,6 +25,7 @@ class DocumentBase {
 	public activeView: DocumentViewBase;
 	private activeViewSelectionColor = 'lightblue'; // Overwritten in constructor.
 
+	public partHasComments: boolean | undefined = undefined;
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {

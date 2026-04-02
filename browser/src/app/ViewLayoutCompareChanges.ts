@@ -45,7 +45,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	}
 
 	private onResize(): void {
-		this.halfWidth = Math.round(this.getDocumentAnchorSection().size[0] * 0.5);
+		this.adjustViewZoomLevel();
 		this.refreshView();
 	}
 
@@ -60,9 +60,20 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		const max = 10;
 
 		const anchorSection = this.getDocumentAnchorSection();
-		this.halfWidth = Math.round(anchorSection.size[0] * 0.5);
 
-		const ratio = this.halfWidth / app.activeDocument.fileSize.pX;
+		// Reserve space for the comment section on the right side of the pages.
+		const commentReserve = app.activeDocument.partHasComments
+			? cool.CommentSection.getCommentWidth()
+			: 0;
+		// Shift the center divider to the left so comments fit on the right.
+		this.halfWidth = Math.round((anchorSection.size[0] - commentReserve) * 0.5);
+		// The gap between the two pages is 2 * viewGap (each page is offset
+		// by viewGap from the center divider).
+		const targetPageWidth = Math.round(
+			(anchorSection.size[0] - 2 * this.viewGap - commentReserve) * 0.5,
+		);
+
+		const ratio = targetPageWidth / app.activeDocument.fileSize.pX;
 		let zoom = app.map.getScaleZoom(ratio);
 		zoom = Math.min(max, Math.max(min, zoom));
 
@@ -226,9 +237,12 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		Util.ensureValue(app.activeDocument);
 
 		const anchorWidth = this.getDocumentAnchorSection().size[0];
-		// Two pages side by side, with a gap in-between.
-		const contentWidth = 2 * app.activeDocument.fileSize.pX + this.viewGap;
-		return anchorWidth - contentWidth;
+		// Right page edge is the width center position + page width (with its gap).
+		const rightPageRightEdge =
+			this.halfWidth + this.viewGap + app.activeDocument.fileSize.pX;
+		// Compute the actual right-side space and double it, because
+		// CommentSection.calculateAvailableSpace() halves the result.
+		return (anchorWidth - rightPageRightEdge) * 2;
 	}
 
 	public override scroll(pX: number, pY: number): boolean {
