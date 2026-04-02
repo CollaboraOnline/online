@@ -63,12 +63,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.focus');
 		cy.realPress('ArrowDown');
 		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.focus');
-
-		// select the second entry
-		cy.realPress('Space');
-		helper.processToIdle(this.win);
-
-		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.class', 'selected');
+		cy.realPress('ArrowUp');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.focus');
+		cy.realPress('ArrowUp');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(1)').should('have.focus');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.class', 'selected');
 
 		// processToIdle wasnt enough for stability
 		cy.wait(500);
