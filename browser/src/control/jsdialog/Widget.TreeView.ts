@@ -1038,9 +1038,10 @@ class TreeViewControl {
 	) {
 		if (entry.enabled === false) return;
 
-		if (window.L.DomUtil.hasClass(span, 'collapsed'))
+		if (window.L.DomUtil.hasClass(span, 'collapsed')) {
 			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
-		else
+			span.setAttribute('aria-expanded', 'true');
+		} else {
 			builder.callback(
 				'treeview',
 				'collapse',
@@ -1048,6 +1049,8 @@ class TreeViewControl {
 				entry.row,
 				builder,
 			);
+			span.setAttribute('aria-expanded', 'false');
+		}
 		$(span).toggleClass('collapsed');
 	}
 
@@ -1062,6 +1065,9 @@ class TreeViewControl {
 		if (entry.ondemand && window.L.DomUtil.hasClass(span, 'collapsed'))
 			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
 		$(span).toggleClass('collapsed');
+		if (window.L.DomUtil.hasClass(span, 'collapsed'))
+			span.setAttribute('aria-expanded', 'false');
+		else span.setAttribute('aria-expanded', 'true');
 	}
 
 	selectEntry(
