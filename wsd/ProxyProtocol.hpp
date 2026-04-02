@@ -16,10 +16,11 @@
 
 #pragma once
 
-#include <StateEnum.hpp>
+#include <common/StateEnum.hpp>
+#include <net/Socket.hpp>
+
 #include <map>
 #include <memory>
-#include <net/Socket.hpp>
 
 /**
  * Implementation that builds a websocket like protocol from many

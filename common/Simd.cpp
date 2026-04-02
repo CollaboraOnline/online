@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#include <Simd.hpp>
+#include "Simd.hpp"
 
 #if ENABLE_SIMD
 #  include <immintrin.h>

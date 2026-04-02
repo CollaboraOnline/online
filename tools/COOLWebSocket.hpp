@@ -13,11 +13,11 @@
 
 #include <test/testlog.hpp>
 
-#include <Poco/Net/WebSocket.h>
-
-#include <Common.hpp>
-#include <Protocol.hpp>
+#include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/Protocol.hpp>
+
+#include <Poco/Net/WebSocket.h>
 
 #include <iomanip>
 

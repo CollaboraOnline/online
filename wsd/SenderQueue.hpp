@@ -16,13 +16,13 @@
 
 #pragma once
 
-#include <common/SigUtil.hpp>
 #include <common/Log.hpp>
-#include <TileDesc.hpp>
-#include <Protocol.hpp>
+#include <common/Protocol.hpp>
+#include <common/SigUtil.hpp>
+#include <wsd/TileDesc.hpp>
 
-#include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 
 #include <deque>
 #include <mutex>

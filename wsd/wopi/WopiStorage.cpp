@@ -13,23 +13,23 @@
 
 #include "WopiStorage.hpp"
 
-#include <Auth.hpp>
-#include <CommandControl.hpp>
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <HostUtil.hpp>
-#include <HttpRequest.hpp>
-#include <common/Log.hpp>
-#include <NetUtil.hpp>
-#include <ProofKey.hpp>
-#include <Unit.hpp>
-#include <common/Util.hpp>
 #include <common/Anonymizer.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
 #include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/NetUtil.hpp>
 #include <wopi/StorageConnectionManager.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/HostUtil.hpp>
+#include <wsd/ProofKey.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/Net/AcceptCertificateHandler.h>

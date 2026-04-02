@@ -16,20 +16,20 @@
 
 #include <config.h>
 
-#include <RequestVettingStation.hpp>
+#include "RequestVettingStation.hpp"
 
 #include <common/Anonymizer.hpp>
-#include <COOLWSD.hpp>
-#include <RequestDetails.hpp>
-#include <TraceEvent.hpp>
-#include <Exceptions.hpp>
-#include <common/Log.hpp>
-#include <DocumentBroker.hpp>
-#include <ClientSession.hpp>
 #include <common/JsonUtil.hpp>
-#include <CacheUtil.hpp>
+#include <common/Log.hpp>
+#include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
-#include <ServerAuditUtil.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/CacheUtil.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/RequestDetails.hpp>
+#include <wsd/ServerAuditUtil.hpp>
 #include <wsd/Storage.hpp>
 
 #if !MOBILEAPP

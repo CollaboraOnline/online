@@ -11,17 +11,16 @@
 
 #pragma once
 
-#include <CharacterConverter.hpp>
-#include <COOLWSD.hpp>
-#include <HttpRequest.hpp>
-#include <common/Log.hpp>
-#include <Storage.hpp>
 #include <common/Authorization.hpp>
+#include <common/CharacterConverter.hpp>
+#include <common/Log.hpp>
 #include <net/HttpRequest.hpp>
+#include <net/HttpRequest.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/Storage.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
-#include <Poco/Util/Application.h>
 
 #include <chrono>
 #include <memory>

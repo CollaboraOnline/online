@@ -17,9 +17,9 @@
 #include <config.h>
 
 #include <common/StringVector.hpp>
+#include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
-#include <TraceEvent.hpp>
-#include <COOLWSD.hpp>
+#include <wsd/COOLWSD.hpp>
 
 void setKitInProcess() { Util::setKitInProcess(false); }
 
