@@ -9,17 +9,19 @@ permissions:
 
 jobs:
   welcome:
-    if: >-
-      github.event.action == 'opened' &&
-      (github.event.pull_request.author_association == 'NONE' ||
-       github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR' ||
-       github.event.pull_request.author_association == 'FIRST_TIMER')
+    if: github.event.action == 'opened'
     runs-on: ubuntu-latest
     steps:
       - name: Post welcome comment
         uses: actions/github-script@v7
         with:
           script: |
+            const author = context.payload.pull_request.user.login;
+            const { data: prs } = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} type:pr author:${author}`,
+            });
+            if (prs.total_count > 1) return;
+
             const comments = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
