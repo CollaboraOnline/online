@@ -1027,6 +1027,30 @@ class TreeViewControl {
 		}
 	}
 
+	selectFirstChild(tr: HTMLElement, builder: JSBuilder, data: TreeWidgetJSON) {
+		const expandedContent = tr.nextElementSibling as HTMLElement;
+		if (
+			!expandedContent ||
+			!expandedContent.classList.contains('ui-treeview-expanded-content')
+		)
+			return;
+
+		const firstChild = expandedContent.querySelector(
+			'.ui-treeview-entry',
+		) as HTMLElement;
+
+		if (firstChild) {
+			const listElements = Array.from(
+				this._container.querySelectorAll(
+					`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+				),
+			) as Array<HTMLElement>;
+			const fromIndex = listElements.indexOf(tr);
+			const toIndex = listElements.indexOf(firstChild);
+			if (toIndex >= 0)
+				this.changeFocusedRow(listElements, fromIndex, toIndex, builder, data);
+		}
+	}
 
 	setupEntryKeyboardEvents(
 		tr: HTMLElement,
@@ -1064,8 +1088,10 @@ class TreeViewControl {
 				// Always expand if collapsed
 				if (expander && window.L.DomUtil.hasClass(tr, 'collapsed')) {
 					expander.click();
-					preventDef = true;
+				} else if (expander && !window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					this.selectFirstChild(tr, builder, data);
 				}
+				preventDef = true;
 			} else if (event.key === 'Tab') {
 				if (!window.L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr);
 			}
