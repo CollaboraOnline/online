@@ -25,7 +25,7 @@
 
 struct BytesDeleter
 {
-    inline void operator()(unsigned char* bytes) { std::free(bytes); }
+    void operator()(unsigned char* bytes) { std::free(bytes); }
 };
 using ScopedBytes = std::unique_ptr<unsigned char, BytesDeleter>;
 

@@ -67,7 +67,7 @@ template <typename T> bool dataFromHexString(const std::string_view hexString, T
     return true;
 }
 
-inline constexpr std::array<char, 2> hexFromByte(unsigned char byte)
+constexpr std::array<char, 2> hexFromByte(unsigned char byte)
 {
     constexpr auto hex = "0123456789ABCDEF";
     return { hex[byte >> 4], hex[byte & 0xf] };
