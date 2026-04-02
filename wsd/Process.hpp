@@ -192,7 +192,7 @@ private:
 };
 
 /// A ChildProcess object represents a Kit process that hosts a document and manipulates the
-/// document using the LibreOfficeKit API. It isn't actually a child of the WSD process, but a
+/// document using the COKit API. It isn't actually a child of the WSD process, but a
 /// grandchild. The comments loosely talk about "child" anyway.
 
 class ChildProcess final : public WSProcess

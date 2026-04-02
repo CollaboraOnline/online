@@ -11,7 +11,7 @@
 #include <config.h>
 
 #define LIBO_INTERNAL_ONLY
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #import <WebKit/WebKit.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>

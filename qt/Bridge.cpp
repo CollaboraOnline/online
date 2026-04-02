@@ -13,7 +13,7 @@
 
 #include "bridge.hpp"
 
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #include <qt/DBusService.hpp>
 #include <qt/DocumentOperations.hpp>
@@ -188,7 +188,7 @@ void Bridge::error(const QString& msg) { LOG_TRC_NOFILE("From JS: error: " << ms
 void Bridge::promptSaveLocation(std::function<void(const std::string&, const std::string&)> callback)
 {
     // Prompt user to pick a save location and format
-    lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
+    kit::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
     if (!loKitDoc)
     {
         LOG_ERR("promptSaveLocation: no loKitDocument");
@@ -718,7 +718,7 @@ QVariant Bridge::cool(const QString& messageStr)
         QObject::connect(dialog, &QFileDialog::fileSelected,
                         [appDocId, format](const QString& destPath) {
             // Export directly to the chosen path
-            lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+            kit::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
             if (!loKitDoc)
             {
                 LOG_ERR("downloadas: no loKitDocument");

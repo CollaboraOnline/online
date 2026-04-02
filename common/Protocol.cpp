@@ -23,8 +23,8 @@
 #include <string>
 #include <string_view>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKitEnums.h>
 
 namespace COOLProtocol
 {

@@ -11,15 +11,15 @@
 
 #pragma once
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKit.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-LibreOfficeKit* dummy_lok_init_2(const char *install_path,  const char *user_profile_url);
+COKit* dummy_cok_init_2(const char *install_path,  const char *user_profile_url);
 
 #ifdef __cplusplus
 }

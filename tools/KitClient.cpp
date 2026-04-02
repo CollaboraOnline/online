@@ -10,7 +10,7 @@
  */
 
 /*
- * Direct LibreOfficeKit client for testing and benchmarking.
+ * Direct COKit client for testing and benchmarking.
  * Functions: Document loading, tile rendering, command execution
  */
 
@@ -21,9 +21,9 @@
 #include <common/Util.hpp>
 #include <kit/KitHelper.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
-#include <LibreOfficeKit/LibreOfficeKit.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKitInit.h>
+#include <COKit/COKit.h>
 
 #include <Poco/String.h>
 #include <Poco/TemporaryFile.h>
@@ -47,7 +47,7 @@ extern "C"
 {
     static void myCallback(int type, const char* payload, void*)
     {
-        std::cout << "Callback: " << lokCallbackTypeToString(type)
+        std::cout << "Callback: " << kitCallbackTypeToString(type)
                   << " payload: " << payload << std::endl;
     }
 }
@@ -66,13 +66,13 @@ protected:
             return EX_USAGE;
         }
 
-        LibreOfficeKit *loKit;
-        LibreOfficeKitDocument *loKitDocument;
+        COKit *loKit;
+        COKitDocument *loKitDocument;
 
-        loKit = lok_init(args[0].c_str());
+        loKit = cok_init(args[0].c_str());
         if (!loKit)
         {
-            logger().fatal("LibreOfficeKit initialisation failed");
+            logger().fatal("COKit initialisation failed");
             return EX_UNAVAILABLE;
         }
 
@@ -108,9 +108,9 @@ protected:
                 std::cout <<
                     "Commands mimic COOL protocol but we talk directly to LOKit:" << std::endl <<
                     "    status" << std::endl <<
-                    "        calls LibreOfficeKitDocument::getDocumentType, getParts, getPartName, getDocumentSize" << std::endl <<
+                    "        calls COKitDocument::getDocumentType, getParts, getPartName, getDocumentSize" << std::endl <<
                     "    tile part pixelwidth pixelheight docposx docposy doctilewidth doctileheight" << std::endl <<
-                    "        calls LibreOfficeKitDocument::paintTile" << std::endl;
+                    "        calls COKitDocument::paintTile" << std::endl;
             }
             else if (tokens.equals(0, "status"))
             {
@@ -145,7 +145,7 @@ protected:
                     continue;
 
                 std::vector<char> png;
-                const auto mode = static_cast<LibreOfficeKitTileMode>(loKitDocument->pClass->getTileMode(loKitDocument));
+                const auto mode = static_cast<COKitTileMode>(loKitDocument->pClass->getTileMode(loKitDocument));
 
                 Png::encodeBufferToPNG(pixmap.data(), canvasWidth, canvasHeight, png, mode);
 

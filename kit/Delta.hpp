@@ -154,7 +154,7 @@ class DeltaGenerator {
 
         // <rle data size> (byte), <bitmask>, [<unique pixel data>]
         size_t packForNetwork(unsigned char *output,
-                              LibreOfficeKitTileMode mode) const
+                              COKitTileMode mode) const
         {
             assert(_rleSize < 65536);
 
@@ -305,7 +305,7 @@ class DeltaGenerator {
         void diffRowTo(const DeltaBitmapRow &curRow,
                        const int width, const int curY,
                        std::vector<uint8_t> &output,
-                       LibreOfficeKitTileMode mode) const
+                       COKitTileMode mode) const
         {
             PixIterator oldPixels(*this);
             PixIterator curPixels(curRow);
@@ -520,14 +520,14 @@ class DeltaGenerator {
     }
 
     static void copy_row(unsigned char *dest, const unsigned char *srcBytes,
-                         unsigned int count, LibreOfficeKitTileMode mode)
+                         unsigned int count, COKitTileMode mode)
     {
         switch (mode)
         {
-        case LOK_TILEMODE_RGBA:
+        case KIT_TILEMODE_RGBA:
             std::memcpy(dest, srcBytes, count * 4);
             break;
-        case LOK_TILEMODE_BGRA:
+        case KIT_TILEMODE_BGRA:
             if (simd::HasAVX2 &&
                 simd_copyRowSwapRB(dest, srcBytes, count))
                 break;
@@ -548,7 +548,7 @@ class DeltaGenerator {
         const DeltaData &prev,
         const DeltaData &cur,
         std::vector<char>& outStream,
-        LibreOfficeKitTileMode mode) const
+        COKitTileMode mode) const
     {
         // TODO: should we split and compress alpha separately ?
         if (prev.getWidth() != cur.getWidth() || prev.getHeight() != cur.getHeight())
@@ -714,7 +714,7 @@ class DeltaGenerator {
         const TileLocation &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe,
-        LibreOfficeKitTileMode mode,
+        COKitTileMode mode,
         std::shared_ptr<DeltaData> &rleData)
     {
         rleData = nullptr;
@@ -782,7 +782,7 @@ class DeltaGenerator {
         const TileLocation &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe,
-        bool dumpTiles, LibreOfficeKitTileMode mode)
+        bool dumpTiles, COKitTileMode mode)
     {
         #if !ENABLE_DEBUG
         dumpTiles = false;

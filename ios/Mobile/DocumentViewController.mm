@@ -32,7 +32,7 @@
 #import "CoolURLSchemeHandler.h"
 
 #define LIBO_INTERNAL_ONLY
-#import <LibreOfficeKit/LibreOfficeKit.hxx>
+#import <COKit/COKit.hxx>
 
 #import "DocumentViewController.h"
 

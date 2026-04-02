@@ -82,7 +82,7 @@ public:
         static std::string toString(int view, int type, const std::string& payload);
     };
 
-    /// Queue a LibreOfficeKit callback for later emission
+    /// Queue a COKit callback for later emission
     void putCallback(int view, int type, const std::string &message);
 
     /// Work back over the queue to simplify & return false if we should not queue.

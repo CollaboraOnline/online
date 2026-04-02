@@ -35,9 +35,8 @@
 /* Define to 1 if you have the `pam' library (-lpam). */
 #define HAVE_LIBPAM 0
 
-/* Define to 1 if you have the <LibreOfficeKit/LibreOfficeKit.h> header file.
-   */
-#define HAVE_LIBREOFFICEKIT_LIBREOFFICEKIT_H 1
+/* Define to 1 if you have the <COKit/COKit.h> header file. */
+#define HAVE_COKIT_COKIT_H 1
 
 /* Define to 1 if you have the <linux/seccomp.h> header file. */
 #define HAVE_LINUX_SECCOMP_H 0

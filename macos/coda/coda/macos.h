@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #include <string>
 
@@ -17,7 +17,7 @@ extern const char *user_name;
 
 extern int coolwsd_server_socket_fd;
 
-extern LibreOfficeKit *lo_kit;
+extern COKit *lo_kit;
 
 /**
  * Get the own installation path.

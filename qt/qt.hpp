@@ -13,7 +13,7 @@
 
 extern int coolwsd_server_socket_fd;
 extern const char* user_name;
-extern LibreOfficeKit* lo_kit;
+extern COKit* lo_kit;
 
 class Application
 {

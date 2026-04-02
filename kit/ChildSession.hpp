@@ -19,7 +19,7 @@
 #include <chrono>
 #include <queue>
 
-namespace lok
+namespace kit
 {
 class Document;
 class Office;
@@ -47,7 +47,7 @@ public:
     ~LogUiCommands();
     void logSaveLoad(std::string cmd, const std::string & path, std::chrono::steady_clock::time_point timeStart);
 private:
-    std::weak_ptr<lok::Document> _document;
+    std::weak_ptr<kit::Document> _document;
     // list the commands to log here.
     std::set<std::string> _cmdToLog = {
         "uno", "key", "mouse", "textinput", "removetextcontext",
@@ -238,12 +238,12 @@ private:
 
     static void dumpRecordedUnoCommands();
 
-    std::shared_ptr<lok::Document> getLOKitDocument() const
+    std::shared_ptr<kit::Document> getLOKitDocument() const
     {
         return _docManager->getLOKitDocument();
     }
 
-    std::shared_ptr<lok::Office> getLOKit() const
+    std::shared_ptr<kit::Office> getLOKit() const
     {
         return _docManager->getLOKit();
     }

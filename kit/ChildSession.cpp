@@ -38,9 +38,9 @@
 #include <kit/KitHelper.hpp>
 #include <kit/SlideCompressor.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKit.hxx>
+#include <COKit/COKitEnums.h>
 
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
@@ -229,13 +229,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         getLOKitDocument()->setView(_viewId);
 
         int curPart = 0;
-        if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+        if (getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT)
             curPart = getLOKitDocument()->getPart();
 
         // Notify all views about updated view info
         _docManager->notifyViewInfo();
 
-        if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+        if (getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT)
         {
             sendTextFrame("curpart: part=" + std::to_string(curPart));
             sendTextFrame("setpart: part=" + std::to_string(curPart));
@@ -247,7 +247,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         if (_stateRecorder.isInvalidate())
         {
             const std::string payload = "0, 0, 1000000000, 1000000000, " + std::to_string(curPart);
-            loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, payload);
+            loKitCallback(KIT_CALLBACK_INVALIDATE_TILES, payload);
         }
 
         for (const auto& viewPair : _stateRecorder.getRecordedViewEvents())
@@ -256,7 +256,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             {
                 const RecordedEvent& event = eventPair.second;
                 LOG_TRC("Replaying missed view event: " << viewPair.first << ' '
-                                                        << lokCallbackTypeToString(event.getType())
+                                                        << kitCallbackTypeToString(event.getType())
                                                         << ": " << event.getPayload());
                 loKitCallback(event.getType(), event.getPayload());
             }
@@ -265,7 +265,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         for (const auto& eventPair : _stateRecorder.getRecordedEvents())
         {
             const RecordedEvent& event = eventPair.second;
-            LOG_TRC("Replaying missed event: " << lokCallbackTypeToString(event.getType()) << ": "
+            LOG_TRC("Replaying missed event: " << kitCallbackTypeToString(event.getType()) << ": "
                                                << event.getPayload());
             loKitCallback(event.getType(), event.getPayload());
         }
@@ -273,13 +273,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         for (const auto& pair : _stateRecorder.getRecordedStates())
         {
             LOG_TRC("Replaying missed state-change: " << pair.second);
-            loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
+            loKitCallback(KIT_CALLBACK_STATE_CHANGED, pair.second);
         }
 
         for (const auto& event : _stateRecorder.getRecordedEventsVector())
         {
             LOG_TRC("Replaying missed event (part of sequence): " <<
-                    lokCallbackTypeToString(event.getType()) << ": " << event.getPayload());
+                    kitCallbackTypeToString(event.getType()) << ": " << event.getPayload());
             loKitCallback(event.getType(), event.getPayload());
         }
 
@@ -467,7 +467,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         constexpr int offsetXTwips = 15 * 15; // start 15 pixels before the target to get a clearer thumbnail
         constexpr int offsetYTwips = 15 * 15;
 
-        const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+        const auto mode = static_cast<COKitTileMode>(getLOKitDocument()->getTileMode());
 
         std::vector<unsigned char> thumbnail(width * height * 4);
         getLOKitDocument()->paintTile(thumbnail.data(), width, height, x - offsetXTwips, y - offsetYTwips, widthTwips, heightTwips);
@@ -550,7 +550,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else
     {
-        // All other commands are such that they always require a LibreOfficeKitDocument session,
+        // All other commands are such that they always require a COKitDocument session,
         // i.e. need to be handled in a child process.
 
         assert(Util::isFuzzing() ||
@@ -1145,7 +1145,7 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
         return sendTextFrame(output.data(), output.size());
     }
 
-    const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+    const auto mode = static_cast<COKitTileMode>(getLOKitDocument()->getTileMode());
 
     if (Png::encodeBufferToPNG(ptrFont.get(), width, height, output, mode))
     {
@@ -1506,8 +1506,8 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
     std::string mimeType = mimeTypes[0];
     SigUtil::addActivity(getId(), "getTextSelection");
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT &&
-        getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_SPREADSHEET)
+    if (getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT &&
+        getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_SPREADSHEET)
     {
         const std::string selection = getTextSelectionInternal(mimeType);
         if (selection.size() >= 1024 * 1024) // Don't return huge data.
@@ -1529,7 +1529,7 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
         const int selectionType = getLOKitDocument()->getSelectionTypeAndText(type.c_str(), &textSelection);
         std::string selection(textSelection ? textSelection : "");
         free(textSelection);
-        if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX)
+        if (selectionType == KIT_SELTYPE_LARGE_TEXT || selectionType == KIT_SELTYPE_COMPLEX)
         {
             // Flag complex data so the client will download async.
             sendTextFrame("complexselection:");
@@ -1980,8 +1980,8 @@ bool ChildSession::extTextInputEvent(const StringVector& tokens)
     URI::decode(text, decodedText);
 
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->postWindowExtTextInputEvent(id, LOK_EXT_TEXTINPUT, decodedText.c_str());
-    getLOKitDocument()->postWindowExtTextInputEvent(id, LOK_EXT_TEXTINPUT_END, decodedText.c_str());
+    getLOKitDocument()->postWindowExtTextInputEvent(id, KIT_EXT_TEXTINPUT, decodedText.c_str());
+    getLOKitDocument()->postWindowExtTextInputEvent(id, KIT_EXT_TEXTINPUT_END, decodedText.c_str());
 
     return true;
 }
@@ -2010,7 +2010,7 @@ bool ChildSession::keyEvent(const StringVector& tokens,
 
     if (tokens.size() != expectedTokens ||
         !getTokenKeyword(tokens[counter++], "type",
-                         {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
+                         {{"input", KIT_KEYEVENT_KEYINPUT}, {"up", KIT_KEYEVENT_KEYUP}},
                          type) ||
         !getTokenInteger(tokens[counter++], "char", charcode) ||
         !getTokenInteger(tokens[counter++], "key", keycode))
@@ -2043,7 +2043,7 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     {
 #if !MOBILEAPP
         // Check if override mode is disabled.
-        if (type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
+        if (type == KIT_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
             !ConfigUtil::getBool("overwrite_mode.enable", false))
             return true;
 #endif
@@ -2121,9 +2121,9 @@ bool ChildSession::mouseEvent(const StringVector& tokens,
     int count = 0;
     if (tokens.size() < minTokens ||
         !getTokenKeyword(tokens[counter++], "type",
-                         {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
-                          {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
-                          {"move", LOK_MOUSEEVENT_MOUSEMOVE}},
+                         {{"buttondown", KIT_MOUSEEVENT_MOUSEBUTTONDOWN},
+                          {"buttonup", KIT_MOUSEEVENT_MOUSEBUTTONUP},
+                          {"move", KIT_MOUSEEVENT_MOUSEMOVE}},
                          type) ||
         !getTokenInteger(tokens[counter++], "x", x) ||
         !getTokenInteger(tokens[counter++], "y", y) ||
@@ -2270,7 +2270,7 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
 
     getLOKitDocument()->setView(_viewId);
 
-    const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+    const auto tileMode = static_cast<COKitTileMode>(getLOKitDocument()->getTileMode());
 
     unsigned char* bitmapBuffer = nullptr;
 
@@ -2392,7 +2392,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
 
     SigUtil::addActivity(getId(), formatUnoCommandInfo(tokens[1]));
 
-    // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
+    // we need to get KIT_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool notify = (tokens.equals(1, ".uno:Save") ||
                           tokens.equals(1, ".uno:Undo") ||
                           tokens.equals(1, ".uno:Redo") ||
@@ -2446,9 +2446,9 @@ bool ChildSession::selectText(const StringVector& tokens,
     {
         if (tokens.size() != 4 ||
             !getTokenKeyword(tokens[1], "type",
-                             {{"start", LOK_SETTEXTSELECTION_START},
-                              {"end", LOK_SETTEXTSELECTION_END},
-                              {"reset", LOK_SETTEXTSELECTION_RESET}},
+                             {{"start", KIT_SETTEXTSELECTION_START},
+                              {"end", KIT_SETTEXTSELECTION_END},
+                              {"reset", KIT_SETTEXTSELECTION_RESET}},
                              type) ||
             !getTokenInteger(tokens[2], "x", x) ||
             !getTokenInteger(tokens[3], "y", y))
@@ -2516,7 +2516,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
     if (jsonMsg.empty())
         return true;
 
-    const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+    const auto tileMode = static_cast<COKitTileMode>(getLOKitDocument()->getTileMode());
     scomp.pushWork(
         [=, this, pixmap = std::move(pixmap),
          jsonMsg = std::move(jsonMsg)](std::vector<char>& output)
@@ -2578,7 +2578,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
             output.resize(max_required_size);
             std::memcpy(output.data(), response.data(), response.size());
 
-            if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
+            if (tileMode == COKitTileMode::KIT_TILEMODE_BGRA)
             {
                 png_row_info rowInfo;
                 rowInfo.rowbytes = pixmap->size();
@@ -2816,7 +2816,7 @@ bool ChildSession::renderWindow(const StringVector& tokens)
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+    const auto mode = static_cast<COKitTileMode>(getLOKitDocument()->getTileMode());
 
     // TODO: use png cache for dialogs too
     if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight, output, mode))
@@ -2871,9 +2871,9 @@ bool ChildSession::sendWindowCommand(const StringVector& tokens)
     getLOKitDocument()->setView(_viewId);
 
     if (tokens.size() > 2 && tokens.equals(2, "close"))
-        getLOKitDocument()->postWindow(winId, LOK_WINDOW_CLOSE, nullptr);
+        getLOKitDocument()->postWindow(winId, KIT_WINDOW_CLOSE, nullptr);
     else if (tokens.size() > 3 && tokens.equals(2, "paste"))
-        getLOKitDocument()->postWindow(winId, LOK_WINDOW_PASTE, tokens[3].c_str());
+        getLOKitDocument()->postWindow(winId, KIT_WINDOW_PASTE, tokens[3].c_str());
 
     return true;
 }
@@ -2945,8 +2945,8 @@ bool ChildSession::selectGraphic(const StringVector& tokens)
     int type, x, y;
     if (tokens.size() != 4 ||
         !getTokenKeyword(tokens[1], "type",
-                         {{"start", LOK_SETGRAPHICSELECTION_START},
-                          {"end", LOK_SETGRAPHICSELECTION_END}},
+                         {{"start", KIT_SETGRAPHICSELECTION_START},
+                          {"end", KIT_SETGRAPHICSELECTION_END}},
                          type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y))
@@ -3083,10 +3083,10 @@ bool ChildSession::saveAs(const StringVector& tokens)
         bool retry = true;
         switch (getLOKitDocument()->getDocumentType())
         {
-            case LOK_DOCTYPE_TEXT:         url += ".odt"; wopiFilename += ".odt"; break;
-            case LOK_DOCTYPE_SPREADSHEET:  url += ".ods"; wopiFilename += ".ods"; break;
-            case LOK_DOCTYPE_PRESENTATION: url += ".odp"; wopiFilename += ".odp"; break;
-            case LOK_DOCTYPE_DRAWING:      url += ".odg"; wopiFilename += ".odg"; break;
+            case KIT_DOCTYPE_TEXT:         url += ".odt"; wopiFilename += ".odt"; break;
+            case KIT_DOCTYPE_SPREADSHEET:  url += ".ods"; wopiFilename += ".ods"; break;
+            case KIT_DOCTYPE_PRESENTATION: url += ".odp"; wopiFilename += ".odp"; break;
+            case KIT_DOCTYPE_DRAWING:      url += ".odg"; wopiFilename += ".odg"; break;
             default:                       retry = false; break;
         }
 
@@ -3144,7 +3144,7 @@ bool ChildSession::exportAs(const StringVector& tokens)
 
     // for PDF and EPUB show dialog with export options first
     // when options will be chosen and file exported we will
-    // receive LOK_CALLBACK_EXPORT_FILE message
+    // receive KIT_CALLBACK_EXPORT_FILE message
     std::string extension = FileUtil::extractFileExtension(wopiFilename);
 
     const bool isPDF = extension == "pdf";
@@ -3180,7 +3180,7 @@ bool ChildSession::exportAs(const StringVector& tokens)
 
     // For image export (triggered from the image context menu).
     // SaveGraphic writes the image in its native format to /tmp/
-    // and fires LOK_CALLBACK_EXPORT_FILE. If no graphic is selected,
+    // and fires KIT_CALLBACK_EXPORT_FILE. If no graphic is selected,
     // the command is a no-op.
     // NOTE: new document export formats must be handled above this,
     // like PDF and EPUB.
@@ -3200,7 +3200,7 @@ bool ChildSession::setClientPart(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
+    if (getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
     {
         getLOKitDocument()->setPart(part);
         _currentPart = part;
@@ -3223,7 +3223,7 @@ bool ChildSession::selectClientPart(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+    if (getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT)
     {
         if (part != getLOKitDocument()->getPart())
         {
@@ -3255,7 +3255,7 @@ bool ChildSession::moveSelectedClientParts(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+    if (getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT)
     {
         getLOKitDocument()->moveSelectedParts(position, false); // Move, don't duplicate.
 
@@ -3384,35 +3384,35 @@ bool ChildSession::getPresentationInfo()
  */
 void ChildSession::rememberEventsForInactiveUser(const int type, const std::string& payload)
 {
-    if (type == LOK_CALLBACK_INVALIDATE_TILES)
+    if (type == KIT_CALLBACK_INVALIDATE_TILES)
     {
         _stateRecorder.recordInvalidate(); // TODO remember the area, not just a bool ('true' invalidates everything)
     }
-    else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-             type == LOK_CALLBACK_CURSOR_VISIBLE ||
-             type == LOK_CALLBACK_TEXT_SELECTION ||
-             type == LOK_CALLBACK_TEXT_SELECTION_START ||
-             type == LOK_CALLBACK_TEXT_SELECTION_END ||
-             type == LOK_CALLBACK_CELL_FORMULA ||
-             type == LOK_CALLBACK_CELL_CURSOR ||
-             type == LOK_CALLBACK_GRAPHIC_SELECTION ||
-             type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
-             type == LOK_CALLBACK_INVALIDATE_HEADER ||
-             type == LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY ||
-             type == LOK_CALLBACK_CELL_ADDRESS ||
-             type == LOK_CALLBACK_REFERENCE_MARKS ||
-             type == LOK_CALLBACK_A11Y_FOCUS_CHANGED ||
-             type == LOK_CALLBACK_A11Y_CARET_CHANGED ||
-             type == LOK_CALLBACK_A11Y_TEXT_SELECTION_CHANGED)
+    else if (type == KIT_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+             type == KIT_CALLBACK_CURSOR_VISIBLE ||
+             type == KIT_CALLBACK_TEXT_SELECTION ||
+             type == KIT_CALLBACK_TEXT_SELECTION_START ||
+             type == KIT_CALLBACK_TEXT_SELECTION_END ||
+             type == KIT_CALLBACK_CELL_FORMULA ||
+             type == KIT_CALLBACK_CELL_CURSOR ||
+             type == KIT_CALLBACK_GRAPHIC_SELECTION ||
+             type == KIT_CALLBACK_DOCUMENT_SIZE_CHANGED ||
+             type == KIT_CALLBACK_INVALIDATE_HEADER ||
+             type == KIT_CALLBACK_INVALIDATE_SHEET_GEOMETRY ||
+             type == KIT_CALLBACK_CELL_ADDRESS ||
+             type == KIT_CALLBACK_REFERENCE_MARKS ||
+             type == KIT_CALLBACK_A11Y_FOCUS_CHANGED ||
+             type == KIT_CALLBACK_A11Y_CARET_CHANGED ||
+             type == KIT_CALLBACK_A11Y_TEXT_SELECTION_CHANGED)
     {
         _stateRecorder.recordEvent(type, payload);
     }
-    else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-             type == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
-             type == LOK_CALLBACK_CELL_VIEW_CURSOR ||
-             type == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
-             type == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
-             type == LOK_CALLBACK_VIEW_LOCK)
+    else if (type == KIT_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+             type == KIT_CALLBACK_TEXT_VIEW_SELECTION ||
+             type == KIT_CALLBACK_CELL_VIEW_CURSOR ||
+             type == KIT_CALLBACK_GRAPHIC_VIEW_SELECTION ||
+             type == KIT_CALLBACK_VIEW_CURSOR_VISIBLE ||
+             type == KIT_CALLBACK_VIEW_LOCK)
     {
         Poco::JSON::Parser parser;
 
@@ -3420,7 +3420,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
         int viewId = root->getValue<int>("viewId");
         _stateRecorder.recordViewEvent(viewId, type, payload);
     }
-    else if (type == LOK_CALLBACK_STATE_CHANGED)
+    else if (type == KIT_CALLBACK_STATE_CHANGED)
     {
         std::string name;
         std::string value;
@@ -3429,9 +3429,9 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
             _stateRecorder.recordState(name, payload);
         }
     }
-    else if (type == LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED ||
-             type == LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED ||
-             type == LOK_CALLBACK_COMMENT)
+    else if (type == KIT_CALLBACK_REDLINE_TABLE_SIZE_CHANGED ||
+             type == KIT_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED ||
+             type == KIT_CALLBACK_COMMENT)
     {
         _stateRecorder.recordEventSequence(type, payload);
     }
@@ -3540,7 +3540,7 @@ bool ChildSession::sendProgressFrame(const char* id, const std::string& jsonProp
 
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
-    const char* const typeName = lokCallbackTypeToString(type);
+    const char* const typeName = kitCallbackTypeToString(type);
     LOG_TRC("ChildSession::loKitCallback: " << typeName << " [" << payload << ']');
 
     if (!Util::isMobileApp() && UnitKit::get().filterLoKitCallback(type, payload))
@@ -3563,7 +3563,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         rememberEventsForInactiveUser(type, payload);
 
         // Pass save and ModifiedStatus notifications through, block others.
-        if (type != LOK_CALLBACK_UNO_COMMAND_RESULT || payload.find(".uno:Save") == std::string::npos)
+        if (type != KIT_CALLBACK_UNO_COMMAND_RESULT || payload.find(".uno:Save") == std::string::npos)
         {
             if (payload.find(".uno:ModifiedStatus") == std::string::npos)
             {
@@ -3573,9 +3573,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         }
     }
 
-    switch (static_cast<LibreOfficeKitCallbackType>(type))
+    switch (static_cast<COKitCallbackType>(type))
     {
-    case LOK_CALLBACK_INVALIDATE_TILES:
+    case KIT_CALLBACK_INVALIDATE_TILES:
         {
             StringVector tokens(StringVector::tokenize(payload, ','));
             if (tokens.size() == 5 || tokens.size() == 6)
@@ -3633,43 +3633,43 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
         }
         break;
-    case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+    case KIT_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
         updateSpeed();
         updateCursorPositionJSON(payload);
         sendTextFrame("invalidatecursor: " + payload);
         break;
-    case LOK_CALLBACK_TEXT_SELECTION:
+    case KIT_CALLBACK_TEXT_SELECTION:
         sendTextFrame("textselection: " + payload);
         break;
-    case LOK_CALLBACK_TEXT_SELECTION_START:
+    case KIT_CALLBACK_TEXT_SELECTION_START:
         sendTextFrame("textselectionstart: " + payload);
         break;
-    case LOK_CALLBACK_TEXT_SELECTION_END:
+    case KIT_CALLBACK_TEXT_SELECTION_END:
         sendTextFrame("textselectionend: " + payload);
         break;
-    case LOK_CALLBACK_CURSOR_VISIBLE:
+    case KIT_CALLBACK_CURSOR_VISIBLE:
         sendTextFrame("cursorvisible: " + payload);
         break;
-    case LOK_CALLBACK_GRAPHIC_SELECTION:
+    case KIT_CALLBACK_GRAPHIC_SELECTION:
         sendTextFrame("graphicselection: " + payload);
         break;
-    case LOK_CALLBACK_SHAPE_INNER_TEXT:
+    case KIT_CALLBACK_SHAPE_INNER_TEXT:
         sendTextFrame("graphicinnertextarea: " + payload);
         break;
-    case LOK_CALLBACK_CELL_CURSOR:
+    case KIT_CALLBACK_CELL_CURSOR:
         updateCursorPosition(payload);
         sendTextFrame("cellcursor: " + payload);
         break;
-    case LOK_CALLBACK_CELL_FORMULA:
+    case KIT_CALLBACK_CELL_FORMULA:
         sendTextFrame("cellformula: " + payload);
         break;
-    case LOK_CALLBACK_MOUSE_POINTER:
+    case KIT_CALLBACK_MOUSE_POINTER:
         sendTextFrame("mousepointer: " + payload);
         break;
-    case LOK_CALLBACK_HYPERLINK_CLICKED:
+    case KIT_CALLBACK_HYPERLINK_CLICKED:
         sendTextFrame("hyperlinkclicked: " + payload);
         break;
-    case LOK_CALLBACK_STATE_CHANGED:
+    case KIT_CALLBACK_STATE_CHANGED:
     {
         if (payload == ".uno:NotesMode=true" || payload == ".uno:NotesMode=false" ||
             payload == ".uno:RedlineRenderMode=true" || payload == ".uno:RedlineRenderMode=false")
@@ -3702,27 +3702,27 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
         break;
     }
-    case LOK_CALLBACK_SEARCH_NOT_FOUND:
+    case KIT_CALLBACK_SEARCH_NOT_FOUND:
         sendTextFrame("searchnotfound: " + payload);
         break;
-    case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+    case KIT_CALLBACK_SEARCH_RESULT_SELECTION:
         sendTextFrame("searchresultselection: " + payload);
         break;
-    case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+    case KIT_CALLBACK_DOCUMENT_SIZE_CHANGED:
         getStatus();
         break;
-    case LOK_CALLBACK_SET_PART:
+    case KIT_CALLBACK_SET_PART:
     {
         int part;
         StringVector tokens(StringVector::tokenize(payload, ','));
         if (getTokenInteger(tokens[1], "part", part) &&
-            getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+            getLOKitDocument()->getDocumentType() != KIT_DOCTYPE_TEXT)
             _currentPart = part;
 
         sendTextFrame("setpart: " + payload);
         break;
     }
-    case LOK_CALLBACK_UNO_COMMAND_RESULT:
+    case KIT_CALLBACK_UNO_COMMAND_RESULT:
     {
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(payload);
@@ -3778,7 +3778,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             _docManager->handleSaveMessage(saveMessage);
     }
     break;
-    case LOK_CALLBACK_ERROR:
+    case KIT_CALLBACK_ERROR:
         {
             LOG_ERR("CALLBACK_ERROR: " << payload);
             Parser parser;
@@ -3789,73 +3789,73 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                     " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
         }
         break;
-    case LOK_CALLBACK_CONTEXT_MENU:
+    case KIT_CALLBACK_CONTEXT_MENU:
         sendTextFrame("contextmenu: " + payload);
         break;
-    case LOK_CALLBACK_STATUS_INDICATOR_START:
+    case KIT_CALLBACK_STATUS_INDICATOR_START:
         sendProgressFrame("start",
                           std::string(R"("text": ")") + JsonUtil::escapeJSONValue(payload) + "\"");
         break;
-    case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+    case KIT_CALLBACK_STATUS_INDICATOR_SET_VALUE:
         sendProgressFrame("setvalue", std::string("\"value\": ") + payload);
         break;
-    case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+    case KIT_CALLBACK_STATUS_INDICATOR_FINISH:
         sendProgressFrame("finish", "");
         break;
-    case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
+    case KIT_CALLBACK_INVALIDATE_VIEW_CURSOR:
         updateCursorPositionJSON(payload);
         sendTextFrame("invalidateviewcursor: " + payload);
         break;
-    case LOK_CALLBACK_TEXT_VIEW_SELECTION:
+    case KIT_CALLBACK_TEXT_VIEW_SELECTION:
         sendTextFrame("textviewselection: " + payload);
         break;
-    case LOK_CALLBACK_CELL_VIEW_CURSOR:
+    case KIT_CALLBACK_CELL_VIEW_CURSOR:
         updateCursorPositionJSON(payload);
         sendTextFrame("cellviewcursor: " + payload);
         break;
-    case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
+    case KIT_CALLBACK_GRAPHIC_VIEW_SELECTION:
         sendTextFrame("graphicviewselection: " + payload);
         break;
-    case LOK_CALLBACK_VIEW_CURSOR_VISIBLE:
+    case KIT_CALLBACK_VIEW_CURSOR_VISIBLE:
         sendTextFrame("viewcursorvisible: " + payload);
         break;
-    case LOK_CALLBACK_VIEW_LOCK:
+    case KIT_CALLBACK_VIEW_LOCK:
         sendTextFrame("viewlock: " + payload);
         break;
-    case LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED:
+    case KIT_CALLBACK_REDLINE_TABLE_SIZE_CHANGED:
         sendTextFrame("redlinetablechanged: " + payload);
         break;
-    case LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED:
+    case KIT_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED:
         sendTextFrame("redlinetablemodified: " + payload);
         break;
-    case LOK_CALLBACK_COMMENT:
+    case KIT_CALLBACK_COMMENT:
     {
         sendTextFrame("comment: " + payload);
         getStatus();
         break;
     }
-    case LOK_CALLBACK_INVALIDATE_HEADER:
+    case KIT_CALLBACK_INVALIDATE_HEADER:
         sendTextFrame("invalidateheader: " + payload);
         break;
-    case LOK_CALLBACK_CELL_ADDRESS:
+    case KIT_CALLBACK_CELL_ADDRESS:
         sendTextFrame("celladdress: " + payload);
         break;
-    case LOK_CALLBACK_RULER_UPDATE:
+    case KIT_CALLBACK_RULER_UPDATE:
         sendTextFrame("hrulerupdate: " + payload);
         break;
-    case LOK_CALLBACK_VERTICAL_RULER_UPDATE:
+    case KIT_CALLBACK_VERTICAL_RULER_UPDATE:
         sendTextFrame("vrulerupdate: " + payload);
         break;
-    case LOK_CALLBACK_WINDOW:
+    case KIT_CALLBACK_WINDOW:
         sendTextFrame("window: " + payload);
         break;
-    case LOK_CALLBACK_VALIDITY_LIST_BUTTON:
+    case KIT_CALLBACK_VALIDITY_LIST_BUTTON:
         sendTextFrame("validitylistbutton: " + payload);
         break;
-    case LOK_CALLBACK_VALIDITY_INPUT_HELP:
+    case KIT_CALLBACK_VALIDITY_INPUT_HELP:
         sendTextFrame("validityinputhelp: " + payload);
         break;
-    case LOK_CALLBACK_CLIPBOARD_CHANGED:
+    case KIT_CALLBACK_CLIPBOARD_CHANGED:
     {
         if (_copyToClipboard)
         {
@@ -3868,59 +3868,59 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
         break;
     }
-    case LOK_CALLBACK_CONTEXT_CHANGED:
+    case KIT_CALLBACK_CONTEXT_CHANGED:
         sendTextFrame("context: " + payload);
         break;
-    case LOK_CALLBACK_SIGNATURE_STATUS:
+    case KIT_CALLBACK_SIGNATURE_STATUS:
         sendTextFrame("signaturestatus: " + payload);
         break;
 
-    case LOK_CALLBACK_PROFILE_FRAME:
-    case LOK_CALLBACK_DOCUMENT_PASSWORD:
-    case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
-    case LOK_CALLBACK_DOCUMENT_PASSWORD_RESET:
+    case KIT_CALLBACK_PROFILE_FRAME:
+    case KIT_CALLBACK_DOCUMENT_PASSWORD:
+    case KIT_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+    case KIT_CALLBACK_DOCUMENT_PASSWORD_RESET:
         // these are not handled here.
         break;
-    case LOK_CALLBACK_CELL_SELECTION_AREA:
+    case KIT_CALLBACK_CELL_SELECTION_AREA:
         sendTextFrame("cellselectionarea: " + payload);
         break;
-    case LOK_CALLBACK_CELL_AUTO_FILL_AREA:
+    case KIT_CALLBACK_CELL_AUTO_FILL_AREA:
         sendTextFrame("cellautofillarea: " + payload);
         break;
-    case LOK_CALLBACK_TABLE_SELECTED:
+    case KIT_CALLBACK_TABLE_SELECTED:
         sendTextFrame("tableselected: " + payload);
         break;
-    case LOK_CALLBACK_REFERENCE_MARKS:
+    case KIT_CALLBACK_REFERENCE_MARKS:
         sendTextFrame("referencemarks: " + payload);
         break;
-    case LOK_CALLBACK_JSDIALOG:
+    case KIT_CALLBACK_JSDIALOG:
         sendTextFrame("jsdialog: " + payload);
         break;
-    case LOK_CALLBACK_CALC_FUNCTION_LIST:
+    case KIT_CALLBACK_CALC_FUNCTION_LIST:
         sendTextFrame("calcfunctionlist: " + payload);
         break;
-    case LOK_CALLBACK_TAB_STOP_LIST:
+    case KIT_CALLBACK_TAB_STOP_LIST:
         sendTextFrame("tabstoplistupdate: " + payload);
         break;
-    case LOK_CALLBACK_FORM_FIELD_BUTTON:
+    case KIT_CALLBACK_FORM_FIELD_BUTTON:
         sendTextFrame("formfieldbutton: " + payload);
         break;
-    case LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY:
+    case KIT_CALLBACK_INVALIDATE_SHEET_GEOMETRY:
         sendTextFrame("invalidatesheetgeometry: " + payload);
         break;
-    case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
+    case KIT_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
         break;
-    case LOK_CALLBACK_APPLICATION_BACKGROUND_COLOR:
+    case KIT_CALLBACK_APPLICATION_BACKGROUND_COLOR:
         sendTextFrame("applicationbackgroundcolor: " + payload);
         break;
-    case LOK_CALLBACK_MEDIA_SHAPE:
+    case KIT_CALLBACK_MEDIA_SHAPE:
         sendTextFrame("mediashape: " + payload);
         break;
-    case LOK_CALLBACK_CONTENT_CONTROL:
+    case KIT_CALLBACK_CONTENT_CONTROL:
         sendTextFrame("contentcontrol: " + payload);
         break;
-    case LOK_COMMAND_BLOCKED:
+    case KIT_COMMAND_BLOCKED:
         {
 #if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
             LOG_INF("COMMAND_BLOCKED: " << payload);
@@ -3934,10 +3934,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #endif
         }
         break;
-    case LOK_CALLBACK_PRINT_RANGES:
+    case KIT_CALLBACK_PRINT_RANGES:
         sendTextFrame("printranges: " + payload);
         break;
-    case LOK_CALLBACK_FONTS_MISSING:
+    case KIT_CALLBACK_FONTS_MISSING:
         if constexpr (!Util::isMobileApp())
         {
             // This environment variable is always set in COOLWSD::innerInitialize().
@@ -3960,7 +3960,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
         }
         break;
-    case LOK_CALLBACK_EXPORT_FILE:
+    case KIT_CALLBACK_EXPORT_FILE:
     {
         bool isAbort = payload == "ABORT";
         bool isError = payload == "ERROR";
@@ -4030,51 +4030,51 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #endif
         break;
     }
-    case LOK_CALLBACK_A11Y_FOCUS_CHANGED:
+    case KIT_CALLBACK_A11Y_FOCUS_CHANGED:
     {
         sendTextFrame("a11yfocuschanged: " + payload);
         break;
     }
-    case LOK_CALLBACK_A11Y_CARET_CHANGED:
+    case KIT_CALLBACK_A11Y_CARET_CHANGED:
     {
         sendTextFrame("a11ycaretchanged: " + payload);
         break;
     }
-    case LOK_CALLBACK_A11Y_TEXT_SELECTION_CHANGED:
+    case KIT_CALLBACK_A11Y_TEXT_SELECTION_CHANGED:
     {
         sendTextFrame("a11ytextselectionchanged: " + payload);
         break;
     }
-    case LOK_CALLBACK_A11Y_FOCUSED_CELL_CHANGED:
+    case KIT_CALLBACK_A11Y_FOCUSED_CELL_CHANGED:
     {
         sendTextFrame("a11yfocusedcellchanged: " + payload);
         break;
     }
-    case LOK_CALLBACK_COLOR_PALETTES:
+    case KIT_CALLBACK_COLOR_PALETTES:
         sendTextFrame("colorpalettes: " + payload);
         break;
-    case LOK_CALLBACK_A11Y_EDITING_IN_SELECTION_STATE:
+    case KIT_CALLBACK_A11Y_EDITING_IN_SELECTION_STATE:
     {
         sendTextFrame("a11yeditinginselectionstate: " + payload);
         break;
     }
-    case LOK_CALLBACK_A11Y_SELECTION_CHANGED:
+    case KIT_CALLBACK_A11Y_SELECTION_CHANGED:
     {
         sendTextFrame("a11yselectionchanged: " + payload);
         break;
     }
-    case LOK_CALLBACK_CORE_LOG:
+    case KIT_CALLBACK_CORE_LOG:
     {
         sendTextFrame("corelog: " + payload);
         break;
     }
-    case LOK_CALLBACK_TOOLTIP:
+    case KIT_CALLBACK_TOOLTIP:
     {
         sendTextFrame("tooltip: " + payload);
         break;
     }
     default:
-        LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
+        LOG_ERR("Unknown callback event (" << kitCallbackTypeToString(type) << "): " << payload);
     }
 }
 

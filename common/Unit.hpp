@@ -22,7 +22,7 @@
 
 #include <test/testlog.hpp>
 
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <COKit/COKitInit.h>
 
 class UnitBase;
 class UnitWSD;
@@ -703,10 +703,10 @@ public:
     /// After the kit process created a ChildSession
     virtual void postKitSessionCreated(Session* /*session*/) {}
 
-    /// Allow a custom LibreOfficeKit wrapper
-    virtual LibreOfficeKit *lok_init(const char * /* instdir */,
+    /// Allow a custom COKit wrapper
+    virtual COKit *cok_init(const char * /* instdir */,
                                      const char * /* userdir */,
-                                     LokHookFunction2 /* fn */)
+                                     CokHookFunction2 /* fn */)
     {
         return nullptr;
     }

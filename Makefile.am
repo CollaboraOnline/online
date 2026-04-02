@@ -552,7 +552,7 @@ kit_headers = \
               kit/ChildSession.hpp \
               kit/Delta.hpp \
               kit/DeltaSimd.h \
-              kit/DummyLibreOfficeKit.hpp \
+              kit/DummyCOKit.hpp \
               kit/Kit.hpp \
               kit/KitHelper.hpp \
               kit/KitWebSocket.hpp \
@@ -580,13 +580,13 @@ noinst_HEADERS = \
 
 dist-hook:
 	git log -1 --format=%h --abbrev=10 > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
-	$(QUIET_MKDIRP) mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
-	cp @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.h \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.hxx \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitEnums.h \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitInit.h \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitTypes.h \
-	   $(distdir)/bundled/include/LibreOfficeKit/
+	$(QUIET_MKDIRP) mkdir -p $(distdir)/bundled/include/COKit/
+	cp @LOKIT_PATH@/COKit/COKit.h \
+	   @LOKIT_PATH@/COKit/COKit.hxx \
+	   @LOKIT_PATH@/COKit/COKitEnums.h \
+	   @LOKIT_PATH@/COKit/COKitInit.h \
+	   @LOKIT_PATH@/COKit/COKitTypes.h \
+	   $(distdir)/bundled/include/COKit/
 
 EXTRA_DIST = \
              $(man_MANS) \

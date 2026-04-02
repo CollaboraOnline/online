@@ -10,7 +10,7 @@
  */
 
 /*
- * Unit test for synthetic LibreOfficeKit functionality.
+ * Unit test for synthetic COKit functionality.
  */
 
 #include <config.h>
@@ -23,7 +23,7 @@
 #include <test/testlog.hpp>
 #include <test/lokassert.hpp>
 
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #include <string>
 #include <thread>
@@ -114,22 +114,22 @@ UnitKitSyntheticLok *GlobalUnitKit;
 class UnitKitSyntheticLok : public UnitKit
 {
 public:
-    LibreOfficeKit *_kit;
+    COKit *_kit;
 
     // Original and overridden vtables
-    LibreOfficeKitClass *_kitClass;
-    LibreOfficeKitClass *_kitClassClean;
+    COKitClass *_kitClass;
+    COKitClass *_kitClassClean;
 
     // Original and overridden vtables
-    LibreOfficeKitDocumentClass *_docClass;
-    LibreOfficeKitDocumentClass *_docClassClean;
+    COKitDocumentClass *_docClass;
+    COKitDocumentClass *_docClassClean;
 
     // Polling replacement
-    LibreOfficeKitPollCallback _pollCallback;
-    LibreOfficeKitWakeCallback _wakeCallback;
+    COKitPollCallback _pollCallback;
+    COKitWakeCallback _wakeCallback;
     void* _pollData;
 
-    LibreOfficeKitCallback _docCallback;
+    COKitCallback _docCallback;
     void *_docCallbackData;
 
     bool isDocumentCreated() const { return _docCallback != nullptr; }
@@ -152,9 +152,9 @@ public:
         GlobalUnitKit = this;
     }
 
-    virtual LibreOfficeKit *lok_init(
+    virtual COKit *cok_init(
         const char *instdir, const char *userdir,
-        LokHookFunction2 fn) override;
+        CokHookFunction2 fn) override;
 
     void postLOKDocumentEvent(int type, const char* payload)
     {
@@ -172,7 +172,7 @@ public:
         if (isDocumentCreated())
         {
             TST_LOG("Send test event");
-            postLOKDocumentEvent(LOK_CALLBACK_CELL_CURSOR, "EMPTY");
+            postLOKDocumentEvent(KIT_CALLBACK_CELL_CURSOR, "EMPTY");
             exitTest(TestResult::Ok);
         }
     }
@@ -198,8 +198,8 @@ extern "C" {
         GlobalUnitKit->_wakeCallback(GlobalUnitKit->_pollData);
     }
 
-    void syn_registerCallback (LibreOfficeKitDocument* pThis,
-                               LibreOfficeKitCallback callback,
+    void syn_registerCallback (COKitDocument* pThis,
+                               COKitCallback callback,
                                void* data)
     {
         assert(GlobalUnitKit);
@@ -208,17 +208,17 @@ extern "C" {
         GlobalUnitKit->_docClassClean->registerCallback(pThis, callback, data);
     }
 
-    LibreOfficeKitDocument* syn_documentLoadWithOptions (LibreOfficeKit* pThis,
+    COKitDocument* syn_documentLoadWithOptions (COKit* pThis,
                                                          const char* url,
                                                          const char* options)
     {
         assert(GlobalUnitKit);
 
         // chain to parent
-        LibreOfficeKitDocument *doc = GlobalUnitKit->_kitClassClean->documentLoadWithOptions(pThis, url, options);
+        COKitDocument *doc = GlobalUnitKit->_kitClassClean->documentLoadWithOptions(pThis, url, options);
 
-        GlobalUnitKit->_docClass = reinterpret_cast<LibreOfficeKitDocumentClass *>(memdup(doc->pClass, doc->pClass->nSize));
-        GlobalUnitKit->_docClassClean = reinterpret_cast<LibreOfficeKitDocumentClass *>(memdup(doc->pClass, doc->pClass->nSize));
+        GlobalUnitKit->_docClass = reinterpret_cast<COKitDocumentClass *>(memdup(doc->pClass, doc->pClass->nSize));
+        GlobalUnitKit->_docClassClean = reinterpret_cast<COKitDocumentClass *>(memdup(doc->pClass, doc->pClass->nSize));
         doc->pClass = GlobalUnitKit->_docClass;
 
         GlobalUnitKit->_docClass->registerCallback = syn_registerCallback;
@@ -226,9 +226,9 @@ extern "C" {
         return doc;
     }
 
-    void syn_runLoop (LibreOfficeKit* pThis,
-                      LibreOfficeKitPollCallback pollCallback,
-                      LibreOfficeKitWakeCallback wakeCallback,
+    void syn_runLoop (COKit* pThis,
+                      COKitPollCallback pollCallback,
+                      COKitWakeCallback wakeCallback,
                       void* data)
     {
         assert(GlobalUnitKit);
@@ -241,17 +241,17 @@ extern "C" {
     }
 };
 
-LibreOfficeKit *UnitKitSyntheticLok::lok_init(const char *instdir,
+COKit *UnitKitSyntheticLok::cok_init(const char *instdir,
                                               const char *userdir,
-                                              LokHookFunction2 fn)
+                                              CokHookFunction2 fn)
 {
     // Let the parent have a go
     _kit = fn(instdir, userdir);
     if (!_kit || !_kit->pClass)
         LOK_ASSERT_FAIL("Failed to get kit initialized");
 
-    _kitClass = reinterpret_cast<LibreOfficeKitClass *>(memdup(_kit->pClass, _kit->pClass->nSize));
-    _kitClassClean = reinterpret_cast<LibreOfficeKitClass *>(memdup(_kit->pClass, _kit->pClass->nSize));
+    _kitClass = reinterpret_cast<COKitClass *>(memdup(_kit->pClass, _kit->pClass->nSize));
+    _kitClassClean = reinterpret_cast<COKitClass *>(memdup(_kit->pClass, _kit->pClass->nSize));
 
     // switch to our vtable
     _kit->pClass = _kitClass;

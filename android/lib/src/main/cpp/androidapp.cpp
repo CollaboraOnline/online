@@ -22,7 +22,7 @@
 #include <common/Util.hpp>
 
 #define LIBO_INTERNAL_ONLY
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #include <osl/detail/android-bootstrap.h>
 

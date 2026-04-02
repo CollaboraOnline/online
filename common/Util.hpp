@@ -14,8 +14,8 @@
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKitEnums.h>
 
 #include <typeinfo>
 
