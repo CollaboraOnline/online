@@ -15,7 +15,7 @@ LABEL release.notes=${releasenotes:-"https://www.collaboraonline.com/code-25-04-
 ARG version
 LABEL version=${version:-"25.04.1.1"}
 ARG coretag
-LABEL commit.history.core="https://git.libreoffice.org/core/+log/${coretag}"
+LABEL commit.history.core="https://gerrit.collaboraoffice.com/plugins/gitiles/core/+log/${coretag}"
 ARG onlinetag
 LABEL commit.history.online="https://github.com/CollaboraOnline/online/commits/${onlinetag}"
 
