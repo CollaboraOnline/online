@@ -33,7 +33,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.sectionProperties.initialAngle = null; // Initial angle of the point (handle) to the center in radians.
 		this.sectionProperties.distanceToCenter = null; // Distance to center.
 		this.sectionProperties.cropModeEnabled = cropModeEnabled;
-		this.sectionProperties.cropCursor = 'url(' + app.LOUtil.getURL("images/cursors/crop.png") + ') 8 8, auto';
+		this.sectionProperties.cropCursor = 'url(' + app.LOUtil.getURL("images/cursors/crop.svg") + ') 8 8, auto';
 
 		this.setMousePointerType();
 
