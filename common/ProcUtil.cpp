@@ -73,6 +73,11 @@
 #include <processthreadsapi.h>
 #endif
 
+namespace ThreadChecks
+{
+    std::atomic<bool> Inhibit(false);
+}
+
 namespace ProcUtil
 {
 static thread_local long ThreadTid = 0;

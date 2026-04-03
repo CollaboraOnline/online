@@ -132,11 +132,6 @@ private:
 
 class SocketThreadOwnerChange;
 
-namespace ThreadChecks
-{
-    extern std::atomic<bool> Inhibit;
-}
-
 /// A non-blocking, streaming socket.
 class Socket
 {

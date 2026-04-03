@@ -14,9 +14,15 @@
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
 
+#include <atomic>
 #include <string>
 #include <thread>
 #include <utility>
+
+namespace ThreadChecks
+{
+    extern std::atomic<bool> Inhibit;
+}
 
 namespace ProcUtil
 {

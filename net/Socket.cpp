@@ -88,11 +88,6 @@
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
 constexpr std::chrono::microseconds WebSocketHandler::InitialPingDelayMicroS;
 
-namespace ThreadChecks
-{
-    std::atomic<bool> Inhibit(false);
-}
-
 #if !MOBILEAPP
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
