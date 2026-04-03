@@ -18,6 +18,7 @@
 
 #include "Log.hpp"
 
+#include <common/ProcUtil.hpp>
 #include <common/StaticLogHelper.hpp>
 #include <common/Util.hpp>
 
@@ -226,7 +227,7 @@ namespace Log
         std::ostringstream oss;
         oss << Static.getName();
         if constexpr (!Util::isMobileApp())
-            oss << '-' << std::setw(5) << std::setfill('0') << Util::getProcessId();
+            oss << '-' << std::setw(5) << std::setfill('0') << ProcUtil::getProcessId();
         Static.setId(oss.str());
     }
 
@@ -247,7 +248,7 @@ namespace Log
                 ++ThreadLocalBufferCount;
 #ifndef NDEBUG
                 OwnThreadIdIndex = NextThreadIdIndex++;
-                ThreadIdArray[OwnThreadIdIndex] = Util::getThreadId();
+                ThreadIdArray[OwnThreadIdIndex] = ProcUtil::getThreadId();
 #endif // !NDEBUG
             }
 
@@ -420,7 +421,7 @@ namespace Log
         std::ostringstream oss;
         oss << Static.getName();
         if constexpr (!Util::isMobileApp())
-            oss << '-' << std::setw(5) << std::setfill('0') << Util::getProcessId();
+            oss << '-' << std::setw(5) << std::setfill('0') << ProcUtil::getProcessId();
         Static.setId(oss.str());
 
         // Configure the logger.
@@ -603,7 +604,7 @@ namespace Log
             }
 
 #ifndef NDEBUG
-            const auto currentThreadId = Util::getThreadId();
+            const auto currentThreadId = ProcUtil::getThreadId();
             for (int i = 0; i < NextThreadIdIndex; ++i)
             {
                 if (ThreadIdArray[i] && ThreadIdArray[i] != currentThreadId)

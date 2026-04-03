@@ -79,7 +79,7 @@ void handle_cool_message(const char *string_value)
         // Start another thread to read responses and forward them to the JavaScript
         std::thread([]
                     {
-                        Util::setThreadName("app2js");
+                        ProcUtil::setThreadName("app2js");
                         while (true)
                         {
                            struct pollfd pollfd[2];
@@ -197,7 +197,7 @@ int main(int argc, char* argv_main[])
     assert(argc == 3);
 
     Log::initialize("WASM", "error");
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
@@ -214,7 +214,7 @@ int main(int argc, char* argv_main[])
     std::thread(
         [&]
         {
-            Util::setThreadName("COOLWSD::run");
+            ProcUtil::setThreadName("COOLWSD::run");
 
             const std::string docKind = std::string(argv_main[1]);
             const std::string docDesc = std::string(argv_main[2]);

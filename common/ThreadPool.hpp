@@ -19,6 +19,7 @@
 #include <thread>
 #include <vector>
 
+#include <common/ProcUtil.hpp>
 #include <common/Util.hpp>
 
 class ThreadPool
@@ -149,7 +150,7 @@ public:
 
     void work()
     {
-        Util::setThreadName("ThreadPool::work");
+        ProcUtil::setThreadName("ThreadPool::work");
         std::unique_lock<std::mutex> lock(_mutex);
         while (!_shutdown)
         {

@@ -35,6 +35,9 @@
     <ClCompile Include="..\..\..\common\MobileApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\ProcUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\Protocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

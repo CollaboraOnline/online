@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/ProcUtil.hpp>
 #include <common/Util.hpp>
 
 #include <cassert>
@@ -103,7 +104,7 @@ public:
                     if (msSinceEpoc - snapshot > MsToTrigger)
                     {
                         // Signal the poorly behaved thread to profile it
-                        Util::killThreadById(*d.second, SIGUSR2);
+                        ProcUtil::killThreadById(*d.second, SIGUSR2);
                         break;
                     }
                 }

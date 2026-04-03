@@ -32,6 +32,7 @@ cmake_list= \
             ../common/Log-poco.cpp \
             ../common/MobileApp.cpp \
             ../common/TraceEvent.cpp \
+            ../common/ProcUtil.cpp \
             ../common/Protocol.cpp \
             ../common/RegexUtil.cpp \
             ../common/Simd.cpp \

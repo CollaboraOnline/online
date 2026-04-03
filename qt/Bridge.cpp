@@ -89,7 +89,7 @@ void Bridge::createAndStartMessagePumpThread()
     _app2js = std::thread(
         [this]
         {
-            Util::setThreadName("app2js");
+            ProcUtil::setThreadName("app2js");
             bool unexpectedClose = false;
             while (true)
             {

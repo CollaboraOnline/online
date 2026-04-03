@@ -490,7 +490,7 @@ int forkKit(const std::function<void()>& childFunc, const std::string& childProc
 
         // sort out thread local variables to get logging right from
         // as early as possible.
-        Util::setThreadName(childProcessName);
+        ProcUtil::setThreadName(childProcessName);
 
         // Close the pipe from coolwsd
         close(0);
@@ -1049,7 +1049,7 @@ int forkit_main(int argc, char** argv)
         EnableExperimental = ConfigUtil::getBool("experimental_features", false);
     }
 
-    Util::setThreadName("forkit");
+    ProcUtil::setThreadName("forkit");
 
     LOG_INF("Preinit stage OK.");
 
@@ -1078,7 +1078,7 @@ int forkit_main(int argc, char** argv)
     // that otherwise that choice is overwritten
     SigUtil::setUserSignals();
 
-    ForKitPoll.reset(new SocketPoll (Util::getThreadName()));
+    ForKitPoll.reset(new SocketPoll (ProcUtil::getThreadName()));
     ForKitPoll->runOnClientThread(); // We will do the polling on this thread.
 
     // Reap zombies when we get the signal

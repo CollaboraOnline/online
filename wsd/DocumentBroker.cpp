@@ -254,7 +254,7 @@ void DocumentBroker::setupPriorities()
     if (_type == ChildType::Batch)
     {
         const int prio = ConfigUtil::getConfigValue<int>("per_document.batch_priority", 5);
-        Util::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
+        ProcUtil::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
     }
 }
 
@@ -2217,7 +2217,7 @@ bool DocumentBroker::processPlugins(std::string& localPath)
                 if (inputs != 1 || outputs != 1)
                     throw std::exception();
 
-                const int process = Util::spawnProcess(command, args);
+                const int process = ProcUtil::spawnProcess(command, args);
                 int status = -1;
                 const int rc = ::waitpid(process, &status, 0);
                 if (rc != 0)
@@ -3396,9 +3396,9 @@ void DocumentBroker::setLoaded()
         LOG_INF("Document [" << _docKey << "] loaded in " << _loadDuration
                              << ", saving-timeout set to " << _saveManager.getSavingTimeout());
         LOG_DBG("Document [" << _docKey
-                             << "] PSS: " << Util::getMemoryUsagePSS(_childProcess->getPid())
-                             << " KB, total PSS: " << Util::getProcessTreePss(Util::getProcessId())
-                             << " KB");
+                             << "] PSS: " << ProcUtil::getMemoryUsagePSS(_childProcess->getPid())
+                             << " KB, total PSS: "
+                             << ProcUtil::getProcessTreePss(ProcUtil::getProcessId()) << " KB");
 
         UNITWSD_CALL_INSTANCE(_unitWsd, onPerfDocumentLoaded());
     }
@@ -5734,9 +5734,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  backgroundAutoSave: " << (_backgroundAutoSave?"true":"false");
     os << "\n  backgroundManualSave: " << (_backgroundManualSave?"true":"false");
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
-    os << "\n  Total PSS: " << Util::getProcessTreePss(Util::getProcessId()) << " KB";
+    os << "\n  Total PSS: " << ProcUtil::getProcessTreePss(ProcUtil::getProcessId()) << " KB";
     if (childPid)
-        os << "\n  Doc PSS: " << Util::getProcessTreePss(childPid) << " KB";
+        os << "\n  Doc PSS: " << ProcUtil::getProcessTreePss(childPid) << " KB";
     if constexpr (!Util::isMobileApp())
     {
         os << "\n  last quarantined version: "

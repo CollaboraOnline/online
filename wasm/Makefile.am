@@ -40,6 +40,7 @@ online_SOURCES = \
 	../common/Log-common.cpp \
 	../common/Log-poco.cpp \
 	../common/TraceEvent.cpp \
+	../common/ProcUtil.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \
 	../common/StringVector.cpp \

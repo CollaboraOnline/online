@@ -16,18 +16,13 @@
 
 #include <config.h>
 
+#include <common/ProcUtil.hpp>
 #include <common/Util.hpp>
 
-namespace Util
+namespace ProcUtil
 {
 /// No-op implementation of desktop only functions
 int spawnProcess(const std::string&, const StringVector&) { return 0; }
-
-std::string getHumanizedBytes(unsigned long) { return std::string(); }
-size_t getTotalSystemMemoryKb() { return 0; }
-std::size_t getFromFile(const char*) { return 0; }
-std::size_t getCGroupMemLimit() { return 0; }
-std::size_t getCGroupMemSoftLimit() { return 0; }
 size_t getMemoryUsagePSS(pid_t) { return 0; }
 size_t getMemoryUsageRSS(pid_t) { return 0; }
 size_t getCurrentThreadCount() { return 0; }
@@ -37,6 +32,15 @@ std::size_t getProcessTreePss(pid_t) { return 0; }
 size_t getCpuUsage(pid_t) { return 0; }
 size_t getStatFromPid(pid_t, int) { return 0; }
 void setProcessAndThreadPriorities(pid_t, int) {}
+} // namespace ProcUtil
+
+namespace Util
+{
+std::string getHumanizedBytes(unsigned long) { return std::string(); }
+size_t getTotalSystemMemoryKb() { return 0; }
+std::size_t getFromFile(const char*) { return 0; }
+std::size_t getCGroupMemLimit() { return 0; }
+std::size_t getCGroupMemSoftLimit() { return 0; }
 
 std::string getLinuxVersion() { return "unknown"; }
 

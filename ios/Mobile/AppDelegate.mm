@@ -30,6 +30,7 @@
 #import "FakeSocket.hpp"
 #import "Kit.hpp"
 #import "Log.hpp"
+#import "ProcUtil.hpp"
 #import "COOLWSD.hpp"
 #import "SetupKitEnvironment.hpp"
 #import "Util.hpp"
@@ -52,7 +53,7 @@ NSString *app_text_direction;
         setupKitEnvironment("");
 
     Log::initialize("Mobile", trace);
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     // Clear the cache directory if it is for another build of the app
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -156,7 +157,7 @@ NSString *app_text_direction;
                        char *argv[2];
                        argv[0] = strdup([[NSBundle mainBundle].executablePath UTF8String]);
                        argv[1] = nullptr;
-                       Util::setThreadName("app");
+                       ProcUtil::setThreadName("app");
                        auto coolwsd = new COOLWSD();
                        coolwsd->run(1, argv);
 

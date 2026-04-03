@@ -512,7 +512,7 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
 
     _secondsSinceEpoch = secondsSinceEpoch;
 
-    _pid = Util::getProcessId();
+    _pid = ProcUtil::getProcessId();
 
     _filename = filename;
 
