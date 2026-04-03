@@ -173,21 +173,6 @@ namespace Log
     /// Getting the logging level as a string
     const std::string& getLevelName();
 
-    /// Dump the invalid id as 0, otherwise dump in hex.
-    /// Note: std::thread::id defines operator<< which
-    /// serializes in decimal. We need this for hex.
-    inline std::string to_string(const std::thread::id& id)
-    {
-        if (id != std::thread::id())
-        {
-            std::ostringstream os;
-            os << std::hex << "0x" << id;
-            return os.str();
-        }
-
-        return "0";
-    }
-
 #ifdef _WIN32
     static bool isDebuggerPresent;
 #endif

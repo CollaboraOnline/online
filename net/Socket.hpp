@@ -368,7 +368,7 @@ public:
     virtual void dumpState(std::ostream&) {}
 
     /// Returns the owner thread's id.
-    const std::thread::id& getThreadOwner() const { return _owner; }
+    ProcUtil::ThreadId getThreadOwner() const { return _owner; }
 
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
@@ -421,12 +421,11 @@ protected:
     void setShutdown() { _isShutdown = true; }
 
     /// Set the thread-id we're bound to
-    virtual void setThreadOwner(const std::thread::id &id)
+    virtual void setThreadOwner(const ProcUtil::ThreadId id)
     {
         if (id != _owner)
         {
-            LOG_TRC("Thread affinity of Socket set to " << Log::to_string(id) << " (was "
-                                                        << Log::to_string(_owner) << ')');
+            LOG_TRC("Thread affinity of Socket set to " << id << " (was " << _owner << ')');
             _owner = id;
         }
     }
@@ -434,11 +433,10 @@ protected:
     /// Reset the thread-id while it's in transition.
     virtual void resetThreadOwner()
     {
-        if (std::thread::id() != _owner)
+        if (ProcUtil::ThreadId() != _owner)
         {
-            LOG_TRC("Resetting thread affinity of Socket while in transit (was "
-                    << Log::to_string(_owner) << ')');
-            _owner = std::thread::id();
+            LOG_TRC("Resetting thread affinity of Socket while in transit (was " << _owner << ')');
+            _owner = ProcUtil::ThreadId();
         }
     }
 
@@ -461,9 +459,8 @@ private:
         _ignoreInput = false;
         _noShutdown = false;
         _sendBufferSize = DefaultSendBufferSize;
-        _owner = std::this_thread::get_id();
-        LOG_DBG("Created socket. Thread affinity set to " << Log::to_string(_owner) << ", "
-                                                          << toStringImpl());
+        _owner = ProcUtil::getThreadId();
+        LOG_DBG("Created socket. Thread affinity set to " << _owner << ", " << toStringImpl());
 
         if constexpr (!Util::isMobileApp())
         {
@@ -510,7 +507,7 @@ private:
     uint64_t _bytesRcvd;
 
     /// We check the owner even in the release builds, needs to be always correct.
-    std::thread::id _owner;
+    ProcUtil::ThreadId _owner;
 
     unsigned int _clientPort;
     int _fd;
@@ -533,7 +530,7 @@ private:
     friend class SocketDisposition;
     friend class SocketPoll;
 
-    static void setThreadOwner(Socket& socket, const std::thread::id &id)
+    static void setThreadOwner(Socket& socket, const ProcUtil::ThreadId id)
     {
         socket.setThreadOwner(id);
     }
@@ -569,7 +566,7 @@ protected:
 public:
     ProtocolHandlerInterface()
         : _fdSocket(-1)
-        , _owner(std::this_thread::get_id())
+        , _owner(ProcUtil::getThreadId())
     {
     }
 
@@ -662,28 +659,28 @@ public:
 private:
     friend class ProtocolThreadOwnerChange;
 
-    void setThreadOwner(const std::thread::id &id)
+    void setThreadOwner(const ProcUtil::ThreadId id)
     {
         if (id != _owner)
         {
-            LOG_TRC("Thread affinity of ProtocolHandlerInterface set to "
-                    << Log::to_string(id) << " (was " << Log::to_string(_owner) << ')');
+            LOG_TRC("Thread affinity of ProtocolHandlerInterface set to " << id << " (was "
+                                                                          << _owner << ')');
             _owner = id;
         }
     }
 
     void resetThreadOwner()
     {
-        if (std::thread::id() != _owner)
+        if (ProcUtil::ThreadId() != _owner)
         {
             LOG_TRC("Resetting thread affinity of ProtocolHandlerInterface while in transit (was "
-                    << Log::to_string(_owner) << ')');
-            _owner = std::thread::id();
+                    << _owner << ')');
+            _owner = ProcUtil::ThreadId();
         }
     }
 
     int _fdSocket; ///< The socket file-descriptor.
-    std::thread::id _owner;
+    ProcUtil::ThreadId _owner;
 };
 
 class StreamSocket;
@@ -694,7 +691,7 @@ class ProtocolThreadOwnerChange
 {
     friend class StreamSocket;
 
-    static void setThreadOwner(ProtocolHandlerInterface& handler, const std::thread::id &id)
+    static void setThreadOwner(ProtocolHandlerInterface& handler, const ProcUtil::ThreadId id)
     {
         handler.setThreadOwner(id);
     }
@@ -858,10 +855,7 @@ public:
     /// Executed inside the poll in case of a wakeup
     virtual void wakeupHook() {}
 
-    const std::thread::id &getThreadOwner() const
-    {
-        return _owner;
-    }
+    ProcUtil::ThreadId getThreadOwner() const { return _owner; }
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
@@ -1109,11 +1103,8 @@ private:
     [[nodiscard]] std::string logInfo() const
     {
         std::ostringstream os;
-        os << "SocketPoll[this " << std::hex << this << std::dec
-           << ", thread[name " << _name
-           << ", id[owner " << Log::to_string(_owner)
-           << ", caller " << Log::to_string(std::this_thread::get_id())
-           << "]]]";
+        os << "SocketPoll[this " << std::hex << this << std::dec << ", thread[name " << _name
+           << ", id[owner " << _owner << ", caller " << ProcUtil::getThreadId() << "]]]";
         return os.str();
     }
 
@@ -1169,7 +1160,7 @@ private:
     size_t _pollStartIndex;
     /// The polling thread.
     std::thread _thread;
-    std::thread::id _owner;
+    ProcUtil::ThreadId _owner;
     /// Flag the thread to stop.
     std::atomic<int64_t> _threadStarted;
 #if !MOBILEAPP
@@ -1987,7 +1978,7 @@ protected:
         return _shutdownSignalled;
     }
 
-    void setThreadOwner(const std::thread::id &id) override
+    void setThreadOwner(const ProcUtil::ThreadId id) override
     {
         Socket::setThreadOwner(id);
         if (_socketHandler)

@@ -339,9 +339,9 @@ class AdminModel final
     AdminModel(const AdminModel &) = delete;
     AdminModel& operator = (const AdminModel &) = delete;
 public:
-    AdminModel() :
-        _segFaultCount(0),
-        _owner(std::this_thread::get_id())
+    AdminModel()
+        : _segFaultCount(0)
+        , _owner(ProcUtil::getThreadId())
     {
         LOG_INF("AdminModel ctor.");
     }
@@ -349,7 +349,7 @@ public:
     ~AdminModel();
 
     /// All methods here must be called from the Admin socket-poll
-    void setThreadOwner(const std::thread::id &id) { _owner = id; }
+    void setThreadOwner(const ProcUtil::ThreadId id) { _owner = id; }
 
     std::string query(const std::string& command);
     std::string getAllHistory() const;
@@ -490,7 +490,7 @@ private:
     std::time_t _lastActivity = 0;
 
     /// We check the owner even in the release builds, needs to be always correct.
-    std::thread::id _owner;
+    ProcUtil::ThreadId _owner;
 
     std::string _currentMigDoc;
 

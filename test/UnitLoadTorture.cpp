@@ -66,7 +66,7 @@ void UnitLoadTorture::loadTorture(const std::string& name, const std::string& do
     {
         threads.emplace_back([&] {
             std::ostringstream oss;
-            oss << std::hex << std::this_thread::get_id();
+            oss << std::hex << ProcUtil::getThreadId();
             const std::string id = oss.str();
 
             TST_LOG(": #" << id << ", views: " << num_of_views << ", to load: " << num_to_load);

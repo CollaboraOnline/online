@@ -17,6 +17,8 @@
 
 #include <config.h>
 
+#include <common/ProcUtil.hpp>
+
 #include <fcntl.h>
 #ifndef _WIN32
 #include <poll.h>
@@ -31,7 +33,6 @@
 #include <iostream>
 #include <sstream>
 #include <mutex>
-#include <thread>
 #include <vector>
 
 // A "fake socket" is represented by a number, a smallish integer, just like a real socket on
@@ -99,7 +100,7 @@ static std::string flush()
 {
     static bool alwaysStderr = std::getenv("FAKESOCKET_LOG_ALWAYS_STDERR") != nullptr;
     if (alwaysStderr)
-        std::cerr << std::this_thread::get_id() << ':' << loggingBuffer.str() << std::endl;
+        std::cerr << ProcUtil::getThreadId() << ':' << loggingBuffer.str() << std::endl;
     else if (loggingCallback != nullptr)
         loggingCallback(loggingBuffer.str());
     loggingBuffer.str("");

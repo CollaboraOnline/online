@@ -880,7 +880,7 @@ public:
                              const std::weak_ptr<ForKitProcess>& proc,
                              bool queueIfUnavailable = false)
     {
-        if (std::this_thread::get_id() == getThreadOwner())
+        if (ProcUtil::getThreadId() == getThreadOwner())
         {
             // Speed up sending the message if the request comes from owner thread
             doSendMessage(msg, proc, queueIfUnavailable);
