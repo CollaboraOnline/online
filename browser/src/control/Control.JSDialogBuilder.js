@@ -1508,6 +1508,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		else if (data.html)
 			fixedtext.innerHTML = data.html;
 
+		if (data.xalign) {
+			fixedtext.style.cssText = 'text-align:' + data.xalign + ';';
+		}
+
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
 
