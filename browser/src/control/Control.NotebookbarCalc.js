@@ -2793,6 +2793,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'iconview_theme_colors-iconview-list',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'TC', de: null },
 						'children': [
 							{
 								'id': 'iconview_theme_colors', // has to match core id
