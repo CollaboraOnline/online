@@ -89,6 +89,9 @@ namespace Log
     /// Cleanup state after forking
     void postFork();
 
+    /// Post renaming a thread.
+    void reset();
+
     void setThreadLocalLogLevel(const std::string& logLevel);
 
     /// Per-thread log prefix that is both safe and efficient.
@@ -96,11 +99,17 @@ namespace Log
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
     class Prefix
     {
+        Prefix(const Prefix&) = delete;
+        Prefix& operator=(const Prefix&) = delete;
+
     public:
         Prefix();
 
         /// Get the log prefix, without updating it.
         std::string_view prefix() const { return _prefix; }
+
+        /// Reset the prefix, re-generating it again.
+        void reset();
 
         /// Update and return the log prefix.
         std::string_view update(std::string_view level,
