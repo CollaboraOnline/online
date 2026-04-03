@@ -18,6 +18,7 @@
 
 #include <common/Log.hpp>
 #include <common/NumUtil.hpp>
+#include <common/ProcUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
 
@@ -149,7 +150,7 @@ std::size_t getFromCGroupV2(const std::string& key)
 }
 } // namespace
 
-namespace Util
+namespace ProcUtil
 {
 
 int spawnProcess(const std::string& cmd, const StringVector& args)
@@ -175,6 +176,11 @@ int spawnProcess(const std::string& cmd, const StringVector& args)
 
     return pid;
 }
+
+} // namespace ProcUtil
+
+namespace Util
+{
 
 std::string getHumanizedBytes(unsigned long bytes)
 {
@@ -268,6 +274,11 @@ std::size_t getCGroupMemSoftLimit()
     return 0;
 #endif
 }
+
+} // namespace Util
+
+namespace ProcUtil
+{
 
 std::pair<std::size_t, std::size_t> getPssAndDirtyFromSMaps(FILE* file)
 {
@@ -461,6 +472,12 @@ void setProcessAndThreadPriorities(const pid_t pid, int prio)
                                    << " with result: " << res);
 #endif
 }
+
+} // namespace ProcUtil
+
+namespace Util
+{
+
 // If OS is not mobile, it must be Linux.
 std::string getLinuxVersion()
 {

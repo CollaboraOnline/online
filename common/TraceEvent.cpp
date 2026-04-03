@@ -33,27 +33,28 @@ void TraceEvent::emitInstantEvent(const std::string& name, const std::string& ar
     if (!recordingOn)
         return;
 
-    emitOneRecording("{"
-                     "\"name\":\""
-                     + name
-                     + "\","
-                       "\"ph\":\"i\""
-                     + ",\"ts\":"
-                     + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
-                              std::chrono::system_clock::now().time_since_epoch())
-                              .count())
-                     + ","
-                       "\"pid\":"
-                     + std::to_string(Util::getProcessId())
-                     + ","
-                       "\"tid\":"
-                     + std::to_string(getThreadId())
-                     + (argsOrEmpty.length() == 0 ? "" : ",\"args\":" + argsOrEmpty)
-                     + "}"
-                     // We add a trailing comma and newline, it is up to the code that handles these "recordings"
-                     // (outputs them into a JSON array) to remove the final comma before adding the terminating
-                     // ']'.
-                       ",\n");
+    emitOneRecording(
+        "{"
+        "\"name\":\"" +
+        name +
+        "\","
+        "\"ph\":\"i\"" +
+        ",\"ts\":" +
+        std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
+                           std::chrono::system_clock::now().time_since_epoch())
+                           .count()) +
+        ","
+        "\"pid\":" +
+        std::to_string(ProcUtil::getProcessId()) +
+        ","
+        "\"tid\":" +
+        std::to_string(getThreadId()) +
+        (argsOrEmpty.length() == 0 ? "" : ",\"args\":" + argsOrEmpty) +
+        "}"
+        // We add a trailing comma and newline, it is up to the code that handles these "recordings"
+        // (outputs them into a JSON array) to remove the final comma before adding the terminating
+        // ']'.
+        ",\n");
 }
 
 void TraceEvent::startRecording()

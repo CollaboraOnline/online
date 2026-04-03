@@ -26,6 +26,7 @@
 #import "COOLWSD.hpp"
 #import "Log.hpp"
 #import "MobileApp.hpp"
+#import "ProcUtil.hpp"
 #import "SigUtil.hpp"
 #import "Util.hpp"
 #import "Clipboard.hpp"
@@ -546,7 +547,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             // Start another thread to read responses and forward them to the JavaScript
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                            ^{
-                               Util::setThreadName("app2js");
+                               ProcUtil::setThreadName("app2js");
                                while (true) {
                                    struct pollfd p[2];
                                    p[0].fd = self.document->fakeClientFd;

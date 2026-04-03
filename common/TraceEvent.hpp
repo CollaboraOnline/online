@@ -14,6 +14,8 @@
 
 #include <sys/types.h>
 
+#include <common/ProcUtil.hpp>
+
 #ifdef TEST_TRACEEVENT_EXE
 #include <iostream>
 #else
@@ -56,7 +58,7 @@ protected:
             threadId = threadCounter++;
         return threadId;
 #else
-    return Util::getThreadId();
+        return ProcUtil::getThreadId();
 #endif
     }
 
@@ -88,7 +90,7 @@ protected:
 
     explicit TraceEvent(std::string args)
         : _args(std::move(args))
-        , _pid(recordingOn ? Util::getProcessId() : -1)
+        , _pid(recordingOn ? ProcUtil::getProcessId() : -1)
     {
     }
 

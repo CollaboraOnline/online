@@ -215,7 +215,7 @@ BackgroundSaveWatchdog::BackgroundSaveWatchdog(unsigned mobileAppDocId, int savi
         // mobileAppDocId is on the stack, so capture it by value.
           [mobileAppDocId, savingTid, this]()
           {
-              Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
+              ProcUtil::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
 
               const auto timeout = std::chrono::seconds(
                   ConfigUtil::getInt("per_document.bgsave_timeout_secs", 120));
@@ -240,7 +240,7 @@ BackgroundSaveWatchdog::BackgroundSaveWatchdog(unsigned mobileAppDocId, int savi
                           " (config timeout: " << timeout << ", real timeout: " << saveDuration << ")");
                   Log::shutdown(); // Flush logs.
                   // this attempts to get the saving-thread to generate a backtrace
-                  Util::killThreadById(savingTid, SIGABRT);
+                  ProcUtil::killThreadById(savingTid, SIGABRT);
 
                   // It is possible that this process will not exit cleanly after
                   // handling SIGABRT, so instead after some time fall-back to this:
@@ -1592,7 +1592,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 
         // sort out thread local variables to get logging right from
         // as early as possible.
-        Util::setThreadName("kitbgsv_" + Util::encodeId(_mobileAppDocId, 3) + '_' +
+        ProcUtil::setThreadName("kitbgsv_" + Util::encodeId(_mobileAppDocId, 3) + '_' +
                             Util::encodeId(numSaves, 3));
         _isBgSaveProcess = true;
 
@@ -1610,7 +1610,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 
         assert(!BackgroundSaveWatchdog::Instance && "Unexpected to have BackgroundSaveWatchdog instance");
         BackgroundSaveWatchdog::Instance =
-            std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
+            std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, ProcUtil::getThreadId());
 
         UnitKit::get().postBackgroundSaveFork();
 
@@ -1618,7 +1618,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 #if 0
         // Disable changing priority for now
         int prio = ConfigUtil::getInt("per_document.bgsave_priority", 5);
-        Util::setProcessAndThreadPriorities(getpid(), prio);
+        ProcUtil::setProcessAndThreadPriorities(getpid(), prio);
 #endif
 
         // other queued messages should be handled in the parent kit
@@ -2782,26 +2782,18 @@ void Document::flushAndExit(int code)
 void Document::dumpState(std::ostream& oss)
 {
     oss << "Kit Document:\n"
-        << "\n\tpid: " << Util::getProcessId()
-        << "\n\tstop: " << _stop
-        << "\n\tjailId: " << _jailId
-        << "\n\tdocKey: " << _docKey
-        << "\n\tdocId: " << _docId
-        << "\n\turl: " << _url
-        << "\n\tobfuscatedFileId: " << _obfuscatedFileId
-        << "\n\tjailedUrl: " << anonymizeUrl(_jailedUrl)
-        << "\n\trenderOpts: " << _renderOpts
+        << "\n\tpid: " << ProcUtil::getProcessId() << "\n\tstop: " << _stop
+        << "\n\tjailId: " << _jailId << "\n\tdocKey: " << _docKey << "\n\tdocId: " << _docId
+        << "\n\turl: " << _url << "\n\tobfuscatedFileId: " << _obfuscatedFileId
+        << "\n\tjailedUrl: " << anonymizeUrl(_jailedUrl) << "\n\trenderOpts: " << _renderOpts
         << "\n\thaveDocPassword: " << _haveDocPassword // not the pwd itself
         << "\n\tisDocPasswordProtected: " << _isDocPasswordProtected
-        << "\n\tdocPasswordType: " << (int)_docPasswordType
-        << "\n\teditorId: " << _editorId
+        << "\n\tdocPasswordType: " << (int)_docPasswordType << "\n\teditorId: " << _editorId
         << "\n\teditorChangeWarning: " << _editorChangeWarning
         << "\n\tmobileAppDocId: " << _mobileAppDocId
         << "\n\tinputProcessingEnabled: " << processInputEnabled()
-        << "\n\tduringLoad: " << _duringLoad
-        << "\n\tmodified: " << name(_modified)
-        << "\n\tbgSaveProc: " << _isBgSaveProcess
-        << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled;
+        << "\n\tduringLoad: " << _duringLoad << "\n\tmodified: " << name(_modified)
+        << "\n\tbgSaveProc: " << _isBgSaveProcess << "\n\tbgSaveDisabled: " << _isBgSaveDisabled;
     if (!_isBgSaveProcess)
         oss << "\n\tbgSavesOnging: "<< _bgSavesOngoing;
 
@@ -3407,7 +3399,7 @@ std::future<COKit*> initKitRunLoopThread(const std::shared_ptr<KitSocketPoll>& m
         std::thread(
             [p = std::move(promise), mainKit]() mutable
             {
-                Util::setThreadName("lokit_runloop");
+                ProcUtil::setThreadName("lokit_runloop");
                 setupKitEnvironment("notebookbar");
                 COKit* kit =
 #if defined(QTAPP)
@@ -4207,7 +4199,7 @@ void runKitLoopInAThread()
 {
     std::thread([&]
                 {
-                    Util::setThreadName("lokit_runloop");
+                    ProcUtil::setThreadName("lokit_runloop");
 
                     std::shared_ptr<kit::Office> loKit = std::make_shared<kit::Office>(lo_kit);
                     int dummy;
@@ -4462,15 +4454,15 @@ std::string anonymizeUsername(const std::string& username)
 void dump_kit_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
-    oss << "Start Kit " << Util::getProcessId() << " Dump State:\n";
+    oss << "Start Kit " << ProcUtil::getProcessId() << " Dump State:\n";
 
     SigUtil::signalLogActivity();
 
     KitSocketPoll::dumpGlobalState(oss);
 
-    oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
+    oss << "\nMalloc info [" << ProcUtil::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
-    oss << "\nEnd Kit " << Util::getProcessId() << " Dump State.\n";
+    oss << "\nEnd Kit " << ProcUtil::getProcessId() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str()); // Log in the journal.

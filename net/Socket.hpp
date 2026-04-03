@@ -17,6 +17,7 @@
 #pragma once
 
 #include <common/Log.hpp>
+#include <common/ProcUtil.hpp>
 #include <common/SigUtil.hpp>
 #include <common/StateEnum.hpp>
 #include <common/Util.hpp>
@@ -378,7 +379,7 @@ public:
     void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
     {
         if (!ThreadChecks::Inhibit)
-            Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
+            ProcUtil::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
     bool ignoringInput() const { return _ignoreInput; }
@@ -586,7 +587,7 @@ public:
     void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
     {
         if (!ThreadChecks::Inhibit)
-            Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
+            ProcUtil::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
     /// Called when the socket is newly created to
@@ -872,7 +873,7 @@ public:
     void assertCorrectThread(LOG_CAPTURE_CALLER_DECLARATION) const
     {
         if (!ThreadChecks::Inhibit && isAlive())
-            Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
+            ProcUtil::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
     /// Kit poll can be called from COKit's Yield in any thread, adapt to that.

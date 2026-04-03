@@ -15,6 +15,7 @@
 #include <ctime>
 
 #include "Log.hpp"
+#include "ProcUtil.hpp"
 #include "StaticLogHelper.hpp"
 #include "Util.hpp"
 
@@ -128,7 +129,7 @@ namespace Log
         *pos++ = '-';
 
         // Thread ID.
-        const auto osTid = Util::getThreadId();
+        const auto osTid = ProcUtil::getThreadId();
 #if defined(__linux__)
         // On Linux osTid is pid_t.
         if (osTid > 99999)
@@ -194,7 +195,7 @@ namespace Log
         pos[0] = '[';
         pos[1] = ' ';
         pos += 2;
-        pos = strcopy(Util::getThreadName(), pos);
+        pos = strcopy(ProcUtil::getThreadName(), pos);
         pos[0] = ' ';
         pos[1] = ']';
         pos[2] = ' ';
@@ -294,7 +295,7 @@ namespace Log
         *pos++ = '-';
 
         // Thread ID.
-        const auto osTid = Util::getThreadId();
+        const auto osTid = ProcUtil::getThreadId();
 #if defined(__linux__)
         // On Linux osTid is pid_t.
         if (osTid > 99999)
@@ -357,7 +358,7 @@ namespace Log
         pos[0] = '[';
         pos[1] = ' ';
         pos += 2;
-        pos = strcopy(Util::getThreadName(), pos);
+        pos = strcopy(ProcUtil::getThreadName(), pos);
         pos[0] = ' ';
         pos[1] = ']';
         pos[2] = ' ';

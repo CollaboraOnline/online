@@ -15,6 +15,7 @@
 
 #include <config.h>
 
+#include <common/ProcUtil.hpp>
 #include <common/Util.hpp>
 #include <lokassert.hpp>
 
@@ -226,9 +227,9 @@ class UnitOverload : public WopiTestServer
 
     std::size_t getMemoryUsage() const
     {
-        std::size_t total = Util::getMemoryUsageRSS(getpid()) + Util::getMemoryUsagePSS(getpid());
+        std::size_t total = ProcUtil::getMemoryUsageRSS(getpid()) + ProcUtil::getMemoryUsagePSS(getpid());
         for (const pid_t pid : _children)
-            total += Util::getMemoryUsageRSS(pid) + Util::getMemoryUsagePSS(pid);
+            total += ProcUtil::getMemoryUsageRSS(pid) + ProcUtil::getMemoryUsagePSS(pid);
 
         return total;
     }

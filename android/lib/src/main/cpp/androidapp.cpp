@@ -171,7 +171,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
             // Start another thread to read responses and forward them to the JavaScript
             std::thread([currentFakeClientFd]
                         {
-                            Util::setThreadName("app2js");
+                            ProcUtil::setThreadName("app2js");
                             JNIThreadContext ctx;
                             while (true)
                             {
@@ -268,7 +268,7 @@ Java_org_libreoffice_androidlib_LOActivity_createCOOLWSD(JNIEnv *env, jobject in
     lokInitialized = true;
     libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
 
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
@@ -280,7 +280,7 @@ Java_org_libreoffice_androidlib_LOActivity_createCOOLWSD(JNIEnv *env, jobject in
                     char *argv[2];
                     argv[0] = strdup("mobile");
                     argv[1] = nullptr;
-                    Util::setThreadName("app");
+                    ProcUtil::setThreadName("app");
                     while (true)
                     {
                         LOG_DBG("Creating COOLWSD");

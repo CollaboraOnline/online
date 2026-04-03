@@ -211,7 +211,7 @@ int main(int argc, char** argv)
     Log::initialize(QApplication::applicationName().toStdString(), logLevel);
     Log::setDisabledAreas(argParser.value(logDisabledAreasOption).toStdString());
 
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
@@ -250,7 +250,7 @@ int main(int argc, char** argv)
     coolwsdThread = std::thread(
         []
         {
-            Util::setThreadName("app");
+            ProcUtil::setThreadName("app");
             char* argv_local[2] = { strdup("coda"), nullptr };
             coolwsd = new COOLWSD();
             coolwsd->run(1, argv_local);

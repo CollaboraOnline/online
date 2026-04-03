@@ -69,6 +69,8 @@
 		BE74B1EF2D3F963F009786DF /* Unit-server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Unit-server.cpp"; path = "../../../common/Unit-server.cpp"; sourceTree = "<group>"; };
 		BE74B1F02D3F963F009786DF /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Uri.hpp; path = ../../../common/Uri.hpp; sourceTree = "<group>"; };
 		BE74B1F12D3F963F009786DF /* Uri.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Uri.cpp; path = ../../../common/Uri.cpp; sourceTree = "<group>"; };
+		4512B4707218EF307D422699 /* ProcUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ProcUtil.hpp; path = ../../../common/ProcUtil.hpp; sourceTree = "<group>"; };
+		207B3780BB51C4BF0BE1946A /* ProcUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcUtil.cpp; path = ../../../common/ProcUtil.cpp; sourceTree = "<group>"; };
 		BE74B1F22D3F963F009786DF /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../common/Util.hpp; sourceTree = "<group>"; };
 		BE74B1F32D3F963F009786DF /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../../../common/Util.cpp; sourceTree = "<group>"; };
 		BE74B1F42D3F963F009786DF /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "../../../common/Util-mobile.cpp"; sourceTree = "<group>"; };
@@ -248,6 +250,8 @@
 				BE74B1EF2D3F963F009786DF /* Unit-server.cpp */,
 				BE74B1F02D3F963F009786DF /* Uri.hpp */,
 				BE74B1F12D3F963F009786DF /* Uri.cpp */,
+				4512B4707218EF307D422699 /* ProcUtil.hpp */,
+				207B3780BB51C4BF0BE1946A /* ProcUtil.cpp */,
 				BE74B1F22D3F963F009786DF /* Util.hpp */,
 				BE74B1F32D3F963F009786DF /* Util.cpp */,
 				BEF9E2022D47D312004FCEB5 /* Util-macos.cpp */,

@@ -127,10 +127,10 @@ ClientSession::ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws
     // client's cool, and for its dummy thread.
     TraceEvent::emitOneRecordingIfEnabled(
         R"({"name":"process_name","ph":"M","args":{"name":"cool-)" + id + R"("},"pid":)" +
-        std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) + ",\"tid\":1},\n");
+        std::to_string(ProcUtil::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) + ",\"tid\":1},\n");
     TraceEvent::emitOneRecordingIfEnabled(
         R"({"name":"thread_name","ph":"M","args":{"name":"JS"},"pid":)" +
-        std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) + ",\"tid\":1},\n");
+        std::to_string(ProcUtil::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) + ",\"tid\":1},\n");
 
     _browserSettingsJSON = new Poco::JSON::Object();
 }
@@ -1224,15 +1224,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     uint64_t dur;
                     if (ph == "i")
                     {
-                        COOLWSD::writeTraceEventRecording("{\"name\":"
-                                                          + name
-                                                          + R"(,"ph":"i")"
-                                                          + args
-                                                          + ",\"ts\":"
-                                                          + std::to_string(ts + _performanceCounterEpoch)
-                                                          + ",\"pid\":"
-                                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
-                                                          + ",\"tid\":1},\n");
+                        COOLWSD::writeTraceEventRecording(
+                            "{\"name\":" + name + R"(,"ph":"i")" + args + ",\"ts\":" +
+                            std::to_string(ts + _performanceCounterEpoch) + ",\"pid\":" +
+                            std::to_string(ProcUtil::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) +
+                            ",\"tid\":1},\n");
                     }
                     // Should the first getTokenUInt64()'s return value really
                     // be ignored?
@@ -1240,37 +1236,23 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                              (static_cast<void>(getTokenUInt64(tokens[4], "id", id)),
                              getTokenUInt64(tokens[5], "tid", tid)))
                     {
-                        COOLWSD::writeTraceEventRecording("{\"name\":"
-                                                          + name
-                                                          + R"(,"ph":")"
-                                                          + ph
-                                                          + "\""
-                                                          + args
-                                                          + ",\"ts\":"
-                                                          + std::to_string(ts + _performanceCounterEpoch)
-                                                          + ",\"pid\":"
-                                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
-                                                          + ",\"tid\":"
-                                                          + std::to_string(tid)
-                                                          + ",\"id\":"
-                                                          + std::to_string(id)
-                                                          + "},\n");
+                        COOLWSD::writeTraceEventRecording(
+                            "{\"name\":" + name + R"(,"ph":")" + ph + "\"" + args + ",\"ts\":" +
+                            std::to_string(ts + _performanceCounterEpoch) + ",\"pid\":" +
+                            std::to_string(ProcUtil::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) +
+                            ",\"tid\":" + std::to_string(tid) + ",\"id\":" + std::to_string(id) +
+                            "},\n");
                     }
                     else if (ph == "X" &&
                              getTokenUInt64(tokens[4], "dur", dur))
                     {
-                        COOLWSD::writeTraceEventRecording("{\"name\":"
-                                                          + name
-                                                          + R"(,"ph":"X")"
-                                                          + args
-                                                          + ",\"ts\":"
-                                                          + std::to_string(ts + _performanceCounterEpoch)
-                                                          + ",\"pid\":"
-                                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
-                                                          + ",\"tid\":1"
-                                                            ",\"dur\":"
-                                                          + std::to_string(dur)
-                                                          + "},\n");
+                        COOLWSD::writeTraceEventRecording(
+                            "{\"name\":" + name + R"(,"ph":"X")" + args + ",\"ts\":" +
+                            std::to_string(ts + _performanceCounterEpoch) + ",\"pid\":" +
+                            std::to_string(ProcUtil::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) +
+                            ",\"tid\":1"
+                            ",\"dur\":" +
+                            std::to_string(dur) + "},\n");
                     }
                     else
                     {

@@ -174,7 +174,7 @@ void AdminDocument::updateMemoryDirty()
     {
         size_t lastMemDirty = _memoryDirty;
         auto procSMaps = _procSMaps.lock();
-        _memoryDirty = procSMaps ? Util::getPssAndDirtyFromSMaps(procSMaps.get()).second : 0;
+        _memoryDirty = procSMaps ? ProcUtil::getPssAndDirtyFromSMaps(procSMaps.get()).second : 0;
         _lastTimeSMapsRead = now;
         if (lastMemDirty != _memoryDirty)
             _hasMemDirtyChanged = true;
@@ -360,7 +360,7 @@ size_t AdminModel::getKitsJiffies() const
             const int pid = it.second.getPid();
             if (pid > 0)
             {
-                unsigned newJ = Util::getCpuUsage(pid);
+                unsigned newJ = ProcUtil::getCpuUsage(pid);
                 unsigned prevJ = it.second.getLastJiffies();
                 if(newJ >= prevJ)
                 {
@@ -1123,8 +1123,8 @@ struct KitProcStats
 {
     void UpdateAggregateStats(int pid)
     {
-        _threadCount.Update(Util::getStatFromPid(pid, 19));
-        _cpuTime.Update(Util::getCpuUsage(pid) / sysconf (_SC_CLK_TCK));
+        _threadCount.Update(ProcUtil::getStatFromPid(pid, 19));
+        _cpuTime.Update(ProcUtil::getCpuUsage(pid) / sysconf (_SC_CLK_TCK));
     }
 
     int unassignedCount;
@@ -1201,16 +1201,19 @@ void AdminModel::getMetrics(std::ostream& oss) const
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     oss << "coolwsd_count " << getPidsFromProcName(std::regex("coolwsd"), nullptr) << std::endl;
-    oss << "coolwsd_thread_count " << Util::getStatFromPid(Util::getProcessId(), 19) << std::endl;
-    oss << "coolwsd_cpu_time_seconds " << Util::getCpuUsage(Util::getProcessId()) / sysconf (_SC_CLK_TCK) << std::endl;
-    oss << "coolwsd_memory_used_bytes " << Util::getMemoryUsagePSS(Util::getProcessId()) * 1024 << std::endl;
+    oss << "coolwsd_thread_count " << ProcUtil::getStatFromPid(ProcUtil::getProcessId(), 19)
+        << std::endl;
+    oss << "coolwsd_cpu_time_seconds "
+        << ProcUtil::getCpuUsage(ProcUtil::getProcessId()) / sysconf(_SC_CLK_TCK) << std::endl;
+    oss << "coolwsd_memory_used_bytes " << ProcUtil::getMemoryUsagePSS(ProcUtil::getProcessId()) * 1024
+        << std::endl;
     oss << "coolwsd_tcp_connections_used " << StreamSocket::getExternalConnectionCount() << std::endl;
     oss << std::endl;
 
     oss << "forkit_count " << getPidsFromProcName(std::regex("forkit"), nullptr) << std::endl;
-    oss << "forkit_thread_count " << Util::getStatFromPid(_forKitPid, 19) << std::endl;
-    oss << "forkit_cpu_time_seconds " << Util::getCpuUsage(_forKitPid) / sysconf (_SC_CLK_TCK) << std::endl;
-    oss << "forkit_memory_used_bytes " << Util::getMemoryUsageRSS(_forKitPid) * 1024 << std::endl;
+    oss << "forkit_thread_count " << ProcUtil::getStatFromPid(_forKitPid, 19) << std::endl;
+    oss << "forkit_cpu_time_seconds " << ProcUtil::getCpuUsage(_forKitPid) / sysconf (_SC_CLK_TCK) << std::endl;
+    oss << "forkit_memory_used_bytes " << ProcUtil::getMemoryUsageRSS(_forKitPid) * 1024 << std::endl;
     oss << std::endl;
 
     DocumentAggregateStats docStats;

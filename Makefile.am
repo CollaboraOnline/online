@@ -162,6 +162,7 @@ shared_sources = \
                  common/Log-common.cpp \
                  common/Log-poco.cpp \
                  common/MobileApp.cpp \
+                 common/ProcUtil.cpp \
                  common/Protocol.cpp \
                  common/RegexUtil.cpp \
                  common/Seccomp.cpp \
@@ -249,6 +250,7 @@ connect_SOURCES = \
                   common/DummyTraceEventEmitter.cpp \
                   common/Log-common.cpp \
                   common/Log-poco.cpp \
+                  common/ProcUtil.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
                   common/Util-server.cpp \
@@ -264,6 +266,7 @@ lokitclient_SOURCES = \
                       common/Log-common.cpp \
                       common/Log-poco.cpp \
                       common/Protocol.cpp \
+                      common/ProcUtil.cpp \
                       common/StringVector.cpp \
                       common/TraceEvent.cpp \
                       common/Util-server.cpp \
@@ -381,6 +384,7 @@ clientnb_SOURCES = \
                    common/DummyTraceEventEmitter.cpp \
                    common/Log-common.cpp \
                    common/Log-poco.cpp \
+                   common/ProcUtil.cpp \
                    common/StringVector.cpp \
                    common/Util-server.cpp \
                    common/Util-unix.cpp \
@@ -399,6 +403,7 @@ coolbench_SOURCES = \
                     common/DummyTraceEventEmitter.cpp \
                     common/Log-common.cpp \
                     common/Log-poco.cpp \
+                    common/ProcUtil.cpp \
                     common/Simd.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
@@ -425,6 +430,7 @@ coolconfig_SOURCES = \
                     common/DummyTraceEventEmitter.cpp \
                     common/Log-common.cpp \
                     common/Log-poco.cpp \
+                    common/ProcUtil.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
                     common/Util-unix.cpp \
@@ -503,6 +509,7 @@ shared_headers = \
                  common/MobileApp.hpp \
                  common/NumUtil.hpp \
                  common/Png.hpp \
+                 common/ProcUtil.hpp \
                  common/Protocol.hpp \
                  common/Rectangle.hpp \
                  common/RegexUtil.hpp \

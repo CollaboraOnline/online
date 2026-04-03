@@ -390,7 +390,7 @@ static void createAndStartMessagePumpThread(WindowData& data)
     data.app2js = std::thread(
         [&data]
         {
-            Util::setThreadName("app2js " + std::to_string(data.appDocId));
+            ProcUtil::setThreadName("app2js " + std::to_string(data.appDocId));
             while (true)
             {
                 struct pollfd pollfd[2];
@@ -2237,7 +2237,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     if (!loglevel)
         loglevel = COOLWSD_LOGLEVEL;
     Log::initialize("CODA", loglevel);
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     persistentWindowSizeStoreOK =
         (persistentWindowSizeStore.open
@@ -2308,7 +2308,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
             // warnings, but let's try to do as they want.
             argv[0] = _strdup("mobile");
             argv[1] = nullptr;
-            Util::setThreadName("app");
+            ProcUtil::setThreadName("app");
             while (true)
             {
                 coolwsd = new COOLWSD();
