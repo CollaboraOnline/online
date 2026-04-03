@@ -3123,7 +3123,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
 bool KitSocketPoll::pushToMainThread(COKitCallback callback, int type,
                                      const char* p, void* data) // static
 {
-    if (mainPoll && mainPoll->getThreadOwner() != std::this_thread::get_id())
+    if (mainPoll && mainPoll->getThreadOwner() != ProcUtil::getThreadId())
     {
         LOG_TRC("Unusual push callback to main thread");
         std::shared_ptr<std::string> copy;

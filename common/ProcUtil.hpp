@@ -26,6 +26,8 @@ namespace ThreadChecks
 
 namespace ProcUtil
 {
+/// The Thread-ID type. Most universally it's 'long'.
+using ThreadId = long;
 
 /// Spawn a process.
 int spawnProcess(const std::string& cmd, const StringVector& args);
@@ -61,13 +63,13 @@ void setThreadName(const std::string& s);
 
 const char* getThreadName();
 
-long getThreadId();
+ThreadId getThreadId();
 long getProcessId();
 
 void killThreadById(int tid, int signal);
 
 /// Asserts in the debug builds, otherwise just logs.
-void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER_DECLARATION);
+void assertCorrectThread(ThreadId owner, LOG_CAPTURE_CALLER_DECLARATION);
 
 #ifndef ASSERT_CORRECT_THREAD
 #define ASSERT_CORRECT_THREAD() assertCorrectThread()

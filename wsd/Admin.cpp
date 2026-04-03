@@ -609,7 +609,7 @@ Admin::~Admin()
 
 void Admin::pollingThread()
 {
-    _model.setThreadOwner(std::this_thread::get_id());
+    _model.setThreadOwner(ProcUtil::getThreadId());
 
     std::chrono::steady_clock::time_point lastCPU = std::chrono::steady_clock::now();
     std::chrono::steady_clock::time_point lastMem = lastCPU;

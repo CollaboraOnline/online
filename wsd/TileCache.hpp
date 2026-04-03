@@ -18,13 +18,13 @@
 
 #include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/ProcUtil.hpp>
 #include <common/Rectangle.hpp>
 #include <wsd/TileDesc.hpp>
 
 #include <chrono>
 #include <memory>
 #include <string>
-#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -303,7 +303,7 @@ public:
 
     // Debugging bits ...
     void dumpState(std::ostream& os);
-    void setThreadOwner(const std::thread::id& id) { _owner = id; }
+    void setThreadOwner(const ProcUtil::ThreadId id) { _owner = id; }
     void assertCacheSize();
 
 private:
@@ -344,7 +344,7 @@ private:
 
     const std::string _docURL;
 
-    std::thread::id _owner;
+    ProcUtil::ThreadId _owner;
 
     /// Approximate size of tilecache in bytes
     size_t _cacheSize;

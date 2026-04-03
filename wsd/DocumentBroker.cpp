@@ -1351,7 +1351,7 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
                                              _saveManager.getLastModifiedLocalTime(), dontUseCache);
-    _tileCache->setThreadOwner(std::this_thread::get_id());
+    _tileCache->setThreadOwner(ProcUtil::getThreadId());
 
     return true;
 }

@@ -204,9 +204,11 @@ bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point creati
     child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true, HostType::Other, ReadType::NormalRead, creationTime);
     child->setNoShutdown();
     child->setClientAddress("save-child");
+    child->resetThreadOwner(); // The parent will set the owner when it inserts into its poller.
     parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true, HostType::Other, ReadType::NormalRead, creationTime);
     parent->setNoShutdown();
     parent->setClientAddress("save-parent");
+    parent->resetThreadOwner(); // The child will set the owner when it inserts into its poller.
 
     return true;
 }
@@ -322,7 +324,7 @@ namespace {
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName))
     , _pollStartIndex(0)
-    , _owner(std::this_thread::get_id())
+    , _owner(ProcUtil::getThreadId())
     , _threadStarted(0)
 #if !MOBILEAPP
     , _watchdogTime(Watchdog::getDisableStamp())
@@ -371,7 +373,7 @@ void SocketPoll::checkAndReThread()
 {
     if (ThreadChecks::Inhibit)
         return; // in late shutdown
-    const std::thread::id us = std::this_thread::get_id();
+    const ProcUtil::ThreadId us = ProcUtil::getThreadId();
     if (_owner == us)
         return; // all well
     LOG_DBG("Unusual - SocketPoll used from a new thread");
@@ -480,10 +482,9 @@ void SocketPoll::pollingThreadEntry()
     try
     {
         ProcUtil::setThreadName(_name);
-        _owner = std::this_thread::get_id();
+        _owner = ProcUtil::getThreadId();
         _ownerThreadId = ProcUtil::getThreadId();
-        LOG_INF("Starting polling thread [" << _name << "] with thread affinity set to "
-                                            << Log::to_string(_owner) << '.');
+        LOG_INF("Starting polling thread [" << _name << "] with thread affinity set to " << _owner);
 
         // Invoke the virtual implementation.
         pollingThread();
@@ -616,7 +617,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
 
                 // Update thread ownership.
                 for (auto& i : _newSockets)
-                    SocketThreadOwnerChange::setThreadOwner(*i, std::this_thread::get_id());
+                    SocketThreadOwnerChange::setThreadOwner(*i, ProcUtil::getThreadId());
 
                 // Copy the new sockets over and clear.
                 _pollSockets.insert(_pollSockets.end(), _newSockets.begin(), _newSockets.end());

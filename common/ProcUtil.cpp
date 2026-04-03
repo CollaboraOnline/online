@@ -80,9 +80,9 @@ namespace ThreadChecks
 
 namespace ProcUtil
 {
-static thread_local long ThreadTid = 0;
+static thread_local ThreadId ThreadTid = 0;
 
-long getThreadId()
+ThreadId getThreadId()
 {
     // Avoid so many redundant system calls
 #if defined __linux__
@@ -159,9 +159,8 @@ void setThreadName(const std::string& s)
 #endif
 
     Log::reset();
-    LOG_INF("Thread " << getThreadId() << " (" << std::hex << std::this_thread::get_id() << std::dec
-                      << ") of process " << getProcessId() << " formerly " << knownAs
-                      << " is now called [" << s << ']');
+    LOG_INF("Thread " << getThreadId() << " of process " << getProcessId() << " formerly "
+                      << knownAs << " is now called [" << s << ']');
 
     // Emit a metadata Trace Event identifying this thread. This will invoke a different function
     // depending on which executable this is in.
@@ -195,15 +194,13 @@ const char* getThreadName()
     return ThreadName;
 }
 
-void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER)
+void assertCorrectThread(ThreadId owner, LOG_CAPTURE_CALLER)
 {
     // uninitialized owner means detached and can be invoked by any thread.
-    const bool sameThread = (owner == std::thread::id() || owner == std::this_thread::get_id());
+    const bool sameThread = (owner == ThreadId() || owner == ProcUtil::getThreadId());
     if (!sameThread)
-        LOG_ERR("Incorrect thread affinity. Expected: "
-                << Log::to_string(owner) << " but called from "
-                << Log::to_string(std::this_thread::get_id()) << " (" << ProcUtil::getThreadId()
-                << ')');
+        LOG_ERR("Incorrect thread affinity. Expected: " << owner << " but called from "
+                                                        << ProcUtil::getThreadId());
 
     assert(sameThread);
 }

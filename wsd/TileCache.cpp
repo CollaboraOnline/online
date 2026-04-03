@@ -43,6 +43,7 @@ using namespace COOLProtocol;
 TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_point& modifiedTime,
                      bool dontCache)
     : _docURL(std::move(docURL))
+    , _owner()
     , _cacheSize(0)
     , _maxCacheSize(1024 * 1024)
     , _dontCache(dontCache)
@@ -57,7 +58,7 @@ TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_p
 
 TileCache::~TileCache()
 {
-    _owner = std::thread::id();
+    _owner = ProcUtil::ThreadId();
 #ifndef BUILDING_TESTS
     LOG_INF("~TileCache dtor for uri [" << COOLWSD::anonymizeUrl(_docURL) << "].");
 #endif
