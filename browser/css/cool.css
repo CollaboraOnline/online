@@ -230,7 +230,7 @@ body {
 }
 
 .bucket-cursor {
-	cursor: url('images/cursors/fill.png') 4 18, auto !important;/*setting coordinates to align the tip of the brush icon */
+	cursor: url('images/cursors/fill.svg') 4 18, auto !important;/*setting coordinates to align the tip of the brush icon */
 }
 .cool-scrollbar-show {
 	opacity: 1 !important;
