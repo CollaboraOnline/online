@@ -67,9 +67,9 @@ layout:
 parts:
   core:
     plugin: nil
-    source: https://gerrit.libreoffice.org/core
+    source: https://gerrit.collaboraoffice.com/core
     source-type: git
-    source-branch: distro/collabora/co-26.04
+    source-branch: main
     source-depth: 1
     source-submodules: []
     override-build: |

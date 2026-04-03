@@ -2,7 +2,7 @@ FROM alpine:3.21 AS builder
 
 # Do not use pre-built CORE_ASSETS -- they are built on glibc and won't work on musl.
 # Build core from source instead.
-ENV CORE_BRANCH=distro/collabora/co-26.04
+ENV CORE_BRANCH=main
 ENV COLLABORA_ONLINE_BRANCH=main
 ENV BUILDDIR=/build
 ENV ONLINE_EXTRA_BUILD_OPTIONS=--enable-experimental

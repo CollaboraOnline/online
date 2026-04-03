@@ -62,7 +62,7 @@ fi
 # only if CORE_ASSETS is not set
 if [ -z "$CORE_ASSETS" ]; then
   if test ! -d core ; then
-    git clone https://git.libreoffice.org/core || exit 1
+    git clone https://gerrit.collaboraoffice.com/core || exit 1
   fi
 
   ( cd core && git fetch --all && git checkout $CORE_BRANCH && ./g pull -r ) || exit 1

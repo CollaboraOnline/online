@@ -82,7 +82,7 @@ fi
 
 # core repo
 if test ! -d core ; then
-  git clone --depth=1 --branch "$CORE_BRANCH" https://git.libreoffice.org/core || exit 1
+  git clone --depth=1 --branch "$CORE_BRANCH" https://gerrit.collaboraoffice.com/core || exit 1
 fi
 
 ( cd core && git fetch --all && git checkout $CORE_BRANCH && ./g pull -r ) || exit 1
