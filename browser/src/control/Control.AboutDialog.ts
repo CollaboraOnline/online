@@ -171,7 +171,7 @@ class AboutDialog {
 		this.appendSpanAndLink(
 			elements.lokitVersion,
 			' git hash:\xA0',
-			`https://gerrit.libreoffice.org/core/+log/${info.lokitHash}`,
+			`https://gerrit.collaboraoffice.com/plugins/gitiles/core/+log/${info.lokitHash}`,
 			info.lokitHash.substring(0, 10),
 		);
 
