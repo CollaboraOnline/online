@@ -107,6 +107,11 @@ namespace Log
         , _year_pos(nullptr)
         , _level_pos(nullptr)
     {
+        reset();
+    }
+
+    void Prefix::reset()
+    {
         const std::chrono::time_point<std::chrono::system_clock> tp =
             std::chrono::system_clock::now();
         char* buffer = _buffer.data();
@@ -272,6 +277,8 @@ namespace Log
     {
         return Prefix::Instance.update(level, tp);
     }
+
+    void reset() { Prefix::Instance.reset(); }
 
 #ifdef BUILDING_TESTS
     char* prefixReference(const std::chrono::time_point<std::chrono::system_clock>& tp,
