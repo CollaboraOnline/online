@@ -212,10 +212,10 @@ AC_ARG_WITH([atspi-driver-path],
                             required to run the Qt app tests.]))
 
 AC_ARG_ENABLE(fuzzers,
-    AS_HELP_STRING([--enable-fuzzers],
-        [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
-         only in a separate build tree, since the switch disables the creation of a coolwsd
-         binary. For best results: --with-sanitizer=address,undefined])
+    AS_HELP_STRING([--enable-fuzzers@<:@=ENGINE@:>@],
+        [Build fuzzer targets. ENGINE is 'libfuzzer' (default) or 'afl'.
+         Useful in a separate build tree since it disables coolwsd.
+         For best results: --with-sanitizer=address,undefined])
 )
 
 AC_ARG_ENABLE([androidapp],
@@ -1375,24 +1375,84 @@ AC_DEFINE_UNQUOTED([CODE_COVERAGE],[$CODE_COVERAGE],[Define to 1 if this is a co
 AM_CONDITIONAL([ENABLE_CODE_COVERAGE], [test "$CODE_COVERAGE" = "1"])
 
 # Fuzzing.
-AC_MSG_CHECKING([whether to build fuzzers])
-if test "$enable_fuzzers" = "yes"; then
-    AC_MSG_RESULT([yes])
-    AC_MSG_CHECKING([whether sanitizers are enabled])
-    if test "x$with_sanitizer" != "x"; then
-    AC_MSG_RESULT([yes ($with_sanitizer)])
-    with_sanitizer="$with_sanitizer,fuzzer-no-link"
-    else
-    AC_MSG_RESULT([no])
-    with_sanitizer="fuzzer-no-link"
-    fi
-    LIBFUZZER=1
-else
-    AC_MSG_RESULT([no])
-    LIBFUZZER=0
-fi
-AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a libfuzzer build.])
+AC_MSG_CHECKING([fuzzer engine])
+case "$enable_fuzzers" in
+    yes|libfuzzer)
+        FUZZER_ENGINE=libfuzzer
+        AC_MSG_RESULT([libfuzzer])
+        if test "x$with_sanitizer" != "x"; then
+            with_sanitizer="$with_sanitizer,fuzzer-no-link"
+        else
+            with_sanitizer="fuzzer-no-link"
+        fi
+        LIBFUZZER=1
+        ;;
+    afl)
+        FUZZER_ENGINE=afl
+        AC_MSG_RESULT([afl])
+        AFL_CXX=""
+        for afl_compiler in afl-clang-lto++ afl-clang-fast++ afl-c++ ; do
+            if command -v $afl_compiler >/dev/null 2>&1; then
+                AFL_CXX=$afl_compiler
+                break
+            fi
+        done
+        if test -z "$AFL_CXX"; then
+            AC_MSG_ERROR([AFL++ compiler not found in PATH (tried afl-clang-lto++, afl-clang-fast++, afl-c++)])
+        fi
+        AFL_CC=$(echo "$AFL_CXX" | sed 's/++$//')
+        AC_MSG_NOTICE([using AFL++ compiler: CXX=$AFL_CXX CC=$AFL_CC])
+        CXX="$AFL_CXX"
+        CC="$AFL_CC"
+        if test "x$with_sanitizer" != "x"; then
+            AC_MSG_WARN([--with-sanitizer ignored for AFL++ builds (sanitizer variant is built automatically)])
+            with_sanitizer=""
+        fi
+        # The _san variant must use afl-clang-fast++, find it explicitly
+        AFL_CLANG_FAST_CXX=""
+        AFL_CLANG_FAST_CC=""
+        for afl_san_compiler in afl-clang-fast++ ; do
+            if command -v $afl_san_compiler >/dev/null 2>&1; then
+                AFL_CLANG_FAST_CXX=$afl_san_compiler
+                AFL_CLANG_FAST_CC=$(echo "$afl_san_compiler" | sed 's/++$//')
+                break
+            fi
+        done
+        if test -z "$AFL_CLANG_FAST_CXX"; then
+            AC_MSG_ERROR([afl-clang-fast++ not found (required for sanitizer variant)])
+        fi
+        AC_MSG_NOTICE([AFL++ san compiler: $AFL_CLANG_FAST_CXX])
+        # AFL++ needs libAFLDriver.a to provide main() for LLVMFuzzerTestOneInput harnesses
+        AFL_DRIVER_LIB=""
+        for dir in $(dirname $(command -v $AFL_CXX))/../lib/afl /usr/local/lib/afl /usr/lib/afl ; do
+            if test -f "$dir/libAFLDriver.a"; then
+                AFL_DRIVER_LIB="$dir/libAFLDriver.a"
+                break
+            fi
+        done
+        if test -z "$AFL_DRIVER_LIB"; then
+            AC_MSG_ERROR([libAFLDriver.a not found (needed to link LLVMFuzzerTestOneInput harnesses)])
+        fi
+        AC_MSG_NOTICE([AFL++ driver: $AFL_DRIVER_LIB])
+        LIBFUZZER=1
+        ;;
+    no|"")
+        FUZZER_ENGINE=""
+        AFL_DRIVER_LIB=""
+        AC_MSG_RESULT([none])
+        LIBFUZZER=0
+        ;;
+    *)
+        AC_MSG_ERROR([unknown fuzzer engine '$enable_fuzzers' (use 'libfuzzer' or 'afl')])
+        ;;
+esac
+AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a fuzzer build.])
 AM_CONDITIONAL([ENABLE_LIBFUZZER], [test "$LIBFUZZER" = "1"])
+AM_CONDITIONAL([ENABLE_AFL], [test "$FUZZER_ENGINE" = "afl"])
+AC_SUBST([FUZZER_ENGINE])
+AC_SUBST([AFL_DRIVER_LIB])
+AC_SUBST([AFL_CLANG_FAST_CXX])
+AC_SUBST([AFL_CLANG_FAST_CC])
 
 # Sanitizers.
 CXXFLAGS_CXXSTD=
