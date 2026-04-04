@@ -1283,7 +1283,15 @@ AS_IF([test "$ENABLE_QTAPP" != true],
 CFLAGS="$CFLAGS -Wall -Wextra"
 
 AC_MSG_CHECKING([whether to use extra compiler hardening flags])
+enable_hardening=yes
 if test "$enable_hardening_flags" = no -o "$host_os" = "emscripten" -o "x$with_sanitizer" != "x"; then
+    enable_hardening=no
+fi
+case "$enable_fuzzers" in
+    no|"") ;;
+    *) enable_hardening=no ;;
+esac
+if test "$enable_hardening" = no; then
     AC_MSG_RESULT([no])
  else
     AC_MSG_RESULT([yes])
@@ -1567,7 +1575,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
           AC_MSG_RESULT([found])
       else
           AC_MSG_RESULT([not found])
-          AS_IF([test "$enable_fuzzers" != "yes"],
+          AS_IF([test "$LIBFUZZER" != "1"],
                 [AC_MSG_ERROR([LibreOffice path must be configured: --with-lo-path])])
       fi
       ])
