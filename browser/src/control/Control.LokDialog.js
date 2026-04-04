@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * window.L.Control.LokDialog used for displaying LOK dialogs
+ * window.L.Control.LokDialog used for displaying COKit dialogs
  */
 
 /* global app $ Hammer brandProductName app cool */

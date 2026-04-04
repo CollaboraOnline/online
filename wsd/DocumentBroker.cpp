@@ -2650,7 +2650,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     if (!success && result != "unmodified")
     {
         LOG_INF("Failed to save docKey [" << _docKey
-                                          << "] as .uno:Save has failed in LOK. Notifying clients");
+                                          << "] as .uno:Save has failed in COKit. Notifying clients");
         session->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         broadcastSaveResult(false, "Could not save the document");
     }

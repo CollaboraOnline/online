@@ -10,7 +10,7 @@
  */
 
 /*
- * Kit process child session handling LOK commands.
+ * Kit process child session handling COKit commands.
  * Classes: ChildSession - Document session command processing
  */
 
@@ -1441,7 +1441,7 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     const std::string filename = Poco::Path(nameAnonym).getFileName();
     const std::string urlAnonym = jailDoc + tmpDir + '/' + filename;
 
-    LOG_DBG("Calling LOK's saveAs with URL: ["
+    LOG_DBG("Calling COKit's saveAs with URL: ["
             << urlAnonym << "], Format: [" << (format.empty() ? "(nullptr)" : format.c_str())
             << "], Filter Options: ["
             << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
@@ -3053,7 +3053,7 @@ bool ChildSession::saveAs(const StringVector& tokens)
     // We don't have the FileId at this point, just a new filename to save-as.
     // So here the filename will be obfuscated with some hashing, which later will
     // get a proper FileId that we will use going forward.
-    LOG_DBG("Calling LOK's saveAs with URL: ["
+    LOG_DBG("Calling COKit's saveAs with URL: ["
             << anonymizeUrl(wopiFilename) << "], Format: ["
             << (format.empty() ? "(nullptr)" : format.c_str()) << "], Filter Options: ["
             << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
@@ -3092,7 +3092,7 @@ bool ChildSession::saveAs(const StringVector& tokens)
 
         if (retry)
         {
-            LOG_DBG("Retry: calling LOK's saveAs with URL: ["
+            LOG_DBG("Retry: calling COKit's saveAs with URL: ["
                     << url << "], Format: [" << (format.empty() ? "(nullptr)" : format.c_str())
                     << "], Filter Options: ["
                     << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
@@ -3153,7 +3153,7 @@ bool ChildSession::exportAs(const StringVector& tokens)
     // We don't have the FileId at this point, just a new filename to save-as.
     // So here the filename will be obfuscated with some hashing, which later will
     // get a proper FileId that we will use going forward.
-    LOG_DBG("Calling LOK's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
+    LOG_DBG("Calling COKit's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
 
     getLOKitDocument()->setView(_viewId);
 

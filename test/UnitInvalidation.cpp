@@ -113,7 +113,7 @@ void UnitInvalidation::invokeWSDTest()
         std::shared_ptr<http::WebSocketSession> windowTwo = helpers::loadDocAndGetSession(
             socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
         setupSession(windowTwo);
-        // ensure all the same tiles are served from the cache, and not the LOK view.
+        // ensure all the same tiles are served from the cache, and not the COKit view.
         renderArea(windowTwo, 0);
 
         TST_LOG("Tab switch and edit: window one");

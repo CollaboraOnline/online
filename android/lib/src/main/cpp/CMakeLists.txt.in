@@ -98,7 +98,7 @@ target_include_directories(androidapp PRIVATE
                            ${POCOINCLUDE_ABI}         # POCO
                            ${ZSTDINCLUDE_ABI}         # ZSTD
                            ${LOBUILDDIR_ABI}/workdir/UnpackedTarball/libpng # libpng
-                           ${LOBUILDDIR_ABI}/include                        # LibreOfficeKit
+                           ${LOBUILDDIR_ABI}/include                        # COKit
 )
 
 add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-native-code.so"

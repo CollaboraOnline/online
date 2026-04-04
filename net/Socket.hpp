@@ -875,7 +875,7 @@ public:
             Util::assertCorrectThread(_owner, LOG_PASS_PARENT_CALLER);
     }
 
-    /// Kit poll can be called from LOK's Yield in any thread, adapt to that.
+    /// Kit poll can be called from COKit's Yield in any thread, adapt to that.
     void checkAndReThread();
 
     /// Poll the sockets for available data to read or buffer to write.

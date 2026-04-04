@@ -303,7 +303,7 @@ UnitBase::TestResult UnitLoad::testLoadSessionRace()
 //        helpers::assertResponseString(socket, "status:", testname);
 
         // This is the race - notice we don't send the 'load url' at all from this view.
-        // We should have a 'session' command already sent to the Kit, but no LOK view yet.
+        // We should have a 'session' command already sent to the Kit, but no COKit view yet.
 
         TST_LOG("Shutting down after second session partially setup");
         socket2->asyncShutdown();

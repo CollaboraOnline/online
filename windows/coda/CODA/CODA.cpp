@@ -336,7 +336,7 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
     PostMessageW(hWnd, CODA_WM_EXECUTESCRIPT, (WPARAM)wparam, 0);
 }
 
-// LOK file save dialog callback.
+// COKit file save dialog callback.
 void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t resultLen)
 {
     // Some sanity checks first.

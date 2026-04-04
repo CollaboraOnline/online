@@ -2459,7 +2459,7 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
-    optionSet.addOption(Option("lo-template-path", "", "Override the LOK core installation directory path.")
+    optionSet.addOption(Option("lo-template-path", "", "Override the COKit core installation directory path.")
                         .required(false)
                         .repeatable(false)
                         .argument("path"));

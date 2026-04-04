@@ -3078,7 +3078,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	// enable or disable blinking cursor and the cursor overlay depending on
 	// the state of the document (if the flags are set)
 	_updateCursorAndOverlay: function (/*update*/) {
-		if (app.file.textCursor.visible   // only when LOK has told us it is ok
+		if (app.file.textCursor.visible   // only when COKit has told us it is ok
 			&& this._map.editorHasFocus()   // not when document is not focused
 			&& !this._map.isSearching()  	// not when searching within the doc
 			&& !this._isZooming             // not when zooming
@@ -3883,7 +3883,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			map.on('resize', this._fitWidthZoom, this);
 		}
 		this._map.on('resize', this._syncTileContainerSize, this);
-		// Retrieve the initial cell cursor position (as LOK only sends us an
+		// Retrieve the initial cell cursor position (as COKit only sends us an
 		// updated cell cursor when the selected cell is changed and not the initial
 		// cell).
 		map.on('statusindicator',

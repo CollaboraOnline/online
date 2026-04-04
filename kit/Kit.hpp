@@ -66,7 +66,7 @@ void documentViewCallback(int type, const char* p, void* data);
 class Document;
 class DeltaGenerator;
 
-/// Descriptor class used to link a LOK
+/// Descriptor class used to link a COKit
 /// callback to a specific view.
 struct CallbackDescriptor
 {
@@ -190,7 +190,7 @@ public:
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
     const std::shared_ptr<Document>& getDocument() const { return _document; }
 
-    // unusual LOK event from another thread, push into our loop to process.
+    // unusual COKit event from another thread, push into our loop to process.
     static bool pushToMainThread(COKitCallback callback, int type, const char* p,
                                  void* data);
 

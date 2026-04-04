@@ -11,7 +11,7 @@
 
 /*
  * Dummy COKit implementation for testing.
- * Classes: LibLODocument_Impl, LibCOKit_Impl - Mock LOK interfaces
+ * Classes: LibLODocument_Impl, LibCOKit_Impl - Mock COKit interfaces
  */
 
 #include <config.h>

@@ -199,7 +199,7 @@ static int URPtoLoFDs[2] { -1, -1 };
 static int URPfromLoFDs[2] { -1, -1 };
 #endif
 
-// Abnormally we get LOK events from another thread, which must be
+// Abnormally we get COKit events from another thread, which must be
 // push safely into our main poll loop to process to keep all
 // socket buffer & event processing in a single, thread.
 static bool pushToMainThread(COKitCallback cb, int type, const char* p, void* data);
@@ -1153,7 +1153,7 @@ void Document::trimAfterInactivity()
     if (SigUtil::getTerminationFlag())
         return;
 
-    // unusual LOK event from another thread,
+    // unusual COKit event from another thread,
     // data - is Document with process' lifetime.
     if (pushToMainThread(GlobalCallback, type, p, data))
         return;
@@ -1221,7 +1221,7 @@ void Document::trimAfterInactivity()
     if (SigUtil::getTerminationFlag())
         return;
 
-    // unusual LOK event from another thread.
+    // unusual COKit event from another thread.
     // data - is CallbackDescriptors which share process' lifetime.
     if (pushToMainThread(ViewCallback, type, p, data))
         return;
@@ -3036,7 +3036,7 @@ void KitSocketPoll::drainQueue()
 // called from inside poll, inside a wakeup
 void KitSocketPoll::wakeupHook() { _pollEnd = std::chrono::steady_clock::now(); }
 
-// a LOK compatible poll function merging the functions.
+// a COKit compatible poll function merging the functions.
 // returns the number of events signalled
 int KitSocketPoll::kitPoll(int timeoutMicroS)
 {
@@ -3131,7 +3131,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     return eventsSignalled;
 }
 
-// unusual LOK event from another thread, push into our loop to process.
+// unusual COKit event from another thread, push into our loop to process.
 bool KitSocketPoll::pushToMainThread(COKitCallback callback, int type,
                                      const char* p, void* data) // static
 {
@@ -3175,7 +3175,7 @@ void documentViewCallback(const int type, const char* payload, void* data)
 namespace
 {
 
-/// Called by LOK main-loop the central location for data processing.
+/// Called by COKit main-loop the central location for data processing.
 int pollCallback([[maybe_unused]] void* data, int timeoutUs)
 {
     if (!Util::isMobileApp())
@@ -3257,7 +3257,7 @@ bool KitSocketPoll::kitHasAnyInput([[maybe_unused]] int mostUrgentPriority) {
 
         if (document->hasCallbacks())
         {
-            // Have pending LOK callbacks from core.
+            // Have pending COKit callbacks from core.
             return true;
         }
 
@@ -3284,7 +3284,7 @@ bool KitSocketPoll::kitHasAnyInput([[maybe_unused]] int mostUrgentPriority) {
 namespace
 {
 
-/// Called by LOK main-loop
+/// Called by COKit main-loop
 void wakeCallback(void* data)
 {
     if (!data)
@@ -3920,7 +3920,7 @@ void lokit_main(
 #endif
         }
 
-        LOG_DBG("Initializing LOK with instdir [" << instdir_path << "] and userdir ["
+        LOG_DBG("Initializing COKit with instdir [" << instdir_path << "] and userdir ["
                                                   << userdir_url << "].");
 
         UserDirPath = pathFromFileURL(userdir_url);

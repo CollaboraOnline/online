@@ -11,7 +11,7 @@
 
 /*
  * Kit process callback queue management and optimization.
- * Classes: KitQueue, Callback - LOK callback handling and deduplication
+ * Classes: KitQueue, Callback - COKit callback handling and deduplication
  */
 
 #include <config.h>

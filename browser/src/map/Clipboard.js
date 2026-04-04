@@ -462,7 +462,7 @@ window.L.Clipboard = window.L.Class.extend({
 		var id = this.getMetaPath(0);
 		var idOld = this.getMetaPath(1);
 
-		// for the paste, we always prefer the internal LOK's copy/paste
+		// for the paste, we always prefer the internal COKit's copy/paste
 		if (preferInternal === true &&
 			((id !== '' && meta.indexOf(id) >= 0) || (idOld !== '' && meta.indexOf(idOld) >= 0)))
 		{

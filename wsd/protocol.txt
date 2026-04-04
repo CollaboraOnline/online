@@ -554,8 +554,8 @@ lokitversion <JSON string>
     JSON string contains version information in format:
     {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
 
-    Eg: {"ProductName": "LibreOffice",
-         "ProductVersion": "5.3",
+    Eg: {"ProductName": "Collabora Office",
+         "ProductVersion": "26.04",
          "ProductExtension": ".0.0.alpha0",
          "BuildId": "<full 40 char git hash>"}
 
@@ -605,7 +605,7 @@ error: cmd=<command> kind=<kind> [code=<error_code>] [params=1,2,3,...,N]
     <kind> is some single-word classification
 
     <code> (when provided) further specifies the error as forwarded from
-    LibreOffice
+    Collabora Office
 
 close: <reason>
 
@@ -750,7 +750,7 @@ invalidatecursor: <payload>
 
     The communication between the parent process (the one keeping open the
     Websocket connections to the clients) and a child process (handling
-    one document through LibreOfficeKit) uses the same protocol, with
+    one document through COKit) uses the same protocol, with
     the following additions and changes:
 
 unocommandresult: <payload>
@@ -1320,7 +1320,7 @@ lokitversion <JSON string>
     JSON string contains version information in format:
     {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
 
-    Eg: {"ProductName": "LibreOffice",
-         "ProductVersion": "5.3",
+    Eg: {"ProductName": "Collabora Office",
+         "ProductVersion": "26.04",
          "ProductExtension": ".0.0.alpha0",
          "BuildId": "<full 40 char git hash>"}

@@ -778,7 +778,7 @@
       "post-install": [
         "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh org.libreoffice.LibreOffice'",
         "mkdir -p /app/core/include",
-        "cp -r include/LibreOfficeKit /app/core/include/."
+        "cp -r include/COKit /app/core/include/."
       ],
       "cleanup": [
               "/core",
