@@ -75,10 +75,10 @@ class TreeViewControl {
 	_thead: HTMLElement = null;
 	_columns: number;
 	_maxColumnsIncludingState: number = 0;
+	_gridModeCache: boolean | undefined;
 	_hasState: boolean;
 	_hasIcon: boolean;
 	_isNavigator: boolean;
-	_gridModeCache: boolean | undefined;
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
 	_rows: Map<string, HTMLElement>;
@@ -1084,6 +1084,10 @@ class TreeViewControl {
 	}
 
 	selectEntryByRow(row: number, shouldFocus: boolean = false) {
+		// Don't change selection while inline cell editing is active:
+		// it would blur the input and discard the edit in progress.
+		if (this._container.querySelector('.ui-treeview-inline-edit')) return;
+
 		const rowElement = this._rows.get(String(row));
 		if (!rowElement) {
 			console.warn('TreeView onSelect: row "' + row + '" not found');

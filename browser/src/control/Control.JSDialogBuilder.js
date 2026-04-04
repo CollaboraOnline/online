@@ -2616,6 +2616,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (!parent)
 			return;
 
+		// Don't rebuild a tree view while inline cell editing is active;
+		// the backend will send an up-to-date state after editend.
+		if (control.querySelector('.ui-treeview-inline-edit'))
+			return;
+
 		// Restore expander depth so heading levels are correct when
 		// rebuilding a nested expander on-demand (see _expanderHandler).
 		var savedExpanderDepth = this._expanderDepth;

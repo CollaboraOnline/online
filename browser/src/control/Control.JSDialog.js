@@ -896,6 +896,12 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			// Sometimes we get another full update for the same dialog
 			const existingNode = this.dialogs[instance.id];
 
+			// Don't rebuild dialog while inline cell editing is active;
+			// the backend will send an up-to-date state after editend.
+			if (existingNode && existingNode.container
+				&& existingNode.container.querySelector('.ui-treeview-inline-edit'))
+				return;
+
 			if (existingNode) {
 				instance.posx = existingNode.startX;
 				instance.posy = existingNode.startY;
