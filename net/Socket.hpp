@@ -421,7 +421,7 @@ protected:
     void setShutdown() { _isShutdown = true; }
 
     /// Set the thread-id we're bound to
-    virtual void setThreadOwner(const ProcUtil::ThreadId id)
+    virtual void setThreadOwner(const ProcUtil::ThreadId id, LOG_CAPTURE_CALLER_DECLARATION)
     {
         if (id != _owner)
         {
@@ -431,7 +431,7 @@ protected:
     }
 
     /// Reset the thread-id while it's in transition.
-    virtual void resetThreadOwner()
+    virtual void resetThreadOwner(LOG_CAPTURE_CALLER_DECLARATION)
     {
         if (ProcUtil::ThreadId() != _owner)
         {
@@ -530,14 +530,15 @@ private:
     friend class SocketDisposition;
     friend class SocketPoll;
 
-    static void setThreadOwner(Socket& socket, const ProcUtil::ThreadId id)
+    static void setThreadOwner(Socket& socket, const ProcUtil::ThreadId id,
+                               LOG_CAPTURE_CALLER_DECLARATION)
     {
-        socket.setThreadOwner(id);
+        socket.setThreadOwner(id, LOG_PASS_PARENT_CALLER);
     }
 
-    static void resetThreadOwner(Socket& socket)
+    static void resetThreadOwner(Socket& socket, LOG_CAPTURE_CALLER_DECLARATION)
     {
-        socket.resetThreadOwner();
+        socket.resetThreadOwner(LOG_PASS_PARENT_CALLER);
     }
 };
 
@@ -659,7 +660,7 @@ public:
 private:
     friend class ProtocolThreadOwnerChange;
 
-    void setThreadOwner(const ProcUtil::ThreadId id)
+    void setThreadOwner(const ProcUtil::ThreadId id, LOG_CAPTURE_CALLER_DECLARATION)
     {
         if (id != _owner)
         {
@@ -669,7 +670,7 @@ private:
         }
     }
 
-    void resetThreadOwner()
+    void resetThreadOwner(LOG_CAPTURE_CALLER_DECLARATION)
     {
         if (ProcUtil::ThreadId() != _owner)
         {
@@ -691,14 +692,15 @@ class ProtocolThreadOwnerChange
 {
     friend class StreamSocket;
 
-    static void setThreadOwner(ProtocolHandlerInterface& handler, const ProcUtil::ThreadId id)
+    static void setThreadOwner(ProtocolHandlerInterface& handler, const ProcUtil::ThreadId id,
+                               LOG_CAPTURE_CALLER_DECLARATION)
     {
-        handler.setThreadOwner(id);
+        handler.setThreadOwner(id, LOG_PASS_PARENT_CALLER);
     }
 
-    static void resetThreadOwner(ProtocolHandlerInterface& handler)
+    static void resetThreadOwner(ProtocolHandlerInterface& handler, LOG_CAPTURE_CALLER_DECLARATION)
     {
-        handler.resetThreadOwner();
+        handler.resetThreadOwner(LOG_PASS_PARENT_CALLER);
     }
 
 };
@@ -1978,18 +1980,18 @@ protected:
         return _shutdownSignalled;
     }
 
-    void setThreadOwner(const ProcUtil::ThreadId id) override
+    void setThreadOwner(const ProcUtil::ThreadId id, LOG_CAPTURE_CALLER_DECLARATION) override
     {
-        Socket::setThreadOwner(id);
+        Socket::setThreadOwner(id, LOG_PASS_PARENT_CALLER);
         if (_socketHandler)
-            ProtocolThreadOwnerChange::setThreadOwner(*_socketHandler, id);
+            ProtocolThreadOwnerChange::setThreadOwner(*_socketHandler, id, LOG_PASS_PARENT_CALLER);
     }
 
-    void resetThreadOwner() override
+    void resetThreadOwner(LOG_CAPTURE_CALLER_DECLARATION) override
     {
-        Socket::resetThreadOwner();
+        Socket::resetThreadOwner(LOG_PASS_PARENT_CALLER);
         if (_socketHandler)
-            ProtocolThreadOwnerChange::resetThreadOwner(*_socketHandler);
+            ProtocolThreadOwnerChange::resetThreadOwner(*_socketHandler, LOG_PASS_PARENT_CALLER);
     }
 
 #if ENABLE_DEBUG
