@@ -232,7 +232,9 @@ BackgroundSaveWatchdog::BackgroundSaveWatchdog(unsigned mobileAppDocId,
               {
                   auto saveDuration = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - saveStart);
 
-                  // Failed!
+                  // Failed! Release the lock before the shutdown/kill sequence.
+                  lock.unlock();
+
                   LOG_WRN("BgSave timed out and will self-destroy process " << getpid() <<
                           " (config timeout: " << timeout << ", real timeout: " << saveDuration << ")");
                   Log::shutdown(); // Flush logs.
