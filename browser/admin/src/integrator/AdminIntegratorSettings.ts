@@ -2977,7 +2977,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						ContentHeight: document.documentElement.offsetHeight + 'px',
 					},
 				},
-				'*',
+				window.origin,
 			);
 		};
 
