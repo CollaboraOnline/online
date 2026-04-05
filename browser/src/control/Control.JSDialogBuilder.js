@@ -1919,11 +1919,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 						buttonImage.src = data.icon;
 					} else {
 						app.LOUtil.setImage(buttonImage, data.icon, builder.map);
-						// Fall back to base64 PNG if the SVG is not available
+						// Fall back to base64 PNG if the SVG is not available.
+						// checkIfImageExists sets display:none on error, so
+						// restore it when substituting the fallback image.
 						if (data.image) {
 							buttonImage.onerror = function() {
 								buttonImage.onerror = null;
 								buttonImage.src = data.image;
+								buttonImage.style.display = '';
 							};
 						}
 					}
