@@ -719,7 +719,7 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     LOG_DBG("AIChatAction: request [" << requestId << "] with "
             << sanitizedMessages->size() << " messages, model: " << model);
 
-    std::string requestUrl = baseUrl;
+    std::string requestUrl = std::move(baseUrl);
     requestUrl.append("/v1/chat/completions");
 
     // Build HTTP payload with model and messages
@@ -899,7 +899,9 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [clientSessionPtr, sendResult](const std::shared_ptr<http::Session>& /*session*/)
+        [clientSessionPtr = std::move(clientSessionPtr),
+         sendResult = std::move(sendResult)](
+            const std::shared_ptr<http::Session>& /*session*/)
     {
         clientSessionPtr->_activeAIChatSession.reset();
         sendResult(false, "Network error - please check your connection");
@@ -912,7 +914,7 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     std::string authHeader = "Bearer ";
     authHeader.append(apiKey);
     httpRequest.set("Authorization", std::move(authHeader));
-    httpRequest.setBody(payloadStr, "application/json");
+    httpRequest.setBody(std::move(payloadStr), "application/json");
 
     LOG_DBG("AIChatAction: sending request [" << requestId << "] to " << requestUrl);
 
@@ -958,7 +960,7 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     if (!baseUrl.empty() && baseUrl.back() == '/')
         baseUrl.pop_back();
 
-    std::string requestUrl = baseUrl;
+    std::string requestUrl = std::move(baseUrl);
     requestUrl.append("/v1/images/generations");
 
     // Build HTTP payload
@@ -1068,7 +1070,9 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [clientSessionPtr, sendImageResult](const std::shared_ptr<http::Session>& /*session*/)
+        [clientSessionPtr = std::move(clientSessionPtr),
+         sendImageResult = std::move(sendImageResult)](
+            const std::shared_ptr<http::Session>& /*session*/)
     {
         clientSessionPtr->_activeAIChatSession.reset();
         sendImageResult(false, "", "Network error - please check your connection");
@@ -1081,7 +1085,7 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
     std::string authHeader = "Bearer ";
     authHeader.append(apiKey);
     httpRequest.set("Authorization", std::move(authHeader));
-    httpRequest.setBody(payloadStr, "application/json");
+    httpRequest.setBody(std::move(payloadStr), "application/json");
 
     LOG_DBG("AIImageGeneration: sending request [" << requestId << "] to "
             << requestUrl << ", model: " << imageModel);
