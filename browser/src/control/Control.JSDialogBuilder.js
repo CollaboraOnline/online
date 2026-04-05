@@ -2137,8 +2137,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					}
 				});
 
+				const closemenuParentId = parentContainer.id;
 				div.closeDropdown = function() {
-					builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+					builder.callback('toolbox', 'closemenu',
+						closemenuParentId ? {id: closemenuParentId} : parentContainer,
+						data.command, builder);
 
 					if (shouldArrowbackgroundButton) {
 						arrowbackground.setAttribute('aria-expanded', 'false');
