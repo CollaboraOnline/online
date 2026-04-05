@@ -241,13 +241,7 @@ JSDialog.OpenDropdown = function (
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
 					if (earlyCallbackCall && innerCallback) {
-						innerCallback(
-							objectType,
-							eventType,
-							object,
-							data,
-							entry || builder,
-						);
+						innerCallback(objectType, eventType, object, data, entry);
 					} else {
 						const uno =
 							entry.uno.indexOf('.uno:') === 0
