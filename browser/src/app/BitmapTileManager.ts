@@ -2172,7 +2172,7 @@ class BitmapTileManager {
 
 			var vTileCountPerPart = Math.ceil(partHeightPixels / app.tile.size.pY);
 
-			for (var i = startPart; i < endPart; i++) {
+			for (var i = startPart; i <= endPart; i++) {
 				for (var j = minLocalX; j <= maxLocalX; j += app.tile.size.pX) {
 					for (
 						var k = 0;
