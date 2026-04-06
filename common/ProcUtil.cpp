@@ -160,7 +160,7 @@ void setThreadName(const std::string& s)
 #elif defined __EMSCRIPTEN__
     emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
 #elif defined _WIN32
-    SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
+    SetThreadDescription(GetCurrentThread(), Util::string_to_wide_string(s).c_str());
     LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #endif
 
@@ -186,7 +186,7 @@ const char* getThreadName()
 #elif defined _WIN32
         PWSTR description;
         if (SUCCEEDED(GetThreadDescription(GetCurrentThread(), &description)))
-            strncpy(ThreadName, wide_string_to_string(description).c_str(), sizeof(ThreadName) - 1);
+            strncpy(ThreadName, Util::wide_string_to_string(description).c_str(), sizeof(ThreadName) - 1);
         LocalFree(description);
 #endif
         ThreadName[sizeof(ThreadName) - 1] = '\0';
