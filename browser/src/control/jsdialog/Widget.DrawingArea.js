@@ -50,6 +50,9 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	if (isFocusableImg) {
 		image.tabIndex = 0;
 		JSDialog.AddAltAttrOnFocusableImg(image, data, builder);
+		if (data.aria && data.aria.role) {
+			image.setAttribute('role', data.aria.role);
+		}
 	} else {
 		image.alt = '';
 		image.classList.add('ui-decorative-image');
