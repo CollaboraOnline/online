@@ -1158,14 +1158,28 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
             // Admin connections
             LOG_INF("Admin request: " << request.getURI());
             const bool allowed = allowedOrigin(request, requestDetails);
-            if (AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
+            if (allowed && AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
             {
                 // Hand the socket over to the Admin poll.
                 disposition.setTransfer(Admin::instance(),
                                         [](const std::shared_ptr<Socket>& /*moveSocket*/) {});
             }
             else
-                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+            {
+                if (!allowed)
+                {
+                    LOG_ERR(
+                        "Rejecting admin WebSocket upgrade due to disallowed origin for request: "
+                        << request);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
+                }
+                else
+                {
+                    LOG_ERR("Rejecting admin WebSocket upgrade due to bad/invalid request: "
+                            << request);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                }
+            }
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "getMetrics"))
@@ -2437,6 +2451,13 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
     // First Upgrade.
     const bool allowed = allowedOrigin(request, requestDetails);
+    if (!allowed)
+    {
+        LOG_ERR("Rejecting WebSocket upgrade due to disallowed origin for request: " << request);
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
+        return true; // Handled.
+    }
+
     auto ws = std::make_shared<WebSocketHandler>(socket, request, allowed);
 
     // Response to clients beyond this point is done via WebSocket.
