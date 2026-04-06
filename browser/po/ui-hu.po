@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 07:19+0100\n"
-"PO-Revision-Date: 2026-02-14 19:12+0000\n"
+"POT-Creation-Date: 2026-04-06 13:07+0200\n"
+"PO-Revision-Date: 2026-04-06 13:02+0100\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
@@ -142,14 +142,14 @@ msgid "Network Graph"
 msgstr "Hálózatgrafikon"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:777
-#: admin/src/integrator/AdminIntegratorSettings.ts:1784
+#: admin/src/integrator/AdminIntegratorSettings.ts:778
+#: admin/src/integrator/AdminIntegratorSettings.ts:1791
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:598
-#: src/canvas/sections/CommentSection.ts:183
-#: src/canvas/sections/CommentSection.ts:501
-#: src/canvas/sections/CommentSection.ts:1214
-#: src/control/Control.Notebookbar.js:277
+#: src/canvas/sections/CommentListSection.ts:608
+#: src/canvas/sections/CommentSection.ts:187
+#: src/canvas/sections/CommentSection.ts:577
+#: src/canvas/sections/CommentSection.ts:1308
+#: src/control/Control.Notebookbar.js:287
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -222,7 +222,9 @@ msgstr "Napló frissítése"
 msgid "Channel Filter:"
 msgstr "Csatornaszűrő:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:526
+#: admin/admin.strings.js:61 src/app/TableStylesService.ts:224
+#: src/app/TableStylesService.ts:427
+#: src/control/Control.JSDialogBuilder.js:527
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:203
 msgid "None"
 msgstr "Nincs"
@@ -298,45 +300,45 @@ msgstr "Figyelmeztetés"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1840 src/app/Debug.ts:1440
-#: src/canvas/sections/CommentListSection.ts:1559
+#: admin/src/integrator/AdminIntegratorSettings.ts:1847 src/app/Debug.ts:1440
+#: src/canvas/sections/CommentListSection.ts:1598
 #: src/control/Control.AboutDialog.ts:268
 #: src/control/Control.AlertDialog.js:56
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:120
 #: src/control/Control.ServerAuditDialog.ts:342
-#: src/control/Control.Tabs.js:426 src/control/Control.Tabs.js:435
+#: src/control/Control.Tabs.js:420 src/control/Control.Tabs.js:429
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:497 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:153
-#: src/control/Toolbar.js:762 src/app/Socket.ts:868 src/app/Socket.ts:1484
+#: src/control/Toolbar.js:778 src/app/Socket.ts:868 src/app/Socket.ts:1484
 #: src/app/Socket.ts:1653 src/app/Socket.ts:2104 src/app/Socket.ts:2204
-#: src/docdispatcher.ts:573 src/main.js:88 src/main.js:91 src/main.js:132
+#: src/docdispatcher.ts:573 src/main.js:91 src/main.js:94 src/main.js:133
 #: src/map/Clipboard.js:1317 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
 #: src/map/handler/Map.SlideShow.js:297 src/map/handler/Map.SlideShow.js:308
-#: src/map/handler/Map.WOPI.js:745 src/slideshow/SlideShowPresenter.ts:1091
-#: src/slideshow/SlideShowPresenter.ts:1106
-#: src/slideshow/SlideShowPresenter.ts:1121
-#: src/slideshow/SlideShowPresenter.ts:1144
+#: src/map/handler/Map.WOPI.js:746 src/slideshow/SlideShowPresenter.ts:1085
+#: src/slideshow/SlideShowPresenter.ts:1100
+#: src/slideshow/SlideShowPresenter.ts:1115
+#: src/slideshow/SlideShowPresenter.ts:1138
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:593
-#: src/canvas/sections/CommentSection.ts:182
-#: src/canvas/sections/CommentSection.ts:185
-#: src/canvas/sections/CommentSection.ts:1215
-#: src/canvas/sections/CommentSection.ts:1220
+#: src/canvas/sections/CommentListSection.ts:603
+#: src/canvas/sections/CommentSection.ts:186
+#: src/canvas/sections/CommentSection.ts:189
+#: src/canvas/sections/CommentSection.ts:1309
+#: src/canvas/sections/CommentSection.ts:1314
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:114
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1926 src/control/Control.UIManager.ts:2007
-#: src/control/Control.UIManager.ts:2161 src/control/Control.UIManager.ts:2339
+#: src/control/Control.UIManager.ts:1936 src/control/Control.UIManager.ts:2017
+#: src/control/Control.UIManager.ts:2171 src/control/Control.UIManager.ts:2349
 #: src/control/Control.Zotero.js:360 src/app/Socket.ts:1429
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -374,261 +376,261 @@ msgstr "Biztosan be szeretné zárni ezt a munkamenetet?"
 msgid "Are you sure you want to shut down the server?"
 msgstr "Biztos benne, hogy leállítja a kiszolgálót?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:155
+#: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Certificate"
 msgstr "Aláírótanúsítvány"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:156
+#: admin/src/integrator/AdminIntegratorSettings.ts:157
 msgid "Signature Key"
 msgstr "Aláírókulcs"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:157
+#: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Signature CA"
 msgstr "Aláíró CA"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "In-document Screen Reader"
 msgstr "Képernyőolvasó a dokumentumhoz"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:161
+#: admin/src/integrator/AdminIntegratorSettings.ts:162
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
 #: src/control/Control.Menubar.ts:663 src/control/Control.Menubar.ts:810
 #: src/control/Control.Menubar.ts:1097 src/control/Control.Menubar.ts:1150
 #: src/control/Control.Menubar.ts:1211 src/control/Control.Menubar.ts:1271
-#: src/control/Control.NotebookbarCalc.js:1622
+#: src/control/Control.NotebookbarCalc.js:1624
 #: src/control/Control.NotebookbarDraw.js:556
-#: src/control/Control.NotebookbarImpress.js:689
-#: src/control/Control.NotebookbarWriter.js:1777
+#: src/control/Control.NotebookbarImpress.js:695
+#: src/control/Control.NotebookbarWriter.js:1762
 msgid "Dark Mode"
 msgstr "Sötét mód"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:162
+#: admin/src/integrator/AdminIntegratorSettings.ts:163
 msgid "Compact layout"
 msgstr "Kompakt elrendezés"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:163
+#: admin/src/integrator/AdminIntegratorSettings.ts:164
 msgid "Show status bar"
 msgstr "Állapotsor megjelenítése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:164
+#: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:496
 msgid "Show Ruler"
 msgstr "Vonalzó megjelenítése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:165
+#: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Accessibility Checker"
 msgstr "Akadálymentesítés-ellenőrző"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:166
-#: src/control/Control.NavigatorPanel.ts:285
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
+#: src/control/Control.NavigatorPanel.ts:286
 msgid "Navigator"
 msgstr "Navigátor"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:167
+#: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:168
+#: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Custom Animation"
 msgstr "Egyéni animáció"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:171
+#: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Style List"
 msgstr "Stíluslista"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:174
-#: src/control/Control.NotebookbarCalc.js:1148
+#: admin/src/integrator/AdminIntegratorSettings.ts:175
+#: src/control/Control.NotebookbarCalc.js:1151
 #: src/control/Control.NotebookbarDraw.js:527
-#: src/control/Control.NotebookbarImpress.js:660
+#: src/control/Control.NotebookbarImpress.js:666
 msgid "Grid"
 msgstr "Rács"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:175
+#: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:176
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Other"
 msgstr "Egyéb"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:177
-#: src/control/Control.NotebookbarImpress.js:669
+#: admin/src/integrator/AdminIntegratorSettings.ts:178
+#: src/control/Control.NotebookbarImpress.js:675
 msgid "Show Grid"
 msgstr "Rács megjelenítése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:178
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Snap to grid"
 msgstr "Illesztés a rácshoz"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:179
-#: admin/src/integrator/AdminIntegratorSettings.ts:185
+#: admin/src/integrator/AdminIntegratorSettings.ts:180
+#: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Size to grid"
 msgstr "Méretezés a rácshoz"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:180
+#: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Synchronize axes"
 msgstr "Tengelyek szinkronizálása"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:181
+#: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Snap grid"
 msgstr "Illesztés a rácshoz"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Empty Pages"
 msgstr "Üres oldalak"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:183
+#: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "Force Breaks"
 msgstr "Törések kényszerítése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:184
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
 #: src/control/Control.Menubar.ts:779 src/control/Control.TopToolbar.js:112
 #: src/control/jsdialog/Definitions.Menu.ts:1587
 msgid "All Sheets"
 msgstr "Minden munkalap"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:186
+#: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Content"
 msgstr "Tartalom"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:187
+#: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Drawing"
 msgstr "Rajz"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:188
-#: src/control/Control.NotebookbarDraw.js:1226
-#: src/control/Control.NotebookbarDraw.js:1426
-#: src/control/Control.NotebookbarWriter.js:1235
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
+#: src/control/Control.NotebookbarDraw.js:1229
+#: src/control/Control.NotebookbarDraw.js:1429
+#: src/control/Control.NotebookbarWriter.js:1220
 msgid "Page"
 msgstr "Oldal"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:189
+#: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Fit to page"
 msgstr "Lap méretéhez igazítás"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:190
+#: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Tile pages"
 msgstr "Oldalak mozaikszerű elrendezése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:191
+#: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet"
 msgstr "Füzet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:192
+#: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Booklet front"
 msgstr "Füzet előlapja"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:193
+#: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Booklet back"
 msgstr "Füzet hátlapja"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:194
+#: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Page name"
 msgstr "Oldal neve"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:195
-#: src/control/Control.NotebookbarCalc.js:779
-#: src/control/Control.NotebookbarWriter.js:1638
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
+#: src/control/Control.NotebookbarCalc.js:782
+#: src/control/Control.NotebookbarWriter.js:1623
 #: src/control/Control.Zotero.js:1153 src/control/Control.Zotero.js:1605
 msgid "Date"
 msgstr "Dátum"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:196
-#: src/control/Control.NotebookbarCalc.js:780
+#: admin/src/integrator/AdminIntegratorSettings.ts:197
+#: src/control/Control.NotebookbarCalc.js:783
 msgid "Time"
 msgstr "Idő"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:197
+#: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Hidden pages"
 msgstr "Rejtett oldalak"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:198
+#: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "From printer setup"
 msgstr "A nyomtató beállításaiból"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:199
+#: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Presentation"
 msgstr "Bemutató"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:200
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.Zotero.js:1341 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr "Jegyzetek"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:201
+#: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handouts"
 msgstr "Emlékeztetők"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:202
-#: src/control/Control.NavigatorPanel.ts:208
+#: admin/src/integrator/AdminIntegratorSettings.ts:203
+#: src/control/Control.NavigatorPanel.ts:209
 msgid "Outline"
 msgstr "Szerkezet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:203
+#: admin/src/integrator/AdminIntegratorSettings.ts:204
 msgid "Handout horizontal"
 msgstr "Emlékeztetők vízszintesen"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:204
+#: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Images"
 msgstr "Képek"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:205
+#: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Tables"
 msgstr "Táblázatok"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:206
+#: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Controls"
 msgstr "Vezérlőelemek"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:207
+#: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Background"
 msgstr "Háttér"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:208
+#: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Print Black"
 msgstr "Nyomtatás feketében"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:209
+#: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Hidden text"
 msgstr "Rejtett szöveg"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:210
+#: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Placeholders"
 msgstr "Helykitöltők"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:211
+#: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Left pages"
 msgstr "Baloldali oldalak"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:212
+#: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Right pages"
 msgstr "Jobboldali oldalak"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:213
+#: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Brochure"
 msgstr "Brosúra"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:214
+#: admin/src/integrator/AdminIntegratorSettings.ts:215
 msgid "Brochure Right to Left"
 msgstr "Brosúra jobbról balra"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:215
+#: admin/src/integrator/AdminIntegratorSettings.ts:216
 msgid "Images and Objects"
 msgstr "Képek és objektumok"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:320
+#: admin/src/integrator/AdminIntegratorSettings.ts:321
 msgid "Invalid JSON file"
 msgstr "Érvénytelen JSON-fájl"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:324
+#: admin/src/integrator/AdminIntegratorSettings.ts:325
 msgid "Error reading file"
 msgstr "Hiba a fájl olvasásakor"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:336
+#: admin/src/integrator/AdminIntegratorSettings.ts:337
 msgid "Autotext"
 msgstr "Szövegblokk"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:338
+#: admin/src/integrator/AdminIntegratorSettings.ts:339
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -637,15 +639,15 @@ msgstr ""
 "illesztéshez gépelje be a szövegblokk rövidítését, és nyomja meg az F3 "
 "billentyűt."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:344
+#: admin/src/integrator/AdminIntegratorSettings.ts:345
 msgid "Upload Autotext"
 msgstr "Szövegblokkok feltöltése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:349
+#: admin/src/integrator/AdminIntegratorSettings.ts:350
 msgid "Custom dictionaries"
 msgstr "Egyéni szótárak"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:351
+#: admin/src/integrator/AdminIntegratorSettings.ts:352
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -653,127 +655,127 @@ msgstr ""
 "Adjon hozzá vagy szerkesszen szavakat a helyesírás-ellenőrző szótárban. A "
 "szótárban (.dic) levő szavakat használni fogja a helyesírás-ellenőrző."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:357
+#: admin/src/integrator/AdminIntegratorSettings.ts:358
 msgid "Upload Wordbook"
 msgstr "Szótár feltöltése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:362
+#: admin/src/integrator/AdminIntegratorSettings.ts:363
 msgid "Document settings"
 msgstr "Dokumentumbeállítások"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:363
+#: admin/src/integrator/AdminIntegratorSettings.ts:364
 #: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
 msgstr "Állítsa be a dokumentumok viselkedését."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:369
+#: admin/src/integrator/AdminIntegratorSettings.ts:370
 msgid "Upload Xcu"
 msgstr "Xcu feltöltése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:420
+#: admin/src/integrator/AdminIntegratorSettings.ts:421
 msgid "Shared Config URL is missing in initial variables."
 msgstr "Hiányzik a megosztott konfigurációs URL a kezdeti változók közül."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:426
+#: admin/src/integrator/AdminIntegratorSettings.ts:427
 msgid "Access token is missing in initial variables."
 msgstr "Hiányzik a hozzáférési token a kezdeti változók közül."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:462
+#: admin/src/integrator/AdminIntegratorSettings.ts:463
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Valami nem sikerült, frissítse az oldalt."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:599
+#: admin/src/integrator/AdminIntegratorSettings.ts:600
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
 "Valami nem sikerült a beállítási fájl letöltése közben, frissítse az oldalt."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:624
+#: admin/src/integrator/AdminIntegratorSettings.ts:625
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr "Valami nem sikerült a szótár letöltése közben, frissítse az oldalt."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:634
+#: admin/src/integrator/AdminIntegratorSettings.ts:635
 msgid "Interface Settings"
 msgstr "A felhasználói felület beállításai"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:636
+#: admin/src/integrator/AdminIntegratorSettings.ts:637
 msgid "Set default interface preferences."
 msgstr "Állítsa be a felhasználói felületet."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:744
+#: admin/src/integrator/AdminIntegratorSettings.ts:745
 msgid "Select a tab to browser settings."
 msgstr "Válasszon egy lapot a böngészőbeállításokhoz."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:757
+#: admin/src/integrator/AdminIntegratorSettings.ts:758
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
 msgstr "Az alapértelmezett dokumentumbeállítások visszaállítása"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:761
+#: admin/src/integrator/AdminIntegratorSettings.ts:762
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
 msgstr "Biztos benne, hogy visszaállítja a dokumentumbeállításokat?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:778
+#: admin/src/integrator/AdminIntegratorSettings.ts:779
 #: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
 msgstr "Dokumentumbeállítások mentése"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1049
+#: admin/src/integrator/AdminIntegratorSettings.ts:1053
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 "(Figyelem: csak akkor állítható be, ha a kiszolgálón engedélyezve van az "
 "akadálymentesítés, azaz accessibility.enable=true)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1131
+#: admin/src/integrator/AdminIntegratorSettings.ts:1138
 msgid "Notebookbar view"
 msgstr "Szalagos nézet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1138
-#: src/control/Control.NotebookbarCalc.js:1583
+#: admin/src/integrator/AdminIntegratorSettings.ts:1145
+#: src/control/Control.NotebookbarCalc.js:1585
 #: src/control/Control.NotebookbarDraw.js:481
-#: src/control/Control.NotebookbarImpress.js:591
-#: src/control/Control.NotebookbarWriter.js:1730
+#: src/control/Control.NotebookbarImpress.js:597
+#: src/control/Control.NotebookbarWriter.js:1715
 msgid "Compact view"
 msgstr "Kompakt nézet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1211
+#: admin/src/integrator/AdminIntegratorSettings.ts:1218
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Valami nem sikerült a fájl feltöltése közben, próbálja újra."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1287
-#: src/canvas/sections/CommentSection.ts:1132
-#: src/canvas/sections/CommentSection.ts:1137
+#: admin/src/integrator/AdminIntegratorSettings.ts:1294
+#: src/canvas/sections/CommentSection.ts:1222
+#: src/canvas/sections/CommentSection.ts:1227
 #: src/control/Control.ContextMenu.js:176 src/docdispatcher.ts:570
 msgid "Delete"
 msgstr "Törlés"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1325
+#: admin/src/integrator/AdminIntegratorSettings.ts:1332
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr "Valami nem sikerült a fájl törlése közben, frissítse az oldalt."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1340
+#: admin/src/integrator/AdminIntegratorSettings.ts:1347
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1366
+#: admin/src/integrator/AdminIntegratorSettings.ts:1373
 msgid "View Settings"
 msgstr "Nézetfüggő beállítások"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1367
+#: admin/src/integrator/AdminIntegratorSettings.ts:1374
 msgid "Adjust view settings."
 msgstr "Itt adhatóak meg a nézetfüggő beállítások."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1377
+#: admin/src/integrator/AdminIntegratorSettings.ts:1384
 msgid "Option"
 msgstr "Beállítás"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1397
+#: admin/src/integrator/AdminIntegratorSettings.ts:1404
 msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
@@ -781,15 +783,15 @@ msgstr ""
 "A Zotero használatához adja meg az API-kulcsot. Az API-kulcsot létrehozhatja "
 "a "
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1405
+#: admin/src/integrator/AdminIntegratorSettings.ts:1412
 msgid "Zotero account API settings"
 msgstr "Zotero-fiókjának API-beállításainál"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1414
+#: admin/src/integrator/AdminIntegratorSettings.ts:1421
 msgid "Document Signing"
 msgstr "Dokumentumok aláírása"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1418
+#: admin/src/integrator/AdminIntegratorSettings.ts:1425
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
@@ -797,8 +799,8 @@ msgstr ""
 "A dokumentumok aláírásának használatához adja meg az aláírási tanúsítványt, "
 "a kulcsot és a CA láncot."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1828
-#: src/map/handler/Map.WOPI.js:745
+#: admin/src/integrator/AdminIntegratorSettings.ts:1835
+#: src/map/handler/Map.WOPI.js:746
 msgid "Error"
 msgstr "Hiba"
 
@@ -929,75 +931,95 @@ msgstr "Kilépés: Ctrl+Shift+Alt+D"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "Az eseménykezelést váratlanul hosszú ideig késleltették: {0} ms"
 
-#: src/canvas/sections/CommentListSection.ts:1255
+#: src/app/TableStylesService.ts:110
+msgid "Light"
+msgstr "Világos"
+
+#: src/app/TableStylesService.ts:112
+msgid "Medium"
+msgstr "Közepes"
+
+#: src/app/TableStylesService.ts:114
+msgid "Dark"
+msgstr "Sötét"
+
+#: src/app/TableStylesService.ts:116
+msgid "Custom"
+msgstr "Egyéni"
+
+#: src/app/TableStylesService.ts:208 src/app/TableStylesService.ts:210
+msgid "Table Styles"
+msgstr "Táblázatstílusok"
+
+#: src/canvas/sections/CommentListSection.ts:1294
 msgid "Modify"
 msgstr "Módosítás"
 
-#: src/canvas/sections/CommentListSection.ts:1261
-#: src/canvas/sections/CommentSection.ts:186
-#: src/canvas/sections/CommentSection.ts:505
-#: src/canvas/sections/CommentSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1300
+#: src/canvas/sections/CommentSection.ts:190
+#: src/canvas/sections/CommentSection.ts:581
+#: src/canvas/sections/CommentSection.ts:1313
 msgid "Reply"
 msgstr "Válasz"
 
-#: src/canvas/sections/CommentListSection.ts:1267
+#: src/canvas/sections/CommentListSection.ts:1306
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/canvas/sections/CommentListSection.ts:1273
+#: src/canvas/sections/CommentListSection.ts:1312
 msgid "Remove Thread"
 msgstr "Szál eltávolítása"
 
-#: src/canvas/sections/CommentListSection.ts:1279
+#: src/canvas/sections/CommentListSection.ts:1318
 msgid "Resolve"
 msgstr "Megoldás"
 
-#: src/canvas/sections/CommentListSection.ts:1279
+#: src/canvas/sections/CommentListSection.ts:1318
 msgid "Unresolve"
 msgstr "Megoldatlan"
 
-#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:1324
 msgid "Unresolve Thread"
 msgstr "A szál legyen megoldatlan"
 
-#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:1324
 msgid "Resolve Thread"
 msgstr "Szál megoldása"
 
-#: src/canvas/sections/CommentListSection.ts:1291
+#: src/canvas/sections/CommentListSection.ts:1330
 msgid "Promote to top comment"
 msgstr "Válasz a nyitó megjegyzésre"
 
-#: src/canvas/sections/CommentListSection.ts:1297
+#: src/canvas/sections/CommentListSection.ts:1336
 msgid "Show on the side"
 msgstr "Megjelenítés oldalt"
 
-#: src/canvas/sections/CommentListSection.ts:1297
+#: src/canvas/sections/CommentListSection.ts:1336
 msgid "Open in full view"
 msgstr "Megnyitás teljes nézetben"
 
-#: src/canvas/sections/CommentListSection.ts:1303
+#: src/canvas/sections/CommentListSection.ts:1342
 msgid "Show in navigator"
 msgstr "Megjelenítés a navigátorban"
 
-#: src/canvas/sections/CommentListSection.ts:1331
-#: src/control/Control.JSDialogBuilder.js:1642
-#: src/layer/tile/CanvasTileLayer.js:3362
-#: src/layer/tile/CanvasTileLayer.js:3373
+#: src/canvas/sections/CommentListSection.ts:1370
+#: src/control/Control.JSDialogBuilder.js:1689
+#: src/layer/tile/CanvasTileLayer.js:3401
+#: src/layer/tile/CanvasTileLayer.js:3412
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: src/canvas/sections/CommentListSection.ts:1557
-#: src/canvas/sections/CommentListSection.ts:1570
+#: src/canvas/sections/CommentListSection.ts:1596
+#: src/canvas/sections/CommentListSection.ts:1609
 msgid "Comments Updated"
 msgstr "Megjegyzések frissítve"
 
-#: src/canvas/sections/CommentListSection.ts:1558
+#: src/canvas/sections/CommentListSection.ts:1597
 msgid "Another user has removed this comment."
 msgstr "Egy másik felhasználó eltávolította ezt a megjegyzést."
 
-#: src/canvas/sections/CommentListSection.ts:1571
+#: src/canvas/sections/CommentListSection.ts:1610
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -1005,11 +1027,11 @@ msgstr ""
 "Egy másik felhasználó frissítette ezt a megjegyzést. Felülírja azokat a "
 "változtatásokat?"
 
-#: src/canvas/sections/CommentListSection.ts:1572 src/app/Socket.ts:1433
+#: src/canvas/sections/CommentListSection.ts:1611 src/app/Socket.ts:1433
 msgid "Overwrite"
 msgstr "Felülírás"
 
-#: src/canvas/sections/CommentListSection.ts:1573
+#: src/canvas/sections/CommentListSection.ts:1612
 msgid "Update"
 msgstr "Frissítés"
 
@@ -1025,26 +1047,26 @@ msgstr "Válaszolás megjegyzésre"
 msgid "Open menu"
 msgstr "Menü megnyitása"
 
-#: src/canvas/sections/CommentSection.ts:346
+#: src/canvas/sections/CommentSection.ts:422
 msgid "Press Ctrl + Enter to post"
 msgstr "A beküldéshez nyomja meg a Ctlr + Enter billentyűkombinációt"
 
-#: src/canvas/sections/CommentSection.ts:418
-#: src/canvas/sections/CommentSection.ts:419
+#: src/canvas/sections/CommentSection.ts:494
+#: src/canvas/sections/CommentSection.ts:495
 msgid "Accept change"
 msgstr "Változás elfogadása"
 
-#: src/canvas/sections/CommentSection.ts:425
-#: src/canvas/sections/CommentSection.ts:426
+#: src/canvas/sections/CommentSection.ts:501
+#: src/canvas/sections/CommentSection.ts:502
 msgid "Reject change"
 msgstr "Változás elvetése"
 
-#: src/canvas/sections/CommentSection.ts:450
+#: src/canvas/sections/CommentSection.ts:526
 msgid "Resolved"
 msgstr "Megoldva"
 
-#: src/canvas/sections/CommentSection.ts:1131
-#: src/canvas/sections/CommentSection.ts:1136
+#: src/canvas/sections/CommentSection.ts:1221
+#: src/canvas/sections/CommentSection.ts:1226
 #: src/control/Control.SaveState.ts:67
 msgid "Saved"
 msgstr "Mentve"
@@ -1062,14 +1084,12 @@ msgid "%1: Current Version"
 msgstr "%1: Jelenlegi verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
-#, fuzzy
 msgid "Initial Version"
-msgstr "%1: Kezdeti verzió"
+msgstr "Kezdeti verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
-#, fuzzy
 msgid "Current Version"
-msgstr "%1: Jelenlegi verzió"
+msgstr "Jelenlegi verzió"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1087,11 +1107,11 @@ msgstr "Hivatkozás szerkesztése"
 msgid "Remove link"
 msgstr "Hivatkozás eltávolítása"
 
-#: src/control/ColorPicker.ts:270
+#: src/control/ColorPicker.ts:269
 msgid "No color"
 msgstr "Nincs szín"
 
-#: src/control/ColorPicker.ts:275
+#: src/control/ColorPicker.ts:274
 msgid "Automatic color"
 msgstr "Automatikus szín"
 
@@ -1196,7 +1216,11 @@ msgstr "Cellák másolása"
 msgid "Fill Series"
 msgstr "Kitöltés sorozattal"
 
-#: src/control/Control.DocumentNameInput.js:115
+#: src/control/Control.DocumentNameInput.js:27
+msgid "Document name"
+msgstr "Dokumentumnév"
+
+#: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
 msgstr "Útvonal"
 
@@ -1618,7 +1642,7 @@ msgstr "Válasszon függvényt"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
-#: src/control/Control.NotebookbarWriter.js:1578
+#: src/control/Control.NotebookbarWriter.js:1563
 msgid "Formula"
 msgstr "Képlet"
 
@@ -1645,117 +1669,117 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Párbeszédablak bezárása"
 
-#: src/control/Control.JSDialogBuilder.js:529
+#: src/control/Control.JSDialogBuilder.js:530
 msgid "Solid"
 msgstr "Homogén"
 
-#: src/control/Control.JSDialogBuilder.js:532
+#: src/control/Control.JSDialogBuilder.js:533
 msgid "Linear"
 msgstr "Lineáris"
 
-#: src/control/Control.JSDialogBuilder.js:535
+#: src/control/Control.JSDialogBuilder.js:536
 msgid "Axial"
 msgstr "Axiális"
 
-#: src/control/Control.JSDialogBuilder.js:538
+#: src/control/Control.JSDialogBuilder.js:539
 msgid "Radial"
 msgstr "Radiális"
 
-#: src/control/Control.JSDialogBuilder.js:541
+#: src/control/Control.JSDialogBuilder.js:542
 msgid "Ellipsoid"
 msgstr "Ellipszoid"
 
-#: src/control/Control.JSDialogBuilder.js:545
+#: src/control/Control.JSDialogBuilder.js:546
 msgid "Quadratic"
 msgstr "Kvadratikus"
 
-#: src/control/Control.JSDialogBuilder.js:548
+#: src/control/Control.JSDialogBuilder.js:549
 msgid "Square"
 msgstr "Négyzet"
 
-#: src/control/Control.JSDialogBuilder.js:551
+#: src/control/Control.JSDialogBuilder.js:552
 msgid "Fixed size"
 msgstr "Fix méret"
 
-#: src/control/Control.JSDialogBuilder.js:1213
+#: src/control/Control.JSDialogBuilder.js:1260
 msgid "From"
 msgstr "Kezdet"
 
-#: src/control/Control.JSDialogBuilder.js:1216
+#: src/control/Control.JSDialogBuilder.js:1263
 msgid "To"
 msgstr "Vég"
 
-#: src/control/Control.JSDialogBuilder.js:1219
+#: src/control/Control.JSDialogBuilder.js:1266
 msgid "Color"
 msgstr "Szín"
 
-#: src/control/Control.JSDialogBuilder.js:1295
+#: src/control/Control.JSDialogBuilder.js:1342
 msgid "Select range"
 msgstr "Tartomány kijelölése"
 
-#: src/control/Control.JSDialogBuilder.js:1406
-#: src/control/Control.NotebookbarBuilder.js:163
+#: src/control/Control.JSDialogBuilder.js:1453
+#: src/control/Control.NotebookbarBuilder.js:165
 msgid "Font Name"
 msgstr "Betűkészlet"
 
-#: src/control/Control.JSDialogBuilder.js:1408 src/control/Toolbar.js:135
+#: src/control/Control.JSDialogBuilder.js:1455 src/control/Toolbar.js:135
 msgid "Font Size"
 msgstr "Betűméret"
 
-#: src/control/Control.JSDialogBuilder.js:1410
-#: src/control/Control.NotebookbarCalc.js:944
-#: src/control/Control.NotebookbarCalc.js:2792
-#: src/control/Control.NotebookbarDraw.js:1754
-#: src/control/Control.NotebookbarImpress.js:1309
-#: src/control/Control.NotebookbarWriter.js:1075
+#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.NotebookbarCalc.js:947
+#: src/control/Control.NotebookbarCalc.js:2662
+#: src/control/Control.NotebookbarDraw.js:1757
+#: src/control/Control.NotebookbarImpress.js:1318
+#: src/control/Control.NotebookbarWriter.js:1060
 #: src/control/Control.TopToolbar.js:519
 msgid "Style"
 msgstr "Stílus"
 
-#: src/control/Control.JSDialogBuilder.js:1628
+#: src/control/Control.JSDialogBuilder.js:1675
 msgid "reply"
 msgstr "válasz"
 
-#: src/control/Control.JSDialogBuilder.js:1631
+#: src/control/Control.JSDialogBuilder.js:1678
 msgid "replies"
 msgstr "válasz"
 
-#: src/control/Control.JSDialogBuilder.js:1706
+#: src/control/Control.JSDialogBuilder.js:1753
 msgid "Insert Comment"
 msgstr "Megjegyzés beszúrása"
 
-#: src/control/Control.JSDialogBuilder.js:1967
+#: src/control/Control.JSDialogBuilder.js:2014
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "Legördülő menü megjelenítése/elrejtése"
 
-#: src/control/Control.JSDialogBuilder.js:1969
+#: src/control/Control.JSDialogBuilder.js:2016
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Párbeszédablak legördülő menü"
 
-#: src/control/Control.JSDialogBuilder.js:1971
-#: src/control/Control.NotebookbarWriter.js:1622
+#: src/control/Control.JSDialogBuilder.js:2018
+#: src/control/Control.NotebookbarWriter.js:1607
 msgid "Dropdown"
 msgstr "Legördülő lista"
 
-#: src/control/Control.JSDialogBuilder.js:1973
+#: src/control/Control.JSDialogBuilder.js:2020
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "Művelet alkalmazása legördülő menü"
 
-#: src/control/Control.JSDialogBuilder.js:2000
+#: src/control/Control.JSDialogBuilder.js:2046
 msgid "Open {name}"
 msgstr "{name} megnyitása"
 
-#: src/control/Control.JSDialogBuilder.js:2273
+#: src/control/Control.JSDialogBuilder.js:2330
 #: src/control/Control.Menubar.ts:940
 msgid "Rows"
 msgstr "Sorok"
 
-#: src/control/Control.JSDialogBuilder.js:2274
+#: src/control/Control.JSDialogBuilder.js:2331
 #: src/control/Control.Menubar.ts:943
 msgid "Columns"
 msgstr "Oszlopok"
 
-#: src/control/Control.JSDialogBuilder.js:2294
+#: src/control/Control.JSDialogBuilder.js:2351
 msgid "Insert Table"
 msgstr "Táblázat beszúrása"
 
@@ -1780,29 +1804,29 @@ msgstr "A keresésnek nincs eredménye!"
 
 #: src/control/Control.Menubar.ts:100 src/control/Control.Menubar.ts:115
 #: src/control/Control.Menubar.ts:1067
-#: src/control/Control.NotebookbarBuilder.js:359
-#: src/control/Control.NotebookbarBuilder.js:572
+#: src/control/Control.NotebookbarBuilder.js:361
+#: src/control/Control.NotebookbarBuilder.js:574
 msgid "ODF text document (.odt)"
 msgstr "ODF szöveges dokumentum (.odt)"
 
 #: src/control/Control.Menubar.ts:101 src/control/Control.Menubar.ts:116
 #: src/control/Control.Menubar.ts:1068
-#: src/control/Control.NotebookbarBuilder.js:371
-#: src/control/Control.NotebookbarBuilder.js:584
+#: src/control/Control.NotebookbarBuilder.js:373
+#: src/control/Control.NotebookbarBuilder.js:586
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 dokumentum (.doc)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:117
 #: src/control/Control.Menubar.ts:1069
-#: src/control/Control.NotebookbarBuilder.js:367
-#: src/control/Control.NotebookbarBuilder.js:580
+#: src/control/Control.NotebookbarBuilder.js:369
+#: src/control/Control.NotebookbarBuilder.js:582
 msgid "Word Document (.docx)"
 msgstr "Word dokumentum (.docx)"
 
 #: src/control/Control.Menubar.ts:103 src/control/Control.Menubar.ts:118
 #: src/control/Control.Menubar.ts:1070
-#: src/control/Control.NotebookbarBuilder.js:363
-#: src/control/Control.NotebookbarBuilder.js:576
+#: src/control/Control.NotebookbarBuilder.js:365
+#: src/control/Control.NotebookbarBuilder.js:578
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
@@ -1825,21 +1849,21 @@ msgstr "Exportálás mint"
 #: src/control/Control.Menubar.ts:1122 src/control/Control.Menubar.ts:1130
 #: src/control/Control.Menubar.ts:1187 src/control/Control.Menubar.ts:1194
 #: src/control/Control.Menubar.ts:1242 src/control/Control.Menubar.ts:1252
-#: src/control/Control.NotebookbarBuilder.js:380
-#: src/control/Control.NotebookbarBuilder.js:418
-#: src/control/Control.NotebookbarBuilder.js:454
-#: src/control/Control.NotebookbarBuilder.js:633
-#: src/control/Control.NotebookbarBuilder.js:644
-#: src/control/Control.NotebookbarBuilder.js:651
-#: src/control/Control.NotebookbarBuilder.js:658
+#: src/control/Control.NotebookbarBuilder.js:382
+#: src/control/Control.NotebookbarBuilder.js:420
+#: src/control/Control.NotebookbarBuilder.js:456
+#: src/control/Control.NotebookbarBuilder.js:635
+#: src/control/Control.NotebookbarBuilder.js:646
+#: src/control/Control.NotebookbarBuilder.js:653
+#: src/control/Control.NotebookbarBuilder.js:660
 #: src/control/Control.NotebookbarDraw.js:312
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokumentum (.pdf)"
 
 #: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:119
 #: src/control/Control.Menubar.ts:1057 src/control/Control.Menubar.ts:1071
-#: src/control/Control.NotebookbarBuilder.js:375
-#: src/control/Control.NotebookbarBuilder.js:637
+#: src/control/Control.NotebookbarBuilder.js:377
+#: src/control/Control.NotebookbarBuilder.js:639
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
@@ -1872,9 +1896,9 @@ msgstr "Letöltés másként"
 #: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:767
 #: src/control/Control.Menubar.ts:1066 src/control/Control.Menubar.ts:1131
 #: src/control/Control.Menubar.ts:1195 src/control/Control.Menubar.ts:1253
-#: src/control/Control.NotebookbarBuilder.js:390
-#: src/control/Control.NotebookbarBuilder.js:424
-#: src/control/Control.NotebookbarBuilder.js:466
+#: src/control/Control.NotebookbarBuilder.js:392
+#: src/control/Control.NotebookbarBuilder.js:426
+#: src/control/Control.NotebookbarBuilder.js:468
 msgid "PDF Document (.pdf) as..."
 msgstr "PDF dokumentum (.pdf) ..."
 
@@ -1917,9 +1941,9 @@ msgstr "Változások összehasonlítása"
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
 #: src/control/Control.Menubar.ts:656 src/control/Control.Menubar.ts:798
 #: src/control/Control.Menubar.ts:804
-#: src/control/Control.NotebookbarCalc.js:1543
+#: src/control/Control.NotebookbarCalc.js:1545
 #: src/control/Control.NotebookbarDraw.js:441
-#: src/control/Control.NotebookbarImpress.js:551
+#: src/control/Control.NotebookbarImpress.js:557
 #: src/control/Control.StatusBar.js:258
 msgid "Reset zoom"
 msgstr "Alaphelyzet"
@@ -1947,17 +1971,16 @@ msgstr "Menü elrejtése"
 #: src/control/Control.Menubar.ts:664 src/control/Control.Menubar.ts:811
 #: src/control/Control.Menubar.ts:1098 src/control/Control.Menubar.ts:1151
 #: src/control/Control.Menubar.ts:1212 src/control/Control.Menubar.ts:1272
-#: src/control/Control.NotebookbarCalc.js:1629
+#: src/control/Control.NotebookbarCalc.js:1631
 #: src/control/Control.NotebookbarDraw.js:563
-#: src/control/Control.NotebookbarImpress.js:696
-#: src/control/Control.NotebookbarWriter.js:1784
+#: src/control/Control.NotebookbarImpress.js:702
+#: src/control/Control.NotebookbarWriter.js:1769
 msgid "Invert Background"
 msgstr "Háttérszín invertálása"
 
 #: src/control/Control.Menubar.ts:178 src/control/Control.Menubar.ts:814
-#: src/control/Control.NotebookbarCalc.js:2819
-#: src/control/Control.NotebookbarWriter.js:966
-#: src/control/Control.NotebookbarWriter.js:1102
+#: src/control/Control.NotebookbarCalc.js:2689
+#: src/control/Control.NotebookbarWriter.js:1087
 msgid "Style list"
 msgstr "Stíluslista"
 
@@ -1975,10 +1998,10 @@ msgstr "Összes"
 
 #: src/control/Control.Menubar.ts:222 src/control/Control.Menubar.ts:524
 #: src/control/Control.Menubar.ts:678 src/control/Control.Menubar.ts:838
-#: src/control/Control.NotebookbarCalc.js:1997
-#: src/control/Control.NotebookbarDraw.js:1585
-#: src/control/Control.NotebookbarImpress.js:1599
-#: src/control/Control.NotebookbarWriter.js:1358
+#: src/control/Control.NotebookbarCalc.js:1867
+#: src/control/Control.NotebookbarDraw.js:1588
+#: src/control/Control.NotebookbarImpress.js:1608
+#: src/control/Control.NotebookbarWriter.js:1343
 msgid "Smart Picker"
 msgstr "Intelligens választó"
 
@@ -2057,7 +2080,7 @@ msgstr "Dátum beszúrása"
 #: src/control/Control.NotebookbarDraw.js:356
 #: src/control/Control.NotebookbarImpress.js:391
 #: src/control/Control.NotebookbarWriter.js:351
-#: src/control/Control.NotebookbarWriter.js:1646
+#: src/control/Control.NotebookbarWriter.js:1631
 msgid "Properties"
 msgstr "Tulajdonságok"
 
@@ -2120,22 +2143,22 @@ msgstr "Utolsó módosítás"
 
 #: src/control/Control.Menubar.ts:434 src/control/Control.Menubar.ts:447
 #: src/control/Control.Menubar.ts:1132
-#: src/control/Control.NotebookbarBuilder.js:432
-#: src/control/Control.NotebookbarBuilder.js:606
+#: src/control/Control.NotebookbarBuilder.js:434
+#: src/control/Control.NotebookbarBuilder.js:608
 msgid "ODF presentation (.odp)"
 msgstr "ODF bemutató (.odp)"
 
 #: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:448
 #: src/control/Control.Menubar.ts:1133
-#: src/control/Control.NotebookbarBuilder.js:444
-#: src/control/Control.NotebookbarBuilder.js:614
+#: src/control/Control.NotebookbarBuilder.js:446
+#: src/control/Control.NotebookbarBuilder.js:616
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 bemutató (.ppt)"
 
 #: src/control/Control.Menubar.ts:436 src/control/Control.Menubar.ts:449
 #: src/control/Control.Menubar.ts:1134
-#: src/control/Control.NotebookbarBuilder.js:440
-#: src/control/Control.NotebookbarBuilder.js:610
+#: src/control/Control.NotebookbarBuilder.js:442
+#: src/control/Control.NotebookbarBuilder.js:612
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint bemutató (.pptx)"
 
@@ -2144,57 +2167,57 @@ msgid "Save Comments"
 msgstr "Megjegyzések mentése"
 
 #: src/control/Control.Menubar.ts:450
-#: src/control/Control.NotebookbarBuilder.js:448
+#: src/control/Control.NotebookbarBuilder.js:450
 msgid "HTML Document (.html)"
 msgstr "HTML-dokumentum (.html)"
 
 #: src/control/Control.Menubar.ts:451
-#: src/control/Control.NotebookbarBuilder.js:479
+#: src/control/Control.NotebookbarBuilder.js:481
 msgid "Shockwave Flash (.swf)"
 msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.ts:452
-#: src/control/Control.NotebookbarBuilder.js:491
+#: src/control/Control.NotebookbarBuilder.js:493
 msgid "Scalable Vector Graphics (.svg)"
 msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.ts:453
-#: src/control/Control.NotebookbarBuilder.js:503
+#: src/control/Control.NotebookbarBuilder.js:505
 msgid "Current slide as Bitmap (.bmp)"
 msgstr "Aktuális dia bitképként (.bmp)"
 
 #: src/control/Control.Menubar.ts:454
-#: src/control/Control.NotebookbarBuilder.js:515
+#: src/control/Control.NotebookbarBuilder.js:517
 msgid "Current slide as Graphics Interchange Format (.gif)"
 msgstr "Aktuális dia GIF képként (.gif)"
 
 #: src/control/Control.Menubar.ts:455
-#: src/control/Control.NotebookbarBuilder.js:527
+#: src/control/Control.NotebookbarBuilder.js:529
 msgid "Current slide as Portable Network Graphics (.png)"
 msgstr "Aktuális dia PNG képként (.png)"
 
 #: src/control/Control.Menubar.ts:456
-#: src/control/Control.NotebookbarBuilder.js:539
+#: src/control/Control.NotebookbarBuilder.js:541
 msgid "Current slide as Tag Image File Format (.tiff)"
 msgstr "Aktuális dia TIFF képként (.tiff)"
 
 #: src/control/Control.Menubar.ts:463
-#: src/control/Control.NotebookbarBuilder.js:677
+#: src/control/Control.NotebookbarBuilder.js:679
 msgid "Full Page Slides"
 msgstr "Csak diák"
 
 #: src/control/Control.Menubar.ts:464
-#: src/control/Control.NotebookbarBuilder.js:681
+#: src/control/Control.NotebookbarBuilder.js:683
 msgid "Notes Pages"
 msgstr "Diák és jegyzetek"
 
 #: src/control/Control.Menubar.ts:498
-#: src/control/Control.NotebookbarImpress.js:644
+#: src/control/Control.NotebookbarImpress.js:650
 msgid "Notes View"
 msgstr "Jegyzetek nézet"
 
 #: src/control/Control.Menubar.ts:502
-#: src/control/Control.NotebookbarImpress.js:650
+#: src/control/Control.NotebookbarImpress.js:656
 msgid "Master View"
 msgstr "Mintanézet"
 
@@ -2221,29 +2244,29 @@ msgstr "Előadói konzol"
 
 #: src/control/Control.Menubar.ts:627 src/control/Control.Menubar.ts:1135
 #: src/control/Control.Menubar.ts:1196
-#: src/control/Control.NotebookbarBuilder.js:436
-#: src/control/Control.NotebookbarBuilder.js:549
+#: src/control/Control.NotebookbarBuilder.js:438
+#: src/control/Control.NotebookbarBuilder.js:551
 msgid "ODF Drawing (.odg)"
 msgstr "ODF rajz (.odg)"
 
 #: src/control/Control.Menubar.ts:756 src/control/Control.Menubar.ts:768
 #: src/control/Control.Menubar.ts:1254
-#: src/control/Control.NotebookbarBuilder.js:398
-#: src/control/Control.NotebookbarBuilder.js:591
+#: src/control/Control.NotebookbarBuilder.js:400
+#: src/control/Control.NotebookbarBuilder.js:593
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF munkafüzet (.ods)"
 
 #: src/control/Control.Menubar.ts:757 src/control/Control.Menubar.ts:769
 #: src/control/Control.Menubar.ts:1255
-#: src/control/Control.NotebookbarBuilder.js:406
-#: src/control/Control.NotebookbarBuilder.js:599
+#: src/control/Control.NotebookbarBuilder.js:408
+#: src/control/Control.NotebookbarBuilder.js:601
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 munkafüzet (.xls)"
 
 #: src/control/Control.Menubar.ts:758 src/control/Control.Menubar.ts:770
 #: src/control/Control.Menubar.ts:1256
-#: src/control/Control.NotebookbarBuilder.js:402
-#: src/control/Control.NotebookbarBuilder.js:595
+#: src/control/Control.NotebookbarBuilder.js:404
+#: src/control/Control.NotebookbarBuilder.js:597
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel munkafüzet (.xlsx)"
 
@@ -2257,105 +2280,105 @@ msgid "Active sheet"
 msgstr "Aktív munkalap"
 
 #: src/control/Control.Menubar.ts:817
-#: src/control/Control.NotebookbarCalc.js:1514
+#: src/control/Control.NotebookbarCalc.js:1516
 msgid "Focus Cell"
 msgstr "Fókuszálás a cellára"
 
 #: src/control/Control.Menubar.ts:912
-#: src/control/jsdialog/Definitions.Menu.ts:1840
+#: src/control/jsdialog/Definitions.Menu.ts:1855
 msgid "Highlight cells with..."
 msgstr "Cellák kiemelése..."
 
 #: src/control/Control.Menubar.ts:913
-#: src/control/jsdialog/Definitions.Menu.ts:1843
+#: src/control/jsdialog/Definitions.Menu.ts:1858
 msgid "Values greater than..."
 msgstr "Az értékek nagyobbak, mint..."
 
 #: src/control/Control.Menubar.ts:914
-#: src/control/jsdialog/Definitions.Menu.ts:1847
+#: src/control/jsdialog/Definitions.Menu.ts:1862
 msgid "Values less than..."
 msgstr "Az értékek kevesebbek, mint..."
 
 #: src/control/Control.Menubar.ts:915
-#: src/control/jsdialog/Definitions.Menu.ts:1851
+#: src/control/jsdialog/Definitions.Menu.ts:1866
 msgid "Values equal to..."
 msgstr "Az értékek egyenlőek..."
 
 #: src/control/Control.Menubar.ts:916
-#: src/control/jsdialog/Definitions.Menu.ts:1855
+#: src/control/jsdialog/Definitions.Menu.ts:1870
 msgid "Values between..."
 msgstr "Az értékek egy intervallumban vannak..."
 
 #: src/control/Control.Menubar.ts:917
-#: src/control/jsdialog/Definitions.Menu.ts:1859
+#: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Values duplicate..."
 msgstr "Az értékek többször előfordulnak..."
 
 #: src/control/Control.Menubar.ts:918
-#: src/control/jsdialog/Definitions.Menu.ts:1863
+#: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "Containing text..."
 msgstr "Tartalmazza a szöveget..."
 
 #: src/control/Control.Menubar.ts:920 src/control/Control.Menubar.ts:930
-#: src/control/jsdialog/Definitions.Menu.ts:1867
-#: src/control/jsdialog/Definitions.Menu.ts:1898
+#: src/control/jsdialog/Definitions.Menu.ts:1882
+#: src/control/jsdialog/Definitions.Menu.ts:1913
 msgid "More highlights..."
 msgstr "További kiemelési szempontok..."
 
 #: src/control/Control.Menubar.ts:922
-#: src/control/jsdialog/Definitions.Menu.ts:1871
+#: src/control/jsdialog/Definitions.Menu.ts:1886
 msgid "Top/Bottom Rules..."
 msgstr "Felső/alsó szabályok..."
 
 #: src/control/Control.Menubar.ts:923
-#: src/control/jsdialog/Definitions.Menu.ts:1874
+#: src/control/jsdialog/Definitions.Menu.ts:1889
 msgid "Top N elements..."
 msgstr "Felső N elem..."
 
 #: src/control/Control.Menubar.ts:924
-#: src/control/jsdialog/Definitions.Menu.ts:1878
+#: src/control/jsdialog/Definitions.Menu.ts:1893
 msgid "Top N percent..."
 msgstr "Felső N százalék..."
 
 #: src/control/Control.Menubar.ts:925
-#: src/control/jsdialog/Definitions.Menu.ts:1882
+#: src/control/jsdialog/Definitions.Menu.ts:1897
 msgid "Bottom N elements..."
 msgstr "Alsó N elem..."
 
 #: src/control/Control.Menubar.ts:926
-#: src/control/jsdialog/Definitions.Menu.ts:1886
+#: src/control/jsdialog/Definitions.Menu.ts:1901
 msgid "Bottom N percent..."
 msgstr "Alsó N százalék..."
 
 #: src/control/Control.Menubar.ts:927
-#: src/control/jsdialog/Definitions.Menu.ts:1890
+#: src/control/jsdialog/Definitions.Menu.ts:1905
 msgid "Above Average..."
 msgstr "Átlag felett..."
 
 #: src/control/Control.Menubar.ts:928
-#: src/control/jsdialog/Definitions.Menu.ts:1894
+#: src/control/jsdialog/Definitions.Menu.ts:1909
 msgid "Below Average..."
 msgstr "Átlag alatt..."
 
 #: src/control/Control.Menubar.ts:1051 src/control/Control.Menubar.ts:1117
 #: src/control/Control.Menubar.ts:1182 src/control/Control.Menubar.ts:1237
 #: src/control/Control.MobileSearchBar.ts:30
-#: src/control/Control.NavigatorPanel.ts:487
-#: src/control/Control.NotebookbarCalc.js:1034
-#: src/control/Control.NotebookbarDraw.js:1173
-#: src/control/Control.NotebookbarDraw.js:1186
-#: src/control/Control.NotebookbarImpress.js:1264
-#: src/control/Control.NotebookbarImpress.js:1277
-#: src/control/Control.NotebookbarWriter.js:1030
-#: src/control/Control.NotebookbarWriter.js:1043
+#: src/control/Control.NavigatorPanel.ts:490
+#: src/control/Control.NotebookbarCalc.js:1037
+#: src/control/Control.NotebookbarDraw.js:1176
+#: src/control/Control.NotebookbarDraw.js:1189
+#: src/control/Control.NotebookbarImpress.js:1273
+#: src/control/Control.NotebookbarImpress.js:1286
+#: src/control/Control.NotebookbarWriter.js:1015
+#: src/control/Control.NotebookbarWriter.js:1028
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:586
-#: src/control/Toolbar.js:587
+#: src/control/Toolbar.js:587 src/control/Toolbar.js:625
 msgid "Search"
 msgstr "Keresés"
 
 #: src/control/Control.Menubar.ts:1104
-#: src/control/Control.NotebookbarCalc.js:1099
-#: src/control/Control.NotebookbarWriter.js:1812
+#: src/control/Control.NotebookbarCalc.js:1102
+#: src/control/Control.NotebookbarWriter.js:1797
 msgid "Page Setup"
 msgstr "Oldalbeállítások"
 
@@ -2373,7 +2396,7 @@ msgstr "Vissza az alapértelmezett nyelvre"
 
 #: src/control/Control.Menubar.ts:1640 src/control/Control.Menubar.ts:1641
 #: src/control/Control.Menubar.ts:1642 src/control/Control.Toolbar.js:247
-#: src/control/jsdialog/Definitions.Menu.ts:2120
+#: src/control/jsdialog/Definitions.Menu.ts:2135
 msgid "More..."
 msgstr "További..."
 
@@ -2399,7 +2422,7 @@ msgstr ""
 msgid "Finish electronic signing"
 msgstr "Elektronikus aláírás befejezése"
 
-#: src/control/Control.Menubar.ts:2445
+#: src/control/Control.Menubar.ts:2445 src/control/Control.Notebookbar.js:120
 msgid "file type icon"
 msgstr "fájltípus ikon"
 
@@ -2438,32 +2461,68 @@ msgstr "Végszín"
 msgid "Navigation Panel"
 msgstr "Navigációs panel"
 
-#: src/control/Control.NavigatorPanel.ts:110
+#: src/control/Control.NavigatorPanel.ts:111
 msgid "Navigation"
 msgstr "Navigáció"
 
-#: src/control/Control.NavigatorPanel.ts:131
+#: src/control/Control.NavigatorPanel.ts:132
 msgid "Close Navigation"
 msgstr "Navigáció bezárása"
 
-#: src/control/Control.NavigatorPanel.ts:187
-#: src/control/Control.NotebookbarImpress.js:1408
+#: src/control/Control.NavigatorPanel.ts:188
+#: src/control/Control.NotebookbarImpress.js:1417
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
 msgstr "Diák"
 
-#: src/control/Control.NavigatorPanel.ts:225
+#: src/control/Control.NavigatorPanel.ts:226
 msgid "Results"
 msgstr "Eredmények"
 
-#: src/control/Control.NavigatorPanel.ts:473
-#: src/control/jsdialog/Widget.TreeView.ts:1674
+#: src/control/Control.NavigatorPanel.ts:476
+#: src/control/jsdialog/Widget.TreeView.ts:1717
 msgid "Search..."
 msgstr "Keresés..."
 
 #: src/control/Control.QuickFindPanel.ts:122
 msgid "Type in the search box to find anything in your document"
 msgstr "Írja be a keresőmezőbe a dokumentumban keresett kifejezést"
+
+#: src/control/Notebookbar.CalcTableTab.ts:43
+msgid "Table Design"
+msgstr "Táblázattervező"
+
+#: src/control/Notebookbar.CalcTableTab.ts:72
+msgid "Table Style Options"
+msgstr "Táblázatstílus beállításai"
+
+#: src/control/Notebookbar.CalcTableTab.ts:85
+msgid "Header Row"
+msgstr "Fejlécsor"
+
+#: src/control/Notebookbar.CalcTableTab.ts:100
+msgid "Total Row"
+msgstr "Összegsor"
+
+#: src/control/Notebookbar.CalcTableTab.ts:121
+msgid "Banded Rows"
+msgstr "Sávozott sorok"
+
+#: src/control/Notebookbar.CalcTableTab.ts:136
+msgid "Banded Columns"
+msgstr "Sávozott oszlopok"
+
+#: src/control/Notebookbar.CalcTableTab.ts:157
+msgid "First Column"
+msgstr "Első oszlop"
+
+#: src/control/Notebookbar.CalcTableTab.ts:172
+msgid "Last Column"
+msgstr "Utolsó oszlop"
+
+#: src/control/Notebookbar.CalcTableTab.ts:190
+msgid "Filter Buttons"
+msgstr "Szűrőgombok"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
@@ -2502,23 +2561,23 @@ msgstr "Átmenet"
 msgid "Transitions"
 msgstr "Átmenetek"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:66
+#: src/control/Notebookbar.ImpressTransitionTab.ts:72
 msgid "Variant"
 msgstr "Változat"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:82
+#: src/control/Notebookbar.ImpressTransitionTab.ts:88
 msgid "Duration"
 msgstr "Időtartam"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:110
+#: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "On mouse click"
 msgstr "Egérkattintásra"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:118
+#: src/control/Notebookbar.ImpressTransitionTab.ts:124
 msgid "After"
 msgstr "Utána"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:139
+#: src/control/Notebookbar.ImpressTransitionTab.ts:145
 msgid "Apply to All Slides"
 msgstr "Alkalmazás az összes diára"
 
@@ -2531,8 +2590,8 @@ msgid "Footnote/Endnote"
 msgstr "Lábjegyzet és végjegyzet"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
-#: src/control/Control.NotebookbarDraw.js:1578
-#: src/control/Control.NotebookbarImpress.js:1635
+#: src/control/Control.NotebookbarDraw.js:1581
+#: src/control/Control.NotebookbarImpress.js:1644
 msgid "Field"
 msgstr "Mező"
 
@@ -2540,7 +2599,7 @@ msgstr "Mező"
 msgid "Animations"
 msgstr "Animációk"
 
-#: src/control/Control.Notebookbar.js:640
+#: src/control/Control.Notebookbar.js:650
 #: src/control/Control.NotebookbarCalc.js:202
 #: src/control/Control.NotebookbarCalc.js:236
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2553,120 +2612,116 @@ msgstr "Animációk"
 msgid "Share"
 msgstr "Megosztás"
 
-#: src/control/Control.NotebookbarBuilder.js:237
+#: src/control/Control.NotebookbarBuilder.js:239
 msgid "Click to expand"
 msgstr "Kattintson a kibontáshoz"
 
-#: src/control/Control.NotebookbarBuilder.js:237
+#: src/control/Control.NotebookbarBuilder.js:239
 msgid "Tap to expand"
 msgstr "Koppintson a kibontáshoz"
 
-#: src/control/Control.NotebookbarBuilder.js:238
+#: src/control/Control.NotebookbarBuilder.js:240
 msgid "Click to collapse"
 msgstr "Kattintson az összecsukáshoz"
 
-#: src/control/Control.NotebookbarBuilder.js:238
-#: src/control/Control.NotebookbarBuilder.js:293
+#: src/control/Control.NotebookbarBuilder.js:240
+#: src/control/Control.NotebookbarBuilder.js:295
 msgid "Tap to collapse"
 msgstr "Koppintson az összecsukáshoz"
 
-#: src/control/Control.NotebookbarBuilder.js:385
-#: src/control/Control.NotebookbarBuilder.js:414
+#: src/control/Control.NotebookbarBuilder.js:387
+#: src/control/Control.NotebookbarBuilder.js:416
 msgid "HTML File (.html)"
 msgstr "HTML-fájl (.html)"
 
-#: src/control/Control.NotebookbarBuilder.js:410
+#: src/control/Control.NotebookbarBuilder.js:412
 msgid "CSV File (.csv)"
 msgstr "CSV-fájl (.csv)"
 
-#: src/control/Control.NotebookbarBuilder.js:553
+#: src/control/Control.NotebookbarBuilder.js:555
 msgid "Image (.png)"
 msgstr "Kép (.png)"
 
-#: src/control/Control.NotebookbarCalc.js:23
+#: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:57
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:37
 msgid "File"
 msgstr "Fájl"
 
-#: src/control/Control.NotebookbarCalc.js:29
+#: src/control/Control.NotebookbarCalc.js:35
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Home"
 msgstr "Kezdőlap"
 
-#: src/control/Control.NotebookbarCalc.js:36
-#: src/control/Control.NotebookbarCalc.js:1193
+#: src/control/Control.NotebookbarCalc.js:42
+#: src/control/Control.NotebookbarCalc.js:1196
 #: src/control/Control.NotebookbarDraw.js:70
-#: src/control/Control.NotebookbarDraw.js:1134
+#: src/control/Control.NotebookbarDraw.js:1137
 #: src/control/Control.NotebookbarImpress.js:90
-#: src/control/Control.NotebookbarImpress.js:2017
+#: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:50
-#: src/control/Control.NotebookbarWriter.js:979
-#: src/control/Control.NotebookbarWriter.js:2483
+#: src/control/Control.NotebookbarWriter.js:964
+#: src/control/Control.NotebookbarWriter.js:2462
 msgid "Insert"
 msgstr "Beszúrás"
 
-#: src/control/Control.NotebookbarCalc.js:42
-#: src/control/Control.NotebookbarDraw.js:1284
+#: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarDraw.js:1287
 msgid "Page Layout"
 msgstr "Oldalelrendezés"
 
-#: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarCalc.js:54
 msgid "Formulas"
 msgstr "Képletek"
 
-#: src/control/Control.NotebookbarCalc.js:54
+#: src/control/Control.NotebookbarCalc.js:60
 msgid "Data"
 msgstr "Adatok"
 
-#: src/control/Control.NotebookbarCalc.js:60
+#: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:63
 msgid "Review"
 msgstr "Véleményezés"
 
-#: src/control/Control.NotebookbarCalc.js:66
+#: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:69
 msgid "Format"
 msgstr "Formátum"
 
-#: src/control/Control.NotebookbarCalc.js:72
+#: src/control/Control.NotebookbarCalc.js:78
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
 msgid "Shape"
 msgstr "Alakzat"
 
-#: src/control/Control.NotebookbarCalc.js:79
+#: src/control/Control.NotebookbarCalc.js:85
 #: src/control/Control.NotebookbarDraw.js:108
 #: src/control/Control.NotebookbarImpress.js:136
 #: src/control/Control.NotebookbarWriter.js:95
-#: src/control/Control.NotebookbarWriter.js:1630
+#: src/control/Control.NotebookbarWriter.js:1615
 msgid "Picture"
 msgstr "Kép"
 
-#: src/control/Control.NotebookbarCalc.js:86
+#: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:150
 #: src/control/Control.NotebookbarWriter.js:102
 msgid "View"
 msgstr "Nézet"
 
-#: src/control/Control.NotebookbarCalc.js:92
-#: src/control/Control.NotebookbarCalc.js:1910
-#: src/control/Control.NotebookbarCalc.js:2880
+#: src/control/Control.NotebookbarCalc.js:98
+#: src/control/Control.NotebookbarCalc.js:1780
+#: src/control/Control.NotebookbarCalc.js:2750
 msgid "Sparkline"
 msgstr "Értékgörbe"
-
-#: src/control/Control.NotebookbarCalc.js:99
-msgid "Table Design"
-msgstr "Táblázattervező"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2718,392 +2773,369 @@ msgstr "Átnevezés"
 
 #: src/control/Control.NotebookbarCalc.js:417
 #: src/control/Control.NotebookbarDraw.js:613
-#: src/control/Control.NotebookbarImpress.js:739
+#: src/control/Control.NotebookbarImpress.js:745
 #: src/control/Control.NotebookbarWriter.js:607
 msgid "Clipboard"
 msgstr "Vágólap"
 
-#: src/control/Control.NotebookbarCalc.js:478
-#: src/control/Control.NotebookbarDraw.js:673
-#: src/control/Control.NotebookbarWriter.js:666 src/control/Toolbar.js:56
+#: src/control/Control.NotebookbarCalc.js:445
+#: src/control/Control.NotebookbarDraw.js:640
+#: src/control/Control.NotebookbarImpress.js:772
+#: src/control/Control.NotebookbarWriter.js:634
+#: src/control/Control.TopToolbar.js:121
+msgid "Clone Formatting (double click to keep active)"
+msgstr "Formázás klónozása (dupla kattintás az aktív tartáshoz)"
+
+#: src/control/Control.NotebookbarCalc.js:481
+#: src/control/Control.NotebookbarDraw.js:676
+#: src/control/Control.NotebookbarWriter.js:669 src/control/Toolbar.js:56
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: src/control/Control.NotebookbarCalc.js:623
-#: src/control/Control.NotebookbarDraw.js:814
+#: src/control/Control.NotebookbarCalc.js:626
+#: src/control/Control.NotebookbarDraw.js:817
 msgid "Alignment"
 msgstr "Igazítás"
 
-#: src/control/Control.NotebookbarCalc.js:750
+#: src/control/Control.NotebookbarCalc.js:753
 msgid "Merge & Center"
 msgstr "Egyesítés és középre igazítás"
 
-#: src/control/Control.NotebookbarCalc.js:760
-#: src/control/Control.NotebookbarCalc.js:776
+#: src/control/Control.NotebookbarCalc.js:763
+#: src/control/Control.NotebookbarCalc.js:779
 msgid "Number"
 msgstr "Szám"
 
-#: src/control/Control.NotebookbarCalc.js:775
+#: src/control/Control.NotebookbarCalc.js:778
 msgid "General"
 msgstr "Általános"
 
-#: src/control/Control.NotebookbarCalc.js:777
+#: src/control/Control.NotebookbarCalc.js:780
 msgid "Percent"
 msgstr "Százalék"
 
-#: src/control/Control.NotebookbarCalc.js:778
+#: src/control/Control.NotebookbarCalc.js:781
 msgid "Currency"
 msgstr "Pénznem"
 
-#: src/control/Control.NotebookbarCalc.js:781
+#: src/control/Control.NotebookbarCalc.js:784
 msgid "Scientific"
 msgstr "Tudományos"
 
-#: src/control/Control.NotebookbarCalc.js:782
+#: src/control/Control.NotebookbarCalc.js:785
 msgid "Fraction"
 msgstr "Tört"
 
-#: src/control/Control.NotebookbarCalc.js:783
+#: src/control/Control.NotebookbarCalc.js:786
 msgid "Boolean Value"
 msgstr "Logikai érték"
 
-#: src/control/Control.NotebookbarCalc.js:784
-#: src/control/Control.NotebookbarCalc.js:2076
-#: src/control/Control.NotebookbarCalc.js:2241
-#: src/control/Control.NotebookbarDraw.js:1668
-#: src/control/Control.NotebookbarImpress.js:1709
-#: src/control/Control.NotebookbarWriter.js:1507
+#: src/control/Control.NotebookbarCalc.js:787
+#: src/control/Control.NotebookbarCalc.js:1946
+#: src/control/Control.NotebookbarCalc.js:2111
+#: src/control/Control.NotebookbarDraw.js:1671
+#: src/control/Control.NotebookbarImpress.js:1718
+#: src/control/Control.NotebookbarWriter.js:1492
 msgid "Text"
 msgstr "Szöveg"
 
-#: src/control/Control.NotebookbarCalc.js:790
-#: src/control/Control.NotebookbarWriter.js:2728
+#: src/control/Control.NotebookbarCalc.js:793
+#: src/control/Control.NotebookbarWriter.js:2707
 msgid "Number Format"
 msgstr "Számformátum"
 
-#: src/control/Control.NotebookbarCalc.js:863
+#: src/control/Control.NotebookbarCalc.js:866
 msgid "Cells"
 msgstr "Cellák"
 
-#: src/control/Control.NotebookbarCalc.js:965
-#: src/control/jsdialog/Definitions.Menu.ts:2326
+#: src/control/Control.NotebookbarCalc.js:968
+#: src/control/jsdialog/Definitions.Menu.ts:2341
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: src/control/Control.NotebookbarCalc.js:972
+#: src/control/Control.NotebookbarCalc.js:975
 msgid "Heading 1"
 msgstr "Címsor 1"
 
-#: src/control/Control.NotebookbarCalc.js:979
+#: src/control/Control.NotebookbarCalc.js:982
 msgid "Heading 2"
 msgstr "Címsor 2"
 
-#: src/control/Control.NotebookbarCalc.js:992
+#: src/control/Control.NotebookbarCalc.js:995
 msgid "Good"
 msgstr "Jó"
 
-#: src/control/Control.NotebookbarCalc.js:999
+#: src/control/Control.NotebookbarCalc.js:1002
 msgid "Neutral"
 msgstr "Semleges"
 
-#: src/control/Control.NotebookbarCalc.js:1006
+#: src/control/Control.NotebookbarCalc.js:1009
 msgid "Bad"
 msgstr "Rossz"
 
-#: src/control/Control.NotebookbarCalc.js:1021
+#: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/PermissionMode.ts:174
 msgid "Editing"
 msgstr "Szerkesztés"
 
-#: src/control/Control.NotebookbarCalc.js:1045
-#: src/control/Control.NotebookbarDraw.js:1197
-#: src/control/Control.NotebookbarImpress.js:1288
-#: src/control/Control.NotebookbarWriter.js:1054
+#: src/control/Control.NotebookbarCalc.js:1048
+#: src/control/Control.NotebookbarDraw.js:1200
+#: src/control/Control.NotebookbarImpress.js:1297
+#: src/control/Control.NotebookbarWriter.js:1039
 msgid "Replace"
 msgstr "Csere"
 
-#: src/control/Control.NotebookbarCalc.js:1109
-#: src/control/Control.NotebookbarWriter.js:1822
+#: src/control/Control.NotebookbarCalc.js:1112
+#: src/control/Control.NotebookbarWriter.js:1807
 msgid "Margin"
 msgstr "Margó"
 
-#: src/control/Control.NotebookbarCalc.js:1116
-#: src/control/Control.NotebookbarWriter.js:1829
+#: src/control/Control.NotebookbarCalc.js:1119
+#: src/control/Control.NotebookbarWriter.js:1814
 msgid "Size"
 msgstr "Méret"
 
-#: src/control/Control.NotebookbarCalc.js:1177
+#: src/control/Control.NotebookbarCalc.js:1180
 msgid "Row Height"
 msgstr "Sormagasság"
 
-#: src/control/Control.NotebookbarCalc.js:1185
+#: src/control/Control.NotebookbarCalc.js:1188
 msgid "Column Width"
 msgstr "Oszlopszélesség"
 
-#: src/control/Control.NotebookbarCalc.js:1205
+#: src/control/Control.NotebookbarCalc.js:1208
 msgid "Insert Rows Above"
 msgstr "Sorok beszúrása ez elé"
 
-#: src/control/Control.NotebookbarCalc.js:1212
+#: src/control/Control.NotebookbarCalc.js:1215
 msgid "Insert Columns Before"
 msgstr "Oszlopok beszúrása ez elé"
 
-#: src/control/Control.NotebookbarCalc.js:1219
+#: src/control/Control.NotebookbarCalc.js:1222
 msgid "Delete Rows"
 msgstr "Sorok törlése"
 
-#: src/control/Control.NotebookbarCalc.js:1231
+#: src/control/Control.NotebookbarCalc.js:1234
 msgid "Insert Rows Below"
 msgstr "Sorok beszúrása ez alá"
 
-#: src/control/Control.NotebookbarCalc.js:1238
+#: src/control/Control.NotebookbarCalc.js:1241
 msgid "Insert Columns After"
 msgstr "Oszlopok beszúrása ez után"
 
-#: src/control/Control.NotebookbarCalc.js:1245
+#: src/control/Control.NotebookbarCalc.js:1248
 msgid "Delete Columns"
 msgstr "Oszlopok törlése"
 
-#: src/control/Control.NotebookbarCalc.js:1268
-#: src/control/Control.NotebookbarCalc.js:3042
-#: src/control/Control.NotebookbarCalc.js:3399
-#: src/control/Control.NotebookbarDraw.js:1300
-#: src/control/Control.NotebookbarImpress.js:2312
-#: src/control/Control.NotebookbarImpress.js:2519
-#: src/control/Control.NotebookbarImpress.js:2823
-#: src/control/Control.NotebookbarWriter.js:2053
-#: src/control/Control.NotebookbarWriter.js:2953
-#: src/control/Control.NotebookbarWriter.js:3276
+#: src/control/Control.NotebookbarCalc.js:1271
+#: src/control/Control.NotebookbarCalc.js:2931
+#: src/control/Control.NotebookbarCalc.js:3288
+#: src/control/Control.NotebookbarDraw.js:1303
+#: src/control/Control.NotebookbarImpress.js:2338
+#: src/control/Control.NotebookbarImpress.js:2545
+#: src/control/Control.NotebookbarImpress.js:2849
+#: src/control/Control.NotebookbarWriter.js:2038
+#: src/control/Control.NotebookbarWriter.js:2932
+#: src/control/Control.NotebookbarWriter.js:3255
 msgid "Align"
 msgstr "Igazítás"
 
-#: src/control/Control.NotebookbarCalc.js:1338
-#: src/control/Control.NotebookbarCalc.js:3109
-#: src/control/Control.NotebookbarCalc.js:3466
-#: src/control/Control.NotebookbarDraw.js:1367
-#: src/control/Control.NotebookbarImpress.js:2379
-#: src/control/Control.NotebookbarImpress.js:2586
-#: src/control/Control.NotebookbarImpress.js:2890
-#: src/control/Control.NotebookbarWriter.js:2124
-#: src/control/Control.NotebookbarWriter.js:3012
-#: src/control/Control.NotebookbarWriter.js:3335
+#: src/control/Control.NotebookbarCalc.js:1341
+#: src/control/Control.NotebookbarCalc.js:2998
+#: src/control/Control.NotebookbarCalc.js:3355
+#: src/control/Control.NotebookbarDraw.js:1370
+#: src/control/Control.NotebookbarImpress.js:2405
+#: src/control/Control.NotebookbarImpress.js:2612
+#: src/control/Control.NotebookbarImpress.js:2916
+#: src/control/Control.NotebookbarWriter.js:2109
+#: src/control/Control.NotebookbarWriter.js:2991
+#: src/control/Control.NotebookbarWriter.js:3314
 msgid "Arrange"
 msgstr "Elrendezés"
 
-#: src/control/Control.NotebookbarCalc.js:1401
+#: src/control/Control.NotebookbarCalc.js:1403
 msgid "Sheet View"
 msgstr "Munkalapnézet"
 
-#: src/control/Control.NotebookbarCalc.js:1415
+#: src/control/Control.NotebookbarCalc.js:1417
 msgid "Default View"
 msgstr "Alapértelmezett nézet"
 
-#: src/control/Control.NotebookbarCalc.js:1432
+#: src/control/Control.NotebookbarCalc.js:1434
 msgid "Open Views List"
 msgstr "Nézetlista megnyitása"
 
-#: src/control/Control.NotebookbarCalc.js:1439
+#: src/control/Control.NotebookbarCalc.js:1441
 msgid "New Sheet View"
 msgstr "Új munkalapnézet"
 
-#: src/control/Control.NotebookbarCalc.js:1446
+#: src/control/Control.NotebookbarCalc.js:1448
 msgid "Remove Sheet View"
 msgstr "Munkalapnézet eltávolítása"
 
-#: src/control/Control.NotebookbarCalc.js:1453
+#: src/control/Control.NotebookbarCalc.js:1455
 msgid "Exit Sheet View"
 msgstr "Kilépés a munkalapnézetből"
 
-#: src/control/Control.NotebookbarCalc.js:1468
+#: src/control/Control.NotebookbarCalc.js:1470
 msgid "Freeze"
 msgstr "Fagyasztás"
 
-#: src/control/Control.NotebookbarCalc.js:1522
+#: src/control/Control.NotebookbarCalc.js:1524
 #: src/control/Control.NotebookbarDraw.js:420
-#: src/control/Control.NotebookbarImpress.js:537
-#: src/control/Control.NotebookbarWriter.js:1676
+#: src/control/Control.NotebookbarImpress.js:543
+#: src/control/Control.NotebookbarWriter.js:1661
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: src/control/Control.NotebookbarCalc.js:1529
+#: src/control/Control.NotebookbarCalc.js:1531
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:463
-#: src/control/Control.NotebookbarWriter.js:1662
+#: src/control/Control.NotebookbarWriter.js:1647
 msgid "Read mode"
 msgstr "Olvasási mód"
 
-#: src/control/Control.NotebookbarCalc.js:1596
+#: src/control/Control.NotebookbarCalc.js:1598
 #: src/control/Control.NotebookbarDraw.js:520
-#: src/control/Control.NotebookbarImpress.js:630
-#: src/control/Control.NotebookbarWriter.js:1769
+#: src/control/Control.NotebookbarImpress.js:636
+#: src/control/Control.NotebookbarWriter.js:1754
 msgid "Collapse Tabs"
 msgstr "Szalag elrejtése"
 
-#: src/control/Control.NotebookbarCalc.js:1609
+#: src/control/Control.NotebookbarCalc.js:1611
 #: src/control/Control.NotebookbarDraw.js:508
-#: src/control/Control.NotebookbarImpress.js:618
-#: src/control/Control.NotebookbarWriter.js:1757
+#: src/control/Control.NotebookbarImpress.js:624
+#: src/control/Control.NotebookbarWriter.js:1742
 msgid "Status Bar"
 msgstr "Állapotsor"
 
-#: src/control/Control.NotebookbarCalc.js:1666
-msgid "Table Style Options"
-msgstr "Táblázatstílus beállításai"
-
-#: src/control/Control.NotebookbarCalc.js:1679
-msgid "Header Row"
-msgstr "Fejlécsor"
-
-#: src/control/Control.NotebookbarCalc.js:1691
-msgid "Total Row"
-msgstr "Összegsor"
-
-#: src/control/Control.NotebookbarCalc.js:1709
-msgid "Banded Rows"
-msgstr "Sávozott sorok"
-
-#: src/control/Control.NotebookbarCalc.js:1721
-msgid "Banded Columns"
-msgstr "Sávozott oszlopok"
-
-#: src/control/Control.NotebookbarCalc.js:1739
-msgid "First Column"
-msgstr "Első oszlop"
-
-#: src/control/Control.NotebookbarCalc.js:1751
-msgid "Last Column"
-msgstr "Utolsó oszlop"
-
-#: src/control/Control.NotebookbarCalc.js:1766
-msgid "Filter Buttons"
-msgstr "Szűrőgombok"
-
-#: src/control/Control.NotebookbarCalc.js:1782
-msgid "Table Styles"
-msgstr "Táblázatstílusok"
-
-#: src/control/Control.NotebookbarCalc.js:1803
-#: src/control/Control.NotebookbarCalc.js:2551
-#: src/control/Control.NotebookbarCalc.js:3162
-#: src/control/Control.NotebookbarCalc.js:3519
-#: src/control/Control.NotebookbarImpress.js:2639
-#: src/control/Control.NotebookbarImpress.js:2943
-#: src/control/Control.NotebookbarWriter.js:3061
-#: src/control/Control.NotebookbarWriter.js:3384
+#: src/control/Control.NotebookbarCalc.js:1673
+#: src/control/Control.NotebookbarCalc.js:2421
+#: src/control/Control.NotebookbarCalc.js:3051
+#: src/control/Control.NotebookbarCalc.js:3408
+#: src/control/Control.NotebookbarImpress.js:2665
+#: src/control/Control.NotebookbarImpress.js:2969
+#: src/control/Control.NotebookbarWriter.js:3040
+#: src/control/Control.NotebookbarWriter.js:3363
 msgid "Group"
 msgstr "Csoportosítás"
 
-#: src/control/Control.NotebookbarCalc.js:1810
+#: src/control/Control.NotebookbarCalc.js:1680
 msgid "Ungroup"
 msgstr "Csoportosítás megszüntetése"
 
-#: src/control/Control.NotebookbarCalc.js:1832
+#: src/control/Control.NotebookbarCalc.js:1702
 msgid "Pivot Table"
 msgstr "Kimutatástábla"
 
-#: src/control/Control.NotebookbarCalc.js:1881
+#: src/control/Control.NotebookbarCalc.js:1751
 #: src/control/Control.NotebookbarDraw.js:94
-#: src/control/Control.NotebookbarDraw.js:1492
+#: src/control/Control.NotebookbarDraw.js:1495
 #: src/control/Control.NotebookbarImpress.js:122
-#: src/control/Control.NotebookbarImpress.js:1502
+#: src/control/Control.NotebookbarImpress.js:1511
 #: src/control/Control.NotebookbarWriter.js:81
-#: src/control/Control.NotebookbarWriter.js:1258
+#: src/control/Control.NotebookbarWriter.js:1243
 msgid "Table"
 msgstr "Táblázat"
 
-#: src/control/Control.NotebookbarCalc.js:1897
-#: src/control/Control.NotebookbarDraw.js:1015
-#: src/control/Control.NotebookbarDraw.js:1472
-#: src/control/Control.NotebookbarImpress.js:1175
-#: src/control/Control.NotebookbarImpress.js:1455
-#: src/control/Control.NotebookbarWriter.js:1266
+#: src/control/Control.NotebookbarCalc.js:1767
+#: src/control/Control.NotebookbarDraw.js:1018
+#: src/control/Control.NotebookbarDraw.js:1475
+#: src/control/Control.NotebookbarImpress.js:1184
+#: src/control/Control.NotebookbarImpress.js:1464
+#: src/control/Control.NotebookbarWriter.js:1251
 msgid "Illustrations"
 msgstr "Illusztrációk"
 
-#: src/control/Control.NotebookbarCalc.js:1960
-#: src/control/Control.NotebookbarDraw.js:1029
-#: src/control/Control.NotebookbarDraw.js:1523
-#: src/control/Control.NotebookbarImpress.js:1189
-#: src/control/Control.NotebookbarImpress.js:1533
-#: src/control/Control.NotebookbarWriter.js:1311
+#: src/control/Control.NotebookbarCalc.js:1830
+#: src/control/Control.NotebookbarDraw.js:1032
+#: src/control/Control.NotebookbarDraw.js:1526
+#: src/control/Control.NotebookbarImpress.js:1198
+#: src/control/Control.NotebookbarImpress.js:1542
+#: src/control/Control.NotebookbarWriter.js:1296
 msgid "Shapes"
 msgstr "Alakzatok"
 
-#: src/control/Control.NotebookbarCalc.js:2005
-#: src/control/Control.NotebookbarDraw.js:1593
-#: src/control/Control.NotebookbarImpress.js:1620
-#: src/control/Control.NotebookbarWriter.js:1379
+#: src/control/Control.NotebookbarCalc.js:1875
+#: src/control/Control.NotebookbarDraw.js:1596
+#: src/control/Control.NotebookbarImpress.js:1629
+#: src/control/Control.NotebookbarWriter.js:1364
 msgid "Assistant"
 msgstr "Asszisztens"
 
-#: src/control/Control.NotebookbarCalc.js:2176
+#: src/control/Control.NotebookbarCalc.js:2046
 msgid "Insert Function"
 msgstr "Függvény beillesztése"
 
-#: src/control/Control.NotebookbarCalc.js:2184
+#: src/control/Control.NotebookbarCalc.js:2054
 msgid "Function Library"
 msgstr "Függvénykönyvtár"
 
-#: src/control/Control.NotebookbarCalc.js:2198
+#: src/control/Control.NotebookbarCalc.js:2068
 msgid "AutoSum"
 msgstr "Összegzés"
 
-#: src/control/Control.NotebookbarCalc.js:2211
+#: src/control/Control.NotebookbarCalc.js:2081
 msgid "Financial"
 msgstr "Pénzügyi"
 
-#: src/control/Control.NotebookbarCalc.js:2229
+#: src/control/Control.NotebookbarCalc.js:2099
 msgid "Logical"
 msgstr "Logikai"
 
-#: src/control/Control.NotebookbarCalc.js:2259
+#: src/control/Control.NotebookbarCalc.js:2129
 msgid "Date & Time"
 msgstr "Dátum és idő"
 
-#: src/control/Control.NotebookbarCalc.js:2271
+#: src/control/Control.NotebookbarCalc.js:2141
 msgid "Lookup & Reference"
 msgstr "Keresés és hivatkozás"
 
-#: src/control/Control.NotebookbarCalc.js:2289
+#: src/control/Control.NotebookbarCalc.js:2159
 msgid "Math & Trig"
 msgstr "Matematikai"
 
-#: src/control/Control.NotebookbarCalc.js:2301
+#: src/control/Control.NotebookbarCalc.js:2171
 msgid "More Functions"
 msgstr "Egyéb függvények"
 
-#: src/control/Control.NotebookbarCalc.js:2346
+#: src/control/Control.NotebookbarCalc.js:2216
 msgid "Range"
 msgstr "Tartomány"
 
-#: src/control/Control.NotebookbarCalc.js:2429
+#: src/control/Control.NotebookbarCalc.js:2299
 msgid "Sort"
 msgstr "Rendezés"
 
-#: src/control/Control.NotebookbarCalc.js:2475
+#: src/control/Control.NotebookbarCalc.js:2345
 msgid "Filter"
 msgstr "Szűrő"
 
-#: src/control/Control.NotebookbarCalc.js:2723
-#: src/control/Control.NotebookbarImpress.js:1980
+#: src/control/Control.NotebookbarCalc.js:2593
+#: src/control/Control.NotebookbarImpress.js:2006
 msgid "Comments"
 msgstr "Megjegyzések"
 
-#: src/control/Control.NotebookbarCalc.js:2829
+#: src/control/Control.NotebookbarCalc.js:2699
 msgid "Format Cells"
 msgstr "Cellák formázása"
 
-#: src/control/Control.NotebookbarCalc.js:2975
-#: src/control/Control.NotebookbarCalc.js:3332
-#: src/control/Control.NotebookbarWriter.js:1955
-#: src/control/Control.NotebookbarWriter.js:2898
-#: src/control/Control.NotebookbarWriter.js:3221
+#: src/control/Control.NotebookbarCalc.js:2759
+#: src/control/Control.NotebookbarImpress.js:1829
+msgid "Themes"
+msgstr "Témák"
+
+#: src/control/Control.NotebookbarCalc.js:2864
+#: src/control/Control.NotebookbarCalc.js:3221
+#: src/control/Control.NotebookbarWriter.js:1940
+#: src/control/Control.NotebookbarWriter.js:2877
+#: src/control/Control.NotebookbarWriter.js:3200
 msgid "Wrap"
 msgstr "Körbefuttatás"
 
-#: src/control/Control.NotebookbarCalc.js:3214
-#: src/control/Control.NotebookbarImpress.js:2699
-#: src/control/Control.NotebookbarWriter.js:3107
+#: src/control/Control.NotebookbarCalc.js:3103
+#: src/control/Control.NotebookbarImpress.js:2725
+#: src/control/Control.NotebookbarWriter.js:3086
 msgid "Image Controls"
 msgstr "Képbeállítások"
 
@@ -3117,16 +3149,16 @@ msgid "PDF Document (.pdf) - Expert"
 msgstr "PDF-dokumentum (.pdf) – Speciális"
 
 #: src/control/Control.NotebookbarDraw.js:495
-#: src/control/Control.NotebookbarImpress.js:605
-#: src/control/Control.NotebookbarWriter.js:1744
+#: src/control/Control.NotebookbarImpress.js:611
+#: src/control/Control.NotebookbarWriter.js:1729
 msgid "Ruler"
 msgstr "Vonalzó"
 
-#: src/control/Control.NotebookbarDraw.js:901
-#: src/control/Control.NotebookbarImpress.js:989
-#: src/control/Control.NotebookbarImpress.js:2192
-#: src/control/Control.NotebookbarWriter.js:811
-#: src/control/Control.NotebookbarWriter.js:2656
+#: src/control/Control.NotebookbarDraw.js:904
+#: src/control/Control.NotebookbarImpress.js:998
+#: src/control/Control.NotebookbarImpress.js:2218
+#: src/control/Control.NotebookbarWriter.js:814
+#: src/control/Control.NotebookbarWriter.js:2635
 msgid "Paragraph"
 msgstr "Bekezdés"
 
@@ -3146,89 +3178,113 @@ msgstr "Diasablon"
 msgid "From Beginning"
 msgstr "Elölről"
 
-#: src/control/Control.NotebookbarImpress.js:476
+#: src/control/Control.NotebookbarImpress.js:470
+msgid "Fullscreen, starting at slide 1"
+msgstr "Teljes képernyő, az 1. diától kezdve"
+
+#: src/control/Control.NotebookbarImpress.js:477
 msgid "From Current Slide"
 msgstr "Az aktuális diától"
 
-#: src/control/Control.NotebookbarImpress.js:485
+#: src/control/Control.NotebookbarImpress.js:478
+msgid "Fullscreen, starting at this slide"
+msgstr "Teljes képernyő, ettől a diától kezdve"
+
+#: src/control/Control.NotebookbarImpress.js:487
 msgid "Present in Window"
 msgstr "Diavetítés ablakban"
 
-#: src/control/Control.NotebookbarImpress.js:493
+#: src/control/Control.NotebookbarImpress.js:488
+msgid "Plays inside the document window. Starts at slide 1"
+msgstr "Lejátszás a dokumentumablakban. Az 1. diától indul"
+
+#: src/control/Control.NotebookbarImpress.js:496
 msgid "Presenter View"
 msgstr "Előadói nézet"
 
-#: src/control/Control.NotebookbarImpress.js:501
+#: src/control/Control.NotebookbarImpress.js:497
+msgid "Shows your notes, next slide, and a timer"
+msgstr "Megjeleníti a jegyzeteit, a következő diát és egy időzítőt"
+
+#: src/control/Control.NotebookbarImpress.js:505
 msgid "Present to All"
 msgstr "Prezentálás mindenkinek"
 
-#: src/control/Control.NotebookbarImpress.js:509
-#: src/slideshow/SlideShowPresenter.ts:1320
+#: src/control/Control.NotebookbarImpress.js:506
+msgid "Starts a slideshow on every viewer's screen"
+msgstr "Diavetítést indít minden néző képernyőjén"
+
+#: src/control/Control.NotebookbarImpress.js:514
+#: src/slideshow/SlideShowPresenter.ts:1314
 msgid "Follow Presenter"
 msgstr "Előadó követése"
 
-#: src/control/Control.NotebookbarImpress.js:637
+#: src/control/Control.NotebookbarImpress.js:515
+msgid "View slides as the presenter advances them"
+msgstr "A diák megjelenítése az előadó léptetése szerint"
+
+#: src/control/Control.NotebookbarImpress.js:643
 msgid "Slide Views"
 msgstr "Dianézetek"
 
-#: src/control/Control.NotebookbarImpress.js:676
+#: src/control/Control.NotebookbarImpress.js:682
 msgid "Snap to Grid"
 msgstr "Illesztés a rácshoz"
 
-#: src/control/Control.NotebookbarImpress.js:800
-#: src/control/Control.NotebookbarImpress.js:1830
+#: src/control/Control.NotebookbarImpress.js:809
+#: src/control/Control.NotebookbarImpress.js:1856
 msgid "Slide Layout"
 msgstr "Diaelrendezés"
 
-#: src/control/Control.NotebookbarImpress.js:811
-#: src/control/Control.NotebookbarImpress.js:1415
+#: src/control/Control.NotebookbarImpress.js:820
+#: src/control/Control.NotebookbarImpress.js:1424
 msgid "New"
 msgstr "Új"
 
-#: src/control/Control.NotebookbarImpress.js:822
-#: src/control/Control.NotebookbarImpress.js:1840
+#: src/control/Control.NotebookbarImpress.js:831
+#: src/control/Control.NotebookbarImpress.js:1866
 msgid "Change Layout"
 msgstr "Elrendezés változtatása"
 
-#: src/control/Control.NotebookbarImpress.js:830
-#: src/control/Control.NotebookbarImpress.js:1847
+#: src/control/Control.NotebookbarImpress.js:839
+#: src/control/Control.NotebookbarImpress.js:1873
 msgid "Reset Layout"
 msgstr "Elrendezés visszaállítása"
 
-#: src/control/Control.NotebookbarImpress.js:844
+#: src/control/Control.NotebookbarImpress.js:853
 msgid "Character"
 msgstr "Karakter"
 
-#: src/control/Control.NotebookbarImpress.js:1105
+#: src/control/Control.NotebookbarImpress.js:1114
 msgid "Spacing & Color"
 msgstr "Térköz és színek"
 
-#: src/control/Control.NotebookbarImpress.js:1795
+#: src/control/Control.NotebookbarImpress.js:1804
 msgid "Master Slide Templates"
 msgstr "Diasablonok"
 
-#: src/control/Control.NotebookbarImpress.js:1809
-msgid "Themes"
-msgstr "Témák"
+#: src/control/Control.NotebookbarImpress.js:1815
+msgid "Presentation Templates"
+msgstr "Bemutatósablonok"
 
-#: src/control/Control.NotebookbarImpress.js:1859
+#: src/control/Control.NotebookbarImpress.js:1885
 msgid "Slide Size"
 msgstr "Dia mérete"
 
-#: src/control/Control.NotebookbarImpress.js:1882
+#: src/control/Control.NotebookbarImpress.js:1908
 msgid "Background Image"
 msgstr "Háttérkép"
 
-#: src/control/Control.NotebookbarImpress.js:2084
+#: src/control/Control.NotebookbarImpress.js:2110
 msgid "Merge & Split"
 msgstr "Egyesítés és felosztás"
 
-#: src/control/Control.NotebookbarImpress.js:2123
-#: src/control/Control.NotebookbarWriter.js:2606
+#: src/control/Control.NotebookbarImpress.js:2149
+#: src/control/Control.NotebookbarWriter.js:2585
 msgid "Select"
 msgstr "Kijelölés"
 
-#: src/control/Control.NotebookbarImpress.js:2732
+#: src/control/Control.NotebookbarImpress.js:2758
 msgid "Effects"
 msgstr "Effektusok"
 
@@ -3252,66 +3308,70 @@ msgstr "Ellenőrzés oldalsáv"
 msgid "Validate Dialog"
 msgstr "Ellenőrzés párbeszédpanel"
 
-#: src/control/Control.NotebookbarWriter.js:941
+#: src/control/Control.NotebookbarWriter.js:944
 #: src/control/Control.Zotero.js:828
 msgid "Styles"
 msgstr "Stílusok"
 
-#: src/control/Control.NotebookbarWriter.js:952
-msgid "Scroll up"
-msgstr "Görgetés felfelé"
-
-#: src/control/Control.NotebookbarWriter.js:959
-msgid "Scroll down"
-msgstr "Görgetés lefelé"
-
-#: src/control/Control.NotebookbarWriter.js:1112
+#: src/control/Control.NotebookbarWriter.js:1097
 msgid "Lists/Bullets"
 msgstr "Listák"
 
-#: src/control/Control.NotebookbarWriter.js:1399
+#: src/control/Control.NotebookbarWriter.js:1384
 msgid "Header & Footer"
 msgstr "Élőfej és élőláb"
 
-#: src/control/Control.NotebookbarWriter.js:1468
+#: src/control/Control.NotebookbarWriter.js:1453
 msgid "Section"
 msgstr "Szakasz"
 
-#: src/control/Control.NotebookbarWriter.js:1553
+#: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
 msgstr "Szimbólumok"
 
-#: src/control/Control.NotebookbarWriter.js:1606
+#: src/control/Control.NotebookbarWriter.js:1591
 msgid "Rich Text"
 msgstr "Formázott szöveg"
 
-#: src/control/Control.NotebookbarWriter.js:1614
+#: src/control/Control.NotebookbarWriter.js:1599
 msgid "Checkbox"
 msgstr "Jelölőnégyzet"
 
-#: src/control/Control.NotebookbarWriter.js:1690
+#: src/control/Control.NotebookbarWriter.js:1675
 msgid "Page Width"
 msgstr "Oldal szélessége"
 
-#: src/control/Control.NotebookbarWriter.js:2223
+#: src/control/Control.NotebookbarWriter.js:2208
 msgid "Spellcheck"
-msgstr ""
+msgstr "Helyesírás-ellenőrzés"
 
-#: src/control/Control.NotebookbarWriter.js:2276
-#: src/control/Control.NotebookbarWriter.js:2292
+#: src/control/Control.NotebookbarWriter.js:2221
+msgid "Spelling Options"
+msgstr "Helyesírási beállítások"
+
+#: src/control/Control.NotebookbarWriter.js:2233
+msgid "Auto Spell Check"
+msgstr "Automatikus helyesírás-ellenőrzés"
+
+#: src/control/Control.NotebookbarWriter.js:2253
+msgid "New Comment"
+msgstr "Új megjegyzés"
+
+#: src/control/Control.NotebookbarWriter.js:2261
+#: src/control/Control.NotebookbarWriter.js:2277
 #: src/control/jsdialog/Widget.HTMLContent.ts:189
 msgid "Show Comments"
 msgstr "Megjegyzések mutatása"
 
-#: src/control/Control.NotebookbarWriter.js:2347
+#: src/control/Control.NotebookbarWriter.js:2332
 msgid "Tracking"
 msgstr "Változáskövetés"
 
-#: src/control/Control.NotebookbarWriter.js:2368
+#: src/control/Control.NotebookbarWriter.js:2346
 msgid "View Changes"
 msgstr "Változások megtekintése"
 
-#: src/control/Control.NotebookbarWriter.js:2544
+#: src/control/Control.NotebookbarWriter.js:2523
 msgid "Split"
 msgstr "Felosztás"
 
@@ -3491,7 +3551,7 @@ msgid "On"
 msgstr "Be"
 
 #: src/control/Control.StatusBar.js:158
-#: src/control/jsdialog/Definitions.Menu.ts:1787
+#: src/control/jsdialog/Definitions.Menu.ts:1802
 msgid "Off"
 msgstr "Ki"
 
@@ -3582,15 +3642,15 @@ msgstr "Munkalap áthelyezése jobbra"
 msgid "Copy Sheet..."
 msgstr "Munkalap másolása..."
 
-#: src/control/Control.Tabs.js:424
+#: src/control/Control.Tabs.js:418
 msgid "Are you sure you want to delete sheet, {sheet}?"
 msgstr "Biztosan törli ezt a munkalapot: {sheet}?"
 
-#: src/control/Control.Tabs.js:435
+#: src/control/Control.Tabs.js:429
 msgid "Rename sheet"
 msgstr "Munkalap átnevezése"
 
-#: src/control/Control.Tabs.js:435
+#: src/control/Control.Tabs.js:429
 msgid "Enter new sheet name"
 msgstr "Adja meg az új munkalapnevet"
 
@@ -3709,13 +3769,13 @@ msgstr "Betöltés…"
 
 #: src/control/Control.Zotero.js:257 src/control/Control.Zotero.js:454
 #: src/slideshow/PresenterConsole.js:31
-#: src/slideshow/SlideShowPresenter.ts:711
+#: src/slideshow/SlideShowPresenter.ts:704
 msgid "Previous"
 msgstr "Előző"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
-#: src/slideshow/SlideShowPresenter.ts:721
+#: src/slideshow/SlideShowPresenter.ts:714
 msgid "Next"
 msgstr "Következő"
 
@@ -3839,19 +3899,19 @@ msgstr ""
 "A hivatkozások véglegesítése azt jeleni, hogy megszűnik a kapcsolat a "
 "Zoteroval, a hivatkozások és a bibliográfia többé nem frissíthető."
 
-#: src/control/HRuler.ts:610 src/control/HRuler.ts:782
+#: src/control/HRuler.ts:611 src/control/HRuler.ts:783
 msgid "Left Margin"
 msgstr "Bal margó"
 
-#: src/control/HRuler.ts:611 src/control/HRuler.ts:783
+#: src/control/HRuler.ts:612 src/control/HRuler.ts:784
 msgid "Right Margin"
 msgstr "Jobb margó"
 
-#: src/control/HRuler.ts:1133
+#: src/control/HRuler.ts:1142
 msgid "Insert tabstop"
 msgstr "Tabulátorpozíció beszúrása"
 
-#: src/control/HRuler.ts:1140
+#: src/control/HRuler.ts:1149
 msgid "Delete tabstop"
 msgstr "Tabulátorpozíció törlése"
 
@@ -3943,11 +4003,11 @@ msgstr "Mentés…"
 msgid "Renaming..."
 msgstr "Átnevezés..."
 
-#: src/control/VRuler.ts:374
+#: src/control/VRuler.ts:375
 msgid "Top Margin"
 msgstr "Felső margó"
 
-#: src/control/VRuler.ts:375
+#: src/control/VRuler.ts:376
 msgid "Bottom Margin"
 msgstr "Alsó margó"
 
@@ -4160,203 +4220,211 @@ msgstr "Laza"
 msgid "Very Loose"
 msgstr "Nagyon laza"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1792
+#: src/control/jsdialog/Definitions.Menu.ts:1788
+msgid "Inline"
+msgstr "Beágyazott"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1794
+msgid "Side by Side"
+msgstr "Egymás mellett"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1807
 msgid "All users"
 msgstr "Minden felhasználó"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1797
+#: src/control/jsdialog/Definitions.Menu.ts:1812
 msgid "This user"
 msgstr "Ez a felhasználó"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1931
+#: src/control/jsdialog/Definitions.Menu.ts:1946
 msgid "No Borders"
 msgstr "Szegély nélkül"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1937
+#: src/control/jsdialog/Definitions.Menu.ts:1952
 msgid "Left Border"
 msgstr "Bal szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1943
+#: src/control/jsdialog/Definitions.Menu.ts:1958
 msgid "Right Border"
 msgstr "Jobb szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1949
+#: src/control/jsdialog/Definitions.Menu.ts:1964
 msgid "Left And Right Borders"
 msgstr "Bal és jobb szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1955
+#: src/control/jsdialog/Definitions.Menu.ts:1970
 msgid "Top Border"
 msgstr "Felső szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1961
+#: src/control/jsdialog/Definitions.Menu.ts:1976
 msgid "Bottom Border"
 msgstr "Alsó szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1967
+#: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Top And Bottom Border"
 msgstr "Alsó és felső szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1973
+#: src/control/jsdialog/Definitions.Menu.ts:1988
 msgid "Outer Border"
 msgstr "Külső szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1979
+#: src/control/jsdialog/Definitions.Menu.ts:1994
 msgid "All Horizontal Lines"
 msgstr "Összes vízszintes vonal"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1985
+#: src/control/jsdialog/Definitions.Menu.ts:2000
 msgid "Outer Border And Horizontal Lines"
 msgstr "Külső szegély és vízszintes vonalak"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1991
+#: src/control/jsdialog/Definitions.Menu.ts:2006
 msgid "Outer Border and Vertical Lines"
 msgstr "Külső szegély és függőleges vonalak"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1997
+#: src/control/jsdialog/Definitions.Menu.ts:2012
 msgid "Outer Borders And All Inner lines"
 msgstr "Külső szegély és minden belső vonal"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2002
+#: src/control/jsdialog/Definitions.Menu.ts:2017
 msgid "Line color"
 msgstr "Vonalszín"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2013
+#: src/control/jsdialog/Definitions.Menu.ts:2028
 msgid "Line style"
 msgstr "Vonalstílus"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2016
+#: src/control/jsdialog/Definitions.Menu.ts:2031
 msgid "Hairline (0.05 pt)"
 msgstr "Hajszálvékony (0,05 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2025
+#: src/control/jsdialog/Definitions.Menu.ts:2040
 msgid "Very thin (0.50 pt)"
 msgstr "Nagyon vékony (0,5 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2034
+#: src/control/jsdialog/Definitions.Menu.ts:2049
 msgid "Thin (0.75 pt)"
 msgstr "Vékony (0,75 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2043
+#: src/control/jsdialog/Definitions.Menu.ts:2058
 msgid "Medium (1.50 pt)"
 msgstr "Közepes (1,50 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2052
+#: src/control/jsdialog/Definitions.Menu.ts:2067
 msgid "Thick (2.25 pt)"
 msgstr "Vastag (2,25 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2061
+#: src/control/jsdialog/Definitions.Menu.ts:2076
 msgid "Extra thick (4.50 pt)"
 msgstr "Extra vastag (4,50 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2070
+#: src/control/jsdialog/Definitions.Menu.ts:2085
 msgid "Double Hairline (1.10 pt)"
 msgstr "Dupla hajszálvékony (1,10 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2079
+#: src/control/jsdialog/Definitions.Menu.ts:2094
 msgid "Double Hairline (2.35 pt)"
 msgstr "Dupla hajszálvékony (2,35 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2088
+#: src/control/jsdialog/Definitions.Menu.ts:2103
 msgid "Thin/Medium (3.00 pt)"
 msgstr "Vékony/közepes (3,00 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2097
+#: src/control/jsdialog/Definitions.Menu.ts:2112
 msgid "Medium/Hairline (3.05 pt)"
 msgstr "Közepes/hajszálvékony (3,05 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2106
+#: src/control/jsdialog/Definitions.Menu.ts:2121
 msgid "Medium/Medium (4.50 pt)"
 msgstr "Közepes/közepes (4,50 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2166
+#: src/control/jsdialog/Definitions.Menu.ts:2181
 msgid "Standard (4:3)"
 msgstr "Szabványos (4:3)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2171
+#: src/control/jsdialog/Definitions.Menu.ts:2186
 msgid "Widescreen (16:9)"
 msgstr "Szélesvásznú (16:9)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2181
+#: src/control/jsdialog/Definitions.Menu.ts:2196
 msgid "Blank Slide"
 msgstr "Üres dia"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2182
+#: src/control/jsdialog/Definitions.Menu.ts:2197
 msgid "Title Slide"
 msgstr "Címdia"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2183
+#: src/control/jsdialog/Definitions.Menu.ts:2198
 msgid "Title, Content"
 msgstr "Cím, tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2184
+#: src/control/jsdialog/Definitions.Menu.ts:2199
 msgid "Title and 2 Content"
 msgstr "Cím és 2 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2185
+#: src/control/jsdialog/Definitions.Menu.ts:2200
 msgid "Title Only"
 msgstr "Csak cím"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2186
+#: src/control/jsdialog/Definitions.Menu.ts:2201
 msgid "Centered Text"
 msgstr "Középre igazított szöveg"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2187
+#: src/control/jsdialog/Definitions.Menu.ts:2202
 msgid "Title, 2 Content and Content"
 msgstr "Cím, 2 tartalom és tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2188
+#: src/control/jsdialog/Definitions.Menu.ts:2203
 msgid "Title, Content and 2 Content"
 msgstr "Cím, tartalom és 2 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2189
+#: src/control/jsdialog/Definitions.Menu.ts:2204
 msgid "Title, 2 Content over Content"
 msgstr "Cím, 2 tartalom tartalom felett"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2190
+#: src/control/jsdialog/Definitions.Menu.ts:2205
 msgid "Title, Content over Content"
 msgstr "Cím, tartalom tartalom felett"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2191
+#: src/control/jsdialog/Definitions.Menu.ts:2206
 msgid "Title, 4 Content"
 msgstr "Cím, 4 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2192
+#: src/control/jsdialog/Definitions.Menu.ts:2207
 msgid "Title, 6 Content"
 msgstr "Cím, 6 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2193
+#: src/control/jsdialog/Definitions.Menu.ts:2208
 msgid "Vertical Title, Text, Chart"
 msgstr "Függőleges cím, szöveg, grafikon"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2194
+#: src/control/jsdialog/Definitions.Menu.ts:2209
 msgid "Vertical Title, Vertical Text"
 msgstr "Függőleges cím, függőleges szöveg"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2195
+#: src/control/jsdialog/Definitions.Menu.ts:2210
 msgid "Title, Vertical Text"
 msgstr "Cím, függőleges szöveg"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2196
+#: src/control/jsdialog/Definitions.Menu.ts:2211
 msgid "Title, Vertical Text, Clipart"
 msgstr "Cím, függőleges szöveg, clipart"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2331
+#: src/control/jsdialog/Definitions.Menu.ts:2346
 msgid "Grayscale"
 msgstr "Szürkeárnyalatos"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2336
+#: src/control/jsdialog/Definitions.Menu.ts:2351
 msgid "Black/White"
 msgstr "Fekete-fehér"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2341
+#: src/control/jsdialog/Definitions.Menu.ts:2356
 msgid "Watermark"
 msgstr "Vízjel"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2349
+#: src/control/jsdialog/Definitions.Menu.ts:2364
 msgid "Insert comment"
 msgstr "Megjegyzés beszúrása"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2353
+#: src/control/jsdialog/Definitions.Menu.ts:2368
 msgid "Comments list"
 msgstr "Megjegyzések listája"
 
@@ -4389,31 +4457,27 @@ msgstr "Egyéni szín bevitele hexa formátumban"
 msgid "Recent"
 msgstr "Előzmények"
 
-#: src/control/jsdialog/Widget.PageMarginEntry.ts:40
-msgid "Page margin options"
-msgstr "Margóbeállítások"
-
-#: src/control/jsdialog/Widget.PageMarginEntry.ts:141
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:139
 msgid "Top: {top}"
 msgstr "Felül: {top}"
 
-#: src/control/jsdialog/Widget.PageMarginEntry.ts:146
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:144
 msgid "Left: {left}"
 msgstr "Bal: {left}"
 
-#: src/control/jsdialog/Widget.PageMarginEntry.ts:156
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:154
 msgid "Bottom: {bottom}"
 msgstr "Alul: {bottom}"
 
-#: src/control/jsdialog/Widget.PageMarginEntry.ts:161
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:159
 msgid "Right: {right}"
 msgstr "Jobb: {right}"
 
-#: src/control/jsdialog/Widget.PageMarginEntry.ts:185
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:183
 msgid "Custom Margins…"
 msgstr "Egyéni margók…"
 
-#: src/control/jsdialog/Widget.PageSizeEntry.ts:69
+#: src/control/jsdialog/Widget.PageSizeEntry.ts:91
 msgid "More Paper Sizes..."
 msgstr "További papírméretek..."
 
@@ -4472,11 +4536,11 @@ msgstr "Cellaszegélyek"
 msgid "More options for {1}"
 msgstr "{1} további beállításai"
 
-#: src/control/jsdialog/Widget.TreeView.ts:1624
+#: src/control/jsdialog/Widget.TreeView.ts:1667
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Itt jelennek meg a dokumentumhoz hozzáadott címsorok és objektumok."
 
-#: src/control/jsdialog/Widget.TreeView.ts:1672
+#: src/control/jsdialog/Widget.TreeView.ts:1715
 msgid "Search items"
 msgstr "Elemek keresése"
 
@@ -4630,7 +4694,7 @@ msgstr "Dokumentumszínek"
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", klaszterkonfigurációs hiba: eltérő kiszolgálóazonosító"
 
-#: src/dom/NotebookbarAccessibility.js:235
+#: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
 msgstr "{0} fül kiválasztva"
 
@@ -4961,15 +5025,15 @@ msgstr "Online szerkesztő"
 msgid "Functions"
 msgstr "Függvények"
 
-#: src/layer/tile/CanvasTileLayer.js:1719
+#: src/layer/tile/CanvasTileLayer.js:1724
 msgid "Named Range"
 msgstr "Nevesített tartomány"
 
-#: src/layer/tile/CanvasTileLayer.js:3390
+#: src/layer/tile/CanvasTileLayer.js:3429
 msgid "No Comments"
 msgstr "Nincsenek megjegyzések"
 
-#: src/main.js:131
+#: src/main.js:132
 msgid "Warning! The browser you are using is not supported."
 msgstr "Figyelem! Az Ön által használt böngésző nem támogatott."
 
@@ -5067,24 +5131,24 @@ msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, állapot: {0}"
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "A kijelölt fájl olvasása sikertelen."
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
 msgstr "Nyomtatás párbeszédablak"
 
 #: src/map/handler/Map.SlideShow.js:59
-#: src/slideshow/SlideShowPresenter.ts:1088
+#: src/slideshow/SlideShowPresenter.ts:1082
 msgid "Empty Slide Show"
 msgstr "Üres bemutató"
 
 #: src/map/handler/Map.SlideShow.js:167
-#: src/slideshow/SlideShowPresenter.ts:1116
+#: src/slideshow/SlideShowPresenter.ts:1110
 msgid "Windowed Presentation Blocked"
 msgstr "Az ablakban diavetítés blokkolva van"
 
 #: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:1118
+#: src/slideshow/SlideShowPresenter.ts:1112
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -5095,17 +5159,17 @@ msgstr ""
 "a képernyő megosztásakor lehet hasznos, egy videohívás során."
 
 #: src/map/handler/Map.SlideShow.js:172
-#: src/slideshow/SlideShowPresenter.ts:918
+#: src/slideshow/SlideShowPresenter.ts:912
 msgid "Windowed Presentation: "
 msgstr "Ablakban vetített bemutató: "
 
 #: src/map/handler/Map.SlideShow.js:202
-#: src/slideshow/SlideShowPresenter.ts:960
+#: src/slideshow/SlideShowPresenter.ts:954
 msgid "Presenting in window"
 msgstr "Diavetítés ablakban"
 
 #: src/map/handler/Map.SlideShow.js:203
-#: src/slideshow/SlideShowPresenter.ts:961
+#: src/slideshow/SlideShowPresenter.ts:955
 msgid "Close Presentation"
 msgstr "Bemutató bezárása"
 
@@ -5118,22 +5182,22 @@ msgid "End Presentation"
 msgstr "Diavetítés befejezése"
 
 #: src/map/handler/Map.SlideShow.js:295
-#: src/slideshow/SlideShowPresenter.ts:1103
+#: src/slideshow/SlideShowPresenter.ts:1097
 msgid "Already presenting"
 msgstr "Már megy a diavetítés"
 
 #: src/map/handler/Map.SlideShow.js:296
-#: src/slideshow/SlideShowPresenter.ts:1104
+#: src/slideshow/SlideShowPresenter.ts:1098
 msgid "You are already presenting this document"
 msgstr "Ezt a dokumentumot már megnyitotta diavetítésre"
 
 #: src/map/handler/Map.SlideShow.js:306
-#: src/slideshow/SlideShowPresenter.ts:1141
+#: src/slideshow/SlideShowPresenter.ts:1135
 msgid "Presentation disabled"
 msgstr "Diavetítés letiltva"
 
 #: src/map/handler/Map.SlideShow.js:307
-#: src/slideshow/SlideShowPresenter.ts:1142
+#: src/slideshow/SlideShowPresenter.ts:1136
 msgid "Presentation mode has been disabled for this document"
 msgstr "A bemutató levetítése nem megengedett"
 
@@ -5142,19 +5206,19 @@ msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
 "A Collabora Online kiszolgálót frissíteni kell. Elérhető az új {0} verzió."
 
-#: src/map/handler/Map.WOPI.js:180
+#: src/map/handler/Map.WOPI.js:181
 msgid "Creating new file from template..."
 msgstr "Új fájl létrehozása sablonból..."
 
-#: src/map/handler/Map.WOPI.js:232
+#: src/map/handler/Map.WOPI.js:233
 msgid "Compare Document..."
 msgstr "Dokumentumok összehasonlítása..."
 
-#: src/map/handler/Map.WOPI.js:745
+#: src/map/handler/Map.WOPI.js:746
 msgid "File name should contain an extension."
 msgstr "A fájlnévnek tartalmaznia kell kiterjesztést."
 
-#: src/map/handler/Map.WOPI.js:753
+#: src/map/handler/Map.WOPI.js:754
 msgid "Creating copy..."
 msgstr "Másolat létrehozása..."
 
@@ -5223,21 +5287,20 @@ msgstr "Ismétlés {0} másodperc múlva"
 msgid "Click to exit presentation..."
 msgstr "Kattintson bárhova a bemutató befejezéséhez..."
 
-#: src/slideshow/SlideShowPresenter.ts:700
+#: src/slideshow/SlideShowPresenter.ts:693
 msgid "End Show"
 msgstr "Bemutató vége"
 
-#: src/slideshow/SlideShowPresenter.ts:735
-#: src/slideshow/SlideShowPresenter.ts:748
+#: src/slideshow/SlideShowPresenter.ts:728
+#: src/slideshow/SlideShowPresenter.ts:741
 msgid "Disable Animations"
 msgstr "Animációk kikapcsolása"
 
-#: src/slideshow/SlideShowPresenter.ts:747
+#: src/slideshow/SlideShowPresenter.ts:740
 msgid "Enable Animations"
 msgstr "Animációk engedélyezése"
 
-#: src/slideshow/SlideShowPresenter.ts:1315
-#, fuzzy
+#: src/slideshow/SlideShowPresenter.ts:1309
 msgid "Stop Following"
 msgstr "Követés megszüntetése"
 
@@ -5322,6 +5385,15 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Scroll up"
+#~ msgstr "Görgetés felfelé"
+
+#~ msgid "Scroll down"
+#~ msgstr "Görgetés lefelé"
+
+#~ msgid "Page margin options"
+#~ msgstr "Margóbeállítások"
 
 #~ msgid "Table Style Light 1"
 #~ msgstr "Világos táblázatstílus 1"
@@ -5409,9 +5481,6 @@ msgstr ""
 
 #~ msgid "Recently opened documents will appear here"
 #~ msgstr "Itt fognak megjelenni a nemrégiben megnyitott dokumentumok"
-
-#~ msgid "New Document"
-#~ msgstr "Új dokumentum"
 
 #~ msgid "Start from a template or a blank file"
 #~ msgstr "Létrehozás sablonból vagy üres fájlból"
@@ -5632,27 +5701,26 @@ msgstr ""
 #~ msgstr "ServerId"
 
 #~ msgid ""
-#~ "The async Clipboard API is not supported by your browser, switching to "
-#~ "HTTPS is meant to fix that."
+#~ "The async Clipboard API is not supported by your browser, switching to HTTPS"
+#~ " is meant to fix that."
 #~ msgstr ""
 #~ "A böngésző nem támogatja az aszinkron vágólap API-t. Valószínűleg HTTPS "
 #~ "használata esetén működne."
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
-#~ "td><td>Cut</td><td>Paste</td></tr></table>"
+#~ "keyboard shortcuts:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>"
 #~ msgstr ""
 #~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
-#~ "az alábbi gyorsbillentyűket:</p><table class=\"warn-copy-paste\""
-#~ "><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
-#~ "n><kbd>V</kbd></td></tr><tr><td>Másolás</td><td>Kivágás</td><td>Beillesztés</"
-#~ "td></tr></table>"
+#~ "az alábbi gyorsbillentyűket:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>Másolás</td><td>Kivágás</td><td>Beillesztés</td></tr></table>"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
@@ -5660,9 +5728,9 @@ msgstr ""
 #~ "see more options</p><p>Close popup to ignore paste special</p>"
 #~ msgstr ""
 #~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p><p>A további "
-#~ "lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A speciális "
-#~ "beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
+#~ "lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A "
+#~ "speciális beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
 
 #~ msgid "Normal View"
 #~ msgstr "Normál nézet"
@@ -5703,12 +5771,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-#~ "indicator\" href=\"#slide-3\">3</a>"
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\""
+#~ " href=\"#slide-3\">3</a>"
 #~ msgstr ""
-#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-#~ "href=\"#slide-3\">3</a>"
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\""
+#~ " href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "ODF munkafüzet (.ods)"
@@ -5754,8 +5822,8 @@ msgstr ""
 #~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Ha a dokumentum nagyobb darabját akarja egy külső alkalmazással "
-#~ "megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg "
-#~ "a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja "
+#~ "megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg"
+#~ " a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja "
 #~ "meg a „Vágólapra másolás megerősítése” gombot.</p><p>Ha a {productname}-on "
 #~ "belül másol egyik dokumentumból a másikba, akkor nem kell a dokumentumot "
 #~ "letöltenie.</p>"
@@ -5791,9 +5859,9 @@ msgstr ""
 #, javascript-format
 #~ msgid ""
 #~ "Save failed because the document is too large or disk quota exceeded. "
-#~ "Document will now be read-only but you may still download it now to "
-#~ "preserve a copy locally. Please contact the server (%storageserver) "
-#~ "administrator to resolve the issue."
+#~ "Document will now be read-only but you may still download it now to preserve"
+#~ " a copy locally. Please contact the server (%storageserver) administrator to"
+#~ " resolve the issue."
 #~ msgstr ""
 #~ "A mentés nem sikerült, mert a dokumentum túl nagy, vagy túllépte a "
 #~ "lemezkvótát. A dokumentum most már írásvédett lesz, de most is letöltheti, "
@@ -5999,21 +6067,21 @@ msgstr ""
 #~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
-#~ "Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt "
-#~ "a böngészőben futó szoftvert önállóan vagy másokkal közösen. Androidot és "
+#~ "Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt"
+#~ " a böngészőben futó szoftvert önállóan vagy másokkal közösen. Androidot és "
 #~ "iOS-t futtató mobileszközére is letöltheti az <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">alkalmazást</a>. A {coolversion} a használhatóság, a "
 #~ "megjelenés és a teljesítmény terén számos újdonsággal jelentkezik."
 
 #, javascript-format
 #~ msgid ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-#~ "a> and learn all about the latest milestone in performance particularly for "
-#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
-#~ "list, asynchronous saving, faster spell checking and more."
+#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release "
+#~ "notes</a> and learn all about the latest milestone in performance "
+#~ "particularly for larger groups working on documents, new native sidebar, new"
+#~ " re-worked avatar list, asynchronous saving, faster spell checking and more."
 #~ msgstr ""
-#~ "Olvassa el az <a href=\"%coolReleaseNotesURL\" target=\"_blank\">angol „"
-#~ "release notes”-ot</a>, ahol részletesen le vannak írva az újdonságok, "
+#~ "Olvassa el az <a href=\"%coolReleaseNotesURL\" target=\"_blank\">angol "
+#~ "„release notes”-ot</a>, ahol részletesen le vannak írva az újdonságok, "
 #~ "például a sok ember által egyszerre végzett dokumentumszerkesztés "
 #~ "teljesítménynövekedése, az új natív oldalsáv, az újratervezett avatárlista, "
 #~ "az aszinkron mentés, a gyorsabb helyesírás-ellenőrzés stb."
@@ -6026,22 +6094,23 @@ msgstr ""
 
 #, javascript-format
 #~ msgid ""
-#~ "Learn more about integrating into your web application in the <a href="
-#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+#~ "Learn more about integrating into your web application in the <a "
+#~ "href=\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head "
+#~ "over to the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
 #~ "instructions</a> and build CODE from scratch. You can also help out with <a "
 #~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
 #~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 #~ "all the essential steps on how to reproduce it."
 #~ msgstr ""
 #~ "Ha szeretné megtudni, hogyan integrálja a Collabora Online-t saját "
-#~ "webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" target=\"_blank\">"
-#~ "Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE forráskódból való "
-#~ "lefordításának <a href=\"%coolStepByStepURL\" target=\"_blank\">részletes "
-#~ "utasításait</a>. Segíthet a <a href=\"%coolTranslationsURL\" target=\""
-#~ "_blank\">fordításban</a> is, vagy ha hibát talál, <a href=\"%"
-#~ "coolBugreportURL\" target=\"_blank\">bejelentheti</a> a hiba "
-#~ "reprodukálásának rövid leírása mellett."
+#~ "webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" "
+#~ "target=\"_blank\">Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE"
+#~ " forráskódból való lefordításának <a href=\"%coolStepByStepURL\" "
+#~ "target=\"_blank\">részletes utasításait</a>. Segíthet a <a "
+#~ "href=\"%coolTranslationsURL\" target=\"_blank\">fordításban</a> is, vagy ha "
+#~ "hibát talál, <a href=\"%coolBugreportURL\" "
+#~ "target=\"_blank\">bejelentheti</a> a hiba reprodukálásának rövid leírása "
+#~ "mellett."
 
 #~ msgid "Learn more about the enterprise-ready versions"
 #~ msgstr "Tudjon meg többet az intézményi használatra kész verziókról"
@@ -6050,7 +6119,6 @@ msgstr ""
 #~ "We are sorry, the information about the latest updates is not available."
 #~ msgstr "Sajnáljuk, de nem tudunk új hírekkel szolgálni."
 
-#, fuzzy
 #~ msgid ""
 #~ "The host URL is empty. The loolwsd server is probably misconfigured, please "
 #~ "contact the administrator."
@@ -6098,20 +6166,21 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-#~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+#~ "copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+#~ "pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért "
-#~ "használja az alábbi gyorsbillentyűket:<ul><li><b>Ctrl+C</b>: másolás</"
-#~ "li><li><b>Ctrl+X</b>: kivágás</li><li><b>Ctrl+V</b>: beillesztés</li></"
-#~ "ul></p>"
+#~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
+#~ "az alábbi gyorsbillentyűket:<ul><li><b>Ctrl+C</b>: "
+#~ "másolás</li><li><b>Ctrl+X</b>: kivágás</li><li><b>Ctrl+V</b>: "
+#~ "beillesztés</li></ul></p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Alcím"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for "
-#~ "individual use."
+#~ "The Personal edition is supported by volunteers and intended for individual "
+#~ "use."
 #~ msgstr ""
 #~ "A „Personal” változathoz csak önkéntesek nyújtanak terméktámogatást, és "
 #~ "egyéni felhasználásra van szánva."
