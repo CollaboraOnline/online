@@ -53,17 +53,17 @@ QUIET_MKDIRP = $(QUIET_MKDIRP_$(V))
 QUIET_MKDIRP_ = $(QUIET_MKDIRP_$(AM_DEFAULT_VERBOSITY))
 QUIET_MKDIRP_0 = @echo "  MKDIRP  " $@;
 
+if ENABLE_LIBFUZZER
+bin_PROGRAMS =
+else
 bin_PROGRAMS = \
 	coolconvert \
 	coolforkit-caps \
 	coolforkit-ns \
 	coolmount \
 	coolstress \
-	coolconfig
-
-if ENABLE_LIBFUZZER
-else
-bin_PROGRAMS += coolwsd
+	coolconfig \
+	coolwsd
 if ENABLE_DEBUG
 bin_PROGRAMS += coolwsd-inproc
 endif
@@ -229,6 +229,9 @@ coolwsd_SOURCES = $(coolwsd_sources) \
 
 EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
+if ENABLE_LIBFUZZER
+noinst_PROGRAMS =
+else
 noinst_PROGRAMS = \
                   clientnb \
                   connect \
@@ -236,6 +239,7 @@ noinst_PROGRAMS = \
                   coolmap \
                   coolsocketdump \
                   lokitclient
+endif
 
 if ENABLE_LIBFUZZER
 if ENABLE_AFL
