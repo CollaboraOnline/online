@@ -2360,7 +2360,7 @@ void COOLWSD::setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguratio
     }
 
 #if !MOBILEAPP
-    setenv("LOK_ALLOWED_EXTREF_PATHS", "", true);
+    setenv("KIT_ALLOWED_EXTREF_PATHS", "", true);
 #endif
 }
 
