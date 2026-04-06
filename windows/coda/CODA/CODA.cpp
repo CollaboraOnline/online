@@ -1143,6 +1143,52 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 {
     switch (message)
     {
+        case WM_CREATE:
+            {
+                // Contrary to documentation, when you use CW_USEDEFAULT for the x and y parameters
+                // in the CreateWindowW() call, Windows will occasionally place the window so that
+                // it is partially obscured by the taskbar. Workaround for that.
+
+                MONITORINFO monitorInfo;
+                monitorInfo.cbSize = sizeof(monitorInfo);
+                GetMonitorInfoW(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
+
+                CREATESTRUCT *cs = (CREATESTRUCT *)lParam;
+
+                int x = cs->x, y = cs->y;
+
+                if (cs->cx < (monitorInfo.rcWork.right - monitorInfo.rcWork.left))
+                {
+                    if (cs->x < monitorInfo.rcWork.left)
+                    {
+                        // Left edge obscured by taskbar at the left. Move window right by the width
+                        // of the taskbar.
+                        x = cs->x + (monitorInfo.rcWork.left - monitorInfo.rcMonitor.left);
+                    } else if (cs->x + cs->cx > monitorInfo.rcWork.right)
+                    {
+                        // Left edge obscured by taskbar at the right. Move window left.
+                        x = cs->x - (monitorInfo.rcMonitor.right - monitorInfo.rcWork.right);
+                    }
+                }
+                if (cs->cy < (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top))
+                {
+                    if (cs->y < monitorInfo.rcWork.top)
+                    {
+                        // Top edge obscured by taskbar at the top. Move window down by the height
+                        // of the taskbar.
+                        y = cs->y + (monitorInfo.rcWork.top - monitorInfo.rcMonitor.top);
+                    } else if (cs->y + cs->cy > monitorInfo.rcWork.bottom)
+                    {
+                        // Bottom edge obscured by taskbar at the bottom. Move window up.
+                        y = cs->y - (monitorInfo.rcMonitor.bottom - monitorInfo.rcWork.bottom);
+                    }
+                }
+
+                if (x != cs->x || y != cs->y)
+                    SetWindowPos(hWnd, NULL, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                return 0;
+            }
+
         case WM_SIZING:
             {
                 int minimumWidth = 1000, minimumHeight = 800;
