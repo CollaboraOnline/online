@@ -9,6 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+// Load the interfaces first.
+/// <reference path="../src/control/jsdialog/Definitions.Types.ts" />
+/// <reference path="../src/app/iface/Clipboard.Interface.ts" />
+/// <reference path="../src/app/iface/Control.Interface.ts" />
+/// <reference path="../src/app/iface/DocLayer.Interface.ts" />
+/// <reference path="../src/app/iface/Map.Interface.ts" />
+/// <reference path="../src/app/iface/MapZoom.Interface.ts" />
+/// <reference path="../src/app/iface/SocketTypes.Interface.ts" />
+/// <reference path="../src/app/iface/TraceEvents.Interface.ts" />
+/// <reference path="../src/app/iface/Welcome.Interface.ts" />
+/// <reference path="../src/global.d.ts" />
+
 /// <reference path="./refs/globals.ts" />
 /// <reference path="./sources.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
