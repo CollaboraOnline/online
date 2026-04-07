@@ -100,4 +100,4 @@ Once the build is done, you can serve the browser/dist tree from a web server (e
 file_path=/some/exisiting/document query paramter, where /some/exisiting/document is the absolute
 path of an exisiting document in the Emscripten file system (cf. online's
 --with-wasm-additional-files configure option; e.g., some
-<http://localhost:6931/cool.html?file_path=/android/default-document/example.odt> for the emrun example).
+<http://localhost:6931/cool.html?file_path=/TODO/example.odt> for the emrun example).
