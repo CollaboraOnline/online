@@ -1808,6 +1808,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					{
 						'id': 'masterpagenb',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'MS', de: null },
 						'children': [
 							{
 								'id': 'masterpageall_label',
@@ -1833,6 +1834,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					{
 						'id': 'iconview_theme_colors-iconview-list',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'TC', de: null },
 						'children': [
 							{
 								'id': 'iconview_theme_colors', // has to match core id
