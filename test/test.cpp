@@ -79,8 +79,6 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
 
 #ifdef STANDALONE_CPPUNIT
 
-static bool IsDebugrun = false;
-
 // coverity[root_function] : don't warn about uncaught exceptions
 int main(int argc, char** argv)
 {
@@ -92,10 +90,6 @@ int main(int argc, char** argv)
         if (arg == "--verbose")
         {
             verbose = true;
-        }
-        else if (arg == "--debugrun")
-        {
-            IsDebugrun = true;
         }
         else if (arg == "--cert-path" && ++i < argc)
         {
