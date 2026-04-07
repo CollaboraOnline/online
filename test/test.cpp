@@ -153,7 +153,6 @@ bool isStandalone()
 }
 
 static std::mutex ErrorMutex;
-static bool IsVerbose = false;
 static std::ostringstream ErrorsStream;
 
 class TestProgressListener : public CppUnit::TestListener
@@ -210,7 +209,6 @@ private:
 // returns true on success
 bool runClientTests(const char* cmd, bool standalone, bool verbose)
 {
-    IsVerbose = verbose;
     IsStandalone = standalone;
 
     CPPUNIT_NS::TestResult controller;
