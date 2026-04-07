@@ -27,6 +27,7 @@ interface WidgetJSON {
 	width?: string; // inside grid - width in number of columns
 	labelledBy?: string;
 	allyRole?: string;
+	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }

@@ -195,6 +195,7 @@ class TableStylesService {
 			name: _('Table Styles'),
 			nofold: true,
 			icon: 'lc_tablestyle.svg',
+			accessibility: { focusBack: false, combination: 'TL', de: null },
 			children: [
 				{
 					id: 'tablestyles_design-iconview-list',

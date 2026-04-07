@@ -43,6 +43,7 @@ class ImpressTransitionTab implements NotebookbarTab {
 					{
 						id: 'transitions_icons-iconview-list',
 						type: 'iconviewlist',
+						accessibility: { focusBack: false, combination: 'TI', de: null },
 						children: [
 							{
 								id: 'transitions_icons',
