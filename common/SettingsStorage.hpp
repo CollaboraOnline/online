@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <typeinfo>
 #include <Poco/Path.h>
 
 #include <functional>
