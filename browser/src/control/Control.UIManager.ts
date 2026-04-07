@@ -155,6 +155,17 @@ class UIManager extends window.L.Control {
 	}
 
 	/**
+	 * Shows a timed tooltip on the view mode button and optionally plays the attention animation.
+	 */
+	showViewModeAttention(): void {
+		const permissionMode = this.permissionViewMode;
+		const viewModeBtn = permissionMode && (permissionMode.viewModeDropdown || permissionMode.viewModeContainer);
+		if (viewModeBtn) {
+			this.showAttention(viewModeBtn, _('You are currently in View mode'), true, 5000);
+		}
+	}
+
+	/**
 	 * Returns the current UI mode ("notebookbar" or "classic").
 	 */
 	getCurrentMode(): UIMode {
