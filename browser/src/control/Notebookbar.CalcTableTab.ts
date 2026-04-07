@@ -68,8 +68,8 @@ class CalcTableTab implements NotebookbarTab {
 			},
 			{
 				type: 'overflowgroup',
-				id: 'table-style-options',
-				name: _('Table Style Options'),
+				id: 'table-options',
+				name: _('Table Options'),
 				accessibility: { focusBack: true, combination: 'TO' },
 				children: [
 					{
@@ -196,7 +196,7 @@ class CalcTableTab implements NotebookbarTab {
 			},
 			{
 				type: 'separator',
-				id: 'table-style-options-break',
+				id: 'table-options-break',
 				orientation: 'vertical',
 			},
 			app.tableStyles?.generateTableStylesJSON(),
