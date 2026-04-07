@@ -240,6 +240,8 @@ class KeyboardShortcuts {
                 shortcut.unoAction !== '.uno:CloseWin' &&
                 shortcut.viewType !== ViewType.ReadOnly) {
                 event.preventDefault();
+                this.map.uiManager.showViewModeAttention();
+
                 return true;
             }
 
@@ -338,6 +340,10 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
         Disable F2 in Writer, formula bar is unsupported, and messes with further input.
         Disable CTRL+SHIFT+N because core side template dialog is not supported on Online.
     */
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'b', unoAction: '.uno:Bold' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'i', unoAction: '.uno:Italic' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'u', unoAction: '.uno:Underline' }),
+
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'N' }),
     new ShortcutDescriptor({ eventType: 'keydown', key: 'F1', dispatchAction: 'showhelp' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT, key: 'F1', dispatchAction: 'focustonotebookbar' }),
