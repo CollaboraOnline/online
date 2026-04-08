@@ -329,7 +329,6 @@ SocketPoll::SocketPoll(std::string threadName)
 #if !MOBILEAPP
     , _watchdogTime(Watchdog::getDisableStamp())
 #endif
-    , _ownerThreadId(ProcUtil::getThreadId())
     , _stop(false)
     , _threadFinished(false)
     , _runOnClientThread(false)
@@ -351,7 +350,7 @@ SocketPoll::SocketPoll(std::string threadName)
 
 #if !MOBILEAPP
     if (PollWatchdog)
-        PollWatchdog->addTime(&_watchdogTime, &_ownerThreadId);
+        PollWatchdog->addTime(&_watchdogTime, &_owner);
 #endif
 }
 
@@ -379,7 +378,6 @@ void SocketPoll::checkAndReThread()
     LOG_DBG("Unusual - SocketPoll used from a new thread");
 
     _owner = us;
-    _ownerThreadId = ProcUtil::getThreadId();
     for (const auto& it : _pollSockets)
         SocketThreadOwnerChange::setThreadOwner(*it, us);
     // _newSockets are adapted as they are inserted.
@@ -483,7 +481,6 @@ void SocketPoll::pollingThreadEntry()
     {
         ProcUtil::setThreadName(_name);
         _owner = ProcUtil::getThreadId();
-        _ownerThreadId = ProcUtil::getThreadId();
         LOG_INF("Starting polling thread [" << _name << "] with thread affinity set to " << _owner);
 
         // Invoke the virtual implementation.
