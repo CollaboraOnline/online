@@ -16,6 +16,6 @@
 #pragma once
 
 #if ENABLE_SSL
+#include <net/SslSocket.hpp>
 #include <Poco/Net/SSLManager.h>
-#include <SslSocket.hpp>
 #endif

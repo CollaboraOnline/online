@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#include <wsd/Admin.hpp>
+#include "Admin.hpp"
 
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
@@ -30,7 +30,7 @@
 #include <common/Util.hpp>
 #include <net/Socket.hpp>
 #if ENABLE_SSL
-#include <SslSocket.hpp>
+#include <net/SslSocket.hpp>
 #endif
 #include <net/WebSocketHandler.hpp>
 #include <wsd/AdminModel.hpp>

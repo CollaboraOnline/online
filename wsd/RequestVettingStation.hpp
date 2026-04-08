@@ -16,10 +16,10 @@
 
 #pragma once
 
-#include <RequestDetails.hpp>
-#include <Storage.hpp>
 #include <common/Util.hpp>
-#include <WebSocketHandler.hpp>
+#include <net/WebSocketHandler.hpp>
+#include <wsd/RequestDetails.hpp>
+#include <wsd/Storage.hpp>
 
 #include <Poco/URI.h>
 

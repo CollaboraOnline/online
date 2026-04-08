@@ -16,7 +16,7 @@
  * Classes: COOLWSDServer
  */
 
-#include <ServerSocket.hpp>
+#include <net/ServerSocket.hpp>
 
 class Admin;
 

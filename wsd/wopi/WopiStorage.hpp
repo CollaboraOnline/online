@@ -15,7 +15,6 @@
 #include <common/CharacterConverter.hpp>
 #include <common/Log.hpp>
 #include <net/HttpRequest.hpp>
-#include <net/HttpRequest.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/Storage.hpp>
 
