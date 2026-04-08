@@ -1169,9 +1169,6 @@ private:
     std::atomic<uint64_t> _watchdogTime;
 #endif
 
-    /// Time-stamp for profiling
-    int _ownerThreadId;
-
     std::atomic<bool> _stop;
     std::atomic<bool> _threadFinished;
     std::atomic<bool> _runOnClientThread;
