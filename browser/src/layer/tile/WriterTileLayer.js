@@ -108,8 +108,10 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 			// of the first paragraph of the document so we want to ignore that
 			// to eliminate document jumping while reconnecting
 			this.persistCursorPositionInWriter = true;
-			this._postMouseEvent('buttondown', this.lastCursorPos.center[0], this.lastCursorPos.center[1], 1, 1, 0);
-			this._postMouseEvent('buttonup', this.lastCursorPos.center[0], this.lastCursorPos.center[1], 1, 1, 0);
+			if (this.lastCursorPos) {
+				// Save position to restore when we have the full layout of the document back
+				this._savedCursorPos = this.lastCursorPos.clone();
+			}
 		}
 		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
@@ -163,5 +165,11 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 			docType: this._docType
 		});
 		TileManager.resetPreFetching(true);
+
+		if (this._savedCursorPos && this._savedCursorPos.center[0] <= app.activeDocument.fileSize.x && this._savedCursorPos.center[1] <= app.activeDocument.fileSize.y) {
+			this._postMouseEvent('buttondown', this._savedCursorPos.center[0], this._savedCursorPos.center[1], 1, 1, 0);
+			this._postMouseEvent('buttonup', this._savedCursorPos.center[0], this._savedCursorPos.center[1], 1, 1, 0);
+			this._savedCursorPos = null;
+		}
 	},
 });
