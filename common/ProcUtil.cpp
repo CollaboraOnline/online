@@ -110,7 +110,7 @@ ThreadId getThreadId()
     }
     return ThreadTid;
 #else
-    static long threadCounter = 1;
+    static std::atomic<ThreadId> threadCounter = 1;
     if (!ThreadTid)
         ThreadTid = threadCounter++;
     return ThreadTid;
