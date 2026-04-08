@@ -21,6 +21,7 @@
 #include <WebSocketSession.hpp>
 #include <test/lokassert.hpp>
 
+#include <memory>
 #include <string>
 
 using namespace std::literals;
@@ -65,9 +66,7 @@ void UnitLoadTorture::loadTorture(const std::string& name, const std::string& do
     for (size_t i = 0; i < thread_count; ++i)
     {
         threads.emplace_back([&] {
-            std::ostringstream oss;
-            oss << std::hex << ProcUtil::getThreadId();
-            const std::string id = oss.str();
+            const std::string id = std::to_string(ProcUtil::getThreadId());
 
             TST_LOG(": #" << id << ", views: " << num_of_views << ", to load: " << num_to_load);
             try
