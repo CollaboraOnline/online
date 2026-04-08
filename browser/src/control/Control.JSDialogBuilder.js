@@ -1313,6 +1313,19 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			controls.spinfield.onkeypress = window.L.bind(builder._preventNonNumericalInput, builder);
 		}
 
+		let style = '';
+		if (data.widthChars && data.widthChars > 0) {
+			style = 'width: ' + data.widthChars + 'ch;';
+		}
+
+		if (data.halign) {
+			style += 'justify-self: ' + data.halign + ';';
+		}
+
+		if (style) {
+			controls.container.style.cssText = style;
+		}
+
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
