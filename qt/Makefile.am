@@ -70,10 +70,12 @@ cmake_list= \
 
 
 # Sources that will be created by Qt's MOC
-BUILT_SOURCES = bridge.moc.cpp DBusService.moc.cpp
+BUILT_SOURCES = bridge.moc.cpp DBusService.moc.cpp RemoteFilePicker.moc.cpp
 bridge.moc.cpp: bridge.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 DBusService.moc.cpp: DBusService.hpp
+	$(MOC) $(MOCFLAGS) -o $@ $<
+RemoteFilePicker.moc.cpp: RemoteFilePicker.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 
 CLEANFILES = $(BUILT_SOURCES)
@@ -85,7 +87,7 @@ coda_qt_CXXFLAGS += -mno-direct-extern-access
 endif
 endif
 
-coda_qt_SOURCES = coda-qt.cpp Application.cpp Bridge.cpp QtClipboard.cpp DocumentOperations.cpp WebView.cpp DBusService.cpp Document.cpp $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp Application.cpp Bridge.cpp QtClipboard.cpp DocumentOperations.cpp WebView.cpp DBusService.cpp Document.cpp RemoteFilePicker.cpp $(cmake_list)
 nodist_coda_qt_SOURCES = $(BUILT_SOURCES)
 
 metainfodir = $(datadir)/metainfo

@@ -1697,7 +1697,7 @@ dnl config for qtapp frontend for cool
 AS_IF([test "$ENABLE_QTAPP" = true],
       [
        PKG_CHECK_MODULES([QT6],
-             [Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus Qt6PrintSupport],,
+             [Qt6Core Qt6Widgets Qt6Gui Qt6Network Qt6WebSockets Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus Qt6PrintSupport],,
              [AC_MSG_ERROR([Qt6 not found. Set QT6_CFLAGS and QT6_LIBS if your distro lacks .pc files.])])
 
        dnl Locate qtpaths6 for Qt6 tool discovery
