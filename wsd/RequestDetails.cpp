@@ -52,8 +52,11 @@ std::map<std::string, std::string> getParams(const std::string& uri)
             }
         }
 
-        LOG_TRC("Found param [" << param.first << "] = [" << param.second << ']');
-        result.emplace(param);
+        if (!param.first.empty())
+        {
+            LOG_TRC("Found param [" << param.first << "] = [" << param.second << ']');
+            result.emplace(param);
+        }
     }
 
     return result;
