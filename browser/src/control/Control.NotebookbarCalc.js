@@ -88,6 +88,13 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'G', de: null }
 			},
 			{
+				'id': 'Chart-tab-label',
+				'text': _('Chart'),
+				'name': 'Chart',
+				'context': 'Chart|Series|ErrorBar|Axis|Grid|ChartElements|Trendline|ChartTitle|ChartLegend|ChartLabel',
+				'accessibility': { focusBack: true,	combination: 'CH', de: null }
+			},
+			{
 				'id': 'View-tab-label',
 				'text': _('View'),
 				'name': 'View',
@@ -122,6 +129,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			this.getFormatTab(),
 			this.getShapeTab(),
 			this.getPictureTab(),
+			this.getChartTab(),
 			this.getViewTab(),
 			this.getSparklineTab(),
 			this.getCalcTableTab(),
@@ -149,7 +157,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Save'),
 						'command': '.uno:Save',
-						'accessibility': { focusBack: true,	combination: 'S', de: null }
+						'accessibility': { focusBack: true,	combination: 'SV', de: null }
 					}
 				]
 			});
@@ -348,7 +356,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -444,7 +452,11 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									'id': 'home-format-paint-brush',
 									'type': 'toolitem',
 									'text': _UNO('.uno:FormatPaintbrush'),
+									'tooltip': _('Clone Formatting (double click to keep active)'),
+									'activeTooltip': _('Clone Formatting is active (click again or press Esc to exit)'),
 									'command': '.uno:FormatPaintbrush',
+									'doubleClickCommand': '.uno:FormatPaintbrush',
+									'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
 									'accessibility': { focusBack: true,	combination: 'FP', de: null }
 								}
 							]
@@ -495,6 +507,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								{
 									'id': 'fontnamecombobox',
 									'type': 'combobox',
+									'label': _('Font'),
 									'text': 'Carlito',
 									'entries': [
 										'Carlito'
@@ -509,6 +522,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								{
 									'id': 'fontsizecombobox',
 									'type': 'combobox',
+									'label': _('Size'),
 									'text': '10 pt',
 									'entries': [
 										'10 pt'
@@ -1066,7 +1080,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									'type': 'toolitem',
 									'text': _UNO('.uno:DataSort', 'spreadsheet'),
 									'command': '.uno:DataSort',
-									'accessibility': { focusBack: true,	combination: 'S', de: null }
+									'accessibility': { focusBack: true,	combination: 'SO', de: null }
 								}
 							]
 						},
@@ -1420,7 +1434,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 											'1'
 										],
 										'command': '.uno:SelectSheetView',
-										'accessibility': { focusBack: true,	combination: 'FS', de: null }
+										'accessibility': { focusBack: true,	combination: 'VS', de: null }
 									}
 								]
 							},
@@ -1630,7 +1644,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'text': _('Invert Background'),
 				'accessibility': { focusBack: true, combination: 'BG', de: null }
 			},
-			{ type: 'separator', id: 'layout-invertbackground-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'view-invertbackground-break', orientation: 'vertical' },
 			{
 				'id': 'view-sidebardeck',
 				'type': 'bigtoolitem',
@@ -1643,8 +1657,16 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Navigator'),
 				'command': '.uno:Navigator',
-				'accessibility': { focusBack: true,	combination: 'N', de: null }
+				'accessibility': { focusBack: true,	combination: 'NV', de: null }
 			},
+			!this.map['wopi'].DisableAISettings ? {
+				'id': 'view-ai-sidebar',
+				'type': 'bigcustomtoolitem',
+				'text': _('AI Assistant'),
+				'icon': 'lc_ai_sidebar.svg',
+				'command': 'aichat',
+				'accessibility': { focusBack: true, combination: 'AI', de: null }
+			} : {},
 
 		];
 
@@ -1912,7 +1934,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
                                 'type': 'toolitem',
                                 'text': _UNO('.uno:InsertCurrentTime', 'spreadsheet'),
                                 'command': '.uno:InsertCurrentTime',
-								'accessibility': { focusBack: true,	combination: 'IT', de: null }
+								'accessibility': { focusBack: true,	combination: 'CT', de: null }
                             }
                         ]
                     }
@@ -2202,7 +2224,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:AddName', 'spreadsheet'),
 								'command': '.uno:AddName',
-								'accessibility': { focusBack: true,	combination: 'ZD', de: null }
+								'accessibility': { focusBack: true,	combination: 'AN', de: null }
 							}
 						]
 					},
@@ -2279,7 +2301,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:ConvertFormulaToValue', 'spreadsheet'),
 								'command': '.uno:ConvertFormulaToValue',
-								'accessibility': { focusBack: true,	combination: 'R', de: null }
+								'accessibility': { focusBack: true,	combination: 'CV', de: null }
 							}
 						]
 					},
@@ -2291,7 +2313,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:Calculate', 'spreadsheet'),
 								'command': '.uno:Calculate',
-								'accessibility': { focusBack: true,	combination: 'R', de: null }
+								'accessibility': { focusBack: true,	combination: 'RC', de: null }
 							}
 						]
 					}
@@ -2434,7 +2456,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'GA', de: null },
 				'children' : [
 					{
-						'id': 'data-group',
+						'id': 'data-data-group',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Group'),
 						'command': '.uno:Group',
@@ -2576,9 +2598,13 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'review-spell-online',
 								'type': 'toolitem',
-								'text': _UNO('.uno:SpellOnline'),
+								'text': _('Auto Spell Check'),
 								'command': '.uno:SpellOnline',
-								'accessibility': { focusBack: true,	combination: 'O', de: null }
+								'accessibility': { focusBack: true,	combination: 'O', de: null },
+								'stateIcons': {
+									on: 'autospellcheck-on',
+									off: 'autospellcheck-off',
+								}
 							}
 						]
 					},
@@ -2775,6 +2801,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'iconview_theme_colors-iconview-list',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'TC', de: null },
 						'children': [
 							{
 								'id': 'iconview_theme_colors', // has to match core id

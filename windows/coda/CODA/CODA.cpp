@@ -336,7 +336,7 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
     PostMessageW(hWnd, CODA_WM_EXECUTESCRIPT, (WPARAM)wparam, 0);
 }
 
-// LOK file save dialog callback.
+// COKit file save dialog callback.
 void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t resultLen)
 {
     // Some sanity checks first.
@@ -390,7 +390,7 @@ static void createAndStartMessagePumpThread(WindowData& data)
     data.app2js = std::thread(
         [&data]
         {
-            Util::setThreadName("app2js " + std::to_string(data.appDocId));
+            ProcUtil::setThreadName("app2js " + std::to_string(data.appDocId));
             while (true)
             {
                 struct pollfd pollfd[2];
@@ -994,26 +994,26 @@ static std::vector<COMDLG_FILTERSPEC>getSaveAsFormats(int docType)
 {
     std::vector<COMDLG_FILTERSPEC> result;
 
-    if (docType == LOK_DOCTYPE_TEXT)
+    if (docType == KIT_DOCTYPE_TEXT)
     {
         result.push_back({L"ODT", L"*.odt"});
         result.push_back({L"RTF", L"*.rtf"});
         result.push_back({L"DOCX", L"*.docx"});
         result.push_back({L"DOC", L"*.doc"});
     }
-    else if (docType == LOK_DOCTYPE_SPREADSHEET)
+    else if (docType == KIT_DOCTYPE_SPREADSHEET)
     {
         result.push_back({L"ODS", L"*.ods"});
         result.push_back({L"XLSX", L"*.xlsx"});
         result.push_back({L"XLS", L"*.xls"});
     }
-    else if (docType == LOK_DOCTYPE_PRESENTATION)
+    else if (docType == KIT_DOCTYPE_PRESENTATION)
     {
         result.push_back({L"ODP", L"*.odp"});
         result.push_back({L"PPTX", L"*.pptx"});
         result.push_back({L"PPT", L"*.ppt"});
     }
-    else if (docType == LOK_DOCTYPE_DRAWING)
+    else if (docType == KIT_DOCTYPE_DRAWING)
     {
         result.push_back({L"ODG", L"*.odg"});
     }
@@ -1143,6 +1143,52 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 {
     switch (message)
     {
+        case WM_CREATE:
+            {
+                // Contrary to documentation, when you use CW_USEDEFAULT for the x and y parameters
+                // in the CreateWindowW() call, Windows will occasionally place the window so that
+                // it is partially obscured by the taskbar. Workaround for that.
+
+                MONITORINFO monitorInfo;
+                monitorInfo.cbSize = sizeof(monitorInfo);
+                GetMonitorInfoW(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
+
+                CREATESTRUCT *cs = (CREATESTRUCT *)lParam;
+
+                int x = cs->x, y = cs->y;
+
+                if (cs->cx < (monitorInfo.rcWork.right - monitorInfo.rcWork.left))
+                {
+                    if (cs->x < monitorInfo.rcWork.left)
+                    {
+                        // Left edge obscured by taskbar at the left. Move window right by the width
+                        // of the taskbar.
+                        x = cs->x + (monitorInfo.rcWork.left - monitorInfo.rcMonitor.left);
+                    } else if (cs->x + cs->cx > monitorInfo.rcWork.right)
+                    {
+                        // Left edge obscured by taskbar at the right. Move window left.
+                        x = cs->x - (monitorInfo.rcMonitor.right - monitorInfo.rcWork.right);
+                    }
+                }
+                if (cs->cy < (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top))
+                {
+                    if (cs->y < monitorInfo.rcWork.top)
+                    {
+                        // Top edge obscured by taskbar at the top. Move window down by the height
+                        // of the taskbar.
+                        y = cs->y + (monitorInfo.rcWork.top - monitorInfo.rcMonitor.top);
+                    } else if (cs->y + cs->cy > monitorInfo.rcWork.bottom)
+                    {
+                        // Bottom edge obscured by taskbar at the bottom. Move window up.
+                        y = cs->y - (monitorInfo.rcMonitor.bottom - monitorInfo.rcWork.bottom);
+                    }
+                }
+
+                if (x != cs->x || y != cs->y)
+                    SetWindowPos(hWnd, NULL, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                return 0;
+            }
+
         case WM_SIZING:
             {
                 int minimumWidth = 1000, minimumHeight = 800;
@@ -1773,6 +1819,22 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_paste_or_read(ClipboardOp::READ, data);
         }
+        else if (s.starts_with(L"TEXTCLIPBOARD "))
+        {
+            std::wstring text = s.substr(14);
+            if (OpenClipboard(NULL))
+            {
+                EmptyClipboard();
+                HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, (text.size() + 1) * sizeof(wchar_t));
+                if (hMem)
+                {
+                    memcpy(GlobalLock(hMem), text.c_str(), (text.size() + 1) * sizeof(wchar_t));
+                    GlobalUnlock(hMem);
+                    SetClipboardData(CF_UNICODETEXT, hMem);
+                }
+                CloseClipboard();
+            }
+        }
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
             do_clipboard_set(data.appDocId, Util::wide_string_to_string(s.substr(13)).c_str());
@@ -1843,6 +1905,55 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
 
             if (filenameAndUri.filename != "")
                 DocumentData::get(data.appDocId).loKitDocument->saveAs(filenameAndUri.uri.c_str(), extension.c_str(), nullptr);
+        }
+        else if (s.starts_with(L"exportfile "))
+        {
+            // "exportfile url=file:///C:/Users/.../tmp/image.png"
+            auto const ns = Util::wide_string_to_string(s);
+            auto const tokens = StringVector::tokenize(ns);
+            std::string fileUrl;
+            if (!COOLProtocol::getTokenString(tokens, "url", fileUrl))
+            {
+                LOG_ERR("No url parameter in message '" << ns << "'");
+                return;
+            }
+
+            auto srcPath = Poco::URI(fileUrl).getPath();
+            // The usual hack to get rid of the leading slash in what Poco::URI::getPath() returns,
+            // like "/C:/Users/bob/AppData/Local/Temp/image.jpg".
+            if (srcPath.length() > 4 && srcPath[0] == '/' && srcPath[2] == ':' && srcPath[3] == '/')
+                srcPath = srcPath.substr(1);
+
+            if (!std::filesystem::exists(srcPath))
+            {
+                LOG_ERR("exportfile: source file not found: " << srcPath);
+                return;
+            }
+
+            auto const extension = Poco::Path(srcPath).getExtension();
+            auto filenameAndUri = fileSaveDialog("image." + extension,
+                                                 "",
+                                                 {
+                                                     {
+                                                         Util::string_to_wide_string(extension).c_str(),
+                                                         Util::string_to_wide_string("*." + extension).c_str()
+                                                     }
+                                                 });
+
+            if (filenameAndUri.filename != "")
+            {
+                auto destPath = Poco::URI(filenameAndUri.uri).getPath();
+                // As above
+                if (destPath.length() > 4 && destPath[0] == '/' && destPath[2] == ':' && destPath[3] == '/')
+                    destPath = destPath.substr(1);
+                std::error_code ec;
+                std::filesystem::copy_file(srcPath, destPath,
+                                           std::filesystem::copy_options::overwrite_existing, ec);
+                if (ec)
+                    LOG_ERR("exportfile: failed to copy to '" << destPath << "': " << ec.message());
+                else
+                    LOG_INF("exportfile: saved image to " << destPath);
+            }
         }
         else if (s.starts_with(L"loaddocument "))
         {
@@ -2172,7 +2283,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     if (!loglevel)
         loglevel = COOLWSD_LOGLEVEL;
     Log::initialize("CODA", loglevel);
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     persistentWindowSizeStoreOK =
         (persistentWindowSizeStore.open
@@ -2243,7 +2354,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
             // warnings, but let's try to do as they want.
             argv[0] = _strdup("mobile");
             argv[1] = nullptr;
-            Util::setThreadName("app");
+            ProcUtil::setThreadName("app");
             while (true)
             {
                 coolwsd = new COOLWSD();

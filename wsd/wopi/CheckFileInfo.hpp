@@ -15,12 +15,12 @@
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
 
-#include <HttpRequest.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
-#include <StateEnum.hpp>
+#include <common/StateEnum.hpp>
+#include <common/TraceEvent.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
 #include <wopi/WopiStorage.hpp>
-#include <TraceEvent.hpp>
+#include <wsd/RequestDetails.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
@@ -82,7 +82,7 @@ public:
     }
 
 private:
-    inline void logPrefix(std::ostream& os) const
+    void logPrefix(std::ostream& os) const
     {
         if (_httpSession)
         {

@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <vector>
-#include <memory>
-#include <functional>
+#include <common/ThreadPool.hpp>
 
-#include <ThreadPool.hpp>
+#include <functional>
+#include <memory>
+#include <vector>
 
 /// Do slide compression work in a thread pool
 class SlideCompressor {

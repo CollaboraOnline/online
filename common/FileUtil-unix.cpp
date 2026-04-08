@@ -314,7 +314,6 @@ namespace FileUtil
                 default:
                     std::cout << '?';
                     break;
-                break;
             }
 
             std::cout << ((entry._mode & S_IRUSR) ? "r" : "-");

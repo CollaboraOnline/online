@@ -209,6 +209,10 @@ window.L.Clipboard = window.L.Class.extend({
 		));
 	},
 
+	getMetaOrigin: function (html) {
+		return this._getMetaOrigin(html, '<div id="meta-origin" data-coolorigin="');
+	},
+
 	_getMetaOrigin: function (html, prefix) {
 		var start = html.indexOf(prefix);
 		if (start < 0) {
@@ -458,7 +462,7 @@ window.L.Clipboard = window.L.Class.extend({
 		var id = this.getMetaPath(0);
 		var idOld = this.getMetaPath(1);
 
-		// for the paste, we always prefer the internal LOK's copy/paste
+		// for the paste, we always prefer the internal COKit's copy/paste
 		if (preferInternal === true &&
 			((id !== '' && meta.indexOf(id) >= 0) || (idOld !== '' && meta.indexOf(idOld) >= 0)))
 		{
@@ -992,6 +996,26 @@ window.L.Clipboard = window.L.Class.extend({
 				// When document is not focused, writing to clipboard is not allowed. But this error shouldn't stop the usage of clipboard API.
 				if (!document.hasFocus()) {
 					window.app.console.warn('navigator.clipboard.write() failed: ' + error.message);
+					// The user switched to another tab before the async clipboard write completed.
+					// Schedule a one-shot retry when this window regains focus so the system
+					// clipboard is updated with the latest copied content, enabling correct
+					// cross-tab paste behaviour.
+					// Remove any previous pending retry - only the latest copy matters.
+					if (this._pendingClipboardRetryHandler) {
+						window.removeEventListener('focus', this._pendingClipboardRetryHandler);
+					}
+					var retryClipboardItem = clipboardItem;
+					var retryClipboard = clipboard;
+					var self = this;
+					var retryHandler = function() {
+						window.removeEventListener('focus', retryHandler);
+						self._pendingClipboardRetryHandler = null;
+						retryClipboard.write([retryClipboardItem]).catch(function(retryError) {
+							window.app.console.warn('navigator.clipboard.write() retry failed: ' + retryError.message);
+						});
+					};
+					this._pendingClipboardRetryHandler = retryHandler;
+					window.addEventListener('focus', retryHandler);
 					return;
 				}
 
@@ -1454,7 +1478,7 @@ window.L.Clipboard = window.L.Class.extend({
 		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			const p = document.createElement('p');
 			p.textContent = _('Your browser has very limited access to the clipboard, so please use the paste buttons on your on-screen keyboard instead.');
 			innerDiv.appendChild(p);

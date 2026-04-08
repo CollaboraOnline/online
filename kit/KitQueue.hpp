@@ -13,6 +13,7 @@
 
 #include <wsd/TileDesc.hpp>
 
+#include <deque>
 #include <string>
 #include <vector>
 
@@ -81,7 +82,7 @@ public:
         static std::string toString(int view, int type, const std::string& payload);
     };
 
-    /// Queue a LibreOfficeKit callback for later emission
+    /// Queue a COKit callback for later emission
     void putCallback(int view, int type, const std::string &message);
 
     /// Work back over the queue to simplify & return false if we should not queue.
@@ -122,7 +123,7 @@ public:
 
     [[nodiscard]] bool getCallback(Callback& callback)
     {
-        if (_callbacks.size() == 0)
+        if (_callbacks.empty())
             return false;
         callback = std::move(_callbacks.front());
         _callbacks.erase(_callbacks.begin());
@@ -184,14 +185,14 @@ private:
 
 private:
     /// Queue of incoming messages from coolwsd
-    std::vector<Payload> _queue;
+    std::deque<Payload> _queue;
 
     /// Queues of incoming tile requests from coolwsd
     using viewTileQueue = std::pair<CanonicalViewId, std::vector<TileDesc>>;
-    std::vector<viewTileQueue> _tileQueues;
+    std::deque<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd
-    std::vector<Callback> _callbacks;
+    std::deque<Callback> _callbacks;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const KitQueue::Callback &c)

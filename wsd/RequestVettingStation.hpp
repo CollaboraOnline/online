@@ -57,7 +57,7 @@ public:
     {
     }
 
-    inline void logPrefix(std::ostream& os) const
+    void logPrefix(std::ostream& os) const
     {
         auto socket = _socket.lock();
         int logContextFD = socket ? socket->getFD() : -1;

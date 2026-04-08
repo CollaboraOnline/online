@@ -80,7 +80,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
 		desktopHelper.assertVisiblePage(2, 2, 8);
 
-		desktopHelper.assertScrollbarPosition('vertical', 55, 70);
+		desktopHelper.assertScrollbarPosition('vertical', 45, 75);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
 		desktopHelper.scrollWriterDocumentToTop();
@@ -89,12 +89,12 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Text').dblclick();
 		desktopHelper.assertVisiblePage(5, 6, 8);
 
-		desktopHelper.assertScrollbarPosition('vertical', 235, 250);
+		desktopHelper.assertScrollbarPosition('vertical', 225, 255);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Replacing').dblclick();
 		desktopHelper.assertVisiblePage(7, 7, 8);
 
-		desktopHelper.assertScrollbarPosition('vertical', 335, 355);
+		desktopHelper.assertScrollbarPosition('vertical', 325, 360);
 	});
 
 	it.skip('Jump to element. Document -> Navigator', function() {

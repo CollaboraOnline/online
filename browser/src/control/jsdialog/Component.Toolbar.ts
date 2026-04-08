@@ -203,7 +203,7 @@ class Toolbar extends JSDialogComponent {
 			) {
 				toHide.push(item.id);
 			} else if (
-				((window.mode.isMobile() && item.mobile === false) ||
+				((window.mode.isSmallScreenDevice() && item.mobile === false) ||
 					(window.mode.isTablet() && item.tablet === false) ||
 					(window.mode.isDesktop() && item.desktop === false) ||
 					(!(window as any).ThisIsAMobileApp &&
@@ -212,7 +212,7 @@ class Toolbar extends JSDialogComponent {
 			) {
 				toHide.push(item.id);
 			} else if (
-				((window.mode.isMobile() && item.mobile === true) ||
+				((window.mode.isSmallScreenDevice() && item.mobile === true) ||
 					(window.mode.isTablet() && item.tablet === true) ||
 					(window.mode.isDesktop() && item.desktop === true) ||
 					((window as any).ThisIsAMobileApp && item.mobilebrowser === true)) &&

@@ -18,6 +18,7 @@ class ContextToolbar extends JSDialogComponent {
 	container!: HTMLElement;
 	initialized: boolean = false;
 	lastIinputEvent?: any = {};
+	pendingTask: TaskId | null = null;
 	pendingShow: boolean = false;
 	// roughly twice the height(76px) of default context toolbar in each direction from boundary
 	disappearingBoundary: number = 150; // px
@@ -66,7 +67,12 @@ class ContextToolbar extends JSDialogComponent {
 	showContextToolbarImpl(): void {
 		this.pendingShow = false;
 
-		app.layoutingService.appendLayoutingTask(() => {
+		if (this.pendingTask)
+			app.layoutingService.cancelLayoutingTask(this.pendingTask);
+
+		this.pendingTask = app.layoutingService.appendLayoutingTask(() => {
+			this.pendingTask = null;
+
 			if (!this.initialized) {
 				const contextToolbarItems = this.getWriterTextContext();
 
@@ -89,7 +95,11 @@ class ContextToolbar extends JSDialogComponent {
 	hideContextToolbar(): void {
 		document.removeEventListener('pointermove', this.pointerMove);
 
-		app.layoutingService.appendLayoutingTask(() => {
+		if (this.pendingTask)
+			app.layoutingService.cancelLayoutingTask(this.pendingTask);
+
+		this.pendingTask = app.layoutingService.appendLayoutingTask(() => {
+			this.pendingTask = null;
 			this.showHideToolbar(false);
 		});
 	}
@@ -101,8 +111,8 @@ class ContextToolbar extends JSDialogComponent {
 		}
 
 		URLPopUpSection.closeURLPopUp();
-		let statRect;
-		if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
+		const statRect = app.file.textCursor.rectangle;
+		if (!TextSelections || !TextSelections.getStartRectangle() || !statRect)
 			return;
 
 		Util.ensureValue(app.activeDocument);
@@ -166,7 +176,7 @@ class ContextToolbar extends JSDialogComponent {
 		const currentFontName = this.map._getCurrentFontName();
 		const currentFontSize =
 			this.map['stateChangeHandler'].getItemValue('.uno:FontHeight');
-		return [
+		const contextItems: ToolItemWidgetJSON[] = [
 			{
 				type: 'container',
 				children: [
@@ -176,6 +186,7 @@ class ContextToolbar extends JSDialogComponent {
 							{
 								id: 'fontnamecombobox',
 								type: 'combobox',
+								label: _('Font'),
 								text: currentFontName,
 								entries: fontEntries,
 								selectedCount: 1,
@@ -190,6 +201,7 @@ class ContextToolbar extends JSDialogComponent {
 							{
 								id: 'fontsizecombobox',
 								type: 'combobox',
+								label: _('Size'),
 								text: currentFontSize,
 								entries: sizeEntries,
 								selectedCount: 1,
@@ -300,6 +312,7 @@ class ContextToolbar extends JSDialogComponent {
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
 		];
+		return contextItems;
 	}
 
 	insertAdditionalContextButton(button: any) {

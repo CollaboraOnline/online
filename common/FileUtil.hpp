@@ -13,14 +13,14 @@
 
 #include <common/Log.hpp>
 
+#include <Poco/Path.h>
+
 #include <cerrno>
 #include <chrono>
 #include <fcntl.h>
 #include <fstream>
 #include <string>
 #include <sys/stat.h>
-
-#include <Poco/Path.h>
 
 #if !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG)
 #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
@@ -240,6 +240,7 @@ namespace FileUtil
         closeFD(fd);
 
         data.resize(originalSize + (n <= 0 ? 0 : n));
+        data.shrink_to_fit();
 
         return n;
     }
@@ -319,8 +320,8 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and same contents.
-        static inline bool isIdenticalTo(const Stat& l, const std::string& lPath,
-                                         const Stat& r, const std::string& rPath)
+        static bool isIdenticalTo(const Stat& l, const std::string& lPath, const Stat& r,
+                                  const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,
@@ -332,8 +333,8 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and modified timestamp.
-        static inline bool isUpToDate(const Stat& l, const std::string& lPath,
-                                      const Stat& r, const std::string& rPath)
+        static bool isUpToDate(const Stat& l, const std::string& lPath, const Stat& r,
+                               const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,

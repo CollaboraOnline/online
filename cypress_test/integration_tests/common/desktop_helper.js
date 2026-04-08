@@ -247,7 +247,7 @@ function insertImage() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoInsertGraphic').filter(':visible').click();
 	} else {
-		cy.cGet('#toolbar-up .unoInsertGraphic').click();
+		cy.cGet('#toolbar-up .unoInsertGraphic').filter(':visible').click();
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
@@ -287,6 +287,10 @@ function closeNavigatorSidebar () {
 
 function insertComment(text = 'some text0', save = true) {
 	cy.log('>> insertComment - start');
+
+	cy.getFrameWindow().then(function(win) {
+		return helper.processToIdle(win);
+	});
 
 	var mode = Cypress.env('USER_INTERFACE');
 	if (mode === 'notebookbar') {

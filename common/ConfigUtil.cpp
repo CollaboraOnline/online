@@ -16,15 +16,18 @@
 
 #include <config.h>
 
-#include <ConfigUtil.hpp>
+#include "ConfigUtil.hpp"
+
 #include <common/Util.hpp>
 
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/XMLConfiguration.h>
 
 #include <cassert>
-#include <string>
+#include <fstream>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 #include <unordered_map>
 
 
@@ -327,6 +330,20 @@ void initialize(const std::string& xml)
     std::istringstream iss(xml);
     XmlConfig.reset(new Poco::Util::XMLConfiguration(iss));
     initialize(XmlConfig);
+}
+
+void initializeFromFile(const std::string& filename)
+{
+    std::ifstream ifs(filename);
+    if (!ifs)
+    {
+        throw std::invalid_argument("The config xml file [" + filename +
+                                    "] is invalid or not found");
+    }
+
+    std::ostringstream oss;
+    oss << ifs.rdbuf();
+    initialize(oss.str());
 }
 
 bool isInitialized() { return Config != nullptr; }

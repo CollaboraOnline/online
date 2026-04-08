@@ -334,7 +334,7 @@ interface Window {
 		get(name: string): string;
 	};
 	mode: {
-		isMobile(): boolean;
+		isSmallScreenDevice(): boolean;
 		isDesktop(): boolean;
 		isTablet(): boolean;
 		isCODesktop(): boolean;
@@ -363,6 +363,7 @@ interface Window {
 	enableAccessibility: boolean;
 	enableExperimentalFeatures: boolean;
 	enableDebug: boolean;
+	simulateError: (name: string) => boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
 	expectedServerId: string;
@@ -426,6 +427,9 @@ interface Window {
 	getAccessibilityState(): boolean;
 	makeClientVisibleArea(): string;
 	postMobileDebug(msg: string): void;
+
+	removeAccessKey(text: string): string;
+	contextMenuWizard: boolean;
 }
 
 // For localization

@@ -17,7 +17,7 @@ window.L.Control.DocumentNameInput = window.L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
-		if (window.mode.isMobile())
+		if (window.mode.isSmallScreenDevice())
 			this.progressBar = document.getElementById('mobile-progress-bar');
 		else
 			this.progressBar = document.getElementById('document-name-input-progress-bar');

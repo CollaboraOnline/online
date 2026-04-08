@@ -18,6 +18,7 @@
 
 #include <common/Log.hpp>
 #include <common/NumUtil.hpp>
+#include <common/ProcUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
 
@@ -149,7 +150,7 @@ std::size_t getFromCGroupV2(const std::string& key)
 }
 } // namespace
 
-namespace Util
+namespace ProcUtil
 {
 
 int spawnProcess(const std::string& cmd, const StringVector& args)
@@ -175,6 +176,11 @@ int spawnProcess(const std::string& cmd, const StringVector& args)
 
     return pid;
 }
+
+} // namespace ProcUtil
+
+namespace Util
+{
 
 std::string getHumanizedBytes(unsigned long bytes)
 {
@@ -269,6 +275,11 @@ std::size_t getCGroupMemSoftLimit()
 #endif
 }
 
+} // namespace Util
+
+namespace ProcUtil
+{
+
 std::pair<std::size_t, std::size_t> getPssAndDirtyFromSMaps(FILE* file)
 {
     std::size_t numPSSKb = 0;
@@ -350,18 +361,19 @@ std::size_t getProcessTreePss(pid_t pid)
             std::string child;
             while (children >> child)
             {
-                const auto pair = NumUtil::i32FromString(child);
-                if (pair.second)
+                const pid_t childPid = NumUtil::i32FromString(child, 0);
+                if (childPid > 0)
                 {
-                    pss += getProcessTreePss(pair.first);
+                    pss += getProcessTreePss(childPid);
                 }
             }
         }
 
         return pss;
     }
-    catch (const std::exception&)
+    catch (const std::exception& exc)
     {
+        LOG_DBG("Exception while getting TreePss for PID [" << pid << "]: " << exc.what());
     }
 
     return 0;
@@ -460,6 +472,12 @@ void setProcessAndThreadPriorities(const pid_t pid, int prio)
                                    << " with result: " << res);
 #endif
 }
+
+} // namespace ProcUtil
+
+namespace Util
+{
+
 // If OS is not mobile, it must be Linux.
 std::string getLinuxVersion()
 {

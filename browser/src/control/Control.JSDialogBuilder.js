@@ -106,10 +106,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._controlHandlers['searchedit'] = JSDialog.searchEdit;
 		this._controlHandlers['formulabaredit'] = JSDialog.formulabarEdit;
 		this._controlHandlers['multilineedit'] = JSDialog.multilineEdit;
-		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
-		this._controlHandlers['okbutton'] = this._pushbuttonControl;
-		this._controlHandlers['helpbutton'] = this._pushbuttonControl;
-		this._controlHandlers['cancelbutton'] = this._pushbuttonControl;
+		this._controlHandlers['pushbutton'] = JSDialog.pushButton;
+		this._controlHandlers['okbutton'] = JSDialog.pushButton;
+		this._controlHandlers['helpbutton'] = JSDialog.pushButton;
+		this._controlHandlers['cancelbutton'] = JSDialog.pushButton;
 		this._controlHandlers['combobox'] = JSDialog.combobox;
 		this._controlHandlers['comboboxentry'] = JSDialog.comboboxEntry;
 		this._controlHandlers['listbox'] = JSDialog.listbox;
@@ -145,9 +145,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._controlHandlers['iconview'] = JSDialog.iconView;
 		this._controlHandlers['iconviewlist'] = JSDialog.notebookbarIconViewList;
 		this._controlHandlers['drawingarea'] = JSDialog.drawingArea;
-		this._controlHandlers['rootcomment'] = this._rootCommentControl;
-		this._controlHandlers['comment'] = this._commentControl;
-		this._controlHandlers['emptyCommentWizard'] = this._rootCommentControl;
+		this._controlHandlers['rootcomment'] = JSDialog.rootCommentControl;
+		this._controlHandlers['comment'] = JSDialog.commentControl;
+		this._controlHandlers['emptyCommentWizard'] = JSDialog.rootCommentControl;
 		this._controlHandlers['separator'] = this._separatorControl;
 		this._controlHandlers['menubutton'] = JSDialog.menubuttonControl;
 		this._controlHandlers['spinner'] = this._spinnerControl;
@@ -340,7 +340,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				dispatcher.dispatch('closeapp');
 			}
-			this._defaultCallbackHandlerSendMessage(objectType, eventType, object, data, builder);
+			builder._defaultCallbackHandlerSendMessage(objectType, eventType, object, data, builder);
 		}
 	},
 
@@ -582,7 +582,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	_stressAccessKey: function(element, accessKey) {
-		if (!accessKey || window.mode.isMobile() || window.getAccessibilityState())
+		if (!accessKey || window.mode.isSmallScreenDevice() || window.getAccessibilityState())
 			return;
 
 		var text = element.textContent;
@@ -845,12 +845,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (builder.wizard) {
 			var that = this;
 			var functionName = data.functionName;
-			$(rightDiv).click(() => {
+			$(rightDiv).click(e => {
+				e.stopPropagation();
 				builder.wizard.goLevelDown(mainContainer);
 				if (contentNode.onshow)
 					contentNode.onshow();
 			});
-			$(leftDiv).click(() => {
+			$(sectionTitle).click(() => {
 				if (functionName !== '') {
 					app.socket.sendMessage('completefunction name=' + functionName);
 					that.map.fire('closemobilewizard');
@@ -1259,7 +1260,15 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 								let visibleContainer = Array.from(container[0].children).find(child =>
 									!child.classList.contains('hidden') && child.offsetParent !== null
 								);
-								let focusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('[tabindex="-1"]:not([disabled])')) : [];
+								
+								var allFocusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('*'))
+									.filter(function(el) { return el.checkVisibility() && JSDialog.IsFocusable(el); }) : [];
+
+								// Only leaf-level focusable elements are candidates.
+								var focusables = allFocusables.filter(function(el) {
+									return !allFocusables.some(function(other) { return other !== el && el.contains(other); });
+								});
+
 								if (focusables.length) {
 									let first = focusables[0];
 									let last = focusables[focusables.length - 1];
@@ -1449,90 +1458,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		value = parseFloat(data.value);
 		builder._setSpinFieldValue(controls.spinfield, builder._formatSpinFieldValue(value, controls.container._unit), value);
-
-		return false;
-	},
-
-	_customPushButtonTextForId: function(buttonId) {
-		if (buttonId == 'validref')
-			return _('Select range');
-
-		return '';
-	},
-
-	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
-		if (data.id && data.id === 'changepass' && builder.map['wopi'].IsOwner === false) {
-			data.enabled = false;
-		}
-		var wrapperClass = window.mode.isMobile() ? '' : 'd-flex justify-content-center';
-		var wrapper = window.L.DomUtil.create('div', wrapperClass + ' ui-pushbutton-wrapper ' + builder.options.cssClass, parentContainer); // need for locking overlay
-		wrapper.id = data.id;
-		var pushbutton = window.L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
-		pushbutton.id = wrapper.id + '-button';
-		pushbutton.setAttribute('tabindex', '0');
-		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
-		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
-		var image;
-		if (data.image && pushbuttonText !== '') {
-			window.L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
-			image = window.L.DomUtil.create('img', '', pushbutton);
-			image.src = data.image;
-			var text = window.L.DomUtil.create('span', '', pushbutton);
-			text.innerText = pushbuttonText;
-			builder._stressAccessKey(text, pushbutton.accessKey);
-		} else if (data.image) {
-			window.L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
-			image = window.L.DomUtil.create('img', '', pushbutton);
-			builder._isStringLCIcon(data.image) ? app.LOUtil.setImage(image, data.image, builder.map) : image.src = data.image;
-		} else if (data.symbol) {
-			window.L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
-			image = window.L.DomUtil.create('img', '', pushbutton);
-			app.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map);
-		} else {
-			pushbutton.innerText = pushbuttonText;
-			builder._stressAccessKey(pushbutton, pushbutton.accessKey);
-		}
-		if (image)
-			image.alt = '';
-
-		const isDisabled = data.enabled === false;
-		if (isDisabled) {
-			wrapper.setAttribute('disabled', 'true');
-			pushbutton.setAttribute('disabled', 'true');
-			pushbutton.setAttribute('aria-disabled', true);
-		}
-
-		JSDialog.SynchronizeDisabledState(wrapper, [pushbutton]);
-
-		if (data.isToggle) {
-			wrapper.classList.add('ui-toggle');
-			if (data.checked === true)
-				wrapper.classList.add('checked');
-		}
-
-		if (customCallback)
-			pushbutton.onclick = customCallback;
-		else if (builder._responses[data.id] !== undefined)
-			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: data.id }, builder._responses[data.id], builder);
-		else
-			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', wrapper, data.command, builder);
-
-		JSDialog.SetupA11yLabelForLabelableElement(parentContainer, pushbutton, data, builder);
-
-		const tooltipText = (data.aria && data.aria.label) || data.text;
-		if (!pushbuttonText && tooltipText) {
-			pushbutton.setAttribute('data-cooltip', builder._cleanText(tooltipText));
-			window.L.control.attachTooltipEventListener(pushbutton, builder.map);
-		}
-
-		if (data.aria && data.aria.role) {
-			pushbutton.setAttribute('role', data.aria.role);
-		}
-
-		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
-		builder.map.disableLockedItem(data, wrapper, pushbutton);
-		if (data.hidden)
-			$(wrapper).hide(); // Both pushbutton and its wrapper needs to be hidden.
 
 		return false;
 	},
@@ -1744,133 +1669,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		return false;
 	},
 
-	_createComment: function(container, data) {
-		// Create annotation copy and add it into the container.
-		container.appendChild(data.annotation.sectionProperties.container);
-
-		data.annotation.show();
-		data.annotation.update();
-		data.annotation.setExpanded();
-	},
-
-	_rootCommentControl: function(parentContainer, data, builder) {
-
-		if (data.type === 'emptyCommentWizard') {
-			builder._emptyCommentWizard(parentContainer, data, builder);
-			return;
-		}
-
-		var mainContainer = document.getElementById('explorable-entry level-' + builder._currentDepth + ' ' + data.id);
-		if (!mainContainer)
-			mainContainer = window.L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
-
-		mainContainer.id = 'explorable-entry level-' + builder._currentDepth + ' ' + data.id;
-
-		var container = document.getElementById(data.id);
-		if (!container)
-			container = window.L.DomUtil.create('div',  'ui-header cool-annotation-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
-
-		container.annotation = data.annotation;
-		container.id = data.id;
-		builder._createComment(container, data);
-		if (data.children.length > 1 && mainContainer.id !== 'comment-thread' + data.id)
-		{
-			var numberOfReplies = data.children.length - 1;
-			if (numberOfReplies > 0)
-			{
-				var replyCountNode = document.getElementById('reply-count-node-' + data.id);
-
-				if (!replyCountNode)
-					replyCountNode = window.L.DomUtil.create('div','cool-annotation-reply-count cool-annotation-content', $(container).find('.cool-annotation-content-wrapper')[0]);
-
-				replyCountNode.id = 'reply-count-node-' + data.id;
-				replyCountNode.style.display = 'block';
-
-				var replyCountText;
-				if (numberOfReplies === 1) {
-					replyCountText = numberOfReplies + ' ' + _('reply');
-				}
-				else {
-					replyCountText = numberOfReplies + ' ' + _('replies');
-				}
-				$(replyCountNode).text(replyCountText);
-			}
-
-			var childContainer = document.getElementById('comment-thread' + data.id);
-
-			if (!childContainer)
-				childContainer = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
-
-			childContainer.id = 'comment-thread' + data.id;
-			childContainer.title = _('Comment');
-
-			$(childContainer).hide();
-
-			if (builder.wizard) {
-				if ($(container).find('.cool-annotation-menubar').length > 0)
-					$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
-
-				var arrowSpan = container.querySelector('[id=\'arrow span ' + data.id + '\']');
-
-				if (!arrowSpan)
-					arrowSpan = window.L.DomUtil.create('span','sub-menu-arrow', $(container).find('.cool-annotation-content-wrapper')[0]);
-
-				arrowSpan.style.display = 'block';
-				arrowSpan.textContent = '>';
-				arrowSpan.style.padding = '0px';
-				arrowSpan.id = 'arrow span ' + data.id;
-
-				$(container).find('.cool-annotation')[0].onclick = function() {
-					builder.wizard.goLevelDown(mainContainer);
-					childContainer.style.display = 'block';
-					if (!childContainer.childNodes.length)
-						builder.build(childContainer, data.children);
-				};
-
-				var backButton = document.getElementById('mobile-wizard-back');
-
-				backButton.onclick = function () {
-					if (backButton.className !== 'close-button') {
-						if (!mainContainer.childNodes.length)
-							builder.build(mainContainer, data);
-						if (data.type === 'rootcomment') {
-							var temp = document.getElementById('comment-thread' + data.id);
-							if (temp)
-								temp.style.display = 'block';
-						}
-					}
-				};
-			}
-		}
-
-		$(container).find('.cool-annotation')[0].addEventListener('click', function() {
-			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).highlightComment(data.annotation);
-		});
-		return false;
-	},
-
-	_commentControl: function(parentContainer, data, builder) {
-		builder._createComment(parentContainer, data, false);
-		return false;
-	},
-
-	_emptyCommentWizard: function(parentContainer, data, builder) {
-		window.L.DomUtil.addClass(parentContainer, 'content-has-no-comments');
-		var emptyCommentWizard = window.L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
-		var imgNode = window.L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
-		app.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map);
-		imgNode.alt = data.text;
-
-		var textNode = window.L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
-		textNode.innerText = data.text;
-		window.L.DomUtil.create('br', 'empty-comment-wizard', textNode);
-		if (app.isCommentEditingAllowed()) {
-			var linkNode = window.L.DomUtil.create('div', 'empty-comment-wizard-link', textNode);
-			linkNode.innerText = _('Insert Comment');
-			linkNode.onclick = builder.map.insertComment.bind(builder.map);
-		}
-	},
-
 	// Create a DOM node with an identifiable parent class
 	_createIdentifiable : function(type, classNames, parentContainer, data) {
 		return window.L.DomUtil.create(
@@ -1880,10 +1678,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_isStringCloseToURL : function(str) {
 		return str.indexOf('http') !== -1;
-	},
-
-	_isStringLCIcon: function (str) {
-		return str.indexOf('lc_') === 0;
 	},
 
 	// TODO: move to jsdialog/Widget.Toolitem.ts
@@ -1995,7 +1789,21 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			else if (hasImage !== false){
 				if (data.icon) {
 					buttonImage = window.L.DomUtil.create('img', '', button);
-					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : app.LOUtil.setImage(buttonImage, data.icon, builder.map);
+					if (this._isStringCloseToURL(data.icon)) {
+						buttonImage.src = data.icon;
+					} else {
+						app.LOUtil.setImage(buttonImage, data.icon, builder.map);
+						// Fall back to base64 PNG if the SVG is not available.
+						// checkIfImageExists sets display:none on error, so
+						// restore it when substituting the fallback image.
+						if (data.image) {
+							buttonImage.onerror = function() {
+								buttonImage.onerror = null;
+								buttonImage.src = data.image;
+								buttonImage.style.display = '';
+							};
+						}
+					}
 				}
 				else if (data.image) {
 					buttonImage = window.L.DomUtil.create('img', '', button);
@@ -2080,6 +1888,17 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							'lc_' + iconName + '.svg',
 							builder.map,
 						);
+					}
+
+					// Swap tooltip text when activeTooltip is set
+					if (data.activeTooltip) {
+						if (isOn) {
+							div._wasActiveTooltip = true;
+							div.setAttribute('data-cooltip', data.activeTooltip);
+						} else if (div._wasActiveTooltip) {
+							div._wasActiveTooltip = false;
+							div.setAttribute('data-cooltip', enabledTooltip);
+						}
 					}
 				};
 
@@ -2194,8 +2013,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					}
 				});
 
+				const closemenuParentId = parentContainer.id;
 				div.closeDropdown = function() {
-					builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+					builder.callback('toolbox', 'closemenu',
+						closemenuParentId ? {id: closemenuParentId} : parentContainer,
+						data.command, builder);
 
 					if (shouldArrowbackgroundButton) {
 						arrowbackground.setAttribute('aria-expanded', 'false');
@@ -2260,6 +2082,16 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		$(controls.button).on('click', clickFunction);
 		$(controls.label).on('click', clickFunction);
+		if (data.doubleClickCommand) {
+			var doubleClickHandler = function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				if (div.hasAttribute('disabled')) return;
+				builder.map.sendUnoCommand(data.doubleClickCommand, data.doubleClickCommandArgs);
+			};
+			$(controls.button).on('dblclick', doubleClickHandler);
+			$(controls.label).on('dblclick', doubleClickHandler);
+		}
 		// We need a way to also handle the custom tooltip for any tool button like save in shortcut bar
 		if (data.isCustomTooltip) {
 			this._handleCustomTooltip(div, builder);
@@ -2463,7 +2295,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		builder._spinfieldControl(content, colsData, builder, callbackFunction);
 
 		var buttonData = { text: _('Insert Table') };
-		builder._pushbuttonControl(content, buttonData, builder, function() {
+		JSDialog.pushButton(content, buttonData, builder, function() {
 			var rowsCount = parseInt($('#rows > input.spinfield').get(0).value);
 			var colsCount = parseInt($('#cols > input.spinfield').get(0).value);
 			builder.map.sendUnoCommand('.uno:InsertTable?Columns=' + colsCount + '&Rows=' + rowsCount);
@@ -2612,6 +2444,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 			break;
 
+		case 'rename':
+			control.setAttribute('modelId', data.new_id);
+			control.id = JSDialog.MakeIdUnique(data.new_id);
+			break;
+
 		case 'rendered_entry':
 		case 'rendered_combobox_entry':
 		{
@@ -2657,6 +2494,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var parent = control.parentNode;
 		if (!parent)
+			return;
+
+		// Don't rebuild a tree view while inline cell editing is active;
+		// the backend will send an up-to-date state after editend.
+		if (control.querySelector('.ui-treeview-inline-edit'))
 			return;
 
 		// Restore expander depth so heading levels are correct when

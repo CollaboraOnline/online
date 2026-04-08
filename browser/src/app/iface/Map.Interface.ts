@@ -79,8 +79,10 @@ interface MapInterface extends Evented {
 		resetAppLoaded(): void;
 		DisableInactiveMessages: boolean;
 		UserCanNotWriteRelative: boolean;
+		IsOwner: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
+		DisableAISettings: boolean;
 		UserCanWrite: boolean;
 		HideChangeTrackingControls: boolean;
 		EnableRemoteLinkPicker: boolean;
@@ -121,6 +123,7 @@ interface MapInterface extends Evented {
 	saveAs(filenme: string, format?: string, options?: string): void;
 
 	addControl(control: any): void;
+	removeControl(control: any): void;
 
 	_shouldStartReadOnly(): boolean;
 	_switchToEditMode(): void;
@@ -224,4 +227,9 @@ interface MapInterface extends Evented {
 
 	// TODO: window.L.control.lokDialog
 	dialog: any;
+	isAIConfigured?: boolean;
+
+	_controlCorners: Record<string, Node>;
+	_contextMenu: ContextMenuControl;
+	_saveImageToWopi: boolean;
 }

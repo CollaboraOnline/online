@@ -273,15 +273,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						callback: function(key, options) {
 								if (nPos === undefined)
 									nPos = that._findClickedPart(options.$trigger[0]);
-								if (that.copiedSlide) {
-									// Same-tab paste: use duplicate allows insertion at a position
-									that._setPart(that.copiedSlide);
-									that._map.duplicatePage(nPos);
-								} else {
-									// Cross-tab/browser paste: use system clipboard
-									that._map.setPart(nPos - 1); // new slide is inserted after set slide
-									that._map._clip.filterExecCopyPaste('.uno:Paste');
-								}
+								that._pasteSlide(nPos);
 						},
 						visible: function() {
 							// Show paste if we have a local copied slide OR
@@ -335,7 +327,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
 						isHtmlName: true,
 						callback: function() {
-							that._map._clip.filterExecCopyPaste('.uno:Paste');
+							that._pasteSlide();
 						},
 					},
 					newslide: {
@@ -415,8 +407,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		return img;
 	},
 
-	_scrollToPart: function() {
-		var partNo = this._map.getCurrentPartNumber();
+	_scrollToPart: function(part) {
+		var partNo = part !== undefined ? part : this._map.getCurrentPartNumber();
 		//var sliderSize, nodePos, nodeOffset, nodeMargin;
 		var node = this._partsPreviewCont.children[partNo];
 
@@ -474,6 +466,59 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
 	},
 
+	// Paste a slide, preferring the system clipboard for cross-tab pastes.
+	// nPos: insertion position for the frame context menu (may be undefined for img context menu).
+	_pasteSlide: async function(nPos) {
+		// Guard against concurrent invocations (e.g. rapid double-click).
+		if (this._pastePending)
+			return;
+		this._pastePending = true;
+		try {
+			if (this.copiedSlide) {
+				// Check if the system clipboard has been updated by a different
+				// tab/session since our last copy. If so, prefer the system clipboard.
+				let useInternalCopy = true;
+				if (window.L.Browser.clipboardApiAvailable) {
+					try {
+						const items = await navigator.clipboard.read();
+						if (items.length > 0 && items[0].types.includes('text/html')) {
+							const blob = await items[0].getType('text/html');
+							const html = await blob.text();
+							const clip = this._map._clip;
+							const meta = clip.getMetaOrigin(html);
+							const id = clip.getMetaPath(0);
+							const idOld = clip.getMetaPath(1);
+							// If meta origin does not match this tab's clipboard, use system clipboard
+							if (meta !== '' && (id === '' || meta.indexOf(id) < 0) && (idOld === '' || meta.indexOf(idOld) < 0)) {
+								useInternalCopy = false;
+							}
+						}
+					} catch (e) {
+						// clipboard read failed or permission denied - keep using internal copy
+					}
+				}
+				if (useInternalCopy) {
+					// Same-tab paste: use duplicate which allows insertion at a position
+					this._setPart(this.copiedSlide);
+					this._map.duplicatePage(nPos);
+				} else {
+					// System clipboard is from a different tab - use it
+					this.copiedSlide = null;
+					if (nPos !== undefined)
+						this._map.setPart(Math.max(0, nPos - 1));
+					this._map._clip.filterExecCopyPaste('.uno:Paste');
+				}
+			} else {
+				// Cross-tab/browser paste: use system clipboard
+				if (nPos !== undefined)
+					this._map.setPart(Math.max(0, nPos - 1)); // new slide is inserted after set slide
+				this._map._clip.filterExecCopyPaste('.uno:Paste');
+			}
+		} finally {
+			this._pastePending = false;
+		}
+	},
+
 	_isSelected: function (e) {
 		var part = this._findClickedPart(e.target.parentNode);
 		var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
@@ -505,37 +550,59 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 			if (e.ctrlKey) {
 				this._map.selectPart(partId, 2, false); // Toggle selection on ctrl+click.
-				if (this.firstSelection === undefined)
-					this.firstSelection = this._map._docLayer._selectedPart;
 			} else if (e.altKey) {
 				window.app.console.log('alt');
 			} else if (e.shiftKey) {
-				if (this.firstSelection === undefined)
-					this.firstSelection = this._map._docLayer._selectedPart;
-
-				//deselect all slides
-				this._map.deselectAll();
-
-				//reselect the first original selection
-				this._map.setPart(this.firstSelection);
-				this._map.selectPart(this.firstSelection, 1, false);
-
-				if (this.firstSelection < partId) {
-					for (var id = this.firstSelection + 1; id <= partId; ++id) {
-						this._map.selectPart(id, 2, false);
-					}
-				} else if (this.firstSelection > partId) {
-					for (id = this.firstSelection - 1; id >= partId; --id) {
-						this._map.selectPart(id, 2, false);
-					}
-				}
+				this._selectPartRange(this._map._docLayer._selectedPart, partId);
 			} else {
 				this._map.deselectAll();
 				this._map.setPart(partId);
 				this._map.selectPart(partId, 1, false); // And select.
-				this.firstSelection = partId;
 			}
 		}
+	},
+
+	_selectPartRange: function (start, end) {
+		if (start === undefined || start === null)
+			start = this._map._docLayer._selectedPart;
+
+		var maxIndex = this._partsPreviewCont.children.length - 1;
+		start = Math.max(0, Math.min(start, maxIndex));
+		end = Math.max(0, Math.min(end, maxIndex));
+
+		//deselect all slides
+		this._map.deselectAll();
+
+		//reselect the first original selection
+		this._map.setPart(start);
+		this._map.selectPart(start, 1, false);
+
+		if (start < end) {
+			for (var id = start + 1; id <= end; ++id) {
+				this._map.selectPart(id, 1, false);
+			}
+		} else if (start > end) {
+			for (id = start - 1; id >= end; --id) {
+				this._map.selectPart(id, 1, false);
+			}
+		}
+		this._selectedPartRange = [start, end];
+		this._scrollToPart(end);
+	},
+
+	_modifySelectedPartRange: function (direction) {
+		var start, end;
+		if (this._selectedPartRange) {
+			start = this._selectedPartRange[0];
+			end = this._selectedPartRange[1];
+		} else {
+			start = end = this._map._docLayer._selectedPart;
+		}
+
+		if (direction === "UP")
+			this._selectPartRange(start, end - 1);
+		if (direction === "DOWN")
+			this._selectPartRange(start, end + 1);
 	},
 
 	_updatePart: function (e) {
@@ -690,7 +757,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			return false;
 
 		var elemRect = el.getBoundingClientRect();
-		var viewRect = new DOMRect(0, 0, window.innerWidth, window.innerHeight);
+		var viewRect = document.getElementById('slide-sorter').getBoundingClientRect();
 
 		return (elemRect.left <= viewRect.right &&
 			viewRect.left <= elemRect.right &&

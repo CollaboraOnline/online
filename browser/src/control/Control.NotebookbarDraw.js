@@ -111,6 +111,13 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'G', de: null }
 			},
 			{
+				'id': 'Chart-tab-label',
+				'text': _('Chart'),
+				'name': 'Chart',
+				'context': 'Chart|Series|ErrorBar|Axis|Grid|ChartElements|Trendline|ChartTitle|ChartLegend|ChartLabel',
+				'accessibility': { focusBack: true, combination: 'CH', de: null }
+			},
+			{
 				'id': 'View-tab-label',
 				'text': _('View'),
 				'name': 'View',
@@ -136,6 +143,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 			this.getTableTab(),
 			this.getShapeTab(),
 			this.getPictureTab(),
+			this.getChartTab(),
 			this.getViewTab(),
 			this.getHelpTab()
 		];
@@ -162,7 +170,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 							'type': 'bigtoolitem',
 							'text': _('Save'),
 							'command': '.uno:Save',
-							'accessibility': { focusBack: true, combination: 'SF', de: null }
+							'accessibility': { focusBack: true, combination: 'SV', de: null }
 						}
 					]
 				});
@@ -369,7 +377,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 							'type': 'bigtoolitem',
 							'text': _('Signature'),
 							'command': '.uno:Signature',
-							'accessibility': { focusBack: true, combination: 'SN' }
+							'accessibility': { focusBack: true, combination: 'GN' }
 						}
 					]
 				}
@@ -637,7 +645,11 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 										'id': 'home-format-paint-brush',
 										'type': 'toolitem',
 										'text': _UNO('.uno:FormatPaintbrush'),
+										'tooltip': _('Clone Formatting (double click to keep active)'),
+										'activeTooltip': _('Clone Formatting is active (click again or press Esc to exit)'),
 										'command': '.uno:FormatPaintbrush',
+										'doubleClickCommand': '.uno:FormatPaintbrush',
+										'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
 										'accessibility': { focusBack: true, combination: 'FP', de: null }
 									}
 								]
@@ -686,6 +698,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 									{
 										'id': 'fontnamecombobox',
 										'type': 'combobox',
+										'label': _('Font'),
 										'text': 'Carlito',
 										'entries': [
 											'Carlito'
@@ -700,6 +713,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 									{
 										'id': 'fontsizecombobox',
 										'type': 'combobox',
+										'label': _('Size'),
 										'text': '12 pt',
 										'entries': [
 											'12 pt'
@@ -1669,7 +1683,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'TI', de: null },
 				'children' : [
 					{
-						'id': 'insert-text',
+						'id': 'insert-insert-text',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Text'),
 						'command': '.uno:Text',

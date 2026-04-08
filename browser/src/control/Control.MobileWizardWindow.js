@@ -63,7 +63,7 @@ window.L.Control.MobileWizardWindow = window.L.Control.extend({
 		this.map = map;
 
 		// for the moment, the mobile-wizard is mobile phone only
-		if (!window.mode.isMobile())
+		if (!window.mode.isSmallScreenDevice())
 			return;
 
 		this.content.replaceChildren();
@@ -461,8 +461,8 @@ window.L.Control.MobileWizardWindow = window.L.Control.extend({
 				return;
 			}
 
-			var isMobileDialog = data.id && !isNaN(data.id) && !isSidebar;
-			if (isMobileDialog) {
+		var isMobileDialog = data.id && !isNaN(data.id) && !isSidebar;
+		if (isMobileDialog) {
 				// id is a number - remember window id for interaction
 				window.mobileDialogId = data.id;
 				//dialogid is string - name of the dialog in json

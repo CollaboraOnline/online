@@ -37,6 +37,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	DisableInsertLocalImage: false,
 	EnableInsertRemoteLink: false,
 	EnableRemoteAIContent: false,
+	DisableAISettings: false,
 	EnableShare: false,
 	HideUserList: null,
 	CallPythonScriptSource: null,
@@ -159,12 +160,14 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		this.DisableInsertLocalImage = !!wopiInfo['DisableInsertLocalImage'];
 		this.EnableRemoteLinkPicker = !!wopiInfo['EnableRemoteLinkPicker'];
 		this.EnableRemoteAIContent = !!wopiInfo['EnableRemoteAIContent'];
+		this.DisableAISettings = !!wopiInfo['DisableAISettings'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
 		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
 		this.DisablePresentation = wopiInfo['DisablePresentation'];
 		this.PresentationLeader = wopiInfo['PresentationLeader'];
+		this.CommentAvatarUrl = wopiInfo['CommentAvatarUrl'];
 
 		if (this.UserCanWrite && !app.isReadOnly()) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
 			app.setPermission('edit');
@@ -747,7 +750,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 						return;
 					}
 
-					var isExport = format === 'pdf' || format === 'epub';
+					var isExport = format === 'pdf' || format === 'epub' || this._map._saveImageToWopi;
+					this._map._saveImageToWopi = false;
 					if (isExport) {
 						this._map.exportAs(msg.Values.Filename);
 					} else {
@@ -800,6 +804,22 @@ window.L.Map.WOPI = window.L.Handler.extend({
 				}
 			}
 		}
+		else if (msg.MessageId === 'Action_GoToComment') {
+			if (msg.Values) {
+				var commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+				if (!commentSection) {
+					this._sendGoToCommentResp(msg.Values.Id, false, 'Comment section not available');
+					return;
+				}
+				var docType = this._map._docLayer._docType;
+				if (docType === 'spreadsheet')
+					this._goToCalcComment(commentSection, msg.Values.Id);
+				else if (docType === 'text')
+					this._goToComment(commentSection, msg.Values.Id);
+				else
+					this._sendGoToCommentResp(msg.Values.Id, false, 'Unsupported document type'); // TODO: support Draw/Impress
+			}
+		}
 		else if (msg.sender === 'EIDEASY_SINGLE_METHOD_SIGNATURE') {
 			// This is produced by the esign popup.
 			const eSignature = this._map.eSignature;
@@ -807,6 +827,122 @@ window.L.Map.WOPI = window.L.Handler.extend({
 				eSignature.handleSigned(msg);
 			}
 		}
+	},
+
+	_goToComment: function(commentSection, commentId) {
+		// Writer and Calc use different types for Id: string vs. integer?
+		var comment = commentSection.getComment(commentId);
+		if (!comment)
+			comment = commentSection.getComment(parseInt(commentId));
+		if (!comment) {
+			this._sendGoToCommentResp(commentId, false, 'Comment not found');
+			return;
+		}
+
+		this._map.showComments(true);
+		if (comment.sectionProperties.data.resolved === 'true')
+			this._map.showResolvedComments(true);
+
+		// Move the cursor to the comment's anchor
+		var clickX, clickY;
+		var cellRange = comment.sectionProperties.data.cellRange;
+		if (this._map._docLayer._docType === 'spreadsheet' && cellRange) {
+			var cellRect = this._map._docLayer._cellRangeToTwipRect(cellRange).toRectangle();
+			clickX = Math.round(cellRect[0] + cellRect[2] / 2);
+			clickY = Math.round(cellRect[1] + cellRect[3] / 2);
+		} else {
+			var anchorPos = comment.sectionProperties.data.anchorPos;
+			clickX = anchorPos[0];
+			clickY = anchorPos[1];
+		}
+		if (clickX && clickY) {
+			this._map._docLayer._postMouseEvent('buttondown', clickX, clickY, 1, 1, 0);
+			this._map._docLayer._postMouseEvent('buttonup', clickX, clickY, 1, 1, 0);
+		}
+
+		commentSection.navigateAndFocusComment(comment);
+
+		if (this._map._docLayer._docType === 'spreadsheet') {
+			// The sheet switch and mouse click (which sets cursor to anchor) trigger
+			// async events (_onSetPartMsg, onNewDocumentTopLeft, onCellAddressChanged)
+			// that would normally hide the comment. Set a guard to prevent that, show
+			// the comment, then clear the guard after a timeout to let events settle.
+			// 2 s timeout is an arbitrary value, hoped to cover typical cases, and at
+			// the same time, not block expected responsiveness, when user expects it
+			// to hide.
+			var props = commentSection.sectionProperties;
+			if (props.doNotHideCommentTimer)
+				clearTimeout(props.doNotHideCommentTimer);
+			props.doNotHideCommentTimer = setTimeout(function() {
+				props.doNotHideCommentTimer = null;
+			}, 2000);
+
+			// Finally, an additional operation specific to Calc (maybe also Draw?):
+			// it actually shows the comment on mouse hover
+			comment.onMouseEnter();
+		}
+
+		this._sendGoToCommentResp(commentId, true);
+	},
+
+	_goToCalcComment: function(commentSection, commentId) {
+		var map = this._map;
+		var props = commentSection.sectionProperties;
+
+		// Try to find the comment in the current calcMasterList.
+		var entry = props.calcMasterList.find(el => el.id == commentId);
+		if (!entry) {
+			this._sendGoToCommentResp(commentId, false, 'Comment not found');
+			return;
+		}
+
+		// If timeout from previous command is still active, stop it; and hide any shown comment,
+		// to avoid a case when doNotHideCommentTimer would prevent another comment from hiding.
+		if (props.doNotHideCommentTimer)
+			clearTimeout(props.doNotHideCommentTimer);
+		props.doNotHideCommentTimer = null;
+		commentSection.hideAllComments();
+
+		var targetTab = parseInt(entry.tab);
+		if (map._docLayer._selectedPart == targetTab) {
+			// Already on the right sheet - navigate immediately.
+			this._goToComment(commentSection, commentId);
+			return;
+		}
+
+		// The comment is on a different sheet. Switch to it and wait for
+		// sheetgeometrychanged so the geometry is ready for positioning.
+
+		var safetyTimer = null;
+		var self = this;
+
+		function cleanup() {
+			clearTimeout(safetyTimer);
+			map.off('sheetgeometrychanged', onGeometry);
+		}
+
+		function onGeometry() {
+			cleanup();
+			self._goToComment(commentSection, commentId);
+		}
+
+		safetyTimer = setTimeout(function() {
+			cleanup();
+			self._sendGoToCommentResp(commentId, false, 'Timed out waiting for server');
+		}, 10000);
+
+		map.once('sheetgeometrychanged', onGeometry);
+		map.setPart(targetTab);
+	},
+
+	_sendGoToCommentResp: function(commentId, success, errorMsg) {
+		var args = { Id: String(commentId), success: success };
+		if (errorMsg)
+			args.errorMsg = errorMsg;
+		this._map.fire('postMessage', {
+			msgId: 'Action_GoToComment_Resp',
+			args: args
+		});
 	},
 
 	_postMessage: function(e) {

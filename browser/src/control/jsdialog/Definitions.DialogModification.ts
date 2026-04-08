@@ -91,7 +91,7 @@ dialogModifications.set('TocDialog', function (instance: any) {
 	}
 
 	// Forward focus events from edit inputs so core tracks the active control.
-	// Without this, clicking an edit between tokens in LOK mode does not
+	// Without this, clicking an edit between tokens in COKit mode does not
 	// update m_pActiveCtrl, and insertion buttons act on the wrong position.
 	instance.container.addEventListener('focusin', function (e: FocusEvent) {
 		const input = e.target as HTMLElement;

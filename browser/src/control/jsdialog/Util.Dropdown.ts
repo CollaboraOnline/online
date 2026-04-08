@@ -32,6 +32,7 @@ JSDialog.OpenDropdown = function (
 	innerCallback: JSDialogMenuCallback,
 	popupAnchor: string,
 	isSubmenu: boolean,
+	earlyCallbackCall?: boolean,
 ) {
 	const json = {
 		id: _createDropdownId(id),
@@ -221,6 +222,7 @@ JSDialog.OpenDropdown = function (
 						generateCallback(entry.items),
 						'top-end',
 						true,
+						earlyCallbackCall,
 					);
 					lastSubMenuOpened = subMenuId;
 
@@ -238,10 +240,22 @@ JSDialog.OpenDropdown = function (
 
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
-					const uno =
-						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
-					window.L.Map.THIS.sendUnoCommand(uno);
-					JSDialog.CloseDropdown(id);
+					if (earlyCallbackCall && innerCallback) {
+						innerCallback(
+							objectType,
+							eventType,
+							object,
+							data,
+							entry || builder,
+						);
+					} else {
+						const uno =
+							entry.uno.indexOf('.uno:') === 0
+								? entry.uno
+								: '.uno:' + entry.uno;
+						window.L.Map.THIS.sendUnoCommand(uno);
+					}
+					JSDialog.CloseAllDropdowns();
 					return;
 				} else {
 					app.console.debug(
@@ -257,12 +271,13 @@ JSDialog.OpenDropdown = function (
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
 			// usually last param is builder see: JSDialogCallback
 			if (
+				!earlyCallbackCall &&
 				innerCallback &&
 				innerCallback(objectType, eventType, object, data, entry || builder)
 			)
 				return;
 
-			if (eventType === 'selected') JSDialog.CloseDropdown(id);
+			if (eventType === 'selected') JSDialog.CloseAllDropdowns();
 
 			// we want to send render request to the default callback -> no warn
 			if (eventType === 'render_entry') return;
@@ -276,7 +291,9 @@ JSDialog.OpenDropdown = function (
 			);
 		};
 	};
-	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	if (!isSubmenu) {
+		window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	}
 	window.L.Map.THIS.fire('jsdialog', {
 		data: json,
 		callback: generateCallback(entries),
@@ -296,6 +313,8 @@ JSDialog.CloseDropdown = function (id: string, focusHandled?: boolean) {
 
 JSDialog.CloseAllDropdowns = function () {
 	window.L.Map.THIS.jsdialog.closeAllDropdowns();
+	if (window.L.Map.THIS.contextToolbar)
+		window.L.Map.THIS.contextToolbar.hideContextToolbar();
 };
 
 JSDialog.GetDropdown = function (id: string) {

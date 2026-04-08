@@ -866,7 +866,7 @@ function onWopiProps(e) {
 }
 
 function processStateChangedCommand(commandName, state) {
-	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
+	var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (!toolbar)
 		return;
 
@@ -928,8 +928,8 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 
-	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
-		|| commandName === '.uno:SpacePara2') {
+	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara115'
+		|| commandName === '.uno:SpacePara15' || commandName === '.uno:SpacePara2') {
 		// TODO
 		//if (toolbar) toolbar.refresh();
 	}
@@ -1019,7 +1019,7 @@ function onCommandResult(e) {
 }
 
 function onUpdatePermission(e) {
-	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
+	var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (toolbar) {
 		// always enabled items
 		var enabledButtons = ['closemobile', 'undo', 'redo', 'fold'];
@@ -1113,7 +1113,7 @@ function setupToolbar(e) {
 
 	map.on('search', function (e) {
 		var searchInput = window.L.DomUtil.get('search-input');
-		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
+		var toolbar = window.mode.isSmallScreenDevice() ? app.map.mobileSearchBar: app.map.statusBar;
 		if (!toolbar) {
 			console.debug('Cannot find search bar');
 			return;
@@ -1121,7 +1121,7 @@ function setupToolbar(e) {
 		if (e.count === 0) {
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				toolbar.enableItem('cancelsearch', false);
 			} else {
 				toolbar.showItem('cancelsearch', false);
@@ -1160,7 +1160,7 @@ function setupToolbar(e) {
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
 
-	if (map.options.wopi && window.L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+	if (map.options.wopi && window.L.Params.closeButtonEnabled && !window.mode.isSmallScreenDevice()) {
 		$('#closebuttonwrapper').css('display', 'flex');
 		var button = window.L.DomUtil.get('closebutton');
 		if (button) {
@@ -1172,7 +1172,7 @@ function setupToolbar(e) {
 	} else if (!window.L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 		$('#closebuttonwrapperseparator').hide();
-	} else if (window.L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+	} else if (window.L.Params.closeButtonEnabled && !window.mode.isSmallScreenDevice()) {
 		$('#closebuttonwrapper').css('display', 'flex');
 	}
 

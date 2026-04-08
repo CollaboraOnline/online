@@ -1215,6 +1215,27 @@ function getSubFolder(filePath) {
 	return subFolder;
 }
 
+// Return the center of the shape SVG overlay in coordinates suitable for
+// clicking on #document-canvas.  The outer SVG (created by
+// ShapeHandlesSection.setSVG) carries left/top relative to
+// #canvas-container; width/height may be on the inner SVG (when a viewBox
+// is present) or on the outer SVG.
+function getShapeSVGCenter() {
+	return cy.cGet('#canvas-container > svg')
+		.then(function(outerSvg) {
+			var outer = outerSvg[0];
+			var inner = outer.querySelector('svg');
+			var width = parseInt(inner && inner.style.width) || parseInt(outer.style.width);
+			var height = parseInt(inner && inner.style.height) || parseInt(outer.style.height);
+			expect(width).to.be.greaterThan(0);
+			expect(height).to.be.greaterThan(0);
+			return {
+				x: parseInt(outer.style.left) + width / 2,
+				y: parseInt(outer.style.top) + height / 2,
+			};
+		});
+}
+
 /*
  * Assert image svg
  */
@@ -1369,6 +1390,49 @@ function waitForMapState(command, expectedValue) {
 	cy.log('<< waitForMapState - end');
 }
 
+// cy.realPress('Enter') via CDP bypasses preventDefault on keydown,
+// which causes implicit form submission and spurious button clicks
+// that don't happen with real keyboard input. This helper blocks
+// those side effects for a single keypress.
+function realPressInDialog(key) {
+	cy.cGet('.jsdialog-window form').then($form => {
+		// Block implicit form submission for this keypress
+		function blockSubmit(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+		$form[0].addEventListener('submit', blockSubmit, true);
+
+		// Block the close button from being clicked
+		var closeBtn = $form[0].querySelector('.ui-dialog-titlebar-close');
+		var origOnclick = closeBtn ? closeBtn.onclick : null;
+		if (closeBtn) {
+			closeBtn.onclick = function(e) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+			};
+		}
+
+		cy.realPress(key).then(() => {
+			$form[0].removeEventListener('submit', blockSubmit, true);
+			if (closeBtn) closeBtn.onclick = origOnclick;
+		});
+	});
+}
+
+// Useful to get an item in the context-menu (currently only for document-area
+// context menus). This context menu uses jsdialog dropdown as the
+// implementation.
+function getContextMenuItem(menuItemText) {
+	return cy.cGet('#jsd-context-menu-dropdown-overlay')
+		.contains('.ui-combobox-entry.jsdialog.ui-grid-cell span',
+			menuItemText);
+}
+
+function getContextMenuItemList() {
+	return cy.cGet('#jsd-context-menu-dropdown-overlay').find('.ui-combobox-entry.jsdialog.ui-grid-cell span');
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1425,7 +1489,11 @@ module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
 module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
+module.exports.getContextMenuItem = getContextMenuItem;
+module.exports.getContextMenuItemList = getContextMenuItemList;
 module.exports.getMatchedCSSRules = getMatchedCSSRules;
+module.exports.realPressInDialog = realPressInDialog;
+module.exports.getShapeSVGCenter = getShapeSVGCenter;
 
 // Find all author CSS rules that match an element, with the source
 // stylesheet filename and the full selector for each matching rule.

@@ -60,7 +60,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2 .cool-annotation-menubar .cool-annotation-menu').click();
-		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
+		cy.cGet('body').contains('.ui-combobox-entry.jsdialog.ui-grid-cell', 'Remove').click();
 		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -104,7 +104,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2 .cool-annotation-menubar .cool-annotation-menu').click();
-		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
+		cy.cGet('body').contains('.ui-combobox-entry.jsdialog.ui-grid-cell', 'Remove').click();
 		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -338,6 +338,54 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		});
 	});
 
+	it('Comment scrolls with document in compare changes mode', function () {
+		// Given a document with a comment in compare changes mode:
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert .unoInsertAnnotation').click();
+		cy.cGet('#annotation-modify-textarea-new').should('exist');
+		cy.cGet('#annotation-modify-textarea-new').type('some text');
+		cy.cGet('#annotation-save-new').click();
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#Review-tab-label').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
+
+		// When scrolling down:
+		let initialTop;
+		cy.cGet('#comment-container-1').then(function($el) {
+			initialTop = $el.position().top;
+		});
+		cy.getFrameWindow().then(function(win) {
+			win.app.sectionContainer.getSectionWithName('scroll').scrollVerticalWithOffset(100);
+		});
+
+		// Then the comment should move up:
+		// Without the accompanying fix in place, this test would have failed with:
+		// - comment top after scroll: expected 207 to be below 207
+		// while it reduced to 189 with the fix.
+		cy.cGet('#comment-container-1').should(function($el) {
+			expect($el.position().top, 'comment top after scroll').to.be.lessThan(initialTop);
+		});
+
+		// Also verify the comment is to the right of the "new" page (right half),
+		// not between the two pages:
+		cy.getFrameWindow().then(function(win) {
+			// Compute the right edge of the right-side page in view coordinates.
+			var layout = win.app.activeDocument.activeLayout;
+			var rightEdgePoint = new win.cool.SimplePoint(win.app.activeDocument.fileSize.pX, 0);
+			rightEdgePoint.mode = 2; // TileMode.RightSide
+			var rightPageEdge = layout.documentToViewX(rightEdgePoint) / win.app.dpiScale;
+			cy.cGet('#comment-container-1').should(function($el) {
+				// Without the accompanying fix in place, this test would have failed with:
+				// - comment left position: expected 593 to be above 747
+				// i.e. the comment left is 1247.125 with the fix.
+				expect($el.position().left, 'comment left position').to.be.greaterThan(rightPageEdge);
+			});
+		});
+	});
+
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
@@ -374,7 +422,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		// undo removed comment
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2 .cool-annotation-menubar .cool-annotation-menu').click();
-		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
+		cy.cGet('body').contains('.ui-combobox-entry.jsdialog.ui-grid-cell', 'Remove').click();
 		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 		cy.cGet('#undo').click();
@@ -391,5 +439,43 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
+	});
+});
+
+describe(['tagdesktop'], 'Restricted user tracked changes dialog button state', function() {
+	function openManageChangesDialog() {
+		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920, 1080);
+		cy.cGet('.notebookbar #Review-tab-label').click();
+		desktopHelper.getNbIcon('AcceptTrackedChanges', 'Review').click();
+		cy.cGet('#AcceptRejectChangesDialog').should('be.visible');
+		cy.cGet('#writerchanges .ui-treeview-entry').first().click();
+	}
+
+	it('Accept and reject buttons are disabled for restricted user', function() {
+		helper.setupAndLoadDocument('writer/manage_tracking_changes.odt',
+			/* isMultiUser */ false, /* copyCertificates copies .wopi.json */ true);
+		openManageChangesDialog();
+
+		// When loading writer/manage_tracking_changes.odt.wopi.json, which
+		// has IsUserRestricted=true and Test_RestrictedCommandList containing
+		// the accept/reject UNO commands, all four buttons must be disabled
+		cy.cGet('#accept-button').should('have.attr', 'disabled');
+		cy.cGet('#reject-button').should('have.attr', 'disabled');
+		cy.cGet('#acceptall-button').should('have.attr', 'disabled');
+		cy.cGet('#rejectall-button').should('have.attr', 'disabled');
+	});
+
+	it('Accept and reject buttons are enabled for unrestricted user', function() {
+		helper.setupAndLoadDocument('writer/manage_tracking_changes.odt',
+			/* isMultiUser */ false, /* copyCertificates copies .wopi.json */ false);
+		openManageChangesDialog();
+
+		// Without the .wopi.json the user is not restricted,
+		// so all four buttons must be enabled
+		cy.cGet('#accept-button').should('not.have.attr', 'disabled');
+		cy.cGet('#reject-button').should('not.have.attr', 'disabled');
+		cy.cGet('#acceptall-button').should('not.have.attr', 'disabled');
+		cy.cGet('#rejectall-button').should('not.have.attr', 'disabled');
 	});
 });

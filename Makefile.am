@@ -20,6 +20,12 @@ SUBDIRS = macos browser
 else
 if ENABLE_QTAPP
 SUBDIRS = qt browser
+
+if ENABLE_QTAPP_TESTS
+check-qtapp:
+	$(MAKE) $(AM_MAKEFLAGS) -C qt check-qtapp
+endif ENABLE_QTAPP_TESTS
+
 else
 if ENABLE_WASM
 SUBDIRS = wasm browser
@@ -47,17 +53,17 @@ QUIET_MKDIRP = $(QUIET_MKDIRP_$(V))
 QUIET_MKDIRP_ = $(QUIET_MKDIRP_$(AM_DEFAULT_VERBOSITY))
 QUIET_MKDIRP_0 = @echo "  MKDIRP  " $@;
 
+if ENABLE_LIBFUZZER
+bin_PROGRAMS =
+else
 bin_PROGRAMS = \
 	coolconvert \
 	coolforkit-caps \
 	coolforkit-ns \
 	coolmount \
 	coolstress \
-	coolconfig
-
-if ENABLE_LIBFUZZER
-else
-bin_PROGRAMS += coolwsd
+	coolconfig \
+	coolwsd
 if ENABLE_DEBUG
 bin_PROGRAMS += coolwsd-inproc
 endif
@@ -156,6 +162,7 @@ shared_sources = \
                  common/Log-common.cpp \
                  common/Log-poco.cpp \
                  common/MobileApp.cpp \
+                 common/ProcUtil.cpp \
                  common/Protocol.cpp \
                  common/RegexUtil.cpp \
                  common/Seccomp.cpp \
@@ -193,6 +200,7 @@ coolwsd_sources = \
                   wsd/CacheUtil.cpp \
                   wsd/ClientRequestDispatcher.cpp \
                   wsd/ClientSession.cpp \
+                  wsd/ContentType.cpp \
                   wsd/DocumentBroker.cpp \
                   wsd/FileServer.cpp \
                   wsd/FileServerUtil.cpp \
@@ -221,6 +229,9 @@ coolwsd_SOURCES = $(coolwsd_sources) \
 
 EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
+if ENABLE_LIBFUZZER
+noinst_PROGRAMS =
+else
 noinst_PROGRAMS = \
                   clientnb \
                   connect \
@@ -228,13 +239,19 @@ noinst_PROGRAMS = \
                   coolmap \
                   coolsocketdump \
                   lokitclient
+endif
 
 if ENABLE_LIBFUZZER
+if ENABLE_AFL
+# AFL++ builds 4 variants per fuzzer target
+else
 noinst_PROGRAMS += \
 		   admin_fuzzer \
+		   clientrequest_fuzzer \
 		   clientsession_fuzzer \
 		   httpresponse_fuzzer \
 		   httpecho_fuzzer
+endif
 endif
 
 connect_SOURCES = \
@@ -242,6 +259,7 @@ connect_SOURCES = \
                   common/DummyTraceEventEmitter.cpp \
                   common/Log-common.cpp \
                   common/Log-poco.cpp \
+                  common/ProcUtil.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
                   common/Util-server.cpp \
@@ -257,6 +275,7 @@ lokitclient_SOURCES = \
                       common/Log-common.cpp \
                       common/Log-poco.cpp \
                       common/Protocol.cpp \
+                      common/ProcUtil.cpp \
                       common/StringVector.cpp \
                       common/TraceEvent.cpp \
                       common/Util-server.cpp \
@@ -334,20 +353,115 @@ common_fuzzer_sources = \
 		       $(coolforkit_sources) \
 		       $(shared_sources)
 
+if ENABLE_AFL
+# AFL++ multi-variant fuzzer build.
+# 4 static libraries (one per variant) from common sources,
+# then 5 fuzzers x 4 variants. To add a new fuzzer, just add to AFL_FUZZERS.
+
+AFL_CPPFLAGS = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) -I${top_srcdir}/test
+AFL_CXXFLAGS = $(AFL_CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+AFL_CFLAGS = $(AFL_CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+AFL_LDFLAGS_COMMON = $(AM_LDFLAGS) $(LIBS)
+
+# Variant configurations: ENV_<variant>, CXX_<variant>, CC_<variant>
+ENV_native =
+CXX_native = $(CXX)
+CC_native = $(CC)
+
+ENV_san = AFL_LLVM_ONLY_FSRV=1 AFL_USE_ASAN=1 AFL_USE_UBSAN=1 AFL_USE_CFISAN=1
+CXX_san = $(AFL_CLANG_FAST_CXX)
+CC_san = $(AFL_CLANG_FAST_CC)
+
+ENV_cmpcov = AFL_LLVM_LAF_ALL=1
+CXX_cmpcov = $(CXX)
+CC_cmpcov = $(CC)
+
+ENV_cmplog = AFL_LLVM_CMPLOG=1
+CXX_cmplog = $(CXX)
+CC_cmplog = $(CC)
+
+AFL_VARIANTS = native san cmpcov cmplog
+
+# Common sources split by language
+common_fuzzer_cpp = $(common_fuzzer_sources)
+common_fuzzer_c = kit/DeltaSimd.c
+
+# Fuzzer registry: name=source (add new fuzzers here)
+AFL_FUZZERS = \
+	admin=fuzzer/Admin.cpp \
+	clientrequest=fuzzer/ClientRequestDispatcherFuzz.cpp \
+	clientsession=fuzzer/ClientSession.cpp \
+	httpresponse=fuzzer/HttpResponse.cpp \
+	httpecho=fuzzer/HttpEcho.cpp
+
+# Extract just the names
+AFL_FUZZER_NAMES = $(foreach f,$(AFL_FUZZERS),$(word 1,$(subst =, ,$f)))
+
+# Generate all target names: <name>_fuzzer_<variant>.afl
+AFL_FUZZER_TARGETS = $(foreach v,$(AFL_VARIANTS),$(foreach n,$(AFL_FUZZER_NAMES),$(n)_fuzzer_$(v).afl))
+
+# Per-variant common object files
+afl_common_objs = $(common_fuzzer_cpp:%.cpp=.afl-$(1)/%.o) $(common_fuzzer_c:%.c=.afl-$(1)/%.o)
+
+# Per-variant static library names
+AFL_LIBS = $(foreach v,$(AFL_VARIANTS),aflfuzz_$(v).a)
+
+# Pattern rules for compiling each variant's objects
+define AFL_VARIANT_RULES
+.afl-$(1)/%.o: %.cpp
+	@mkdir -p $$(dir $$@)
+	$(ENV_$(1)) $$(CXX_$(1)) $$(AFL_CXXFLAGS) -c -o $$@ $$<
+
+.afl-$(1)/%.o: %.c
+	@mkdir -p $$(dir $$@)
+	$(ENV_$(1)) $$(CC_$(1)) $$(AFL_CFLAGS) @SIMD_CFLAGS@ -c -o $$@ $$<
+
+aflfuzz_$(1).a: $$(call afl_common_objs,$(1))
+	$$(AR) crs $$@ $$^
+endef
+
+$(foreach v,$(AFL_VARIANTS),$(eval $(call AFL_VARIANT_RULES,$(v))))
+
+# Link rule: <name>_fuzzer_<variant>.afl from variant-compiled fuzzer source + static lib
+define AFL_FUZZER_LINK
+$(1)_fuzzer_$(2).afl: .afl-$(2)/$(3:.cpp=.o) aflfuzz_$(2).a
+	$(ENV_$(2)) $$(CXX_$(2)) -o $$@ $$< aflfuzz_$(2).a $$(AFL_DRIVER_LIB) $$(AFL_LDFLAGS_COMMON)
+endef
+
+$(foreach f,$(AFL_FUZZERS),\
+  $(foreach v,$(AFL_VARIANTS),\
+    $(eval $(call AFL_FUZZER_LINK,$(word 1,$(subst =, ,$f)),$(v),$(word 2,$(subst =, ,$f))))))
+
+clean-afl:
+	rm -rf $(foreach v,$(AFL_VARIANTS),.afl-$(v)) $(AFL_LIBS) $(AFL_FUZZER_TARGETS)
+
+else
+# libFuzzer build (original)
+
+LIBFUZZER_LDFLAGS = -fsanitize=fuzzer
+
 admin_fuzzer_CPPFLAGS = \
 			$(AM_CPPFLAGS)
 admin_fuzzer_SOURCES = \
 		       $(common_fuzzer_sources) \
 		       fuzzer/Admin.cpp
-admin_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+admin_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
 admin_fuzzer_LDADD = libsimd.a
+
+clientrequest_fuzzer_CPPFLAGS = \
+				$(AM_CPPFLAGS)
+clientrequest_fuzzer_SOURCES = \
+			       $(common_fuzzer_sources) \
+			       fuzzer/ClientRequestDispatcherFuzz.cpp
+clientrequest_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
+clientrequest_fuzzer_LDADD = libsimd.a
 
 clientsession_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS)
 clientsession_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/ClientSession.cpp
-clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+clientsession_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
 clientsession_fuzzer_LDADD = libsimd.a
 
 httpresponse_fuzzer_CPPFLAGS = \
@@ -355,7 +469,7 @@ httpresponse_fuzzer_CPPFLAGS = \
 httpresponse_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/HttpResponse.cpp
-httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+httpresponse_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
 httpresponse_fuzzer_LDADD = libsimd.a
 
 httpecho_fuzzer_CPPFLAGS = \
@@ -364,8 +478,10 @@ httpecho_fuzzer_CPPFLAGS = \
 httpecho_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/HttpEcho.cpp
-httpecho_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+httpecho_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
 httpecho_fuzzer_LDADD = libsimd.a
+
+endif # ENABLE_AFL
 
 endif # ENABLE_LIBFUZZER
 
@@ -374,6 +490,7 @@ clientnb_SOURCES = \
                    common/DummyTraceEventEmitter.cpp \
                    common/Log-common.cpp \
                    common/Log-poco.cpp \
+                   common/ProcUtil.cpp \
                    common/StringVector.cpp \
                    common/Util-server.cpp \
                    common/Util-unix.cpp \
@@ -392,6 +509,7 @@ coolbench_SOURCES = \
                     common/DummyTraceEventEmitter.cpp \
                     common/Log-common.cpp \
                     common/Log-poco.cpp \
+                    common/ProcUtil.cpp \
                     common/Simd.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
@@ -418,6 +536,7 @@ coolconfig_SOURCES = \
                     common/DummyTraceEventEmitter.cpp \
                     common/Log-common.cpp \
                     common/Log-poco.cpp \
+                    common/ProcUtil.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
                     common/Util-unix.cpp \
@@ -441,6 +560,7 @@ wsd_headers = \
               wsd/ClientRequestDispatcher.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
+              wsd/ContentType.hpp \
               wsd/DocumentBroker.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
@@ -495,6 +615,7 @@ shared_headers = \
                  common/MobileApp.hpp \
                  common/NumUtil.hpp \
                  common/Png.hpp \
+                 common/ProcUtil.hpp \
                  common/Protocol.hpp \
                  common/Rectangle.hpp \
                  common/RegexUtil.hpp \
@@ -544,7 +665,7 @@ kit_headers = \
               kit/ChildSession.hpp \
               kit/Delta.hpp \
               kit/DeltaSimd.h \
-              kit/DummyLibreOfficeKit.hpp \
+              kit/DummyCOKit.hpp \
               kit/Kit.hpp \
               kit/KitHelper.hpp \
               kit/KitWebSocket.hpp \
@@ -560,7 +681,6 @@ noinst_HEADERS = \
                  test/HttpTestServer.hpp \
                  test/KitPidHelpers.hpp \
                  test/UnitHTTP.hpp \
-                 test/UnitTimeoutBase.hpp \
                  test/UnitWSDClient.hpp \
                  test/WOPIUploadConflictCommon.hpp \
                  test/WebSocketSession.hpp \
@@ -573,13 +693,13 @@ noinst_HEADERS = \
 
 dist-hook:
 	git log -1 --format=%h --abbrev=10 > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
-	$(QUIET_MKDIRP) mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
-	cp @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.h \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.hxx \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitEnums.h \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitInit.h \
-	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitTypes.h \
-	   $(distdir)/bundled/include/LibreOfficeKit/
+	$(QUIET_MKDIRP) mkdir -p $(distdir)/bundled/include/COKit/
+	cp @LOKIT_PATH@/COKit/COKit.h \
+	   @LOKIT_PATH@/COKit/COKit.hxx \
+	   @LOKIT_PATH@/COKit/COKitEnums.h \
+	   @LOKIT_PATH@/COKit/COKitInit.h \
+	   @LOKIT_PATH@/COKit/COKitTypes.h \
+	   $(distdir)/bundled/include/COKit/
 
 EXTRA_DIST = \
              $(man_MANS) \
@@ -668,7 +788,7 @@ cleanup:
 
 # Always cleanup before removing the binaries.
 # Note: this can break with -j option!
-clean-am: cleanup clean-binPROGRAMS clean-generic clean-libtool clean-local clean-noinstPROGRAMS mostlyclean-am
+clean-am: cleanup clean-binPROGRAMS clean-generic clean-libtool clean-local clean-noinstPROGRAMS mostlyclean-am clean-afl
 
 clean-local:
 	$(CLEANUP_COMMAND)
@@ -816,12 +936,21 @@ SYSTEM_STAMP =
 
 endif
 
-.PHONY: cleanup setup-wsd
+if ENABLE_AFL
+all-local: $(AFL_FUZZER_TARGETS)
+clean-local: clean-afl
+endif
 
+.PHONY: cleanup setup-wsd clean-afl
+
+if ENABLE_AFL
+ALL_LOCAL_DEPS=$(AFL_FUZZER_TARGETS)
+else
 if ENABLE_LIBFUZZER
 ALL_LOCAL_DEPS=
 else
 ALL_LOCAL_DEPS=coolwsd
+endif
 endif
 
 all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ @CACHE_PATH@ $(SYSTEM_STAMP)
@@ -846,7 +975,30 @@ CLANGXX_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 
 JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS) $(coolstress_TDOC_CPPFLAGS)))
 
-JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(wildcard **/*.cpp))
+all_compiled_sources = $(sort \
+	$(shared_sources) \
+	$(coolwsd_sources) \
+	$(coolforkit_sources) \
+	$(coolwsd_SOURCES) \
+	$(coolforkit_caps_SOURCES) \
+	$(connect_SOURCES) \
+	$(lokitclient_SOURCES) \
+	$(coolstress_SOURCES) \
+	$(coolconfig_SOURCES) \
+	$(coolsocketdump_SOURCES) \
+	$(coolbench_SOURCES) \
+	$(coolconvert_SOURCES) \
+	$(coolmount_SOURCES) \
+	$(coolmap_SOURCES) \
+	$(clientnb_SOURCES) \
+	$(libsimd_a_SOURCES) \
+	$(libglobals_a_SOURCES) \
+	$(libkitglobals_a_SOURCES) \
+	$(libwsdglobals_a_SOURCES) \
+	$(libkitwsdglobals_a_SOURCES) \
+)
+
+JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(filter %.cpp,$(all_compiled_sources)))
 
 $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 
@@ -856,8 +1008,15 @@ $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 	@echo -n " -o $(patsubst %.cpp,%.o,$<) -c $<\",\"file\":\"$<\"}" >> $@
 
 $(abs_srcdir)/compile_commands.json: $(JSON_COMPILE_SRC)
+	@$(MAKE) -C test compile_commands
 	@echo -n "[" > $@
 	@for file in $(JSON_COMPILE_SRC) ; \
+	do \
+		cat $$file; \
+		echo ","; \
+		rm -f $$file; \
+	done >> $@
+	@for file in $$(find test -name '*.cmd' 2>/dev/null) ; \
 	do \
 		cat $$file; \
 		echo ","; \

@@ -16,39 +16,41 @@
 
 #include <config.h>
 
+#include <wsd/ClientRequestDispatcher.hpp>
+#include <wsd/ContentType.hpp>
+
 #if ENABLE_FEATURE_LOCK
-#include <CommandControl.hpp>
+#include <common/CommandControl.hpp>
 #endif
 
 #include <common/Anonymizer.hpp>
-#include <common/StateEnum.hpp>
-#include <COOLWSD.hpp>
-#include <ClientSession.hpp>
-#include <ConfigUtil.hpp>
-#include <Exceptions.hpp>
-#include <FileServer.hpp>
-#include <HttpRequest.hpp>
+#include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/NumUtil.hpp>
-#include <ProofKey.hpp>
-#include <ProxyRequestHandler.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
-#include <UserMessages.hpp>
+#include <common/StateEnum.hpp>
 #include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
+#include <net/HttpRequest.hpp>
 #include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
 #include <net/Uri.hpp>
-#include <wsd/ClientRequestDispatcher.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/ProofKey.hpp>
+#include <wsd/ProxyRequestHandler.hpp>
+#include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/UserMessages.hpp>
 
 #if !MOBILEAPP
-#include <Admin.hpp>
-#include <JailUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <wsd/Admin.hpp>
+#include <wsd/HostUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
-#include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
 #include <Poco/DOM/AutoPtr.h>
@@ -1156,14 +1158,28 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
             // Admin connections
             LOG_INF("Admin request: " << request.getURI());
             const bool allowed = allowedOrigin(request, requestDetails);
-            if (AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
+            if (allowed && AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
             {
                 // Hand the socket over to the Admin poll.
                 disposition.setTransfer(Admin::instance(),
                                         [](const std::shared_ptr<Socket>& /*moveSocket*/) {});
             }
             else
-                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+            {
+                if (!allowed)
+                {
+                    LOG_ERR(
+                        "Rejecting admin WebSocket upgrade due to disallowed origin for request: "
+                        << request);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
+                }
+                else
+                {
+                    LOG_ERR("Rejecting admin WebSocket upgrade due to bad/invalid request: "
+                            << request);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                }
+            }
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "getMetrics"))
@@ -1979,166 +1995,6 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
     return false; // async
 }
 
-std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
-{
-    static std::unordered_map<std::string, std::string> contentTypes{
-        { "svg", "image/svg+xml" },
-        { "pot", "application/vnd.ms-powerpoint" },
-        { "xla", "application/vnd.ms-excel" },
-
-        // Writer documents
-        { "sxw", "application/vnd.sun.xml.writer" },
-        { "odt", "application/vnd.oasis.opendocument.text" },
-        { "fodt", "application/vnd.oasis.opendocument.text-flat-xml" },
-
-        // Calc documents
-        { "sxc", "application/vnd.sun.xml.calc" },
-        { "ods", "application/vnd.oasis.opendocument.spreadsheet" },
-        { "fods", "application/vnd.oasis.opendocument.spreadsheet-flat-xml" },
-
-        // Impress documents
-        { "sxi", "application/vnd.sun.xml.impress" },
-        { "odp", "application/vnd.oasis.opendocument.presentation" },
-        { "fodp", "application/vnd.oasis.opendocument.presentation-flat-xml" },
-
-        // Draw documents
-        { "sxd", "application/vnd.sun.xml.draw" },
-        { "odg", "application/vnd.oasis.opendocument.graphics" },
-        { "fodg", "application/vnd.oasis.opendocument.graphics-flat-xml" },
-
-        // Chart documents
-        { "odc", "application/vnd.oasis.opendocument.chart" },
-
-        // Text master documents
-        { "sxg", "application/vnd.sun.xml.writer.global" },
-        { "odm", "application/vnd.oasis.opendocument.text-master" },
-
-        // Math documents
-        // In fact Math documents are not supported at all.
-        // See: https://bugs.documentfoundation.org/show_bug.cgi?id=97006
-        { "sxm", "application/vnd.sun.xml.math" },
-        { "odf", "application/vnd.oasis.opendocument.formula" },
-
-        // Text template documents
-        { "stw", "application/vnd.sun.xml.writer.template" },
-        { "ott", "application/vnd.oasis.opendocument.text-template" },
-
-        // Writer master document templates
-        { "otm", "application/vnd.oasis.opendocument.text-master-template" },
-
-        // Spreadsheet template documents
-        { "stc", "application/vnd.sun.xml.calc.template" },
-        { "ots", "application/vnd.oasis.opendocument.spreadsheet-template" },
-
-        // Presentation template documents
-        { "sti", "application/vnd.sun.xml.impress.template" },
-        { "otp", "application/vnd.oasis.opendocument.presentation-template" },
-
-        // Drawing template documents
-        { "std", "application/vnd.sun.xml.draw.template" },
-        { "otg", "application/vnd.oasis.opendocument.graphics-template" },
-
-        // MS Word
-        { "doc", "application/msword" },
-        { "dot", "application/msword" },
-
-        // MS Excel
-        { "xls", "application/vnd.ms-excel" },
-
-        // MS PowerPoint
-        { "ppt", "application/vnd.ms-powerpoint" },
-
-        // OOXML wordprocessing
-        { "docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
-        { "docm", "application/vnd.ms-word.document.macroEnabled.12" },
-        { "dotx", "application/vnd.openxmlformats-officedocument.wordprocessingml.template" },
-        { "dotm", "application/vnd.ms-word.template.macroEnabled.12" },
-
-        // OOXML spreadsheet
-        { "xltx", "application/vnd.openxmlformats-officedocument.spreadsheetml.template" },
-        { "xltm", "application/vnd.ms-excel.template.macroEnabled.12" },
-        { "xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
-        { "xlsb", "application/vnd.ms-excel.sheet.binary.macroEnabled.12" },
-        { "xlsm", "application/vnd.ms-excel.sheet.macroEnabled.12" },
-
-        // OOXML presentation
-        { "pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
-        { "pptm", "application/vnd.ms-powerpoint.presentation.macroEnabled.12" },
-        { "potx", "application/vnd.openxmlformats-officedocument.presentationml.template" },
-        { "potm", "application/vnd.ms-powerpoint.template.macroEnabled.12" },
-
-        // Others
-        { "wpd", "application/vnd.wordperfect" },
-        { "pdb", "application/x-aportisdoc" },
-        { "hwp", "application/x-hwp" },
-        { "wps", "application/vnd.ms-works" },
-        { "wri", "application/x-mswrite" },
-        { "dif", "application/x-dif-document" },
-        { "slk", "text/spreadsheet" },
-        { "csv", "text/csv" },
-        { "tsv", "text/tab-separated-values" },
-        { "dbf", "application/x-dbase" },
-        { "wk1", "application/vnd.lotus-1-2-3" },
-        { "wks", "application/vnd.lotus-1-2-3" },
-        { "wq2", "application/vnd.lotus-1-2-3" },
-        { "123", "application/vnd.lotus-1-2-3" },
-        { "wb1", "application/vnd.lotus-1-2-3" },
-        { "wq1", "application/vnd.lotus-1-2-3" },
-        { "xlr", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
-        { "qpw", "application/vnd.ms-office" },
-        { "cgm", "image/cgm" },
-        { "dxf", "image/vnd.dxf" },
-        { "emf", "image/x-emf" },
-        { "wmf", "image/x-wmf" },
-        { "cdr", "application/coreldraw" },
-        { "vsd", "application/vnd.visio2013" },
-        { "vss", "application/vnd.visio" },
-        { "pub", "application/x-mspublisher" },
-        { "lrf", "application/x-sony-bbeb" },
-        { "gnumeric", "application/x-gnumeric" },
-        { "mw", "application/macwriteii" },
-        { "numbers", "application/x-iwork-numbers-sffnumbers" },
-        { "oth", "application/vnd.oasis.opendocument.text-web" },
-        { "p65", "application/x-pagemaker" },
-        { "rtf", "text/rtf" },
-        { "txt", "text/plain" },
-        { "fb2", "application/x-fictionbook+xml" },
-        { "cwk", "application/clarisworks" },
-        { "wpg", "image/x-wpg" },
-        { "pages", "application/x-iwork-pages-sffpages" },
-        { "ppsx", "application/vnd.openxmlformats-officedocument.presentationml.slideshow" },
-        { "key", "application/x-iwork-keynote-sffkey" },
-        { "abw", "application/x-abiword" },
-        { "fh", "image/x-freehand" },
-        { "sxs", "application/vnd.sun.xml.chart" },
-        { "602", "application/x-t602" },
-        { "bmp", "image/bmp" },
-        { "png", "image/png" },
-        { "gif", "image/gif" },
-        { "tiff", "image/tiff" },
-        { "jpg", "image/jpg" },
-        { "jpeg", "image/jpeg" },
-        { "pdf", "application/pdf" },
-    };
-
-    const std::string ext = Poco::Path(fileName).getExtension();
-
-    const auto it = contentTypes.find(ext);
-    if (it != contentTypes.end())
-        return it->second;
-
-    return "application/octet-stream";
-}
-
-bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
-{
-    const std::string contentType = getContentType(fileName);
-
-    return contentType == "application/vnd.oasis.opendocument.spreadsheet" ||
-           contentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-           contentType == "application/vnd.ms-excel";
-}
-
 bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
                                                 const Poco::Net::HTTPRequest& request,
                                                 std::istream& message,
@@ -2215,7 +2071,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
             const bool fullSheetPreview =
                 (form.has("FullSheetPreview") && form.get("FullSheetPreview") == "true");
-            if (fullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
+            if (fullSheetPreview && format == "pdf" && ContentType::isSpreadsheet(fromPath))
             {
                 //FIXME: We shouldn't have "true" as having the option already implies that
                 // we want it enabled (i.e. we shouldn't set the option if we don't want it).
@@ -2414,7 +2270,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             // Instruct browsers to download the file, not display it
             // with the exception of SVG where we need the browser to
             // actually show it.
-            response.setContentType(getContentType(fileName));
+            response.setContentType(std::string(ContentType::fromFileName(fileName)));
             if (serveAsAttachment)
                 response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
@@ -2595,6 +2451,13 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
     // First Upgrade.
     const bool allowed = allowedOrigin(request, requestDetails);
+    if (!allowed)
+    {
+        LOG_ERR("Rejecting WebSocket upgrade due to disallowed origin for request: " << request);
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
+        return true; // Handled.
+    }
+
     auto ws = std::make_shared<WebSocketHandler>(socket, request, allowed);
 
     // Response to clients beyond this point is done via WebSocket.

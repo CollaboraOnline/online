@@ -1,0 +1,5 @@
+T /cool/wsÂ
+Host: 127.0.0.1:9
+Origin: https://127.0.0.1:
+Upgrade:websocket
+

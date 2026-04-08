@@ -147,7 +147,7 @@ class PresentationBar {
 			this.showItem('presentation', true);
 		}
 
-		if (!window.mode.isMobile())
+		if (!window.mode.isSmallScreenDevice())
 			this.show();
 	}
 

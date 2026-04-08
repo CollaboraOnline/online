@@ -23,7 +23,7 @@ fi;
 echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'."
 
 if [ -z "$CORE_BRANCH" ]; then
-  CORE_BRANCH="distro/collabora/co-25.04"
+  CORE_BRANCH="main"
 fi;
 echo "Building core branch '$CORE_BRANCH'"
 
@@ -38,7 +38,7 @@ echo "Building online branch '$COLLABORA_ONLINE_BRANCH' from '$COLLABORA_ONLINE_
 if [ -z "$CORE_BUILD_TARGET" ]; then
   CORE_BUILD_TARGET=""
 fi;
-echo "LOKit (core) build target: '$CORE_BUILD_TARGET'"
+echo "COKit (core) build target: '$CORE_BUILD_TARGET'"
 
 
 SRCDIR=$(realpath `dirname $0`)
@@ -82,7 +82,7 @@ fi
 
 # core repo
 if test ! -d core ; then
-  git clone --depth=1 --branch "$CORE_BRANCH" https://git.libreoffice.org/core || exit 1
+  git clone --depth=1 --branch "$CORE_BRANCH" https://gerrit.collaboraoffice.com/core || exit 1
 fi
 
 ( cd core && git fetch --all && git checkout $CORE_BRANCH && ./g pull -r ) || exit 1
@@ -105,14 +105,10 @@ if test -d online-branding ; then
   ( cd online-branding && git pull -r ) || exit 1
 fi
 
-##### LOKit (core) #####
+##### COKit (core) #####
 
 # build
-if [ "$CORE_BRANCH" == "distro/collabora/co-25.04" ]; then
-  ( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format --disable-symbols ) || exit 1
-else
-  ( cd core && ./autogen.sh --with-distro=LibreOfficeOnline ) || exit 1
-fi
+( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format --disable-symbols ) || exit 1
 ( cd core && make $CORE_BUILD_TARGET ) || exit 1
 
 # copy stuff

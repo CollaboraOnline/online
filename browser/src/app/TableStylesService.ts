@@ -48,6 +48,12 @@ interface TableStyleEntry {
 	Elements: Array<TableStyleElement>;
 }
 
+interface TableStyleLayoutEntry {
+	isSeparator: boolean;
+	text?: string;
+	style?: TableStyleEntry;
+}
+
 function getElementColor(
 	style: TableStyleEntry,
 	type: string,
@@ -66,15 +72,6 @@ function toHex(r: number, g: number, b: number): string {
 	);
 }
 
-function lightenColor(hex: string, factor: number): string {
-	const [r, g, b] = parseHexToRgb(hex);
-	return toHex(
-		r + (255 - r) * factor,
-		g + (255 - g) * factor,
-		b + (255 - b) * factor,
-	);
-}
-
 function darkenColor(hex: string, factor: number): string {
 	const [r, g, b] = parseHexToRgb(hex);
 	return toHex(r * (1 - factor), g * (1 - factor), b * (1 - factor));
@@ -82,6 +79,34 @@ function darkenColor(hex: string, factor: number): string {
 
 class TableStylesService {
 	private styles = new Array<TableStyleEntry>();
+
+	private static readonly groupOrder: Record<string, number> = {
+		light: 1,
+		medium: 2,
+		dark: 3,
+		other: 4,
+	};
+
+	private static getGroup(name: string): string {
+		const lower = name.toLowerCase();
+		if (lower.includes('light')) return 'light';
+		if (lower.includes('medium')) return 'medium';
+		if (lower.includes('dark')) return 'dark';
+		return 'other';
+	}
+
+	private static getGroupLabel(group: string): string {
+		switch (group) {
+			case 'light':
+				return _('Light');
+			case 'medium':
+				return _('Medium');
+			case 'dark':
+				return _('Dark');
+			default:
+				return _('Custom');
+		}
+	}
 
 	public get(): Array<TableStyleEntry> {
 		return this.styles;
@@ -93,8 +118,25 @@ class TableStylesService {
 
 	public onCommandState(e: any) {
 		if (e.commandName === '.uno:TableStyles') {
+			if (e.state === '') return;
+
 			try {
 				this.styles = JSON.parse(e.state).TableStyles;
+				this.styles.sort((a, b) => {
+					const tableGroupA =
+						TableStylesService.groupOrder[
+							TableStylesService.getGroup(a.Name)
+						] ?? 4;
+					const tableGroupB =
+						TableStylesService.groupOrder[
+							TableStylesService.getGroup(b.Name)
+						] ?? 4;
+					if (tableGroupA !== tableGroupB) return tableGroupA - tableGroupB;
+					return a.Name.localeCompare(b.Name, undefined, {
+						numeric: true,
+						sensitivity: 'base',
+					});
+				});
 			} catch (e) {
 				app.console.error('Failed to parse TableStyles: ' + e);
 			}
@@ -113,12 +155,17 @@ class TableStylesService {
 
 			let position = -1;
 			if (currentStyle) {
-				position = 0; // state set -> at least None can be selected
-
-				for (const style of this.styles) {
-					position++;
-
-					if (style.Name === currentStyle.TableStyleName) break;
+				const layout = this.getEntriesLayout();
+				const targetName = currentStyle.TableStyleName || 'None';
+				position = layout.findIndex(
+					(item: TableStyleLayoutEntry) =>
+						!item.isSeparator && item.style?.Name === targetName,
+				);
+				if (position === -1) {
+					position = layout.findIndex(
+						(item: TableStyleLayoutEntry) => !item.isSeparator,
+					);
+					if (position === -1) position = 0;
 				}
 			}
 
@@ -141,23 +188,36 @@ class TableStylesService {
 		}
 	}
 
-	public generateTableStylesJSON(): IconViewListJSON {
+	public generateTableStylesJSON(): OverflowGroupWidgetJSON {
 		return {
-			id: 'tablestyles_design-iconview-list',
-			type: 'iconviewlist',
+			id: 'Tablestyles_design--group',
+			type: 'overflowgroup',
+			name: _('Table Styles'),
+			nofold: true,
+			icon: 'lc_tablestyle.svg',
 			children: [
 				{
-					id: 'tablestyles_design',
-					type: 'iconview',
-					text: _('Table Styles'),
-					command: '.uno:DatabaseSettings',
-					aria: { label: _('Table Styles') },
-					accessibility: { focusBack: true, combination: 'TS' },
-					entries: this.generateJSON(),
-					singleclickactivate: true,
-					textWithIconEnabled: false, // standard names from core are not translated yet
-					selectionmode: 'single',
-				} as IconViewJSON,
+					id: 'tablestyles_design-iconview-list',
+					type: 'iconviewlist',
+					accessibility: { focusBack: false, combination: 'TL', de: null },
+					children: [
+						{
+							id: 'tablestyles_design',
+							type: 'iconview',
+							text: _('Table Styles'),
+							command: '.uno:DatabaseSettings',
+							aria: { label: _('Table Styles') },
+							accessibility: {
+								focusBack: true,
+								combination: 'TS',
+							},
+							entries: this.generateJSON(),
+							singleclickactivate: true,
+							textWithIconEnabled: false, // standard names from core are not translated yet
+							selectionmode: 'single',
+						} as IconViewJSON,
+					],
+				},
 			],
 		};
 	}
@@ -253,14 +313,17 @@ class TableStylesService {
 	}
 
 	public generateIcon(style: TableStyleEntry): string {
-		const wholeTable = getElementColor(style, 'WholeTable') || '000000';
+		const wholeTable = getElementColor(style, 'WholeTable') || 'FFFF';
 		const headerRow = getElementColor(style, 'HeaderRow') || wholeTable;
 		const firstRowStripe =
 			getElementColor(style, 'FirstRowStripe') || wholeTable;
+		const secondRowStripe =
+			getElementColor(style, 'SecondRowStripe') || wholeTable;
 
 		const wt = '#' + wholeTable;
 		const hr = '#' + headerRow;
 		const frs = '#' + firstRowStripe;
+		const srs = '#' + secondRowStripe;
 
 		const getStyleIndex = (variant: string) => {
 			const match = style.Name.match(new RegExp(`${variant}(\\d+)$`));
@@ -270,34 +333,55 @@ class TableStylesService {
 		let svg: string;
 
 		if (style.Name.indexOf('Light') >= 0) {
-			svg = lightTableStyleSvg(
-				hr,
-				lightenColor(frs, 0.5),
-				getStyleIndex('Light'),
-			);
+			svg = lightTableStyleSvg(hr, wt, frs, getStyleIndex('Light'));
 		} else if (style.Name.indexOf('Medium') >= 0) {
-			svg = mediumTableStyleSvg(
-				hr,
-				frs,
-				lightenColor(frs, 0.55),
-				getStyleIndex('Medium'),
-			);
+			svg = mediumTableStyleSvg(hr, wt, frs, getStyleIndex('Medium'));
 		} else if (style.Name.indexOf('Dark') >= 0) {
-			const darkStyleIndex = getStyleIndex('Dark');
-			const gridColor =
-				darkStyleIndex >= 8 && darkStyleIndex <= 11
-					? strengthenColor(wt, 0.75)
-					: darkenColor(wt, 0.35);
-			svg = darkTableStyleSvg(hr, wt, gridColor, darkStyleIndex);
+			svg = darkTableStyleSvg(hr, wt, frs, getStyleIndex('Dark'));
 		} else {
-			svg = lightTableStyleSvg(
-				wt,
-				lightenColor(wt, 0.5),
-				getStyleIndex('Light'),
-			);
+			svg = customTableStyleSvg(hr, frs, srs);
 		}
 
 		return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+	}
+
+	private getEntriesLayout(): TableStyleLayoutEntry[] {
+		const layout: TableStyleLayoutEntry[] = [];
+		layout.push({
+			isSeparator: true,
+			text: TableStylesService.getGroupLabel('light'),
+		});
+		layout.push({ isSeparator: false, style: this.getNoneStyle() });
+
+		let previousGroup = 'light';
+		this.styles.forEach((element) => {
+			const currentGroup = TableStylesService.getGroup(element.Name);
+			if (currentGroup === 'other') return;
+
+			if (currentGroup !== previousGroup) {
+				layout.push({
+					isSeparator: true,
+					text: TableStylesService.getGroupLabel(currentGroup),
+				});
+			}
+			previousGroup = currentGroup;
+			layout.push({ isSeparator: false, style: element });
+		});
+
+		const customStyles = this.styles.filter(
+			(style) => TableStylesService.getGroup(style.Name) === 'other',
+		);
+		if (customStyles.length > 0) {
+			layout.push({
+				isSeparator: true,
+				text: TableStylesService.getGroupLabel('other'),
+			});
+			customStyles.forEach((style) => {
+				layout.push({ isSeparator: false, style: style });
+			});
+		}
+
+		return layout;
 	}
 
 	public generateJSON(): Array<IconViewEntry> {
@@ -310,30 +394,38 @@ class TableStylesService {
 		const iconViewEntries = new Array<IconViewEntry>();
 		let i = 0;
 
-		iconViewEntries.push({
-			row: -1,
-			text: _('None'),
-			image: 'images/lc_table_none.svg',
-			width: 50,
-			height: 50,
-			selected:
-				!currentStyle ||
-				currentStyle.TableStyleName === '' ||
-				currentStyle.TableStyleName === 'None',
-		} as IconViewEntry);
+		const layout = this.getEntriesLayout();
+		layout.forEach((item) => {
+			if (item.isSeparator) {
+				iconViewEntries.push({
+					row: 'sep-' + i,
+					separator: true,
+					text: item.text || '',
+					image: '',
+				} as IconViewEntry);
+			} else {
+				if (!item.style) return;
+				const element = item.style;
+				const isNone = element.Name === 'None';
+				const selected = isNone
+					? !currentStyle ||
+						currentStyle.TableStyleName === '' ||
+						currentStyle.TableStyleName === 'None'
+					: currentStyle && element.Name === currentStyle.TableStyleName;
 
-		this.styles.forEach((element) => {
-			const selected = currentStyle
-				? element.Name === currentStyle.TableStyleName
-				: false;
-			iconViewEntries.push({
-				row: i++,
-				text: element.UIName,
-				image: this.generateIcon(element),
-				width: 50,
-				height: 50,
-				selected: selected,
-			} as IconViewEntry);
+				const formattedText = isNone ? _('None') : element.UIName;
+
+				iconViewEntries.push({
+					row: isNone ? -1 : i++,
+					text: formattedText,
+					image: isNone
+						? 'images/lc_table_none.svg'
+						: this.generateIcon(element),
+					width: 50,
+					height: 50,
+					selected: selected,
+				} as IconViewEntry);
+			}
 		});
 
 		return iconViewEntries;

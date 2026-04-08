@@ -16,16 +16,16 @@
 
 #pragma once
 
-#include <Exceptions.hpp>
-#include <Protocol.hpp>
-#include <Rectangle.hpp>
+#include <common/Protocol.hpp>
+#include <common/Rectangle.hpp>
 #include <common/StringVector.hpp>
+#include <wsd/Exceptions.hpp>
 
 #include <cassert>
-#include <unordered_map>
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <unordered_map>
 
 #define TILE_WIRE_ID
 using TileWireId = uint32_t;
@@ -401,14 +401,6 @@ public:
     static TileDesc parse(std::string_view message)
     {
         return parse(StringVector::tokenize(message.data(), message.size()));
-    }
-
-    [[nodiscard]] std::string generateID() const
-    {
-        std::ostringstream tileID;
-        tileID << getPart() << ':' << getEditMode() << ':' << getTilePosX() << ':' << getTilePosY()
-                << ':' << getTileWidth() << ':' << getTileHeight() << ':' << getCanonicalViewId();
-        return tileID.str();
     }
 
 private:

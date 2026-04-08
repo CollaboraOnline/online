@@ -14,8 +14,8 @@
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#define KIT_USE_UNSTABLE_API
+#include <COKit/COKitEnums.h>
 
 #include <typeinfo>
 
@@ -39,7 +39,6 @@
 #include <sstream>
 #include <string>
 #include <string_view>
-#include <thread>
 #include <utility>
 
 #define STRINGIFY(X) #X
@@ -181,6 +180,7 @@ namespace Util
     class ThreadCounter
     {
         std::unique_ptr<CounterImpl> _impl;
+
     public:
         ThreadCounter();
         ~ThreadCounter();
@@ -198,9 +198,6 @@ namespace Util
         /// Get number of items in this directory or -1 on error
         int count();
     };
-
-    /// Spawn a process.
-    int spawnProcess(const std::string &cmd, const StringVector &args);
 
     /// Exception safe scope count/guard
     struct ReferenceHolder
@@ -314,35 +311,8 @@ namespace Util
     /// Returns the cgroup's soft memory limit, or 0 if not available in bytes
     std::size_t getCGroupMemSoftLimit();
 
-    /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).
-    size_t getMemoryUsagePSS(pid_t pid);
-
-    /// Returns the process RSS in KB.
-    size_t getMemoryUsageRSS(pid_t pid);
-
-    /// Returns the number of current threads, or zero on error
-    size_t getCurrentThreadCount();
-
-    /// Returns the RSS and PSS of the current process in KB.
-    /// Example: "procmemstats: pid=123 rss=12400 pss=566"
-    std::string getMemoryStats(FILE* file);
-
-    /// Reads from SMaps file Pss and Private_Dirty values and
-    /// returns them as a pair in the same order
-    std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file);
-
-    /// Returns the total PSS usage of the process and all its children.
-    std::size_t getProcessTreePss(pid_t pid);
-
-    size_t getCpuUsage(pid_t pid);
-
-    size_t getStatFromPid(pid_t pid, int ind);
-
-    /// Sets priorities for a given pid & the current thread
-    void setProcessAndThreadPriorities(pid_t pid, int prio);
-
     /// Replace substring @a in string @s with string @b.
-    std::string replace(std::string s, const std::string& a, const std::string& b);
+    std::string replace(std::string s, std::string_view a, std::string_view b);
 
     /// Replace character @a in string @s, in place, with character @b.
     inline std::string& replaceInPlace(std::string& s, char a, char b)
@@ -369,16 +339,7 @@ namespace Util
 
     void replaceAllSubStr(std::string& input, const std::string& target, const std::string& replacement);
 
-    std::string formatLinesForLog(const std::string& s);
-
-    void setThreadName(const std::string& s);
-
-    const char *getThreadName();
-
-    long getThreadId();
-    long getProcessId();
-
-    void killThreadById(int tid, int signal);
+    std::string formatLinesForLog(std::string_view s);
 
     /// Returns the COOL Version number string.
     std::string getCoolVersion();
@@ -996,57 +957,6 @@ int main(int argc, char**argv)
     /// either for a URL or for a file path
     std::string cleanupFilename(const std::string &filename);
 
-    /// Simple backtrace capture
-    /// Use case, e.g. streaming up to 20 frames to log: `LOG_TRC( Util::Backtrace::get(20) );`
-    /// Enabled for !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
-    /// Using
-    /// - <https://www.man7.org/linux/man-pages/man3/backtrace.3.html>
-    /// - <https://gcc.gnu.org/onlinedocs/libstdc++/manual/ext_demangling.html>
-    class Backtrace
-    {
-    public:
-        struct Symbol
-        {
-            std::string blob;
-            std::string mangled;
-            std::string offset;
-            std::string demangled;
-            [[nodiscard]] std::string toString() const;
-            [[nodiscard]] std::string toMangledString() const;
-            bool isDemangled() const { return !demangled.empty(); }
-        };
-
-    private:
-        /// Stack frames {address, symbol}
-        std::vector<std::pair<void*, Symbol>> _frames;
-        int skipFrames;
-
-        static bool separateRawSymbol(const std::string& raw, Symbol& s);
-
-    public:
-        /// Produces a backtrace instance from current stack position
-        Backtrace(int maxFrames = 50, int skip = 1);
-
-        /// Produces a backtrace instance from current stack position
-        static Backtrace get(const int maxFrames = 50, const int skip = 2)
-        {
-            Backtrace bt(maxFrames, skip);
-            return bt;
-        }
-
-        /// Sends captured backtrace to given ostream
-        std::ostream& send(std::ostream& os) const;
-
-        /// Produces a string representation, one line per frame
-        [[nodiscard]] std::string toString() const;
-
-        /* constexpr */ size_t size() const { return _frames.size(); }
-        /* constexpr */ const Symbol& operator[](size_t idx) const
-        {
-            return _frames[idx].second;
-        }
-    };
-
     //// Return current time in HTTP format.
     std::string getHttpTimeNow();
 
@@ -1233,12 +1143,14 @@ int main(int argc, char**argv)
     // If OS is not mobile, it must be Linux.
     std::string getLinuxVersion();
 
-    /// Converts and returns the argument to lower-case.
-    inline std::string toLower(std::string s)
+    /// Converts in-place and returns the argument to lower-case.
+    inline std::string& toLowerInplace(std::string& s)
     {
         std::transform(s.begin(), s.end(), s.begin(), ::tolower);
         return s;
     }
+    /// Converts and returns a copy of the argument in lower-case.
+    inline std::string toLower(std::string s) { return toLowerInplace(s); }
 
     /// Case insensitive comparison of two strings.
     /// Returns true iff the two strings are equal, regardless of case.
@@ -1354,16 +1266,6 @@ int main(int argc, char**argv)
         return oss.str();
     }
 
-    /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(std::thread::id owner, LOG_CAPTURE_CALLER_DECLARATION);
-
-#ifndef ASSERT_CORRECT_THREAD
-#define ASSERT_CORRECT_THREAD() assertCorrectThread()
-#endif
-#ifndef ASSERT_CORRECT_THREAD_OWNER
-#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER)
-#endif
-
     /// Sleep based on count of seconds in env. var
     void sleepFromEnvIfSet(const char *domain, const char *envVar);
 
@@ -1410,8 +1312,6 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
     os << Util::getIso8601FracformatTime(ts);
     return os;
 }
-
-inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
 
 inline std::ostream& operator<<(std::ostream& os, const Poco::Net::HTTPRequest& request)
 {

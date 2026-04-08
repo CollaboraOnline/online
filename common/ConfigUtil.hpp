@@ -113,6 +113,9 @@ void initialize(const std::string& xml);
 /// Initialize the config given a pointer to a long-lived pointer.
 void initialize(const Poco::Util::AbstractConfiguration* config);
 
+/// Initialize the config from a file given it's name.
+void initializeFromFile(const std::string& filename);
+
 /// Check if the config has been initialized
 bool isInitialized();
 
@@ -163,7 +166,7 @@ inline bool isSSLTermination()
 }
 
 /// Return true if build is support key enabled (ENABLE_SUPPORT_KEY is defined)
-inline constexpr bool isSupportKeyEnabled()
+constexpr bool isSupportKeyEnabled()
 {
 #ifdef ENABLE_SUPPORT_KEY
     return ENABLE_SUPPORT_KEY;

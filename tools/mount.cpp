@@ -14,11 +14,12 @@
  */
 
 #include <config.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sysexits.h>
 
-#include <security.h>
+#include <common/security.h>
+
+#include <cstdio>
+#include <cstdlib>
+#include <sysexits.h>
 
 extern int domount(int argc, const char* const* argv);
 

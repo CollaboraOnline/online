@@ -462,6 +462,13 @@ button.leaflet-control-search-next
 #toolbar-up .ui-combobox-button {
 	padding-left: 10px;
 }
+.ui-combobox label {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 50%;
+	flex-shrink: 0;
+}
 #fontsizecombobox-input-context-toolbar {
 	width: 55px !important;
 }
@@ -930,8 +937,6 @@ button.leaflet-control-search-next
 .w2ui-icon.cellverttop { background: url('images/lc_cellverttop.svg') no-repeat center; }
 .w2ui-icon.cellvertcenter { background: url('images/lc_cellvertcenter.svg') no-repeat center; }
 .w2ui-icon.cellvertbottom { background: url('images/lc_cellvertbottom.svg') no-repeat center; }
-.w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara15 { background: url('images/lc_linespacing.svg') no-repeat center; }
-.w2ui-icon.spacepara2 { background: url('images/lc_spacepara2.svg') no-repeat center; }
 .w2ui-icon.paraspaceincrease { background: url('images/lc_paraspaceincrease.svg') no-repeat center; }
 .w2ui-icon.paraspacedecrease { background: url('images/lc_paraspacedecrease.svg') no-repeat center; }
 .w2ui-icon.numbering { background: url('images/lc_defaultnumbering.svg') no-repeat center; }
@@ -1221,8 +1226,6 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.cellverttop { background: url('images/dark/lc_cellverttop.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.cellvertcenter { background: url('images/dark/lc_cellvertcenter.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.cellvertbottom { background: url('images/dark/lc_cellvertbottom.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara15 { background: url('images/dark/lc_linespacing.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.spacepara2 { background: url('images/dark/lc_spacepara2.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.paraspaceincrease { background: url('images/dark/lc_paraspaceincrease.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.paraspacedecrease { background: url('images/dark/lc_paraspacedecrease.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.numbering { background: url('images/dark/lc_defaultnumbering.svg') no-repeat center; }
@@ -1572,7 +1575,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 #followingChipBackground {
 	transform: translateX(calc(2.5px /* border widths */ + 2.5px /* background paddings */ + var(--btn-img-size) - 0.6px /* browser rendering fudge */));
-	/* We'd like this to flow over the first item of the userListSummary. I've added a fudge because browser rendering seems to have subpixel errors here and it's far better to
+	/* We'd like this to flow over the first item of the userListSummaryButton. I've added a fudge because browser rendering seems to have subpixel errors here and it's far better to
 	 * render the border marginally too far left than leave a gap. */
 }
 
@@ -1581,12 +1584,12 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 #followingChipBackground:hover:has(#followingChip:hover),
-#userListSummaryBackground:hover:has(#userListSummary:hover) {
+#userListSummaryBackground:hover:has(#userListSummaryButton:hover) {
 	background-color: var(--color-background-darker);
 }
 
 #followingChipBackground > #followingChip,
-#userListSummaryBackground > #userListSummary {
+#userListSummaryBackground > #userListSummaryButton {
 	cursor: pointer;
 
 	margin: 0; /* everything is in the respective #fooBackground selectors */
@@ -1612,7 +1615,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	box-sizing: border-box;
 }
 
-#userListSummaryBackground > #userListSummary {
+#userListSummaryBackground > #userListSummaryButton {
 	background: transparent !important; /* we want to override some classes that are added to buttons by default */
 
 	height: fit-content !important;
@@ -1627,20 +1630,20 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	border: none !important; /* we want to override some classes that are added to buttons by default */
 }
 
-#userListSummary .avatar-img:first-child {
+#userListSummaryButton .avatar-img:first-child {
 	margin-left: 0;
 }
 
-#userListSummary .avatar-img:last-child {
+#userListSummaryButton .avatar-img:last-child {
 	margin-right: 0 !important;
 }
 
-#userListSummary .avatar-img {
+#userListSummaryButton .avatar-img {
 	background-clip: padding-box;
 	margin-left: -10px;
 }
 
-#userListSummary:not(:hover) .avatar-img.following {
+#userListSummaryButton:not(:hover) .avatar-img.following {
 	border-color: transparent !important;
 }
 
@@ -1759,7 +1762,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 #picture-transparency-entry-6 img { filter: opacity(0.05) }
 
 @media only screen and (max-width: 600px) {
-	#userListSummary,
+	#userListSummaryButton,
 	#userListHeader {
 		display: none;
 	}

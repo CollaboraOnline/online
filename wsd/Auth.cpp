@@ -134,7 +134,7 @@ bool JWTAuth::verify(const std::string& accessToken)
         // Verify if the token is not already expired
         Poco::JSON::Parser parser;
         Poco::Dynamic::Var result = parser.parse(decodedPayload);
-        Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
+        const Poco::JSON::Object::Ptr& object = result.extract<Poco::JSON::Object::Ptr>();
         std::time_t decodedExptime = 0;
         object->get("exp").convert(decodedExptime);
 

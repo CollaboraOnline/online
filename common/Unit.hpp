@@ -22,7 +22,7 @@
 
 #include <test/testlog.hpp>
 
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <COKit/COKitInit.h>
 
 class UnitBase;
 class UnitWSD;
@@ -331,7 +331,10 @@ private:
     /// Returns true iff there are more valid test instances to dereference.
     static bool haveMoreTests()
     {
-        return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1];
+        // The last test is the dummy one, used to avoid having a null instance.
+        // Check that we have a valid one after the next one, otherwise it's the dummy.
+        return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1] &&
+               GlobalArray[GlobalIndex + 2];
     }
 
     /// Self-test.
@@ -362,7 +365,7 @@ private:
     static void* DlHandle; ///< The handle to the unit-test .so.
     static char *UnitLibPath;
     static UnitBase** GlobalArray; ///< All the tests.
-    static int GlobalIndex; ///< The index of the current test.
+    static std::atomic_int_fast64_t GlobalIndex; ///< The index of the current test.
     static TestOptions GlobalTestOptions; ///< The test options for this Test Suite.
     static TestResult GlobalResult; ///< The result of all tests. Latches at first failure.
 
@@ -700,10 +703,10 @@ public:
     /// After the kit process created a ChildSession
     virtual void postKitSessionCreated(Session* /*session*/) {}
 
-    /// Allow a custom LibreOfficeKit wrapper
-    virtual LibreOfficeKit *lok_init(const char * /* instdir */,
+    /// Allow a custom COKit wrapper
+    virtual COKit *cok_init(const char * /* instdir */,
                                      const char * /* userdir */,
-                                     LokHookFunction2 /* fn */)
+                                     CokHookFunction2 /* fn */)
     {
         return nullptr;
     }

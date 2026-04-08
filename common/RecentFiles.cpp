@@ -89,19 +89,32 @@ std::string RecentFiles::serialise()
     std::string result;
 
     result = "[ ";
+    int n = 0;
     for (int i = 0; i < _mostRecentlyUsed.size(); i++)
     {
         Poco::URI uri(_mostRecentlyUsed[i].uri);
         std::vector<std::string> segments;
         uri.getPathSegments(segments);
 
+        // Verify that the file still exists
+        std::string path = uri.getPath();
+#ifdef _WIN32
+        if (path.length() > 4 && path[0] == '/' && path[2] == ':' && path[3] == '/')
+            path = path.substr(1);
+#endif
+        std::ifstream stream;
+        FileUtil::openFileToIFStream(path, stream);
+        if (!stream.is_open())
+            continue;
+
+        if (n > 0)
+            result += ", ";
         result += "{ "
             "\"uri\": \"" + _mostRecentlyUsed[i].uri + "\", "
             "\"name\": \"" + JsonUtil::escapeJSONValue(segments.empty() ? uri.getPathEtc() : segments.back()) + "\", "
             "\"timestamp\": \"" + std::format("{:%FT%TZ}", _mostRecentlyUsed[i].timestamp) + "\""
             " }";
-        if (i < _mostRecentlyUsed.size() - 1)
-            result += ", ";
+        n++;
     }
     result += " ]";
 

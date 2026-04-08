@@ -122,27 +122,36 @@ class A11yValidator {
 
 	private checkElementHasLabel(type: string, element: HTMLElement): void {
 		if (element.hasAttribute('aria-labelledby')) {
-			const labelledbyId = element.getAttribute('aria-labelledby') as string;
+			const labelledbyValue = element.getAttribute('aria-labelledby') as string;
+			const labelledbyIds = labelledbyValue.trim().split(/\s+/);
 
-			const referencedElement = document.getElementById(labelledbyId);
+			for (const labelledbyId of labelledbyIds) {
+				const referencedElement = document.getElementById(labelledbyId);
 
-			if (!referencedElement) {
-				throw new A11yValidatorException(
-					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to non-existing element with id: '${labelledbyId}'`,
-				);
-			} else {
-				const labelHasHtmlFor =
-					referencedElement.tagName === 'LABEL' &&
-					(referencedElement as HTMLLabelElement).htmlFor;
-
-				const htmlForPointsToThisElement =
-					labelHasHtmlFor &&
-					(referencedElement as HTMLLabelElement).htmlFor === element.id;
-
-				if (htmlForPointsToThisElement) {
+				if (!referencedElement) {
 					throw new A11yValidatorException(
-						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to label element with id: '${labelledbyId}', but that label also has htmlFor attribute pointing to this element. Should not duplicate labelling.`,
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to non-existing element with id: '${labelledbyId}'`,
 					);
+				}
+
+				// Only flag htmlFor duplication for single-label case.
+				// Multi-label (grid pattern) legitimately needs both
+				// htmlFor (click-to-focus) and aria-labelledby
+				// (composite accessible name).
+				if (labelledbyIds.length === 1) {
+					const labelHasHtmlFor =
+						referencedElement.tagName === 'LABEL' &&
+						(referencedElement as HTMLLabelElement).htmlFor;
+
+					const htmlForPointsToThisElement =
+						labelHasHtmlFor &&
+						(referencedElement as HTMLLabelElement).htmlFor === element.id;
+
+					if (htmlForPointsToThisElement) {
+						throw new A11yValidatorException(
+							`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to label element with id: '${labelledbyId}', but that label also has htmlFor attribute pointing to this element. Should not duplicate labelling.`,
+						);
+					}
 				}
 			}
 		} else {
@@ -189,13 +198,24 @@ class A11yValidator {
 					referencedElement.hasAttribute('aria-labelledby') ||
 					referencedElement.hasAttribute('aria-label')
 				) {
-					throw new A11yValidatorException(
-						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is associated with element with id: '${htmlFor}' via htmlFor, but that element also has aria-label or aria-labelledby attribute. Should not duplicate labelling.`,
-					);
+					// Allow when the target has multi-label aria-labelledby
+					// (space-separated IDs indicate a grid-layout pattern
+					// where htmlFor provides click-to-focus and
+					// aria-labelledby provides the composite accessible name).
+					const ariaLabelledBy =
+						referencedElement.getAttribute('aria-labelledby');
+					const isMultiLabel =
+						ariaLabelledBy && ariaLabelledBy.trim().split(/\s+/).length > 1;
+
+					if (!isMultiLabel) {
+						throw new A11yValidatorException(
+							`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is associated with element with id: '${htmlFor}' via htmlFor, but that element also has aria-label or aria-labelledby attribute. Should not duplicate labelling.`,
+						);
+					}
 				}
 			} else {
 				const referencedElement = document.querySelector(
-					`[aria-labelledby="${element.id}"]`,
+					`[aria-labelledby~="${element.id}"]`,
 				);
 				if (!referencedElement) {
 					throw new A11yValidatorException(
@@ -378,6 +398,7 @@ class A11yValidator {
 
 		let errorCount = this.validateContainer(notebookbar.container);
 		errorCount += this.checkTabContainerConsistency(notebookbar);
+		errorCount += this.checkOverflowGroupChildIds(notebookbar);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: notebookbar passed all checks');
@@ -421,7 +442,190 @@ class A11yValidator {
 			errorCount++;
 		}
 
+		errorCount += this.checkDuplicateShortcuts(selectedTab.id);
+
 		return errorCount;
+	}
+
+	private collectAllCombinations(
+		node: WidgetJSON | WidgetJSON[],
+		items: Array<{ id: string; combination: string }>,
+		language: string | null,
+	): void {
+		if (!node) return;
+
+		if (Array.isArray(node)) {
+			for (const child of node) {
+				this.collectAllCombinations(child, items, language);
+			}
+			return;
+		}
+
+		const isOverflow = node.type === 'overflowgroup';
+
+		if (!isOverflow && node.accessibility && node.accessibility.combination) {
+			const combo =
+				language && node.accessibility[language]
+					? (node.accessibility[language] as string)
+					: node.accessibility.combination;
+			const id = node.id || 'unknown';
+			items.push({ id: id, combination: combo });
+		}
+
+		if (node.children && Array.isArray(node.children)) {
+			for (const child of node.children) {
+				this.collectAllCombinations(child, items, language);
+			}
+		}
+	}
+
+	private checkDuplicateShortcuts(selectedTabId: string): number {
+		const notebookbar = (window as any).app?.map?.uiManager?.notebookbar;
+		if (!notebookbar) return 0;
+
+		const tabs = notebookbar.getTabs();
+		const rawDefinitions = notebookbar.getFullJSON();
+		if (!tabs || !rawDefinitions) return 0;
+
+		// Find the ContextContainer
+		let node = rawDefinitions;
+		let contextContainer = null;
+		while (
+			node.children &&
+			Array.isArray(node.children) &&
+			node.children[0] &&
+			!contextContainer
+		) {
+			if (node.children[0].id === 'ContextContainer')
+				contextContainer = node.children[0];
+			else node = node.children[0];
+		}
+		if (!contextContainer) return 0;
+
+		// Find the selected tab's raw content
+		const tabName = selectedTabId.split('-')[0];
+		let rawContentList = null;
+		for (const child of contextContainer.children) {
+			if (
+				child.children &&
+				child.children[0] &&
+				child.children[0].id === tabName + '-container'
+			) {
+				rawContentList = child.children[0].children;
+				break;
+			}
+		}
+		if (!rawContentList) return 0;
+
+		const NbaDefs = (window as any).NotebookbarAccessibilityDefinitions;
+		const language = NbaDefs ? new NbaDefs().getLanguage() : null;
+
+		const items: Array<{ id: string; combination: string }> = [];
+		this.collectAllCombinations(rawContentList, items, language);
+
+		let errorCount = 0;
+
+		for (let i = 0; i < items.length; i++) {
+			for (let j = i + 1; j < items.length; j++) {
+				const a = items[i];
+				const b = items[j];
+				if (a.combination === b.combination) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}' has duplicate shortcut '${a.combination}' on '${a.id}' and '${b.id}'. Each shortcut within a tab must be unique.`,
+						),
+					);
+					errorCount++;
+				} else if (a.combination.startsWith(b.combination)) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}': shortcut '${b.combination}' on '${b.id}' is a prefix of '${a.combination}' on '${a.id}', making '${a.id}' unreachable.`,
+						),
+					);
+					errorCount++;
+				} else if (b.combination.startsWith(a.combination)) {
+					console.error(
+						new A11yValidatorException(
+							`Tab '${selectedTabId}': shortcut '${a.combination}' on '${a.id}' is a prefix of '${b.combination}' on '${b.id}', making '${b.id}' unreachable.`,
+						),
+					);
+					errorCount++;
+				}
+			}
+		}
+
+		return errorCount;
+	}
+
+	private checkOverflowGroupChildIds(notebookbar: any): number {
+		const selectedTab = document.querySelector(
+			'.ui-tab.notebookbar.selected',
+		) as HTMLElement;
+		if (!selectedTab || !selectedTab.id) return 0;
+
+		const tabName = selectedTab.id.split('-')[0];
+		const containerId = tabName + '-container';
+
+		const fullJSON = notebookbar.getFullJSON();
+		const tabJSON = this.findJSONNodeById(fullJSON, containerId);
+		if (!tabJSON) return 0;
+
+		let errorCount = 0;
+
+		const walk = (node: any): void => {
+			if (!node || !node.children || !Array.isArray(node.children)) return;
+
+			for (const child of node.children) {
+				if (child.type === 'overflowgroup' && child.id) {
+					this.findDuplicateIdInChildren(
+						child.id,
+						child.children,
+						(dupId: string) => {
+							console.error(
+								new A11yValidatorException(
+									`Overflow group '${dupId}' contains a child with the same id. This breaks accessibility shortcut resolution because querySelector matches the parent instead of the child.`,
+								),
+							);
+							errorCount++;
+						},
+					);
+				}
+				walk(child);
+			}
+		};
+
+		walk(tabJSON);
+		return errorCount;
+	}
+
+	private findJSONNodeById(node: any, id: string): any {
+		if (!node) return null;
+		if (node.id === id) return node;
+		if (node.children && Array.isArray(node.children)) {
+			for (const child of node.children) {
+				const found = this.findJSONNodeById(child, id);
+				if (found) return found;
+			}
+		}
+		return null;
+	}
+
+	private findDuplicateIdInChildren(
+		parentId: string,
+		children: any[],
+		onDuplicate: (id: string) => void,
+	): void {
+		if (!children || !Array.isArray(children)) return;
+
+		for (const child of children) {
+			if (child.id === parentId) {
+				onDuplicate(parentId);
+				return;
+			}
+			if (child.children) {
+				this.findDuplicateIdInChildren(parentId, child.children, onDuplicate);
+			}
+		}
 	}
 }
 

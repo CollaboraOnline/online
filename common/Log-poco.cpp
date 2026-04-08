@@ -18,6 +18,7 @@
 
 #include "Log.hpp"
 
+#include <common/ProcUtil.hpp>
 #include <common/StaticLogHelper.hpp>
 #include <common/Util.hpp>
 
@@ -28,6 +29,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <cstdint>
 #include <cstring>
 #include <ctime>
@@ -36,6 +38,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -45,7 +48,7 @@ namespace
 std::atomic_int32_t ThreadLocalBufferCount(0);
 
 #ifndef NDEBUG
-// In debug builds, we track the thread-ids to list the ones still running at exist.
+// In debug builds, we track the thread-ids to list the ones still running at exit.
 thread_local std::int32_t OwnThreadIdIndex = 0;
 std::int32_t ThreadIdArray[256];
 std::atomic_int32_t NextThreadIdIndex(0);
@@ -142,7 +145,7 @@ namespace Log
         void close() override { flush(); }
 
         /// Write the given buffer to stderr directly.
-        static inline std::size_t writeRaw(const char* data, std::size_t count)
+        static std::size_t writeRaw(const char* data, std::size_t count)
         {
 #if WASMAPP
             // In WASM, stdout works best.
@@ -171,19 +174,19 @@ namespace Log
             return ptr - data;
         }
 
-        template <std::size_t N> inline void writeRaw(const char (&data)[N])
+        template <std::size_t N> void writeRaw(const char (&data)[N])
         {
             writeRaw(data, N - 1); // Minus the null.
         }
 
-        inline void writeRaw(const std::string& string) { writeRaw(string.data(), string.size()); }
+        void writeRaw(const std::string& string) { writeRaw(string.data(), string.size()); }
 
         /// Flush the stderr file data.
-        static inline bool flush() { return ::fflush(stderr) == 0; }
+        static bool flush() { return ::fflush(stderr) == 0; }
 
         /// Overloaded log function that takes a naked data pointer to log.
         /// Appends new-line to the given data.
-        inline void log(const char* data, std::size_t size)
+        void log(const char* data, std::size_t size)
         {
             char buffer[BufferSize];
             if (size < sizeof(buffer) - 1)
@@ -224,7 +227,7 @@ namespace Log
         std::ostringstream oss;
         oss << Static.getName();
         if constexpr (!Util::isMobileApp())
-            oss << '-' << std::setw(5) << std::setfill('0') << Util::getProcessId();
+            oss << '-' << std::setw(5) << std::setfill('0') << ProcUtil::getProcessId();
         Static.setId(oss.str());
     }
 
@@ -245,7 +248,7 @@ namespace Log
                 ++ThreadLocalBufferCount;
 #ifndef NDEBUG
                 OwnThreadIdIndex = NextThreadIdIndex++;
-                ThreadIdArray[OwnThreadIdIndex] = Util::getThreadId();
+                ThreadIdArray[OwnThreadIdIndex] = ProcUtil::getThreadId();
 #endif // !NDEBUG
             }
 
@@ -262,7 +265,7 @@ namespace Log
             std::size_t available() const { return BufferSize - _size; }
 
             /// Flush internal buffers, if any.
-            inline void flush()
+            void flush()
             {
                 if (_size)
                 {
@@ -272,7 +275,7 @@ namespace Log
                 }
             }
 
-            inline void log(const char* data, std::size_t size, bool force, std::int64_t ts)
+            void log(const char* data, std::size_t size, bool force, std::int64_t ts)
             {
                 if (_size + size > BufferSize - 1)
                 {
@@ -301,7 +304,7 @@ namespace Log
                 }
             }
 
-            inline void buffer(const char* data, std::size_t size)
+            void buffer(const char* data, std::size_t size)
             {
                 assert(_size + size <= BufferSize && "Buffer overflow");
 
@@ -318,12 +321,12 @@ namespace Log
         };
 
     protected:
-        inline std::size_t size() const { return _tlb.size(); }
-        inline std::size_t available() const { return _tlb.available(); }
+        std::size_t size() const { return _tlb.size(); }
+        std::size_t available() const { return _tlb.available(); }
 
-        inline void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
+        void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
 
-        inline void buffer(const std::string_view string) { buffer(string.data(), string.size()); }
+        void buffer(const std::string_view string) { buffer(string.data(), string.size()); }
 
     public:
         ~BufferedConsoleChannel() { flush(); }
@@ -331,7 +334,7 @@ namespace Log
         void close() override { flush(); }
 
         /// Flush buffers, if any.
-        static inline void flush() { _tlb.flush(); }
+        static void flush() { _tlb.flush(); }
 
         void log(const Poco::Message& msg) override
         {
@@ -418,7 +421,7 @@ namespace Log
         std::ostringstream oss;
         oss << Static.getName();
         if constexpr (!Util::isMobileApp())
-            oss << '-' << std::setw(5) << std::setfill('0') << Util::getProcessId();
+            oss << '-' << std::setw(5) << std::setfill('0') << ProcUtil::getProcessId();
         Static.setId(oss.str());
 
         // Configure the logger.
@@ -593,10 +596,15 @@ namespace Log
             return;
         if (!Util::isKitInProcess())
         {
+            // Allow other threads time to exit.
+            for (int i = 0; i < 10 && ThreadLocalBufferCount > 1; ++i)
+            {
+                std::this_thread::yield();
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            }
+
 #ifndef NDEBUG
-            OwnThreadIdIndex = NextThreadIdIndex++;
-            ThreadIdArray[OwnThreadIdIndex] = Util::getThreadId();
-            const auto currentThreadId = Util::getThreadId();
+            const auto currentThreadId = ProcUtil::getThreadId();
             for (int i = 0; i < NextThreadIdIndex; ++i)
             {
                 if (ThreadIdArray[i] && ThreadIdArray[i] != currentThreadId)

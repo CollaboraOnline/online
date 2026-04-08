@@ -191,7 +191,7 @@ NODE_MODULES_SRC =\
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
 
-COOL_CSS_LST =\
+COOL_CSS =\
 	$(srcdir)/css/leaflet.css \
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
@@ -220,14 +220,13 @@ COOL_CSS_LST =\
 	$(srcdir)/css/backstage.css \
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/forced-colors.css \
+	$(srcdir)/css/aichat-sidebar.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
 	$(srcdir)/css/tooltip.css \
 	$(srcdir)/css/progressbar.css \
 	$(srcdir)/css/settings.css
-
-COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
 COOL_CSS_DST = $(foreach file,$(COOL_CSS),$(DIST_FOLDER)/$(notdir $(file)))
 COOL_CSS_M4 = $(strip $(foreach file,$(COOL_CSS),$(notdir $(file))))
@@ -259,6 +258,7 @@ NODE_MODULES_JS =\
 	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js' 2>/dev/null) \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/fzstd/umd/index.js \
+	node_modules/marked/marked.min.js \
 	node_modules/gl-matrix/gl-matrix-min.js
 
 COOL_LIBS_JS =\
@@ -303,6 +303,10 @@ COOL_JS_LST =\
 	src/app/ViewLayoutCompareChanges.ts \
 	src/app/DocumentBase.ts \
 	src/app/DocumentView.ts \
+	src/app/TileCoordData.ts \
+	src/app/PaneBorder.ts \
+	src/app/Tile.ts \
+	src/app/BitmapTileManager.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SearchService.ts \
 	src/app/BaseClass.ts \
@@ -379,6 +383,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CellCursorSection.ts \
 	src/canvas/sections/CellSelectionHandleSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
+	src/canvas/sections/FormulaErrorHelpSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
 	src/canvas/sections/TextSelectionSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \
@@ -439,6 +444,8 @@ COOL_JS_LST =\
 	src/map/handler/Map.WOPI.js \
 	src/control/jsdialog/Util.UniqueId.ts \
 	src/control/jsdialog/Definitions.MenuCommands.ts \
+	src/control/jsdialog/Control.ts \
+	src/control/jsdialog/Control.ContextMenu.ts \
 	src/control/Control.AboutDialog.ts \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \
@@ -465,6 +472,7 @@ COOL_JS_LST =\
 	src/control/Control.Tooltip.js \
 	src/control/Control.ESignature.ts \
 	src/control/Control.ESignatureDialog.ts \
+	src/control/Control.AIChatSidebar.ts \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Util.Shortcuts.ts \
 	src/control/jsdialog/Util.ModelState.ts \
@@ -519,6 +527,8 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.OverflowManager.ts \
 	src/control/jsdialog/Widget.Progressbar.js \
 	src/control/jsdialog/Widget.RadioButton.ts \
+	src/control/jsdialog/Widget.PushButton.ts \
+	src/control/jsdialog/Widget.Comment.ts \
 	src/control/jsdialog/Widget.ScrolledWindow.js \
 	src/control/jsdialog/Widget.SearchEdit.ts \
 	src/control/jsdialog/Widget.SidebarContainers.ts \
@@ -696,10 +706,8 @@ COOL_JS_LST =\
 	src/control/Control.Scroll.Annotation.js \
 	src/main.js
 
-COOL_JS_WEBORDER = $(filter %,$(COOL_JS_LST))
-
-COOL_JS_SRC = $(filter %.js,$(COOL_JS_WEBORDER))
-COOL_TS_SRC = $(filter %.ts,$(COOL_JS_WEBORDER))
+COOL_JS_SRC = $(filter %.js,$(COOL_JS_LST))
+COOL_TS_SRC = $(filter %.ts,$(COOL_JS_LST))
 
 # beware these are not helpfully ordered
 COOL_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_TS_SRC))
@@ -730,7 +738,7 @@ dist-hook:
 
 SUBDIRS = l10n images
 
-COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER))
+COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_LST))
 
 define bundle_cool
 	$(if $(IS_SEPARATE),\
@@ -971,7 +979,7 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 	$(QUIET_CMP) if cmp -s $@.tmp $@; then rm $@.tmp; else mv $@.tmp $@; fi
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
-	$(foreach file,$(L10N_ALL_JS_ENTRY) $(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(patsubst $(DIST_FOLDER)/src/%,src/%,$(COOL_JS_WEBORDER))), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
+	$(foreach file,$(L10N_ALL_JS_ENTRY) $(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(patsubst $(DIST_FOLDER)/src/%,src/%,$(COOL_JS_LST))), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
 	@truncate $(if $(filter Darwin FreeBSD,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
@@ -1266,6 +1274,8 @@ pot:
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.NewSlideLayoutEntry.ts \
 		src/control/jsdialog/Widget.RadioButton.ts \
+		src/control/jsdialog/Widget.PushButton.ts \
+		src/control/jsdialog/Widget.Comment.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
 		src/app/Socket.ts \

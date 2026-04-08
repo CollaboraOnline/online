@@ -33,6 +33,7 @@ interface DocLayerInterface {
 	_getViewId(): string;
 	_painter: PainterInterface;
 	_docType: string;
+	_coreMousePointer: string;
 
 	isCalc(): boolean;
 	isWriter(): boolean;
@@ -133,4 +134,7 @@ interface DocLayerInterface {
 		menuStructure?: WidgetJSON,
 		onlyThread?: any,
 	): WidgetJSON;
+
+	_resetReferencesMarks(type?: string): void;
+	_clearSelections(calledFromSetPartHandler?: boolean): void;
 }

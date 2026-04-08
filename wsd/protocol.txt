@@ -107,6 +107,20 @@ paste mimetype=<mimeType>
 
     Paste content at the current cursor position.
 
+aichat: <json>
+
+    Send chat messages to the AI assistant. The JSON payload contains:
+    - messages: Array of chat messages in OpenAI format [{role, content}, ...]
+    - requestId: Unique identifier for matching the response
+    The server proxies the request to the configured AI provider and returns
+    the result via 'aichatresult' message. If the AI provider returns an
+    image, the result will contain imageData instead of content.
+
+aichatcancel: <requestId>
+
+    Cancel an in-progress AI chat request. <requestId> is the identifier
+    from the original 'aichat' message.
+
 insertfile name=<name> type=<type>
 
     Inserts the file with the name <name> into the document, we currently
@@ -383,6 +397,18 @@ commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
         - <UNOCommand> is the command to be executed (e.g., .uno:ViewAnnotations).
         - Optional query parameters can be appended to specify additional command details.
 
+    .uno:FormulaDepChain (Calc only)
+        Requests the formula dependency chain for the currently selected cell.
+        Returns a JSON object with:
+        - hasError: boolean indicating if the cell has a formula error
+        - reason: if no error, one of "not_formula" or "no_error"
+        - cell: object with address, sheet, formula, error, errorCode
+        - dependencies: array of dependency objects (recursive), each with:
+          - address, sheet, type (formula/value/string/empty/range/circular)
+          - For formulas: formula text, optional error/value, nested dependencies
+          - For values/strings: the cell value
+        Maximum recursion depth: 10 levels. Maximum cells: 50.
+
 completefunction name=<FunctionName>
 
     Requests the execution of a spreadsheet function in MobileWizard.Clients can request to complete a function name partially typed in the formula input box.
@@ -528,8 +554,8 @@ lokitversion <JSON string>
     JSON string contains version information in format:
     {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
 
-    Eg: {"ProductName": "LibreOffice",
-         "ProductVersion": "5.3",
+    Eg: {"ProductName": "Collabora Office",
+         "ProductVersion": "26.04",
          "ProductExtension": ".0.0.alpha0",
          "BuildId": "<full 40 char git hash>"}
 
@@ -579,7 +605,7 @@ error: cmd=<command> kind=<kind> [code=<error_code>] [params=1,2,3,...,N]
     <kind> is some single-word classification
 
     <code> (when provided) further specifies the error as forwarded from
-    LibreOffice
+    Collabora Office
 
 close: <reason>
 
@@ -679,6 +705,15 @@ complexselection:
     Complex selections with embedded objects and large text selections need special export handling.
     This response signifies that the payload is large and/or complex and needs to be retrieved via the clipboard API.
 
+aichatresult:<json>
+
+    Response from the AI chat assistant. The JSON payload contains:
+    - success: Boolean indicating if the request succeeded
+    - content: The AI response text (on success, for text responses)
+    - imageData: Base64-encoded PNG image data (on success, for image responses)
+    - error: Error message (on failure)
+    - requestId: The request identifier from the original 'aichat' message
+
 tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [wid=<wireId>]
 <binaryPngImage>
 
@@ -715,7 +750,7 @@ invalidatecursor: <payload>
 
     The communication between the parent process (the one keeping open the
     Websocket connections to the clients) and a child process (handling
-    one document through LibreOfficeKit) uses the same protocol, with
+    one document through COKit) uses the same protocol, with
     the following additions and changes:
 
 unocommandresult: <payload>
@@ -1285,7 +1320,7 @@ lokitversion <JSON string>
     JSON string contains version information in format:
     {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
 
-    Eg: {"ProductName": "LibreOffice",
-         "ProductVersion": "5.3",
+    Eg: {"ProductName": "Collabora Office",
+         "ProductVersion": "26.04",
          "ProductExtension": ".0.0.alpha0",
          "BuildId": "<full 40 char git hash>"}

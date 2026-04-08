@@ -1,0 +1,6 @@
+GET cool/eVÿÿt/ws HTP
+Host: 127.0.0.1:0
+Origin: https://127.0.0.1:0
+.1:6
+Upgrade: websocket
+

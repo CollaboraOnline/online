@@ -152,6 +152,7 @@ window.L.Map.include({
 	},
 
 	deselectAll: function() {
+		this._docLayer._preview._selectedPartRange = undefined;
 		for (let i = 0; i < app.impress.partList.length; i++) {
 			this.selectPart(i, 0, false, false);
 		}

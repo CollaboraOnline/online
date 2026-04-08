@@ -13,23 +13,23 @@
 
 #include "WopiStorage.hpp"
 
-#include <Auth.hpp>
-#include <CommandControl.hpp>
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <HostUtil.hpp>
-#include <HttpRequest.hpp>
-#include <common/Log.hpp>
-#include <NetUtil.hpp>
-#include <ProofKey.hpp>
-#include <Unit.hpp>
-#include <common/Util.hpp>
 #include <common/Anonymizer.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
 #include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/NetUtil.hpp>
 #include <wopi/StorageConnectionManager.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/HostUtil.hpp>
+#include <wsd/ProofKey.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -50,20 +50,22 @@
 #include <memory>
 #include <string>
 
-bool isTemplate(const std::string& filename)
-{
-    std::vector<std::string> templateExtensions{ ".stw",  ".ott",  ".dot", ".dotx",
-                                                 ".dotm", ".otm",  ".stc", ".ots",
-                                                 ".xltx", ".xltm", ".sti", ".otp",
-                                                 ".potx", ".potm", ".std", ".otg" };
-    for (auto& extension : templateExtensions)
-        if (filename.ends_with(extension))
-            return true;
-    return false;
-}
-
 namespace
 {
+
+constexpr bool isTemplate(const std::string_view filename)
+{
+    constexpr std::string_view extensions[] = { ".stw",  ".ott",  ".dot",  ".dotx", ".dotm", ".otm",
+                                                ".stc",  ".ots",  ".xltx", ".xltm", ".sti",  ".otp",
+                                                ".potx", ".potm", ".std",  ".otg" };
+    for (const std::string_view extension : extensions)
+    {
+        if (filename.ends_with(extension))
+            return true;
+    }
+
+    return false;
+}
 
 /// A helper class to invoke the callback of an async
 /// request when it exits its scope.
@@ -97,10 +99,14 @@ void anonymizeAvatarURL(Poco::JSON::Object::Ptr& userExtraInfo)
     if (!avatarURL.empty())
     {
         const std::string avatar_path = "/avatar/";
-        std::size_t startPos = avatarURL.find(avatar_path) + avatar_path.length();
-        std::size_t endPos = avatarURL.find("/", startPos);
+        const std::size_t pos = avatarURL.find(avatar_path);
+        if (pos == std::string::npos)
+            return;
 
-        if (startPos != std::string::npos && endPos != std::string::npos)
+        const std::size_t startPos = pos + avatar_path.length();
+        const std::size_t endPos = avatarURL.find("/", startPos);
+
+        if (endPos != std::string::npos)
         {
             std::string avatarUserName = avatarURL.substr(startPos, endPos - startPos);
             avatarURL.replace(startPos, endPos - startPos, COOLWSD::anonymizeUsername(avatarUserName));
@@ -176,11 +182,10 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
 
         // Set anonymized version of the above fields before logging.
         // Note: anonymization caches the result, so we don't need to store here.
-        if (COOLWSD::AnonymizeUserData)
-            object->set("BaseFileName", COOLWSD::anonymizeUrl(getFilename()));
+        object->set("BaseFileName", COOLWSD::anonymizeUrl(getFilename()));
 
         // If obfuscatedUserId is provided, then don't log the originals and use it.
-        if (COOLWSD::AnonymizeUserData && _obfuscatedUserId.empty())
+        if (_obfuscatedUserId.empty())
         {
             object->set("OwnerId", COOLWSD::anonymizeUsername(getOwnerId()));
             object->set("UserId", COOLWSD::anonymizeUsername(_userId));
@@ -226,6 +231,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "DisableInsertLocalImage", _disableInsertLocalImage);
     JsonUtil::findJSONValue(object, "EnableRemoteLinkPicker", _enableRemoteLinkPicker);
     JsonUtil::findJSONValue(object, "EnableRemoteAIContent", _enableRemoteAIContent);
+    JsonUtil::findJSONValue(object, "DisableAISettings", _disableAISettings);
     JsonUtil::findJSONValue(object, "EnableShare", _enableShare);
     JsonUtil::findJSONValue(object, "HideUserList", _hideUserList);
     JsonUtil::findJSONValue(object, "SupportsLocks", _supportsLocks);
@@ -271,7 +277,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         isUserLocked = false;
         CommandControl::LockManager::setUnlockLink(uriObject.getHost());
         Poco::URI newUri(HostUtil::getNewLockedUri(uriObject));
-        const std::string host = newUri.getHost();
+        const std::string& host = newUri.getHost();
 
         if (CommandControl::LockManager::hostExist(host))
         {
@@ -306,6 +312,13 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     bool booleanFlag = false;
     JsonUtil::findJSONValue(object, "IsUserRestricted", booleanFlag);
     CommandControl::RestrictionManager::setRestrictedUser(booleanFlag);
+
+#if ENABLE_DEBUG
+    // Enable testing feature restriction; always reset to avoid stale state from prior loads
+    std::string restrictedCommandList;
+    JsonUtil::findJSONValue(object, "Test_RestrictedCommandList", restrictedCommandList);
+    CommandControl::RestrictionManager::setRestrictedCommandList(restrictedCommandList);
+#endif
 
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
         _disableChangeTrackingRecord =
@@ -710,10 +723,10 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
     //TODO: replace with state machine.
     if (_uploadHttpSession)
     {
-        LOG_WRN("Upload is already in progress.");
+        LOG_INF("Upload is already in progress");
         asyncUploadCallback(
-            AsyncUpload(AsyncUpload::State::Error,
-                UploadResult(UploadResult::Result::FAILED, "Already in progress.")));
+            AsyncUpload(AsyncUpload::State::Running,
+                        UploadResult(UploadResult::Result::OK, "Already in progress.")));
         return 0;
     }
 

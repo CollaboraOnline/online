@@ -13,12 +13,12 @@
 # * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
 
 if [ -z "$CORE_REPO" ]; then
-  CORE_REPO="https://git.libreoffice.org/core"
+  CORE_REPO="https://gerrit.collaboraoffice.com/core"
 fi;
 
 if [ -z "$CORE_ASSETS" ]; then
   if [ -z "$CORE_BRANCH" ]; then
-    CORE_BRANCH="distro/collabora/co-26.04"
+    CORE_BRANCH="main"
   fi;
   echo "Building core branch '$CORE_BRANCH' from '$CORE_REPO'"
 else

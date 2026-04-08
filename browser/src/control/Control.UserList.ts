@@ -73,7 +73,7 @@ class UserList extends window.L.Control {
 		map.on('removeview', this.onRemoveView, this);
 		map.on('deselectuser', this.deselectUser, this);
 
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isSmallScreenDevice() || window.mode.isTablet()) {
 			this.options.nUsers = '%n';
 			this.options.oneUser = '1';
 			this.options.noUser = '0';
@@ -83,7 +83,7 @@ class UserList extends window.L.Control {
 			this.options.noUser = _('0 users');
 		}
 
-		const userListElement = document.getElementById('userListSummary');
+		const userListElement = document.getElementById('userListSummaryButton');
 		userListElement.setAttribute('aria-label', _('User List Summary'));
 
 		this.registerHeaderAvatarEvents();
@@ -221,14 +221,14 @@ class UserList extends window.L.Control {
 		if (canShowDropdown) {
 			JSDialog.OpenDropdown(
 				'userlist',
-				document.getElementById('userListSummary'),
+				document.getElementById('userListSummaryButton'),
 				JSDialog.MenuDefinitions.get('UsersListMenu'),
 			);
 		}
 	}
 
 	registerHeaderAvatarEvents() {
-		document.getElementById('userListSummary').addEventListener(
+		document.getElementById('userListSummaryButton').addEventListener(
 			'click',
 			function (e: MouseEvent) {
 				e.stopPropagation();
@@ -243,7 +243,7 @@ class UserList extends window.L.Control {
 			(this.map['wopi'].HideUserList !== null &&
 				this.map['wopi'].HideUserList !== undefined &&
 				$.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isMobile() &&
+			(window.mode.isSmallScreenDevice() &&
 				$.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
 			(window.mode.isTablet() &&
 				$.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
@@ -296,10 +296,10 @@ class UserList extends window.L.Control {
 		const userListElementBackground = document.getElementById(
 			'userListSummaryBackground',
 		);
-		const userListElement = document.getElementById('userListSummary');
+		const userListElement = document.getElementById('userListSummaryButton');
 
 		if (
-			window.mode.isMobile() ||
+			window.mode.isSmallScreenDevice() ||
 			this.hideUserList() ||
 			this.users.size === 1
 		) {

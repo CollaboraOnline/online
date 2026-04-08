@@ -13,6 +13,9 @@
 
 #include "SettingsStorage.hpp"
 
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Environment.h>
 #include <Poco/File.h>
@@ -22,12 +25,10 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/String.h>
 #include <Poco/Util/Application.h>
+
 #include <exception>
 #include <fstream>
 #include <sstream>
-
-#include "Log.hpp"
-#include <common/Util.hpp>
 
 namespace Desktop
 {
@@ -37,7 +38,7 @@ void uploadSettings(const std::string& payload)
     try
     {
         Poco::JSON::Parser parser;
-        auto obj = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
+        const auto obj = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
 
         const std::string fileName = obj->getValue<std::string>("fileName");
         const std::string filePath = obj->getValue<std::string>("filePath");
@@ -160,7 +161,7 @@ void syncSettings(const std::function<void(const std::vector<char>&)>& sendFileC
         std::string settingsConfig = fetchSettingsConfig();
 
         Poco::JSON::Parser parser;
-        Poco::JSON::Object::Ptr json =
+        const Poco::JSON::Object::Ptr json =
             parser.parse(settingsConfig).extract<Poco::JSON::Object::Ptr>();
 
         auto sendFile = [&](const std::string& key) {
@@ -236,7 +237,7 @@ void processIntegratorAdminFile(const std::string& payload)
     }
 
     Poco::JSON::Parser parser;
-    Poco::JSON::Object::Ptr json = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
+    const Poco::JSON::Object::Ptr json = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
 
     auto replaceOrEmpty = [&](const std::string& token, const std::string& jsonKey) {
         std::string value;

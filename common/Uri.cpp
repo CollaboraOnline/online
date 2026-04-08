@@ -37,7 +37,7 @@ std::string Uri::decode(const std::string& uri)
     return decoded;
 }
 
-std::string Uri::encodeAllPercent(const std::string& path)
+std::string Uri::encodeAllPercent(const std::string_view path)
 {
     std::string result;
     result.reserve(path.size());

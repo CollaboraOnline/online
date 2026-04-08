@@ -375,7 +375,7 @@ public:
     const std::string& getConfigId() const { return _configId; }
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
-    bool hasTileCache() { return _tileCache != nullptr; }
+    bool hasTileCache() const { return _tileCache != nullptr; }
     bool isAlive() const;
 
     /// Are we running in either shutdown, or the polling thread.

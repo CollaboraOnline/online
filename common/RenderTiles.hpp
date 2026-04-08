@@ -11,24 +11,17 @@
 
 #pragma once
 
+#include <common/Png.hpp>
+#include <common/Rectangle.hpp>
+#include <common/ThreadPool.hpp>
+#include <kit/Delta.hpp>
+#include <wsd/TileDesc.hpp>
+
+#include <COKit/COKit.hxx>
+
 #include <cassert>
 #include <memory>
-#include <queue>
-#include <thread>
-#include <condition_variable>
-#include <fstream>
-#include <unordered_map>
 #include <vector>
-
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-
-#include <common/ThreadPool.hpp>
-
-#include <Png.hpp>
-#include <Delta.hpp>
-#include <Rectangle.hpp>
-#include <TileDesc.hpp>
-
 namespace RenderTiles
 {
     struct Buffer {
@@ -65,11 +58,11 @@ namespace RenderTiles
     }
 
     bool doRender(
-        const std::shared_ptr<lok::Document>& document, DeltaGenerator& deltaGen,
+        const std::shared_ptr<kit::Document>& document, DeltaGenerator& deltaGen,
         TileCombined& tileCombined, ThreadPool& pngPool,
         const std::function<void(unsigned char* data, int offsetX, int offsetY, size_t pixmapWidth,
                                  size_t pixmapHeight, int pixelWidth, int pixelHeight,
-                                 LibreOfficeKitTileMode mode)>& blendWatermark,
+                                 COKitTileMode mode)>& blendWatermark,
         const std::function<void(const char* buffer, size_t length)>& outputMessage,
         [[maybe_unused]] unsigned mobileAppDocId, CanonicalViewId canonicalViewId, bool dumpTiles)
     {
@@ -103,13 +96,21 @@ namespace RenderTiles
 
         assert(tiles.size() == tileRecs.size());
 
-        const size_t tilesByX = renderArea.getWidth() / tileCombined.getTileWidth();
-        const size_t tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
+        const int areaWidth = renderArea.getWidth();
+        const int areaHeight = renderArea.getHeight();
+        if (areaWidth <= 0 || areaHeight <= 0)
+        {
+            LOG_ERR("Invalid render area " << areaWidth << 'x' << areaHeight);
+            return false;
+        }
+
+        const size_t tilesByX = static_cast<size_t>(areaWidth) / tileCombined.getTileWidth();
+        const size_t tilesByY = static_cast<size_t>(areaHeight) / tileCombined.getTileHeight();
         const int pixelWidth = tileCombined.getWidth();
         const int pixelHeight = tileCombined.getHeight();
         assert (pixelWidth > 0 && pixelHeight > 0);
-        const size_t pixmapWidth = tilesByX * pixelWidth;
-        const size_t pixmapHeight = tilesByY * pixelHeight;
+        const size_t pixmapWidth = tilesByX * static_cast<size_t>(pixelWidth);
+        const size_t pixmapHeight = tilesByY * static_cast<size_t>(pixelHeight);
 
         if (pixmapWidth > 4096 || pixmapHeight > 4096)
             LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << 'x' << pixmapHeight
@@ -135,7 +136,7 @@ namespace RenderTiles
                 << renderArea.getWidth() << ", " << renderArea.getHeight() << ") "
                 << " took " << elapsedUs << " (" << area / elapsedUs.count() << " MP/s).");
 
-        const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
+        const auto mode = static_cast<COKitTileMode>(document->getTileMode());
 
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<char> output;

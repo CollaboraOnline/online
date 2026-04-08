@@ -10,16 +10,16 @@
  */
 
 /*
- * The main entry point for the LibreOfficeKit process serving
+ * The main entry point for the COKit process serving
  * a document editing session.
  */
 
 #include <config.h>
 
+#include "KitWebSocket.hpp"
+
 // Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Include <typeinfo> here.
 #include <typeinfo>
-
-#include "KitWebSocket.hpp"
 
 #include <common/Anonymizer.hpp>
 #include <common/JsonUtil.hpp>
@@ -94,7 +94,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         if (!_document)
         {
 #if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
-            Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
+            ProcUtil::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
             _document = std::make_shared<Document>(
                 _loKit, _jailId, _docKey, docId, url,
@@ -106,8 +106,8 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
             // We can do this only after creating the Document object.
             TraceEvent::emitOneRecordingIfEnabled(
                 std::string("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\"") +
-                "Kit-" + docId + "\"},\"pid\":" + std::to_string(Util::getProcessId()) +
-                ",\"tid\":" + std::to_string(Util::getThreadId()) + "},\n");
+                "Kit-" + docId + "\"},\"pid\":" + std::to_string(ProcUtil::getProcessId()) +
+                ",\"tid\":" + std::to_string(ProcUtil::getThreadId()) + "},\n");
         }
 
         // Validate and create session.

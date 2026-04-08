@@ -26,9 +26,11 @@ interface WidgetJSON {
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
-	labelledBy?: string;
+	labelledBy?: string | string[];
 	allyRole?: string;
+	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
+	ariaLive?: 'polite' | 'assertive' | 'off';
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }
 
@@ -48,6 +50,7 @@ interface JSBuilderOptions {
 
 interface JSBuilder {
 	_currentDepth: number; // mobile-wizard only FIXME: encapsulate
+	_responses: any;
 
 	_unoToolButton: UnoToolButtonHandler; // special handler which returns toolitem object
 	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
@@ -56,6 +59,7 @@ interface JSBuilder {
 	options: JSBuilderOptions; // current state
 	map: MapInterface; // reference to map
 	rendersCache: any; // on demand content cache
+	wizard: any;
 	windowId?: WindowId | number;
 
 	build: (
@@ -77,6 +81,9 @@ interface JSBuilder {
 	_getGridRows: (data: WidgetJSON[]) => number;
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
+	_setAccessKey: (element: HTMLElement, key: string) => void;
+	_getAccessKeyFromText: (text: string) => string;
+	_stressAccessKey: (element: HTMLElement, accessKey: string) => void;
 	_expanderHandler: any; // FIXME: use handlers getter instead
 }
 
@@ -133,6 +140,7 @@ interface ActionData {
 	control_id: string;
 	action_type: string;
 	data: any;
+	new_id?: string;
 }
 
 // JSDialog message (full, update or action)
@@ -170,7 +178,7 @@ interface DialogJSON extends JSDialogJSON {
 type NotebookbarAccessibilityDescriptor = {
 	focusBack: boolean;
 	combination: string;
-	de?: string | null; // combination specific for german
+	[language: string]: string | boolean | null | undefined; // language-specific combinations (e.g. 'de' for German)
 };
 
 type NotebookbarTabEntry = {
@@ -310,6 +318,10 @@ interface PushButtonWidget extends WidgetJSON {
 	symbol?: string;
 	text?: string;
 	image?: string;
+	isToggle?: boolean;
+	checked?: boolean;
+	command?: string;
+	hidden?: boolean; // todo: deprecate it in favor of WidgetJson.visible
 }
 
 // type: 'menubutton'
@@ -385,6 +397,8 @@ interface TreeHeaderJSON {
 	text: string;
 	sortable: boolean; // can be sorted by column
 	arrow?: 'up' | 'down'; // sorting arrow to show
+	color?: string; // series color as hex string (RRGGBB) for color bar indicator
+	headerName?: string; // series name for chart data table headers
 }
 
 interface TreeWidgetJSON extends WidgetJSON {

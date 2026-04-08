@@ -201,11 +201,21 @@ AC_ARG_ENABLE([qtapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view. See qt/README.]))
 
+AC_ARG_ENABLE([qtapp-tests],
+              AS_HELP_STRING([--enable-qtapp-tests],
+                             [Enable the WebdriverIO test suite for the Qt app.
+                              Requires --enable-qtapp and --with-atspi-driver-path.]))
+
+AC_ARG_WITH([atspi-driver-path],
+            AS_HELP_STRING([--with-atspi-driver-path=/path/to/selenium-webdriver-at-spi.py],
+                           [Path to the selenium-webdriver-at-spi.py script
+                            required to run the Qt app tests.]))
+
 AC_ARG_ENABLE(fuzzers,
-    AS_HELP_STRING([--enable-fuzzers],
-        [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
-         only in a separate build tree, since the switch disables the creation of a coolwsd
-         binary. For best results: --with-sanitizer=address,undefined])
+    AS_HELP_STRING([--enable-fuzzers@<:@=ENGINE@:>@],
+        [Build fuzzer targets. ENGINE is 'libfuzzer' (default) or 'afl'.
+         Useful in a separate build tree since it disables coolwsd.
+         For best results: --with-sanitizer=address,undefined])
 )
 
 AC_ARG_ENABLE([androidapp],
@@ -274,7 +284,7 @@ AC_ARG_ENABLE([seccomp],
                               Beware of the security consequences!]))
 AC_ARG_WITH([lokit-path],
             AS_HELP_STRING([--with-lokit-path=<path>],
-                           [Path to the "include" directory with the LibreOfficeKit headers]))
+                           [Path to the "include" directory with the COKit headers]))
 
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
@@ -444,9 +454,8 @@ AC_ARG_ENABLE([feature-restriction],
 
 AC_ARG_ENABLE([wasm-embindtest],
               AS_HELP_STRING([--enable-wasm-embindtest],
-                             [Run the LibreOffice embindtest as part of running the app. Requires
-                              LibreOffice to be built with --enable-dbgutil. Relevant only for a
-                              Wasm build.]))
+                             [Run the LibreOffice embindtest as part of running the app. Relevant
+                              only for a Wasm build.]))
 
 AC_ARG_WITH([wasm-zetajs],
             AS_HELP_STRING([--with-wasm-zetajs=<path>],
@@ -457,7 +466,7 @@ AC_ARG_WITH([wasm-zetajs],
 
 AC_ARG_ENABLE([wasm-zetajs-example],
               AS_HELP_STRING([--enable-wasm-zetajs-example],
-                             [Inclue a zetajs scripting example in the app. Requires
+                             [Include a zetajs scripting example in the app. Requires
                               --with-wasm-zetajs. Relevant only for a Wasm build.]))
 
 AC_ARG_ENABLE([experimental],
@@ -1157,6 +1166,24 @@ fi
 AC_SUBST(ENABLE_QTAPP)
 AM_CONDITIONAL([ENABLE_QTAPP], [test "$ENABLE_QTAPP" = "true"])
 
+ENABLE_QTAPP_TESTS=false
+AT_SPI_DRIVER_PATH=
+if test "$enable_qtapp_tests" = "yes"; then
+    if test "$ENABLE_QTAPP" != "true"; then
+        AC_MSG_ERROR([--enable-qtapp-tests requires --enable-qtapp])
+    fi
+    if test -z "$with_atspi_driver_path"; then
+        AC_MSG_ERROR([--enable-qtapp-tests requires --with-atspi-driver-path=<path>])
+    fi
+    if test ! -f "$with_atspi_driver_path"; then
+        AC_MSG_ERROR([AT-SPI driver not found: $with_atspi_driver_path])
+    fi
+    AT_SPI_DRIVER_PATH="$with_atspi_driver_path"
+    ENABLE_QTAPP_TESTS=true
+fi
+AC_SUBST(AT_SPI_DRIVER_PATH)
+AM_CONDITIONAL([ENABLE_QTAPP_TESTS], [test "$ENABLE_QTAPP_TESTS" = "true"])
+
 dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
 dnl capability. Compare to ENABLE_WASM.
 
@@ -1256,7 +1283,15 @@ AS_IF([test "$ENABLE_QTAPP" != true],
 CFLAGS="$CFLAGS -Wall -Wextra"
 
 AC_MSG_CHECKING([whether to use extra compiler hardening flags])
+enable_hardening=yes
 if test "$enable_hardening_flags" = no -o "$host_os" = "emscripten" -o "x$with_sanitizer" != "x"; then
+    enable_hardening=no
+fi
+case "$enable_fuzzers" in
+    no|"") ;;
+    *) enable_hardening=no ;;
+esac
+if test "$enable_hardening" = no; then
     AC_MSG_RESULT([no])
  else
     AC_MSG_RESULT([yes])
@@ -1348,24 +1383,84 @@ AC_DEFINE_UNQUOTED([CODE_COVERAGE],[$CODE_COVERAGE],[Define to 1 if this is a co
 AM_CONDITIONAL([ENABLE_CODE_COVERAGE], [test "$CODE_COVERAGE" = "1"])
 
 # Fuzzing.
-AC_MSG_CHECKING([whether to build fuzzers])
-if test "$enable_fuzzers" = "yes"; then
-    AC_MSG_RESULT([yes])
-    AC_MSG_CHECKING([whether sanitizers are enabled])
-    if test "x$with_sanitizer" != "x"; then
-    AC_MSG_RESULT([yes ($with_sanitizer)])
-    with_sanitizer="$with_sanitizer,fuzzer-no-link"
-    else
-    AC_MSG_RESULT([no])
-    with_sanitizer="fuzzer-no-link"
-    fi
-    LIBFUZZER=1
-else
-    AC_MSG_RESULT([no])
-    LIBFUZZER=0
-fi
-AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a libfuzzer build.])
+AC_MSG_CHECKING([fuzzer engine])
+case "$enable_fuzzers" in
+    yes|libfuzzer)
+        FUZZER_ENGINE=libfuzzer
+        AC_MSG_RESULT([libfuzzer])
+        if test "x$with_sanitizer" != "x"; then
+            with_sanitizer="$with_sanitizer,fuzzer-no-link"
+        else
+            with_sanitizer="fuzzer-no-link"
+        fi
+        LIBFUZZER=1
+        ;;
+    afl)
+        FUZZER_ENGINE=afl
+        AC_MSG_RESULT([afl])
+        AFL_CXX=""
+        for afl_compiler in afl-clang-lto++ afl-clang-fast++ afl-c++ ; do
+            if command -v $afl_compiler >/dev/null 2>&1; then
+                AFL_CXX=$afl_compiler
+                break
+            fi
+        done
+        if test -z "$AFL_CXX"; then
+            AC_MSG_ERROR([AFL++ compiler not found in PATH (tried afl-clang-lto++, afl-clang-fast++, afl-c++)])
+        fi
+        AFL_CC=$(echo "$AFL_CXX" | sed 's/++$//')
+        AC_MSG_NOTICE([using AFL++ compiler: CXX=$AFL_CXX CC=$AFL_CC])
+        CXX="$AFL_CXX"
+        CC="$AFL_CC"
+        if test "x$with_sanitizer" != "x"; then
+            AC_MSG_WARN([--with-sanitizer ignored for AFL++ builds (sanitizer variant is built automatically)])
+            with_sanitizer=""
+        fi
+        # The _san variant must use afl-clang-fast++, find it explicitly
+        AFL_CLANG_FAST_CXX=""
+        AFL_CLANG_FAST_CC=""
+        for afl_san_compiler in afl-clang-fast++ ; do
+            if command -v $afl_san_compiler >/dev/null 2>&1; then
+                AFL_CLANG_FAST_CXX=$afl_san_compiler
+                AFL_CLANG_FAST_CC=$(echo "$afl_san_compiler" | sed 's/++$//')
+                break
+            fi
+        done
+        if test -z "$AFL_CLANG_FAST_CXX"; then
+            AC_MSG_ERROR([afl-clang-fast++ not found (required for sanitizer variant)])
+        fi
+        AC_MSG_NOTICE([AFL++ san compiler: $AFL_CLANG_FAST_CXX])
+        # AFL++ needs libAFLDriver.a to provide main() for LLVMFuzzerTestOneInput harnesses
+        AFL_DRIVER_LIB=""
+        for dir in $(dirname $(command -v $AFL_CXX))/../lib/afl /usr/local/lib/afl /usr/lib/afl ; do
+            if test -f "$dir/libAFLDriver.a"; then
+                AFL_DRIVER_LIB="$dir/libAFLDriver.a"
+                break
+            fi
+        done
+        if test -z "$AFL_DRIVER_LIB"; then
+            AC_MSG_ERROR([libAFLDriver.a not found (needed to link LLVMFuzzerTestOneInput harnesses)])
+        fi
+        AC_MSG_NOTICE([AFL++ driver: $AFL_DRIVER_LIB])
+        LIBFUZZER=1
+        ;;
+    no|"")
+        FUZZER_ENGINE=""
+        AFL_DRIVER_LIB=""
+        AC_MSG_RESULT([none])
+        LIBFUZZER=0
+        ;;
+    *)
+        AC_MSG_ERROR([unknown fuzzer engine '$enable_fuzzers' (use 'libfuzzer' or 'afl')])
+        ;;
+esac
+AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a fuzzer build.])
 AM_CONDITIONAL([ENABLE_LIBFUZZER], [test "$LIBFUZZER" = "1"])
+AM_CONDITIONAL([ENABLE_AFL], [test "$FUZZER_ENGINE" = "afl"])
+AC_SUBST([FUZZER_ENGINE])
+AC_SUBST([AFL_DRIVER_LIB])
+AC_SUBST([AFL_CLANG_FAST_CXX])
+AC_SUBST([AFL_CLANG_FAST_CC])
 
 # Sanitizers.
 CXXFLAGS_CXXSTD=
@@ -1406,7 +1501,7 @@ for i in $CC; do
     esac
 done
 if test "$ENABLE_RUNTIME_OPTIMIZATIONS" != no; then
-    AC_DEFINE([ENABLE_RUNTIME_OPTIMIZATIONS],1,[Define to 1 if this is not a santitizers build.])
+    AC_DEFINE([ENABLE_RUNTIME_OPTIMIZATIONS],1,[Define to 1 if this is not a sanitizers build.])
 fi
 
 # Check for C++20 support.
@@ -1480,7 +1575,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
           AC_MSG_RESULT([found])
       else
           AC_MSG_RESULT([not found])
-          AS_IF([test "$enable_fuzzers" != "yes"],
+          AS_IF([test "$LIBFUZZER" != "1"],
                 [AC_MSG_ERROR([LibreOffice path must be configured: --with-lo-path])])
       fi
       ])
@@ -1764,9 +1859,9 @@ AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
 AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$host_os" != "emscripten"],
-      [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
+      [AC_CHECK_HEADERS([COKit/COKit.h],
                         [],
-                        [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
+                        [AC_MSG_ERROR([header COKit/COKit.h not found, perhaps you want to use --with-lokit-path])])
        AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
                         [],
                         [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
@@ -2186,11 +2281,11 @@ if test "$host_os" = emscripten; then
         AC_MSG_CHECKING([whether the LibreOffice installation includes embindtest])
         if test ! -f "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps; then
             AC_MSG_ERROR([cannot find $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
-        elif ! LC_ALL=POSIX grep -E -q -e '(^|[[[:space:]]])-lembindtestlo($|[[[:space:]]])' \
+        elif ! LC_ALL=POSIX grep -E -q -e '(^|[[[:space:]]])-ltestunolo($|[[[:space:]]])' \
                 "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps
         then
             AC_MSG_ERROR(
-                [cannot find -lembindtestlo in $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
+                [cannot find -ltestunolo in $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
         else
             AC_MSG_RESULT([yes])
         fi

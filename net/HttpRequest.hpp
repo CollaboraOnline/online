@@ -153,6 +153,9 @@
 
 namespace http
 {
+static constexpr int64_t MaxBodyLen = 2LL * 1024 * 1024 * 1024; ///< Prevent runaway cases.
+static constexpr int64_t MaxChunkLen = 128LL * 1024 * 1024; ///< Prevent runaway cases.
+
 /// The parse-state of a field.
 STATE_ENUM(FieldParseState,
            Unknown, ///< Not yet parsed.
@@ -447,6 +450,13 @@ public:
                             { return Util::iequal(pair.first, key); }) != end;
     }
 
+    [[nodiscard]] ConstIterator find(const std::string_view key) const
+    {
+        const ConstIterator end = this->end();
+        return std::find_if(begin(), end, [&key](const Pair& pair) -> bool
+                            { return Util::iequal(pair.first, key); });
+    }
+
     /// Remove the first matching HTTP header field (case insensitive), returning true if found and removed.
     bool remove(const std::string_view key)
     {
@@ -665,8 +675,15 @@ public:
     /// The header object.
     const Header& header() const { return _header; }
 
-    // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string_view key) const { return _header.has(key); }
+    /// Returns true if the HTTP header field exists (case insensitive).
+    [[nodiscard]] bool has(const std::string_view key) const { return _header.has(key); }
+
+    /// Returns the iterator to the header's key in question, if found. Otherwise end().
+    [[nodiscard]] Header::ConstIterator find(const std::string_view key) const
+    {
+        return _header.find(key);
+    }
+    Header::ConstIterator end() const { return _header.end(); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
     [[nodiscard]] std::string get(const std::string_view key,
@@ -2125,6 +2142,12 @@ inline std::ostream& operator<<(std::ostream& os, const http::StatusCode& status
 inline std::ostringstream& operator<<(std::ostringstream& os, const http::StatusCode& statusCode)
 {
     os << static_cast<int>(statusCode) << " (" << getReasonPhraseForCode(statusCode) << ')';
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const http::Header::ConnectionToken& token)
+{
+    os << http::Header::name(token);
     return os;
 }
 

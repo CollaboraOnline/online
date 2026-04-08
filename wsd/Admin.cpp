@@ -16,6 +16,8 @@
 
 #include <config.h>
 
+#include <wsd/Admin.hpp>
+
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -31,7 +33,6 @@
 #include <SslSocket.hpp>
 #endif
 #include <net/WebSocketHandler.hpp>
-#include <wsd/Admin.hpp>
 #include <wsd/AdminModel.hpp>
 #include <wsd/Auth.hpp>
 #include <wsd/COOLWSD.hpp>
@@ -608,7 +609,7 @@ Admin::~Admin()
 
 void Admin::pollingThread()
 {
-    _model.setThreadOwner(std::this_thread::get_id());
+    _model.setThreadOwner(ProcUtil::getThreadId());
 
     std::chrono::steady_clock::time_point lastCPU = std::chrono::steady_clock::now();
     std::chrono::steady_clock::time_point lastMem = lastCPU;
@@ -839,8 +840,8 @@ size_t Admin::getTotalMemoryUsage() const
     // inside the forkit - we should account all of our fixed cost of
     // memory to the forkit; and then count only dirty pages in the clients
     // since we know that they share everything else with the forkit.
-    const size_t forkitRssKb = Util::getMemoryUsageRSS(_forKitPid);
-    const size_t wsdPssKb = Util::getMemoryUsagePSS(Util::getProcessId());
+    const size_t forkitRssKb = ProcUtil::getMemoryUsageRSS(_forKitPid);
+    const size_t wsdPssKb = ProcUtil::getMemoryUsagePSS(ProcUtil::getProcessId());
     const size_t kitsDirtyKb = _model.getKitsMemoryUsage();
     const size_t totalMem = wsdPssKb + forkitRssKb + kitsDirtyKb;
 
@@ -849,8 +850,8 @@ size_t Admin::getTotalMemoryUsage() const
 
 size_t Admin::getTotalCpuUsage() const
 {
-    const size_t forkitJ = Util::getCpuUsage(_forKitPid);
-    const size_t wsdJ = Util::getCpuUsage(Util::getProcessId());
+    const size_t forkitJ = ProcUtil::getCpuUsage(_forKitPid);
+    const size_t wsdJ = ProcUtil::getCpuUsage(ProcUtil::getProcessId());
 
     if (_lastJiffies == 0)
     {
@@ -1116,7 +1117,7 @@ void Admin::cleanupLostKits()
         if (internalKitPids.find(pid) == internalKitPids.end())
         {
             // Check if this is our kit process (forked from our ForKit process)
-            if (Util::getStatFromPid(pid, 3) == (size_t)_forKitPid)
+            if (ProcUtil::getStatFromPid(pid, 3) == (size_t)_forKitPid)
                 mapKitsLost.insert(std::pair<pid_t, std::time_t>(pid, std::time(nullptr)));
         }
         else

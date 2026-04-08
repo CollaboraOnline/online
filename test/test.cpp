@@ -79,8 +79,6 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
 
 #ifdef STANDALONE_CPPUNIT
 
-static bool IsDebugrun = false;
-
 // coverity[root_function] : don't warn about uncaught exceptions
 int main(int argc, char** argv)
 {
@@ -92,10 +90,6 @@ int main(int argc, char** argv)
         if (arg == "--verbose")
         {
             verbose = true;
-        }
-        else if (arg == "--debugrun")
-        {
-            IsDebugrun = true;
         }
         else if (arg == "--cert-path" && ++i < argc)
         {
@@ -159,7 +153,6 @@ bool isStandalone()
 }
 
 static std::mutex ErrorMutex;
-static bool IsVerbose = false;
 static std::ostringstream ErrorsStream;
 
 class TestProgressListener : public CppUnit::TestListener
@@ -216,7 +209,6 @@ private:
 // returns true on success
 bool runClientTests(const char* cmd, bool standalone, bool verbose)
 {
-    IsVerbose = verbose;
     IsStandalone = standalone;
 
     CPPUNIT_NS::TestResult controller;

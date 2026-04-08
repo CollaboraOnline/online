@@ -109,7 +109,7 @@ UnitBase::TestResult UnitSession::testBadRequest()
         // TST_LOG("Response: " << response->header().toString());
         LOK_ASSERT_EQUAL(http::StatusCode::BadRequest, response->statusCode());
         LOK_ASSERT_EQUAL(false, session->isConnected());
-        LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
+        LOK_ASSERT_EQUAL(http::Header::ConnectionToken::Close, response->header().getConnectionToken());
     }
     catch (const Poco::Exception& exc)
     {
@@ -141,7 +141,7 @@ UnitBase::TestResult UnitSession::testHandshake()
                 const std::string msg(std::string(message.begin(), message.end()));
                 if (!msg.starts_with("error:"))
                 {
-                    LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix("progress:", msg), true);
+                    LOK_ASSERT_EQUAL(true, COOLProtocol::matchPrefix("progress:", msg));
                     LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                 }
                 else
@@ -564,7 +564,7 @@ UnitBase::TestResult UnitSession::testGetMetrics()
         LOK_ASSERT(response->header().hasContentLength());
         LOK_ASSERT(0 < response->header().getContentLength());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-        LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
+        LOK_ASSERT_EQUAL(http::Header::ConnectionToken::Close, response->header().getConnectionToken());
 
         // check metrics format and a few key values
         auto body = std::istringstream(response->getBody());

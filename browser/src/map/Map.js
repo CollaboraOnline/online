@@ -177,7 +177,7 @@ window.L.Map = window.L.Evented.extend({
 				this._fireInitComplete('doclayerinit');
 			}
 
-			if (window.mode.isMobile())
+			if (window.mode.isSmallScreenDevice())
 			{
 				document.getElementById('document-container').classList.add('mobile');
 				this._size = new cool.Point(0,0);
@@ -291,7 +291,7 @@ window.L.Map = window.L.Evented.extend({
 					commentSection.clearList();
 			}
 
-			if (!window.mode.isMobile())
+			if (!window.mode.isSmallScreenDevice())
 				this.initializeModificationIndicator();
 
 			// We have loaded.
@@ -1713,8 +1713,10 @@ window.L.Map = window.L.Evented.extend({
 
 		if (this.getDocType() === 'spreadsheet') {
 			this._docLayer.goToCellViewCursor(id);
-		} else if (this.getDocType() === 'text' || this.getDocType() === 'presentation') {
+		} else if (this.getDocType() === 'text') {
 			this._docLayer.goToViewCursor(id);
+		} else if (this.getDocType() === 'presentation' || this.getDocType() === 'drawing') {
+			this._docLayer.goToOtherUserView(id);
 		}
 	},
 

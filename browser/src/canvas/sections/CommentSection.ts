@@ -58,6 +58,10 @@ export class Comment extends CanvasSectionObject {
 	cachedIsEdit: boolean = false;
 	hidden: boolean | null = null;
 
+	containerPosX: number = 0;
+	containerPosY: number = 0;
+	canvasContainerBounds: DOMRect = new DOMRect();
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public static makeName(data: any): string {
 		return data.id === 'new' ? 'new comment' : 'comment ' + data.id;
@@ -112,6 +116,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container = null;
 		this.sectionProperties.author = null;
 		this.sectionProperties.resolvedTextElement = null;
+		this.sectionProperties.removedTextElement = null;
 		this.sectionProperties.authorAvatarImg = null;
 		this.sectionProperties.authorAvatartdImg = null;
 		this.sectionProperties.contentAuthor = null;
@@ -234,12 +239,14 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.contentNode = window.L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
+		this.sectionProperties.contentNode.setAttribute('tabindex', '-1');
 
 		const commentFooter = window.L.DomUtil.create('div', 'cool-annotation-footer', this.sectionProperties.wrapper);
 		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', commentFooter);
 		const resolvedEl = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', commentFooter);
 		this.sectionProperties.resolvedTextElement = resolvedEl;
 		this.updateResolvedField(this.sectionProperties.data.resolved);
+
 
 		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
@@ -265,7 +272,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.doPendingInitializationInView();
 
-		if (!(<any>window).mode.isMobile())
+		if (!(<any>window).mode.isSmallScreenDevice())
 			document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
@@ -275,7 +282,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
 		window.L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
 
-		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
+		var mobileClass = (<any>window).mode.isSmallScreenDevice() ? ' wizard-comment-box': '';
 
 		if (this.sectionProperties.data.trackchange) {
 			this.sectionProperties.wrapper = window.L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
@@ -306,7 +313,10 @@ export class Comment extends CanvasSectionObject {
 		var imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 		imgAuthor.setAttribute('alt', this.sectionProperties.data.author);
 		var viewId = this.map.getViewId(this.sectionProperties.data.author);
-		app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
+		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl)
+			imgAuthor.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+		else
+			app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
@@ -326,6 +336,7 @@ export class Comment extends CanvasSectionObject {
 		edit.id = 'comment-annotation-menu-edit-' + this.sectionProperties.data.id;
 		edit.tabIndex = 0;
 		edit.onclick = this.onEditComment.bind(this);
+		edit.onkeypress = this.editOnKeyPress.bind(this);
 		edit.dataset.title = Comment.editCommentLabel;
 		edit.setAttribute('aria-label', Comment.editCommentLabel);
 
@@ -336,7 +347,73 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.onkeypress = this.menuOnKeyPress.bind(this);
 		this.sectionProperties.menu.dataset.title = Comment.openMenuLabel;
 		this.sectionProperties.menu.setAttribute('aria-label', Comment.openMenuLabel);
-		this.sectionProperties.menu.annotation = this;
+	}
+
+	public setContainerPos(forceUpdate: boolean, canvasContainerBounds?: DOMRect, left?: number, top?: number): void {
+		if ((<any>window).mode.isSmallScreenDevice()) {
+			return;
+		}
+
+		if (canvasContainerBounds === undefined) {
+			canvasContainerBounds = this.canvasContainerBounds;
+		}
+
+		if (left === undefined) {
+			left = this.containerPosX;
+		}
+
+		if (top === undefined) {
+			top = this.containerPosY;
+		}
+
+		if (this.containerPosX === left
+				&& this.containerPosY === top
+				&& this.canvasContainerBounds.left === canvasContainerBounds.left
+				&& this.canvasContainerBounds.right === canvasContainerBounds.right
+				&& this.canvasContainerBounds.top === canvasContainerBounds.top
+				&& this.canvasContainerBounds.bottom === canvasContainerBounds.bottom
+				&& !forceUpdate
+		) {
+			return;
+		}
+
+		this.containerPosX = left;
+		this.containerPosY = top;
+		this.canvasContainerBounds = canvasContainerBounds;
+
+		left += canvasContainerBounds.left;
+		top += canvasContainerBounds.top;
+
+		if (this.isSelected() || this.isEdit()) {
+			if (left < canvasContainerBounds.left) {
+				left = canvasContainerBounds.left;
+			}
+
+			if (top < canvasContainerBounds.top) {
+				top = canvasContainerBounds.top;
+			}
+
+			const width = this.getCommentWidth() / app.dpiScale;
+			if (left + width > canvasContainerBounds.right) {
+				left = canvasContainerBounds.right - width;
+			}
+
+			const height = this.getCommentHeight();
+			if (top + height > canvasContainerBounds.bottom) {
+				top = canvasContainerBounds.bottom - height;
+			}
+		}
+
+		if (this.isSelected()) {
+			this.sectionProperties.container.style.zIndex = 14;
+		} else if (this.isEdit()) {
+			this.sectionProperties.container.style.zIndex = 13;
+		} else {
+			this.sectionProperties.container.style.zIndex = ''; // Default for .cool-annotation is 12
+		}
+
+		this.sectionProperties.container.style.left = Math.round(left) + 'px';
+		this.sectionProperties.container.style.top = Math.round(top) + 'px';
 	}
 
 	private createReplyHint (commentType: HTMLElement): void {
@@ -354,11 +431,11 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public getContainerPosX(): number {
-		return parseInt(this.sectionProperties.container.style.left.replace('px', ''));
+		return this.containerPosX;
 	}
 
 	public getContainerPosY(): number {
-		return parseInt(this.sectionProperties.container.style.top.replace('px', ''));
+		return this.containerPosY;
 	}
 
 	public updateChildLines (): void {
@@ -451,6 +528,22 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
+	public updateRemovedField (): void {
+		var isDeleted = this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED;
+		if (isDeleted && !this.sectionProperties.removedTextElement) {
+			var commentFooter = this.sectionProperties.contentDate.parentNode;
+			this.sectionProperties.removedTextElement = window.L.DomUtil.create('div', 'cool-annotation-content-removed', commentFooter);
+		}
+		if (this.sectionProperties.removedTextElement) {
+			this.sectionProperties.removedTextElement.innerText = isDeleted ? _('Removed') : '';
+		}
+		if (isDeleted) {
+			this.sectionProperties.resolvedTextElement.innerText = '';
+		} else {
+			this.updateResolvedField(this.sectionProperties.data.resolved);
+		}
+	}
+
 	private isNewPara(): boolean {
 		const selection = window.getSelection();
 		if (!selection.rangeCount) return;
@@ -524,7 +617,11 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
-		if (this.sectionProperties.data.avatar) {
+		this.updateRemovedField();
+		if (this.map['wopi'] && this.map['wopi'].CommentAvatarUrl) {
+			this.sectionProperties.authorAvatarImg.setAttribute('src', this.map['wopi'].CommentAvatarUrl);
+		}
+		else if (this.sectionProperties.data.avatar) {
 			this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
 		}
 		else {
@@ -783,6 +880,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.collapsedInfoNode.style.visibility = '';
 		this.cachedIsEdit = false;
+		this.setContainerPos(true);
 	}
 
 	private showCalc() {
@@ -793,7 +891,7 @@ export class Comment extends CanvasSectionObject {
 		this.cachedIsEdit = false;
 
 		this.positionCalcComment();
-		if (!(<any>window).mode.isMobile()) {
+		if (!(<any>window).mode.isSmallScreenDevice()) {
 			this.sectionProperties.commentListSection.select(this);
 		}
 		this.sectionProperties.container.style.visibility = '';
@@ -805,7 +903,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public positionCalcComment(): void {
-		if (!(<any>window).mode.isMobile()) {
+		if (!(<any>window).mode.isSmallScreenDevice()) {
 			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + this.calcOptimumSizeForCalc()[0] - 3;
 
 			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
@@ -820,6 +918,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeReply.style.display = 'none';
 			this.sectionProperties.contentNode.style.display = '';
 			this.cachedIsEdit = false;
+			this.setContainerPos(true);
 			if (this.isSelected() || !this.isCollapsed) {
 				this.sectionProperties.container.style.visibility = '';
 			}
@@ -839,6 +938,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED) {
 			this.sectionProperties.container.classList.add(layoutClass);
 		}
+		this.updateRemovedField();
 	}
 
 	public show(): void {
@@ -849,7 +949,7 @@ export class Comment extends CanvasSectionObject {
 		this.showMarker();
 
 		// On mobile, container shouldn't be 'document-container', but it is 'document-container' on initialization. So we hide the comment until comment wizard is opened.
-		if ((<any>window).mode.isMobile() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
+		if ((<any>window).mode.isSmallScreenDevice() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
 			this.sectionProperties.container.style.visibility = 'hidden';
 
 		if (cool.CommentSection.commentWasAutoAdded)
@@ -876,6 +976,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.showSelectedCoordinate = false;
 		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.cachedIsEdit = false;
+		this.setContainerPos(true);
 		this.hidden = true;
 	}
 
@@ -902,6 +1003,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeModify.style.display = 'none';
 			this.sectionProperties.nodeReply.style.display = 'none';
 			this.cachedIsEdit = false;
+			this.setContainerPos(true);
 		}
 		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.hidden = true;
@@ -943,7 +1045,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnMouseClick (e: any): void {
-		$(this.sectionProperties.menu).contextMenu();
+		this.openContextMenu();
 		window.L.DomEvent.stopPropagation(e);
 	}
 
@@ -952,17 +1054,142 @@ export class Comment extends CanvasSectionObject {
 		window.L.DomEvent.stopPropagation(e);
 	}
 
+	private editOnKeyPress (e: any): void {
+		if (e.code === 'Space' || e.code === 'Enter')
+		{
+			this.onEditComment(e);
+			window.L.DomEvent.stopPropagation(e);
+		}
+	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
 		if (e.code === 'Space' || e.code === 'Enter')
-			$(this.sectionProperties.menu).contextMenu();
+			this.openContextMenu();
 		window.L.DomEvent.stopPropagation(e);
+	}
+
+	private openContextMenu (): void {
+		const listSection = this.sectionProperties.commentListSection;
+		const data = this.sectionProperties.data;
+		const docLayer = app.map._docLayer;
+		const entries: Array<any> = [];
+		let pos = 0;
+
+		if (data.trackchange) {
+			entries.push({ text: _('Comment'), type: 'action', id: 'modify', pos: String(pos++) });
+		} else {
+			const blockChangeFromDifferentAuthor = this.map.isReadOnlyMode()
+				&& docLayer._docType === 'text'
+				&& this.map.getViewName(docLayer._viewId) !== data.author;
+
+			if (!blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Modify'), type: 'action', id: 'modify', pos: String(pos++) });
+
+			if (docLayer._docType === 'text')
+				entries.push({ text: _('Reply'), type: 'action', id: 'reply', pos: String(pos++) });
+
+			if (!blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Remove'), type: 'action', id: 'remove', pos: String(pos++) });
+
+			if (docLayer._docType === 'text' && this.isRootComment() && !blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Remove Thread'), type: 'action', id: 'removeThread', pos: String(pos++) });
+
+			if (docLayer._docType === 'text')
+				entries.push({
+					text: data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
+					type: 'action', id: 'resolve', pos: String(pos++),
+				});
+
+			if (docLayer._docType === 'text' && this.isRootComment())
+				entries.push({
+					text: listSection.isThreadResolved(this) ? _('Unresolve Thread') : _('Resolve Thread'),
+					type: 'action', id: 'resolveThread', pos: String(pos++),
+				});
+
+			if (docLayer._docType === 'text' && !this.isRootComment() && !blockChangeFromDifferentAuthor)
+				entries.push({ text: _('Promote to top comment'), type: 'action', id: 'promote', pos: String(pos++) });
+
+			if (docLayer._docType === 'text' && !window.mode.isSmallScreenDevice()) {
+				const isShownBig = listSection.isShownBig(this);
+				entries.push({
+					text: isShownBig ? _('Show on the side') : _('Open in full view'),
+					type: 'action', id: 'showBigger', pos: String(pos++),
+				});
+			}
+
+			if ((docLayer._docType === 'text' || docLayer._docType === 'spreadsheet')
+				&& !window.mode.isSmallScreenDevice())
+				entries.push({ text: _('Show in navigator'), type: 'action', id: 'showInNavigator', pos: String(pos++) });
+		}
+
+		if (entries.length === 0)
+			return;
+
+		const menuEl = this.sectionProperties.menu;
+		menuEl._onDropDown = function (open: boolean) {
+			this.sectionProperties.contextMenu = open;
+		}.bind(this);
+
+		if (window.mode.isSmallScreenDevice()) {
+			const menu: any[] = [];
+			entries.forEach((entry: any) => {
+				menu.push({
+					name: entry.text,
+					command: entry.text,
+					callback: () => {
+						this.handleMenuAction(entry.id);
+						if (entry.id !== 'reply' && entry.id !== 'modify')
+							app.map.fire('mobilewizardback');
+					},
+				});
+			});
+			const menuData =
+				window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(
+					menu,
+					true,
+					'',
+				);
+			app.map.fire('mobilewizard', { data: menuData });
+			return;
+		}
+
+		const callback = function (_objectType: string, eventType: string, _object: any, _data: any, entry: any) {
+			if (eventType !== 'selected')
+				return false;
+			this.handleMenuAction(entry?.id);
+			JSDialog.CloseAllDropdowns();
+			return true;
+		}.bind(this);
+
+		JSDialog.OpenDropdown(
+			'comment-menu-' + data.id,
+			menuEl,
+			entries,
+			callback,
+			'',
+			false,
+		);
+	}
+
+	private handleMenuAction (id: string): void {
+		const listSection = this.sectionProperties.commentListSection;
+		switch (id) {
+		case 'modify': listSection.modify(this); break;
+		case 'reply': listSection.reply(this); break;
+		case 'remove': listSection.remove(this.sectionProperties.data.id); break;
+		case 'removeThread': listSection.removeThread(this.sectionProperties.data.id); break;
+		case 'resolve': listSection.resolve(this); break;
+		case 'resolveThread': listSection.resolveThread(this); break;
+		case 'promote': listSection.promote(this); break;
+		case 'showBigger': listSection.toggleShowBigger(this); break;
+		case 'showInNavigator': listSection.showInNavigator(this); break;
+		}
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onMouseClick (e: any): void {
-		if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
+		if (((<any>window).mode.isSmallScreenDevice() || (<any>window).mode.isTablet())
 			&& this.map.getDocType() == 'spreadsheet'
 			&& !this.map.uiManager.mobileWizard.isOpen()) {
 			this.hide();
@@ -1009,7 +1236,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onReplyClick (e: any): void {
 		window.L.DomEvent.stopPropagation(e);
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
@@ -1195,8 +1422,12 @@ export class Comment extends CanvasSectionObject {
 		}
 		else {
 			this.sectionProperties.nodeReply.style.display = 'none';
-			if (!this.sectionProperties.nodeModify || this.sectionProperties.nodeModify.style.display === 'none')
+			if (!this.sectionProperties.nodeModify || this.sectionProperties.nodeModify.style.display === 'none') {
 				this.cachedIsEdit = false;
+				if (app.map._docLayer._docType !== 'spreadsheet') {
+					this.setContainerPos(true);
+				}
+			}
 		}
 	}
 
@@ -1252,6 +1483,9 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = '';
 		this.cachedIsEdit = true;
+		if (app.map._docLayer._docType !== 'spreadsheet') {
+			this.setContainerPos(true);
+		}
 		return this;
 	}
 
@@ -1263,6 +1497,9 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container.style.visibility = '';
 		this.sectionProperties.contentNode.style.display = 'none';
 		this.cachedIsEdit = true;
+		if (app.map._docLayer._docType !== 'spreadsheet') {
+			this.setContainerPos(true);
+		}
 		return this;
 	}
 
@@ -1369,8 +1606,10 @@ export class Comment extends CanvasSectionObject {
 			if (this.sectionProperties.data.rectangles[0].containsPoint(app.calc.cellCursorRectangle.center))
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = this;
 			else if (this.isSelected()) {
-				this.hide();
-				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
+				if (!this.sectionProperties.commentListSection.sectionProperties.doNotHideCommentTimer) {
+					this.hide();
+					this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
+				}
 			}
 			else if (this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment == this)
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
@@ -1477,7 +1716,7 @@ export class Comment extends CanvasSectionObject {
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
-		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isSmallScreenDevice() || (<any>window).mode.isTablet()) {
 			if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing')
 				app.map._docLayer._openCommentWizard(this);
 			this.onMouseEnter();
@@ -1814,7 +2053,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private getActiveEditorElement(): HTMLElement | null {
-		if ((<any>window).mode.isMobile()) {
+		if ((<any>window).mode.isSmallScreenDevice()) {
 			const commentSection = app.sectionContainer.getSectionWithName(
 				app.CSections.CommentList.name,
 			);

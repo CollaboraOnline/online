@@ -64,9 +64,9 @@ SlideLayerCacheMap::find(const std::string& key) const
 }
 
 std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>>::const_iterator
-SlideLayerCacheMap::end()
+SlideLayerCacheMap::end() const
 {
     return cache_map.end();
 }
 
-std::size_t SlideLayerCacheMap::size() { return cache_map.size(); }
+std::size_t SlideLayerCacheMap::size() const { return cache_map.size(); }

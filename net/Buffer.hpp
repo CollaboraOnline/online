@@ -95,6 +95,27 @@ public:
         _buffer.insert(_buffer.end(), data, data + len);
     }
 
+    /// Grow the buffer by len bytes and return a pointer to the
+    /// first new byte. Used to write directly into the buffer.
+    /// After writing, call commit with the actual bytes written,
+    /// which must be <= len.
+    char* provision(std::size_t len)
+    {
+        assert(len > 0 && "Expected a minimum length of 1 to provision in the buffer");
+        const auto oldSize = _buffer.size();
+        _buffer.resize(oldSize + len);
+        return _buffer.data() + oldSize;
+    }
+
+    /// Commit actual bytes written after provision. If actual < provisioned,
+    /// the buffer is trimmed to discard the unused tail.
+    void commit(std::size_t provisioned, std::size_t actual)
+    {
+        assert(actual <= provisioned && "Cannot commit more than provisioned");
+        if (actual < provisioned)
+            _buffer.resize(_buffer.size() - (provisioned - actual));
+    }
+
     void append(const std::string_view s) { append(s.data(), s.size()); }
 
     /// Append a literal string, with compile-time size capturing.

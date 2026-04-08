@@ -172,7 +172,7 @@ class AboutDialog {
 		this.appendSpanAndLink(
 			elements.lokitVersion,
 			' git hash:\xA0',
-			`https://gerrit.libreoffice.org/core/+log/${info.lokitHash}`,
+			`https://gerrit.collaboraoffice.com/plugins/gitiles/core/+log/${info.lokitHash}`,
 			info.lokitHash.substring(0, 10),
 		);
 
@@ -372,7 +372,7 @@ class AboutDialog {
 		}
 
 		const addLine = (label: string, value: string) => {
-			if (value.trim()) {
+			if (value && value.trim()) {
 				text += `${label}: ${value.trim()}\n`;
 			}
 		};
@@ -391,7 +391,7 @@ class AboutDialog {
 
 		text = text.replace(/\u00A0/g, ' ');
 
-		if ((window as any).ThisIsTheQtApp || (window as any).ThisIsTheMacOSApp) {
+		if (window.mode.isCODesktop()) {
 			(window as any).postMobileMessage('TEXTCLIPBOARD ' + text);
 			this.contentHasBeenCopiedShowSnackbar();
 		} else if (navigator.clipboard && window.isSecureContext) {

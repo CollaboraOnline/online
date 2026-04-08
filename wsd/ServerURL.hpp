@@ -53,7 +53,7 @@ public:
 
         // A well formed ProxyPrefix will override it.
         const std::string& url = proxyPrefix;
-        if (url.size() <= 0)
+        if (url.empty())
             return;
 
         std::size_t pos = url.find("://");

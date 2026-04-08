@@ -221,6 +221,13 @@ class CanvasSectionObject {
 			(point[1] >= this.myTopLeft[1] && point[1] <= this.myTopLeft[1] + this.size[1]))
 	}
 
+	goToSection() {
+		const point = new cool.SimplePoint(this.position[0] * app.pixelsToTwips, this.position[1] * app.pixelsToTwips);
+		var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
+		if (!isNewCursorVisible)
+			app.map._docLayer.scrollToPos(point);
+	}
+
 	// All below functions should be included in their respective section definitions (or other classes), not here.
 	isCalcRTL(): boolean { return; }
 	setViewResolved(on: boolean): void { return; }

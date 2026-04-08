@@ -139,6 +139,13 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: false, combination: 'I', de: null }
 			},
 			{
+				'id': 'Chart-tab-label',
+				'text': _('Chart'),
+				'name': 'Chart',
+				'context': 'Chart|Series|ErrorBar|Axis|Grid|ChartElements|Trendline|ChartTitle|ChartLegend|ChartLabel',
+				'accessibility': { focusBack: false, combination: 'CH', de: null }
+			},
+			{
 				'id': 'MasterPage-tab-label',
 				'text': _('Master'),
 				'name': 'MasterPage',
@@ -174,6 +181,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			this.getTableTab(),
 			this.getShapeTab(),
 			this.getPictureTab(),
+			this.getChartTab(),
 			this.getMasterTab(),
 			this.getViewTab(),
 			this.getHelpTab()
@@ -405,7 +413,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'type': 'bigtoolitem',
 						'text': _('Signature'),
 						'command': '.uno:Signature',
-						'accessibility': { focusBack: true, combination: 'SN' }
+						'accessibility': { focusBack: true, combination: 'GN' }
 					}
 				]
 			});
@@ -716,7 +724,15 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck',
 				'accessibility': { focusBack: true, combination: 'SD', de: null }
-			}
+			},
+			!this.map['wopi'].DisableAISettings ? {
+				'id': 'view-ai-sidebar',
+				'type': 'bigcustomtoolitem',
+				'text': _('AI Assistant'),
+				'icon': 'lc_ai_sidebar.svg',
+				'command': 'aichat',
+				'accessibility': { focusBack: true, combination: 'AI', de: null }
+			} : {}
 		];
 
 		return this.getTabPage('View', content);
@@ -776,7 +792,11 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 										'id': 'home-format-paint-brush',
 										'type': 'toolitem',
 										'text': _UNO('.uno:FormatPaintbrush'),
+										'tooltip': _('Clone Formatting (double click to keep active)'),
+										'activeTooltip': _('Clone Formatting is active (click again or press Esc to exit)'),
 										'command': '.uno:FormatPaintbrush',
+										'doubleClickCommand': '.uno:FormatPaintbrush',
+										'doubleClickCommandArgs': { PersistentCopy: { type: 'boolean', value: true } },
 										'accessibility': { focusBack: true, combination: 'FP', de: null }
 									}
 								]
@@ -811,7 +831,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'type': 'overflowgroup',
 				'id': 'home-slide-layout',
 				'name':_('Slide Layout'),
-				'accessibility': { focusBack: true, combination: 'CS', de: null },
+				'accessibility': { focusBack: true, combination: 'NS', de: null },
 				'more': {
 					'command':'.uno:PageSetup',
 					'accessibility': { focusBack: true, combination: 'ML', de: null }
@@ -823,7 +843,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'applyCallback': '.uno:InsertPage',
 						'text': _('New'),
 						'command': '.uno:InsertPage',
-						'accessibility': { focusBack: true, combination: 'CS', de: null }
+						'accessibility': { focusBack: true, combination: 'NS', de: null }
 					},
 					{
 						'type': 'container',
@@ -835,7 +855,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'text': _('Change Layout'),
 								'icon': 'lc_changelayout.svg',
 								'command': '.uno:AssignLayout',
-								'accessibility': { focusBack: true, combination: 'CL', de: null }
+								'accessibility': { focusBack: true, combination: 'GL', de: null }
 							},
 							{
 								'id': 'home-assign-layout',
@@ -870,6 +890,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 									{
 										'id': 'fontnamecombobox',
 										'type': 'combobox',
+										'label': _('Font'),
 										'text': 'Carlito',
 										'entries': [
 											'Carlito'
@@ -884,6 +905,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 									{
 										'id': 'fontsizecombobox',
 										'type': 'combobox',
+										'label': _('Size'),
 										'text': '12 pt',
 										'entries': [
 											'12 pt'
@@ -1728,7 +1750,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: true, combination: 'IX', de: null },
 				'children' : [
 					{
-						'id': 'insert-text',
+						'id': 'insert-insert-text',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Text'),
 						'command': '.uno:Text',
@@ -1817,6 +1839,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					{
 						'id': 'masterpagenb',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'MS', de: null },
 						'children': [
 							{
 								'id': 'masterpagecurrent_label',
@@ -1851,6 +1874,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					{
 						'id': 'iconview_theme_colors-iconview-list',
 						'type': 'iconviewlist',
+						'accessibility': { focusBack: false, combination: 'TC', de: null },
 						'children': [
 							{
 								'id': 'iconview_theme_colors', // has to match core id
@@ -1995,9 +2019,13 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 							{
 								'id': 'review-spell-online',
 								'type': 'toolitem',
-								'text': _UNO('.uno:SpellOnline'),
+								'text': _('Auto Spell Check'),
 								'command': '.uno:SpellOnline',
-								'accessibility': { focusBack: true, combination: 'SO', de: null }
+								'accessibility': { focusBack: true, combination: 'SO', de: null },
+								'stateIcons': {
+									on: 'autospellcheck-on',
+									off: 'autospellcheck-off',
+								}
 							}
 						]
 					},

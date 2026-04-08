@@ -72,8 +72,8 @@ public:
     {
         os << "\tfd: " << getFD()
            << "\n\tqueue: " << _chunks.size() << '\n';
-        auto now = std::chrono::steady_clock::now();
-        for (auto &chunk : _chunks)
+        const auto now = std::chrono::steady_clock::now();
+        for (const auto &chunk : _chunks)
         {
             os << "\t\tin: "
                << std::chrono::duration_cast<std::chrono::milliseconds>(chunk->getSendTime() - now)

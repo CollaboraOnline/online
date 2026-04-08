@@ -100,7 +100,7 @@ export class ColumnHeader extends Header {
 		const isRTL = this.isCalcRTL();
 		// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
 		let resizeAreaStart = isRTL ? Math.min(start + this.borderResizeHandle * app.dpiScale, end) : Math.max(start, end - this.borderResizeHandle * app.dpiScale);
-		if (entryIsCurrent || (window as any).mode.isMobile()) {
+		if (entryIsCurrent || (window as any).mode.isSmallScreenDevice()) {
 			resizeAreaStart = isRTL ? start + this.resizeHandleSize : end - this.resizeHandleSize;
 		}
 		return isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);

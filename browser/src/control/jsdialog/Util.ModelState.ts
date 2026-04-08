@@ -144,6 +144,8 @@ class JSDialogModelState {
 
 			if (data.data.action_type === 'show') found.visible = true;
 			else if (data.data.action_type === 'hide') found.visible = false;
+			else if (data.data.action_type === 'rename' && data.data.new_id)
+				found.id = data.data.new_id;
 		}
 	}
 

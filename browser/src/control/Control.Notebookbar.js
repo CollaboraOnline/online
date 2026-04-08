@@ -104,7 +104,9 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			docLogo.setAttribute('id', 'document-logo');
 			docLogo.setAttribute('type', 'action');
 			docLogo.setAttribute('target', '_blank');
+			docLogo.setAttribute('aria-label', _('file type icon'));
 			docLogo.setAttribute('tabIndex', 0);
+			docLogo.setAttribute('aria-label', _('file type icon'));
 
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);
@@ -638,7 +640,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 				'command': 'shareas',
 				'inlineLabel': true,
 				'accessibility': { focusBack: false, combination: 'ZS', de: null },
-				'tabIndex': 0,
 			});
 		}
 

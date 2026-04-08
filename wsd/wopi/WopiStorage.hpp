@@ -11,17 +11,16 @@
 
 #pragma once
 
-#include <CharacterConverter.hpp>
-#include <COOLWSD.hpp>
-#include <HttpRequest.hpp>
-#include <common/Log.hpp>
-#include <Storage.hpp>
 #include <common/Authorization.hpp>
+#include <common/CharacterConverter.hpp>
+#include <common/Log.hpp>
 #include <net/HttpRequest.hpp>
+#include <net/HttpRequest.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/Storage.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
-#include <Poco/Util/Application.h>
 
 #include <chrono>
 #include <memory>
@@ -59,8 +58,8 @@ public:
         const std::string& getTemplateSource() const { return _templateSource; }
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
         const std::string& getFileUrl() const { return _fileUrl; }
-        const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
-        const std::string& getHideUserList() { return _hideUserList; }
+        const std::string& getPostMessageOrigin() const { return _postMessageOrigin; }
+        const std::string& getHideUserList() const { return _hideUserList; }
         const std::string& getPresentationLeader() const { return _presentationLeader; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
@@ -83,6 +82,7 @@ public:
         bool getDisableInsertLocalImage() const { return _disableInsertLocalImage; }
         bool getEnableRemoteLinkPicker() const { return _enableRemoteLinkPicker; }
         bool getEnableRemoteAIContent() const { return _enableRemoteAIContent; }
+        bool getDisableAISettings() const { return _disableAISettings; }
         bool getEnableShare() const { return _enableShare; }
         bool getSupportsRename() const { return _supportsRename; }
         bool getSupportsLocks() const { return _supportsLocks; }
@@ -174,6 +174,8 @@ public:
         bool _enableRemoteLinkPicker = false;
         /// If set to true, users can insert remote AI-generated content
         bool _enableRemoteAIContent = false;
+        /// If set to true, AI settings UI and AI features are disabled for the user
+        bool _disableAISettings = false;
         /// If set to true, users can access the file share functionality
         bool _enableShare = false;
         /// If WOPI host supports locking
@@ -182,7 +184,7 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
-        /// If user is limited to only writing/modifiyng comments
+        /// If user is limited to only writing/modifying comments
         bool _userCanOnlyComment = false;
         /// If user is limited to only managing redlines (accept/reject)
         bool _userCanOnlyManageRedlines = false;
@@ -283,7 +285,7 @@ private:
     }
 
 private:
-    /// A URl provided by the WOPI host to use for GetFile.
+    /// A URL provided by the WOPI host to use for GetFile.
     std::string _fileUrl;
 
     // Time spend in saving the file from storage

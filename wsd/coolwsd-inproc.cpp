@@ -38,7 +38,7 @@ int createForkit(const std::string& forKitPath, const StringVector& args)
     }
 
     std::thread([argc, argv] {
-        Util::setThreadName("forkit");
+        ProcUtil::setThreadName("forkit");
         forkit_main(argc, argv);
     })
         .detach();

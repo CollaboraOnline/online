@@ -17,16 +17,16 @@
 #include <config.h>
 
 #include <common/StringVector.hpp>
+#include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
-#include <TraceEvent.hpp>
-#include <COOLWSD.hpp>
+#include <wsd/COOLWSD.hpp>
 
 void setKitInProcess() { Util::setKitInProcess(false); }
 
 int createForkit(const std::string& forKitPath, const StringVector& args)
 {
     // create forkit in a process
-    return Util::spawnProcess(forKitPath, args);
+    return ProcUtil::spawnProcess(forKitPath, args);
 };
 
 // FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a

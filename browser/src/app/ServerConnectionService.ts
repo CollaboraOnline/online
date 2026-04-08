@@ -19,6 +19,7 @@ interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
 	signatureCertificate?: string;
+	aiConfigured?: boolean;
 }
 
 class ServerConnectionService {
@@ -42,13 +43,15 @@ class ServerConnectionService {
 			return;
 		}
 
+		app.map.isAIConfigured = !!viewSetting.aiConfigured;
+
 		let zoteroPlugin = app.map.zotero;
 		const zoteroAPIKey = viewSetting.zoteroAPIKey;
 		if (
 			window.zoteroEnabled &&
 			zoteroAPIKey &&
 			!zoteroPlugin &&
-			!window.mode.isMobile()
+			!window.mode.isSmallScreenDevice()
 		) {
 			app.console.debug('ServerConnectionService: initialize Zotero plugin');
 
@@ -75,7 +78,7 @@ class ServerConnectionService {
 	public onFirstTileReceived() {
 		app.console.debug('ServerConnectionService: onFirstTileReceived');
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			// show zotero items if needed
 			const zoteroItems = [
 				'zoteroaddeditbibliography',

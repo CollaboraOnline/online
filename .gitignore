@@ -69,8 +69,10 @@ test/samples/calc-edit.ods
 test/samples/writer-large-edit.fodt
 cypress_test/test/data/presets/user/browsersetting.json
 cypress_test/test/data/presets/user/standard.dic
+test/clienttest
 test/fakesockettest
 test/unithttplib
+test/unittest
 test/*.csv
 test/data/presets/user/browsersettings.json
 jsstress
@@ -84,6 +86,8 @@ coolwsd.log
 .log
 *.lo
 *.mo
+*.tmp
+*.sw?
 
 gcov/*
 *.gcno
@@ -99,6 +103,7 @@ browser/admin/jsconfig.json
 browser/dist
 browser/compilets
 browser/typescript_js
+*.tsbuildinfo
 browser/src/app/TaskWorker.js
 
 /coolforkit
@@ -118,7 +123,6 @@ coolstress
 coolconfig
 loolconfig
 loadtest
-unittest
 clientnb
 libglobals.a
 libkitglobals.a

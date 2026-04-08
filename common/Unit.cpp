@@ -12,7 +12,7 @@
 
 #include <config.h>
 
-#include <Unit.hpp>
+#include "Unit.hpp"
 
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
@@ -25,6 +25,7 @@
 #include <Poco/Util/Application.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
+#include <atomic>
 #include <cassert>
 #include <condition_variable>
 #include <csignal>
@@ -36,7 +37,7 @@
 #include <thread>
 
 UnitBase** UnitBase::GlobalArray = nullptr;
-int UnitBase::GlobalIndex = -1;
+std::atomic_int_fast64_t UnitBase::GlobalIndex = -1;
 char* UnitBase::UnitLibPath = nullptr;
 void* UnitBase::DlHandle = nullptr;
 UnitBase::TestOptions UnitBase::GlobalTestOptions;
@@ -137,15 +138,26 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
     GlobalArray = nullptr;
     GlobalIndex = -1;
 
+    int testCount = 0;
+
     // Only in debug builds do we support tests.
 #if ENABLE_DEBUG
     if (!unitLibPath.empty())
     {
-        GlobalArray = linkAndCreateUnit(type, unitLibPath);
-        if (GlobalArray == nullptr)
+        auto tests = linkAndCreateUnit(type, unitLibPath);
+        if (tests == nullptr)
         {
             // Error is logged already.
             return false;
+        }
+
+        while (tests[testCount] != nullptr)
+            ++testCount;
+
+        GlobalArray = new UnitBase*[testCount + 2]; // + dummy + null termination.
+        for (int i = 0; tests[i] != nullptr; ++i)
+        {
+            GlobalArray[i] = tests[i];
         }
 
         // For now enable full logging
@@ -172,7 +184,7 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
                 TimeoutThread = std::thread(
                     [instance]
                     {
-                        Util::setThreadName("unit timeout");
+                        ProcUtil::setThreadName("unit timeout");
 
                         std::unique_lock<std::mutex> lock2(TimeoutThreadMutex);
                         if (TimeoutConditionVariable.wait_for(lock2,
@@ -189,32 +201,34 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
                         }
                     });
             }
-
-            return GlobalArray[GlobalIndex] != nullptr;
         }
     }
+    else
 #endif // ENABLE_DEBUG
+    {
+        // Fallback.
+        GlobalArray = new UnitBase*[1 + 1]; // Dummy + null termination.
+    }
 
-    // Fallback.
+    // Dummy instance.
     switch (type)
     {
         case UnitType::Wsd:
-            GlobalArray = new UnitBase*[2]{ new UnitWSD("UnitWSD"), nullptr };
-            GlobalIndex = 0;
+            GlobalArray[testCount] = new UnitWSD("DummyUnitWSD");
             break;
         case UnitType::Kit:
-            GlobalArray = new UnitBase*[2]{ new UnitKit("UnitKit"), nullptr };
-            GlobalIndex = 0;
+            GlobalArray[testCount] = new UnitKit("DummyUnitKit");
             break;
         case UnitType::Tool:
-            GlobalArray = new UnitBase*[2]{ new UnitTool("UnitTool"), nullptr };
-            GlobalIndex = 0;
+            GlobalArray[testCount] = new UnitTool("DummyUnitTool");
             break;
         default:
             assert(false);
             break;
     }
 
+    GlobalArray[testCount + 1] = nullptr;
+    GlobalIndex = 0;
     return GlobalArray[GlobalIndex] != nullptr;
 }
 

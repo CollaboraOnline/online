@@ -22,11 +22,10 @@
 #include <common/Syscall.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
-#include <net/Socket.hpp>
-#include <system_error>
-#include <test/WebSocketSession.hpp>
 #include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
 #include <net/Uri.hpp>
+#include <test/WebSocketSession.hpp>
 #include <test/lokassert.hpp>
 #include <test/testlog.hpp>
 #include <tools/COOLWebSocket.hpp>
@@ -44,6 +43,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <thread>
 
 #ifndef TDOC
@@ -256,8 +256,7 @@ inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket,
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
-                          const std::string_view string,
-                          const std::string_view testname = std::string_view())
+                          const std::string_view string, const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));

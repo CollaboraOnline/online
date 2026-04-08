@@ -13,7 +13,7 @@
 
 #if MOBILEAPP
 
-#include <Storage.hpp>
+#include <wsd/Storage.hpp>
 
 #ifdef IOS
 #import "CODocument.h"
@@ -23,7 +23,7 @@
 
 // On iOS at least we want to be able to have several documents open in the same app process.
 
-// It is somewhat complicated to make sure we access the same LibreOfficeKit object for the document
+// It is somewhat complicated to make sure we access the same COKit object for the document
 // in both the iOS-specific Objective-C++ code and in the mostly generic Online C++ code.
 
 // We pass around a numeric ever-increasing document identifier that gets bumped for each document
@@ -36,7 +36,7 @@
 // and opening of several documents in sequence very quickly might cause discrepancies, so it is
 // better to use a different counter to be sure. Patches to use just one counter welcome.
 
-namespace lok
+namespace kit
 {
 class Document;
 }
@@ -53,7 +53,7 @@ public:
     {
     }
 
-    lok::Document *loKitDocument;
+    kit::Document *loKitDocument;
 
     static DocumentData &allocate(unsigned docId);
     static DocumentData &get(unsigned docId);

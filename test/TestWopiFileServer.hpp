@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
 #include <wsd/RequestDetails.hpp>
@@ -351,6 +353,24 @@ void handlePresetRequest(const std::string& kind, const std::string& etagString,
         {
             LOG_WRN("preset file [" << browserSettingPath << "] doesn't exist");
         }
+
+        const std::string& viewSettingPath =
+            COOLWSD::FileServerRoot + "test/data/presets/user/viewsetting.json";
+        if (FileUtil::Stat(viewSettingPath).exists())
+        {
+            Poco::JSON::Array::Ptr viewsettingArray = new Poco::JSON::Array();
+            Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
+            std::string uri = COOLWSD::getServerURL().append(prefix + viewSettingPath);
+            Util::trim(uri);
+            configEntry->set("uri", uri);
+            configEntry->set("stamp", etagString);
+            viewsettingArray->add(configEntry);
+            configInfo->set("viewsetting", viewsettingArray);
+        }
+        else
+        {
+            LOG_WRN("preset file [" << viewSettingPath << "] doesn't exist");
+        }
     }
 
     std::ostringstream jsonStream;
@@ -421,6 +441,26 @@ void handleSettingsRequest(const Poco::Net::HTTPRequest& request, const std::str
     const Poco::Path path = requestUri.getPath();
     const std::string prefix = "/wopi/settings";
     std::string configPath = path.toString().substr(prefix.length());
+
+    // When called via fetch-settings-config, the type is passed as a query
+    // parameter and the path has no config filename suffix.  Map the type
+    // parameter to the corresponding config path so the existing handler
+    // logic works for both the direct and proxied request styles.
+    if (configPath.empty() || configPath == "/")
+    {
+        const auto params = requestUri.getQueryParameters();
+        for (const auto& param : params)
+        {
+            if (param.first == "type")
+            {
+                if (param.second == "userconfig")
+                    configPath = "/userconfig.json";
+                else if (param.second == "systemconfig")
+                    configPath = "/sharedconfig.json";
+                break;
+            }
+        }
+    }
 
     if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
     {
@@ -571,6 +611,60 @@ void handleSettingsRequest(const Poco::Net::HTTPRequest& request, const std::str
         http::Response httpResponse(http::StatusCode::OK);
         FileServerRequestHandler::hstsHeaders(httpResponse);
         httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
+        socket->send(httpResponse);
+    }
+    else if (request.getMethod() == "DELETE")
+    {
+        const Poco::URI::QueryParameters params = requestUri.getQueryParameters();
+        std::string fileId;
+        for (const auto& param : params)
+        {
+            if (param.first == "fileId")
+                fileId = param.second;
+        }
+
+        if (fileId.empty())
+        {
+            http::Response httpResponse(http::StatusCode::BadRequest);
+            socket->send(httpResponse);
+            LOG_ERR("Failed to delete the file, missing fileId parameter");
+            return;
+        }
+
+        std::vector<std::string> splitStr = Util::splitStringToVector(fileId, '/');
+        if (splitStr.size() != 4)
+        {
+            http::Response httpResponse(http::StatusCode::BadRequest);
+            socket->send(httpResponse);
+            LOG_ERR("Failed to delete the file, invalid fileId[" << fileId << ']');
+            return;
+        }
+
+        const std::string& type = splitStr[1];
+        const std::string& fileName = splitStr[3];
+
+        std::string dirPath = "test/data/presets/";
+        if (type == "userconfig")
+            dirPath.append("user");
+        else if (type == "systemconfig")
+            dirPath.append("shared");
+
+        dirPath.push_back('/');
+        dirPath.append(fileName);
+
+        Poco::File file(dirPath);
+        if (file.exists())
+        {
+            file.remove();
+            LOG_DBG("Deleted preset file [" << dirPath << ']');
+        }
+        else
+        {
+            LOG_WRN("Preset file [" << dirPath << "] doesn't exist, nothing to delete");
+        }
+
+        http::Response httpResponse(http::StatusCode::OK);
+        FileServerRequestHandler::hstsHeaders(httpResponse);
         socket->send(httpResponse);
     }
 }

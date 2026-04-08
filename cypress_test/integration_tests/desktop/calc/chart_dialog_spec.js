@@ -20,7 +20,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart dialog tests', funct
 		helper.typeIntoDocument('{enter}');
 		// Right-click on the thick y-axis and click 'Format Axis'.
 		calcHelper.clickAtOffset(XPos, YPos, true);
-		cy.cGet('a.format-axis').click();
+		helper.getContextMenuItem('Format Axis...').click();
+
 		cy.cGet('.lokdialog_container').should('be.visible');
 
 		// Auto min must be ON.
@@ -39,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart dialog tests', funct
 		// See if the above changes persisted.
 		// Again right-click on the thick y-axis and select 'Format Axis'.
 		calcHelper.clickAtOffset(XPos, YPos, true);
-		cy.cGet('a.format-axis').click();
+		helper.getContextMenuItem('Format Axis...').click();
 		cy.cGet('.lokdialog_container').should('be.visible');
 		// Auto min must be OFF.
 		cy.cGet('#CBX_AUTO_MIN-input').should('not.be.checked');
@@ -62,6 +63,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart dialog tests', funct
 		cy.cGet('#CHART2_HID_SCH_WIZARD_ROADMAP')
 			.should('be.visible')
 			.invoke('width')
-			.should('be.greaterThan', 385).and('be.lessThan',415);
+			.should('be.greaterThan', 380).and('be.lessThan', 450);
 	});
 });

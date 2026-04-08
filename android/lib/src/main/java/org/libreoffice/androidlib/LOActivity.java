@@ -864,7 +864,7 @@ public class LOActivity extends AppCompatActivity {
         // setup the COOLWSD
         ApplicationInfo applicationInfo = getApplicationInfo();
         String dataDir = applicationInfo.dataDir;
-        Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
+        Log.i(TAG, String.format("Initializing COKit, dataDir=%s\n", dataDir));
 
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
         String apkFile = getApplication().getPackageResourcePath();

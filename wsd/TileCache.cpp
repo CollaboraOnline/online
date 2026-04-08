@@ -43,6 +43,7 @@ using namespace COOLProtocol;
 TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_point& modifiedTime,
                      bool dontCache)
     : _docURL(std::move(docURL))
+    , _owner()
     , _cacheSize(0)
     , _maxCacheSize(1024 * 1024)
     , _dontCache(dontCache)
@@ -57,7 +58,7 @@ TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_p
 
 TileCache::~TileCache()
 {
-    _owner = std::thread::id();
+    _owner = ProcUtil::ThreadId();
 #ifndef BUILDING_TESTS
     LOG_INF("~TileCache dtor for uri [" << COOLWSD::anonymizeUrl(_docURL) << "].");
 #endif
@@ -119,12 +120,12 @@ size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<Client
                                                     const std::chrono::steady_clock::time_point now)
 {
     size_t count = 0;
-    for (auto& it : _tilesBeingRendered)
+    for (const auto& it : _tilesBeingRendered)
     {
         if (it.second->isStale(now))
             continue;
 
-        for (auto& s : it.second->getSubscribers())
+        for (const auto& s : it.second->getSubscribers())
         {
             if (s.lock() == session)
                 ++count;
@@ -551,12 +552,14 @@ void TileCache::assertCacheSize()
 {
     if constexpr (Util::isDebugEnabled())
     {
+#if !defined NDEBUG
         size_t recalcSize = 0;
         for (const auto& it : _cache)
         {
             recalcSize += itemCacheSize(it.second);
         }
         assert(recalcSize == _cacheSize);
+#endif
     }
 }
 

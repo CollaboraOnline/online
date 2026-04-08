@@ -115,7 +115,7 @@ class StatusBar extends JSDialog.Toolbar {
 		if (e.count === 0) {
 			this.enableItem('searchprev', false);
 			this.enableItem('searchnext', false);
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				this.enableItem('cancelsearch', false);
 			} else {
 				this.showItem('cancelsearch', false);
@@ -300,7 +300,7 @@ class StatusBar extends JSDialog.Toolbar {
 			this.showItem('overview', false);
 			this.showItem('overviewbreak', false);
 
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('statusdocpos-container', true);
 				this.showItem('rowcolselcount-container', true);
 				this.showItem('insertmode-container', true);
@@ -319,7 +319,7 @@ class StatusBar extends JSDialog.Toolbar {
 			this.showItem('overview', false);
 			this.showItem('overviewbreak', false);
 
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('statepagenumber-container', true);
 				this.showItem('statewordcount-container', true);
 				this.showItem('insertmode-container', true);
@@ -337,7 +337,7 @@ class StatusBar extends JSDialog.Toolbar {
 			break;
 
 		case 'presentation':
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('slidestatus-container', true);
 				this.showItem('languagestatus', !app.map.isReadOnlyMode());
 				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
@@ -346,7 +346,7 @@ class StatusBar extends JSDialog.Toolbar {
 			}
 			break;
 		case 'drawing':
-			if (!window.mode.isMobile()) {
+			if (!window.mode.isSmallScreenDevice()) {
 				this.showItem('pagestatus-container', true);
 				this.showItem('languagestatus', !app.map.isReadOnlyMode());
 				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
@@ -446,7 +446,7 @@ class StatusBar extends JSDialog.Toolbar {
 
 		JSDialog.RefreshScrollables();
 
-		if (!window.mode.isMobile()) {
+		if (!window.mode.isSmallScreenDevice()) {
 			this.showItem('languagestatus', !isReadOnlyMode);
 			this.showItem('languagestatusbreak', !isReadOnlyMode);
 			if (this.map.getDocType() === 'spreadsheet') {

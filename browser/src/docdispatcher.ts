@@ -361,6 +361,35 @@ class Dispatcher {
 		};
 	}
 
+	private addAICommands() {
+		this.actionsMap['aichat'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			sidebar.toggle();
+		};
+
+		this.actionsMap['helpfixformulaerror'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			if (!sidebar.isVisible()) sidebar.show();
+			sidebar.diagnoseFormulaError();
+		};
+	}
+
 	private addExportCommands() {
 		this.actionsMap['exportpdf'] = function () {
 			app.map.sendUnoCommand('.uno:ExportToPDF', {
@@ -392,7 +421,7 @@ class Dispatcher {
 
 	private addCalcCommands() {
 		this.actionsMap['acceptformula'] = function () {
-			if (window.mode.isMobile()) {
+			if (window.mode.isSmallScreenDevice()) {
 				app.map.focus();
 				app.map._docLayer.postKeyboardEvent(
 					'input',
@@ -423,7 +452,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['functiondialog'] = function () {
-			if (window.mode.isMobile() && app.map._functionWizardData) {
+			if (window.mode.isSmallScreenDevice() && app.map._functionWizardData) {
 				app.map._docLayer._closeMobileWizard();
 				app.map._docLayer._openMobileWizard(app.map._functionWizardData);
 				app.map.formulabarSetDirty();
@@ -874,6 +903,7 @@ class Dispatcher {
 
 		this.addGeneralCommands();
 		this.addExportCommands();
+		this.addAICommands();
 
 		if (docType === 'text') {
 			this.addWriterCommands();
@@ -884,7 +914,7 @@ class Dispatcher {
 			this.addImpressAndDrawCommands();
 		}
 
-		if (window.mode.isMobile()) this.addMobileCommands();
+		if (window.mode.isSmallScreenDevice()) this.addMobileCommands();
 	}
 
 	public dispatch(action: string, data?: any) {

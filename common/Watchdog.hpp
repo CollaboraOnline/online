@@ -11,11 +11,16 @@
 
 #pragma once
 
-#include <thread>
+#include <common/ProcUtil.hpp>
+#include <common/Util.hpp>
+
+#include <cassert>
 #include <chrono>
-#include <mutex>
-#include <csignal>
 #include <condition_variable>
+#include <csignal>
+#include <mutex>
+#include <thread>
+#include <vector>
 
 extern "C"
 {
@@ -90,7 +95,7 @@ public:
         {
             {
                 uint64_t msSinceEpoc = getTimestamp();
-                for (auto d : _times)
+                for (const auto& d : _times)
                 {
                     uint64_t snapshot = *d.first; // one atomic read
                     if (snapshot == 0) // sleeping / polling
@@ -99,7 +104,7 @@ public:
                     if (msSinceEpoc - snapshot > MsToTrigger)
                     {
                         // Signal the poorly behaved thread to profile it
-                        Util::killThreadById(*d.second, SIGUSR2);
+                        ProcUtil::killThreadById(*d.second, SIGUSR2);
                         break;
                     }
                 }

@@ -16,12 +16,13 @@
 
 #pragma once
 
-#include <COOLWSD.hpp>
-#include <ConfigUtil.hpp>
-#include <FileUtil.hpp>
-#include <HttpRequest.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <wsd/COOLWSD.hpp>
+
 #include <Poco/Net/PartHandler.h>
-#include <Socket.hpp>
 
 #include <string>
 #include <unordered_map>
@@ -110,13 +111,13 @@ public:
 
         bool isValid() const { return !_wopiSrc.empty() && !_accessToken.empty(); }
 
-        const std::string wopiSrc() const { return _wopiSrc; }
-        const std::string accessToken() const { return _accessToken; }
-        const std::string noAuthHeader() const { return _noAuthHeader; }
-        const std::string permission() const { return _permission; }
+        const std::string& wopiSrc() const { return _wopiSrc; }
+        const std::string& accessToken() const { return _accessToken; }
+        const std::string& noAuthHeader() const { return _noAuthHeader; }
+        const std::string& permission() const { return _permission; }
         // only exists in debugging mode, so built-in wopi debuging server
         // can support multiple 'shared' configs depending on configid=something
-        const std::string wopiConfigId() const { return _wopiConfigId; }
+        const std::string& wopiConfigId() const { return _wopiConfigId; }
 
     private:
         std::string _wopiSrc;
@@ -158,6 +159,8 @@ private:
     static void fetchSettingFile(const Poco::Net::HTTPRequest& request,
                                    std::istream& message,
                                    const std::shared_ptr<StreamSocket>& socket);
+    static void fetchModels(const Poco::Net::HTTPRequest& request, std::istream& message,
+                            const std::shared_ptr<StreamSocket>& socket);
 
     static void deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
                                          std::istream& message,
@@ -210,7 +213,7 @@ public:
                        const std::shared_ptr<StreamSocket>& socket,
                        ResourceAccessDetails& accessDetails);
 
-    void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
+    void readDirToHash(const std::string& basePath, const std::string& path);
 
     const std::string *getCompressedFile(const std::string &path);
 
@@ -238,7 +241,8 @@ public:
     void dumpState(std::ostream& os);
 
 private:
-    std::map<std::string, std::pair<std::string, std::string>> FileHash;
+    using FileHashMap_t = std::unordered_map<std::string, std::pair<std::string, std::string>>;
+    FileHashMap_t FileHash;
     static void sendError(http::StatusCode errorCode, const std::string& requestPath,
                           const std::shared_ptr<StreamSocket>& socket,
                           const std::string& shortMessage, const std::string& longMessage,

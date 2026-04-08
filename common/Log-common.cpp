@@ -11,12 +11,14 @@
 
 #include <config.h>
 
+#include "Log.hpp"
+
+#include <common/ProcUtil.hpp>
+#include <common/StaticLogHelper.hpp>
+#include <common/Util.hpp>
+
 #include <cstring>
 #include <ctime>
-
-#include "Log.hpp"
-#include "StaticLogHelper.hpp"
-#include "Util.hpp"
 
 namespace Log
 {
@@ -74,7 +76,6 @@ namespace Log
         return out;
     }
 
-#if defined(__linux__)
     /// Convert unsigned long num to base-10 ascii in place.
     /// Returns the *end* position.
     char* to_ascii(char* buf, std::size_t num)
@@ -96,7 +97,6 @@ namespace Log
 
         return buf + i;
     }
-#endif
     } // namespace
 
     Prefix::Prefix()
@@ -104,6 +104,11 @@ namespace Log
         , _last_time(0)
         , _year_pos(nullptr)
         , _level_pos(nullptr)
+    {
+        reset();
+    }
+
+    void Prefix::reset()
     {
         const std::chrono::time_point<std::chrono::system_clock> tp =
             std::chrono::system_clock::now();
@@ -128,9 +133,7 @@ namespace Log
         *pos++ = '-';
 
         // Thread ID.
-        const auto osTid = Util::getThreadId();
-#if defined(__linux__)
-        // On Linux osTid is pid_t.
+        const auto osTid = ProcUtil::getThreadId();
         if (osTid > 99999)
         {
             if (osTid > 999999)
@@ -146,12 +149,6 @@ namespace Log
             to_ascii_fixed<5>(pos, osTid);
             pos += 5;
         }
-#else // !__linux__
-        // On all other systems osTid is std::thread::id.
-        std::stringstream ss;
-        ss << osTid;
-        pos = strcopy(ss.str().c_str(), pos);
-#endif // !__linux__
 
         *pos++ = ' ';
 #endif // !IOS && !__FreeBSD__
@@ -194,7 +191,7 @@ namespace Log
         pos[0] = '[';
         pos[1] = ' ';
         pos += 2;
-        pos = strcopy(Util::getThreadName(), pos);
+        pos = strcopy(ProcUtil::getThreadName(), pos);
         pos[0] = ' ';
         pos[1] = ']';
         pos[2] = ' ';
@@ -271,6 +268,8 @@ namespace Log
         return Prefix::Instance.update(level, tp);
     }
 
+    void reset() { Prefix::Instance.reset(); }
+
 #ifdef BUILDING_TESTS
     char* prefixReference(const std::chrono::time_point<std::chrono::system_clock>& tp,
                           char* buffer, const std::string_view level)
@@ -294,9 +293,7 @@ namespace Log
         *pos++ = '-';
 
         // Thread ID.
-        const auto osTid = Util::getThreadId();
-#if defined(__linux__)
-        // On Linux osTid is pid_t.
+        const auto osTid = ProcUtil::getThreadId();
         if (osTid > 99999)
         {
             if (osTid > 999999)
@@ -312,12 +309,6 @@ namespace Log
             to_ascii_fixed<5>(pos, osTid);
             pos += 5;
         }
-#else
-        // On all other systems osTid is std::thread::id.
-        std::stringstream ss;
-        ss << osTid;
-        pos = strcopy(ss.str().c_str(), pos);
-#endif
 
         *pos++ = ' ';
 #endif
@@ -357,7 +348,7 @@ namespace Log
         pos[0] = '[';
         pos[1] = ' ';
         pos += 2;
-        pos = strcopy(Util::getThreadName(), pos);
+        pos = strcopy(ProcUtil::getThreadName(), pos);
         pos[0] = ' ';
         pos[1] = ']';
         pos[2] = ' ';

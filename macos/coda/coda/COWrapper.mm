@@ -11,7 +11,7 @@
 #include <config.h>
 
 #define LIBO_INTERNAL_ONLY
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <COKit/COKit.hxx>
 
 #import <WebKit/WebKit.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
@@ -26,6 +26,7 @@
 #include <common/Clipboard.hpp>
 #include <common/LangUtil.hpp>
 #include <common/Log.hpp>
+#include <common/ProcUtil.hpp>
 #include <common/MobileApp.hpp>
 #include <common/Util.hpp>
 #include <net/FakeSocket.hpp>
@@ -52,7 +53,7 @@ static std::thread coolwsdThread;
 #else
     Log::initialize("Mobile", "information");
 #endif
-    Util::setThreadName("main");
+    ProcUtil::setThreadName("main");
 
     // Set up the logging callback
     fakeSocketSetLoggingCallback([](const std::string& line) {
@@ -69,7 +70,7 @@ static std::thread coolwsdThread;
             "coda"
         };
 
-        Util::setThreadName("app");
+        ProcUtil::setThreadName("app");
 
         coolwsd = new COOLWSD();
         coolwsd->run(args);
@@ -101,7 +102,7 @@ static std::thread coolwsdThread;
     // Start another thread to read responses and forward them to the JavaScript
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^{
-                       Util::setThreadName("app2js");
+                       ProcUtil::setThreadName("app2js");
                        while (true) {
                            struct pollfd p[2];
                            p[0].fd = document.fakeClientFd;

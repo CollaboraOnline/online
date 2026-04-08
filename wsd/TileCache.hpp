@@ -16,25 +16,24 @@
 
 #pragma once
 
-#include <iosfwd>
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/ProcUtil.hpp>
+#include <common/Rectangle.hpp>
+#include <wsd/TileDesc.hpp>
+
+#include <chrono>
 #include <memory>
 #include <string>
-#include <thread>
 #include <unordered_map>
 #include <unordered_set>
-
-#include <Rectangle.hpp>
-
-#include <common/Log.hpp>
-#include <Common.hpp>
-#include <TileDesc.hpp>
 
 class ClientSession;
 
 // The cache cares about only some properties.
 struct TileDescCacheCompareEq final
 {
-    inline bool operator()(const TileDesc& l, const TileDesc& r) const
+    bool operator()(const TileDesc& l, const TileDesc& r) const
     {
         return l.getPart() == r.getPart() &&
                l.getWidth() == r.getWidth() &&
@@ -51,7 +50,7 @@ struct TileDescCacheCompareEq final
 // The cache cares about only some properties.
 struct TileDescCacheHasher final
 {
-    inline size_t operator()(const TileDesc& t) const
+    size_t operator()(const TileDesc& t) const
     {
         size_t hash = t.getPart();
 
@@ -304,7 +303,7 @@ public:
 
     // Debugging bits ...
     void dumpState(std::ostream& os);
-    void setThreadOwner(const std::thread::id& id) { _owner = id; }
+    void setThreadOwner(const ProcUtil::ThreadId id) { _owner = id; }
     void assertCacheSize();
 
 private:
@@ -345,7 +344,7 @@ private:
 
     const std::string _docURL;
 
-    std::thread::id _owner;
+    ProcUtil::ThreadId _owner;
 
     /// Approximate size of tilecache in bytes
     size_t _cacheSize;

@@ -13,16 +13,16 @@
 
 #include "CheckFileInfo.hpp"
 
-#include <COOLWSD.hpp>
-#include <RequestDetails.hpp>
-#include <TraceEvent.hpp>
-#include <wopi/StorageConnectionManager.hpp>
-#include <Exceptions.hpp>
-#include <common/Log.hpp>
-#include <DocumentBroker.hpp>
-#include <ClientSession.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
+#include <wopi/StorageConnectionManager.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/RequestDetails.hpp>
 
 bool CheckFileInfo::checkFileInfo(int redirectLimit)
 {

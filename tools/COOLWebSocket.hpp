@@ -13,11 +13,11 @@
 
 #include <test/testlog.hpp>
 
-#include <Poco/Net/WebSocket.h>
-
-#include <Common.hpp>
-#include <Protocol.hpp>
+#include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/Protocol.hpp>
+
+#include <Poco/Net/WebSocket.h>
 
 #include <iomanip>
 
@@ -166,8 +166,8 @@ public:
     // Return a string dump of a WebSocket frame: Its opcode, length, first line (if present),
     // flags. For human-readable logging purposes. Format not guaranteed to be stable. Not to be
     // inspected programmatically.
-    static inline
-    std::string getAbbreviatedFrameDump(const char *message, const int length, const int flags)
+    static std::string getAbbreviatedFrameDump(const char* message, const int length,
+                                               const int flags)
     {
         std::ostringstream result;
         switch (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)

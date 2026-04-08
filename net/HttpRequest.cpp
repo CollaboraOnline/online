@@ -346,13 +346,38 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
         // Get the data to write into the socket
         // from the client's callback. This is
         // used to upload files, or other data.
-        char buffer[64 * 1024];
+        constexpr std::size_t BlockSize = 64 * 1024;
         std::size_t wrote = 0;
         const bool chunked =
             Util::toLower(get("transfer-encoding")).find("chunked") != std::string::npos;
         do
         {
-            const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
+            int64_t read;
+            if (chunked)
+            {
+                // Chunked encoding needs to prepend the size header before the
+                // data, so we must read into a temporary buffer first.
+                char buffer[BlockSize];
+                read = _bodyReaderCb(buffer, sizeof(buffer));
+                if (read > 0)
+                {
+                    std::stringstream ss;
+                    ss << std::hex << read;
+                    out.append(ss.str());
+                    out.append("\r\n");
+                    out.append(buffer, read);
+                    out.append("\r\n");
+                }
+            }
+            else
+            {
+                // Read directly into the output buffer.
+                const auto provisioned = std::min(BlockSize, capacity - wrote);
+                char* buffer = out.provision(provisioned);
+                read = _bodyReaderCb(buffer, provisioned);
+                out.commit(provisioned, read > 0 ? read : 0);
+            }
+
             if (read < 0)
             {
                 LOG_ERR("Error reading the data to send as the HTTP request body: " << read);
@@ -366,28 +391,13 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
                 setStage(Stage::Finished);
                 if (chunked)
                 {
-                    out.append("0\r\n\r\n"); // Ending chunck.
+                    out.append("0\r\n\r\n"); // Ending chunk.
                 }
 
                 break;
             }
 
-            const auto before = out.size();
-            if (chunked)
-            {
-                std::stringstream ss;
-                ss << std::hex << read;
-                out.append(ss.str());
-                out.append("\r\n");
-                out.append(buffer, read);
-                out.append("\r\n");
-            }
-            else
-            {
-                out.append(buffer, read);
-            }
-
-            wrote += (out.size() - before);
+            wrote += read;
             LOG_TRC("performWrites (request body): " << read << " bytes, total: "
                                                      << out.size() - buffered_size);
         } while (wrote < capacity);
@@ -631,7 +641,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
                 // This is a chunked transfer.
                 // Find the start of the chunk, which is
                 // the length of the chunk in hex.
-                // each chunk is preceeded by its length in hex.
+                // each chunk is preceded by its length in hex.
                 while (available)
                 {
 #ifdef DEBUG_HTTP
@@ -870,7 +880,7 @@ int64_t Response::readData(const char* p, int64_t len)
             // This is a chunked transfer.
             // Find the start of the chunk, which is
             // the length of the chunk in hex.
-            // each chunk is preceeded by its length in hex.
+            // each chunk is preceded by its length in hex.
             while (available)
             {
 #ifdef DEBUG_HTTP

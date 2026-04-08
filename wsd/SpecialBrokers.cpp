@@ -18,34 +18,34 @@
 
 #include "SpecialBrokers.hpp"
 
+#include <common/Clipboard.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Message.hpp>
+#include <common/Protocol.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <net/Socket.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/QuarantineUtil.hpp>
+#include <wsd/TileCache.hpp>
+
+#if !MOBILEAPP
+#include <wopi/CheckFileInfo.hpp>
+#include <net/HttpHelper.hpp>
+#endif
+
 #include <Poco/DigestStream.h>
 #include <Poco/Exception.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-
-#include <ClientSession.hpp>
-#include <Common.hpp>
-#include <COOLWSD.hpp>
-#include <FileServer.hpp>
-#include <Socket.hpp>
-#include <TileCache.hpp>
-#include <QuarantineUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Log.hpp>
-#include <common/Message.hpp>
-#include <common/Clipboard.hpp>
-#include <common/Protocol.hpp>
-#include <common/Unit.hpp>
-#include <common/FileUtil.hpp>
-#include <common/Uri.hpp>
-#include <CommandControl.hpp>
-
-#if !MOBILEAPP
-#include <wopi/CheckFileInfo.hpp>
-#include <net/HttpHelper.hpp>
-#endif
 
 #include <atomic>
 #include <cassert>
@@ -251,11 +251,11 @@ void ConvertToBroker::setLoaded()
     _clientSession->handleMessage(saveasRequest);
 }
 
-static std::atomic<std::size_t> renderSearchResultBrokerInstanceCouter;
+static std::atomic<std::size_t> renderSearchResultBrokerInstanceCounter;
 
 std::size_t RenderSearchResultBroker::getInstanceCount()
 {
-    return renderSearchResultBrokerInstanceCouter;
+    return renderSearchResultBrokerInstanceCounter;
 }
 
 RenderSearchResultBroker::RenderSearchResultBroker(
@@ -324,7 +324,7 @@ void RenderSearchResultBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        renderSearchResultBrokerInstanceCouter--;
+        renderSearchResultBrokerInstanceCounter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }

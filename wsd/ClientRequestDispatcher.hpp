@@ -16,16 +16,16 @@
 
 #pragma once
 
-#include <RequestVettingStation.hpp>
-#include <RequestDetails.hpp>
-#include <Socket.hpp>
+#include <net/Socket.hpp>
+#include <wsd/RequestDetails.hpp>
+#include <wsd/RequestVettingStation.hpp>
 #if !MOBILEAPP
 #include <wopi/WopiProxy.hpp>
 #endif // !MOBILEAPP
 
 #include <cstdint>
-#include <string>
 #include <memory>
+#include <string>
 
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
@@ -112,10 +112,6 @@ private:
                                    SocketDisposition& /*disposition*/,
                                    const std::shared_ptr<StreamSocket>& socket,
                                    bool bVTT);
-
-    static std::string getContentType(const std::string& fileName);
-
-    static bool isSpreadsheet(const std::string& fileName);
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
     bool handlePostRequest(const RequestDetails& requestDetails,

@@ -38,11 +38,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			});
 
 		//deletion
-		cy.cGet('#document-container').then(function(item) {
-			const boundingRectangle = item[0].getBoundingClientRect();
-			const x = boundingRectangle.left + boundingRectangle.width / 2;
-			const y = boundingRectangle.top + boundingRectangle.height / 2;
-			cy.cGet('#document-canvas').rightclick(x, y);
+		helper.getShapeSVGCenter().then(function(pos) {
+			cy.cGet('#document-canvas').rightclick(pos.x, pos.y);
 		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();

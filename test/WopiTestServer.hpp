@@ -27,13 +27,13 @@
 #include <test/helpers.hpp>
 #include <test/lokassert.hpp>
 
-#include <JsonUtil.hpp>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
 #include <cctype>
 #include <sstream>
+#include <string_view>
 #include <vector>
 
 /// Simulates a WOPI server for testing purposes.
@@ -232,13 +232,13 @@ protected:
     }
 
     /// Returns true iff @uriPath is a Wopi path but not to the contents.
-    static bool isWopiInfoRequest(const std::string& uriPath)
+    static bool isWopiInfoRequest(const std::string_view uriPath)
     {
         return uriPath.starts_with(getURIRootPath()) && !uriPath.ends_with("/contents");
     }
 
     /// Returns true iff @uriPath is a Wopi path to the contents of a file.
-    static bool isWopiContentRequest(const std::string& uriPath)
+    static bool isWopiContentRequest(const std::string_view uriPath)
     {
         return uriPath.starts_with(getURIRootPath()) && uriPath.ends_with("/contents");
     }
@@ -251,6 +251,11 @@ protected:
 
         // Reset to default.
         config.setBool("storage.wopi.is_legacy_server", false);
+
+        // Reduce the save retry time.
+        config.setUInt("per_document.min_time_between_saves_ms", 100);
+        // Reduce the upload retry time.
+        config.setUInt("per_document.min_time_between_uploads_ms", 500);
     }
 
     /// Returns the default CheckFileInfo json.

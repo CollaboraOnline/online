@@ -110,7 +110,11 @@ class Mention extends AutoCompletePopup {
 
 		const isMobileCommentActive = commentSection?.isMobileCommentActive();
 		const mobileCommentModalId = commentSection?.getMobileCommentModalId();
-		if (entries.length === 0 && this.isMobile && isMobileCommentActive) {
+		if (
+			entries.length === 0 &&
+			this.isSmallScreenDevice &&
+			isMobileCommentActive
+		) {
 			const control = this.getTreeJSON();
 			control.hideIfEmpty = true;
 			const data = this.getPopupJSON(control, { x: 0, y: 0 });
@@ -194,7 +198,7 @@ class Mention extends AutoCompletePopup {
 		if (!mentionPopup) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
-		if (this.isMobile) {
+		if (this.isSmallScreenDevice) {
 			const commentSection = app.sectionContainer.getSectionWithName(
 				app.CSections.CommentList.name,
 			);

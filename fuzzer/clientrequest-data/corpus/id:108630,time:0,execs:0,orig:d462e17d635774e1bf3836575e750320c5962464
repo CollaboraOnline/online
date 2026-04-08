@@ -1,0 +1,6 @@
+GET cool/ws P1
+Host:
+Upgrade: websocket
+Sec-WebSocket-Version:15555545555555555555
+
+æ

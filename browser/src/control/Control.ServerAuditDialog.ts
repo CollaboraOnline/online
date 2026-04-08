@@ -193,7 +193,7 @@ class ServerAuditDialog {
 		};
 
 		this.map.fire(
-			window.mode.isMobile() ? 'mobilewizard' : 'jsdialog',
+			window.mode.isSmallScreenDevice() ? 'mobilewizard' : 'jsdialog',
 			dialogBuildEvent,
 		);
 	}
@@ -358,7 +358,7 @@ class ServerAuditDialog {
 			},
 		};
 		this.map.fire(
-			window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog',
+			window.mode.isSmallScreenDevice() ? 'closemobilewizard' : 'jsdialog',
 			closeEvent,
 		);
 	}

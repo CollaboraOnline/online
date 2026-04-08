@@ -1,0 +1,2 @@
+fuzzer/*/corpus/* binary
+fuzzer/*-data/* binary

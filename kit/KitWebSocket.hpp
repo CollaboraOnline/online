@@ -9,8 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 /*
- * The main entry point for the LibreOfficeKit process serving
+ * The main entry point for the COKit process serving
  * a document editing session.
  */
 
@@ -24,7 +26,7 @@ class Document;
 class KitQueue;
 class KitSocketPoll;
 
-namespace lok
+namespace kit
 {
 class Office;
 }
@@ -32,7 +34,7 @@ class Office;
 class KitWebSocketHandler final : public WebSocketHandler
 {
     std::string _socketName;
-    std::shared_ptr<lok::Office> _loKit;
+    std::shared_ptr<kit::Office> _loKit;
     std::string _jailId;
     std::string _docKey; ///< When we get it while creating a new view.
     std::shared_ptr<Document> _document;
@@ -41,7 +43,7 @@ class KitWebSocketHandler final : public WebSocketHandler
     bool _backgroundSaver;
 
 public:
-    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit,
+    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<kit::Office>& loKit,
                         const std::string& jailId, std::shared_ptr<KitSocketPoll> ksPoll,
                         unsigned mobileAppDocId)
         : WebSocketHandler(/* isClient = */ true, /* isMasking */ false)

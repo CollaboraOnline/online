@@ -50,6 +50,9 @@ var NotebookbarAccessibilityDefinitions = function() {
 					} else if (document.getElementById(id + '-input')) {
 						// checkbox
 						list.push({ id: id + '-input', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else if (rawList[i].type === 'iconviewlist') {
+						// iconviewlist
+						list.push({ id: id + '-expand-button', focusBack:  rawList[i].accessibility.focusBack, combination: combination });
 					} else {
 						// other
 						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
@@ -104,7 +107,6 @@ var NotebookbarAccessibilityDefinitions = function() {
 				defs[tabs[i].id].combination = language && tabs[i].accessibility[language] ? tabs[i].accessibility[language]: tabs[i].accessibility.combination;
 				defs[tabs[i].id].contentList = [];
 				this.getContentListRecursive(defs[tabs[i].id].rawContentList, defs[tabs[i].id].contentList, language);
-				this.targetedButtonsForTab(tabs[i].id, defs[tabs[i].id].contentList);
 				delete defs[tabs[i].id].rawContentList;
 			}
 		}
@@ -171,21 +173,6 @@ var NotebookbarAccessibilityDefinitions = function() {
 				combination : language && toolOption.accessibility[language] ? toolOption.accessibility[language]: toolOption.accessibility.combination,
 				contentList: []
 			};
-		}
-	}
-
-	this.targetedButtonsForTab = function(tabId, list) {
-		// add targeted accesskey information of specific uno buttons from a tab
-		var buttonList = [];
-
-		// Home tab
-		if (tabId == 'Home-tab-label')
-			buttonList = ['stylesview-expand-button'];
-
-		for (var i = 0; i < buttonList.length; i++) {
-			var button = document.getElementById(buttonList[i]);
-			if (button && button.accessKey !== undefined && button.accessKey.trim())
-				list.push({ id: button.id, focusBack: true, combination: button.accessKey });
 		}
 	}
 

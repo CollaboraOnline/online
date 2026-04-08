@@ -1004,7 +1004,9 @@ class BackstageView extends window.L.Class {
 			const type = this.normalizeTemplateType(entry.type, absolutePath);
 			if (!type) return;
 
-			const name = entry.name || this.deriveDisplayName(absolutePath);
+			const name = entry.name;
+			if (!name) return;
+
 			const id = entry.id || this.slugify(name + absolutePath);
 			const searchComponents = [name, type, absolutePath];
 
@@ -1228,24 +1230,15 @@ class BackstageView extends window.L.Class {
 		}
 	}
 
-	private getTemplateTypeLabel(type: TemplateType): string {
-		switch (type) {
-			case 'writer':
-				return 'Writer';
-			case 'calc':
-				return 'Calc';
-			case 'impress':
-				return 'Impress';
-			default:
-				return type;
-		}
-	}
-
 	private createTemplateCard(
 		template: TemplateData,
 		options: { variant?: 'featured'; isBlank?: boolean } = {},
 	): HTMLElement {
-		const card = this.createElement('div', 'backstage-template-card');
+		const card = this.createElement(
+			'div',
+			'backstage-template-card',
+			template.id,
+		);
 		if (options.variant === 'featured') card.classList.add('is-featured');
 		if (options.isBlank) card.classList.add('is-blank');
 
@@ -1339,15 +1332,6 @@ class BackstageView extends window.L.Class {
 			.replace(/[^a-z0-9]+/g, '-')
 			.replace(/^-+|-+$/g, '')
 			.replace(/-{2,}/g, '-');
-	}
-
-	private deriveDisplayName(templatePath: string): string {
-		const baseName = templatePath.split(/[\\/]/).pop() || templatePath;
-		const nameWithoutExtension = baseName.replace(/\.[^.]+$/, '');
-		return nameWithoutExtension
-			.replace(/[_-]+/g, ' ')
-			.replace(/\s+/g, ' ')
-			.replace(/\b\w/g, (char) => char.toUpperCase());
 	}
 
 	private getDocTypeString(): string {

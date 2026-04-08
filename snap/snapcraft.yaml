@@ -67,9 +67,9 @@ layout:
 parts:
   core:
     plugin: nil
-    source: https://gerrit.libreoffice.org/core
+    source: https://gerrit.collaboraoffice.com/core
     source-type: git
-    source-branch: distro/collabora/co-26.04
+    source-branch: main
     source-depth: 1
     source-submodules: []
     override-build: |
@@ -197,7 +197,7 @@ parts:
       mkdir -p "$CRAFT_PART_INSTALL/usr/lib"
       cp -a inst/lib/collaboraoffice "$CRAFT_PART_INSTALL/usr/lib/collaboraoffice"
       mkdir -p "$CRAFT_PART_INSTALL/usr/include"
-      cp -a include/LibreOfficeKit "$CRAFT_PART_INSTALL/usr/include/LibreOfficeKit"
+      cp -a include/COKit "$CRAFT_PART_INSTALL/usr/include/COKit"
     build-packages:
       - autoconf
       - automake

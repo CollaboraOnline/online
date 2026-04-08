@@ -59,7 +59,7 @@
 #include <fstream>
 
 #include <common/Log.hpp>
-#include <TraceEvent.hpp>
+#include <common/TraceEvent.hpp>
 
 namespace Png
 {
@@ -165,7 +165,7 @@ unpremultiply_rgba_data (png_structp /*png*/, png_row_infop row_info, png_bytep 
 /// png_write_row(), so can't use const here for pixmap.
 inline bool impl_encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                                       int width, int height, int bufferWidth, int bufferHeight,
-                                      std::vector<char>& output, LibreOfficeKitTileMode mode)
+                                      std::vector<char>& output, COKitTileMode mode)
 {
     if (bufferWidth < width || bufferHeight < height)
     {
@@ -203,10 +203,10 @@ inline bool impl_encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size
 
     switch (mode)
     {
-        case LOK_TILEMODE_BGRA:
+        case KIT_TILEMODE_BGRA:
             png_set_write_user_transform_fn (png_ptr, unpremultiply_bgra_data);
             break;
-        case LOK_TILEMODE_RGBA:
+        case KIT_TILEMODE_RGBA:
             png_set_write_user_transform_fn (png_ptr, unpremultiply_rgba_data);
             break;
     }
@@ -228,7 +228,7 @@ inline bool impl_encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size
 /// png_write_row(), so can't use const here for pixmap.
 inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY, int width,
                                  int height, int bufferWidth, int bufferHeight,
-                                 std::vector<char>& output, LibreOfficeKitTileMode mode)
+                                 std::vector<char>& output, COKitTileMode mode)
 {
     ProfileZone pz("encodeSubBufferToPNG");
 
@@ -267,7 +267,7 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
 
 inline
 bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
-                       std::vector<char>& output, LibreOfficeKitTileMode mode)
+                       std::vector<char>& output, COKitTileMode mode)
 {
     return encodeSubBufferToPNG(pixmap, 0, 0, width, height, width, height, output, mode);
 }
