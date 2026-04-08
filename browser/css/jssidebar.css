@@ -175,6 +175,16 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	margin: 5px 0 !important;
 }
 
+/* #decimalplaces */
+#NumberFormatPropertyPanel .jsdialog.sidebar.spinfieldcontainer {
+	margin: unset;
+}
+
+/* #numberformatcombobox-input */
+#NumberFormatPropertyPanel .jsdialog.sidebar.ui-listbox-container .ui-listbox {
+	width: 100%;
+	height: 26px;
+}
 
 /* widget width */
 
