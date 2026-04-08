@@ -11,26 +11,25 @@
 
 #pragma once
 
-#include <math.h>
-#include <iomanip>
-#include <chrono>
-#include <cstring>
-#include <unordered_map>
-
-#include <Socket.hpp>
-#include <WebSocketHandler.hpp>
-#include <TraceFile.hpp>
-#include <common/Util.hpp>
 #include <common/Log.hpp>
-#include <net/Ssl.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#include <net/WebSocketHandler.hpp>
 #include <wsd/TileDesc.hpp>
+#include <wsd/TraceFile.hpp>
 #if ENABLE_SSL
-#  include <SslSocket.hpp>
+#include <net/Ssl.hpp>
+#include <net/SslSocket.hpp>
 #endif
 
-#include <iostream>
-#include <fstream>
+#include <chrono>
+#include <cstring>
 #include <ctime>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <unordered_map>
 #include <utility>
 
 struct PerfMetricInfo
