@@ -86,10 +86,13 @@ bool Uri::hasReadonlyPermission(const std::string& url)
     //FIXME: Replace with our own implementation.
     for (const auto& param : Poco::URI(url).getQueryParameters())
     {
-        LOG_TRC("Query param: " << param.first << ", value: " << param.second);
-        if (param.first == "permission" && param.second == "readonly")
+        if (!param.first.empty())
         {
-            return true;
+            LOG_TRC("Query param: [" << param.first << "], value: [" << param.second << ']');
+            if (param.first == "permission" && param.second == "readonly")
+            {
+                return true;
+            }
         }
     }
 
