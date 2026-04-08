@@ -63,6 +63,14 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		}
 	}
 
+	// Special case: Error Sentence should be treated as a textbox by the screen reader
+	if (image.id === "errorsentence") {
+		image.setAttribute('aria-label', 'Misspelling preview');
+		image.setAttribute('role', 'textbox');
+		image.setAttribute('aria-multiline', 'true');
+		image.setAttribute('contenteditable', 'true');
+	}
+
 	// Line width dialog is affected from delay on image render.
 	// So If the image render is delayed, use width and height of the data
 	if (JSDialog.isWidgetInModalPopup(data) && image.width == 0 && image.height == 0) {
