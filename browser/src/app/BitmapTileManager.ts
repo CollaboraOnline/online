@@ -22,6 +22,13 @@ function hex2string(inData: any, length: number) {
 	return hexified.join('');
 }
 
+// real RAM sizes for keyframes + delta cache in memory.
+let _highDeltaMemory = 120 * 1024 * 1024; // 120Mb
+let _lowDeltaMemory = 100 * 1024 * 1024; // 100Mb
+// number of tiles
+let _highTileCount = 2048;
+let _lowTileCount = _highTileCount - 128;
+
 class BitmapTileManager {
 	private _docLayer: any;
 	private _zoom: number;
@@ -128,15 +135,34 @@ class BitmapTileManager {
 		});
 	}
 
+	private static setCacheSize(
+		lowKb: number,
+		highKb: number,
+		lowCount: number,
+		highCount: number,
+	) {
+		_lowDeltaMemory = lowKb * 1024;
+		_highDeltaMemory = highKb * 1024;
+		_lowTileCount = lowCount;
+		_highTileCount = highCount;
+	}
+
+	public static setDefaultCacheSize() {
+		BitmapTileManager.setCacheSize(100 * 1024, 120 * 1024, 2048 - 128, 2048);
+	}
+
+	// to exercise manager harder
+	public static setLimitedCacheSize() {
+		BitmapTileManager.setCacheSize(128, 1024, 50, 100);
+	}
+
 	// Set a high and low watermark of how many bitmaps we want
 	// and expire old ones
 	private garbageCollect(discardAll = false) {
-		// real RAM sizes for keyframes + delta cache in memory.
-		let highDeltaMemory = 120 * 1024 * 1024; // 120Mb
-		let lowDeltaMemory = 100 * 1024 * 1024; // 100Mb
-		// number of tiles
-		let highTileCount = 2048;
-		let lowTileCount = highTileCount - 128;
+		let highDeltaMemory = _highDeltaMemory;
+		let lowDeltaMemory = _lowDeltaMemory;
+		let highTileCount = _highTileCount;
+		let lowTileCount = _lowTileCount;
 
 		if (discardAll) {
 			highDeltaMemory = 0;
@@ -144,10 +170,6 @@ class BitmapTileManager {
 			highTileCount = 0;
 			lowTileCount = 0;
 		}
-
-		/* uncomment to exercise me harder. */
-		/* highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
-		   highTileCount = 100; lowTileCount = 50; */
 
 		// FIXME: could maintain this as we go rather than re-accounting it regularly.
 		var totalSize = 0;
