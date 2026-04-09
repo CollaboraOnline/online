@@ -229,6 +229,28 @@ HostEntry syncResolveDNS(const std::string& addressToCheck)
 #endif
 }
 
+/// Returns true if the address is a cloud instance metadata IP,
+/// matching core's opensocket_callback in CurlSession.cxx.
+bool isInstanceMetadataAddress(const sockaddr* ai_addr)
+{
+    char addrstr[INET6_ADDRSTRLEN];
+    const void* inAddr = nullptr;
+
+    if (ai_addr->sa_family == AF_INET)
+        inAddr = &(reinterpret_cast<const sockaddr_in*>(ai_addr)->sin_addr);
+    else if (ai_addr->sa_family == AF_INET6)
+        inAddr = &(reinterpret_cast<const sockaddr_in6*>(ai_addr)->sin6_addr);
+
+    if (!inAddr)
+        return false;
+
+    if (!inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr)))
+        return false;
+
+    const std::string_view addr(addrstr);
+    return addr == "169.254.169.254" || addr == "fd00:ec2::254";
+}
+
 using sockaddr_ptr = std::unique_ptr<sockaddr, void (*)(void*)>;
 
 sockaddr_ptr dupAddrWithPort(const sockaddr* addr, socklen_t addrLen, uint16_t port)
@@ -486,6 +508,13 @@ void asyncConnect(std::string host, const std::string& port, const bool isSSL,
             {
                 if (ai->ai_addrlen && ai->ai_addr)
                 {
+                    if (isInstanceMetadataAddress(ai->ai_addr))
+                    {
+                        LOG_WRN("Blocking connection to instance metadata address for " << host);
+                        result = AsyncConnectResult::ConnectionError;
+                        break;
+                    }
+
                     int fd = Syscall::socket_cloexec_nonblock(ai->ai_addr->sa_family, SOCK_STREAM /*| SOCK_NONBLOCK | SOCK_CLOEXEC*/, 0);
                     if (fd < 0)
                     {
@@ -577,6 +606,12 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
         {
             if (ai->ai_addrlen && ai->ai_addr)
             {
+                if (isInstanceMetadataAddress(ai->ai_addr))
+                {
+                    LOG_WRN("Blocking connection to instance metadata address for " << host);
+                    break;
+                }
+
                 int fd = Syscall::socket_cloexec_nonblock(ai->ai_addr->sa_family, SOCK_STREAM /*| SOCK_NONBLOCK | SOCK_CLOEXEC*/, 0);
                 if (fd < 0)
                 {

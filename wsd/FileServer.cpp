@@ -233,26 +233,10 @@ std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& conf
     return config.getBool(propertyName, defaultValue) ? "true" : "false";
 }
 
-/// Returns true if any resolved address is an instance metadata IP,
-/// matching core's opensocket_callback in CurlSession.cxx.
-bool isInstanceMetadataAddress(const std::string& host)
-{
-    const auto addresses = net::resolveAddresses(host);
-    for (const auto& addr : addresses)
-    {
-        if (addr == "169.254.169.254" || addr == "fd00:ec2::254")
-            return true;
-    }
-    return false;
-}
-
 /// Returns true if the host is forbidden by KIT_HOST_ALLOWLIST, matching
 /// the convention of core's HostFilter::isForbidden.
 bool isForbiddenKitHost(const std::string& host)
 {
-    if (isInstanceMetadataAddress(host))
-        return true;
-
     static const char* allowlist = std::getenv("KIT_HOST_ALLOWLIST");
     if (!allowlist || allowlist[0] == '\0')
         return false;
