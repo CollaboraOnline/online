@@ -47,6 +47,7 @@
 #include <QString>
 #include <QTimer>
 #include <QUrl>
+#include <QWebSocket>
 #include <QWidget>
 
 static const int SHOW_JS_MAXLEN = 300;
@@ -860,9 +861,19 @@ QVariant Bridge::cool(const QString& messageStr)
         // If this was triggered from a starter screen, close it
         closeStarterScreen();
     }
+    else if (tokens.equals(0, "collab"))
+    {
+        // Forward a message from JS to the per-document collab
+        // WebSocket (if open).
+        if (_document._remoteInfo && _document._remoteInfo->collabWs)
+        {
+            QString payload = messageStr.mid(messageStr.indexOf(' ') + 1);
+            _document._remoteInfo->collabWs->sendTextMessage(payload);
+        }
+    }
     else
     {
-        // Forward arbitrary payload from JS → Online
+        // Forward arbitrary payload from JS -> Online
         fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
     }
     return {};

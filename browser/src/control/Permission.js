@@ -19,7 +19,58 @@ window.L.Map.include({
 		'xlsb': { canEdit: false, odfFormat: 'ods' }
 	},
 
+	_setupCodaCollab: function () {
+		if (!window.mode.isCODesktop())
+			return;
+		// Track collab users, mirroring the COWASM approach in
+		// global.js.
+		if (!window.collabUsers)
+			window.collabUsers = [];
+
+		var that = this;
+		// Called from C++ Bridge::evalJS when the per-document
+		// collab WebSocket receives a message.
+		window._codaCollabMessage = function (msg) {
+			if (msg.type === 'user_list' && Array.isArray(msg.users)) {
+				window.collabUsers = msg.users;
+				window.collabEditingActive = !!msg.editingActive;
+			} else if (msg.type === 'user_joined' && msg.user) {
+				window.collabUsers.push(msg.user);
+			} else if (msg.type === 'user_left' && msg.user) {
+				window.collabUsers = window.collabUsers.filter(
+					function (u) { return u.id !== msg.user.id; });
+			}
+
+			if (msg.type === 'editing_started' && msg.user) {
+				that._onOtherUserEditingStarted(
+					msg.user.name || msg.user.id);
+			} else if (msg.type === 'switch_to_collab') {
+				that._onSwitchToCollabRequest();
+			} else if (msg.type === 'saved_and_switching') {
+				that._onEditorSavedAndSwitching();
+			} else if (msg.type === 'user_left') {
+				that._onCollabUserLeft();
+			}
+		};
+
+		// Send a message on the collab WebSocket via the C++ Bridge.
+		window.collabSendMessage = function (msg) {
+			if (window.postMobileMessage) {
+				window.postMobileMessage(
+					'collab ' + JSON.stringify(msg));
+			}
+		};
+
+		// Switch from local to server-based collaborative editing.
+		// TODO: implement the actual switch (save, upload, reload
+		// WebView with server-rendered cool.html).
+		window.switchToServerMode = function () {
+			window.postMobileMessage('switchToServerMode');
+		};
+	},
+
 	setPermission: function (perm) {
+		this._setupCodaCollab();
 		var button = $('#mobile-edit-button');
 		button.off('click');
 		button.attr('tabindex', 0);
@@ -306,15 +357,16 @@ window.L.Map.include({
 
 	// from read-only to edit mode
 	_switchToEditMode: function () {
-		// In WASM mode, notify the collab broker that editing is
-		// starting so that users who join later are informed.
-		if (window.ThisIsTheEmscriptenApp) {
+		// Notify the collab broker that editing is starting so that
+		// users who join later are informed.
+		if (window.ThisIsTheEmscriptenApp || window.mode.isCODesktop()) {
 			window.collabSendMessage({type: 'editing_started'});
 		}
 
-		// In WASM mode with other collab users, offer the choice
-		if (window.ThisIsTheEmscriptenApp && window.collabUsers
-			&& window.collabUsers.length > 0) {
+		// With other collab users present, offer the choice between
+		// local and collaborative editing.
+		if ((window.ThisIsTheEmscriptenApp || window.mode.isCODesktop())
+			&& window.collabUsers && window.collabUsers.length > 0) {
 			this._showWasmEditChoice();
 			return;
 		}
