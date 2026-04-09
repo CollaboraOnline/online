@@ -523,8 +523,9 @@ class BackstageView extends window.L.Class {
 			'backstage-recent-documents-body',
 		);
 
+		let i: number = 0;
 		docs.forEach((doc) => {
-			const rows = this.createRecentDocumentRows(doc);
+			const rows = this.createRecentDocumentRows(doc, i++);
 			rows.forEach((row) => tbody.appendChild(row));
 		});
 
@@ -561,7 +562,7 @@ class BackstageView extends window.L.Class {
 		return thead;
 	}
 
-	private createRecentDocumentRows(doc: any): HTMLElement[] {
+	private createRecentDocumentRows(doc: any, i: number): HTMLElement[] {
 		const { fileName, filePath, timestamp, uri } = this.parseDocumentData(doc);
 		const docType = doc.doctype || 'writer';
 		const formattedTime = this.formatTimestamp(timestamp);
@@ -572,6 +573,7 @@ class BackstageView extends window.L.Class {
 			formattedTime,
 			uri,
 			docType,
+			i,
 		);
 		return [row];
 	}
@@ -582,12 +584,14 @@ class BackstageView extends window.L.Class {
 		formattedTime: string,
 		uri: string,
 		docType: string,
+		i: number,
 	): HTMLElement {
 		const row = this.createElement('tr', 'backstage-recent-document-row');
 
 		const nameCell = this.createElement(
 			'td',
 			'backstage-recent-document-name-cell',
+			'backstage-recent-document-' + i,
 		);
 		const nameText = this.createElement(
 			'div',
