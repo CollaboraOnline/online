@@ -47,6 +47,7 @@
 #include <QWebChannel>
 #include <QWebEngineFullScreenRequest>
 #include <QWebEngineSettings>
+#include <QWebSocket>
 
 #include <algorithm>
 #include <memory>
@@ -633,6 +634,72 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     }
     _mainWindow->resize(size.first, size.second);
     _mainWindow->show();
+}
+
+void WebView::loadRemote(const QString& localPath,
+                         std::shared_ptr<coda::RemoteDocInfo> remoteInfo)
+{
+    Poco::URI fileURL(Poco::Path(localPath.toStdString()));
+
+    _document = {
+        ._fileURL = fileURL,
+        ._fakeClientFd = fakeSocketSocket(),
+        ._appDocId = coda::generateNewAppDocId(),
+        ._remoteInfo = std::move(remoteInfo),
+    };
+
+    QWebChannel* channel = new QWebChannel(_webView->page());
+    queryGnomeFontScalingUpdateZoom();
+
+    assert(_bridge == nullptr);
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
+    channel->registerObject("bridge", _bridge);
+    _webView->page()->setWebChannel(channel);
+
+    Poco::Path coolHtmlPath(getDataDir());
+    coolHtmlPath.append("/browser/dist/cool.html");
+    Poco::URI urlAndQuery(coolHtmlPath);
+    urlAndQuery.setScheme("file");
+    std::string uiLanguage = getUILanguage();
+    urlAndQuery.addQueryParameter("lang", uiLanguage);
+    urlAndQuery.addQueryParameter("dir", LangUtil::isRtlLanguage(uiLanguage) ? "rtl" : "");
+    urlAndQuery.addQueryParameter("file_path", _document._fileURL.toString());
+    urlAndQuery.addQueryParameter("permission", "edit");
+    urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
+    urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
+
+    if (portalPrefersDark())
+        urlAndQuery.addQueryParameter("darkTheme", "true");
+
+    const std::string urlAndQueryStr = urlAndQuery.toString();
+    LOG_TRC("Open remote URL: " << urlAndQueryStr);
+
+    Poco::Path uriPath(_document._fileURL.getPath());
+    QString fileName = QString::fromStdString(uriPath.getFileName());
+    QString applicationTitle = fileName + " - " APP_NAME;
+    if (_webView->window())
+        _webView->window()->setWindowTitle(applicationTitle);
+
+    _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
+
+    auto size = getWindowSize(false);
+    _mainWindow->resize(size.first, size.second);
+    _mainWindow->show();
+
+    // Wire up collab WebSocket notifications to the Bridge so JS can
+    // handle them (user_joined, user_left, etc.).
+    if (_document._remoteInfo && _document._remoteInfo->collabWs)
+    {
+        auto* ws = _document._remoteInfo->collabWs.get();
+        auto* bridge = _bridge;
+        QObject::connect(ws, &QWebSocket::textMessageReceived,
+            [bridge](const QString& msg) {
+                bridge->evalJS(
+                    "if (window._codaCollabMessage) "
+                    "window._codaCollabMessage("
+                    + msg.toStdString() + ");");
+            });
+    }
 }
 
 WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath, const std::string& basename)

@@ -565,9 +565,23 @@ int main(int argc, char** argv)
         tmp->setAutoRemove(false);
         dlReply->deleteLater();
 
-        // Don't close collabWs - it stays open for collab notifications.
-        qDebug() << "Downloaded to:" << localPath;
-        coda::openFiles(QStringList() << localPath);
+        delete downloadDone;
+        delete downloadUrl;
+        delete collabLoop;
+
+        // Disconnect the download-phase signal handlers before
+        // transferring ownership to the per-document RemoteDocInfo.
+        collabWs->disconnect();
+
+        // Package the collab state into per-document ownership.
+        auto remoteInfo = std::make_shared<coda::RemoteDocInfo>();
+        remoteInfo->wopiSrc = remoteWopiSrc;
+        remoteInfo->accessToken = remoteAccessToken;
+        remoteInfo->coolServer = remoteCoolServer;
+        remoteInfo->collabWs.reset(collabWs);
+
+        WebView* webViewInstance = new WebView(Application::getProfile());
+        webViewInstance->loadRemote(localPath, std::move(remoteInfo));
     }
     else if (!absoluteFiles.isEmpty())
     {

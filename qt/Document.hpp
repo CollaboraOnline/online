@@ -13,13 +13,31 @@
 
 #include <Poco/URI.h>
 
+#include <QString>
+#include <memory>
+
+class QWebSocket;
+
 namespace coda
 {
+
+/// Parameters for a remote document opened via a COOL server's
+/// /co/collab endpoint.  Empty for local-only documents.
+struct RemoteDocInfo
+{
+    QString wopiSrc;
+    QString accessToken;
+    QString coolServer;
+    // Heap-allocated; lives as long as the document is open.
+    std::unique_ptr<QWebSocket> collabWs;
+};
+
 struct DocumentData
 {
     Poco::URI _fileURL;
     int _fakeClientFd = -1;
     unsigned _appDocId = 0;
+    std::shared_ptr<RemoteDocInfo> _remoteInfo;
 };
 
 unsigned generateNewAppDocId();
