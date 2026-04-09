@@ -1810,7 +1810,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             << (ConfigUtil::isSSLTermination() ? "enabled." : "disabled."));
 
     std::string allowedLanguages(config().getString("allowed_languages"));
-    setenv("LOK_ALLOWLIST_LANGUAGES", allowedLanguages.c_str(), 1);
+    setenv("KIT_ALLOWLIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
 #endif // !MOBILEAPP
 
@@ -2135,11 +2135,11 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #if !MOBILEAPP
     const std::string helpUrl = ConfigUtil::getConfigValue<std::string>(conf, "help_url", HELP_URL);
-    setenv("LOK_HELP_URL", helpUrl.c_str(), 1);
+    setenv("KIT_HELP_URL", helpUrl.c_str(), 1);
 #else
     // On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake,
     // at least they should not have a non-working Help button.
-    setenv("LOK_HELP_URL", "", 1);
+    setenv("KIT_HELP_URL", "", 1);
 #endif
 
     if constexpr (ConfigUtil::isSupportKeyEnabled())
@@ -2353,13 +2353,13 @@ void COOLWSD::setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguratio
                 LOG_ERR("Invalid regular expression for allowed host: \"" << lokAllowedHosts[i] << "\"");
         }
 
-        setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
+        setenv("KIT_HOST_ALLOWLIST", allowedRegex.c_str(), true);
 
 #if !MOBILEAPP
         if (!ConfigUtil::getConfigValue<bool>(conf, "ssl.ssl_verification", true))
         {
             // also disable host verification for allowed hosts
-            ::setenv("LOK_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
+            ::setenv("KIT_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
         }
 #endif
     }
