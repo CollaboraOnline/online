@@ -205,10 +205,11 @@ static CokHookFunction2* initFunction = nullptr;
 
 #if !MOBILEAPP
 
-BackgroundSaveWatchdog::BackgroundSaveWatchdog(unsigned mobileAppDocId, int savingTid)
+BackgroundSaveWatchdog::BackgroundSaveWatchdog(unsigned mobileAppDocId,
+                                               ProcUtil::ThreadId savingTid)
     : _saveCompleted(false)
     , _watchdogThread(
-        // mobileAppDocId is on the stack, so capture it by value.
+          // mobileAppDocId is on the stack, so capture it by value.
           [mobileAppDocId, savingTid, this]()
           {
               ProcUtil::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");

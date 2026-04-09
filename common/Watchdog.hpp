@@ -94,16 +94,16 @@ public:
         {
             {
                 uint64_t msSinceEpoc = getTimestamp();
-                for (const auto& d : _times)
+                for (const auto& [time, tid] : _times)
                 {
-                    uint64_t snapshot = *d.first; // one atomic read
+                    const uint64_t snapshot = *time; // one atomic read
                     if (snapshot == 0) // sleeping / polling
                         continue;
                     // out of the poll for longer than threshold:
                     if (msSinceEpoc - snapshot > MsToTrigger)
                     {
                         // Signal the poorly behaved thread to profile it
-                        ProcUtil::killThreadById(*d.second, SIGUSR2);
+                        ProcUtil::killThreadById(*tid, SIGUSR2);
                         break;
                     }
                 }
