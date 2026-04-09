@@ -612,6 +612,18 @@ class DebugManager {
 		});
 
 		this._addDebugTool({
+			name: 'Test refetching tiles',
+			category: 'Functionality',
+			startsOn: false,
+			onAdd: function () {
+				BitmapTileManager.setLimitedCacheSize();
+			},
+			onRemove: function () {
+				BitmapTileManager.setDefaultCacheSize();
+			},
+		});
+
+		this._addDebugTool({
 			name: 'Randomize user settings',
 			category: 'Functionality',
 			startsOn: !!window.coolParams.get('randomUser'),
