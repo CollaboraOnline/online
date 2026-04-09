@@ -163,6 +163,16 @@ static FilenameAndUri fileSaveDialog(const std::string& name,
 
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mode);
 
+static std::set<std::string> currentlyOpenDocumens()
+{
+    std::set<std::string> result;
+
+    for (const auto& i : windowData)
+        result.insert(i.second.filenameAndUri.uri);
+
+    return result;
+}
+
 // Vector of documents to open passed on the command line, or multiple documents to open selected in
 // a file open dialog. We open the next one only as soon as the previous one has finished loading.
 static std::deque<FilenameAndUri> filenamesAndUrisToOpen;
@@ -564,7 +574,7 @@ static void do_getrecentdocs(const WindowData& data, int id)
     PostMessageW(data.hWnd, CODA_WM_EXECUTESCRIPT,
                  (WPARAM)_strdup(("window.replyFromNativeToCall(" +
                                   std::to_string(id) +
-                                  ", '" + recentFiles.serialise() + "')").c_str()), 0);
+                                  ", '" + recentFiles.serialiseFiltered(currentlyOpenDocumens()) + "')").c_str()), 0);
 }
 
 static void do_cut_or_copy(ClipboardOp op, WindowData& data)
