@@ -101,6 +101,10 @@ class DebugManager {
 	private _automatedUserQueue: string[];
 	private _automatedUserPhase: number;
 
+	// DOM touching in LayoutingTask check
+	private _domObserver: MutationObserver;
+	private _stopOnDomTouching: boolean;
+
 	constructor(map: MapInterface) {
 		this._map = map;
 		this._docLayer = null;
@@ -537,6 +541,46 @@ class DebugManager {
 				delete self._eventDelayWatchStart;
 				delete self._lastEventDelayTime;
 				delete self._lastEventDelay;
+			},
+		});
+
+		this._addDebugTool({
+			name: 'DOM touching outside task',
+			category: 'Logging',
+			startsOn: true,
+			onAdd: function () {
+				const config = {
+					attributes: true,
+					childList: true,
+					subtree: true,
+				};
+
+				self._domObserver = new MutationObserver(() => {
+					if (!app.layoutingService.isWorking()) {
+						app.console.error('DOM Modification outside LayoutingTask');
+						if (self._stopOnDomTouching) {
+							// eslint-disable-next-line
+							debugger;
+						}
+					}
+				});
+
+				self._domObserver.observe(app.map.getContainer(), config);
+			},
+			onRemove: function () {
+				self._domObserver.disconnect();
+			},
+		});
+
+		this._addDebugTool({
+			name: 'DOM touching - breakpoint',
+			category: 'Logging',
+			startsOn: false,
+			onAdd: function () {
+				self._stopOnDomTouching = true;
+			},
+			onRemove: function () {
+				self._stopOnDomTouching = false;
 			},
 		});
 

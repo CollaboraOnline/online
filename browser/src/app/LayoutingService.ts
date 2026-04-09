@@ -26,6 +26,7 @@ class LayoutingService {
 	private _layoutTaskFlush: ReturnType<typeof setTimeout> | null = null;
 	private _drainCallbacks: Array<SimpleTask> = [];
 	private _lastTaskId = 0;
+	private _isWorking = false;
 
 	// get something around 25 fps as minimum (35ms + some overflow = ~40ms)
 	private MAX_TASK_DURATION_MS = 35;
@@ -51,6 +52,10 @@ class LayoutingService {
 		return this._layoutTasks.length > 0;
 	}
 
+	public isWorking(): boolean {
+		return this._isWorking;
+	}
+
 	public onDrain(callback: SimpleTask): void {
 		this._drainCallbacks.push(callback);
 		this._scheduleLayouting();
@@ -60,11 +65,15 @@ class LayoutingService {
 		const task = this._layoutTasks.shift();
 		if (!task || !task.func) return false;
 
+		this._isWorking = true;
+
 		try {
 			task.func();
 		} catch (ex) {
 			console.error('LayoutingTask exception: ' + ex);
 		}
+
+		this._isWorking = false;
 
 		return true;
 	}
@@ -118,6 +127,8 @@ class LayoutingService {
 	}
 
 	private _runDrainCallbacks(): void {
+		this._isWorking = true;
+
 		const callbacks = this._drainCallbacks;
 		this._drainCallbacks = [];
 		for (const cb of callbacks) {
@@ -127,6 +138,8 @@ class LayoutingService {
 				console.error('Drain callback exception: ' + ex);
 			}
 		}
+
+		this._isWorking = false;
 	}
 
 	private _scheduleLayouting(): void {

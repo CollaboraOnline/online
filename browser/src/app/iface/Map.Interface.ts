@@ -49,6 +49,7 @@ interface MapInterface extends Evented {
 	getDocSize(): cool.Point;
 	getSize(): cool.Point;
 	getCenter(): LatLngLike;
+	getContainer(): Element;
 	_getCurrentFontName(): string;
 
 	_docLoadedOnce: boolean;
