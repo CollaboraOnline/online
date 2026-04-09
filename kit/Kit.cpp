@@ -2036,7 +2036,7 @@ std::shared_ptr<kit::Document> Document::load(const std::shared_ptr<ChildSession
         {
             std::string scheme, host, port;
             if (net::parseUri(session->getDocURL(), scheme, host, port) && scheme == "https://")
-                ::setenv("LOK_EXEMPT_VERIFY_HOST", host.c_str(), 1);
+                ::setenv("KIT_EXEMPT_VERIFY_HOST", host.c_str(), 1);
         }
     }
 
@@ -3897,7 +3897,7 @@ void lokit_main(
             ::setenv("XDG_CONFIG_HOME", (tmpPath + "/.config").c_str(), 1);
             ::setenv("HOME", tmpPath.c_str(), 1);
             // overwrite coolkitconfig.xcu setting to fit into allowed paths
-            ::setenv("LOK_WORKDIR", ("file://" + tmpPath).c_str(), 1);
+            ::setenv("KIT_WORKDIR", ("file://" + tmpPath).c_str(), 1);
 
             // Setup the OSL sandbox
             allowedPaths += ":r:" + pathFromFileURL(userdir_url);
