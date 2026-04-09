@@ -427,7 +427,9 @@ int main(int argc, char** argv)
     if (!remoteWopiSrc.isEmpty())
     {
         // Download the file via the COOL server's /co/collab endpoint,
-        // same flow as the COWASM wasm build uses.
+        // same flow as the COWASM wasm build uses.  Keep the WebSocket
+        // open afterwards to receive collab notifications (user
+        // join/leave, etc.).
         qDebug() << "WOPISrc:" << remoteWopiSrc;
         qDebug() << "COOL server:" << remoteCoolServer;
 
@@ -437,22 +439,32 @@ int main(int argc, char** argv)
                       + "/co/collab?WOPISrc="
                       + QUrl::toPercentEncoding(remoteWopiSrc);
 
-        QEventLoop collabLoop;
-        QString downloadUrl;
-        QWebSocket ws;
+        // Heap-allocated so it outlives the download phase and stays
+        // open while the document is being edited.
+        auto* collabWs = new QWebSocket;
 
-        QObject::connect(&ws, &QWebSocket::connected, [&]() {
-            ws.sendTextMessage("access_token " + remoteAccessToken);
-        });
-        QObject::connect(&ws, &QWebSocket::textMessageReceived,
-            [&](const QString& msg) {
+        // State shared between the download phase (synchronous, in this
+        // scope) and the monitoring phase (asynchronous, via app.exec).
+        // Heap-allocated so the lambda doesn't capture dead stack refs.
+        auto* downloadUrl = new QString;
+        auto* downloadDone = new bool(false);
+        auto* collabLoop = new QEventLoop;
+
+        QObject::connect(collabWs, &QWebSocket::connected,
+            [collabWs, &remoteAccessToken]() {
+                collabWs->sendTextMessage("access_token "
+                                          + remoteAccessToken);
+            });
+        QObject::connect(collabWs, &QWebSocket::textMessageReceived,
+            [downloadUrl, downloadDone, collabWs, collabLoop]
+            (const QString& msg) {
                 QJsonDocument jdoc = QJsonDocument::fromJson(msg.toUtf8());
                 QJsonObject jobj = jdoc.object();
                 QString type = jobj["type"].toString();
 
                 if (type == "authenticated")
                 {
-                    ws.sendTextMessage(
+                    collabWs->sendTextMessage(
                         "{\"type\":\"fetch\","
                         "\"stream\":\"contents\","
                         "\"requestId\":\"coda-init\"}");
@@ -460,44 +472,69 @@ int main(int argc, char** argv)
                 else if (type == "fetch_url"
                          && jobj["requestId"].toString() == "coda-init")
                 {
-                    downloadUrl = jobj["url"].toString();
-                    collabLoop.quit();
+                    *downloadUrl = jobj["url"].toString();
+                    *downloadDone = true;
+                    collabLoop->quit();
                 }
                 else if (type == "error" || type == "fetch_error")
                 {
                     qWarning() << "Collab error:" << msg;
-                    ws.close();
+                    collabWs->close();
+                }
+                else if (*downloadDone)
+                {
+                    // Monitoring phase: handle collab notifications
+                    // while the document is open.
+                    // TODO: act on these (e.g., offer to switch to
+                    // online collaborative editing when another user
+                    // joins)
+                    if (type == "user_joined")
+                    {
+                        QJsonObject user = jobj["user"].toObject();
+                        (void)user;
+                    }
+                    else if (type == "user_left")
+                    {
+                        QJsonObject user = jobj["user"].toObject();
+                        (void)user;
+                    }
                 }
             });
-        QObject::connect(&ws, &QWebSocket::disconnected,
-                         &collabLoop, &QEventLoop::quit);
+        QObject::connect(collabWs, &QWebSocket::disconnected,
+            [downloadUrl, collabLoop]() {
+                if (downloadUrl->isEmpty())
+                    collabLoop->quit();
+            });
 
         QTimer collabTimeout;
         collabTimeout.setSingleShot(true);
-        QObject::connect(&collabTimeout, &QTimer::timeout, [&]() {
-            qWarning() << "Collab WebSocket timeout";
-            ws.close();
-        });
+        QObject::connect(&collabTimeout, &QTimer::timeout,
+            [collabWs]() {
+                qWarning() << "Collab WebSocket timeout";
+                collabWs->close();
+            });
         collabTimeout.start(30000);
 
-        ws.open(QUrl(wsUrl));
-        collabLoop.exec();
+        collabWs->open(QUrl(wsUrl));
+        collabLoop->exec();
 
-        if (downloadUrl.isEmpty())
+        if (downloadUrl->isEmpty())
         {
             qWarning() << "Failed to get download URL from collab";
+            delete downloadDone;
+            delete downloadUrl;
+            delete collabWs;
             _Exit(1);
         }
 
         // Resolve relative URL against COOL server
-        if (downloadUrl.startsWith('/'))
-            downloadUrl = remoteCoolServer + downloadUrl;
-
-        qDebug() << "Collab download URL:" << downloadUrl;
+        QString dlUrlStr = *downloadUrl;
+        if (dlUrlStr.startsWith('/'))
+            dlUrlStr = remoteCoolServer + dlUrlStr;
 
         // Download the file
         QNetworkAccessManager dlNam;
-        QUrl dlUrl(downloadUrl);
+        QUrl dlUrl(dlUrlStr);
         QNetworkRequest dlReq(dlUrl);
         QEventLoop dlLoop;
         QNetworkReply* dlReply = dlNam.get(dlReq);
@@ -509,6 +546,7 @@ int main(int argc, char** argv)
         {
             qWarning() << "Download error:" << dlReply->errorString();
             dlReply->deleteLater();
+            delete collabWs;
             _Exit(1);
         }
 
@@ -527,8 +565,7 @@ int main(int argc, char** argv)
         tmp->setAutoRemove(false);
         dlReply->deleteLater();
 
-        ws.close();
-
+        // Don't close collabWs - it stays open for collab notifications.
         qDebug() << "Downloaded to:" << localPath;
         coda::openFiles(QStringList() << localPath);
     }
