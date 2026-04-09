@@ -425,7 +425,7 @@ protected:
     {
         if (id != _owner)
         {
-            LOG_TRC("Thread affinity of Socket set to " << id << " (was " << _owner << ')');
+            LOG_TRC("Thread affinity of Socket #" << _fd << " set to " << id << " (was " << _owner << ')');
             _owner = id;
         }
     }
@@ -435,7 +435,7 @@ protected:
     {
         if (ProcUtil::ThreadId() != _owner)
         {
-            LOG_TRC("Resetting thread affinity of Socket while in transit (was " << _owner << ')');
+            LOG_TRC("Resetting thread affinity of Socket #" << _fd << " while in transit (was " << _owner << ')');
             _owner = ProcUtil::ThreadId();
         }
     }
@@ -460,7 +460,7 @@ private:
         _noShutdown = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = ProcUtil::getThreadId();
-        LOG_DBG("Created socket. Thread affinity set to " << _owner << ", " << toStringImpl());
+        LOG_DBG("Created socket #" << _fd << ". Thread affinity set to " << _owner);
 
         if constexpr (!Util::isMobileApp())
         {
