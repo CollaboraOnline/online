@@ -37,6 +37,9 @@ public:
     // Produces a JSON string of the type that our JS expects.
     std::string serialise();
 
+    // As serialise(), but without the documents listed.
+    std::string serialiseFiltered(std::set<std::string> dropTheseURIs);
+
 private:
     struct Entry
     {

@@ -86,13 +86,22 @@ void RecentFiles::add(const std::string& uri)
 
 std::string RecentFiles::serialise()
 {
+    return serialiseFiltered({ });
+}
+
+std::string RecentFiles::serialiseFiltered(std::set<std::string> dropTheseURIs)
+{
     std::string result;
 
     result = "[ ";
     int n = 0;
     for (int i = 0; i < _mostRecentlyUsed.size(); i++)
     {
+        if (dropTheseURIs.contains(_mostRecentlyUsed[i].uri))
+            continue;
+
         Poco::URI uri(_mostRecentlyUsed[i].uri);
+
         std::vector<std::string> segments;
         uri.getPathSegments(segments);
 
