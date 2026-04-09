@@ -66,7 +66,7 @@ const char* getThreadName();
 ThreadId getThreadId();
 long getProcessId();
 
-void killThreadById(int tid, int signal);
+void killThreadById(ThreadId tid, int signal);
 
 /// Asserts in the debug builds, otherwise just logs.
 void assertCorrectThread(ThreadId owner, LOG_CAPTURE_CALLER_DECLARATION);

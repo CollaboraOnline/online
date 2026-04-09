@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <common/ProcUtil.hpp>
+
 #include <atomic>
 #include <condition_variable>
 #include <mutex>
@@ -19,7 +21,7 @@
 class BackgroundSaveWatchdog
 {
 public:
-    BackgroundSaveWatchdog(unsigned mobileAppDocId, int savingTid);
+    BackgroundSaveWatchdog(unsigned mobileAppDocId, ProcUtil::ThreadId savingTid);
     ~BackgroundSaveWatchdog();
     void complete();
 

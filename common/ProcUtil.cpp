@@ -117,7 +117,7 @@ ThreadId getThreadId()
 #endif
 }
 
-void killThreadById(int tid, [[maybe_unused]] int signal)
+void killThreadById(ThreadId tid, [[maybe_unused]] int signal)
 {
 #if defined __linux__
     ::syscall(SYS_tgkill, getpid(), tid, signal);
