@@ -33,11 +33,9 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		e.preventDefault();
 		this.stopPropagating();
 
-		// Calculate the center position of the section. We will send this to core side.
-		point.pX = this.position[0] + this.size[0] / 2;
-		point.pY = this.position[1] + this.size[1] / 2;
-
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+		const _validatedCellAddress = (app.map._docLayer as { _validatedCellAddress?: null | cool.SimplePoint })._validatedCellAddress;
+		if (_validatedCellAddress && app.calc.cellCursorVisible && _validatedCellAddress.equals(app.calc.cellAddress?.toArray() ?? [])) {
+			app.map.sendUnoCommand('.uno:DataSelect');
+		}
 	}
 }
