@@ -200,6 +200,32 @@ class DebugManager {
 		if (servedBy) servedBy.style.display = 'none';
 	}
 
+	private setupObserver() {
+		this._domObserver = new MutationObserver(() => {
+			app.console.error('DOM Modification outside LayoutingTask or RAF');
+			if (this._stopOnDomTouching) {
+				// eslint-disable-next-line
+				debugger;
+			}
+		});
+	}
+
+	public enterRAF() {
+		if (this._domObserver) this._domObserver.disconnect();
+	}
+
+	public exitRAF() {
+		if (this._domObserver) {
+			const config = {
+				attributes: true,
+				childList: true,
+				subtree: true,
+			};
+
+			this._domObserver.observe(app.map.getContainer(), config);
+		}
+	}
+
 	private _addDebugTool(tool: DebugTool) {
 		// Create category fieldset if it doesn't exist
 		let fieldset = this._panel.querySelector(
@@ -549,26 +575,12 @@ class DebugManager {
 			category: 'Logging',
 			startsOn: true,
 			onAdd: function () {
-				const config = {
-					attributes: true,
-					childList: true,
-					subtree: true,
-				};
-
-				self._domObserver = new MutationObserver(() => {
-					if (!app.layoutingService.isWorking()) {
-						app.console.error('DOM Modification outside LayoutingTask');
-						if (self._stopOnDomTouching) {
-							// eslint-disable-next-line
-							debugger;
-						}
-					}
-				});
-
-				self._domObserver.observe(app.map.getContainer(), config);
+				self.setupObserver();
+				self.exitRAF();
 			},
 			onRemove: function () {
 				self._domObserver.disconnect();
+				delete self._domObserver;
 			},
 		});
 

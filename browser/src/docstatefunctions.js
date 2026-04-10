@@ -471,3 +471,11 @@ app.impress.isSlideSelected = function (index) {
 		return app.impress.partList[index].selected === 1;
 	} else return false;
 };
+
+app.enterRAF = function () {
+	if (app.map._debug) app.map._debug.enterRAF();
+};
+
+app.exitRAF = function () {
+	if (app.map._debug) app.map._debug.exitRAF();
+};
