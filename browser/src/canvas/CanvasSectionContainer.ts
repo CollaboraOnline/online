@@ -667,10 +667,14 @@ class CanvasSectionContainer {
 	}
 
 	private redrawCallback(timestamp: number) {
+		app.enterRAF();
+
 		this.drawRequest = null;
 
-		if (!this.isCanvasSizeValidAfterDisplayChange())
+		if (!this.isCanvasSizeValidAfterDisplayChange()) {
+			app.exitRAF();
 			return;
+		}
 
 		this.flushLayoutingTasks();
 		this.resizeCanvas();
@@ -679,6 +683,8 @@ class CanvasSectionContainer {
 
 		// need to check if we should continue animation
 		this.animate(timestamp);
+
+		app.exitRAF();
 	}
 
 	public requestReDraw() {
@@ -2090,6 +2096,8 @@ class CanvasSectionContainer {
 	}
 
 	private animate (timeStamp: number) {
+		app.enterRAF();
+
 		if (this.lastFrameStamp > 0)
 			this.elapsedTime += Math.max(0, timeStamp - this.lastFrameStamp);
 
@@ -2114,6 +2122,8 @@ class CanvasSectionContainer {
 			this.setAnimatingSectionName(null);
 			this.frameCount = this.elapsedTime = null;
 		}
+
+		app.exitRAF();
 	}
 
 	// Resets animation duration. Not to be called directly. Instead, use (inside section class) this.resetAnimation()
