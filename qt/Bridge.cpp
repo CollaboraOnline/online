@@ -16,6 +16,7 @@
 #include <COKit/COKit.hxx>
 
 #include <qt/DBusService.hpp>
+#include <qt/RemoteFilePicker.hpp>
 #include <qt/DocumentOperations.hpp>
 #include <net/FakeSocket.hpp>
 #include <common/FileUtil.hpp>
@@ -38,13 +39,21 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
+#include <QDir>
+#include <QEventLoop>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QInputDialog>
+#include <QLineEdit>
 #include <QMainWindow>
 #include <QMetaObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QObject>
 #include <QPointer>
 #include <QString>
+#include <QTemporaryFile>
 #include <QTimer>
 #include <QUrl>
 #include <QWebSocket>
@@ -606,6 +615,100 @@ QVariant Bridge::cool(const QString& messageStr)
             else
                 _webView->destroyPresentationFS();
         }
+    }
+    else if (message == "openremote")
+    {
+        // Ask for the server URL, then show the remote file picker.
+        // The full flow (WOPI extraction, collab download, open) runs
+        // asynchronously from here.
+        // Read last-used server URL from config
+        Poco::Path configFile = Desktop::getConfigPath();
+        configFile.append("RemoteServer.conf");
+        QString lastUrl;
+        QFile conf(QString::fromStdString(configFile.toString()));
+        if (conf.open(QIODevice::ReadOnly))
+        {
+            lastUrl = QString::fromUtf8(conf.readAll()).trimmed();
+            conf.close();
+        }
+
+        auto* inputDialog = new QInputDialog(_webView);
+        inputDialog->setWindowTitle(QObject::tr("Open Remote"));
+        inputDialog->setLabelText(QObject::tr("Server URL:"));
+        inputDialog->setTextEchoMode(QLineEdit::Normal);
+        inputDialog->setTextValue(lastUrl);
+        inputDialog->resize(400, 150);
+        if (inputDialog->exec() != QDialog::Accepted)
+        {
+            delete inputDialog;
+            return {};
+        }
+        QString serverUrl = inputDialog->textValue();
+        delete inputDialog;
+        if (serverUrl.isEmpty())
+            return {};
+
+        // Save for next time
+        if (conf.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            conf.write(serverUrl.toUtf8());
+            conf.close();
+        }
+
+        // Show the remote file picker in a separate invocation so
+        // we don't block the cool() return.
+        auto* webView = _webView;
+        QTimer::singleShot(0, [serverUrl, webView]() {
+            RemoteFilePicker picker(serverUrl, webView);
+            if (picker.exec() != QDialog::Accepted)
+                return;
+
+            // For now, just open via WebDAV download (same as --remote
+            // fallback).  TODO: extract the full WOPI + collab flow
+            // into a reusable function.
+            QUrl davUrl = picker.serverUrl();
+            davUrl.setPath(davUrl.path() + "/remote.php/dav/files/"
+                           + picker.loginName() + "/"
+                           + picker.selectedPath());
+            QString cred = picker.loginName() + ':' + picker.appPassword();
+
+            QNetworkAccessManager nam;
+            QNetworkRequest req(davUrl);
+            req.setRawHeader("Authorization",
+                             "Basic " + cred.toUtf8().toBase64());
+
+            QEventLoop loop;
+            QNetworkReply* reply = nam.get(req);
+            QObject::connect(reply, &QNetworkReply::finished,
+                             &loop, &QEventLoop::quit);
+            loop.exec();
+
+            if (reply->error() != QNetworkReply::NoError)
+            {
+                LOG_ERR("Remote download error: "
+                        << reply->errorString().toStdString());
+                reply->deleteLater();
+                return;
+            }
+
+            QString ext;
+            QString path = picker.selectedPath();
+            int dot = path.lastIndexOf('.');
+            if (dot >= 0)
+                ext = path.mid(dot);
+
+            auto* tmp = new QTemporaryFile(
+                QDir::tempPath() + "/coda-XXXXXX" + ext);
+            (void)tmp->open();
+            tmp->write(reply->readAll());
+            QString localPath = tmp->fileName();
+            tmp->close();
+            tmp->setAutoRemove(false);
+            reply->deleteLater();
+
+            coda::openFiles(QStringList() << localPath);
+            closeStarterScreen();
+        });
     }
     else if (message == "uno .uno:Open")
     {
