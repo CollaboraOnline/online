@@ -284,11 +284,11 @@ COOL_JS_LST =\
 	src/app/LocaleService.ts \
 	src/app/LayoutingService.ts \
 	src/app/ServerConnectionService.ts \
+	src/app/DocEvents.ts \
 	src/docstate.ts \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
 	src/app/TableStylesService.ts \
-	src/app/DocEvents.ts \
 	src/core/geometry.ts \
 	src/core/TimerRegistry.ts \
 	src/app/GraphicSelectionMiddleware.ts \
