@@ -184,6 +184,8 @@ class PermissionViewMode extends JSDialogComponent {
 			return;
 		}
 
+		this.map.uiManager.closeSnackbar();
+
 		if (mode === 'edit') {
 			if (typeof this.map._switchToEditMode === 'function')
 				this.map._switchToEditMode();
