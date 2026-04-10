@@ -294,7 +294,7 @@ window.L.Map.include({
 		}
 
 		var isAllowedInReadOnly = false;
-		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
+		var allowedCommands = ['.uno:Save', '.uno:SaveAs', '.uno:WordCountDialog',
 			'.uno:Signature', '.uno:PrepareSignature', '.uno:DownloadSignature', '.uno:InsertSignatureLine',
 			'.uno:ShowResolvedAnnotations', '.uno:Open', '.uno:CloseWin',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
