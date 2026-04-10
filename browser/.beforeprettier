@@ -93,7 +93,6 @@
 /src/core/Rectangle.ts
 /src/core/Socket.js
 /src/core/Util.js
-/src/app/DocEvents.ts
 /src/dom/DomEvent.js
 /src/dom/DomEvent.MultiClick.js
 /src/dom/DomEvent.Pointer.js
