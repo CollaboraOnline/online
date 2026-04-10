@@ -23,33 +23,34 @@
 type eventCallback = (...args: any[]) => void;
 
 class DocEvents {
-    static documentContainerId = 'document-container';
-    container: HTMLDivElement;
+	static documentContainerId = 'document-container';
+	container: HTMLDivElement;
 
-    public initiate() {
-        this.container = document.getElementById(DocEvents.documentContainerId) as HTMLDivElement;
+	constructor() {
+		this.initiate();
+	}
 
-        if (!this.container)
-            console.error('DocEvents initation failed.');
+	public initiate() {
+		this.container = document.getElementById(
+			DocEvents.documentContainerId,
+		) as HTMLDivElement;
 
-        // Resize event for a div element is not fired. We'll use a resize-observer for catching the event.
-        new ResizeObserver(this.fire.bind(this, 'resize')).observe(this.container);
-    }
+		if (!this.container) console.error('DocEvents initation failed.');
 
-    public fire(eventType: string, details: any) {
-        const newEvent = new CustomEvent(eventType, { detail: details });
-        this.container.dispatchEvent(newEvent);
-    }
+		// Resize event for a div element is not fired. We'll use a resize-observer for catching the event.
+		new ResizeObserver(this.fire.bind(this, 'resize')).observe(this.container);
+	}
 
-    public on(eventType: string, callback: eventCallback) {
-        this.container.addEventListener(eventType, callback);
-    }
+	public fire(eventType: string, details: any) {
+		const newEvent = new CustomEvent(eventType, { detail: details });
+		this.container.dispatchEvent(newEvent);
+	}
 
-    public off(eventType: string, callback: eventCallback) {
-        this.container.removeEventListener(eventType, callback);
-    }
+	public on(eventType: string, callback: eventCallback) {
+		this.container.addEventListener(eventType, callback);
+	}
+
+	public off(eventType: string, callback: eventCallback) {
+		this.container.removeEventListener(eventType, callback);
+	}
 }
-
-// Initiate
-app.events = new DocEvents();
-app.events.initiate();
