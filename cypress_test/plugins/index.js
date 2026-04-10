@@ -24,9 +24,15 @@ function plugin(on, config) {
 
 	// Abort the run after the first spec failure so CI does not waste
 	// time running remaining specs when the build is already doomed.
+	// process.exit(1) is not sufficient: Cypress runs plugins in
+	// a child process, so it only kills this worker while the main
+	// Cypress process hangs forever. Cypress is launched via setsid
+	// in the Makefile so it has its own process group. Kill that
+	// group to take down Cypress and the browser it spawned without
+	// affecting the parent shell.
 	on('after:spec', (spec, results) => {
 		if (results && results.stats.failures > 0) {
-			process.exit(1);
+			process.kill(0, 'SIGTERM');
 		}
 	});
 
