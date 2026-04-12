@@ -63,7 +63,7 @@ protected:
     _scenario;
 
     static constexpr auto OriginalDocContent = "Original contents";
-    static constexpr auto ModifiedOriginalDocContent = "\ufeffaOriginal contents\n";
+    static constexpr auto ModifiedOriginalDocContent = "aOriginal contents\n";
     static constexpr auto ConflictingDocContent = "Modified in-storage contents";
 
     std::size_t getExpectedCheckFileInfo() const { return _expectedCheckFileInfo; }
