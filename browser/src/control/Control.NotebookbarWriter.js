@@ -2272,7 +2272,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'review-comments',
-				'name':_('Comments'),
+				'name': _('Show Comments'),
 				'accessibility': { focusBack: false, combination: 'SC', de: 'N' },
 				'more': {
 					'command':'showcommentsnavigator',
@@ -2285,7 +2285,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:InsertAnnotation'),
 						'command': '.uno:InsertAnnotation',
-						'accessibility': { focusBack: false, combination: 'C', de: 'N' }
+						'accessibility': { focusBack: false, combination: 'CM', de: 'N' }
 					},
 					{
 						'type': 'container',
@@ -2351,7 +2351,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			hideChangeTrackingControls ? {} : {
 				'type': 'overflowgroup',
 				'id': 'review-tracking',
-				'name':_('Tracking'),
+				'name': _('Tracking'),
 				'accessibility': { focusBack: false, combination: 'TC', de: null },
 				'children' : [
 					{
@@ -2452,8 +2452,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			hideChangeTrackingControls ? {} : {
 				'type': 'overflowgroup',
 				'id': 'review-compare',
-				'name':_('Compare'),
-				'accessibility': { focusBack: false, combination: 'RO', de: null },
+				'name': _('Compare'),
+				'nofold': true,
 				'children' : [
 					{
 						'id': 'review-compare:CompareDocumentsMenu',
@@ -2469,6 +2469,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'type': 'overflowgroup',
 				'id': 'review-accessibility',
 				'name':_('Accessibility'),
+				'nofold': true,
 				'accessibility': { focusBack: false, combination: 'A1', de: 'B' },
 				'children' : [
 					{
