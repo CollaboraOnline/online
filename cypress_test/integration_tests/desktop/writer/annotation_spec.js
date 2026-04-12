@@ -393,7 +393,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		const replyCount = 5;
 		for (let i = 1; i <= replyCount; i++) {
 			cy.cGet('#comment-annotation-menu-' + i).click();
-			cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+			cy.cGet('body').contains('.ui-combobox-entry', 'Reply').click();
 			cy.cGet('#annotation-reply-textarea-' + i).type('reply ' + i);
 			cy.cGet('#annotation-reply-' + i).click();
 			cy.cGet('#annotation-content-area-' + (i + 1)).should('contain', 'reply ' + i);
