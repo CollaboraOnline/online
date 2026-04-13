@@ -353,8 +353,6 @@ private:
     bool sendCombinedTiles(const char* buffer, int length, const StringVector& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool sendFontRendering(const char* buffer, int length, const StringVector& tokens,
-                           const std::shared_ptr<DocumentBroker>& docBroker);
     bool handleGetSlideRequest(const StringVector& tokens,
                                const std::shared_ptr<DocumentBroker>& docBroker);
 
