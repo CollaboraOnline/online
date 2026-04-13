@@ -57,6 +57,34 @@ window.L.Map.include({
 		});
 	},
 
+	insertThreadedComment: function() {
+		if (this.stateChangeHandler.getItemValue('InsertAnnotation') === 'disabled')
+			return;
+		const editingComment = cool.Comment.isAnyEdit();
+		const commentSection = app.sectionContainer.getSectionWithName(
+			app.CSections.CommentList.name
+		) as cool.CommentSection;
+		if (commentSection && editingComment) {
+			commentSection.navigateAndFocusComment(editingComment);
+			return;
+		}
+
+		var avatar = undefined;
+		var author = this.getViewName(this._docLayer._viewId);
+		if (author in this._viewInfoByUserName) {
+			avatar = this._viewInfoByUserName[author].userextrainfo.avatar;
+		}
+		this._docLayer.newAnnotation({
+			text: '',
+			textrange: '',
+			author: author,
+			dateTime: new Date().toISOString(),
+			id: 'new',
+			avatar: avatar,
+			threaded: 'true',
+		});
+	},
+
 	showResolvedComments: function(on: boolean = false) {
 		var unoCommand = '.uno:ShowResolvedAnnotations';
 		this.sendUnoCommand(unoCommand);
@@ -789,13 +817,15 @@ export class CommentSection extends CanvasSectionObject {
 						value: annotation.sectionProperties.data.text
 					} }
 			};
+			var unoCommand = annotation.sectionProperties.data.threaded
+				? '.uno:InsertThreadedComment' : '.uno:InsertAnnotation';
 			if (app.file.fileBasedView) {
 				this.map.setPart(app.map._docLayer._selectedPart, false);
-				this.map.sendUnoCommand('.uno:InsertAnnotation', comment, true /* force */);
+				this.map.sendUnoCommand(unoCommand, comment, true /* force */);
 				this.map.setPart(0, false);
 			}
 			else {
-				this.map.sendUnoCommand('.uno:InsertAnnotation', comment, true /* force */);
+				this.map.sendUnoCommand(unoCommand, comment, true /* force */);
 			}
 
 			// Object is later removed in onACKComment when newly inserted comment object is available

@@ -793,12 +793,13 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			this._map.mention.openMentionPopup(list);
 		}
 		else if (msg.MessageId === 'Action_ResolveComment') {
-			// Currently only Writer has "Resolve Comment" feature.
-			if (msg.Values && this._map._docLayer._docType === 'text') {
+			var docType = this._map._docLayer._docType;
+			if (msg.Values && (docType === 'text' || docType === 'spreadsheet')) {
 				const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
 				if (commentSection) {
 					const comment = commentSection.getComment(msg.Values.Id);
-					if (comment && comment.sectionProperties.data.resolved !== 'true') {
+					if (comment && comment.sectionProperties.data.resolved !== 'true'
+						&& (docType === 'text' || comment.sectionProperties.data.threaded)) {
 						commentSection.resolve(comment);
 					}
 				}
