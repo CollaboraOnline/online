@@ -260,6 +260,12 @@ class SlideShowPresenter {
 			case 'displayslide':
 				this._slideShowNavigator.setLeaderSlide(info);
 				this._slideShowNavigator.resetLeaderEffect();
+				if (this.isFollowing()) {
+					// Navigate to the leader's slide if we are idle. If
+					// we are loading, the fetchAndRun callback's catch-up
+					// will handle it once the load completes.
+					this._slideShowNavigator.followLeaderDisplaySlide(info.currentSlide);
+				}
 				break;
 			case 'effect':
 				this._slideShowNavigator.setLeaderEffect(info);

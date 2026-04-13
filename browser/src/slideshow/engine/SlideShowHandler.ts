@@ -380,6 +380,7 @@ class SlideShowHandler {
 
 	notifySlideStart(nNewSlideIndex: number, nOldSlideIndex: number) {
 		this.nCurrentEffect = 0;
+		this.bIsNextEffectRunning = false;
 		this.bIsRewinding = false;
 		this.bIsSkipping = false;
 		this.bIsSkippingAll = false;
@@ -617,6 +618,9 @@ class SlideShowHandler {
 		this.aNextEffectEventArray.at(this.nCurrentEffect).fire();
 		this.aEventMultiplexer.notifySkipEffectEvent();
 		++this.nCurrentEffect;
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
+		);
 		this.update();
 		this.bIsSkipping = false;
 		return true;
