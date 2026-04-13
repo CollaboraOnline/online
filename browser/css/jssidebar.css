@@ -77,6 +77,7 @@ img.sidebar.ui-image {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--sidebar-header-height);
+	font-weight: bold;
 	padding-inline: 8px;
 	flex: 1;
 	display: flex;
