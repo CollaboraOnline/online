@@ -70,7 +70,7 @@ MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
 # tsc can report a failure, but still create a .js and a second make attempt will succeed,
 # so if this returns an error then delete the target
 $(MOCHA_JS_DIR)/main.js: $(MOCHA_DIR)/main.ts
-	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --moduleResolution node --lib dom,es2016 --target ES5 --downlevelIteration || (rm -f $@ && false)
+	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --moduleResolution node --lib dom,es2016 --target ES5 --downlevelIteration --allowJs || (rm -f $@ && false)
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)

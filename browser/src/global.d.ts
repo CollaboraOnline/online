@@ -43,6 +43,7 @@ interface COOLTouch {
 interface Window {
 	touch: COOLTouch;
 	setLogging(value: boolean): void;
+	postMobileMessage(msg: string): void;
 }
 
 /*
@@ -339,6 +340,7 @@ interface Window {
 		isTablet(): boolean;
 		isCODesktop(): boolean;
 		isNewDocument(): boolean;
+		isChromebook(): boolean;
 		getDeviceFormFactor(): string;
 	};
 	prefs: {
@@ -379,6 +381,7 @@ interface Window {
 	sidebarId: number;
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
+	ThisIsTheAndroidApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
 	ThisIsTheiOSApp: boolean;
 	ThisIsTheMacOSApp: boolean;
