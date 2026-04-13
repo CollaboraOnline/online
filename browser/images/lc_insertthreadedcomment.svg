@@ -1,0 +1,8 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Comment bubble (same outline weight as InsertAnnotation, 1px shorter for checkmark) -->
+  <path d="m1 1v9h2.5c.276 0 .5.224.5.5v2.387l3.168-2.76c.091-.082.21-.127.332-.127h5.5v-9z" fill="#fafafa"/>
+  <path d="m.5 0c-.276 0-.5.224-.5.5v10c0 .276.224.5.5.5h2.5v3c.001.431.51.659.832.373l3.668-3.373h6c.276 0 .5-.224.5-.5v-10c0-.276-.224-.5-.5-.5zm.5 1h12v9h-5.5c-.122 0-.241.045-.332.127l-3.168 2.76v-2.387c0-.276-.224-.5-.5-.5h-2.5z" fill="#3a3a38"/>
+  <!-- Green checkmark circle in bottom-right -->
+  <circle cx="12.5" cy="12.5" r="3.5" fill="#107c10"/>
+  <path d="m11 12.5 1 1 2-2.5" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

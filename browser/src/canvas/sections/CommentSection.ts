@@ -1095,7 +1095,8 @@ export class Comment extends CanvasSectionObject {
 			if (docLayer._docType === 'text' && this.isRootComment() && !blockChangeFromDifferentAuthor)
 				entries.push({ text: _('Remove Thread'), type: 'action', id: 'removeThread', pos: String(pos++) });
 
-			if (docLayer._docType === 'text')
+			if (docLayer._docType === 'text'
+				|| (docLayer._docType === 'spreadsheet' && data.threaded))
 				entries.push({
 					text: data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
 					type: 'action', id: 'resolve', pos: String(pos++),
