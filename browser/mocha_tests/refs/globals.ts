@@ -9,8 +9,51 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var L: any = {
+// In Node (mocha) there is no browser `window`. Many source files assign
+// to `window.*` at top level (e.g. `window.app.a11yValidator = ...`).
+// Aliasing `window` to `globalThis` makes those assignments land on the
+// same object as bare `app`, `L`, etc., so the whole source tree can be
+// loaded without a browser DOM.
+(globalThis as any).window = globalThis;
+
+// docstatefunctions.js calls `window.addEventListener('load', ...)` at
+// module load time, before any test wires up jsdom. Provide a no-op so
+// the call does not throw; tests that need real DOM events overwrite
+// `global.window` later via initializeJSDOM.
+(globalThis as any).addEventListener = () => {};
+
+// gettext translation shim. In the browser `_` is provided by l10n.js
+// (and `_` resolves to the identity on untranslated strings).
+(globalThis as any)._ = (s: string) => s;
+
+// Leaflet's `L` namespace is a script-loaded global in the browser. Source
+// files run mixin calls (L.Map.include, L.Handler.extend, ...) at module
+// load time, so we need enough of a stub for those to be no-ops. extend()
+// returns an empty class so `L.Foo.Settings = L.Handler.extend({...})`
+// evaluates to a usable constructor.
+const noopClass: any = function () {};
+noopClass.extend = () => noopClass;
+noopClass.include = () => {};
+noopClass.mergeOptions = () => {};
+noopClass.addInitHook = () => {};
+
+(globalThis as any).L = {
     LOUtil: {},
+    Map: noopClass,
+    Handler: noopClass,
+    Control: noopClass,
+    Class: noopClass,
+    Layer: noopClass,
+    Evented: noopClass,
+    control: {},
+};
+
+// DOMPurify is loaded via <script> tag in the browser; source files call
+// DOMPurify.addHook(...) at module load time. Stub it so source
+// concatenation doesn't blow up under Node.
+(globalThis as any).DOMPurify = {
+    addHook() {},
+    sanitize(s: string) { return s; },
 };
 
 (globalThis as any).app = {
@@ -22,8 +65,48 @@ var L: any = {
     twipsToPixels: 15,
     pixelsToTwips: 1 / 15,
     sectionContainer: {},
-	console: globalThis.console,
-	socket: {},
+    socket: {},
+    // Loader-time stubs: source files touch these at module-load time.
+    // In the browser, js/global.js + setLogging(true) populate app.console
+    // with real console wrappers (assert, error, warn, ...). app.events is
+    // a DocEvents instance with on/off/fire/emit. Mirror just enough of
+    // that so source concatenation doesn't blow up under Node.
+    console: console,
+    events: { on() {}, off() {}, fire() {}, emit() {} },
+    // docstatefunctions.js attaches functions to app.calc / app.impress at
+    // module-load time (e.g. `app.calc.isRTL = function () {...}`), so the
+    // sub-objects must already exist. In the browser these are created in
+    // docstate.ts; we mirror the bare structure here.
+    //
+    // docstate.ts reassigns `window.app` to a brand-new object, but that
+    // only updates the jsdom window's property — `globalThis.app` keeps
+    // pointing at this stub. The `load` event listener registered in
+    // docstatefunctions.js runs in Node scope where bare `app` resolves to
+    // `globalThis.app`, so the stub also needs `file`, `tile`, `map`, and
+    // `following` populated well enough for the load callback and the
+    // RAF helpers (app.enterRAF / app.exitRAF) not to throw.
+    calc: {},
+    impress: {},
+    file: {
+        textCursor: {
+            visible: false,
+            rectangle: null,
+        },
+    },
+    tile: {
+        size: null,
+    },
+    // `app.enterRAF`/`app.exitRAF` in docstatefunctions.js dereference
+    // `app.map._debug` without a null check on `map`, and SheetGeometry
+    // calls `app.map.fire(...)` after guarding only on `app.map`. Give
+    // `map` no-op event methods so neither site throws when RAF fires
+    // during tests. Tests that exercise map behavior (ViewLayout) still
+    // overwrite `app.map` with a richer fixture.
+    map: { fire() {}, on() {}, off() {}, emit() {}, _debug: null },
+    following: {
+        mode: 'none',
+        viewId: -1,
+    },
 };
 
 globalThis.window = (function() {
