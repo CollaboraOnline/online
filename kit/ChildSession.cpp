@@ -2669,7 +2669,14 @@ bool ChildSession::renderWindow(const StringVector& tokens)
             dpiScale = 1.0;
     }
 
-    const size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+    constexpr int maxDimension = 4096;
+    if (bufferWidth <= 0 || bufferHeight <= 0 || bufferWidth > maxDimension || bufferHeight > maxDimension)
+    {
+        LOG_WRN("paintwindow: rejecting invalid dimensions " << bufferWidth << 'x' << bufferHeight);
+        return true;
+    }
+
+    const size_t pixmapDataSize = static_cast<size_t>(4) * bufferWidth * bufferHeight;
     std::vector<unsigned char> pixmap(pixmapDataSize);
     const int width = bufferWidth;
     const int height = bufferHeight;
