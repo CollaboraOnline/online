@@ -16,23 +16,8 @@
 #include <net/FakeSocket.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
-#include <qt/RemoteFilePicker.hpp>
 #include <qt/WebView.hpp>
 #include <qt/qt.hpp>
-
-#include <QEventLoop>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDir>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QTemporaryFile>
-#include <QTimer>
-#include <QUrlQuery>
-#include <QWebEnginePage>
-#include <QWebSocket>
-
 
 #include <Poco/URI.h>
 
@@ -201,12 +186,6 @@ int main(int argc, char** argv)
         QStringList() << "drawing" << "draw",
         "Create a new vector drawing."
     );
-    QCommandLineOption remoteOption(
-        "remote",
-        "Browse and open a file from a remote server (e.g. Nextcloud).",
-        "url"
-    );
-
     argParser.addOption(debugOption);
     argParser.addOption(logLevelOption);
     argParser.addOption(logDisabledAreasOption);
@@ -214,7 +193,6 @@ int main(int argc, char** argv)
     argParser.addOption(spreadsheetOption);
     argParser.addOption(presentationOption);
     argParser.addOption(drawingOption);
-    argParser.addOption(remoteOption);
     argParser.addPositionalArgument("DOCUMENT", "Document file(s) to open", "[DOCUMENT...]");
     argParser.process(app);
     QStringList files = argParser.positionalArguments();
@@ -229,144 +207,6 @@ int main(int argc, char** argv)
     if (!debugMode && !qEnvironmentVariableIsSet("QT_LOGGING_RULES"))
         QLoggingCategory::setFilterRules(QStringLiteral("js=false"));
 
-    // --remote: show the remote file picker, authenticate via
-    // Nextcloud Login Flow v2, get WOPI parameters via richdocuments,
-    // download the file via the COOL server's /co/collab endpoint, and
-    // open it locally.
-    QString remoteWopiSrc, remoteAccessToken, remoteCoolServer;
-    // Picker credentials needed for WebDAV download fallback
-    QUrl remoteServerUrl;
-    QString remoteLoginName, remoteAppPassword, remoteSelectedPath;
-    if (argParser.isSet(remoteOption))
-    {
-        RemoteFilePicker picker(argParser.value(remoteOption));
-        if (picker.exec() != QDialog::Accepted)
-            _Exit(0);
-
-        remoteServerUrl = picker.serverUrl();
-        remoteLoginName = picker.loginName();
-        remoteAppPassword = picker.appPassword();
-        remoteSelectedPath = picker.selectedPath();
-
-        qDebug() << "Selected:" << remoteSelectedPath
-                 << "fileId:" << picker.selectedFileId();
-
-        QNetworkAccessManager nam;
-        QString cred = picker.loginName() + ':' + picker.appPassword();
-        QByteArray authHeader = "Basic " + cred.toUtf8().toBase64();
-        QEventLoop loop;
-
-        // Step 1: Get a direct editing URL via the richdocuments OCS API.
-        QUrl ocsUrl = picker.serverUrl();
-        ocsUrl.setPath(ocsUrl.path()
-                       + "/ocs/v2.php/apps/richdocuments/api/v1/document");
-        QNetworkRequest ocsReq(ocsUrl);
-        ocsReq.setHeader(QNetworkRequest::ContentTypeHeader,
-                         "application/x-www-form-urlencoded");
-        ocsReq.setRawHeader("OCS-APIREQUEST", "true");
-        ocsReq.setRawHeader("Authorization", authHeader);
-
-        QNetworkReply* ocsReply = nam.post(
-            ocsReq, "fileId=" + picker.selectedFileId().toUtf8()
-                    + "&format=json");
-        QObject::connect(ocsReply, &QNetworkReply::finished,
-                         &loop, &QEventLoop::quit);
-        loop.exec();
-
-        if (ocsReply->error() != QNetworkReply::NoError)
-        {
-            qWarning() << "OCS error:" << ocsReply->errorString();
-            ocsReply->deleteLater();
-            _Exit(1);
-        }
-
-        QJsonDocument ocsDoc = QJsonDocument::fromJson(ocsReply->readAll());
-        ocsReply->deleteLater();
-        QString directUrl = ocsDoc["ocs"]["data"]["url"].toString();
-        qDebug() << "Direct URL:" << directUrl;
-
-        // Step 2: Load the direct URL in a hidden QWebEnginePage.
-        // Nextcloud's richdocuments JS will construct an iframe src like
-        //   http://cool:9980/browser/.../cool.html?WOPISrc=...&access_token=...
-        // We intercept that navigation request to extract the params.
-        class WopiInterceptPage : public QWebEnginePage {
-        public:
-            QString wopiSrc;
-            QString accessToken;
-            QString coolServerUrl; // e.g. "http://localhost:9980"
-            QEventLoop* evLoop;
-            using QWebEnginePage::QWebEnginePage;
-        protected:
-            bool acceptNavigationRequest(
-                const QUrl& url, NavigationType, bool) override
-            {
-                QUrlQuery q(url);
-                if (q.hasQueryItem("WOPISrc"))
-                {
-                    wopiSrc = q.queryItemValue(
-                        "WOPISrc", QUrl::FullyDecoded);
-                    accessToken = q.queryItemValue(
-                        "access_token", QUrl::FullyDecoded);
-                    coolServerUrl = url.scheme() + "://"
-                        + url.host() + ":"
-                        + QString::number(url.port(80));
-                    if (accessToken.isEmpty())
-                    {
-                        // Extract from the richdocuments initial state
-                        // embedded in the page
-                        runJavaScript(
-                            "(() => {"
-                            "  var el = document.getElementById("
-                            "    'initial-state-richdocuments-document');"
-                            "  if (!el) return '';"
-                            "  try {"
-                            "    return JSON.parse(atob(el.value)).token"
-                            "      || '';"
-                            "  } catch(e) { return ''; }"
-                            "})()",
-                            [this](const QVariant& result) {
-                                accessToken = result.toString();
-                                if (evLoop)
-                                    evLoop->quit();
-                            });
-                        return false;
-                    }
-                    qDebug() << "Intercepted COOL URL:" << url;
-                    if (evLoop)
-                        evLoop->quit();
-                    return false;
-                }
-                return true;
-            }
-        };
-
-        auto* page = new WopiInterceptPage;
-        page->evLoop = &loop;
-        page->load(QUrl("about:blank"));
-
-        QTimer timeout;
-        timeout.setSingleShot(true);
-        QObject::connect(&timeout, &QTimer::timeout,
-                         &loop, &QEventLoop::quit);
-        timeout.start(15000);
-
-        page->load(QUrl(directUrl));
-        loop.exec();
-
-        remoteWopiSrc = page->wopiSrc;
-        remoteAccessToken = page->accessToken;
-        remoteCoolServer = page->coolServerUrl;
-        page->deleteLater();
-
-        if (remoteWopiSrc.isEmpty() || remoteAccessToken.isEmpty())
-        {
-            qWarning() << "Timed out or failed to get WOPI params";
-            _Exit(1);
-        }
-
-        qDebug() << "WOPISrc:" << remoteWopiSrc;
-        qDebug() << "access_token:" << remoteAccessToken;
-    }
 
     Log::initialize(QApplication::applicationName().toStdString(), logLevel);
     Log::setDisabledAreas(argParser.value(logDisabledAreasOption).toStdString());
@@ -424,166 +264,7 @@ int main(int argc, char** argv)
     DBusService* dbusService = new DBusService(&app);
     DBusService::registerService(dbusService);
 
-    if (!remoteWopiSrc.isEmpty())
-    {
-        // Download the file via the COOL server's /co/collab endpoint,
-        // same flow as the COWASM wasm build uses.  Keep the WebSocket
-        // open afterwards to receive collab notifications (user
-        // join/leave, etc.).
-        qDebug() << "WOPISrc:" << remoteWopiSrc;
-        qDebug() << "COOL server:" << remoteCoolServer;
-
-        QString wsUrl = QString(remoteCoolServer)
-                            .replace("http://", "ws://")
-                            .replace("https://", "wss://")
-                      + "/co/collab?WOPISrc="
-                      + QUrl::toPercentEncoding(remoteWopiSrc);
-
-        // Heap-allocated so it outlives the download phase and stays
-        // open while the document is being edited.
-        auto* collabWs = new QWebSocket;
-
-        // State shared between the download phase (synchronous, in this
-        // scope) and the monitoring phase (asynchronous, via app.exec).
-        // Heap-allocated so the lambda doesn't capture dead stack refs.
-        auto* downloadUrl = new QString;
-        auto* downloadDone = new bool(false);
-        auto* collabLoop = new QEventLoop;
-
-        QObject::connect(collabWs, &QWebSocket::connected,
-            [collabWs, &remoteAccessToken]() {
-                collabWs->sendTextMessage("access_token "
-                                          + remoteAccessToken);
-            });
-        QObject::connect(collabWs, &QWebSocket::textMessageReceived,
-            [downloadUrl, downloadDone, collabWs, collabLoop]
-            (const QString& msg) {
-                QJsonDocument jdoc = QJsonDocument::fromJson(msg.toUtf8());
-                QJsonObject jobj = jdoc.object();
-                QString type = jobj["type"].toString();
-
-                if (type == "authenticated")
-                {
-                    collabWs->sendTextMessage(
-                        "{\"type\":\"fetch\","
-                        "\"stream\":\"contents\","
-                        "\"requestId\":\"coda-init\"}");
-                }
-                else if (type == "fetch_url"
-                         && jobj["requestId"].toString() == "coda-init")
-                {
-                    *downloadUrl = jobj["url"].toString();
-                    *downloadDone = true;
-                    collabLoop->quit();
-                }
-                else if (type == "error" || type == "fetch_error")
-                {
-                    qWarning() << "Collab error:" << msg;
-                    collabWs->close();
-                }
-                else if (*downloadDone)
-                {
-                    // Monitoring phase: handle collab notifications
-                    // while the document is open.
-                    // TODO: act on these (e.g., offer to switch to
-                    // online collaborative editing when another user
-                    // joins)
-                    if (type == "user_joined")
-                    {
-                        QJsonObject user = jobj["user"].toObject();
-                        (void)user;
-                    }
-                    else if (type == "user_left")
-                    {
-                        QJsonObject user = jobj["user"].toObject();
-                        (void)user;
-                    }
-                }
-            });
-        QObject::connect(collabWs, &QWebSocket::disconnected,
-            [downloadUrl, collabLoop]() {
-                if (downloadUrl->isEmpty())
-                    collabLoop->quit();
-            });
-
-        QTimer collabTimeout;
-        collabTimeout.setSingleShot(true);
-        QObject::connect(&collabTimeout, &QTimer::timeout,
-            [collabWs]() {
-                qWarning() << "Collab WebSocket timeout";
-                collabWs->close();
-            });
-        collabTimeout.start(30000);
-
-        collabWs->open(QUrl(wsUrl));
-        collabLoop->exec();
-
-        if (downloadUrl->isEmpty())
-        {
-            qWarning() << "Failed to get download URL from collab";
-            delete downloadDone;
-            delete downloadUrl;
-            delete collabWs;
-            _Exit(1);
-        }
-
-        // Resolve relative URL against COOL server
-        QString dlUrlStr = *downloadUrl;
-        if (dlUrlStr.startsWith('/'))
-            dlUrlStr = remoteCoolServer + dlUrlStr;
-
-        // Download the file
-        QNetworkAccessManager dlNam;
-        QUrl dlUrl(dlUrlStr);
-        QNetworkRequest dlReq(dlUrl);
-        QEventLoop dlLoop;
-        QNetworkReply* dlReply = dlNam.get(dlReq);
-        QObject::connect(dlReply, &QNetworkReply::finished,
-                         &dlLoop, &QEventLoop::quit);
-        dlLoop.exec();
-
-        if (dlReply->error() != QNetworkReply::NoError)
-        {
-            qWarning() << "Download error:" << dlReply->errorString();
-            dlReply->deleteLater();
-            delete collabWs;
-            _Exit(1);
-        }
-
-        // Preserve file extension for filter detection
-        QString ext;
-        int dot = remoteSelectedPath.lastIndexOf('.');
-        if (dot >= 0)
-            ext = remoteSelectedPath.mid(dot);
-
-        auto* tmp = new QTemporaryFile(
-            QDir::tempPath() + "/coda-XXXXXX" + ext);
-        (void)tmp->open();
-        tmp->write(dlReply->readAll());
-        QString localPath = tmp->fileName();
-        tmp->close();
-        tmp->setAutoRemove(false);
-        dlReply->deleteLater();
-
-        delete downloadDone;
-        delete downloadUrl;
-        delete collabLoop;
-
-        // Disconnect the download-phase signal handlers before
-        // transferring ownership to the per-document RemoteDocInfo.
-        collabWs->disconnect();
-
-        // Package the collab state into per-document ownership.
-        auto remoteInfo = std::make_shared<coda::RemoteDocInfo>();
-        remoteInfo->wopiSrc = remoteWopiSrc;
-        remoteInfo->accessToken = remoteAccessToken;
-        remoteInfo->coolServer = remoteCoolServer;
-        remoteInfo->collabWs.reset(collabWs);
-
-        WebView* webViewInstance = new WebView(Application::getProfile());
-        webViewInstance->loadRemote(localPath, std::move(remoteInfo));
-    }
-    else if (!absoluteFiles.isEmpty())
+    if (!absoluteFiles.isEmpty())
     {
         coda::openFiles(absoluteFiles);
     }

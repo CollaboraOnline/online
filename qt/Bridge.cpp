@@ -16,7 +16,7 @@
 #include <COKit/COKit.hxx>
 
 #include <qt/DBusService.hpp>
-#include <qt/RemoteFilePicker.hpp>
+#include <qt/RemoteOpen.hpp>
 #include <qt/DocumentOperations.hpp>
 #include <net/FakeSocket.hpp>
 #include <common/FileUtil.hpp>
@@ -39,11 +39,12 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
-#include <QDir>
 #include <QEventLoop>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QInputDialog>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QMetaObject>
@@ -618,9 +619,6 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "openremote")
     {
-        // Ask for the server URL, then show the remote file picker.
-        // The full flow (WOPI extraction, collab download, open) runs
-        // asynchronously from here.
         // Read last-used server URL from config
         Poco::Path configFile = Desktop::getConfigPath();
         configFile.append("RemoteServer.conf");
@@ -655,59 +653,10 @@ QVariant Bridge::cool(const QString& messageStr)
             conf.close();
         }
 
-        // Show the remote file picker in a separate invocation so
-        // we don't block the cool() return.
         auto* webView = _webView;
         QTimer::singleShot(0, [serverUrl, webView]() {
-            RemoteFilePicker picker(serverUrl, webView);
-            if (picker.exec() != QDialog::Accepted)
-                return;
-
-            // For now, just open via WebDAV download (same as --remote
-            // fallback).  TODO: extract the full WOPI + collab flow
-            // into a reusable function.
-            QUrl davUrl = picker.serverUrl();
-            davUrl.setPath(davUrl.path() + "/remote.php/dav/files/"
-                           + picker.loginName() + "/"
-                           + picker.selectedPath());
-            QString cred = picker.loginName() + ':' + picker.appPassword();
-
-            QNetworkAccessManager nam;
-            QNetworkRequest req(davUrl);
-            req.setRawHeader("Authorization",
-                             "Basic " + cred.toUtf8().toBase64());
-
-            QEventLoop loop;
-            QNetworkReply* reply = nam.get(req);
-            QObject::connect(reply, &QNetworkReply::finished,
-                             &loop, &QEventLoop::quit);
-            loop.exec();
-
-            if (reply->error() != QNetworkReply::NoError)
-            {
-                LOG_ERR("Remote download error: "
-                        << reply->errorString().toStdString());
-                reply->deleteLater();
-                return;
-            }
-
-            QString ext;
-            QString path = picker.selectedPath();
-            int dot = path.lastIndexOf('.');
-            if (dot >= 0)
-                ext = path.mid(dot);
-
-            auto* tmp = new QTemporaryFile(
-                QDir::tempPath() + "/coda-XXXXXX" + ext);
-            (void)tmp->open();
-            tmp->write(reply->readAll());
-            QString localPath = tmp->fileName();
-            tmp->close();
-            tmp->setAutoRemove(false);
-            reply->deleteLater();
-
-            coda::openFiles(QStringList() << localPath);
-            closeStarterScreen();
+            coda::openRemoteFile(serverUrl, webView,
+                                 Application::getProfile());
         });
     }
     else if (message == "uno .uno:Open")
@@ -963,6 +912,149 @@ QVariant Bridge::cool(const QString& messageStr)
 
         // If this was triggered from a starter screen, close it
         closeStarterScreen();
+    }
+    else if (tokens.equals(0, "switchToServerMode"))
+    {
+        // Switch from local to server-rendered collaborative editing
+        // by navigating to the COOL server's cool.html.
+        if (!_document._remoteInfo)
+            return {};
+
+        auto& ri = *_document._remoteInfo;
+
+        // TODO: if the document has been modified locally, save and
+        // upload via the collab endpoint before switching.
+
+        // Stop the local FakeSocket message pump.
+        if (_closeNotificationPipeForForwardingThread[0] >= 0)
+        {
+            fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
+            _closeNotificationPipeForForwardingThread[0] = -1;
+        }
+
+        // Close the collab WebSocket.
+        if (ri.collabWs)
+            ri.collabWs->close();
+
+        // Navigate to the COOL server's cool.html with WOPI params.
+        QString coolUrl = ri.coolServer
+            + "/browser/dist/cool.html"
+            + "?WOPISrc=" + QUrl::toPercentEncoding(ri.wopiSrc)
+            + "&access_token=" + QUrl::toPercentEncoding(ri.accessToken)
+            + "&permission=edit";
+
+        LOG_TRC("switchToServerMode: loading "
+                << coolUrl.toStdString());
+
+        QMetaObject::invokeMethod(_webView, [this, coolUrl]() {
+            _webView->load(QUrl(coolUrl));
+        }, Qt::QueuedConnection);
+    }
+    else if (tokens.equals(0, "uploadAndSwitch"))
+    {
+        // Upload the locally-saved file via collab, then switch to
+        // server mode.  The JS side has already triggered .uno:Save.
+        if (!_document._remoteInfo || !_document._remoteInfo->collabWs)
+            return {};
+
+        auto& ri = *_document._remoteInfo;
+
+        // Read the local file (already saved by .uno:Save)
+        std::string localPath = _document._fileURL.getPath();
+        QFile file(QString::fromStdString(localPath));
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            LOG_ERR("saveUploadAndSwitch: cannot read " << localPath);
+            return {};
+        }
+        QByteArray fileBytes = file.readAll();
+        file.close();
+
+        // Upload via the collab WebSocket
+        auto* ws = ri.collabWs.get();
+        auto coolServer = ri.coolServer;
+        auto* bridge = this;
+
+        auto conn = std::make_shared<QMetaObject::Connection>();
+        *conn = QObject::connect(ws, &QWebSocket::textMessageReceived,
+            [conn, fileBytes, coolServer, bridge]
+            (const QString& msg) {
+                QJsonDocument jdoc = QJsonDocument::fromJson(msg.toUtf8());
+                QJsonObject jobj = jdoc.object();
+
+                if (jobj["type"].toString() == "upload_url"
+                    && jobj["requestId"].toString() == "coda-save")
+                {
+                    QObject::disconnect(*conn);
+
+                    QString uploadUrl = jobj["url"].toString();
+                    if (uploadUrl.startsWith('/'))
+                        uploadUrl = coolServer + uploadUrl;
+
+                    auto* nam = new QNetworkAccessManager;
+                    QUrl ulUrl(uploadUrl);
+                    QNetworkRequest req(ulUrl);
+                    req.setHeader(QNetworkRequest::ContentTypeHeader,
+                                  "application/octet-stream");
+                    QNetworkReply* reply = nam->post(req, fileBytes);
+                    QObject::connect(reply, &QNetworkReply::finished,
+                        [reply, nam, bridge]() {
+                            reply->deleteLater();
+                            nam->deleteLater();
+
+                            if (reply->error() != QNetworkReply::NoError)
+                            {
+                                LOG_ERR("saveUploadAndSwitch: upload failed: "
+                                        << reply->errorString().toStdString());
+                            }
+
+                            // Notify other collab users and switch
+                            bridge->evalJS(
+                                "window.collabSendMessage("
+                                "{type:'saved_and_switching'});"
+                                "window.switchToServerMode();");
+                        });
+                }
+            });
+
+        ws->sendTextMessage(
+            "{\"type\":\"upload\","
+            "\"stream\":\"contents\","
+            "\"requestId\":\"coda-save\"}");
+    }
+    else if (tokens.equals(0, "replayCollabMessages"))
+    {
+        // JS is ready - replay any collab messages buffered during
+        // the download phase.
+        if (_document._remoteInfo)
+        {
+            for (const auto& msg : _document._remoteInfo->pendingCollabMessages)
+            {
+                // Only replay user_list if no live notifications
+                // have updated collabUsers yet (user_list is stale
+                // and would overwrite live data).
+                if (msg.contains("\"type\":\"user_list\""))
+                {
+                    evalJS(
+                        "if (window._codaCollabMessage"
+                        "    && (!window.collabUsers"
+                        "        || window.collabUsers.length === 0))"
+                        "  window._codaCollabMessage("
+                        + msg.toStdString() + ");");
+                }
+                else
+                {
+                    evalJS(
+                        "if (window._codaCollabMessage)"
+                        "  window._codaCollabMessage("
+                        + msg.toStdString() + ");");
+                }
+            }
+            _document._remoteInfo->pendingCollabMessages.clear();
+            evalJS(
+                "if (window._codaCollabMessagesReplayed)"
+                "  window._codaCollabMessagesReplayed();");
+        }
     }
     else if (tokens.equals(0, "collab"))
     {

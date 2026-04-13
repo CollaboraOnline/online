@@ -61,12 +61,32 @@ window.L.Map.include({
 			}
 		};
 
-		// Switch from local to server-based collaborative editing.
-		// TODO: implement the actual switch (save, upload, reload
-		// WebView with server-rendered cool.html).
 		window.switchToServerMode = function () {
 			window.postMobileMessage('switchToServerMode');
 		};
+
+		// Replay any collab messages that arrived before
+		// _codaCollabMessage was defined.
+		if (window._codaCollabQueue) {
+			for (var i = 0; i < window._codaCollabQueue.length; i++) {
+				window._codaCollabMessage(window._codaCollabQueue[i]);
+			}
+			delete window._codaCollabQueue;
+		}
+
+		// Tell C++ to replay any collab messages buffered during
+		// the download phase.  C++ calls _codaCollabMessagesReplayed
+		// after all messages have been forwarded.
+		window._codaCollabMessagesReplayed = function () {
+			delete window._codaCollabMessagesReplayed;
+			if (window.collabEditingActive) {
+				// Defer so any pending closealldialogs settles.
+				setTimeout(function () {
+					that._onCollabEditingActive();
+				}, 100);
+			}
+		};
+		window.postMobileMessage('replayCollabMessages');
 	},
 
 	setPermission: function (perm) {
@@ -257,16 +277,14 @@ window.L.Map.include({
 					// Stay in current WASM read-only mode
 				}},
 				{id: 'collab-join', func_: function () {
-					if (!window.collabUsers
-						|| window.collabUsers.length === 0) {
-						// No other collab WS users (they already
-						// switched to server mode or left).
-						window.switchToServerMode();
-					} else {
-						// Ask local editors to save and switch,
-						// then wait for the save to complete.
+					if (window.collabEditingActive) {
+						// Someone is editing locally - ask them to
+						// save and switch, then wait.
 						that._waitForCollabSave();
 						window.collabSendMessage({type: 'switch_to_collab'});
+					} else {
+						// No active editor - just switch directly.
+						window.switchToServerMode();
 					}
 				}}
 			]
@@ -324,9 +342,17 @@ window.L.Map.include({
 	// modifications, .uno:Save is a no-op and we switch immediately.
 	_saveAndSwitchToServerMode: function () {
 		if (this._permission === 'edit' && this._everModified) {
-			window._switchToServerAfterSave = true;
-			this.save(true /* dontTerminateEdit */,
-				false /* dontSaveIfUnmodified */);
+			if (window.mode.isCODesktop()) {
+				// CODA-Q: save locally first, then the Bridge
+				// handles upload and switch.
+				window._codaUploadAndSwitchAfterSave = true;
+				this.save(true /* dontTerminateEdit */,
+					false /* dontSaveIfUnmodified */);
+			} else {
+				window._switchToServerAfterSave = true;
+				this.save(true /* dontTerminateEdit */,
+					false /* dontSaveIfUnmodified */);
+			}
 		} else {
 			window.collabSendMessage({type: 'saved_and_switching'});
 			window.switchToServerMode();

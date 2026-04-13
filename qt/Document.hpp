@@ -14,6 +14,7 @@
 #include <Poco/URI.h>
 
 #include <QString>
+#include <QStringList>
 #include <memory>
 
 class QWebSocket;
@@ -30,6 +31,9 @@ struct RemoteDocInfo
     QString coolServer;
     // Heap-allocated; lives as long as the document is open.
     std::unique_ptr<QWebSocket> collabWs;
+    // Collab messages received during download, before JS forwarding
+    // is wired up.  Replayed by loadRemote.
+    QStringList pendingCollabMessages;
 };
 
 struct DocumentData

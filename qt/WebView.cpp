@@ -46,6 +46,7 @@
 #include <QVariant>
 #include <QWebChannel>
 #include <QWebEngineFullScreenRequest>
+#include <QTimer>
 #include <QWebEngineSettings>
 #include <QWebSocket>
 
@@ -694,11 +695,23 @@ void WebView::loadRemote(const QString& localPath,
         auto* bridge = _bridge;
         QObject::connect(ws, &QWebSocket::textMessageReceived,
             [bridge](const QString& msg) {
+                LOG_TRC("Collab WS -> JS: " << msg.toStdString().substr(0, 100));
                 bridge->evalJS(
-                    "if (window._codaCollabMessage) "
-                    "window._codaCollabMessage("
-                    + msg.toStdString() + ");");
+                    "if (window._codaCollabMessage) {"
+                    "  window._codaCollabMessage("
+                    + msg.toStdString() + ");"
+                    "} else {"
+                    "  window._codaCollabQueue = window._codaCollabQueue || [];"
+                    "  window._codaCollabQueue.push("
+                    + msg.toStdString() + ");"
+                    "}");
             });
+        QObject::connect(ws, &QWebSocket::disconnected,
+            []() { LOG_DBG("Collab WS disconnected"); });
+
+        // Buffered collab messages (user_list etc.) are replayed
+        // when JS sends 'replayCollabMessages' after
+        // _codaCollabMessage is defined (see Bridge.cpp).
     }
 }
 
