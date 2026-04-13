@@ -164,6 +164,80 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.05);
     });
 
+    // Dispatch a keydown event on the exact document node where the
+    // SlideShowNavigator keydown handler is registered. We go through
+    // the presenter's _slideShowWindowProxy to get the same object
+    // reference that addEventListener was called on.
+    function sendSlideshowKey(win, keyCode) {
+        cy.then(function() {
+            var presenter = win.app.map.slideShowPresenter;
+            var proxyWin = presenter._slideShowWindowProxy.contentWindow;
+            var doc = proxyWin.document;
+            doc.dispatchEvent(new proxyWin.KeyboardEvent('keydown', {
+                code: keyCode,
+                key: keyCode,
+                bubbles: true,
+                cancelable: true,
+            }));
+        });
+    }
+
+    it('Follower cannot advance when at leader position', function () {
+        // Leader (iframe2) starts followme and advances 1 effect
+        cy.cSetActiveFrame('#iframe2');
+        cy.cGet('.notebookbar #slide-presentation-follow-me').click();
+        getSlideShow().should('be.visible');
+        impressHelper.waitForSlideShowIdle(win2);
+        impressHelper.waitForSlideShowIdle(win1);
+        getSlideShowContent().find('.slideshow-nav-container #next').click();
+        impressHelper.waitForSlideShowIdle(win2);
+        impressHelper.waitForSlideShowIdle(win1);
+
+        // Follower (iframe1) auto-follows to effect1
+        cy.cSetActiveFrame('#iframe1');
+        // getSlideShow().should('be.visible');
+        impressHelper.waitForSlideShowIdle(win1);
+        getSlideShowCanvas().compareSnapshot('effect1', 0.05);
+
+        // Follower presses ArrowRight - blocked by canUserAdvanceEffect
+        sendSlideshowKey(win1, 'ArrowRight');
+        impressHelper.waitForSlideShowIdle(win1);
+        // Still at effect1, not advanced to slide 2
+        getSlideShowCanvas().compareSnapshot('effect1', 0.05);
+    });
+
+    it('Follower: skip to last reachable effect of leader slide', function () {
+        // Leader (iframe2) starts followme and advances 4 clicks to slide2_effect2
+        cy.cSetActiveFrame('#iframe2');
+        cy.cGet('.notebookbar #slide-presentation-follow-me').click();
+        getSlideShow().should('be.visible');
+        impressHelper.waitForSlideShowIdle(win2);
+        impressHelper.waitForSlideShowIdle(win1);
+        for (let i = 0; i < 4; i++) {
+            getSlideShowContent().find('.slideshow-nav-container #next').click();
+            impressHelper.waitForSlideShowIdle(win2);
+            impressHelper.waitForSlideShowIdle(win1);
+        }
+        getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.05);
+
+        // Follower (iframe1) auto-follows to slide2_effect2
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().should('be.visible');
+        impressHelper.waitForSlideShowIdle(win1);
+
+        // Follower goes backward 2 times on slide 2 to rewind effects
+        getSlideShowContent().find('.slideshow-nav-container #previous').click();
+        impressHelper.waitForSlideShowIdle(win1);
+        getSlideShowContent().find('.slideshow-nav-container #previous').click();
+        impressHelper.waitForSlideShowIdle(win1);
+
+        // Follower presses PageDown - should skip only to leader's 2 effects, not all 3
+        sendSlideshowKey(win1, 'PageDown');
+        impressHelper.waitForSlideShowIdle(win1);
+        // Should be at slide2_effect2 (leader position), not slide2_effect3
+        getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.07);
+    });
+
     it('Exit', function () {
         cy.cSetActiveFrame('#iframe2');
         cy.cGet('.notebookbar #slide-presentation-follow-me').click();
