@@ -480,10 +480,14 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 							contextTab = tabElement;
 						else
 							alreadySelected = tabElement;
+						// break so that next contexts don't add hidden on top of selected
+						break;
 					} else if (contexts[context] === 'default') {
 						tabElement.show();
 						if (!tabElement.hasClass('selected'))
 							defaultTab = tabElement;
+					} else if (tabs[tab].name !== 'Home') {
+						tabElement.addClass('hidden');
 					}
 				}
 			} else if (!this.map.uiManager.isTabVisible(tabs[tab].name)) {
