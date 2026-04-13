@@ -141,6 +141,12 @@ function reloadDocument(filePath) {
 	closeDocument(filePath);
 	loadDocument(filePath, /*skipDocumentChecks*/ true);
 
+	// loadDocument skips full documentChecks on reload, but we still
+	// need to wait for the document canvas to be visible before
+	// callers start asserting on document content.
+	cy.cGet('#document-canvas', {timeout: Cypress.config('defaultCommandTimeout') * 2.0})
+		.should('be.visible');
+
 	cy.log('<< reloadDocument - end');
 }
 
