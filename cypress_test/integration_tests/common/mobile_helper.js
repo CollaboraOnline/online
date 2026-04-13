@@ -312,10 +312,14 @@ function insertComment(skipCommentCheck = false) {
 	cy.cGet('.cool-annotation-table').should('exist');
 	cy.cGet('#input-modal-input').type('some text');
 	cy.cGet('#response-ok').click();
-	cy.wait(2000); // FIXME: skip DocModified message
+
+	// Wait for core to process the comment insertion
+	cy.getFrameWindow().then((win) => {
+		helper.processToIdle(win);
+	});
 
 	if (!skipCommentCheck) {
-		cy.cGet('[id^=comment-container-]').should('exist').wait(300);
+		cy.cGet('[id^=comment-container-]').should('exist');
 		cy.cGet('[id^=annotation-content-area-]').should('be.visible');
 		cy.cGet('[id^=annotation-content-area-]').should('have.text', 'some text');
 	}
