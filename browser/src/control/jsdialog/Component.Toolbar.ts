@@ -154,6 +154,25 @@ class Toolbar extends JSDialogComponent {
 		});
 	}
 
+	isItemUserHidden(id: string): boolean {
+		if (!id) return false;
+		const entry = this.model.getById(id);
+		return !!(entry && entry.userHidden);
+	}
+
+	userHideItem(id: string, hide: boolean): void {
+		if (!id) return;
+
+		this.model.widgetUpdate({
+			control: { id: id, userHidden: hide } as WidgetJSON,
+		} as JSDialogJSON);
+
+		const el = this.getItemElement(id);
+		if (!el) return;
+		if (hide) window.L.DomUtil.addClass(el, 'user-hidden');
+		else window.L.DomUtil.removeClass(el, 'user-hidden');
+	}
+
 	isItemDisabled(id: string): boolean {
 		const item = this.getItemElement(id);
 		if (!item) return true;

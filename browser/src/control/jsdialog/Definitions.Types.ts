@@ -19,6 +19,7 @@ interface WidgetJSON {
 	type: string; // type of widget
 	enabled?: boolean; // enabled state
 	visible?: boolean; // visibility state
+	userHidden?: boolean; // hidden by user preference (separate from doc-type preferences)
 	children?: Array<WidgetJSON>; // child nodes
 	title?: string;
 	text?: string; // TODO: remove, its for not yet defined widget types
