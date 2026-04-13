@@ -40,6 +40,7 @@ class IconUtil {
 		'TableDialog',
 		'GraphicDialog',
 		'InsertAnnotation',
+		'InsertThreadedComment',
 		'SpellingAndGrammarDialog',
 		'DecrementLevel',
 		'TransformDialog',
