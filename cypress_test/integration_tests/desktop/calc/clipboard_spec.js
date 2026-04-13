@@ -206,7 +206,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.processToIdle(this.win);
 
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.arrow-div.reverse').should('be.visible'); // Ensure that hyperlink doesn't overlap with the cell.
+		cy.cGet('.hyperlink-pop-up-container').should('be.visible');
 
 		helper.processToIdle(this.win);
 		cy.cGet('#hyperlink-pop-up-copy').click();
