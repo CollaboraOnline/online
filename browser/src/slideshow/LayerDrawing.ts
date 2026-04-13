@@ -405,6 +405,13 @@ class LayerDrawing {
 			slideHash === this.nextRequestedSlideHash ||
 			slideHash === this.nextPrefetchedSlideHash
 		) {
+			// A non-prefetch request for a slide that is already being
+			// prefetched: upgrade to a regular request so the callback
+			// fires when the data arrives.
+			if (!prefetch && slideHash === this.prefetchedSlideHash) {
+				this.requestedSlideHash = this.prefetchedSlideHash;
+				this.prefetchedSlideHash = null;
+			}
 			app.console.debug(
 				'LayerDrawing.requestSlideImpl: no need to fetch slide again',
 			);
