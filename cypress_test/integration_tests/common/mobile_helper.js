@@ -304,11 +304,11 @@ function selectListBoxItem2(listboxSelector, item) {
 
 	cy.log('<< selectListBoxItem2 - end');
 }
-function insertComment(skipCommentCheck = false) {
+function insertComment(skipCommentCheck = false, menuLabel = 'Comment') {
 	cy.log('>> insertComment - start');
 
 	openInsertionWizard();
-	cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
+	cy.cGet('body').contains('.menu-entry-with-icon', menuLabel).click();
 	cy.cGet('.cool-annotation-table').should('exist');
 	cy.cGet('#input-modal-input').type('some text');
 	cy.cGet('#response-ok').click();

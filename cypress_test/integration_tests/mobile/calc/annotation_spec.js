@@ -14,7 +14,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 	});
 
 	it('Saving comment.', function() {
-		mobileHelper.insertComment();
+		mobileHelper.insertComment(false, 'Note');
 		cy.cGet('#comment-container-1').should('exist');
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -27,7 +27,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 	});
 
 	it('Modifying comment.', function() {
-		mobileHelper.insertComment();
+		mobileHelper.insertComment(false, 'Note');
 		cy.cGet('#comment-container-1').should('exist');
 		mobileHelper.selectAnnotationMenuItem('Modify');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
@@ -40,7 +40,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 	});
 
 	it('Remove comment.', function() {
-		mobileHelper.insertComment();
+		mobileHelper.insertComment(false, 'Note');
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 		mobileHelper.selectAnnotationMenuItem('Remove');
@@ -50,7 +50,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 
 	it('Try to insert empty comment.', function() {
 		mobileHelper.openInsertionWizard();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Note').click();
 		cy.cGet('.cool-annotation-table').should('exist');
 		cy.cGet('#input-modal-input').should('have.text', '');
 		cy.cGet('#response-ok').click();

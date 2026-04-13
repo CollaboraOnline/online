@@ -223,6 +223,10 @@ class Dispatcher {
 			app.map.insertComment();
 		};
 
+		this.actionsMap['insertthreadedcomment'] = function () {
+			app.map.insertThreadedComment();
+		};
+
 		this.actionsMap['showcommentsnavigator'] = function (data?: any) {
 			if (
 				!document

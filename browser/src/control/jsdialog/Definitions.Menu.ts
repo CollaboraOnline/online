@@ -2384,6 +2384,21 @@ menuDefinitions.set('AnnotationMenu', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('CalcAnnotationMenu', [
+	{
+		text: _('Insert Comment'),
+		action: 'insertthreadedcomment',
+	},
+	{
+		text: _('Insert Note'),
+		action: 'insertcomment',
+	},
+	{
+		text: _('Comments list'),
+		action: 'showcommentsnavigator',
+	},
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('PictureEffectsMenu', [
 	{
 		text: _UNO('.uno:GraphicFilterInvert'),

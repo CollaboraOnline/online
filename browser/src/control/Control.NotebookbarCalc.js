@@ -2054,9 +2054,18 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-insert-threaded-comment',
+								'type': 'customtoolitem',
+								'text': _UNO('.uno:InsertThreadedComment', 'spreadsheet'),
+								'command': 'insertthreadedcomment',
+								'icon': 'lc_insertthreadedcomment.svg',
+								'lockUno': '.uno:InsertAnnotation',
+								'accessibility': { focusBack: true,	combination: 'TC', de: null }
+							},
+							{
 								'id': 'insert-insert-annotation',
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAnnotation', 'text'),
+								'text': _UNO('.uno:InsertAnnotation', 'spreadsheet'),
 								'command': '.uno:InsertAnnotation',
 								'accessibility': { focusBack: true,	combination: 'IA', de: null }
 							}
@@ -2639,12 +2648,12 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'IA', de: null },
 				'children' : [
 					{
-						'id': 'review-insert-annotation:AnnotationMenu',
+						'id': 'review-insert-threaded-comment:CalcAnnotationMenu',
 						'type': 'menubutton',
-						'text': _UNO('.uno:InsertAnnotation'),
-						'applyCallback': 'insertcomment',
-						'command': '.uno:InsertAnnotation',
-						'accessibility': { focusBack: true,	combination: 'IA', de: null }
+						'text': _UNO('.uno:InsertThreadedComment', 'spreadsheet'),
+						'applyCallback': 'insertthreadedcomment',
+						'command': '.uno:InsertThreadedComment',
+						'accessibility': { focusBack: true,	combination: 'TC', de: null }
 					},
 					{
 						'id': 'Review-Section-Annotation2',
