@@ -77,7 +77,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#contenttree').should('not.have.attr', 'tabindex');
 	});
 
-	it.skip('Treelistbox with-headers', function() {
+	it('Treelistbox with-headers', function() {
 		cy.cGet('#contenttree2').compareSnapshot('treeview_headers', 0.12);
 
 		// use sort feature
