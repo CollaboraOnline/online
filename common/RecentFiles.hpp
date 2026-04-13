@@ -24,8 +24,14 @@ public:
 
     // Loads the list of recent files and timestamps. The fileName parameter is the file where the
     // list is stored. If it doesn't exist, start with an empty list, but remember the pathname as
-    // the list will be saved there whenever a file is added. The maxFiles parameter indicates how
-    // many entries will be kept. Only after calling this can you call the other member functions.
+    // the list will be saved there whenever a file is added.
+    //
+    // The maxFiles parameter indicates the maximum number of entries that will be returned from
+    // the serialise() member function. At most twice that number of entries are stored in the file,
+    // to have a buffer in case some of the files are subsequently removed or temporarily
+    // inaccessible when running the app the next time.
+    //
+    // Only after calling this can you call the other member functions.
     void load(const std::string& fileName, int maxFiles);
 
     // Add a document URI to the list. It will be placed first in the list. Its timestamp will be

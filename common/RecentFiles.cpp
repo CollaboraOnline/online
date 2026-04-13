@@ -40,7 +40,7 @@ void RecentFiles::load(const std::string& fileName, int maxFiles)
     if (stream.is_open())
     {
         int n = 0;
-        while (!stream.eof() && !stream.bad() && n++ < maxFiles)
+        while (!stream.eof() && !stream.bad() && n++ < _maxFiles * 2)
         {
             Entry entry;
             std::getline(stream, entry.uri);
@@ -124,6 +124,8 @@ std::string RecentFiles::serialiseFiltered(std::set<std::string> dropTheseURIs)
             "\"timestamp\": \"" + std::format("{:%FT%TZ}", _mostRecentlyUsed[i].timestamp) + "\""
             " }";
         n++;
+        if (n == _maxFiles)
+            break;
     }
     result += " ]";
 
