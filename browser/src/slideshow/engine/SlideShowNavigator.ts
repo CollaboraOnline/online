@@ -26,6 +26,8 @@ class SlideShowNavigator {
 	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
 	private currentLeaderSlide: number = -1;
 	private currentLeaderEffect: number = 0;
+	private isSlideLoading: boolean = false;
+	private isEffectPending: boolean = false;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -82,6 +84,22 @@ class SlideShowNavigator {
 
 	dispatchEffect(userInitiated: boolean = true) {
 		if (userInitiated && !this.canUserAdvanceEffect()) return;
+		// Follower: drop dispatcheffect messages that arrive while a
+		// slide is loading. The leader's subsequent displayslide /
+		// effect messages are authoritative, and the fetchAndRun
+		// callback's follower catch-up reconciles state after load.
+		if (!userInitiated && this.isSlideLoading) return;
+		// Leader: set isEffectPending so the fetchAndRun callback
+		// replays the press as switchSlide(+1) after the load.
+		// The replay itself starts a new load; presses that arrive
+		// during that next load are absorbed by its own callback, so
+		// rapid-click-through can still chain multiple advances across
+		// successive loads.
+		if (this.isSlideLoading) {
+			this.isEffectPending = true;
+			this.presenter.sendSlideShowFollowMessage('dispatcheffect');
+			return;
+		}
 		this.presenter.sendSlideShowFollowMessage('dispatcheffect');
 		const currentTime = Date.now();
 		const timeDiff = currentTime - this.lastClickTime;
@@ -277,15 +295,26 @@ class SlideShowNavigator {
 		this.currentLeaderEffect = 0;
 	}
 
+	followLeaderDisplaySlide(nLeaderSlide: number) {
+		if (nLeaderSlide === this.currentSlide) return;
+		// If the follower is currently loading a slide, the catch-up
+		// in the fetchAndRun callback will handle navigating to the
+		// leader's slide. Starting a navigation here would overlap
+		// with the in-flight fetchAndRun and cause rendering issues.
+		if (this.isSlideLoading) return;
+		this.displaySlide(nLeaderSlide, true);
+	}
+
 	followLeaderSlide() {
 		if (this.presenter.isFollowing()) return;
 		this.presenter.setFollowing(true);
-		// const currentEffect = this.currentLeaderEffect;
 		if (this.currentLeaderSlide === this.currentSlide) {
 			if (this.slideShowHandler.hasAnyEffectStarted())
 				this.slideShowHandler.rewindAllEffects();
-		} else this.displaySlide(this.currentLeaderSlide, true);
-		this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
+			this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
+		} else {
+			this.displaySlide(this.currentLeaderSlide, true);
+		}
 	}
 
 	displaySlide(
@@ -293,10 +322,6 @@ class SlideShowNavigator {
 		bSkipTransition: boolean,
 		nStartEffect: number = undefined,
 	) {
-		this.presenter.sendSlideShowFollowMessage(
-			'displayslide ' + JSON.stringify({ currentSlide: nNewSlide }),
-		);
-
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -349,7 +374,13 @@ class SlideShowNavigator {
 			return;
 		}
 
+		this.presenter.sendSlideShowFollowMessage(
+			'displayslide ' + JSON.stringify({ currentSlide: nNewSlide }),
+		);
+		this.isSlideLoading = true;
+		this.isEffectPending = false;
 		this.slideCompositor.fetchAndRun(nNewSlide, () => {
+			this.isSlideLoading = false;
 			assert(
 				this instanceof SlideShowNavigator,
 				'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: ' +
@@ -400,6 +431,31 @@ class SlideShowNavigator {
 			if (this.isRewindingToPrevSlide) {
 				this.slideShowHandler.skipAllEffects();
 				this.isRewindingToPrevSlide = false;
+			}
+
+			// Replay the leader's pending press (see dispatchEffect).
+			// At most one switchSlide(+1) runs per load callback;
+			// presses that came in during this load collapse into
+			// this single advance. The replay starts a new load,
+			// where more presses can queue up independently.
+			if (this.isEffectPending) {
+				this.isEffectPending = false;
+				this.switchSlide(1, true);
+			}
+			// Follower catch-up: align to the leader's position now
+			// that the load is done. If the leader has moved further
+			// ahead while we were loading, navigate to that slide;
+			// if they are on the same slide but further into its
+			// effects, skip to that effect.
+			else if (this.presenter.isFollowing() && nStartEffect === undefined) {
+				if (this.currentLeaderSlide > this.currentSlide) {
+					this.displaySlide(this.currentLeaderSlide, true);
+				} else if (
+					this.currentLeaderSlide === this.currentSlide &&
+					this.currentLeaderEffect > 0
+				) {
+					this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
+				}
 			}
 		});
 	}
