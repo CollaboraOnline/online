@@ -1466,10 +1466,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrame("pong rendercount=" + count);
         return true;
     }
-    else if (tokens.equals(0, "renderfont"))
-    {
-        return sendFontRendering(buffer, length, tokens, docBroker);
-    }
     else if (tokens.equals(0, "status") || tokens.equals(0, "statusupdate"))
     {
         assert(firstLine.size() == static_cast<std::size_t>(length));
@@ -2555,31 +2551,6 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const Strin
     return forwardToChild(std::string(buffer, length), docBroker);
 }
 
-bool ClientSession::sendFontRendering(const char *buffer, int length, const StringVector& tokens,
-                                      const std::shared_ptr<DocumentBroker>& docBroker)
-{
-    std::string font, text;
-    if (tokens.size() < 2 ||
-        !getTokenString(tokens[1], "font", font))
-    {
-        return sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
-    }
-
-    getTokenString(tokens[2], "char", text);
-
-    if (docBroker->hasTileCache())
-    {
-        Blob cachedStream = docBroker->tileCache().lookupCachedStream(TileCache::StreamType::Font, font+text);
-        if (cachedStream)
-        {
-            const std::string response = "renderfont: " + tokens.cat(' ', 1) + '\n';
-            return sendBlob(response, cachedStream);
-        }
-    }
-
-    return forwardToChild(std::string(buffer, length), docBroker);
-}
-
 bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const StringVector& tokens,
                              const std::shared_ptr<DocumentBroker>& docBroker)
 {
@@ -3611,22 +3582,6 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
         return status;
     }
 #endif
-    else if (tokens.equals(0, "renderfont:"))
-    {
-        std::string font, text;
-        if (tokens.size() < 3 || !getTokenString(tokens[1], "font", font))
-        {
-            LOG_ERR("Bad syntax for: " << firstLine);
-            return false;
-        }
-
-        getTokenString(tokens[2], "char", text);
-        assert(firstLine.size() < payload->size() && "Missing multiline data in renderfont");
-        docBroker->tileCache().saveStream(TileCache::StreamType::Font, font + text,
-                                          payload->data().data() + firstLine.size() + 1,
-                                          payload->data().size() - firstLine.size() - 1);
-        return forwardToClient(payload);
-    }
     else if (tokens.equals(0, "extractedlinktargets:"))
     {
         LOG_TRC("Sending extracted link targets response.");

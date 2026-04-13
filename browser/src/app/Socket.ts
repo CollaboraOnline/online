@@ -1211,7 +1211,6 @@ class Socket {
 		} else if (
 			!textMsg.startsWith('tile:') &&
 			!textMsg.startsWith('delta:') &&
-			!textMsg.startsWith('renderfont:') &&
 			!textMsg.startsWith('slidelayer:') &&
 			!textMsg.startsWith('zstdslidelayer:') &&
 			!textMsg.startsWith('windowpaint:')
@@ -1305,7 +1304,6 @@ class Socket {
 				e.data.startsWith('tile:') ||
 				e.data.startsWith('tilecombine:') ||
 				e.data.startsWith('delta:') ||
-				e.data.startsWith('renderfont:') ||
 				e.data.startsWith('rendersearchlist:') ||
 				e.data.startsWith('slidelayer:') ||
 				e.data.startsWith('zstdslidelayer:') ||
@@ -1338,7 +1336,6 @@ class Socket {
 		if (
 			!isTile &&
 			!isDelta &&
-			!e.textMsg.startsWith('renderfont:') &&
 			!e.textMsg.startsWith('slidelayer:') &&
 			!e.textMsg.startsWith('windowpaint:')
 		)
