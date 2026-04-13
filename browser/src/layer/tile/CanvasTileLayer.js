@@ -882,9 +882,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		else if (textMsg.startsWith('mousepointer:')) {
 			this._onMousePointerMsg(textMsg);
 		}
-		else if (textMsg.startsWith('renderfont:')) {
-			this._onRenderFontMsg(textMsg, img);
-		}
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._onSearchNotFoundMsg(textMsg);
 		}
@@ -2012,15 +2009,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// Sending postMessage about View_Added / View_Removed is
 		// deprecated, going forward we prefer sending the entire information.
 		this._map.fire('updateviewslist');
-	},
-
-	_onRenderFontMsg: function (textMsg, img) {
-		var command = app.socket.parseServerCmd(textMsg);
-		this._map.fire('renderfont', {
-			font: command.font,
-			char: command.char,
-			img: img
-		});
 	},
 
 	_onSearchNotFoundMsg: function (textMsg) {
