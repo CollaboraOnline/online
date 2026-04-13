@@ -937,7 +937,6 @@ SYSTEM_STAMP =
 endif
 
 if ENABLE_AFL
-all-local: $(AFL_FUZZER_TARGETS)
 clean-local: clean-afl
 endif
 
