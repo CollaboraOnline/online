@@ -16,6 +16,69 @@
 
 declare var JSDialog: any;
 
+interface StatusbarItemMetadata {
+	cooltip: string;
+	configLabel?: string;
+}
+
+// Statusbar HTML item strings.
+// cooltip is shown as data-cooltip on the element.
+// configLabel is the menu entry text in the status bar config menu
+function getStatusbarItemMetadata(id: string): StatusbarItemMetadata {
+	switch (id) {
+		case 'statepagenumber':
+			return {
+				cooltip: _('Number of Pages. Click to open the Go to Page dialog box.'),
+				configLabel: _('Number of Pages'),
+			};
+		case 'statewordcount':
+			return { cooltip: _('Word Counter'), configLabel: _('Word Counter') };
+		case 'statusdocpos':
+			return {
+				cooltip: _('Number of Sheets'),
+				configLabel: _('Number of Sheets'),
+			};
+		case 'rowcolselcount':
+			return {
+				cooltip: _('Selected range of cells'),
+				configLabel: _('Cell Selection'),
+			};
+		case 'insertmode':
+			return {
+				cooltip: _('Entering text mode'),
+				configLabel: _('Insert Mode'),
+			};
+		case 'showcomments':
+			return { cooltip: _('Show Comments'), configLabel: _('Comments') };
+		case 'statusselectionmode':
+			return { cooltip: _('Selection Mode') };
+		case 'slidestatus':
+			return {
+				cooltip: _('Number of Slides'),
+				configLabel: _('Number of Slides'),
+			};
+		case 'pagestatus':
+			return {
+				cooltip: _('Number of Pages'),
+				configLabel: _('Number of Pages'),
+			};
+		case 'statetablecell':
+			return {
+				cooltip: _('Choice of functions'),
+				configLabel: _('Table Cell Functions'),
+			};
+		case 'permissionmode':
+			return { cooltip: _('Permission Mode') };
+		case 'documentstatus':
+			return { cooltip: _('Your changes have been saved') };
+	}
+	return { cooltip: '' };
+}
+
+function getStatusbarItemConfigLabel(id: string): string | null {
+	return getStatusbarItemMetadata(id).configLabel || null;
+}
+
 function sanitizeString(text: string): string {
 	const sanitizer = document.createElement('div');
 	sanitizer.innerText = text;
@@ -30,10 +93,12 @@ function getPermissionModeElements(
 	const permissionModeDiv = document.createElement('div');
 	permissionModeDiv.className = 'jsdialog ui-badge';
 
+	const cooltip = getStatusbarItemMetadata('permissionmode').cooltip;
+
 	if (isReadOnlyMode && !canUserWrite) {
 		permissionModeDiv.classList.add('status-readonly-mode');
 		permissionModeDiv.textContent = _('Read-only');
-		permissionModeDiv.setAttribute('data-cooltip', _('Permission Mode'));
+		permissionModeDiv.setAttribute('data-cooltip', cooltip);
 		window.L.control.attachTooltipEventListener(permissionModeDiv, map);
 	} else if (isReadOnlyMode && canUserWrite) {
 		permissionModeDiv.classList.add('status-readonly-transient-mode');
@@ -41,7 +106,7 @@ function getPermissionModeElements(
 	} else {
 		permissionModeDiv.classList.add('status-edit-mode');
 		permissionModeDiv.textContent = _('Edit mode');
-		permissionModeDiv.setAttribute('data-cooltip', _('Permission Mode'));
+		permissionModeDiv.setAttribute('data-cooltip', cooltip);
 		window.L.control.attachTooltipEventListener(permissionModeDiv, map);
 	}
 
@@ -69,7 +134,7 @@ function getStatusbarItemElement(
 function getPageNumberElements(text: string, builder: any) {
 	const button = getStatusbarItemElement(
 		'StatePageNumber',
-		_('Number of Pages. Click to open the Go to Page dialog box.'),
+		getStatusbarItemMetadata('statepagenumber').cooltip,
 		text,
 		builder,
 		true,
@@ -81,7 +146,7 @@ function getPageNumberElements(text: string, builder: any) {
 function getWordCountElements(text: string, builder: any) {
 	return getStatusbarItemElement(
 		'StateWordCount',
-		_('Word Counter'),
+		getStatusbarItemMetadata('statewordcount').cooltip,
 		text,
 		builder,
 	);
@@ -90,7 +155,7 @@ function getWordCountElements(text: string, builder: any) {
 function getStatusDocPosElements(text: string, builder: any) {
 	const button = getStatusbarItemElement(
 		'StatusDocPos',
-		_('Number of Sheets'),
+		getStatusbarItemMetadata('statusdocpos').cooltip,
 		text,
 		builder,
 		true,
@@ -102,7 +167,7 @@ function getStatusDocPosElements(text: string, builder: any) {
 function getInsertModeElements(text: string, builder: any) {
 	return getStatusbarItemElement(
 		'InsertMode',
-		_('Entering text mode'),
+		getStatusbarItemMetadata('insertmode').cooltip,
 		text,
 		builder,
 	);
@@ -111,7 +176,7 @@ function getInsertModeElements(text: string, builder: any) {
 function getSelectionModeElements(text: string, builder: any) {
 	return getStatusbarItemElement(
 		'StatusSelectionMode',
-		_('Selection Mode'),
+		getStatusbarItemMetadata('statusselectionmode').cooltip,
 		text,
 		builder,
 	);
@@ -120,7 +185,7 @@ function getSelectionModeElements(text: string, builder: any) {
 function getRowColSelCountElements(text: string, builder: any) {
 	return getStatusbarItemElement(
 		'RowColSelCount',
-		_('Selected range of cells'),
+		getStatusbarItemMetadata('rowcolselcount').cooltip,
 		text,
 		builder,
 	);
@@ -129,7 +194,7 @@ function getRowColSelCountElements(text: string, builder: any) {
 function getStateTableCellElements(text: string, builder: any) {
 	return getStatusbarItemElement(
 		'StateTableCell',
-		_('Choice of functions'),
+		getStatusbarItemMetadata('statetablecell').cooltip,
 		text,
 		builder,
 	);
@@ -138,7 +203,7 @@ function getStateTableCellElements(text: string, builder: any) {
 function getSlideStatusElements(text: string, builder: any) {
 	const button = getStatusbarItemElement(
 		'SlideStatus',
-		_('Number of Slides'),
+		getStatusbarItemMetadata('slidestatus').cooltip,
 		text,
 		builder,
 		true,
@@ -150,7 +215,7 @@ function getSlideStatusElements(text: string, builder: any) {
 function getPageStatusElements(text: string, builder: any) {
 	const button = getStatusbarItemElement(
 		'PageStatus',
-		_('Number of Pages'),
+		getStatusbarItemMetadata('pagestatus').cooltip,
 		text,
 		builder,
 		true,
@@ -160,9 +225,10 @@ function getPageStatusElements(text: string, builder: any) {
 }
 
 function getDocumentStatusElements(text: string, builder: any) {
+	const cooltip = getStatusbarItemMetadata('documentstatus').cooltip;
 	const docstat = getStatusbarItemElement(
 		'DocumentStatus',
-		_('Your changes have been saved'),
+		cooltip,
 		'',
 		builder,
 	);
@@ -172,10 +238,7 @@ function getDocumentStatusElements(text: string, builder: any) {
 		const lastSaved = document.createElement('span');
 		lastSaved.id = 'last-saved';
 		lastSaved.textContent = '';
-		lastSaved.setAttribute(
-			'data-cooltip',
-			_('Your changes have been saved') + '.',
-		);
+		lastSaved.setAttribute('data-cooltip', cooltip + '.');
 		window.L.control.attachTooltipEventListener(lastSaved, builder.map);
 		docstat.appendChild(lastSaved);
 	}
@@ -186,7 +249,7 @@ function getDocumentStatusElements(text: string, builder: any) {
 function getShowCommentsStatusElements(text: string, builder: any) {
 	return getStatusbarItemElement(
 		'ShowComments',
-		_('Show Comments'),
+		getStatusbarItemMetadata('showcomments').cooltip,
 		text,
 		builder,
 	);
@@ -279,3 +342,4 @@ function htmlContent(
 }
 
 JSDialog.htmlContent = htmlContent;
+JSDialog.getStatusbarItemConfigLabel = getStatusbarItemConfigLabel;
