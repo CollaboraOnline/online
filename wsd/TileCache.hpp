@@ -258,7 +258,6 @@ public:
 
     enum StreamType : std::uint8_t
     {
-        Font,
         Style,
         CmdValues,
         Last

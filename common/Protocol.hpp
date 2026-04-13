@@ -37,7 +37,6 @@ namespace COOLProtocol
         "tile:",
         "tilecombine:",
         "delta:",
-        "renderfont:",
         "rendersearchresult:",
         "slidelayer:",
         "zstdslidelayer:",

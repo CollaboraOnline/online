@@ -502,10 +502,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
-    else if (tokens.equals(0, "renderfont"))
-    {
-        sendFontRendering(tokens);
-    }
     else if (tokens.equals(0, "setclientpart"))
     {
         return setClientPart(tokens);
@@ -1096,69 +1092,6 @@ bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& t
     }
 
     return false;
-}
-
-bool ChildSession::sendFontRendering(const StringVector& tokens)
-{
-    std::string font, text, decodedFont, decodedChar;
-    bool success;
-
-    if (tokens.size() < 3 ||
-        !getTokenString(tokens[1], "font", font))
-    {
-        sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
-        return false;
-    }
-
-    getTokenString(tokens[2], "char", text);
-
-    try
-    {
-        URI::decode(font, decodedFont);
-        URI::decode(text, decodedChar);
-    }
-    catch (Poco::SyntaxException& exc)
-    {
-        LOG_ERR(exc.message());
-        sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
-        return false;
-    }
-
-    const std::string response = "renderfont: " + tokens.cat(' ', 1) + '\n';
-
-    std::vector<char> output;
-    output.resize(response.size());
-    std::memcpy(output.data(), response.data(), response.size());
-
-    const auto start = std::chrono::steady_clock::now();
-    // renderFont use a default font size (25) when width and height are 0
-    int width = 0, height = 0;
-
-    getLOKitDocument()->setView(_viewId);
-
-    ScopedBytes ptrFont(getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height));
-
-    const auto duration = std::chrono::steady_clock::now() - start;
-    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-    LOG_TRC("renderFont [" << font << "] rendered in " << elapsed);
-
-    if (!ptrFont)
-    {
-        return sendTextFrame(output.data(), output.size());
-    }
-
-    const auto mode = static_cast<COKitTileMode>(getLOKitDocument()->getTileMode());
-
-    if (Png::encodeBufferToPNG(ptrFont.get(), width, height, output, mode))
-    {
-        success = sendTextFrame(output.data(), output.size());
-    }
-    else
-    {
-        success = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
-    }
-
-    return success;
 }
 
 bool ChildSession::getStatus()
