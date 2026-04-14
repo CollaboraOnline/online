@@ -25,6 +25,7 @@ window.L.IFrameDialog = window.L.Class.extend({
 		var content, form;
 
 		this._loading = false;
+		this._url = url;
 		window.L.setOptions(this, options);
 
 		const containerCss = this.options.dialogCssClass;
@@ -118,6 +119,15 @@ window.L.IFrameDialog = window.L.Class.extend({
 				window.postMessage('{"MessageId":"' + msg + '"}');
 			}
 		}, 1000);
+
+		// contentDocument is null when the site blocks framing via
+		// Content-Security-Policy frame-ancestors or X-Frame-Options.
+		// Fall back to opening the URL in a new tab.
+		if (!this._iframe.contentDocument) {
+			this.remove();
+			window.open(this._url, '_blank', 'noopener');
+			return;
+		}
 
 		if (this.options.stylesheets) {
 			this.addStyleSheets(this.options.stylesheets);
