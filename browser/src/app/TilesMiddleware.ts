@@ -1325,18 +1325,10 @@ class TileManager {
 	}
 
 	private static updateTileDistance(tile: Tile, zoom: number) {
-		let modes = [app.map._docLayer._selectedMode];
-		if (
-			app.activeDocument &&
-			app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges'
-		) {
-			// 2 modes are active at the same time in compare changes view mode.
-			modes = [TileMode.LeftSide, TileMode.RightSide];
-		}
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
-			!modes.includes(tile.coords.mode)
+			!app.activeDocument.isModeActive(tile.coords.mode)
 		)
 			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
 		else {
