@@ -331,6 +331,7 @@ class SlideShowNavigator {
 				bSkipTransition,
 		);
 
+		if (!this.theMetaPres) return;
 		if (this.presenter && !this.presenter._checkAlreadyPresenting()) {
 			NAVDBG.print('SlideShowNavigator.displaySlide: no more presenting');
 			this.quit();
@@ -432,13 +433,12 @@ class SlideShowNavigator {
 				this.slideShowHandler.skipAllEffects();
 				this.isRewindingToPrevSlide = false;
 			}
-
 			// Replay the leader's pending press (see dispatchEffect).
 			// At most one switchSlide(+1) runs per load callback;
 			// presses that came in during this load collapse into
 			// this single advance. The replay starts a new load,
 			// where more presses can queue up independently.
-			if (this.isEffectPending) {
+			else if (this.isEffectPending) {
 				this.isEffectPending = false;
 				this.switchSlide(1, true);
 			}
