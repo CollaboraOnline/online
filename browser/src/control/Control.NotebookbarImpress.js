@@ -476,7 +476,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			{
 				'type': 'overflowgroup',
 				'id': 'slide-start',
-				'name':_('Start Slide Show'),
+				'name': _('Start Slide Show'),
 				'children' : [
 					{
 						'id': 'slide-fullscreen-presentation',
@@ -504,8 +504,8 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				} : {},
 			{
 				'type': 'overflowgroup',
-				'id': 'slide-start',
-				'name':_('Present'),
+				'id': 'slide-present',
+				'name': _('Present'),
 				'children' : [
 				!window.ThisIsAMobileApp || window.mode.isCODesktop() ?
 					{
