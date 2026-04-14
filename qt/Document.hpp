@@ -29,6 +29,11 @@ struct RemoteDocInfo
     QString wopiSrc;
     QString accessToken;
     QString coolServer;
+    // The path component of the original COOL URL intercepted from
+    // the integrator, e.g. "/browser/abc123/cool.html".  Needed
+    // by switchToServerMode to navigate to the correct versioned
+    // URL on the remote server.
+    QString coolPath;
     // Heap-allocated; lives as long as the document is open.
     std::unique_ptr<QWebSocket> collabWs;
     // Collab messages received during download, before JS forwarding

@@ -937,8 +937,11 @@ QVariant Bridge::cool(const QString& messageStr)
             ri.collabWs->close();
 
         // Navigate to the COOL server's cool.html with WOPI params.
-        QString coolUrl = ri.coolServer
-            + "/browser/dist/cool.html"
+        // Use the original versioned path captured by the
+        // IntegratorFilePicker (e.g. /browser/<hash>/cool.html).
+        QString path = ri.coolPath.isEmpty()
+            ? "/browser/dist/cool.html" : ri.coolPath;
+        QString coolUrl = ri.coolServer + path
             + "?WOPISrc=" + QUrl::toPercentEncoding(ri.wopiSrc)
             + "&access_token=" + QUrl::toPercentEncoding(ri.accessToken)
             + "&permission=edit";
