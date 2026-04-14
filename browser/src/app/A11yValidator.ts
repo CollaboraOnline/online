@@ -256,6 +256,10 @@ class A11yValidator {
 			const labelledBy = btn.getAttribute('aria-labelledby')?.trim();
 			if (!labelledBy) return;
 
+			// Skip hidden buttons (e.g. inside collapsed sidebar panels).
+			// They are not reachable by users or screen readers.
+			if (!this.isVisible(btn as HTMLElement)) return;
+
 			if (!labelMap.has(labelledBy)) {
 				labelMap.set(labelledBy, []);
 			}
