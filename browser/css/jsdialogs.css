@@ -1049,6 +1049,22 @@ img.context-menu-icon {
 	padding-left: 2em;
 }
 
+#statusbar-context-menu-dropdown.jsdialog-window {
+	/* override width set in .jsdialog-window.modalpopup */
+	min-width: 160px !important;
+}
+
+#statusbar-context-menu-dropdown .ui-combobox-entry:not(.checked)::before {
+	content: '\2713';
+	display: inline-block;
+	visibility: hidden;
+	padding: 0 6px;
+}
+
+.user-hidden {
+	display: none !important;
+}
+
 /* input text */
 
 .ui-dialog .jsdialog.ui-edit:focus-visible {
