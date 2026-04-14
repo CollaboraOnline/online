@@ -310,9 +310,16 @@ void removeAssocTmpOfJail(const std::string &root)
 
     jailPath.popDirectory();
     jailPath.pushDirectory("tmp");
-    jailPath.pushDirectory(std::string("cool-") + jailId);
 
-    FileUtil::removeFile(jailPath.toString(), true);
+    Poco::Path coolTmpPath(jailPath);
+    coolTmpPath.pushDirectory(std::string("cool-") + jailId);
+    FileUtil::removeFile(coolTmpPath.toString(), true);
+
+    // Also remove the per-jail systemplate copy created when
+    // sysTemplateIncomplete is true (read-only systemplate).
+    Poco::Path sysTemplatePath(jailPath);
+    sysTemplatePath.pushDirectory(std::string("systemplate-") + jailId);
+    FileUtil::removeFile(sysTemplatePath.toString(), true);
 #endif
 }
 
