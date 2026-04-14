@@ -369,10 +369,8 @@ class ContextMenuControl extends JSControl {
 					Util.ensureValue(item.text);
 					itemName = item.text;
 					contextMenu[item.command] = {
-						name: window.mode.isSmallScreenDevice()
-							? _(itemName)
-							: app.IconUtil.createMenuItemLink(itemName, item.command),
-						isHtmlName: true,
+						name: _(itemName),
+						isHtmlName: false,
 					};
 					isLastItemText = true;
 					continue;
