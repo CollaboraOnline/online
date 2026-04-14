@@ -230,18 +230,16 @@ class BitmapTileManager {
 		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
 		const highNumBitmaps = 250; // ~60Mb.
 
-		const assertChecks = false;
-
 		if (tile.image) {
 			// fast case - no impact on count of tiles or bitmap list:
-			if (assertChecks)
+			if (this.extraDebugChecks())
 				window.app.console.assert(!!this.tileBitmapList.find((i) => i == tile));
 			tile.image.close();
 			tile.image = bitmap;
 			return;
 		}
 
-		if (assertChecks)
+		if (this.extraDebugChecks())
 			window.app.console.assert(!this.tileBitmapList.find((i) => i == tile));
 
 		// free the last tile if we need to
@@ -2275,5 +2273,10 @@ class BitmapTileManager {
 		if (!tile) return;
 		tile.lastRendered = performance.now();
 		if (!tile.image) tile.missingContent++;
+	}
+
+	// flip to true for extra bitmap list consistency checks
+	private extraDebugChecks(): boolean {
+		return false;
 	}
 }
