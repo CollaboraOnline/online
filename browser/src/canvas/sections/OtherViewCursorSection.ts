@@ -190,6 +190,8 @@ class TextCursorSection extends HTMLObjectSection {
 		for (let i = 0; i < TextCursorSection.sectionPointers.length; i++) {
 			const section = TextCursorSection.sectionPointers[i];
 			section.setShowSection(section.checkMyVisibility());
+			if (!section.showSection)
+				CursorHeaderSection.deletePopUpNow(section.sectionProperties.viewId);
 			if (hideCursors) section.getHTMLObject().style.opacity = '0';
 			else section.getHTMLObject().style.opacity = '1';
 		}
