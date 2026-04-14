@@ -417,6 +417,7 @@ private:
     void abortConversion(const std::shared_ptr<DocumentBroker>& docBroker,
                          const std::shared_ptr<StreamSocket>& saveAsSocket, std::string errorKind);
 
+#if !MOBILEAPP
     /// Send a JSON payload as an MCP JSON-RPC result via the saveAs socket.
     void sendMcpJsonResult(const std::shared_ptr<StreamSocket>& socket,
                            const std::string& jsonPayload);
@@ -424,6 +425,7 @@ private:
     /// Send a JSON-RPC error via the saveAs socket for MCP mode.
     void sendMcpError(const std::shared_ptr<StreamSocket>& socket, int code,
                       const std::string& message);
+#endif // !MOBILEAPP
 
 #if !MOBILEAPP
 

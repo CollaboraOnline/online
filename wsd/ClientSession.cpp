@@ -36,7 +36,9 @@
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/FileServer.hpp>
+#if !MOBILEAPP
 #include <wsd/McpResponseUtil.hpp>
+#endif
 #include <wsd/TileDesc.hpp>
 
 #include <common/base64.hpp>
@@ -3586,6 +3588,7 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
         return status;
     }
 #endif
+#if !MOBILEAPP
     else if (tokens.equals(0, "extractedlinktargets:"))
     {
         LOG_TRC("Sending extracted link targets response.");
@@ -3649,6 +3652,7 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
         docBroker->closeDocument("transformeddocumentstructure");
         return true;
     }
+#endif // !MOBILEAPP
     else if (tokens.equals(0, "sendthumbnail:"))
     {
         LOG_TRC("Sending get-thumbnail response.");
@@ -3721,6 +3725,7 @@ static std::string getDocTypeFromExtension(const std::string& ext)
     return (it != extToType.end()) ? it->second : "writer";
 }
 
+#if !MOBILEAPP
 void ClientSession::sendMcpJsonResult(const std::shared_ptr<StreamSocket>& socket,
                                       const std::string& jsonPayload)
 {
@@ -3740,6 +3745,7 @@ void ClientSession::sendMcpError(const std::shared_ptr<StreamSocket>& socket, in
     httpResponse.setBody(body, "application/json");
     socket->sendAndShutdown(httpResponse);
 }
+#endif // !MOBILEAPP
 
 void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBroker,
                                     const std::shared_ptr<StreamSocket>& saveAsSocket,
@@ -3750,10 +3756,12 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
     LOG_DBG("Conversion request of [" << docBroker->getDocKey() << "] failed: " << errorKind);
     if (!saveAsSocket)
         LOG_ERR("Error saveas socket missing in isConvertTo mode");
+#if !MOBILEAPP
     else if (_mcpContext)
     {
         sendMcpError(saveAsSocket, -32603, "Conversion failed: " + errorKind);
     }
+#endif // !MOBILEAPP
     else if (errorKind == "passwordrequired:to-view" ||
              errorKind == "passwordrequired:to-modify")
     {
