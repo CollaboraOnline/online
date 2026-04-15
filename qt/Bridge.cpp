@@ -941,6 +941,9 @@ QVariant Bridge::cool(const QString& messageStr)
         // IntegratorFilePicker (e.g. /browser/<hash>/cool.html).
         QString path = ri.coolPath.isEmpty()
             ? "/browser/dist/cool.html" : ri.coolPath;
+        //TODO: But strip any wasm/ segment that stems from the "TODO: COWASM: Unconditionally serve
+        // Wasm to integrators" code:
+        path.replace("/wasm/cool.html", "/cool.html");
         QString coolUrl = ri.coolServer + path
             + "?WOPISrc=" + QUrl::toPercentEncoding(ri.wopiSrc)
             + "&access_token=" + QUrl::toPercentEncoding(ri.accessToken)
