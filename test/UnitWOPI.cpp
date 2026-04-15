@@ -21,6 +21,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
+#include <chrono>
 #include <thread>
 #include <sys/types.h>
 #include <unistd.h>
@@ -329,8 +330,6 @@ public:
 /// unavailable, we are still able to unload.
 class UnitWopiUnavailable : public WopiTestServer
 {
-    using Base = WopiTestServer;
-
     STATE_ENUM(Phase, Load, WaitLoadStatus, Done)
     _phase;
 
@@ -510,10 +509,563 @@ public:
     }
 };
 
+class UnitWopiHttpHeaders : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, Done)
+    _phase;
+
+protected:
+    virtual std::unique_ptr<http::Response>
+    assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        assertHeaders(request);
+
+        return nullptr; // Success.
+    }
+
+    std::unique_ptr<http::Response>
+    assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        assertHeaders(request);
+        exitTest(TestResult::Ok); //TODO: Remove when we add put/rename cases.
+
+        return nullptr; // Success.
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        assertHeaders(request);
+        exitTest(TestResult::Ok);
+        return nullptr;
+    }
+
+    void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        assertHeaders(request);
+        exitTest(TestResult::Ok);
+    }
+
+    void assertRenameFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        assertHeaders(request);
+        exitTest(TestResult::Ok);
+    }
+
+    void assertHeaders(const Poco::Net::HTTPRequest& request) const
+    {
+        static const std::map<std::string, std::string> Headers{
+            { "Authorization", "Bearer xyz123abc456vwc789z" },
+            { "X-Requested-With", "XMLHttpRequest" },
+        };
+
+        for (const auto& pair : Headers)
+        {
+            LOK_ASSERT_MESSAGE("Request must have [" + pair.first + ']', request.has(pair.first));
+            LOK_ASSERT_EQUAL(pair.second, request[pair.first]);
+        }
+    }
+
+public:
+    UnitWopiHttpHeaders()
+        : WopiTestServer("UnitWOPIHttpHeaders")
+        , _phase(Phase::Load)
+    {
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+
+                // Technically, having an empty line in the header
+                // is invalid (it signifies the end of headers), but
+                // this is to illustrate that we are able to overcome
+                // such issues and generate valid headers.
+                const std::string params =
+                    "access_header=Authorization%3A%2520Bearer%"
+                    "2520xyz123abc456vwc789z%250D%250A%250D%250AX-Requested-With%"
+                    "3A%2520XMLHttpRequest&reuse_cookies=language%3Den-us%3AK%3DGS1&permission="
+                    "edit";
+
+                initWebsocket("/wopi/files/0?" + params);
+
+                WSD_CMD("load url=" + getWopiSrc());
+
+                break;
+            }
+            case Phase::Done:
+            {
+                // Just wait for the results.
+                break;
+            }
+        }
+    }
+};
+
+/// This tests that loading a document with access_token_ttl
+/// works correctly and the token expiry is tracked.
+class UnitWopiAccessTokenTtl : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, Save, Done)
+    _phase;
+
+public:
+    UnitWopiAccessTokenTtl()
+        : WopiTestServer("UnitWopiAccessTokenTtl")
+        , _phase(Phase::Load)
+    {
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::Modify);
+
+        // Modify the currently opened document; type 'a'.
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::Modify);
+
+        TRANSITION_STATE(_phase, Phase::Save);
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        return true;
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOK_ASSERT_STATE(_phase, Phase::Save);
+        TRANSITION_STATE(_phase, Phase::Done);
+
+        passTest("PutFile succeeded with access_token_ttl");
+        return nullptr;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                // TTL 15 minutes from now, in milliseconds (as per WOPI spec).
+                const uint64_t expiryTimeMs =
+                    static_cast<uint64_t>(time(nullptr) + (15 * 60)) * 1000;
+                initWebsocket("/wopi/files/0?access_token=secret&access_token_ttl=" +
+                              std::to_string(expiryTimeMs));
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::Modify:
+            case Phase::Save:
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+/// Test the save -> 401 -> tokenexpired -> resetaccesstoken -> retry -> success flow.
+class UnitWopiTokenRefreshOnSave : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitSave, WaitTokenExpired, Done)
+    _phase;
+
+    int _putFileCount;
+
+    static constexpr auto OriginalToken = "original_token_123";
+    static constexpr auto RefreshedToken = "refreshed_token_456";
+
+public:
+    UnitWopiTokenRefreshOnSave()
+        : WopiTestServer("UnitWopiTokenRefreshOnSave")
+        , _phase(Phase::Load)
+        , _putFileCount(0)
+    {
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::Modify);
+
+        // Modify the document; type 'a'.
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::Modify);
+
+        TRANSITION_STATE(_phase, Phase::WaitSave);
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        return true;
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        ++_putFileCount;
+        TST_LOG("PutFile #" << _putFileCount << " URI: " << request.getURI());
+
+        if (_putFileCount == 1)
+        {
+            // First PutFile: verify original token and return 401.
+            for (const auto& param : Poco::URI(request.getURI()).getQueryParameters())
+            {
+                if (param.first == "access_token")
+                {
+                    LOK_ASSERT_EQUAL_STR(std::string(OriginalToken), param.second);
+                    break;
+                }
+            }
+
+            TST_LOG("Returning 401 to trigger token refresh");
+            return std::make_unique<http::Response>(http::StatusCode::Unauthorized);
+        }
+
+        // Second PutFile: verify the refreshed token is used.
+        LOK_ASSERT_EQUAL(2, _putFileCount);
+        for (const auto& param : Poco::URI(request.getURI()).getQueryParameters())
+        {
+            if (param.first == "access_token")
+            {
+                LOK_ASSERT_EQUAL_STR(std::string(RefreshedToken), param.second);
+                break;
+            }
+        }
+
+        TRANSITION_STATE(_phase, Phase::Done);
+        passTest("PutFile retry with refreshed token succeeded");
+        return nullptr;
+    }
+
+    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
+                                      const WSOpCode /* code */, const bool /* flush */,
+                                      int& /*unitReturn*/) override
+    {
+        const std::string_view message(data, len);
+        if (message == "tokenexpired")
+        {
+            TST_LOG("Got tokenexpired, sending resetaccesstoken with new token and TTL");
+            LOK_ASSERT_STATE(_phase, Phase::WaitSave);
+            TRANSITION_STATE(_phase, Phase::WaitTokenExpired);
+
+            // TTL 30 minutes from now, in milliseconds.
+            const uint64_t expiryMs =
+                static_cast<uint64_t>(time(nullptr) + 30 * 60) * 1000;
+            WSD_CMD("resetaccesstoken " + std::string(RefreshedToken) + ' ' +
+                    std::to_string(expiryMs));
+        }
+
+        return false;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                initWebsocket("/wopi/files/0?access_token=" + std::string(OriginalToken) +
+                              "&access_token_ttl=0");
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::Modify:
+            case Phase::WaitSave:
+            case Phase::WaitTokenExpired:
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+/// Test the save -> 401 -> tokenexpired -> no refresh -> timeout -> saveunauthorized flow.
+/// We return 401 on the only PutFile attempt, send tokenexpired, and never reply with
+/// resetaccesstoken. The auth state stays in TokenRefresh (so isValid() is false and
+/// no further upload is attempted), and the poll loop's isTokenRefreshTimedOut() check
+/// fires after refresh_timeout_secs to broadcast saveunauthorized.
+class UnitWopiTokenRefreshTimeout : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitSave, WaitTimeout, Done)
+    _phase;
+    int _defLifetimeMins;
+    int _refreshTimeoutSecs;
+    bool _gotTokenExpired;
+
+public:
+    UnitWopiTokenRefreshTimeout(int defLifetimeMins, int refreshTimeoutSecs)
+        : WopiTestServer("UnitWopiTokenRefreshTimeout")
+        , _phase(Phase::Load)
+        , _defLifetimeMins(defLifetimeMins)
+        , _refreshTimeoutSecs(refreshTimeoutSecs)
+        , _gotTokenExpired(false)
+    {
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        WopiTestServer::configure(config);
+
+        config.setUInt("storage.wopi.access_token.default_lifetime_mins", _defLifetimeMins);
+        config.setUInt("storage.wopi.access_token.refresh_timeout_secs", _refreshTimeoutSecs);
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::Modify);
+
+        // Modify the document; type 'a'.
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::Modify);
+
+        TRANSITION_STATE(_phase, Phase::WaitSave);
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        return true;
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        // Return 401. handleUploadToStorageFailed sends tokenexpired and switches
+        // the auth to Type::TokenRefresh, which makes isValid() false -- no further
+        // PutFile is attempted while we wait for the host. Since the host never
+        // replies with resetaccesstoken, the poll loop eventually fires
+        // isTokenRefreshTimedOut() and broadcasts saveunauthorized.
+        TST_LOG("Returning 401 (no token refresh will arrive)");
+        return std::make_unique<http::Response>(http::StatusCode::Unauthorized);
+    }
+
+    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
+                                      const WSOpCode /* code */, const bool /* flush */,
+                                      int& /*unitReturn*/) override
+    {
+        const std::string_view message(data, len);
+        if (message == "tokenexpired")
+        {
+            TST_LOG("Got tokenexpired, deliberately NOT sending resetaccesstoken");
+            LOK_ASSERT_STATE(_phase, Phase::WaitSave);
+            TRANSITION_STATE(_phase, Phase::WaitTimeout);
+            _gotTokenExpired = true;
+            // Let the refresh-request time out.
+        }
+
+        return false;
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        TST_LOG("Got error: [" << message << ']');
+
+        if (message.find("kind=saveunauthorized") != std::string::npos)
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitTimeout);
+            LOK_ASSERT_MESSAGE("tokenexpired should have been sent before timeout", _gotTokenExpired);
+
+            TRANSITION_STATE(_phase, Phase::Done);
+            passTest("Token refresh timeout correctly produced saveunauthorized");
+            return true;
+        }
+
+        return false;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                initWebsocket("/wopi/files/0?access_token=anything&access_token_ttl=0");
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::Modify:
+            case Phase::WaitSave:
+            case Phase::WaitTimeout:
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+/// Verify the unauthorized (expired token) retry cap.
+/// PutFile always returns 401. We answer every tokenexpired with a fresh
+/// resetaccesstoken. After MaxTokenRefreshAttempts (3) cycles wsd must stop
+/// asking for refreshes and broadcast saveunauthorized instead of sending a
+/// 4th tokenexpired.
+class UnitWopiTokenRefreshCap : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitSave, Done) _phase;
+
+    static constexpr int MaxAttempts = 3; // Must match DocumentBroker MaxTokenRefreshAttempts.
+
+    int _tokenExpiredCount;
+    bool _gotSaveUnauthorized;
+
+public:
+    UnitWopiTokenRefreshCap()
+        : WopiTestServer("UnitWopiTokenRefreshCap")
+        , _phase(Phase::Load)
+        , _tokenExpiredCount(0)
+        , _gotSaveUnauthorized(false)
+    {
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::Modify);
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::Modify);
+
+        TRANSITION_STATE(_phase, Phase::WaitSave);
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+        return true;
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        TST_LOG("Returning 401 to keep triggering tokenexpired");
+        return std::make_unique<http::Response>(http::StatusCode::Unauthorized);
+    }
+
+    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
+                                      const WSOpCode /* code */, const bool /* flush */,
+                                      int& /*unitReturn*/) override
+    {
+        const std::string_view message(data, len);
+        if (message == "tokenexpired")
+        {
+            ++_tokenExpiredCount;
+            TST_LOG("Got tokenexpired #" << _tokenExpiredCount);
+
+            // The cap must stop us at exactly kMaxAttempts. A 4th tokenexpired
+            // means the cap didn't engage.
+            LOK_ASSERT_MESSAGE("tokenexpired exceeded MaxTokenRefreshAttempts",
+                               _tokenExpiredCount <= MaxAttempts);
+
+            // Reply with a fresh resetaccesstoken so the auth flips back to Token
+            // and the next save attempt would re-enter the refresh branch -- if
+            // not for the cap.
+            WSD_CMD("resetaccesstoken refreshed_" + std::to_string(_tokenExpiredCount) + " 0");
+        }
+
+        return false;
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        TST_LOG("Got error: [" << message << ']');
+
+        if (message.find("kind=saveunauthorized") != std::string::npos)
+        {
+            LOK_ASSERT_EQUAL(MaxAttempts, _tokenExpiredCount);
+            _gotSaveUnauthorized = true;
+            TRANSITION_STATE(_phase, Phase::Done);
+            passTest("Retry cap correctly produced saveunauthorized after " +
+                     std::to_string(MaxAttempts) + " refreshes");
+            return true;
+        }
+
+        return false;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+                initWebsocket("/wopi/files/0?access_token=anything&access_token_ttl=0");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::Modify:
+            case Phase::WaitSave:
+            case Phase::Done:
+            {
+                break;
+            }
+        }
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase*[4]{ new UnitWOPI(), new UnitWOPILoadEncoded(),
-                             /*new UnitOverload(),*/ new UnitWopiUnavailable(), nullptr };
+    return new UnitBase* []
+    {
+        new UnitWOPI(), new UnitWOPILoadEncoded(),
+            /*new UnitOverload(),*/ new UnitWopiUnavailable(), new UnitWopiHttpHeaders(),
+            new UnitWopiAccessTokenTtl(), new UnitWopiTokenRefreshOnSave(),
+            new UnitWopiTokenRefreshTimeout(0, 5), new UnitWopiTokenRefreshCap(), nullptr
+    };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
