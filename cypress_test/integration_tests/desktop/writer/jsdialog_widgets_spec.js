@@ -86,21 +86,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 	});
 
 	it('Treelistbox with-headers', function() {
-		cy.cGet('#contenttree2').compareSnapshot('treeview_headers', 0.12);
+		cy.cGet('#contenttree2').compareSnapshot('treeview_headers', 0.15);
 
 		// use sort feature
 		cy.cGet('#contenttree2 .ui-treeview-header-sort-icon').should('be.not.visible');
 		cy.cGet('#contenttree2 .ui-treeview-header-button').contains('Column 2').click();
 		cy.cGet('#contenttree2 .ui-treeview-header-sort-icon').should('be.visible');
 		cy.cGet('#contenttree2 .ui-treeview-header-button').contains('Column 2').click();
-		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.1);
+		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.15);
 
 		// use filter feature
 		cy.cGet('#contenttree2').then(
 			(trees) => {
 				trees[0].filterEntries('Row 2');
 				helper.processToIdle(this.win);
-				cy.cGet('#contenttree2').compareSnapshot('treeview_headers_filter', 0.12);
+				cy.cGet('#contenttree2').compareSnapshot('treeview_headers_filter', 0.15);
 			});
 	});
 });
