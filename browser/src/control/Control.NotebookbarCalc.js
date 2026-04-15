@@ -1832,7 +1832,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								]
 							},
 							{
-								'id': 'LineB162',
 								'type': 'toolbox',
 								'children': [
 									{
@@ -1885,21 +1884,77 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'insert-functiondialog-break', orientation: 'vertical' },
 			{
-				'id': 'HyperlinkDialog',
-				'class': 'unoHyperlinkDialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:HyperlinkDialog'),
-				'command': '.uno:HyperlinkDialog',
-				'accessibility': { focusBack: true,	combination: 'I2', de: null }
+				'type': 'overflowgroup',
+				'id': 'insert-links',
+				'name':_('Links'),
+				'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' },
+				'children' : [
+					{
+						'id': 'HyperlinkDialog',
+						'class': 'unoHyperlinkDialog',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:HyperlinkDialog'),
+						'command': '.uno:HyperlinkDialog',
+						'accessibility': { focusBack: true,	combination: 'I2', de: null }
+					},
+					(this.map['wopi'].EnableRemoteLinkPicker) ? {
+						'id': 'insert-smart-picker',
+						'class': 'unoremotelink',
+						'type': 'bigcustomtoolitem',
+						'text': _('Smart Picker'),
+						'command': 'remotelink',
+						'accessibility': { focusBack: true,	combination: 'LR', de: null }
+					} : {},
+					{
+						'id': 'Insert-Section-NameRangesTable-Ext',
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-add-name',
+										'type': 'toolitem',
+										'text': _UNO('.uno:AddName', 'spreadsheet'),
+										'command': '.uno:AddName',
+										'accessibility': { focusBack: true,	combination: 'IN', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-define-name',
+										'type': 'toolitem',
+										'text': _UNO('.uno:DefineName', 'spreadsheet'),
+										'command': '.uno:DefineName',
+										'accessibility': { focusBack: true,	combination: 'DN', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+				]
 			},
-			(this.map['wopi'].EnableRemoteLinkPicker) ? {
-				'id': 'insert-smart-picker',
-				'class': 'unoremotelink',
-				'type': 'bigcustomtoolitem',
-				'text': _('Smart Picker'),
-				'command': 'remotelink',
-				'accessibility': { focusBack: true,	combination: 'LR', de: null }
-			} : {},
+			{ type: 'separator', id: 'insert-definename-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'insert-annotation',
+				'name':_('Comments'),
+				'accessibility': { focusBack: false,	combination: 'IA',	de:	null },
+				'children' : [
+					{
+						'id': 'insert-insert-annotation',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertAnnotation', 'text'),
+						'command': '.uno:InsertAnnotation',
+						'accessibility': { focusBack: true,	combination: 'IA', de: null }
+					},
+				]
+			},
+			{ type: 'separator', id: 'insert-insertannotation-break', orientation: 'vertical' },
 			(this.map['wopi'].EnableRemoteAIContent) ? {
 				'id': 'insert-insert-remote-ai-content',
 				'class': 'unoremoteaicontent',
@@ -1908,70 +1963,57 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': 'remoteaicontent',
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
 			} : {},
-			{ type: 'separator', id: 'insert-remoteaicontent-break', orientation: 'vertical' },
-            {
-                'type': 'container',
-                'children': [
-                    {
-                        'type': 'toolbox',
-                        'children': [
-                            {
-								'id': 'insert-insert-current-date',
-                                'type': 'toolitem',
-                                'text': _UNO('.uno:InsertCurrentDate', 'spreadsheet'),
-                                'command': '.uno:InsertCurrentDate',
-								'accessibility': { focusBack: true,	combination: 'ID', de: null }
-                            }
-                        ]
-                    },
-                    {
-                        'type': 'toolbox',
-                        'children': [
-                            {
-								'id': 'insert-insert-current-time',
-                                'type': 'toolitem',
-                                'text': _UNO('.uno:InsertCurrentTime', 'spreadsheet'),
-                                'command': '.uno:InsertCurrentTime',
-								'accessibility': { focusBack: true,	combination: 'CT', de: null }
-                            }
-                        ]
-                    }
-                ],
-                'vertical': 'true'
-            },
-			{ type: 'separator', id: 'insert-insertcurrenttime-break', orientation: 'vertical' },
+			(this.map['wopi'].EnableRemoteAIContent) ? {
+				'type': 'separator',
+				'id': 'insert-remoteaicontent-break',
+				'orientation': 'vertical'
+			} : {},
 			{
-				'id': 'Insert-Section-NameRangesTable-Ext',
-				'type': 'container',
-				'children': [
+				'type': 'overflowgroup',
+				'id': 'insert-header-footer',
+				'name':_('Header & Footer'),
+				'accessibility': { focusBack: false,	combination: 'H',	de:	'H' },
+				'children' : [
 					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'insert-add-name',
-								'type': 'toolitem',
-								'text': _UNO('.uno:AddName', 'spreadsheet'),
-								'command': '.uno:AddName',
-								'accessibility': { focusBack: true,	combination: 'IN', de: null }
-							}
-						]
+						'id': 'insert-edit-header-and-footer',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
+						'command': '.uno:EditHeaderAndFooter',
+						'accessibility': { focusBack: true,	combination: 'IH', de: null }
 					},
 					{
-						'type': 'toolbox',
+						'type': 'container',
 						'children': [
 							{
-								'id': 'insert-define-name',
-								'type': 'toolitem',
-								'text': _UNO('.uno:DefineName', 'spreadsheet'),
-								'command': '.uno:DefineName',
-								'accessibility': { focusBack: true,	combination: 'DN', de: null }
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-insert-current-date',
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertCurrentDate', 'spreadsheet'),
+										'command': '.uno:InsertCurrentDate',
+										'accessibility': { focusBack: true,	combination: 'ID', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'insert-insert-current-time',
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertCurrentTime', 'spreadsheet'),
+										'command': '.uno:InsertCurrentTime',
+										'accessibility': { focusBack: true,	combination: 'CT', de: null }
+									}
+								]
 							}
-						]
-					}
-				],
-				'vertical': 'true'
+						],
+						'vertical': 'true'
+					},
+				]
 			},
-			{ type: 'separator', id: 'insert-definename-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'insert-insertcurrenttime-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'insert-text',
@@ -2024,47 +2066,21 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'insert-verticaltext-break', orientation: 'vertical' },
 			{
-				'id': 'insert-edit-header-and-footer',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
-				'command': '.uno:EditHeaderAndFooter',
-				'accessibility': { focusBack: true,	combination: 'IH', de: null }
-			},
-			{ type: 'separator', id: 'insert-editheaderandfooter-break', orientation: 'vertical' },
-			{
+				'type': 'overflowgroup',
 				'id': 'Insert-Charmap-Annotation',
-				'type': 'container',
-				'children': [
+				'name':_('Symbols'),
+				'accessibility': { focusBack: false,	combination: 'ZS',	de:	null },
+				'children' : [
 					{
-						'id': 'LineA153',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'CharmapControl',
-								'class': 'unoCharmapControl',
-								'type': 'customtoolitem',
-								'text': _UNO('.uno:CharmapControl'),
-								'command': 'charmapcontrol',
-								'accessibility': { focusBack: true,	combination: 'ZS', de: null }
-							}
-						]
+						'id': 'CharmapControl',
+						'class': 'unoCharmapControl',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:CharmapControl'),
+						'command': 'charmapcontrol',
+						'accessibility': { focusBack: true,	combination: 'ZS', de: null }
 					},
-					{
-						'id': 'LineB163',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'insert-insert-annotation',
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAnnotation', 'text'),
-								'command': '.uno:InsertAnnotation',
-								'accessibility': { focusBack: true,	combination: 'IA', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			}
+				]
+			},
 		];
 
 		return this.getTabPage('Insert', content);
