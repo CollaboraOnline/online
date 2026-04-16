@@ -24,6 +24,37 @@ const dialogModifications = new Map<string, DialogModificationCallback>();
 dialogModifications.set('FindReplaceDialog', function (instance: any) {
 	if (!instance.container) return;
 
+	// In view mode, disable the Replace tab so the user cannot switch to
+	// replace controls.
+	if (!(window as any).app.map.isEditMode()) {
+		const disableReplaceTab = () => {
+			const tab = instance.container.querySelector(
+				'#replace_tab_btn',
+			) as HTMLElement;
+			if (tab) {
+				tab.setAttribute('disabled', 'true');
+				tab.setAttribute('data-cooltip', _('You are currently in View mode'));
+				tab.style.pointerEvents = 'auto';
+				(window as any).L.control.attachTooltipEventListener(
+					tab,
+					(window as any).app.map,
+				);
+			}
+		};
+
+		disableReplaceTab();
+
+		// Observe the parent container for child changes and re-apply the disabled state.
+		const replaceTab = instance.container.querySelector(
+			'#replace_tab_btn',
+		) as HTMLElement;
+		if (replaceTab && replaceTab.parentNode) {
+			new MutationObserver(disableReplaceTab).observe(replaceTab.parentNode, {
+				childList: true,
+			});
+		}
+	}
+
 	instance.container.addEventListener('keydown', function (e: KeyboardEvent) {
 		if (e.code !== 'Enter') return; // Only handle Enter key
 
