@@ -80,8 +80,14 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		span.innerText = data.text;
 	}
 
+	_setupDrawingAreaMouseEvents(image, container, builder);
+	_setupDrawingAreaKeyboardEvents(image, container, builder);
+
+	return false;
+}
+
+function _setupDrawingAreaMouseEvents (imageElement, container, builder) {
 	var getCoordinatesFromEvent = function (e) {
-		var imageElement = document.getElementById(imageId);
 		var boundingBox = imageElement.getBoundingClientRect();
 		var ret = [e.x - boundingBox.left, e.y - boundingBox.top];
 
@@ -94,7 +100,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	var moveTimer = null;
 	var moveFunc = null;
 
-	window.L.DomEvent.on(image, 'dblclick', function(e) {
+	window.L.DomEvent.on(imageElement, 'dblclick', function(e) {
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
 
@@ -104,7 +110,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		builder.callback('drawingarea', 'dblclick', container.getCurrent(), coordinates, builder);
 	}, this);
 
-	window.L.DomEvent.on(image, 'click touchend', function(e) {
+	window.L.DomEvent.on(imageElement, 'click touchend', function(e) {
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
 
@@ -141,7 +147,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		builder.callback('drawingarea', 'mouseup', container.getCurrent(), coordinates, builder);
 	};
 
-	image.addEventListener('mousedown', function (e) {
+	imageElement.addEventListener('mousedown', function (e) {
 		moveFunc = function () {
 			var pos = getCoordinatesFromEvent(e);
 			var coordinates = pos[0] + ';' + pos[1];
@@ -157,10 +163,12 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		window.addEventListener('mousemove', onMove);
 		window.addEventListener('mouseup', endMove);
 	});
+}
 
+function _setupDrawingAreaKeyboardEvents (focusElement, container, builder) {
 	var modifier = 0;
 
-	image.addEventListener('keydown', function(event) {
+	focusElement.addEventListener('keydown', function(event) {
 		if (event.key === 'Enter') {
 			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.RETURN | modifier, builder);
 			event.preventDefault();
@@ -207,7 +215,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		}
 	});
 
-	image.addEventListener('keyup', function(event) {
+	focusElement.addEventListener('keyup', function(event) {
 		if (event.key === 'Shift') {
 			modifier = modifier & (~app.UNOModifier.SHIFT);
 			event.preventDefault();
@@ -217,11 +225,11 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		}
 	});
 
-	image.addEventListener('blur', function() {
+	focusElement.addEventListener('blur', function() {
 		modifier = 0;
 	});
 
-	image.addEventListener('keypress', function(event) {
+	focusElement.addEventListener('keypress', function(event) {
 		if (event.key === 'Enter' ||
 			event.key === 'Escape' ||
 			event.key === 'Esc' ||
@@ -253,8 +261,6 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 		event.preventDefault();
 	});
-
-	return false;
 }
 
 JSDialog.drawingArea = function (parentContainer, data, builder) {
