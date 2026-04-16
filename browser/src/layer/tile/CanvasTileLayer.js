@@ -3001,7 +3001,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		if (!app.file.textCursor.visible) {
+		// We will continue if the sidebar is focused (!== null).
+		if (!app.file.textCursor.visible && document.activeElement.closest('#navigation-sidebar') === null) {
 			this._updateCursorAndOverlay();
 			TextCursorSection.updateVisibilities(true);
 			return;
