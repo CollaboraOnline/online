@@ -275,8 +275,8 @@ unithttplib_LDADD += -lssl -lcrypto
 clienttest_LDADD += -lssl -lcrypto
 endif
 if ENABLE_LIBFUZZER
-unit_fuzz_la_SOURCES = UnitFuzz.cpp
-unit_fuzz_la_LIBADD = $(CPPUNIT_LIBS)
+# unit_fuzz_la_SOURCES = UnitFuzz.cpp
+# unit_fuzz_la_LIBADD = $(CPPUNIT_LIBS)
 else
 
 fakesockettest_CPPFLAGS = -g

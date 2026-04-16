@@ -438,14 +438,14 @@ clean-afl:
 else
 # libFuzzer build (original)
 
-LIBFUZZER_LDFLAGS = -fsanitize=fuzzer
+LIBFUZZER_LD_FLAGS = -fsanitize=fuzzer
 
 admin_fuzzer_CPPFLAGS = \
 			$(AM_CPPFLAGS)
 admin_fuzzer_SOURCES = \
 		       $(common_fuzzer_sources) \
 		       fuzzer/Admin.cpp
-admin_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
+admin_fuzzer_LDFLAGS = $(LIBFUZZER_LD_FLAGS) $(AM_LDFLAGS)
 admin_fuzzer_LDADD = libsimd.a
 
 clientrequest_fuzzer_CPPFLAGS = \
@@ -453,7 +453,7 @@ clientrequest_fuzzer_CPPFLAGS = \
 clientrequest_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/ClientRequestDispatcherFuzz.cpp
-clientrequest_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
+clientrequest_fuzzer_LDFLAGS = $(LIBFUZZER_LD_FLAGS) $(AM_LDFLAGS)
 clientrequest_fuzzer_LDADD = libsimd.a
 
 clientsession_fuzzer_CPPFLAGS = \
@@ -461,7 +461,7 @@ clientsession_fuzzer_CPPFLAGS = \
 clientsession_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/ClientSession.cpp
-clientsession_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
+clientsession_fuzzer_LDFLAGS = $(LIBFUZZER_LD_FLAGS) $(AM_LDFLAGS)
 clientsession_fuzzer_LDADD = libsimd.a
 
 httpresponse_fuzzer_CPPFLAGS = \
@@ -469,7 +469,7 @@ httpresponse_fuzzer_CPPFLAGS = \
 httpresponse_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/HttpResponse.cpp
-httpresponse_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
+httpresponse_fuzzer_LDFLAGS = $(LIBFUZZER_LD_FLAGS) $(AM_LDFLAGS)
 httpresponse_fuzzer_LDADD = libsimd.a
 
 httpecho_fuzzer_CPPFLAGS = \
@@ -478,7 +478,7 @@ httpecho_fuzzer_CPPFLAGS = \
 httpecho_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
 			       fuzzer/HttpEcho.cpp
-httpecho_fuzzer_LDFLAGS = $(LIBFUZZER_LDFLAGS) $(AM_LDFLAGS)
+httpecho_fuzzer_LDFLAGS = $(LIBFUZZER_LD_FLAGS) $(AM_LDFLAGS)
 httpecho_fuzzer_LDADD = libsimd.a
 
 endif # ENABLE_AFL
@@ -937,7 +937,6 @@ SYSTEM_STAMP =
 endif
 
 if ENABLE_AFL
-all-local: $(AFL_FUZZER_TARGETS)
 clean-local: clean-afl
 endif
 
