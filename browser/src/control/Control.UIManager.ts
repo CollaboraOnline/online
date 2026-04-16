@@ -602,6 +602,7 @@ class UIManager extends window.L.Control {
 			formulabarRow?.classList?.remove('hidden');
 			this.map.formulabar = JSDialog.FormulaBar(this.map);
 			this.map.addressInputField = JSDialog.AddressInputField(this.map);
+			this.map.calcNotifications = new CalcNotifications(this.map);
 			$('#toolbar-wrapper').addClass('spreadsheet');
 
 			// remove unused elements
