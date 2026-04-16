@@ -229,6 +229,7 @@ private:
     bool getA11yFocusedParagraph();
     bool getA11yCaretPosition();
     bool getPresentationInfo();
+    bool getSlideSections();
 
     void rememberEventsForInactiveUser(int type, const std::string& payload);
 
