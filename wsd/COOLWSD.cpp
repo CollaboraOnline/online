@@ -1783,26 +1783,16 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #endif // !MOBILEAPP
 
-    int pdfResolution =
-        ConfigUtil::getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
-    if (pdfResolution > 0)
-    {
-        constexpr int MaxPdfResolutionDpi = 384;
-        if (pdfResolution > MaxPdfResolutionDpi)
-        {
-            // Avoid excessive memory consumption.
-            LOG_WRN("The PDF resolution specified in per_document.pdf_resolution_dpi ("
-                    << pdfResolution << ") is larger than the maximum (" << MaxPdfResolutionDpi
-                    << "). Using " << MaxPdfResolutionDpi << " instead.");
+#if defined(DEBUG)
+    // Enable if you need more logging from core
+    //setenv("SAL_LOG", "+INFO+WARN", 0);
 
-            pdfResolution = MaxPdfResolutionDpi;
-        }
+    // Enable if you need to see the top left corner of tile that was rendered
+    //setenv("LOK_DEBUG_TILES", "1", 0);
+#endif
 
-        const std::string pdfResolutionStr = std::to_string(pdfResolution);
-        LOG_DBG("Setting envar PDFIMPORT_RESOLUTION_DPI="
-                << pdfResolutionStr << " per config per_document.pdf_resolution_dpi");
-        ::setenv("PDFIMPORT_RESOLUTION_DPI", pdfResolutionStr.c_str(), 1);
-    }
+    if (ConfigUtil::hasProperty("per_document.pdf_resolution_dpi"))
+        LOG_WRN("NOTE: Deprecated config option per_document.pdf_resolution_dpi is no longer supported");
 
     SysTemplate = ConfigUtil::getPathFromConfig("sys_template_path");
     if (SysTemplate.empty())
