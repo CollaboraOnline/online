@@ -120,13 +120,13 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('parentless', function() {
-			const el = DomUtil.create('p', 'cool-caption', undefined, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', undefined, store.document);
 			nodeassert.strictEqual('cool-caption', el.className);
 			nodeassert.strictEqual(null, el.parentElement);
 		});
 
 		it('with parent', function() {
-			const el = DomUtil.create('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', one, store.document);
 			nodeassert.strictEqual('cool-caption', el.className);
 			nodeassert.strictEqual(one, el.parentElement);
 			nodeassert.strictEqual(1, one.childElementCount);
@@ -138,7 +138,7 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('parentless', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', undefined, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', undefined, store.document);
 			nodeassert.strictEqual('cool-caption', el.id);
 			nodeassert.strictEqual(null, el.parentElement);
 			const result = DomUtil.get('cool-caption', store.document);
@@ -146,7 +146,7 @@ describe('DomUtil', function() {
 		});
 
 		it('with parent', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			nodeassert.strictEqual('cool-caption', el.id);
 			nodeassert.strictEqual(one, el.parentElement);
 			nodeassert.strictEqual(1, one.childElementCount);
@@ -166,7 +166,7 @@ describe('DomUtil', function() {
 		});
 
 		it('parentless', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', undefined, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', undefined, store.document);
 			nodeassert.doesNotThrow(() => {
 				DomUtil.remove(el);
 			}, 'remove() should never throw');
@@ -177,7 +177,7 @@ describe('DomUtil', function() {
 		});
 
 		it('with parent', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			nodeassert.doesNotThrow(() => {
 				DomUtil.remove(el);
 			}, 'remove() should never throw');
@@ -203,8 +203,8 @@ describe('DomUtil', function() {
 
 		it('two children', function() {
 			nodeassert.strictEqual(0, one.childElementCount);
-			DomUtil.createWithId('p', 'cool-caption1', one, undefined, store.document);
-			DomUtil.createWithId('p', 'cool-caption2', one, undefined, store.document);
+			DomUtil.createWithId('p', 'cool-caption1', one, store.document);
+			DomUtil.createWithId('p', 'cool-caption2', one, store.document);
 			nodeassert.strictEqual(2, one.childElementCount);
 			nodeassert.doesNotThrow(() => {
 				DomUtil.empty(one);
@@ -223,17 +223,17 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('no class names', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			nodeassert.strictEqual('', DomUtil.getClass(el));
 		});
 
 		it('one class name', function() {
-			const el = DomUtil.create('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', one, store.document);
 			nodeassert.strictEqual('cool-caption', DomUtil.getClass(el));
 		});
 
 		it('multiple class names', function() {
-			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, store.document);
 			nodeassert.strictEqual('cool-caption embossed blurred', DomUtil.getClass(el));
 		});
 	});
@@ -243,19 +243,19 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('no class names', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool-caption'));
 		});
 
 		it('one class name', function() {
-			const el = DomUtil.create('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', one, store.document);
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool'));
 			nodeassert.ok(!DomUtil.hasClass(el, 'caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'cool-caption'));
 		});
 
 		it('multiple class names', function() {
-			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, store.document);
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool'));
 			nodeassert.ok(!DomUtil.hasClass(el, 'caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'cool-caption'));
@@ -271,7 +271,7 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('no class names', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			DomUtil.setClass(el, 'blink dark');
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'blink'));
@@ -279,7 +279,7 @@ describe('DomUtil', function() {
 		});
 
 		it('one class name', function() {
-			const el = DomUtil.create('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', one, store.document);
 			DomUtil.setClass(el, 'blink dark');
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'blink'));
@@ -287,7 +287,7 @@ describe('DomUtil', function() {
 		});
 
 		it('multiple class names', function() {
-			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, store.document);
 			DomUtil.setClass(el, 'blink dark');
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(!DomUtil.hasClass(el, 'blurred'));
@@ -302,7 +302,7 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('no class names', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			DomUtil.addClass(el, 'blink dark');
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'blink'));
@@ -310,7 +310,7 @@ describe('DomUtil', function() {
 		});
 
 		it('one class name', function() {
-			const el = DomUtil.create('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', one, store.document);
 			DomUtil.addClass(el, 'blink dark');
 			nodeassert.ok(DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'blink'));
@@ -318,7 +318,7 @@ describe('DomUtil', function() {
 		});
 
 		it('multiple class names', function() {
-			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption embossed blurred', one, store.document);
 			DomUtil.addClass(el, 'blink dark');
 			nodeassert.ok(DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(DomUtil.hasClass(el, 'blurred'));
@@ -333,14 +333,14 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('no class names', function() {
-			const el = DomUtil.createWithId('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.createWithId('p', 'cool-caption', one, store.document);
 			DomUtil.removeClass(el, 'blink');
 			nodeassert.ok(!DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(!DomUtil.hasClass(el, 'blink'));
 		});
 
 		it('one class name', function() {
-			const el = DomUtil.create('p', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption', one, store.document);
 			DomUtil.removeClass(el, 'blink');
 			nodeassert.ok(DomUtil.hasClass(el, 'cool-caption'));
 			nodeassert.ok(!DomUtil.hasClass(el, 'blink'));
@@ -349,7 +349,7 @@ describe('DomUtil', function() {
 		});
 
 		it('multiple class names', function() {
-			const el = DomUtil.create('p', 'cool-caption embossed blurred blink dark', one, undefined, store.document);
+			const el = DomUtil.create('p', 'cool-caption embossed blurred blink dark', one, store.document);
 
 			DomUtil.removeClass(el, 'blink');
 			nodeassert.ok(DomUtil.hasClass(el, 'cool-caption'));
@@ -386,7 +386,7 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('already empty div', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			nodeassert.strictEqual('', el.textContent);
 			nodeassert.strictEqual(0, el.childNodes.length);
 			DomUtil.removeChildNodes(el);
@@ -395,7 +395,7 @@ describe('DomUtil', function() {
 		});
 
 		it('div with text', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			el.textContent = 'Hello world!';
 			nodeassert.strictEqual('Hello world!', el.textContent);
 			nodeassert.strictEqual(1, el.childNodes.length);
@@ -405,9 +405,9 @@ describe('DomUtil', function() {
 		});
 
 		it('div with text and a paragraph tag', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			el.textContent = 'Hello world!';
-			DomUtil.create('p', 'cool-caption', el, undefined, store.document);
+			DomUtil.create('p', 'cool-caption', el, store.document);
 			nodeassert.strictEqual('Hello world!', el.textContent);
 			nodeassert.strictEqual(2, el.childNodes.length);
 			DomUtil.removeChildNodes(el);
@@ -435,7 +435,7 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('no offset or scale', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			DomUtil.setTransform(el);
 			const tx = el.style.getPropertyValue(DomUtil.TRANSFORM);
 			nodeassert.strictEqual(tx, 'translate3d(0px,0px,0)');
@@ -443,7 +443,7 @@ describe('DomUtil', function() {
 		});
 
 		it('only offset', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			DomUtil.setTransform(el, new cool.Point(100, 200));
 			const tx = el.style.getPropertyValue(DomUtil.TRANSFORM);
 			nodeassert.strictEqual(tx, 'translate3d(100px,200px,0)');
@@ -451,7 +451,7 @@ describe('DomUtil', function() {
 		});
 
 		it('offset and scale', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			DomUtil.setTransform(el, new cool.Point(100, 200), 5);
 			const tx = el.style.getPropertyValue(DomUtil.TRANSFORM);
 			nodeassert.strictEqual(tx, 'translate3d(100px,200px,0) scale(5)');
@@ -464,7 +464,7 @@ describe('DomUtil', function() {
 		const one = DomUtil.get('one', store.document);
 
 		it('set/get', function() {
-			const el = DomUtil.create('div', 'cool-caption', one, undefined, store.document);
+			const el = DomUtil.create('div', 'cool-caption', one, store.document);
 			const pos = new cool.Point(128, 512);
 			DomUtil.setPosition(el, pos);
 			const posGot = DomUtil.getPosition(el);
