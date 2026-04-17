@@ -36,4 +36,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statusbar tests.', functio
 		desktopHelper.selectZoomLevel('280', false);
 		desktopHelper.shouldHaveZoomLevel('280');
 	});
+
+	it('Statusbar configuration menu.', function () {
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#overview2').should('be.visible');
+		cy.cGet('#overviewbreak').should('be.visible');
+
+		desktopHelper.openStatusBarContextMenu();
+		desktopHelper.statusBarContextMenuEntry('Overview')
+			.should('have.class', 'checked').click();
+		cy.cGet('#overview2').should('not.be.visible');
+		cy.cGet('#overviewbreak').should('not.be.visible');
+
+		desktopHelper.openStatusBarContextMenu();
+		desktopHelper.statusBarContextMenuEntry('Overview')
+			.should('not.have.class', 'checked').click();
+		cy.cGet('#overview2').should('be.visible');
+		cy.cGet('#overviewbreak').should('be.visible');
+	});
 });
