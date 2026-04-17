@@ -358,7 +358,7 @@ class DomUtil {
 					DomUtil.userSelectProperty,
 					DomUtil._userSelect,
 				);
-				this._userSelect = undefined;
+				DomUtil._userSelect = undefined;
 			}
 		};
 	}
