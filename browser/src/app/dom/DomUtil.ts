@@ -317,7 +317,7 @@ class DomUtil {
 
 	private static _userSelect: any = undefined;
 
-	private static getDisbleTextSelection(): () => void {
+	private static getDisableTextSelection(): () => void {
 		if ('onselectstart' in document) {
 			return () => {
 				window.L.DomEvent.on(
@@ -339,7 +339,7 @@ class DomUtil {
 		};
 	}
 
-	public static disableTextSelection = DomUtil.getDisbleTextSelection();
+	public static disableTextSelection = DomUtil.getDisableTextSelection();
 
 	private static getEnableTextSelection(): () => void {
 		if ('onselectstart' in document) {
