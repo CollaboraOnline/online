@@ -113,4 +113,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statusbar tests.', functio
 		desktopHelper.selectZoomLevel('280', false);
 		desktopHelper.shouldHaveZoomLevel('280');
 	});
+
+	it('Statusbar configuration menu.', function () {
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#StateTableCell').should('be.visible');
+
+		desktopHelper.openStatusBarContextMenu();
+		desktopHelper.statusBarContextMenuEntry('Table Cell Functions')
+			.should('have.class', 'checked').click();
+		cy.cGet('#StateTableCell').should('not.be.visible');
+		cy.cGet('#statetablecell-container').should('not.be.visible');
+
+		desktopHelper.openStatusBarContextMenu();
+		desktopHelper.statusBarContextMenuEntry('Table Cell Functions')
+			.should('not.have.class', 'checked').click();
+		cy.cGet('#StateTableCell').should('be.visible');
+	});
 });
