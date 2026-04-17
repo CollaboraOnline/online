@@ -944,6 +944,12 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     const std::string model = getAIProviderModel();
     std::string baseUrl = getAIProviderURL();
 
+    if (!ConfigUtil::getConfigValue<bool>("ai.enabled", false))
+    {
+        sendAIChatResult(false, "AI features are disabled by the administrator", requestId);
+        return true;
+    }
+
     if (apiKey.empty() || model.empty() || baseUrl.empty())
     {
         sendAIChatResult(false, "AI settings not configured", requestId);
@@ -3300,6 +3306,14 @@ bool ClientSession::handleUpdateViewSettings(const std::string& firstLine)
     JsonUtil::findJSONValue(viewSettings, "aiImageSize", aiImageSize);
     JsonUtil::findJSONValue(viewSettings, "aiRequestTimeout", aiRequestTimeout);
 
+    // coolwsd.xml AI defaults as final fallback
+    if (aiProviderAPIKey.empty())
+        aiProviderAPIKey = ConfigUtil::getConfigValue<std::string>("ai.api_key", "");
+    if (aiProviderModel.empty())
+        aiProviderModel = ConfigUtil::getConfigValue<std::string>("ai.model", "");
+    if (aiProviderURL.empty())
+        aiProviderURL = ConfigUtil::getConfigValue<std::string>("ai.api_url", "");
+
     setAIProviderAPIKey(aiProviderAPIKey);
     setAIProviderModel(aiProviderModel);
     setAIProviderURL(aiProviderURL);
@@ -3327,7 +3341,8 @@ bool ClientSession::handleUpdateViewSettings(const std::string& firstLine)
     viewSettings->remove("aiImageProviderURL");
     viewSettings->remove("aiImageModel");
 
-    const bool aiConfigured = !aiProviderAPIKey.empty() &&
+    const bool aiConfigured = ConfigUtil::getConfigValue<bool>("ai.enabled", false) &&
+                              !aiProviderAPIKey.empty() &&
                               !aiProviderModel.empty() &&
                               !aiProviderURL.empty();
     viewSettings->set("aiConfigured", aiConfigured);
