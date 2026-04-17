@@ -2907,7 +2907,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		if (!app.file.textCursor.visible) {
+		if (!app.file.textCursor.visible && !GraphicSelection.hasActiveSelection()) {
 			this._updateCursorAndOverlay();
 			TextCursorSection.updateVisibilities(true);
 			return;
