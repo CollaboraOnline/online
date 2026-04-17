@@ -205,6 +205,8 @@ coolwsd_sources = \
                   wsd/FileServer.cpp \
                   wsd/FileServerUtil.cpp \
                   wsd/HostUtil.cpp \
+                  wsd/McpHandler.cpp \
+                  wsd/McpResponseUtil.cpp \
                   wsd/ProofKey.cpp \
                   wsd/ProxyProtocol.cpp \
                   wsd/ProxyRequestHandler.cpp \
@@ -565,6 +567,8 @@ wsd_headers = \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/HostUtil.hpp \
+              wsd/McpHandler.hpp \
+              wsd/McpResponseUtil.hpp \
               wsd/PlatformDesktop.hpp \
               wsd/PlatformMobile.hpp \
               wsd/PlatformUnix.hpp \
