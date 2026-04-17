@@ -9,8 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// window.L.DomUtil contains various utility functions for working with
-// DOM.
+// DomUtil contains various utility functions for working with DOM.
 
 class DomUtil {
 	public static get(
