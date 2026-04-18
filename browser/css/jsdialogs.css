@@ -778,7 +778,7 @@ algned to the bottom */
 
 #ServerAuditDialog .ui-treeview-entry {
 	display: grid;
-	grid-template-columns: var(--btn-img-size-m) 6fr 3fr;
+	grid-template-columns: auto 6fr 3fr;
 	white-space: normal;
 }
 
@@ -827,6 +827,10 @@ algned to the bottom */
 
 #ServerAuditDialog .ui-treeview-headers > div:nth-last-child(1) {
 	margin-inline-start: 7px;
+}
+
+#ServerAuditDialog .ui-treeview-rowheader {
+	background-color: transparent;
 }
 
 .ui-treeview-header {
