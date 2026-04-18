@@ -758,13 +758,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 					],
 					'vertical': 'true'
 				},
-				{
-					'id': 'home-merge-cells',
-					'type': 'bigtoolitem',
-					'text': _('Merge & Center'),
-					'command': '.uno:ToggleMergeCells',
-					'accessibility': { focusBack: true, combination: 'MC', de: null }
-				}
 			]
 		},
 			{ type: 'separator', id: 'home-pararighttoleft-break', orientation: 'vertical' },
@@ -877,6 +870,13 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'name': _('Cells'),
 				'accessibility': { focusBack: true,	combination: 'RB', de: null },
 				'children' : [
+				{
+					'id': 'home-merge-cells',
+					'type': 'bigtoolitem',
+					'text': _('Merge & Center'),
+					'command': '.uno:ToggleMergeCells',
+					'accessibility': { focusBack: true, combination: 'MC', de: null }
+				},
 				{
 					'id': 'Home-Section-Cell1',
 					'type': 'container',
