@@ -2479,7 +2479,7 @@ button.has-img img {
 	grid-auto-flow: column;
 	align-items: center;
 	grid-column-gap: 4px;
-	grid-template-columns: repeat(3, 30px);
+	grid-template-columns: 30px 41px 30px;
 }
 
 #formulabar-buttons-toolbox * {
