@@ -2015,55 +2015,64 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 		// Note: when adding track changes elements, consider this._map['wopi'].HideChangeTrackingControls
 		var content = [
 			{
-				'id': 'review-spell-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SpellDialog'),
-				'command': '.uno:SpellDialog',
-				'accessibility': { focusBack: false, combination: 'SD', de: null }
-			},
-			{
-				'id': 'LanguageMenu',
-				'type': 'bigcustomtoolitem',
-				'text': _UNO('.uno:LanguageMenu'),
-				'command': 'languagemenu',
-				'accessibility': { focusBack: false, combination: 'TM', de: null }
-			},
-			{
-				'id': 'Review-Section-Language1',
-				'type': 'container',
-				'children': [
+				'type': 'overflowgroup',
+				'id': 'review-spellcheck',
+				'name':_('Spelling'),
+				'icon': 'lc_spellcheck.svg',
+				'accessibility': { focusBack: true,	combination: 'SP', de: 'SP'},
+				'children' : [
 					{
-						'id': 'LineA19',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'review-spell-online',
-								'type': 'toolitem',
-								'text': _('Auto Spell Check'),
-								'command': '.uno:SpellOnline',
-								'accessibility': { focusBack: true, combination: 'SO', de: null },
-								'stateIcons': {
-									on: 'autospellcheck-on',
-									off: 'autospellcheck-off',
-								}
-							}
-						]
+						'id': 'review-spell-dialog',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:SpellDialog'),
+						'command': '.uno:SpellDialog',
+						'accessibility': { focusBack: false, combination: 'SD', de: null }
 					},
 					{
-						'id': 'LineB20',
-						'type': 'toolbox',
+						'id': 'LanguageMenu',
+						'type': 'bigcustomtoolitem',
+						'text': _UNO('.uno:LanguageMenu'),
+						'command': 'languagemenu',
+						'accessibility': { focusBack: false, combination: 'TM', de: null }
+					},
+					{
+						'id': 'Review-Section-Language1',
+						'type': 'container',
 						'children': [
 							{
-								'id': 'review-hyphenation',
-								'type': 'toolitem',
-								'text': _UNO('.uno:Hyphenation', 'presentation'),
-								'command': '.uno:Hyphenation',
-								'accessibility': { focusBack: true, combination: 'HY', de: null }
+								'id': 'LineA19',
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-spell-online',
+										'type': 'toolitem',
+										'text': _('Auto Spell Check'),
+										'command': '.uno:SpellOnline',
+										'accessibility': { focusBack: true, combination: 'SO', de: null},
+										'stateIcons': {
+											on: 'autospellcheck-on',
+											off: 'autospellcheck-off',
+										},
+									}
+								]
+							},
+							{
+								'id': 'LineB20',
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-hyphenation',
+										'type': 'toolitem',
+										'text': _UNO('.uno:Hyphenation', 'presentation'),
+										'command': '.uno:Hyphenation',
+										'accessibility': { focusBack: true, combination: 'HY', de: null }
+									}
+								]
 							}
-						]
-					}
-				],
-				'vertical': 'true'
+						],
+						'vertical': 'true'
+					},
+				]
 			},
 			{ type: 'separator', id: 'review-hyphenation-break', orientation: 'vertical' },
 			{

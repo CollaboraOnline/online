@@ -2197,57 +2197,44 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hideChangeTrackingControls = this._map['wopi'].HideChangeTrackingControls;
 		var content = [
 			{
-				'id': 'review-word-count-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:WordCountDialog', 'text'),
-				'command': '.uno:WordCountDialog',
-				'accessibility': { focusBack: false, combination: 'W', de: 'W' }
-			},
-			{
-				'id': 'review-thesaurus-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ThesaurusDialog'),
-				'command': '.uno:ThesaurusDialog',
-				'accessibility': { focusBack: false, combination: 'E', de: null }
-			},
-			{
-				'id': 'LanguageMenu:LanguageMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:LanguageMenu'),
-				'command': '.uno:LanguageMenu',
-				'accessibility': { focusBack: false, combination: 'ZL', de: null }
-			},
-			window.deeplEnabled ?
-				{
-					'id': 'review-translate',
-					'type': 'bigtoolitem',
-					'text': _UNO('.uno:Translate', 'text'),
-					'command': '.uno:Translate',
-					'accessibility': { focusBack: false, combination: 'ZT', de: null }
-				}: {},
-			{ type: 'separator', id: 'review-wordcountdialog-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
-				'id': 'review-Spellcheck',
-				'name': _('Spellcheck'),
+				'id': 'review-spellcheck',
+				'name': _('Spelling'),
 				'icon': 'lc_spellcheck.svg',
 				'accessibility': { focusBack: false,combination: 'SP',	de:	'SP' },
 				'children' : [
 					{
+						'id': 'review-word-count-dialog',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:WordCountDialog', 'text'),
+						'command': '.uno:WordCountDialog',
+						'accessibility': { focusBack: false, combination: 'W', de: 'W' }
+					},
+					{
+						'id': 'review-thesaurus-dialog',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:ThesaurusDialog'),
+						'command': '.uno:ThesaurusDialog',
+						'accessibility': { focusBack: false, combination: 'E', de: null }
+					},
+					{
+						'id': 'LanguageMenu:LanguageMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:LanguageMenu'),
+						'command': '.uno:LanguageMenu',
+						'accessibility': { focusBack: false, combination: 'ZL', de: null }
+					},
+					window.deeplEnabled ?
+						{
+							'id': 'review-translate',
+							'type': 'bigtoolitem',
+							'text': _UNO('.uno:Translate', 'text'),
+							'command': '.uno:Translate',
+							'accessibility': { focusBack: false, combination: 'ZT', de: null }
+						}: {},
+					{
 						'type': 'container',
 						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-spelling-and-grammar-dialog',
-										'type': 'toolitem',
-										'text': _('Spelling Options'),
-										'command': '.uno:SpellingAndGrammarDialog',
-										'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
-									}
-								]
-							},
 							{
 								'type': 'toolbox',
 								'children': [
@@ -2264,6 +2251,18 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 									}
 								]
 							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-spelling-and-grammar-dialog',
+										'type': 'toolitem',
+										'text': _('Spelling Options'),
+										'command': '.uno:SpellingAndGrammarDialog',
+										'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
+									}
+								]
+							},
 						],
 						'vertical': 'true'
 					},
@@ -2271,24 +2270,23 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'review-spell-break', orientation: 'vertical' },
 			{
-				'id': 'review-insert-annotation',
-				'class': 'unoAccessibilityCheck',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation'),
-				'command': '.uno:InsertAnnotation',
-				'accessibility': { focusBack: false, combination: 'CM', de: 'N' }
-			},
-			{ type: 'separator', id: 'review-comment-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
 				'id': 'review-comments',
-				'name':_('Show Comments'),
+				'name': _('Show Comments'),
 				'accessibility': { focusBack: false, combination: 'SC', de: 'N' },
 				'more': {
 					'command':'showcommentsnavigator',
 					'accessibility': { focusBack: true,	combination: 'MC', de: null },
 				},
 				'children' : [
+					{
+						'id': 'review-insert-annotation',
+						'class': 'unoAccessibilityCheck',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertAnnotation'),
+						'command': '.uno:InsertAnnotation',
+						'accessibility': { focusBack: false, combination: 'CM', de: 'N' }
+					},
 					{
 						'type': 'container',
 						'children': [
@@ -2353,7 +2351,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			hideChangeTrackingControls ? {} : {
 				'type': 'overflowgroup',
 				'id': 'review-tracking',
-				'name':_('Tracking'),
+				'name': _('Tracking'),
 				'accessibility': { focusBack: false, combination: 'TC', de: null },
 				'children' : [
 					{
@@ -2452,20 +2450,37 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'review-accepttrackedchanges-break', orientation: 'vertical' },
 			hideChangeTrackingControls ? {} : {
-				'id': 'review-compare:CompareDocumentsMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:CompareDocuments', 'text'),
-				'command': '.uno:CompareDocuments',
-				'accessibility': { focusBack: true, combination: 'RO', de: null }
+				'type': 'overflowgroup',
+				'id': 'review-compare',
+				'name': _('Compare'),
+				'nofold': true,
+				'children' : [
+					{
+						'id': 'review-compare:CompareDocumentsMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:CompareDocuments', 'text'),
+						'command': '.uno:CompareDocuments',
+						'accessibility': { focusBack: true, combination: 'RO', de: null }
+					},
+				]
 			},
 			hideChangeTrackingControls ? {} : { type: 'separator', id: 'review-compare-break', orientation: 'vertical' },
 			{
-				'id': 'review-accessibility-check',
-				'class': 'unoAccessibilityCheck',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:AccessibilityCheck', 'text', true),
-				'command': '.uno:SidebarDeck.A11yCheckDeck',
-				'accessibility': { focusBack: false, combination: 'A1', de: 'B' }
+				'type': 'overflowgroup',
+				'id': 'review-accessibility',
+				'name':_('Accessibility'),
+				'nofold': true,
+				'accessibility': { focusBack: false, combination: 'A1', de: 'B' },
+				'children' : [
+					{
+						'id': 'review-accessibility-check',
+						'class': 'unoAccessibilityCheck',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:AccessibilityCheck', 'text', true),
+						'command': '.uno:SidebarDeck.A11yCheckDeck',
+						'accessibility': { focusBack: false, combination: 'A1', de: 'B' }
+					}
+				]
 			}
 		];
 
