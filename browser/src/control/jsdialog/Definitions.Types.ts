@@ -79,6 +79,9 @@ interface JSBuilder {
 	_getGridRows: (data: WidgetJSON[]) => number;
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
+	_setAccessKey: (element: HTMLElement, key: string) => void;
+	_getAccessKeyFromText: (text: string) => string;
+	_stressAccessKey: (element: HTMLElement, accessKey: string) => void;
 	_expanderHandler: any; // FIXME: use handlers getter instead
 }
 
