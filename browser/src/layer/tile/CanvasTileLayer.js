@@ -3266,8 +3266,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	recalculateZoomOnResize: function() {
 		/* in impress, we always recalculate zoom on resize to keep the slide in-view.
 		 * so the second condition is unnecessary, but we keep it for consistency. */
-		if (this.isWriter() || this.isImpress())
+		if (this.isWriter() || this.isImpress()) {
 			this._invalidateZoomFirstFit = true;
+			this._fitWidthZoom();
+		}
 	},
 
 	// This is really just called on zoomend
