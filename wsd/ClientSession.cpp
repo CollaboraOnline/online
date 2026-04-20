@@ -1346,9 +1346,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        // Get the access_token_ttl, if provided. 0 means unknown/missing.
-        const auto expiryEpoch = std::chrono::milliseconds(
+        // Get the access_token_ttl, if provided. 0 means no expiry tracking
+        // (the legacy single-arg form of the command implied this too).
+        const auto rawExpiryEpoch = std::chrono::milliseconds(
             (tokens.size() == 3) ? Util::u64FromString(tokens[2], 0).first : 0);
+        const auto expiryEpoch = Authorization::adjustExpiryEpoch(rawExpiryEpoch);
 
         LOG_DBG("Resetting access token for " << getName() << " with expiry at " << expiryEpoch
                                               << ": " << tokens[1]);
