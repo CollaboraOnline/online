@@ -2166,6 +2166,15 @@ class Socket {
 				if (this.ReconnectCount > 1) {
 					this._map.showBusy(errorMessages.docunloadingretry, false);
 				}
+			} else if (errorKind === 'io' && command.errorCode === '770') {
+				this._map._fatal = true;
+				this._map.fire('error', { msg: errorMessages.cantreaddoc });
+			} else {
+				// Any other load error (io, network, etc.)
+				this._map._fatal = true;
+				this._map.fire('error', {
+					msg: errorMessages.faileddocloading,
+				});
 			}
 
 			if (passwordNeeded) {
