@@ -464,7 +464,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 
 .ui-tabs.mobile-wizard {
 	text-align: center;
-	height: 42px;
+	height: var(--header-height);
 	display: flex;
 	width: 100%;
 	padding: 0px;
@@ -481,8 +481,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 .ui-tab.mobile-wizard {
 	flex: auto;
 	display: table-cell;
-	height: 36px;
-	line-height: 36px;
+	line-height: var(--header-height);
 	vertical-align: middle;
 	margin: 0px 5%;
 	border-radius: 10px;
