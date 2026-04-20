@@ -147,6 +147,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#AcceptRejectChangesDialog').should('not.exist');
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 
 		// Then the left label should show the old document name:
 		cy.cGet('#compare-changes-left-title').should(function($el) {
@@ -178,6 +179,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		// If this is visible or not is not interesting, we want to assert the resulting
 		// title.
 		cy.cGet('#compare-tracked-change-button').click({force: true});
+		cy.cGet('#compare-tracked-change-entry-1').click();
 		cy.cGet('#compare-changes-left-title').should(function($el) {
 			expect($el.text()).to.match(/^remote_old\.odt/);
 		});
@@ -194,6 +196,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		// When entering doc compare mode via View Changes:
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 
 		// Then tiles should exist for both mode=1 (LeftSide) and mode=2 (RightSide)
 		// with content:
@@ -227,6 +230,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#Review-tab-label').click();
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 
 		// When faking a tooltip message for a tracked change on the right side:
@@ -256,6 +260,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#Review-tab-label').click();
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 
 		// When faking a tooltip message with anchor rectangles for a deletion:
@@ -290,6 +295,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#Review-tab-label').click();
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 
 		// When double-clicking at the cursor position on the right side to create a selection:
@@ -313,6 +319,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#Review-tab-label').click();
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 
 		// When zooming out:
@@ -350,6 +357,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#Review-tab-label').click();
 		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change-button').filter(':visible').click();
+		cy.cGet('#compare-tracked-change-entry-1').click();
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 
 		// When scrolling down:
