@@ -1024,6 +1024,35 @@ inline bool sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
     return false;
 }
 
+/// Send .uno:ReportWhenIdle and wait for the response, ensuring
+/// all pending core operations have completed.
+inline void processToIdle(const std::shared_ptr<http::WebSocketSession>& ws,
+                          const std::string_view testname,
+                          std::chrono::milliseconds timeout = std::chrono::seconds(10))
+{
+    TST_LOG("Waiting for core to be idle.");
+    sendTextFrame(ws,
+        "uno .uno:ReportWhenIdle {\"idleID\":{\"type\":\"string\",\"value\":\"idle1\"}}",
+        testname);
+    const auto endTime = std::chrono::steady_clock::now() + timeout;
+    while (std::chrono::steady_clock::now() < endTime)
+    {
+        const auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(
+            endTime - std::chrono::steady_clock::now());
+        const std::string response =
+            getResponseString(ws, "unocommandresult:", testname, remaining);
+        if (response.empty())
+            break;
+        if (response.find("ReportWhenIdle") != std::string::npos &&
+            response.find("idle1") != std::string::npos)
+        {
+            TST_LOG("Core is idle.");
+            return;
+        }
+    }
+    LOK_ASSERT_FAIL("Timed out waiting for ReportWhenIdle");
+}
+
 /// Drain all events.
 /// Draining happens until nothing is received for @timeoutDrain.
 inline void drain(const std::shared_ptr<http::WebSocketSession>& ws, const std::string& testname,

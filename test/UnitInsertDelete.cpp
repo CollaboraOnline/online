@@ -110,6 +110,10 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 
         const std::string slide1Hash = currentPartHashes[0];
 
+        // Wait for core to settle before inserting slides, otherwise
+        // a late status: from load can be consumed by the insert loop.
+        helpers::processToIdle(socket, testname);
+
         // insert 10 slides
         TST_LOG("Inserting 10 slides.");
         for (size_t it = 1; it <= 10; it++)
@@ -125,8 +129,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 
             currentPartHashes = getPartHashCodes(loopStatusJsonObject);
 
-            //FIXME: enable this when fixed
-            //LOK_ASSERT_EQUAL(it + 1, currentPartHashes.size());
+            LOK_ASSERT_EQUAL(it + 1, currentPartHashes.size());
         }
 
         currentPartHashes = drainAndGetPartHashCodes(socket, testname, parser);
