@@ -1929,10 +1929,18 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		console.assert(data.action_type);
 
+		let isManageNamesDialog = container && container.innerText.includes('Manage Names');
+		let isAddButton = data.control_id === 'add';
+
 		switch (data.action_type) {
 		case 'grab_focus':
 			if (typeof control.onFocus === 'function')
 				control.onFocus();
+			else if (isAddButton && isManageNamesDialog) {
+				// In some cases (like Manage Names dialog) the "add" button is a div containing a button element,
+				// and focus should be set to the inner button.
+				control.querySelector('button').focus();
+			}
 			else
 				control.focus();
 			break;
