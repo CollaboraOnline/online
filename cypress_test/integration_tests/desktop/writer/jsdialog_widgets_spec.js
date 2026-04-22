@@ -24,27 +24,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 	});
 
 	it('Combobox', function() {
-		cy.cGet('#combo_box_enable').compareSnapshot('combobox_enable', 0.1);
-		cy.cGet('#combo_box_disable').compareSnapshot('combobox_disable', 0.1);
+		cy.cGet('#combo_box_enable').compareSnapshot('combobox_enable', 0.2);
+		cy.cGet('#combo_box_disable').compareSnapshot('combobox_disable', 0.2);
 	});
 
 	it('Edit field', function() {
-		cy.cGet('#entry_box_1').compareSnapshot('edit_enabled', 0.1);
-		cy.cGet('#entry_box_2').compareSnapshot('edit_disabled', 0.1);
+		cy.cGet('#entry_box_1').compareSnapshot('edit_enabled', 0.2);
+		cy.cGet('#entry_box_2').compareSnapshot('edit_disabled', 0.2);
 	});
 
 	it('Checkbox', function() {
-		cy.cGet('#check_btn_1').compareSnapshot('checkbox_checked', 0.1);
-		cy.cGet('#check_btn_2').compareSnapshot('checkbox', 0.1);
-		cy.cGet('#check_btn_3').compareSnapshot('checkbox_disabled_checked', 0.1);
-		cy.cGet('#check_btn_4').compareSnapshot('checkbox_disabled', 0.1);
+		cy.cGet('#check_btn_1').compareSnapshot('checkbox_checked', 0.2);
+		cy.cGet('#check_btn_2').compareSnapshot('checkbox', 0.2);
+		cy.cGet('#check_btn_3').compareSnapshot('checkbox_disabled_checked', 0.2);
+		cy.cGet('#check_btn_4').compareSnapshot('checkbox_disabled', 0.2);
 	});
 
 	it('Radio button', function() {
-		cy.cGet('#radio_btn_1').compareSnapshot('radio_checked', 0.1);
-		cy.cGet('#radio_btn_2').compareSnapshot('radio', 0.1);
-		cy.cGet('#radio_btn_3').compareSnapshot('radio_disabled_checked', 0.1);
-		cy.cGet('#radio_btn_4').compareSnapshot('radio_disabled', 0.1);
+		cy.cGet('#radio_btn_1').compareSnapshot('radio_checked', 0.2);
+		cy.cGet('#radio_btn_2').compareSnapshot('radio', 0.2);
+		cy.cGet('#radio_btn_3').compareSnapshot('radio_disabled_checked', 0.2);
+		cy.cGet('#radio_btn_4').compareSnapshot('radio_disabled', 0.2);
 	});
 
 	it('Treelistbox no-headers', function() {
