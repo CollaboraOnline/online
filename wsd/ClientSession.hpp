@@ -202,12 +202,6 @@ public:
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
-    /// True if the WOPI host asked for AI UI / features to be disabled for this document.
-    bool isDisableAISettings() const
-    {
-        return _wopiFileInfo && _wopiFileInfo->getDisableAISettings();
-    }
-
     /// Get requested tiles waiting for sending to the client
     std::deque<TileDesc>& getRequestedTiles() { return _requestedTiles; }
 
@@ -356,6 +350,12 @@ public:
 
 #if !MOBILEAPP
     void updateBrowserSettingsJSON(const std::string& json);
+
+    /// True if the WOPI host asked for AI UI / features to be disabled for this document.
+    bool isDisableAISettings() const
+    {
+        return _wopiFileInfo && _wopiFileInfo->getDisableAISettings();
+    }
 #endif
 
 private:
