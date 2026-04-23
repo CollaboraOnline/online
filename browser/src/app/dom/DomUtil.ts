@@ -9,8 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// window.L.DomUtil contains various utility functions for working with
-// DOM.
+// DomUtil contains various utility functions for working with DOM.
 
 class DomUtil {
 	public static get(
@@ -45,7 +44,6 @@ class DomUtil {
 		tagName: string,
 		className: string,
 		container?: HTMLElement,
-		data?: any,
 		doc: Document = window.document,
 	) {
 		const el = doc.createElement(tagName);
@@ -62,7 +60,6 @@ class DomUtil {
 		tagName: string,
 		id: string,
 		container?: HTMLElement,
-		data?: any,
 		doc: Document = window.document,
 	) {
 		const el = doc.createElement(tagName);
@@ -317,7 +314,7 @@ class DomUtil {
 
 	private static _userSelect: any = undefined;
 
-	private static getDisbleTextSelection(): () => void {
+	private static getDisableTextSelection(): () => void {
 		if ('onselectstart' in document) {
 			return () => {
 				window.L.DomEvent.on(
@@ -339,7 +336,7 @@ class DomUtil {
 		};
 	}
 
-	public static disableTextSelection = DomUtil.getDisbleTextSelection();
+	public static disableTextSelection = DomUtil.getDisableTextSelection();
 
 	private static getEnableTextSelection(): () => void {
 		if ('onselectstart' in document) {
@@ -358,7 +355,7 @@ class DomUtil {
 					DomUtil.userSelectProperty,
 					DomUtil._userSelect,
 				);
-				this._userSelect = undefined;
+				DomUtil._userSelect = undefined;
 			}
 		};
 	}

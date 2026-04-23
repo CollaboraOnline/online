@@ -1282,7 +1282,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var controls = {};
 
-		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer);
 
 		controls['container'] = div;
 		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
