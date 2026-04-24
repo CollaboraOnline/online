@@ -234,7 +234,7 @@ class InitializerBase {
 		window.hexifyUrl = false;
 		window.versionPath = "";
 		window.accessToken = element.dataset.accessToken;
-		window.accessTokenTTL = element.dataset.accessTokenTtl;
+		window.accessTokenTTL = element.dataset.accessTokenTtl || '0';
 		window.noAuthHeader = element.dataset.noAuthHeader;
 		window.accessHeader = element.dataset.accessHeader;
 		window.postMessageOriginExt = "";
@@ -1730,7 +1730,7 @@ function getInitializerClass() {
 		global.webserver = global.webserver.replace(/\/*$/, ''); // Remove trailing slash.
 	}
 
-	var docParams, wopiParams;
+	var docParams = '', wopiParams;
 	var filePath = global.coolParams.get('file_path');
 	global.wopiSrc = global.coolParams.get('WOPISrc');
 	if (global.wopiSrc != '') {
