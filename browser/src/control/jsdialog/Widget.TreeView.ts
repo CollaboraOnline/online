@@ -320,7 +320,12 @@ class TreeViewControl {
 		return false;
 	}
 
-	fillHeader(header: TreeHeaderJSON, builder: JSBuilder) {
+	fillHeader(
+		header: TreeHeaderJSON,
+		builder: JSBuilder,
+		data?: TreeWidgetJSON,
+		columnIndex?: number,
+	) {
 		if (!header) return;
 
 		const th = window.L.DomUtil.create(
@@ -336,6 +341,9 @@ class TreeViewControl {
 				builder.options.cssClass + ' ui-treeview-header-button',
 				th,
 			);
+			if (data && columnIndex !== undefined) {
+				button.id = data.id + '-header-' + columnIndex + '-button';
+			}
 			button.textContent = header.text;
 			if (header.arrow) {
 				th.setAttribute(
@@ -1811,7 +1819,7 @@ class TreeViewControl {
 		}
 
 		for (const index in headers) {
-			this.fillHeader(headers[index], builder);
+			this.fillHeader(headers[index], builder, data, parseInt(index));
 
 			if (headers[index].sortable === false) continue;
 
