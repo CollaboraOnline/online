@@ -199,6 +199,31 @@ public:
         _auth.expire();
     }
 
+    /// Start waiting for a token refresh from the host.
+    void startTokenRefresh(const std::chrono::seconds timeout)
+    {
+        LOG_DBG("Session [" << getId() << "] starting token refresh wait (attempt #"
+                            << (_tokenRefreshAttempts + 1) << ')');
+        ++_tokenRefreshAttempts;
+        _auth.startTokenRefresh(timeout);
+    }
+
+    /// Returns the number of consecutive refresh attempts since the last successful upload.
+    int tokenRefreshAttempts() const { return _tokenRefreshAttempts; }
+
+    /// Reset the consecutive token-refresh attempt counter. Call on successful upload.
+    void resetTokenRefreshAttempts() { _tokenRefreshAttempts = 0; }
+
+    /// Returns true iff this session is waiting for a token refresh.
+    bool isRefreshingToken() const { return _auth.isRefreshingToken(); }
+
+    /// Returns true if the token refresh wait has timed out.
+    bool isTokenRefreshTimedOut(
+        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
+    {
+        return _auth.isTokenRefreshTimedOut(now);
+    }
+
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
@@ -446,6 +471,10 @@ private:
 
     /// Authorization data - either access_token or access_header.
     Authorization _auth;
+
+    /// Number of consecutive token-refresh attempts triggered by upload 401s
+    /// since the last successful upload. Bounds the refresh-on-unauthorize retry loop.
+    int _tokenRefreshAttempts;
 
     /// Rotating clipboard remote access identifiers - protected by GlobalSessionMapMutex
     std::string _clipboardKeys[2];

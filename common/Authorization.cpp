@@ -17,7 +17,10 @@
 #include <config.h>
 
 #include "Authorization.hpp"
+
+#include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Uri.hpp>
 
@@ -98,9 +101,31 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
     }
 }
 
+Authorization::duration Authorization::adjustExpiryEpoch(duration rawExpiryEpoch)
+{
+    if (rawExpiryEpoch == duration::zero())
+    {
+        // No TTL provided; apply default lifetime if configured.
+        CONFIG_STATIC const int defaultLifetimeMins =
+            ConfigUtil::getInt("storage.wopi.access_token.default_lifetime_mins", 0);
+        if (defaultLifetimeMins > 0)
+        {
+            const auto expiry = std::chrono::duration_cast<duration>(
+                std::chrono::system_clock::now().time_since_epoch() +
+                std::chrono::minutes(defaultLifetimeMins));
+            LOG_TRC("No access_token_ttl provided, using default lifetime of "
+                    << defaultLifetimeMins << "m, expiry at " << expiry);
+            return expiry;
+        }
+    }
+
+    return rawExpiryEpoch;
+}
+
 Authorization Authorization::create(const Poco::URI& uri)
 {
     bool noHeader = false;
+    duration rawExpiryEpoch = duration::zero();
     Authorization::Type type = Authorization::Type::None;
     std::string decoded;
     for (const auto& param : uri.getQueryParameters())
@@ -119,10 +144,31 @@ Authorization Authorization::create(const Poco::URI& uri)
                 noHeader = true;
             }
         }
+        else if (param.first == "access_token_ttl")
+        {
+            rawExpiryEpoch = duration(NumUtil::u64FromString(param.second, 0));
+        }
     }
 
     if (!decoded.empty())
-        return Authorization(type, std::move(decoded), noHeader);
+    {
+        Authorization auth(type, std::move(decoded), noHeader);
+        if (type == Authorization::Type::Token)
+        {
+            const duration adjusted = adjustExpiryEpoch(rawExpiryEpoch);
+            if (adjusted > duration::zero())
+            {
+                auth.setExpiryEpoch(adjusted);
+            }
+        }
+        else if (rawExpiryEpoch > duration::zero())
+        {
+            LOG_WRN("Ignoring invalid access_token_ttl with ["
+                    << name(type) << "] authorization type in uri [" << uri.toString() << ']');
+        }
+
+        return auth;
+    }
 
     return Authorization();
 }

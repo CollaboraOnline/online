@@ -513,6 +513,22 @@ void DocumentBroker::pollThread()
                     _uploadRequest.reset();
                 }
 
+                // Check if any session's token refresh wait has timed out.
+                for (const auto& it : _sessions)
+                {
+                    const auto& session = it.second;
+                    if (session->isTokenRefreshTimedOut(now))
+                    {
+                        LOG_WRN("Token refresh timed out for session ["
+                                << session->getId() << "] on docKey [" << _docKey << ']');
+                        session->sendTextFrameAndLogError(
+                            "error: cmd=storage kind=saveunauthorized");
+                        session->invalidateAuthorizationToken();
+                        broadcastSaveResult(false, "Invalid or expired access token");
+                        break; // Only one refresh at a time.
+                    }
+                }
+
                 // Check if there are queued activities.
                 if (!_renameFilename.empty() && !_renameSessionId.empty())
                 {
@@ -608,7 +624,7 @@ void DocumentBroker::pollThread()
                 {
                     // Retry uploading, if the last one failed and we can try again.
                     const auto session = getWriteableSession();
-                    if (session && !session->getAuthorization().isExpired())
+                    if (session && session->getAuthorization().isValid())
                     {
                         checkAndUploadToStorage(session, /*justSaved=*/false);
                     }
@@ -767,7 +783,7 @@ void DocumentBroker::pollThread()
             LOG_ERR("No write-able session to unlock with");
             _lockCtx->bumpTimer();
         }
-        else if (session->getAuthorization().isExpired())
+        else if (!session->getAuthorization().isValid())
         {
             LOG_ERR("No write-able session with valid authorization to unlock with");
             _lockCtx->bumpTimer();
@@ -2340,7 +2356,7 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
     LOG_TRC("Requesting async " << StorageBase::nameShort(lock) << "ing of [" << _docKey
                                 << "] by session #" << session.getId());
 
-    if (session.getAuthorization().isExpired())
+    if (!session.getAuthorization().isValid())
     {
         error = "Expired authorization token";
         return false;
@@ -2371,7 +2387,7 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
     LOG_TRC("Requesting async " << StorageBase::nameShort(lock) << "ing of [" << _docKey
                                 << "] by session #" << session->getId());
 
-    if (session->getAuthorization().isExpired())
+    if (!session->getAuthorization().isValid())
     {
         error = "Expired authorization token";
         return false;
@@ -2675,6 +2691,24 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
 
 // This is called when either we just got save response, or,
 // there was nothing to save and want to check for uploading.
+void DocumentBroker::onTokenRefreshed(const std::shared_ptr<ClientSession>& session)
+{
+    ASSERT_CORRECT_THREAD();
+    assert(session && "Expected a valid session for onTokenRefreshed");
+
+    if (!_storageManager.lastUploadSuccessful())
+    {
+        LOG_INF("Token refreshed for session [" << session->getId() << "] on docKey [" << _docKey
+                                                << "]. Retrying upload");
+        checkAndUploadToStorage(session, /*justSaved=*/false);
+    }
+    else
+    {
+        LOG_INF("Token refreshed for session [" << session->getId() << "] on docKey [" << _docKey
+                                                << "] but no upload needs retrying");
+    }
+}
+
 void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session,
                                              bool justSaved)
 {
@@ -3010,6 +3044,11 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
     assert(_uploadRequest && "Expected to have a valid UploadRequest instance");
     LOG_DBG("Last upload result: OK");
 
+    if (const auto session = _uploadRequest->session())
+    {
+        session->resetTokenRefreshAttempts();
+    }
+
 #if !MOBILEAPP
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
@@ -3293,27 +3332,52 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     {
         LOG_DBG("Last upload result: UNAUTHORIZED");
         const auto session = _uploadRequest->session();
-        if (session)
+
+        // Bound the refresh-on-unauthorized retry loop: a successful resetaccesstoken
+        // flips state back to Token, so isRefreshingToken() alone can't gate further attempts.
+        constexpr int MaxTokenRefreshAttempts = 3;
+        if (session && !session->isRefreshingToken() &&
+            session->tokenRefreshAttempts() < MaxTokenRefreshAttempts)
         {
-            LOG_ERR(
-                "Cannot upload docKey ["
-                << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
-                << _storageManager.getSizeAsUploaded()
-                << " bytes. Invalid or expired access token. Notifying client and invalidating the "
-                   "authorization token of session ["
-                << session->getId() << ']');
-            session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
-            session->invalidateAuthorizationToken();
+            // Ask the host for a fresh token before giving up.
+            LOG_WRN("Cannot upload docKey ["
+                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
+                    << "]. Invalid or expired access token. "
+                       "Requesting token refresh from session ["
+                    << session->getId() << "] (attempt " << (session->tokenRefreshAttempts() + 1)
+                    << " of " << MaxTokenRefreshAttempts << ')');
+            session->sendTextFrame("tokenexpired");
+
+            CONFIG_STATIC const auto refreshTimeout =
+                ConfigUtil::getConfigValue<std::chrono::seconds>(
+                    "storage.wopi.access_token.refresh_timeout_secs", 60);
+            session->startTokenRefresh(refreshTimeout);
         }
         else
         {
-            LOG_ERR("Cannot upload docKey ["
-                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
-                    << _storageManager.getSizeAsUploaded()
-                    << " bytes. Invalid or expired access token. The client session is closed.");
-        }
+            // No session, mid-refresh (refresh arrived but upload failed again),
+            // or hit the retry cap.
+            if (session)
+            {
+                LOG_ERR("Cannot upload docKey ["
+                        << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                        << _storageManager.getSizeAsUploaded()
+                        << " bytes. Invalid or expired access token. Notifying client and "
+                           "invalidating the authorization token of session ["
+                        << session->getId() << ']');
+                session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+                session->invalidateAuthorizationToken();
+            }
+            else
+            {
+                LOG_ERR("Cannot upload docKey ["
+                        << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                        << _storageManager.getSizeAsUploaded()
+                        << " bytes. Invalid or expired access token. The client session is closed");
+            }
 
-        broadcastSaveResult(false, "Invalid or expired access token");
+            broadcastSaveResult(false, "Invalid or expired access token");
+        }
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
@@ -3447,7 +3511,7 @@ std::shared_ptr<ClientSession> DocumentBroker::getFirstAuthorizedSession() const
     for (const auto& sessionIt : _sessions)
     {
         const auto& session = sessionIt.second;
-        if (!session->getAuthorization().isExpired())
+        if (session->getAuthorization().isValid())
         {
             return session;
         }
@@ -3469,7 +3533,7 @@ std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
         // with a valid authorization token, or the first.
         // Note that isViewLoaded() precludes inWaitDisconnected().
         if (!savingSession || (session->isViewLoaded() && session->isEditable() &&
-                               !session->getAuthorization().isExpired()))
+                               session->getAuthorization().isValid()))
         {
             savingSession = session;
         }
@@ -3496,7 +3560,7 @@ void DocumentBroker::refreshLock()
         LOG_ERR("No write-able session to refresh lock with");
         _lockCtx->bumpTimer();
     }
-    else if (session->getAuthorization().isExpired())
+    else if (!session->getAuthorization().isValid())
     {
         LOG_ERR("No write-able session with valid authorization to refresh lock with");
         _lockCtx->bumpTimer();
@@ -3779,7 +3843,7 @@ void DocumentBroker::autoSaveAndStop(const std::string_view reason)
         {
             // Nothing to save. Try to upload if necessary.
             const auto session = getWriteableSession();
-            if (session && !session->getAuthorization().isExpired())
+            if (session && session->getAuthorization().isValid())
             {
                 checkAndUploadToStorage(session, /*justSaved=*/false);
                 if (isAsyncUploading())
@@ -3996,6 +4060,15 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
     ASSERT_CORRECT_THREAD();
 
     LOG_ASSERT_MSG(session, "Got null ClientSession");
+
+    // Cancel any pending token refresh for this session.
+    if (session->isRefreshingToken())
+    {
+        LOG_WRN("Session [" << session->getId() << "] removed while waiting for token refresh");
+        session->invalidateAuthorizationToken();
+        broadcastSaveResult(false, "Session closed during token refresh");
+    }
+
     const std::string id = session->getId();
     try
     {

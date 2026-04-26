@@ -41,6 +41,7 @@ class Socket {
 	private _inLayerTransaction: boolean;
 	private _slurpDuringTransaction: boolean;
 	private _accessTokenExpireTimeout: TimeoutHdl | undefined;
+	private _accessTokenExpireWarningCount: number = 0;
 	private _reconnecting: boolean;
 	private _slurpTimer: TimeoutHdl | undefined;
 	private _renderEventTimer: TimeoutHdl | undefined;
@@ -236,8 +237,8 @@ class Socket {
 	}
 
 	private getWebSocketBaseURI(map: MapInterface): string {
-		if (window.enableExperimentalFeatures) {
-			// Use the new Cool WS URL.
+		if (window.enableExperimentalFeatures && map.options.wopiSrc) {
+			// Use the new Cool WS URL for WOPI documents.
 			return window.makeWopiCoolWsUrl(
 				window.makeWsUrl('/cool'),
 				$.param(map.options.docParams),
@@ -296,22 +297,25 @@ class Socket {
 
 		this._connectCount++;
 		this._faultInjection();
-		if (
-			map.options.docParams.access_token &&
-			parseInt(map.options.docParams.access_token_ttl as string)
-		) {
-			const tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
-			clearTimeout(this._accessTokenExpireTimeout);
-			this._accessTokenExpireTimeout = setTimeout(
-				this._sessionExpiredWarning.bind(this),
-				parseInt(map.options.docParams.access_token_ttl as string) -
-					Date.now() -
-					tokenExpiryWarning,
-			);
-		}
+		this.resetTokenExpiryTimer();
 
 		// process messages for early socket connection
 		this._emptyQueue();
+	}
+
+	public resetTokenExpiryTimer(): void {
+		clearTimeout(this._accessTokenExpireTimeout); // Always clear the old timer.
+		this._accessTokenExpireWarningCount = 0;
+		const ttl = parseInt(
+			this._map.options.docParams.access_token_ttl as string,
+		);
+		if (this._map.options.docParams.access_token && ttl) {
+			const tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
+			this._accessTokenExpireTimeout = setTimeout(
+				this._sessionExpiredWarning.bind(this),
+				ttl - Date.now() - tokenExpiryWarning,
+			);
+		}
 	}
 
 	public close(code?: number, reason?: string): void {
@@ -654,11 +658,27 @@ class Socket {
 		const timerepr = dateTime.toLocaleDateString(String.locale, dateOptions);
 		this._map.fire('warn', { msg: expirymsg.replace('{time}', timerepr) });
 
-		// If user still doesn't refresh the session, warn again periodically
-		this._accessTokenExpireTimeout = setTimeout(
-			this._sessionExpiredWarning.bind(this),
-			120 * 1000,
-		);
+		// Notify the host so it can refresh the token programmatically.
+		const remainingMs =
+			parseInt(this._map.options.docParams.access_token_ttl as string) -
+			Date.now();
+		this._map.fire('postMessage', {
+			msgId: 'App_TokenExpiring',
+			args: {
+				Timeout: Math.max(remainingMs, 0),
+			},
+		});
+
+		// If user still doesn't refresh the session, warn again periodically.
+		// Cap at 10 retries (~20 minutes, i.e. ~5 minutes after the access_token
+		// expires) so we don't spam the host indefinitely.
+		this._accessTokenExpireWarningCount++;
+		if (this._accessTokenExpireWarningCount < 10) {
+			this._accessTokenExpireTimeout = setTimeout(
+				this._sessionExpiredWarning.bind(this),
+				120 * 1000,
+			);
+		}
 	}
 
 	public setUnloading(): void {
@@ -1141,6 +1161,13 @@ class Socket {
 			return;
 		} else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
 			this._onMigrateMsg(textMsg);
+			return;
+		} else if (textMsg.startsWith('tokenexpired')) {
+			// Server got a 401 on save. Ask the host for a fresh token.
+			this._map.fire('postMessage', {
+				msgId: 'App_TokenExpired',
+				args: {},
+			});
 			return;
 		} else if (textMsg.startsWith('close: ')) {
 			this._onCloseMsg(textMsg);

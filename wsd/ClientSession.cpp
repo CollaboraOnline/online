@@ -51,6 +51,8 @@
 #include <Poco/URI.h>
 
 #include <cctype>
+#include <chrono>
+#include <cstdint>
 #include <ios>
 #include <map>
 #include <memory>
@@ -97,6 +99,7 @@ ClientSession::ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws
     , _additionalFileUrisPublic(additionalFileUrisPublic)
     , _serverURL(requestDetails)
     , _auth(Authorization::create(uriPublic))
+    , _tokenRefreshAttempts(0)
     , _docBroker(docBroker)
     , _lastStateTime(std::chrono::steady_clock::now())
     , _clientVisibleArea(0, 0, 0, 0)
@@ -1349,14 +1352,26 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 #endif
     else if (tokens.equals(0, "resetaccesstoken"))
     {
-        if (tokens.size() != 2)
+        if (tokens.size() <= 1 || tokens.size() > 3)
         {
             LOG_ERR("Bad syntax for: " << tokens[0]);
-            sendTextFrameAndLogError("error: cmd=resetaccesstoken kind=syntax");
+            sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=syntax");
             return false;
         }
 
-        _auth.resetAccessToken(tokens[1]);
+        // Get the access_token_ttl, if provided. 0 means no expiry tracking
+        // (the legacy single-arg form of the command implied this too).
+        const auto rawExpiryEpoch = std::chrono::milliseconds(
+            (tokens.size() == 3) ? NumUtil::u64FromString(tokens[2], 0) : 0);
+        const auto expiryEpoch = Authorization::adjustExpiryEpoch(rawExpiryEpoch);
+
+        LOG_DBG("Resetting access token for " << getName() << " with expiry at " << expiryEpoch
+                                              << ": " << tokens[1]);
+        _auth.resetAccessToken(tokens[1], expiryEpoch);
+
+        // Notify the DocumentBroker in case a save is waiting for a token refresh.
+        docBroker->onTokenRefreshed(client_from_this());
+
         return true;
     }
 #if !MOBILEAPP && !WASMAPP
@@ -3608,8 +3623,11 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\t\tisLive: " << isLive()
        << "\n\t\tisViewLoaded: " << isViewLoaded()
        << "\n\t\tisDocumentOwner: " << isDocumentOwner()
-       << "\n\t\tstate: " << name(_state)
-       << "\n\t\tkeyEvents: " << _keyEvents
+       << "\n\t\tstate: " << name(_state);
+
+    _auth.dumpState(os);
+
+    os << "\n\t\tkeyEvents: " << _keyEvents
 //       << "\n\t\tvisibleArea: " << _clientVisibleArea
        << "\n\t\tclientSelectedPart: " << _clientSelectedPart
        << "\n\t\ttile size Pixel: " << _tileWidthPixel << 'x' << _tileHeightPixel
