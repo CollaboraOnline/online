@@ -55,6 +55,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = [];
+		this._sectionHeaders = []; // Section header DOM elements
+		this._collapsedSections = new Set(); // Names of sections collapsed by the user
 		this._direction = this.options.allowOrientation ?
 			(!window.mode.isDesktop() && window.L.DomUtil.isPortrait() ? 'x' : 'y') :
 			this.options.axis;
@@ -69,6 +71,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		map.on('scrolllimits', this._invalidateParts, this);
 		map.on('scrolltopart', this._scrollToPart, this);
 		map.on('beforerequestpreview', this._beforeRequestPreview, this);
+		map.on('updatesections', this._updateSections, this);
 
 		window.addEventListener('resize', window.L.bind(this._resize, this));
 	},
@@ -402,6 +405,26 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				});
 			}
 
+			// if not the first section slide then add entry for section
+			var isFisrtSectionSlide = false;
+			const sections = app.impress.sections;
+			if (sections) {
+				for (let i = 0; i < sections.length; i++) {
+					if (sections[i].startIndex === partIndex) {
+						isFisrtSectionSlide = true;
+						break;
+					}
+				}
+			}
+			if (!isFisrtSectionSlide) {
+				entries.push({
+					id: 'addsection',
+					type: 'comboboxentry',
+					text: _('Add Section'),
+					pos: 0,
+				});
+			}
+
 			var menuPosEl = that._getMenuPosEl();
 			var rect = that._container.getBoundingClientRect();
 			menuPosEl.style.left = (e.clientX - rect.left) + 'px';
@@ -438,6 +461,9 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				case 'hideslide':
 					that._map.hideSlide();
 					break;
+				case 'addsection':
+					app.socket.sendMessage('uno .uno:AddSlideSection');
+					app.socket.sendMessage('getslidesections');
 				}
 				JSDialog.CloseAllDropdowns();
 				return true;
@@ -469,10 +495,274 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		return img;
 	},
 
+	_updateSections: function (e) {
+		if (!this._previewInitialized)
+			return;
+
+		var sections = e.sections || [];
+
+		// Remove existing section headers
+		for (var i = 0; i < this._sectionHeaders.length; i++) {
+			window.L.DomUtil.remove(this._sectionHeaders[i]);
+		}
+		this._sectionHeaders = [];
+
+		if (!sections || sections.length === 0) {
+			this._collapsedSections.clear();
+			return;
+		}
+
+		// Drop any remembered names that no longer correspond to a section
+		// (e.g. after a rename or removal).
+		var liveNames = new Set();
+		for (var ln = 0; ln < sections.length; ln++)
+			liveNames.add(sections[ln].name);
+		this._collapsedSections.forEach(function (name) {
+			if (!liveNames.has(name))
+				this._collapsedSections.delete(name);
+		}, this);
+
+		// Insert section headers before the frame of each section's first slide.
+		// The container children are: #first-drop-site, frame0, frame1, ...
+		// So slide index N corresponds to child index N+1.
+		for (var s = 0; s < sections.length; s++) {
+			var section = sections[s];
+			var slideIndex = section.startIndex;
+
+			if (slideIndex < 0 || slideIndex >= this._previewTiles.length)
+				continue;
+
+			var header = this._createSectionHeader(section, s);
+			this._sectionHeaders.push(header);
+
+			// Insert before the frame of this section's first slide
+			var slideFrame = this._previewTiles[slideIndex].parentNode;
+			slideFrame.parentNode.insertBefore(header, slideFrame);
+		}
+
+		this._applyAllSectionsCollapse();
+	},
+
+	_createSectionHeader: function (section, sectionIndex) {
+		var that = this;
+
+		var header = window.L.DomUtil.create('div', 'slide-section-header');
+		header.setAttribute('data-section-index', sectionIndex);
+		header.setAttribute('data-start-index', section.startIndex);
+
+		var toggleBtn = window.L.DomUtil.create('button', 'slide-section-toggle ui-expander-btn', header);
+		toggleBtn.type = 'button';
+		toggleBtn.setAttribute('aria-label',
+			_('Toggle section %1').replace('%1', section.name));
+
+		var nameSpan = window.L.DomUtil.create('span', 'slide-section-name', header);
+		nameSpan.textContent = section.name;
+		nameSpan.setAttribute('title', section.name);
+
+		window.L.DomEvent.on(toggleBtn, 'click', function (e) {
+			window.L.DomEvent.stopPropagation(e);
+			window.L.DomEvent.preventDefault(e);
+			that._toggleSectionCollapse(sectionIndex);
+		}, this);
+
+		// Click on the header (but not the toggle) selects all slides in the section.
+		window.L.DomEvent.on(header, 'click', function (e) {
+			if (toggleBtn.contains(e.target))
+				return;
+			window.L.DomEvent.stopPropagation(e);
+			window.L.DomEvent.preventDefault(e);
+			that._selectSection(sectionIndex);
+		}, this);
+
+		// Section context menu
+		if (this._map.isEditMode()) {
+			window.L.DomEvent.on(header, 'contextmenu', function(e) {
+				window.L.DomEvent.stopPropagation(e);
+				window.L.DomEvent.preventDefault(e);
+
+				if (app.map.isReadOnlyMode())
+					return;
+
+				that._openSectionContextMenu(section, sectionIndex, e);
+			}, this);
+		}
+
+		return header;
+	},
+
+	_selectSection: function (sectionIndex) {
+		var sections = app.impress && app.impress.sections;
+		if (!sections || !sections[sectionIndex])
+			return;
+
+		var start = sections[sectionIndex].startIndex;
+		var end = (sectionIndex + 1 < sections.length)
+			? sections[sectionIndex + 1].startIndex - 1
+			: this._previewTiles.length - 1;
+
+		if (start < 0 || end < start)
+			return;
+
+		this._selectPartRange(start, end, false);
+	},
+
+	_toggleSectionCollapse: function (sectionIndex) {
+		var sections = app.impress.sections || [];
+		var section = sections[sectionIndex];
+		if (!section)
+			return;
+
+		if (this._collapsedSections.has(section.name))
+			this._collapsedSections.delete(section.name);
+		else
+			this._collapsedSections.add(section.name);
+
+		this._applySectionCollapse(sectionIndex);
+		// Expanding may reveal thumbnails whose images were never fetched.
+		this._ensureVisiblePreviews();
+	},
+
+	// Apply the collapsed class to one section's header and its slide frames.
+	_applySectionCollapse: function (sectionIndex) {
+		var section = app.impress.sections && app.impress.sections[sectionIndex];
+		if (!section)
+			return;
+
+		var collapsed = this._collapsedSections.has(section.name);
+		var end = section.startIndex + section.slideCount;
+
+		var header = this._sectionHeaders[sectionIndex];
+		if (header) {
+			var toggleBtn = header.querySelector('.slide-section-toggle');
+			header.classList.toggle('collapsed', collapsed);
+			if (toggleBtn)
+				toggleBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+		}
+
+		for (var i = section.startIndex; i < end; i++) {
+			var frame = this._previewTiles[i] && this._previewTiles[i].parentNode;
+			if (frame)
+				frame.classList.toggle('section-collapsed', collapsed);
+		}
+	},
+
+	// Apply collapsed state to every section.
+	_applyAllSectionsCollapse: function () {
+		var sections = app.impress.sections || [];
+		for (var s = 0; s < sections.length; s++)
+			this._applySectionCollapse(s);
+	},
+
+	_openSectionContextMenu: function (section, sectionIndex, e) {
+		var that = this;
+		var sections = app.impress.sections || [];
+
+		var entries = [{
+			id: 'renameSection',
+			type: 'comboboxentry',
+			text: _('Rename Section'),
+			pos: 0,
+		}];
+		if (sectionIndex > 0) {
+			entries.push({
+				id: 'moveSectionUp',
+				type: 'comboboxentry',
+				text: _('Move Section Up'),
+				pos: 0,
+			});
+		}
+		if (sectionIndex < sections.length - 1) {
+			entries.push({
+				id: 'moveSectionDown',
+				type: 'comboboxentry',
+				text: _('Move Section Down'),
+				pos: 0,
+			});
+		}
+		entries.push({
+			id: 'removeSection',
+			type: 'comboboxentry',
+			text: _('Remove Section'),
+			pos: 0,
+		});
+
+		var menuPosEl = this._getMenuPosEl();
+		var rect = this._container.getBoundingClientRect();
+		menuPosEl.style.left = (e.clientX - rect.left) + 'px';
+		menuPosEl.style.top = (e.clientY - rect.top) + 'px';
+
+		var callback = function (objectType, eventType, object, data, entry) {
+			if (eventType !== 'selected')
+				return false;
+			switch (entry.id) {
+			case 'renameSection':
+				that._renameSection(section, sectionIndex);
+				break;
+			case 'moveSectionUp':
+				that._map.setPart(section.startIndex);
+				that._map.selectPart(section.startIndex, 1, false);
+				app.socket.sendMessage('uno .uno:MoveSlideSectionUp');
+				app.socket.sendMessage('getslidesections');
+				break;
+			case 'moveSectionDown':
+				that._map.setPart(section.startIndex);
+				that._map.selectPart(section.startIndex, 1, false);
+				app.socket.sendMessage('uno .uno:MoveSlideSectionDown');
+				app.socket.sendMessage('getslidesections');
+				break;
+			case 'removeSection':
+				that._map.setPart(section.startIndex);
+				that._map.selectPart(section.startIndex, 1, false);
+				app.socket.sendMessage('uno .uno:RemoveSlideSection');
+				app.socket.sendMessage('getslidesections');
+				break;
+			}
+			JSDialog.CloseAllDropdowns();
+			return true;
+		};
+
+		JSDialog.OpenDropdown(
+			'slide-section-menu',
+			menuPosEl,
+			entries,
+			callback,
+			'',
+			false,
+		);
+	},
+
+	_renameSection: function (section, sectionIndex) {
+		var currentName = section.name;
+
+		app.map.uiManager.showInputModal(
+			'rename-section',
+			_('Rename Section'),
+			_('Enter new section name:'),
+			currentName,
+			_('OK'),
+			function (newName) {
+				if (newName && newName !== currentName) {
+					var command = {
+						'SectionIndex': {
+							'type': 'long',
+							'value': sectionIndex
+						},
+						'Name': {
+							'type': 'string',
+							'value': newName
+						}
+					};
+					app.socket.sendMessage('uno .uno:RenameSlideSection ' + JSON.stringify(command));
+					app.socket.sendMessage('getslidesections');
+				}
+			}
+		);
+	},
+
 	_scrollToPart: function(part) {
 		var partNo = part !== undefined ? part : this._map.getCurrentPartNumber();
-		//var sliderSize, nodePos, nodeOffset, nodeMargin;
-		var node = this._partsPreviewCont.children[partNo];
+		// Use the preview tile's parent frame directly instead of child index
+		var node = this._previewTiles[partNo] ? this._previewTiles[partNo].parentNode : null;
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo))) {
 			if (this.scrollTimer) clearTimeout(this.scrollTimer);
@@ -484,12 +774,17 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		}
 	},
 
-	// We will use this function because IE doesn't support "Array.from" feature.
+	// Returns the logical child index (counting only frames, not section headers).
 	_findClickedPart: function (element) {
+		var frameIndex = 0;
 		for (var i = 0; i < this._partsPreviewCont.children.length; i++) {
-			if (this._partsPreviewCont.children[i] === element || this._partsPreviewCont.children[i] === element.parentNode) {
-				return i;
+			var child = this._partsPreviewCont.children[i];
+			if (child === element || child === element.parentNode) {
+				return frameIndex;
 			}
+			// Only count non-section-header children as frames
+			if (!child.classList.contains('slide-section-header'))
+				frameIndex++;
 		}
 		return -1;
 	},
@@ -624,7 +919,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		}
 	},
 
-	_selectPartRange: function (start, end) {
+	_selectPartRange: function (start, end, scrollToEnd = true) {
 		if (start === undefined || start === null)
 			start = this._map._docLayer._selectedPart;
 
@@ -649,7 +944,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			}
 		}
 		this._selectedPartRange = [start, end];
-		this._scrollToPart(end);
+		if (scrollToEnd)
+			this._scrollToPart(end);
 	},
 
 	_modifySelectedPartRange: function (direction) {

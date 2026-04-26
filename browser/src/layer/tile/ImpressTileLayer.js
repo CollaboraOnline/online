@@ -333,6 +333,9 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 
 				if (refreshAnnotation)
 					app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+
+				// Fetch slide sections data
+				app.socket.sendMessage('getslidesections');
 			}
 
 			this._documentInfo = textMsg;
