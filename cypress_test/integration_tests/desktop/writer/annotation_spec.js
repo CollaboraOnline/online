@@ -272,7 +272,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.annotation-button-delete').should('be.visible');
 	});
 
-	it('Global opreations without doc focused', function () {
+	it('Global operations without doc focused', function () {
 		cy.getFrameWindow().then(function (win) {
 			cy.spy(win.app.socket, 'sendMessage').as('sendMessage');
 		});
