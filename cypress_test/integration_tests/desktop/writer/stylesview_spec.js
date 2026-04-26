@@ -57,7 +57,7 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 		cy.viewport(650, 1080);
 		cy.cGet('#stylesview-iconview-list-dropdown').should('not.exist');
 
-		// re-open after resize
+		// re-open after the resize
 		openExpander();
 
 		// with reduced height:
