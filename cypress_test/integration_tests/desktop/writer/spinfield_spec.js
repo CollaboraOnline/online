@@ -288,4 +288,23 @@ describe(['tagdesktop'], 'Spinfield unit and button tests', function () {
 			});
 		});
 	});
+
+	it('Menubutton and listbox-container left-align in grid', function () {
+		openDialogAndSwitchToBorder();
+
+		// The Line section of the Border tab has a menubutton (#linestylelb)
+		// and a listbox-container (#linewidthlb) in the same grid column.
+		// They should share the same left edge.
+		cy.cGet('#linestylelb').should('be.visible');
+		cy.cGet('#linewidthlb').should('be.visible');
+
+		cy.cGet('#linestylelb').then(function ($btn) {
+			var btnLeft = $btn[0].getBoundingClientRect().left;
+
+			cy.cGet('#linewidthlb').should(function ($list) {
+				var listLeft = $list[0].getBoundingClientRect().left;
+				expect(listLeft).to.equal(btnLeft);
+			});
+		});
+	});
 });
