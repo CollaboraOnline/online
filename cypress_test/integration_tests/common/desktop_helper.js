@@ -70,6 +70,20 @@ function showStatusBarIfHidden() {
 	cy.log('<< showStatusBarIfHidden - end');
 }
 
+function openStatusBarContextMenu() {
+	cy.log('>> openStatusBarContextMenu - start');
+
+	cy.cGet('#toolbar-down').rightclick();
+	cy.cGet('#statusbar-context-menu-dropdown').should('be.visible');
+
+	cy.log('<< openStatusBarContextMenu - end');
+}
+
+function statusBarContextMenuEntry(label) {
+	return cy.cGet('#statusbar-context-menu-dropdown')
+		.contains('.ui-combobox-entry', label);
+}
+
 // Select a color from colour palette widget used on top toolbar.
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
@@ -604,6 +618,8 @@ module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
+module.exports.openStatusBarContextMenu = openStatusBarContextMenu;
+module.exports.statusBarContextMenuEntry = statusBarContextMenuEntry;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;
