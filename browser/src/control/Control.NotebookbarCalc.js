@@ -2378,6 +2378,24 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						],
 						'vertical': 'true'
 					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'data-shuffle',
+										'type': 'toolitem',
+										'text': _UNO('.uno:Shuffle', 'spreadsheet'),
+										'command': '.uno:Shuffle',
+										'accessibility': { focusBack: true,	combination: 'SH', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
 				]
 			},
 			{ type: 'separator', id: 'data-sortdescending-break', orientation: 'vertical' },
