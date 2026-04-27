@@ -777,7 +777,7 @@ class TreeViewControl {
 		link.href = entry.columns[index].link || entry.columns[index].text;
 		link.innerText = entry.columns[index].text || entry.text;
 		link.target = '_blank';
-		link.rel = 'noopener';
+		link.rel = 'noopener noreferrer';
 	}
 
 	fillCells(

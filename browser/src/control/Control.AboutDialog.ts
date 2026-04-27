@@ -84,6 +84,7 @@ class AboutDialog {
 		const a = document.createElement('a');
 		a.href = linkHref;
 		a.target = '_blank';
+		a.rel = 'noopener noreferrer';
 		a.textContent = linkText;
 
 		span.appendChild(a);
@@ -140,7 +141,7 @@ class AboutDialog {
 			productNameWithURL =
 				'<a href="' +
 				sanitizeUrl(productURL) +
-				'" target="_blank">' +
+				'" target="_blank" rel="noopener noreferrer">' +
 				productName +
 				'</a>';
 		else productNameWithURL = productName;
