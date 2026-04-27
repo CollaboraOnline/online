@@ -2475,17 +2475,22 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	getTableTab: function() {
 		var content = [
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TableDialog', 'text', true),
-				'command': '.uno:TableDialog'
-			},
-			{ type: 'separator', id: 'table-bigtoolitem-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
-				'id': 'table-insert',
-				'name':_('Insert'),
+				'id': 'table-rows-columns',
+				'name':_('Rows & Columns'),
 				'accessibility': { focusBack: false, combination: 'TI', de: null },
+				'more': {
+					'command':'.uno:TableDialog',
+					'accessibility': { focusBack: true, combination: 'TG', de: null }
+				},
 				'children' : [
+					{
+						'type': 'bigtoolitem',
+						'id': 'table-table-dialog',
+						'text': _UNO('.uno:TableDialog', 'text', true),
+						'command': '.uno:TableDialog',
+						'accessibility': { focusBack: true, combination: 'TD', de: null }
+					},
 					{
 						'type': 'container',
 						'children': [
@@ -2494,16 +2499,19 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-insert-columns-before',
 										'text': _UNO('.uno:InsertColumnsBefore', 'text', true),
 										'command': '.uno:InsertColumnsBefore'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-insert-columns-after',
 										'text': _UNO('.uno:InsertColumnsAfter', 'text', true),
 										'command': '.uno:InsertColumnsAfter'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-delete-columns',
 										'text': _UNO('.uno:DeleteColumns', 'text', true),
 										'command': '.uno:DeleteColumns'
 									}
@@ -2514,16 +2522,19 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-insert-rows-before',
 										'text': _UNO('.uno:InsertRowsBefore', 'text', true),
 										'command': '.uno:InsertRowsBefore'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-insert-rows-after',
 										'text': _UNO('.uno:InsertRowsAfter', 'text', true),
 										'command': '.uno:InsertRowsAfter'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-delete-rows',
 										'text': _UNO('.uno:DeleteRows', 'text', true),
 										'command': '.uno:DeleteRows'
 									}
@@ -2534,19 +2545,19 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					},
 				]
 			},
-			{ type: 'separator', id: 'table-deleterows-break', orientation: 'vertical' },
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:MergeCells', 'text'),
-				'command': '.uno:MergeCells'
-			},
 			{ type: 'separator', id: 'table-mergecells-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'table-split',
-				'name':_('Split'),
+				'id': 'table-merge-split',
+				'name':_('Merge & Split'),
 				'accessibility': { focusBack: false, combination: 'TS', de: null },
 				'children' : [
+					{
+						'type': 'bigtoolitem',
+						'id': 'table-merge-cells',
+						'text': _UNO('.uno:MergeCells', 'text'),
+						'command': '.uno:MergeCells'
+					},
 					{
 						'type': 'container',
 						'children': [
@@ -2555,6 +2566,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-split-cell',
 										'text': _UNO('.uno:SplitCell', 'text'),
 										'command': '.uno:SplitCell'
 									}
@@ -2565,6 +2577,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-split-table',
 										'text': _UNO('.uno:SplitTable', 'text'),
 										'command': '.uno:SplitTable'
 									}
@@ -2577,40 +2590,14 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'table-splittable-break', orientation: 'vertical' },
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Protect', 'text'),
-								'command': '.uno:Protect'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:UnsetCellsReadOnly', 'text'),
-								'command': '.uno:UnsetCellsReadOnly'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'table-unsetcellsreadonly-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
-				'id': 'table-select',
+				'id': 'table-select-group',
 				'name':_('Select'),
 				'accessibility': { focusBack: false, combination: 'TC', de: null },
 				'children' : [
 					{
 						'type': 'bigtoolitem',
+						'id': 'table-entire-cell',
 						'text': _UNO('.uno:EntireCell', 'text', true),
 						'command': '.uno:EntireCell'
 					},
@@ -2622,11 +2609,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-entire-column',
 										'text': _UNO('.uno:EntireColumn', 'presentation'),
 										'command': '.uno:EntireColumn'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-select-table',
 										'text': _UNO('.uno:SelectTable', 'text', true),
 										'command': '.uno:SelectTable'
 									},
@@ -2637,11 +2626,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-entire-row',
 										'text': _UNO('.uno:EntireRow', 'presentation'),
 										'command': '.uno:EntireRow'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-delete-table',
 										'text': _UNO('.uno:DeleteTable', 'text', true),
 										'command': '.uno:DeleteTable'
 									},
@@ -2655,10 +2646,38 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			{ type: 'separator', id: 'table-deletetable-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'table-paragraph-table',// id-should be unique for overflowgroup options
-				'name':_('Paragraph'),
+				'id': 'table-protect-group',
+				'name':_('Color'),
+				'children' : [
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:TableCellBackgroundColor', 'text'),
+						'noLabel': true,
+						'command': '.uno:TableCellBackgroundColor',
+					},
+					{
+						'id': 'set-border-style:BorderStyleMenuWriter',
+						'type': 'menubutton',
+						'noLabel': true,
+						'text': _UNO('.uno:SetBorderStyle', 'text'),
+						'command': '.uno:SetBorderStyle'
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'table-design-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'table-align-group',// id-should be unique for overflowgroup options
+				'name':_('Align'),
 				'accessibility': { focusBack: false, combination: 'TB', de: null },
 				'children' : [
+					{
+						'type': 'bigtoolitem',
+						'id': 'table-table-sort',
+						'text': _UNO('.uno:TableSort', 'text'),
+						'command': '.uno:TableSort'
+					},
 					{
 						'type': 'container',
 						'children': [
@@ -2667,16 +2686,19 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-cell-vert-top',
 										'text': _UNO('.uno:CellVertTop'),
 										'command': '.uno:CellVertTop'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-cell-vert-center',
 										'text': _UNO('.uno:CellVertCenter'),
 										'command': '.uno:CellVertCenter'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-cell-vert-bottom',
 										'text': _UNO('.uno:CellVertBottom'),
 										'command': '.uno:CellVertBottom'
 									}
@@ -2687,21 +2709,25 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
+										'id': 'table-left-para',
 										'text': _UNO('.uno:LeftPara'),
 										'command': '.uno:LeftPara'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-center-para',
 										'text': _UNO('.uno:CenterPara'),
 										'command': '.uno:CenterPara'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-right-para',
 										'text': _UNO('.uno:RightPara'),
 										'command': '.uno:RightPara'
 									},
 									{
 										'type': 'toolitem',
+										'id': 'table-justify-para',
 										'text': _UNO('.uno:JustifyPara'),
 										'command': '.uno:JustifyPara'
 									}
@@ -2714,22 +2740,63 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'table-justifypara-break', orientation: 'vertical' },
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TableSort', 'text'),
-				'command': '.uno:TableSort'
-			},
-			{ type: 'separator', id: 'table-tablesort-break', orientation: 'vertical' },
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TableNumberFormatDialog', 'text'),
-				'command': '.uno:TableNumberFormatDialog'
-			},
-			{ type: 'separator', id: 'table-tablenumberformatdialog-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
-				'id': 'table-number-format',
+				'id': 'table-number-format-group',
 				'name':_('Number Format'),
 				'accessibility': { focusBack: false, combination: 'TN', de: null },
+				'more': {
+					'command':'.uno:TableNumberFormatDialog',
+					'accessibility': { focusBack: true,	combination: 'TF', de: null },
+				},
+				'children' : [
+					{
+						'type': 'bigtoolitem',
+						'id': 'table-table-number-format-dialog',
+						'text': _UNO('.uno:TableNumberFormatDialog', 'text'),
+						'command': '.uno:TableNumberFormatDialog'
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'id': 'table-number-format-currency',
+										'text': _UNO('.uno:NumberFormatCurrency', 'text'),
+										'command': '.uno:NumberFormatCurrency'
+									},
+									{
+										'type': 'toolitem',
+										'id': 'table-number-format-percent',
+										'text': _UNO('.uno:NumberFormatPercent', 'text'),
+										'command': '.uno:NumberFormatPercent'
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'noLabel': true,
+										'id': 'table-number-format-date',
+										'text': _UNO('.uno:NumberFormatDate', 'text'),
+										'command': '.uno:NumberFormatDate'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+				]
+			},
+			{ type: 'separator', id: 'table-unsetcellsreadonly-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'table-protect-group',
+				'name':_('Protect'),
 				'children' : [
 					{
 						'type': 'container',
@@ -2739,50 +2806,35 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:NumberFormatCurrency', 'text'),
-										'command': '.uno:NumberFormatCurrency'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:NumberFormatDate', 'text'),
-										'command': '.uno:NumberFormatDate'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:NumberFormatPercent', 'text'),
-										'command': '.uno:NumberFormatPercent'
+										'id': 'table-protect',
+										'text': _UNO('.uno:Protect', 'text'),
+										'command': '.uno:Protect'
 									}
 								]
 							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'id': 'table-unset-cells-read-only',
+										'text': _UNO('.uno:UnsetCellsReadOnly', 'text'),
+										'command': '.uno:UnsetCellsReadOnly'
+									}
+								]
+							}
 						],
 						'vertical': 'true'
 					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:TableCellBackgroundColor', 'text'),
-								'command': '.uno:TableCellBackgroundColor',
-							},
-							{
-								'id': 'set-border-style:BorderStyleMenuWriter',
-								'type': 'menubutton',
-								'noLabel': true,
-								'text': _UNO('.uno:SetBorderStyle', 'text'),
-								'command': '.uno:SetBorderStyle'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
+				]
 			},
 			{ type: 'separator', id: 'table-numberformatpercent-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
+				'id': 'table-insert-caption',
 				'text': _UNO('.uno:InsertCaptionDialog', 'text'),
 				'command': '.uno:InsertCaptionDialog'
-			},
+			}
 		];
 
 		return this.getTabPage(tableTabName, content);
