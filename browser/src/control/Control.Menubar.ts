@@ -511,8 +511,7 @@ class Menubar extends window.L.Control {
 				   {uno: '.uno:ModifyPage'},
 					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), unoid: '.uno:SlideChangeWindow', id: 'transitiondeck', type: 'action'},
 					 {uno: '.uno:MasterSlidesPanel'},
-					 {uno: '.uno:CustomAnimation'}, // core version
-				   //{name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'}, // online version
+					 {name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'}, // online version
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},

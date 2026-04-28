@@ -25,7 +25,8 @@
 }
 
 label.notebookbar,
-.notebookbar.ui-radiobutton label {
+.notebookbar.ui-radiobutton label,
+.static-label.notebookbar {
 	line-height: var(--default-font-size);
 	font-family: var(--cool-font);
 	font-size: var(--default-font-size);
@@ -804,20 +805,22 @@ label.notebookbar.ui-checkbox-label {
 }
 
 #Animation.notebookbar #custom_animation_list {
-	display: block;      /* force to allow full scroll range */
-	min-width: 308px;    /* to avoid flicker and too much changes */
+	min-width: 300px;    /* to avoid flicker and too much changes */
+	max-width: 30vw;
 	overflow-y: scroll;  /* to avoid flicker always show scroll */
 	width: max-content;  /* adjust to the generated size */
 	scrollbar-width: initial;
 }
 
+#Animation.notebookbar #custom_animation_list .ui-treeview-cell-text-content {
+	min-width: 280px;
+	max-width: calc(30vw - 20px);
+	text-overflow: ellipsis;
+}
+
 #Animation.notebookbar #custom_animation_list div {
 	padding: 0px;
 	margin: 0px;
-}
-
-#Animation.notebookbar #custom_animation_list .ui-treeview-cell-text-content {
-	display: grid;
 }
 
 #Animation.notebookbar .ui-grid button {

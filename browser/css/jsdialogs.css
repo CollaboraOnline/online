@@ -36,6 +36,7 @@
 
 .jsdialog-container {
 	position: absolute;
+	font-family: var(--cool-font);
 }
 
 .jsdialog-window:not(.modalpopup) .jsdialog-container:not(.snackbar) {
@@ -180,7 +181,6 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	max-height: calc( 90vh - 34px);
 	overflow-y: auto !important;
 	background-color: var(--color-background-lighter) !important;
-	font-family: var(--cool-font);
 	line-height: 1.5;
 	scrollbar-color: var(--scrollbar-color);
 	scrollbar-width: var(--scrollbar-width);
