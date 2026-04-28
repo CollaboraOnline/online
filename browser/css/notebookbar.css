@@ -596,7 +596,7 @@ label.notebookbar.ui-checkbox-label {
 }
 
 #transitions_icons-iconview-list-dropdown {
-	margin-top: 42px !important;
+	margin-top: 38px !important;
 }
 
 .jsdialog#iconview_theme_colors:not(.sidebar) {
@@ -771,10 +771,6 @@ label.notebookbar.ui-checkbox-label {
 .jsdialog #transitions_icons,
 .notebookbar #transitions_icons-iconview {
 	margin-left: 10px;
-}
-
-#transitions-group {
-	margin-bottom: 7px;
 }
 
 #Transition-container.notebookbar {
