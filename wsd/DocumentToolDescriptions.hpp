@@ -19,6 +19,19 @@
 namespace DocumentToolDescriptions
 {
 
+/// Description for the convert_document tool.
+inline constexpr const char* CONVERT_DOCUMENT_DESCRIPTION =
+    "Convert a document to a different format. Returns the converted file as "
+    "base64-encoded binary.\n\n"
+    "Supported input formats - Writer: odt, docx, doc, rtf, txt, html, md, fodt, wpd, pages. "
+    "Calc: ods, xlsx, xls, csv, fods, numbers. "
+    "Impress: odp, pptx, ppt, fodp, key. "
+    "Draw: odg, svg, vsdx, pub, png, pdf.\n\n"
+    "Supported output formats - Writer: odt, docx, pdf, rtf, txt, html, png. "
+    "Calc: ods, xlsx, csv, pdf, html, png. "
+    "Impress: odp, pptx, pdf, html, svg, png. "
+    "Draw: odg, pdf, svg, png.";
+
 /// Description for the extract_link_targets tool.
 inline constexpr const char* EXTRACT_LINK_TARGETS_DESCRIPTION =
     "Extract all link targets from a document. Returns a JSON object with "
@@ -35,8 +48,11 @@ inline constexpr const char* EXTRACT_DOC_STRUCTURE_DESCRIPTION =
     "For Impress: slide names, object names per slide. "
     "Useful for understanding document layout before applying transformations.";
 
-/// Description for the transform parameter of transform_document_structure.
-inline constexpr const char* TRANSFORM_PARAM_DESCRIPTION =
+/// Transform description - part 1 of 3 (up to and including the "Text content"
+/// section). Concatenate with TRANSFORM_PARAM_IMAGE_GEN (AI only) and
+/// TRANSFORM_PARAM_POST_IMAGE to form the full description; MCP skips the
+/// image-gen piece because it does not require an AI provider.
+inline constexpr const char* TRANSFORM_PARAM_PRE_IMAGE =
     R"(JSON transformation commands. The top-level object can contain "Transforms" and/or "UnoCommand" objects in any order.
 
 --- Impress/ODP Presentations ---
@@ -82,10 +98,22 @@ Available layouts (use ChangeLayoutByName with these names):
 Text content:
 - {"SetText.N": "text"} - set text of placeholder N on current slide (0=title, 1=first content, 2=second content, etc.). Use \n for paragraph breaks.
 
-Image generation (inserts AI-generated image into a placeholder):
+)";
+
+/// Transform description - part 2 of 3 (AI image generation). Depends on an
+/// AI image provider being configured, so it is only included by consumers
+/// that require AI (the AI sidebar). Omitted on the MCP path.
+inline constexpr const char* TRANSFORM_PARAM_IMAGE_GEN =
+    R"(Image generation (inserts AI-generated image into a placeholder):
 - {"GenerateImage.N": "prompt"} - generate an image from the text prompt using the AI image provider and insert it into placeholder N on the current slide, replacing the placeholder content. N is the 0-based object index (same as SetText.N). A loading placeholder is inserted immediately when the transform is applied, then the real image progressively replaces it after generation completes. Use descriptive prompts for best results. Example: {"GenerateImage.1": "A modern office building with glass facade at sunset, professional photography"}
 
-Object selection:
+)";
+
+/// Transform description - part 3 of 3 (object selection onwards through
+/// the final example). Concatenate after PRE_IMAGE (and optionally
+/// IMAGE_GEN) to form the full description.
+inline constexpr const char* TRANSFORM_PARAM_POST_IMAGE =
+    R"(Object selection:
 - {"MarkObject": N} - select object at index on current slide
 - {"UnMarkObject": N} - deselect object at index
 

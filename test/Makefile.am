@@ -111,7 +111,8 @@ all_la_unit_tests = \
 	unit-wopi-httpredirect.la \
 	unit-convert-to-password-protected.la \
 	unit-bad-doc-load.la \
-	unit-hosting.la
+	unit-hosting.la \
+	unit-mcp.la
 # 	unit-fuzz.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -158,6 +159,8 @@ wsd_sources = \
 	../wsd/FileServer.cpp \
 	../wsd/FileServerUtil.cpp \
 	../wsd/HostUtil.cpp \
+	../wsd/McpHandler.cpp \
+	../wsd/McpResponseUtil.cpp \
 	../wsd/ProofKey.cpp \
 	../wsd/ProxyProtocol.cpp \
 	../wsd/ProxyRequestHandler.cpp \
@@ -183,6 +186,7 @@ test_base_sources = \
 	HttpWhiteBoxTests.cpp \
 	KitQueueTests.cpp \
 	LoggingWhiteBoxTests.cpp \
+	McpHandlerTests.cpp \
 	NetUtilWhiteBoxTests.cpp \
 	NumUtilWhiteBoxTests.cpp \
 	RequestDetailsTests.cpp \
@@ -245,6 +249,7 @@ unittest_SOURCES = \
 	$(kit_sources) \
 	../wsd/FileServerUtil.cpp \
 	../wsd/HostUtil.cpp \
+	../wsd/McpResponseUtil.cpp \
 	../wsd/ProofKey.cpp \
 	../wsd/RequestDetails.cpp \
 	../wsd/TestStubs.cpp \
@@ -309,6 +314,8 @@ unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
 unit_convert_csv_la_SOURCES = UnitConvertCSV.cpp
+unit_mcp_la_SOURCES = UnitMcp.cpp
+unit_mcp_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_to_password_protected_la_SOURCES = UnitConvertToPasswordProtected.cpp
 unit_initial_load_fail_la_SOURCES = UnitInitialLoadFail.cpp
 unit_initial_load_fail_la_LIBADD = $(CPPUNIT_LIBS)
