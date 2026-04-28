@@ -345,7 +345,7 @@ nav.hasnotebookbar [id^='save'].saved::after {
 	left: 1px;
 	height: 2px;
 	width: 17px;
-	background: #555;
+	background: var(--color-main-text);
 	-webkit-transition: all 0.25s;
 	transition: all 0.25s;
 }
