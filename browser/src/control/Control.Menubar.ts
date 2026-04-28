@@ -2442,12 +2442,12 @@ class Menubar extends window.L.Control {
 			$(aItem).data('id', 'document-logo');
 			$(aItem).data('type', 'action');
 			aItem.setAttribute('role', 'img');
-			aItem.setAttribute('aria-label', _('file type icon'));
 			aItem.target = '_blank';
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
 			}
+			app.LOUtil.syncDocumentLogoAriaLabel(aItem);
 
 			if (this._menubarCont != null)
 				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);

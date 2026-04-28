@@ -21,6 +21,8 @@ var L: any = {
     LOUtil: {},
 };
 
+function _(text: string): string { return text; }
+
 var app: any = {
     CSections: { Scroll: { name : 'scroll' } },
     roundedDpiScale : 1,
