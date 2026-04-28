@@ -394,6 +394,7 @@ export class CommentSection extends CanvasSectionObject {
 		return type === 'ViewLayoutMultiPage' || type === 'ViewLayoutCompareChanges';
 	}
 
+	/* todo: check if we need to apply scaling to `availableSpace`, or is it already done by `getTotalSideSpace()` */
 	public calculateAvailableSpace() {
 		if (CommentSection.isMultiColumnLayout()) {
 			const layout = app.activeDocument.activeLayout as ViewLayoutMultiPage | ViewLayoutCompareChanges;
@@ -402,7 +403,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		else {
 			let availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
-			availableSpace = Math.round(availableSpace / app.dpiScale);
+			availableSpace = Math.round(availableSpace);
 			return availableSpace;
 		}
 	}
