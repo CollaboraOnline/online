@@ -2104,6 +2104,11 @@ class Socket {
 					msgId: 'Action_Load_Resp',
 					args: postMessageObj,
 				});
+				this._map.fire('error', {
+					msg: _(
+						'Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists.',
+					),
+				});
 			}
 
 			if (this._map._docLayer) {
