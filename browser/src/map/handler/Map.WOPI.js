@@ -793,7 +793,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Action_FollowUser') {
 			if (msg.Values) {
-				this._map._setFollowing(msg.Values.Follow, msg.Values.ViewId);
+				this._map._setFollowing(msg.Values.Follow, parseInt(msg.Values.ViewId, 10), true);
 			}
 			else {
 				this._map._setFollowing(true, null);
