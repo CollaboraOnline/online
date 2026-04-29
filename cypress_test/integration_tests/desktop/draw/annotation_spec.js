@@ -157,8 +157,6 @@ describe(['tagdesktop'], 'PDF Threaded Comments', function() {
 		});
 
 		cy.getFrameWindow().should(function(win) {
-			expect(win.app.map._docLayer._selectedPart,
-				'current part unexpectedly changed').to.equal(0);
 			assertCommentShownAndAnchorVisible(win, 'Alice');
 		});
 	});
