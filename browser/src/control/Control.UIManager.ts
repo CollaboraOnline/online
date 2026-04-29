@@ -1092,6 +1092,11 @@ class UIManager extends window.L.Control {
 
 		if (!found)
 			window.app.console.error('UIManager: Button with id "' + buttonId + '" not found.');
+
+		// When toggledarktheme is hidden, also hide the adjacent separator
+		// to prevent two separators from being displayed in a row.
+		if (buttonId === 'toggledarktheme')
+			this.showButton('view-invertbackground-break', show);
 	}
 
 	/**
