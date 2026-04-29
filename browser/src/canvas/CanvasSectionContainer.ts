@@ -218,6 +218,12 @@ class CanvasSectionContainer {
 		document.addEventListener('mousemove', this.onMouseMove.bind(this));
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
 		document.addEventListener('mouseup', this.onMouseUp.bind(this));
+
+		// Capture-phase fallback: if a downstream bubble-phase stopPropagation
+		// (e.g. from branding scripts) hides the mouseup from the document
+		// listener above, recover from the resulting stuck drag. Deferred via
+		// microtask so the normal flow runs first when nothing intercepts.
+		window.addEventListener('mouseup', this.onMouseUpFallback.bind(this), true);
 		this.canvas.onclick = this.onClick.bind(this);
 		this.canvas.ondblclick = this.onDoubleClick.bind(this);
 		this.canvas.oncontextmenu = this.onContextMenu.bind(this);
@@ -1210,7 +1216,23 @@ class CanvasSectionContainer {
 		}
 	}
 
+	// Capture-phase fallback: schedules a deferred check so the normal
+	// document-bubble path runs first. If that path was blocked upstream
+	// (stopPropagation by a branding script or similar) and we are stuck
+	// in a drag, run the recovery here.
+	private onMouseUpFallback (e: MouseEvent) {
+		queueMicrotask(() => {
+			if ((e as any).__cscMouseUpHandled)
+				return;
+			if (!this.draggingSomething)
+				return;
+			this.onMouseUp(e);
+		});
+	}
+
 	private onMouseUp (e: MouseEvent) { // Should be ignored unless this.draggingSomething = true.
+		(e as any).__cscMouseUpHandled = true;
+
 		// Early exit. If mouse down position is not inside the canvas area, we have nothing to check further.
 		if (!this.positionOnMouseDown) {
 			this.clearMousePositions();
