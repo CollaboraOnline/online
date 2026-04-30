@@ -218,6 +218,18 @@ class CanvasSectionContainer {
 		document.addEventListener('mousemove', this.onMouseMove.bind(this));
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
 		document.addEventListener('mouseup', this.onMouseUp.bind(this));
+
+		// Capture-phase fallback: if a downstream bubble-phase stopPropagation
+		// (e.g. from branding scripts) hides the mouseup from the document
+		// listener above, recover from the resulting stuck drag. Deferred via
+		// microtask so the normal flow runs first when nothing intercepts.
+		window.addEventListener('mouseup', this.onMouseUpFallback.bind(this), true);
+
+		// Sometimes another event other than mouseup is fired for ending a drag.
+		// Try not to miss it or we get stuck in dragging state.
+		window.addEventListener('pointerup', this.onPointerUpFallback.bind(this), true);
+		window.addEventListener('pointercancel', this.onPointerUpFallback.bind(this), true);
+
 		this.canvas.onclick = this.onClick.bind(this);
 		this.canvas.ondblclick = this.onDoubleClick.bind(this);
 		this.canvas.oncontextmenu = this.onContextMenu.bind(this);
@@ -1142,6 +1154,18 @@ class CanvasSectionContainer {
 	}
 
 	private onMouseMove (e: MouseEvent) {
+		// If a drag is in progress but the OS reports no buttons are pressed,
+		// the mouseup was lost. Fix it.
+		if (this.draggingSomething && e.buttons === 0) {
+			var recoveryEvent = new MouseEvent('mouseup', {
+				button: 0,
+				buttons: 0,
+				clientX: e.clientX,
+				clientY: e.clientY,
+			});
+			this.onMouseUp(recoveryEvent);
+		}
+
 		// Early exit. If mouse is outside and "draggingSomething = false", then there is no reason to check further.
 		// Add an exception for leaflet, check after removing it.
 		if (!this.mouseIsInside && !this.draggingSomething && !this.isLongPressActive())
@@ -1210,7 +1234,40 @@ class CanvasSectionContainer {
 		}
 	}
 
+	// Capture-phase fallback: schedules a deferred check so the normal
+	// document-bubble path runs first. If that path was blocked upstream
+	// (stopPropagation by a branding script or similar) and we are stuck
+	// in a drag, run the recovery here.
+	private onMouseUpFallback (e: MouseEvent) {
+		queueMicrotask(() => {
+			if ((e as any).__cscMouseUpHandled)
+				return;
+			if (!this.draggingSomething)
+				return;
+			this.onMouseUp(e);
+		});
+	}
+
+	// Recovers when no mouseup reaches at all.
+	private onPointerUpFallback (e: PointerEvent) {
+		if (e.pointerType === 'touch')
+			return;
+		setTimeout(() => {
+			if (!this.draggingSomething)
+				return;
+			var synthetic = new MouseEvent('mouseup', {
+				button: 0,
+				buttons: 0,
+				clientX: e.clientX,
+				clientY: e.clientY,
+			});
+			this.onMouseUp(synthetic);
+		}, 0);
+	}
+
 	private onMouseUp (e: MouseEvent) { // Should be ignored unless this.draggingSomething = true.
+		(e as any).__cscMouseUpHandled = true;
+
 		// Early exit. If mouse down position is not inside the canvas area, we have nothing to check further.
 		if (!this.positionOnMouseDown) {
 			this.clearMousePositions();
