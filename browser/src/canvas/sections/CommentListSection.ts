@@ -914,7 +914,12 @@ export class CommentSection extends CanvasSectionObject {
 	/// returns canvas top and bottom position in core pixels
 	public getScreenTopBottom(): Array<number> {
 		const screenTop = app.activeDocument.activeView.viewedRectangle.pY1;
-		const screenBottom = screenTop + this.cssToCorePixels($('#map').height());
+		const mapEl = document.getElementById('map');
+		if (!mapEl) {
+			console.warn("HTML element with ID map doesn't exist.");
+			return [screenTop, screenTop];
+		}
+		const screenBottom = screenTop + this.cssToCorePixels(mapEl.getBoundingClientRect().height);
 
 		return [screenTop, screenBottom];
 	}
