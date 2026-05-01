@@ -278,8 +278,12 @@ var sendInsertTableFunction = function(event) {
 	var col = $(event.target).index() + 1;
 	var row = $(event.target).parent().index() + 1;
 	$('.col').removeClass('bright');
-	var status = $('#inserttable-status')
-	status.html('<br/>');
+	const status = document.getElementById('inserttable-status');
+	if (!status) {
+		console.warn("HTML element with ID inserttable-status doesn't exist.");
+	} else {
+		status.innerHTML = '<br/>';
+	}
 	var msg = 'uno .uno:InsertTable {' +
 		' "Columns": { "type": "long","value": '
 		+ col +
@@ -1064,21 +1068,28 @@ function onUpdatePermission(e) {
 				if (!keepDisabled || alwaysEnable)
 					toolbar.enableItem(items[idx].id, true);
 				$('.main-nav').removeClass('readonly');
-				$('#toolbar-down').removeClass('readonly');
+				const toolbarDown1 = document.getElementById('toolbar-down');
+				if (toolbarDown1) toolbarDown1.classList.remove('readonly');
 			} else if (!alwaysEnable) {
 				$('.main-nav').addClass('readonly');
-				$('#toolbar-down').addClass('readonly');
+				const toolbarDown2 = document.getElementById('toolbar-down');
+				if (toolbarDown2) toolbarDown2.classList.add('readonly');
 				toolbar.enableItem(items[idx].id, false);
 			}
 		}
 
+		const toolbarMobileBack = document.getElementById('toolbar-mobile-back');
 		if (e.detail.perm === 'edit') {
-			$('#toolbar-mobile-back').removeClass('editmode-off');
-			$('#toolbar-mobile-back').addClass('editmode-on');
+			if (toolbarMobileBack) {
+				toolbarMobileBack.classList.remove('editmode-off');
+				toolbarMobileBack.classList.add('editmode-on');
+			}
 			toolbar.updateItem({id: 'closemobile', type: 'customtoolitem', w2icon: 'editmode'});
 		} else {
-			$('#toolbar-mobile-back').removeClass('editmode-on');
-			$('#toolbar-mobile-back').addClass('editmode-off');
+			if (toolbarMobileBack) {
+				toolbarMobileBack.classList.remove('editmode-on');
+				toolbarMobileBack.classList.add('editmode-off');
+			}
 			toolbar.updateItem({id: 'closemobile', type: 'customtoolitem', w2icon: 'closemobile'});
 		}
 	}
@@ -1101,11 +1112,14 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 
 global.editorUpdate = editorUpdate;
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
 	// Attach insert file action
-	$('#insertgraphic').on('change', onInsertGraphic);
-	$('#insertmultimedia').on('change', onInsertMultimedia);
-	$('#selectbackground').on('change', onInsertBackground);
+	const insertGraphic = document.getElementById('insertgraphic');
+	if (insertGraphic) insertGraphic.addEventListener('change', onInsertGraphic);
+	const insertMultimedia = document.getElementById('insertmultimedia');
+	if (insertMultimedia) insertMultimedia.addEventListener('change', onInsertMultimedia);
+	const selectBackground = document.getElementById('selectbackground');
+	if (selectBackground) selectBackground.addEventListener('change', onInsertBackground);
 });
 
 function setupToolbar(e) {
@@ -1123,10 +1137,15 @@ function setupToolbar(e) {
 			toolbar.enableItem('searchnext', false);
 			toolbar.showItem('cancelsearch', false);
 			L.DomUtil.addClass(searchInput, 'search-not-found');
-			$('#findthis').addClass('search-not-found');
+			const findThis = document.getElementById('findthis');
+			if (!findThis) {
+				console.warn("HTML element with ID findthis doesn't exist.");
+			} else {
+				findThis.classList.add('search-not-found');
+			}
 			app.searchService.resetSelection();
 			setTimeout(function () {
-				$('#findthis').removeClass('search-not-found');
+				if (findThis) findThis.classList.remove('search-not-found');
 				L.DomUtil.removeClass(searchInput, 'search-not-found');
 			}, 800);
 		}
@@ -1154,8 +1173,13 @@ function setupToolbar(e) {
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 
+	const closebuttonwrapper = document.getElementById('closebuttonwrapper');
 	if (map.options.wopi && L.Params.closeButtonEnabled && !window.mode.isMobile()) {
-		$('#closebuttonwrapper').css('display', 'flex');
+		if (!closebuttonwrapper) {
+			console.warn("HTML element with ID closebuttonwrapper doesn't exist.");
+		} else {
+			closebuttonwrapper.style.display = 'flex';
+		}
 		var button = L.DomUtil.get('closebutton');
 		if (button) {
 			const closeButtonText = _('Close document');
@@ -1164,19 +1188,25 @@ function setupToolbar(e) {
 			L.control.attachTooltipEventListener(button, map);
 		}
 	} else if (!L.Params.closeButtonEnabled) {
-		$('#closebuttonwrapper').hide();
-		$('#closebuttonwrapperseparator').hide();
+		if (closebuttonwrapper) closebuttonwrapper.style.display = 'none';
+		const closebuttonwrapperseparator = document.getElementById('closebuttonwrapperseparator');
+		if (closebuttonwrapperseparator) closebuttonwrapperseparator.style.display = 'none';
 	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
-		$('#closebuttonwrapper').css('display', 'flex');
+		if (closebuttonwrapper) closebuttonwrapper.style.display = 'flex';
 	}
 
-	$('#closebutton').click(function () {
-		let dispatcher = global.app.dispatcher;
-		if (!dispatcher)
-			dispatcher = new app.definitions['dispatcher']('global');
+	const closebutton = document.getElementById('closebutton');
+	if (!closebutton) {
+		console.warn("HTML element with ID closebutton doesn't exist.");
+	} else {
+		closebutton.addEventListener('click', function () {
+			let dispatcher = global.app.dispatcher;
+			if (!dispatcher)
+				dispatcher = new app.definitions['dispatcher']('global');
 
-		dispatcher.dispatch('closeapp');
-	});
+			dispatcher.dispatch('closeapp');
+		});
+	}
 }
 
 global.setupToolbar = setupToolbar;
