@@ -392,7 +392,12 @@ L.Control.Tabs = L.Control.extend({
 
 	_deleteSheet: function() {
 		var nPos = this._tabForContextMenu;
-		var message = _('Are you sure you want to delete sheet, {sheet}?').replace('{sheet}', $('#spreadsheet-tab' + this._tabForContextMenu).text());
+		const tabEl = document.getElementById('spreadsheet-tab' + this._tabForContextMenu);
+		if (!tabEl) {
+			console.warn("HTML element with ID spreadsheet-tab" + this._tabForContextMenu + " doesn't exist.");
+			return;
+		}
+		var message = _('Are you sure you want to delete sheet, {sheet}?').replace('{sheet}', tabEl.textContent);
 
 		this._map.uiManager.showInfoModal('delete-sheet-modal', '', message, '', _('OK'), function() {
 			this._map.deletePage(nPos);
@@ -402,7 +407,12 @@ L.Control.Tabs = L.Control.extend({
 	_renameSheet: function() {
 		var map = this._map;
 		var nPos = this._tabForContextMenu;
-		var tabName = $('#spreadsheet-tab' + this._tabForContextMenu).text();
+		const renameTabEl = document.getElementById('spreadsheet-tab' + this._tabForContextMenu);
+		if (!renameTabEl) {
+			console.warn("HTML element with ID spreadsheet-tab" + this._tabForContextMenu + " doesn't exist.");
+			return;
+		}
+		var tabName = renameTabEl.textContent;
 		this._map.uiManager.showInputModal('rename-calc-sheet', _('Rename sheet'), _('Enter new sheet name'), tabName, _('OK'),
 			function (value) {
 				map.renamePage(value, nPos);
