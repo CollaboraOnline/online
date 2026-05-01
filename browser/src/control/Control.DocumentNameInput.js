@@ -12,7 +12,7 @@
  * L.Control.DocumentNameInput
  */
 
-/* global _ */
+/* global $ _ */
 L.Control.DocumentNameInput = L.Control.extend({
 
 	onAdd: function (map) {
