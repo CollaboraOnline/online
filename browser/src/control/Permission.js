@@ -11,7 +11,7 @@
 /*
  * Document permission handler
  */
-/* global app $ _ */
+/* global app _ */
 L.Map.include({
 	readonlyStartingFormats: {
 		'txt': { canEdit: true, odfFormat: 'odt' },
@@ -20,12 +20,19 @@ L.Map.include({
 	},
 
 	setPermission: function (perm) {
-		var button = $('#mobile-edit-button');
-		button.off('click');
-		button.attr('tabindex', 0);
-		button.attr('role', 'button');
-		button.attr('title', _('Edit document'));
-		button.attr('aria-label', _('Edit document'));
+		const button = document.getElementById('mobile-edit-button');
+		if (!button) {
+			console.warn("HTML element with ID mobile-edit-button doesn't exist.");
+			return;
+		}
+		if (button._clickHandler) {
+			button.removeEventListener('click', button._clickHandler);
+			button._clickHandler = null;
+		}
+		button.tabIndex = 0;
+		button.setAttribute('role', 'button');
+		button.title = _('Edit document');
+		button.setAttribute('aria-label', _('Edit document'));
 		// app.file.fileBasedView is new view that has continuous scrolling
 		// used for PDF and we don't permit editing for PDFs
 		// this._shouldStartReadOnly() is a check for files that should start in readonly mode and even on desktop browser
@@ -36,16 +43,17 @@ L.Map.include({
 		// we offer save-as to another place where the user can edit the document
 		var isPDF = app.file.fileBasedView && app.file.editComment;
 		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet())) {
-			button.css('display', 'flex');
+			button.style.display = 'flex';
 		} else {
-			button.hide();
+			button.style.display = 'none';
 		}
 		var that = this;
 		if (perm === 'edit') {
 			if (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) {
-				button.on('click', function () {
+				button._clickHandler = function () {
 					that._switchToEditMode();
-				});
+				};
+				button.addEventListener('click', button._clickHandler);
 
 				// temporarily, before the user touches the floating action button
 				this._enterReadOnlyMode('readonly');
@@ -60,16 +68,18 @@ L.Map.include({
 		}
 		else if (perm === 'view' || perm === 'readonly') {
 			if (this.isLockedReadOnlyUser()) {
-				button.on('click', function () {
+				button._clickHandler = function () {
 					that.openUnlockPopup();
-				});
+				};
+				button.addEventListener('click', button._clickHandler);
 			}
 			else if (window.ThisIsTheAndroidApp) {
-				button.on('click', function () {
+				button._clickHandler = function () {
 					that._requestFileCopy();
-				});
+				};
+				button.addEventListener('click', button._clickHandler);
 			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet()))) {
-				$('#mobile-edit-button').hide();
+				button.style.display = 'none';
 			}
 
 			this._enterReadOnlyMode(perm);
@@ -126,7 +136,12 @@ L.Map.include({
 				return;
 		}
 		this.options.canTryLock = false; // don't respond to lockfailed anymore
-		$('#mobile-edit-button').hide();
+		const editButton = document.getElementById('mobile-edit-button');
+		if (!editButton) {
+			console.warn("HTML element with ID mobile-edit-button doesn't exist.");
+		} else {
+			editButton.style.display = 'none';
+		}
 		this._enterEditMode('edit');
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.fire('editorgotfocus');
