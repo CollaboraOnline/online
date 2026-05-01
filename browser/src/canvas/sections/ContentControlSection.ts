@@ -70,7 +70,8 @@ export class ContentControlSection extends CanvasSectionObject {
 					}
 				}
 			});
-			$('#datepicker').hide();
+			const datepickerEl = document.getElementById('datepicker');
+			if (datepickerEl) datepickerEl.style.display = 'none';
 		} else
 			$('#datepicker').datepicker('destroy');
 
