@@ -217,11 +217,21 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_setProgressCursor: function() {
-		$('#map').css('cursor', 'progress');
+		const mapEl = document.getElementById('map');
+		if (!mapEl) {
+			console.warn('HTML element with ID map doesn\'t exist.');
+			return;
+		}
+		mapEl.style.cursor = 'progress';
 	},
 
 	_setNormalCursor: function() {
-		$('#map').css('cursor', 'default');
+		const mapEl = document.getElementById('map');
+		if (!mapEl) {
+			console.warn('HTML element with ID map doesn\'t exist.');
+			return;
+		}
+		mapEl.style.cursor = 'default';
 	},
 
 	startProgressMode: function() {
