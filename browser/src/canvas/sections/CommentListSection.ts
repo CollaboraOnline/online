@@ -1526,29 +1526,22 @@ export class CommentSection extends CanvasSectionObject {
 		return (index === undefined) ? -1 : index;
 	}
 
-	public isThreadResolved (annotation: any): boolean {
-		// If comment has children.
-		if (annotation.sectionProperties.children.length > 0) {
-			for (var i = 0; i < annotation.sectionProperties.children.length; i++) {
-				if (annotation.sectionProperties.children[i].sectionProperties.data.resolved !== 'true')
-					return false;
-			}
-			return true;
-		}
-		// If it has a parent.
-		else if (annotation.sectionProperties.data.parent !== '0') {
-			var index = this.getSubRootIndexOf(annotation.sectionProperties.data.parent);
-			var comment = this.sectionProperties.commentList[index];
-			if (comment.sectionProperties.data.resolved !== 'true')
+	private isSubThreadResolved(annotation: Comment): boolean {
+		if (annotation.sectionProperties.data.resolved !== 'true')
+			return false;
+		for (let i = 0; i < annotation.sectionProperties.children.length; i++) {
+			if (!this.isSubThreadResolved(annotation.sectionProperties.children[i]))
 				return false;
-			else if (comment.sectionProperties.children.length > 0) {
-				for (var i = 0; i < comment.sectionProperties.children.length; i++) {
-					if (comment.sectionProperties.children[i].sectionProperties.data.resolved !== 'true')
-						return false;
-				}
-				return true;
-			}
 		}
+		return true;
+	}
+
+	public isThreadResolved(annotation: Comment): boolean {
+		if (annotation.isRootComment())
+			return this.isSubThreadResolved(annotation);
+		const index = this.getRootIndexOf(annotation.sectionProperties.data.parent);
+		const top_comment = this.sectionProperties.commentList[index];
+		return this.isSubThreadResolved(top_comment);
 	}
 
 	private initializeContextMenus (): void {
@@ -2606,26 +2599,6 @@ export class CommentSection extends CanvasSectionObject {
 				index--;
 			else
 				break;
-		}
-
-		return index;
-	}
-
-	// Returns the sub-root comment index of given id
-	private getSubRootIndexOf (id: any): number {
-		var index = this.getIndexOf(id);
-
-		if (index !== -1)
-		{
-			var comment = this.sectionProperties.commentList[index];
-			var parentId = comment.sectionProperties.data.parent;
-
-			while (index >= 0) {
-				if (this.sectionProperties.commentList[index].sectionProperties.data.id !== parentId && this.sectionProperties.commentList[index].sectionProperties.data.parent !== '0')
-					index--;
-				else
-					break;
-			}
 		}
 
 		return index;

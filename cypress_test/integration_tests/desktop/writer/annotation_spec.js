@@ -427,6 +427,42 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		});
 	});
 
+	it('Resolve/Unresolve Thread on partially resolved thread', function () {
+		desktopHelper.insertComment();
+		cy.cGet('#comment-container-1').should('exist');
+
+		// Reply to create a thread (root id 1, reply id 2).
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+		cy.cGet('#annotation-reply-textarea-1').type('reply text');
+		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('#annotation-content-area-2').should('contain', 'reply text');
+
+		// Resolve only the reply, leaving the root unresolved.
+		cy.cGet('#comment-annotation-menu-2').click();
+		cy.cGet('body').contains('.context-menu-item', 'Resolve').click();
+		cy.cGet('#comment-container-2 .cool-annotation-content-resolved').should('have.text', 'Resolved');
+		cy.cGet('#comment-container-1 .cool-annotation-content-resolved').should('have.text', '');
+
+		// Root menu must offer 'Resolve Thread' since the thread is not fully resolved.
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Resolve Thread').should('be.visible');
+		cy.cGet('body').contains('.context-menu-item', 'Unresolve Thread').should('not.exist');
+		cy.cGet('body').contains('.context-menu-item', 'Resolve Thread').click();
+
+		// All comments in the thread are now resolved.
+		cy.cGet('#comment-container-1 .cool-annotation-content-resolved').should('have.text', 'Resolved');
+		cy.cGet('#comment-container-2 .cool-annotation-content-resolved').should('have.text', 'Resolved');
+
+		// Root menu now offers 'Unresolve Thread'.
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Unresolve Thread').should('be.visible');
+		cy.cGet('body').contains('.context-menu-item', 'Unresolve Thread').click();
+
+		// All comments in the thread are unresolved again.
+		cy.cGet('#comment-container-1 .cool-annotation-content-resolved').should('have.text', '');
+		cy.cGet('#comment-container-2 .cool-annotation-content-resolved').should('have.text', '');
+	});
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
