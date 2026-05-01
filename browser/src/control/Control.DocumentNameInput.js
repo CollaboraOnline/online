@@ -12,7 +12,7 @@
  * L.Control.DocumentNameInput
  */
 
-/* global $ _ */
+/* global _ */
 L.Control.DocumentNameInput = L.Control.extend({
 
 	onAdd: function (map) {
@@ -59,28 +59,50 @@ L.Control.DocumentNameInput = L.Control.extend({
 		if (this._renaming)
 			return;
 
-		$('#document-name-input').val(this.map['wopi'].BreadcrumbDocName);
+		const nameInput = document.getElementById('document-name-input');
+		if (!nameInput) {
+			console.warn("HTML element with ID document-name-input doesn't exist.");
+			return;
+		}
+		nameInput.value = this.map['wopi'].BreadcrumbDocName;
 		this.map._onGotFocus();
 	},
 
 	disableDocumentNameInput : function() {
-		$('#document-name-input').prop('disabled', true);
-		$('#document-name-input').removeClass('editable');
-		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
+		const nameInput = document.getElementById('document-name-input');
+		if (!nameInput) {
+			console.warn("HTML element with ID document-name-input doesn't exist.");
+			return;
+		}
+		nameInput.disabled = true;
+		nameInput.classList.remove('editable');
+		nameInput.removeEventListener('keypress', this.onDocumentNameKeyPress);
 	},
 
 	enableDocumentNameInput : function() {
-		$('#document-name-input').prop('disabled', false);
-		$('#document-name-input').addClass('editable');
-		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
-		$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
-		$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
+		const nameInput = document.getElementById('document-name-input');
+		if (!nameInput) {
+			console.warn("HTML element with ID document-name-input doesn't exist.");
+			return;
+		}
+		nameInput.disabled = false;
+		nameInput.classList.add('editable');
+		nameInput.removeEventListener('keypress', this.onDocumentNameKeyPress);
+		nameInput.addEventListener('keypress', this.onDocumentNameKeyPress.bind(this));
+		nameInput.removeEventListener('focus', this.onDocumentNameFocus);
+		nameInput.addEventListener('focus', this.onDocumentNameFocus.bind(this));
+		nameInput.removeEventListener('blur', this.documentNameCancel);
+		nameInput.addEventListener('blur', this.documentNameCancel.bind(this));
 	},
 
 	onDocumentNameKeyPress: function(e) {
 		if (e.keyCode === 13) { // Enter key
-			var value = $('#document-name-input').val();
-			this.documentNameConfirm(value);
+			const nameInput = document.getElementById('document-name-input');
+			if (!nameInput) {
+				console.warn("HTML element with ID document-name-input doesn't exist.");
+				return;
+			}
+			this.documentNameConfirm(nameInput.value);
 		} else if (e.keyCode === 27) { // Escape key
 			this.documentNameCancel();
 		}
@@ -94,13 +116,22 @@ L.Control.DocumentNameInput = L.Control.extend({
 		var extn = name.lastIndexOf('.');
 		if (extn < 0)
 			extn = name.length;
-		$('#document-name-input').val(name);
-		$('#document-name-input')[0].setSelectionRange(0, extn);
+		const nameInput = document.getElementById('document-name-input');
+		if (!nameInput) {
+			console.warn("HTML element with ID document-name-input doesn't exist.");
+			return;
+		}
+		nameInput.value = name;
+		nameInput.setSelectionRange(0, extn);
 	},
 
 	onDocLayerInit: function() {
 
-		var el = $('#document-name-input');
+		const el = document.getElementById('document-name-input');
+		if (!el) {
+			console.warn("HTML element with ID document-name-input doesn't exist.");
+			return;
+		}
 
 		try {
 			var fileNameFullPath = new URL(
@@ -112,30 +143,30 @@ L.Control.DocumentNameInput = L.Control.extend({
 			var basePath = fileNameFullPath.replace(this.map['wopi'].BaseFileName , '').replace(/\/$/, '');
 			var title = this.map['wopi'].BaseFileName + '\n' + _('Path') + ': ' + basePath;
 
-			el.prop('title', title);
+			el.title = title;
 		} catch (e) {
 			// purposely ignore the error for legacy browsers
 		}
 
 		// FIXME: Android app would display a temporary filename, not the actual filename
 		if (window.ThisIsTheAndroidApp) {
-			el.hide();
+			el.style.display = 'none';
 		} else {
-			el.show();
+			el.style.display = '';
 		}
 
 		if (window.ThisIsAMobileApp) {
 			// We can now set the document name in the menu bar
-			el.prop('disabled', false);
-			el.removeClass('editable');
-			el.focus(function() { $(this).blur(); });
+			el.disabled = false;
+			el.classList.remove('editable');
+			el.addEventListener('focus', function() { this.blur(); });
 			// Call decodeURIComponent twice: Reverse both our encoding and the encoding of
 			// the name in the file system.
-			el.val(decodeURIComponent(decodeURIComponent(this.map.options.doc.replace(/.*\//, '')))
+			el.value = decodeURIComponent(decodeURIComponent(this.map.options.doc.replace(/.*\//, '')))
 							  // To conveniently see the initial visualViewport scale and size, un-comment the following line.
 							  // + ' (' + window.visualViewport.scale + '*' + window.visualViewport.width + 'x' + window.visualViewport.height + ')'
 							  // TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
-							 );
+							 ;
 		}
 
 		if (this.map.isReadOnlyMode()) {
@@ -146,8 +177,12 @@ L.Control.DocumentNameInput = L.Control.extend({
 	onWopiProps: function(e) {
 		if (e.BaseFileName !== null) {
 			// set the document name into the name field
-			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
 			var input = L.DomUtil.get('document-name-input');
+			if (!input) {
+				console.warn("HTML element with ID document-name-input doesn't exist.");
+				return;
+			}
+			input.value = e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName;
 			input.setAttribute('data-cooltip', input.value);
 			L.control.attachTooltipEventListener(input, this.map);
 		}
@@ -175,16 +210,32 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	showLoadingAnimation : function() {
 		this.disableDocumentNameInput();
-		$('#document-name-input-loading-bar').css('display', 'block');
+		const loadingBar = document.getElementById('document-name-input-loading-bar');
+		if (!loadingBar) {
+			console.warn("HTML element with ID document-name-input-loading-bar doesn't exist.");
+			return;
+		}
+		loadingBar.style.display = 'block';
 	},
 
 	hideLoadingAnimation : function() {
 		this.enableDocumentNameInput();
-		$('#document-name-input-loading-bar').css('display', 'none');
+		const loadingBar = document.getElementById('document-name-input-loading-bar');
+		if (!loadingBar) {
+			console.warn("HTML element with ID document-name-input-loading-bar doesn't exist.");
+			return;
+		}
+		loadingBar.style.display = 'none';
 	},
 
 	_getMaxAvailableWidth: function() {
-		var x = $('#document-titlebar').prop('offsetLeft') + $('.document-title').prop('offsetLeft') + $('#document-name-input').prop('offsetLeft');
+		const titlebar = document.getElementById('document-titlebar');
+		const nameInput = document.getElementById('document-name-input');
+		if (!titlebar || !nameInput) {
+			console.warn("HTML element with ID document-titlebar or document-name-input doesn't exist.");
+			return 300;
+		}
+		var x = titlebar.offsetLeft + $('.document-title').prop('offsetLeft') + nameInput.offsetLeft;
 		var containerWidth = parseInt($('.main-nav').css('width'));
 		var maxWidth = Math.max(containerWidth - x - 30, 0);
 		maxWidth = Math.max(maxWidth, 300); // input field at least 300px
