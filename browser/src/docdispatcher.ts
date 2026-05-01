@@ -258,17 +258,26 @@ class Dispatcher {
 			app.map.cancelSearch();
 		};
 		this.actionsMap['showsearchbar'] = () => {
-			$('#toolbar-down').hide();
-			$('#showsearchbar').removeClass('over');
-			$('#toolbar-search').show();
+			const toolbarDown = document.getElementById('toolbar-down');
+			if (toolbarDown) toolbarDown.style.display = 'none';
+			const showsearchbar = document.getElementById('showsearchbar');
+			if (showsearchbar) showsearchbar.classList.remove('over');
+			const toolbarSearch = document.getElementById('toolbar-search');
+			if (toolbarSearch) toolbarSearch.style.display = '';
 			L.DomUtil.get('search-input').focus();
 		};
 		this.actionsMap['hidesearchbar'] = () => {
-			$('#toolbar-search').hide();
-			if (app.map.isEditMode()) $('#toolbar-down').show();
+			const toolbarSearch = document.getElementById('toolbar-search');
+			if (toolbarSearch) toolbarSearch.style.display = 'none';
+			if (app.map.isEditMode()) {
+				const toolbarDown = document.getElementById('toolbar-down');
+				if (toolbarDown) toolbarDown.style.display = '';
+			}
 			/** show edit button if only we are able to edit but in readonly mode */
-			if (!app.isReadOnly() && app.map.isReadOnlyMode())
-				$('#mobile-edit-button').css('display', 'flex');
+			if (!app.isReadOnly() && app.map.isReadOnlyMode()) {
+				const mobileEditButton = document.getElementById('mobile-edit-button');
+				if (mobileEditButton) mobileEditButton.style.display = 'flex';
+			}
 		};
 
 		this.actionsMap['prev'] = () => {
@@ -448,23 +457,29 @@ class Dispatcher {
 
 		// sheets toolbar
 		this.actionsMap['insertsheet'] = function () {
-			var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
+			const tabScroll = document.getElementById('spreadsheet-tab-scroll');
+			if (!tabScroll) {
+				console.warn(
+					"HTML element with ID spreadsheet-tab-scroll doesn't exist.",
+				);
+				return;
+			}
+			var nPos = tabScroll.childElementCount;
 			app.map.insertPage(nPos);
 			app.map.insertPage.scrollToEnd = true;
 		};
 		this.actionsMap['firstrecord'] = function () {
-			$('#spreadsheet-tab-scroll').scrollLeft(0);
+			const tabScroll = document.getElementById('spreadsheet-tab-scroll');
+			if (tabScroll) tabScroll.scrollLeft = 0;
 		};
 		this.actionsMap['nextrecord'] = function () {
 			// TODO: We should get visible tab's width instead of 60px
-			$('#spreadsheet-tab-scroll').scrollLeft(
-				$('#spreadsheet-tab-scroll').scrollLeft() + 60,
-			);
+			const tabScroll = document.getElementById('spreadsheet-tab-scroll');
+			if (tabScroll) tabScroll.scrollLeft = tabScroll.scrollLeft + 60;
 		};
 		this.actionsMap['prevrecord'] = function () {
-			$('#spreadsheet-tab-scroll').scrollLeft(
-				$('#spreadsheet-tab-scroll').scrollLeft() - 30,
-			);
+			const tabScroll = document.getElementById('spreadsheet-tab-scroll');
+			if (tabScroll) tabScroll.scrollLeft = tabScroll.scrollLeft - 30;
 		};
 		this.actionsMap['lastrecord'] = function () {
 			// Set a very high value, so that scroll is set to the maximum possible value internally.
