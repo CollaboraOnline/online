@@ -1459,7 +1459,9 @@ class CanvasSectionContainer {
 			return;
 		}
 
-		this.clearMousePositions();
+		if (!this.draggingSomething)
+			this.clearMousePositions();
+
 		this.width = newWidth;
 		this.height = newHeight;
 		this.needsResize = true;
