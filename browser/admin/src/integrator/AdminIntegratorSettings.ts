@@ -530,6 +530,31 @@ class SettingIframe {
 		return inputEl;
 	}
 
+	private createSelectInput(
+		id: string,
+		options: Array<{ value: string; label: string }>,
+		selectedValue: string,
+		onChangeHandler = (select) => {},
+	) {
+		const selectEl = document.createElement('select');
+		selectEl.id = id;
+		selectEl.classList.add('dic-input-container');
+
+		options.forEach((option) => {
+			const optionEl = document.createElement('option');
+			optionEl.value = option.value;
+			optionEl.textContent = option.label;
+			selectEl.appendChild(optionEl);
+		});
+
+		selectEl.value = selectedValue;
+
+		selectEl.addEventListener('change', () => {
+			onChangeHandler(selectEl);
+		});
+		return selectEl;
+	}
+
 	private createTextArea(
 		id: string,
 		placeholder: string = '',
