@@ -33,6 +33,7 @@
 #include <QString>
 #include <QTranslator>
 #include <QWebEngineProfile>
+#include <QWebEngineUrlScheme>
 
 #include <pwd.h>
 
@@ -129,6 +130,22 @@ namespace
 
 int main(int argc, char** argv)
 {
+    // Register the cool: URL scheme before QApplication so QtWebEngine picks
+    // it up. Embedded-media URLs in presentations look like
+    // cool:/cool/media?Tag=... and are served by CoolUrlSchemeHandler.
+    // LocalScheme + LocalAccessAllowed lets a file:// page (cool.html is
+    // loaded from the filesystem) reach cool: URLs without Chromium
+    // blocking them as cross-origin.
+    {
+        QWebEngineUrlScheme scheme("cool");
+        scheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
+        scheme.setFlags(QWebEngineUrlScheme::SecureScheme
+                      | QWebEngineUrlScheme::LocalScheme
+                      | QWebEngineUrlScheme::LocalAccessAllowed
+                      | QWebEngineUrlScheme::CorsEnabled);
+        QWebEngineUrlScheme::registerScheme(scheme);
+    }
+
     QApplication app(argc, argv);
 
     user_name = getUserName();
