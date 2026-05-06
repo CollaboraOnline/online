@@ -343,7 +343,8 @@ ul {
   font-weight: 500 !important;
 }
 
-.view-input-container input[type='text'] {
+.view-input-container input[type='text'],
+.view-input-container select {
   width: 100%;
   max-width: 400px;
   padding: 8px 12px;
