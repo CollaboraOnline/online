@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-13 12:48+0100\n"
+"POT-Creation-Date: 2026-05-07 15:44+0200\n"
 "PO-Revision-Date: 2026-02-24 12:09+0000\n"
 "Last-Translator: Méven Car <meven.car@collabora.com>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/collabora-online/ui/fr/>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
+"ui/fr/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -141,8 +142,8 @@ msgid "Network Graph"
 msgstr "Graphique du réseau"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:777
-#: admin/src/integrator/AdminIntegratorSettings.ts:1784
+#: admin/src/integrator/AdminIntegratorSettings.ts:820
+#: admin/src/integrator/AdminIntegratorSettings.ts:1896
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
 #: src/canvas/sections/CommentListSection.ts:598
 #: src/canvas/sections/CommentSection.ts:183
@@ -223,7 +224,8 @@ msgstr "Actualiser le journal"
 msgid "Channel Filter:"
 msgstr "Filtre de canal :"
 
-#: admin/admin.strings.js:61 src/app/TableStylesService.ts:335
+#: admin/admin.strings.js:61 src/app/TableStylesService.ts:162
+#: src/app/TableStylesService.ts:309
 #: src/control/Control.JSDialogBuilder.js:526
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:203
 msgid "None"
@@ -282,14 +284,13 @@ msgstr "Mémoire"
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
 msgstr ""
-"Veuillez patienter, le cluster Kubernetes est en cours de mise à "
-"l'échelle..."
+"Veuillez patienter, le cluster Kubernetes est en cours de mise à l'échelle..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
-"Impossible de définir le cookie d'authentification jwt sur une connexion non"
-" sécurisée"
+"Impossible de définir le cookie d'authentification jwt sur une connexion non "
+"sécurisée"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
@@ -302,7 +303,7 @@ msgstr "Attention"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1840 src/app/Debug.ts:1440
+#: admin/src/integrator/AdminIntegratorSettings.ts:1952 src/app/Debug.ts:1440
 #: src/canvas/sections/CommentListSection.ts:1559
 #: src/control/Control.AboutDialog.ts:268
 #: src/control/Control.AlertDialog.js:56
@@ -378,23 +379,23 @@ msgstr "Êtes-vous sûr de vouloir terminer cette session ?"
 msgid "Are you sure you want to shut down the server?"
 msgstr "Êtes-vous sûr de vouloir arrêter le serveur ?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:155
+#: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Signature Certificate"
 msgstr "Certificat de Signature"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:156
+#: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Signature Key"
 msgstr "Signature de la clé de chiffrement"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:157
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Signature CA"
 msgstr "Signature de l'Autorité de Certification (CA)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "In-document Screen Reader"
 msgstr "Lecteur d'écran intégré dans le document"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:161
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
 #: src/control/Control.Menubar.ts:663 src/control/Control.Menubar.ts:810
 #: src/control/Control.Menubar.ts:1097 src/control/Control.Menubar.ts:1150
@@ -406,233 +407,241 @@ msgstr "Lecteur d'écran intégré dans le document"
 msgid "Dark Mode"
 msgstr "Mode sombre"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:162
+#: admin/src/integrator/AdminIntegratorSettings.ts:178
+msgid "Smart Zoom"
+msgstr "Zoom intelligent"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
+msgid "Default Zoom"
+msgstr "Zoom par défaut"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Compact layout"
 msgstr "Disposition compacte"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:163
+#: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Show status bar"
 msgstr "Afficher la barre d'état"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:164
+#: admin/src/integrator/AdminIntegratorSettings.ts:182
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:496
 msgid "Show Ruler"
 msgstr "Afficher la règle"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:165
+#: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Accessibility Checker"
 msgstr "Vérification de l'accessibilité"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:166
+#: admin/src/integrator/AdminIntegratorSettings.ts:184
 #: src/control/Control.NavigatorPanel.ts:286
 msgid "Navigator"
 msgstr "Navigateur"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:167
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Show Sidebar"
 msgstr "Afficher la barre latérale"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:168
+#: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Custom Animation"
 msgstr "Animation personnalisée"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:171
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Style List"
 msgstr "Liste des styles"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:174
+#: admin/src/integrator/AdminIntegratorSettings.ts:192
 #: src/control/Control.NotebookbarCalc.js:1148
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:660
 msgid "Grid"
 msgstr "Grille"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:175
+#: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Print"
 msgstr "Imprimer"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:176
+#: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Other"
 msgstr "Autre"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:177
+#: admin/src/integrator/AdminIntegratorSettings.ts:195
 #: src/control/Control.NotebookbarImpress.js:669
 msgid "Show Grid"
 msgstr "Afficher la grille"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:178
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Snap to grid"
 msgstr "Aimanter sur la grille"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:179
-#: admin/src/integrator/AdminIntegratorSettings.ts:185
+#: admin/src/integrator/AdminIntegratorSettings.ts:197
+#: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Size to grid"
 msgstr "Dimensionner selon la grille"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:180
+#: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Synchronize axes"
 msgstr "Synchronisation des axes"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:181
+#: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Snap grid"
 msgstr "Aimanter la grille"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Empty Pages"
 msgstr "Pages vides"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:183
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Force Breaks"
 msgstr "Forcer les pauses"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:184
+#: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: src/control/Control.Menubar.ts:779 src/control/Control.TopToolbar.js:112
 #: src/control/jsdialog/Definitions.Menu.ts:1587
 msgid "All Sheets"
 msgstr "Toutes les feuilles"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:186
+#: admin/src/integrator/AdminIntegratorSettings.ts:204
 msgid "Content"
 msgstr "Contenu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:187
+#: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Drawing"
 msgstr "Dessin"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:188
+#: admin/src/integrator/AdminIntegratorSettings.ts:206
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
 #: src/control/Control.NotebookbarWriter.js:1235
 msgid "Page"
 msgstr "Page"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:189
+#: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Fit to page"
 msgstr "Adapter à la page"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:190
+#: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Tile pages"
 msgstr "Pages en mosaïque"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:191
+#: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Booklet"
 msgstr "Livret"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:192
+#: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Booklet front"
 msgstr "Recto du livret"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:193
+#: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Booklet back"
 msgstr "Verso du livret"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:194
+#: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Page name"
 msgstr "Nom de la page"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:195
+#: admin/src/integrator/AdminIntegratorSettings.ts:213
 #: src/control/Control.NotebookbarCalc.js:779
 #: src/control/Control.NotebookbarWriter.js:1638
 #: src/control/Control.Zotero.js:1153 src/control/Control.Zotero.js:1605
 msgid "Date"
 msgstr "Date"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:196
+#: admin/src/integrator/AdminIntegratorSettings.ts:214
 #: src/control/Control.NotebookbarCalc.js:780
 msgid "Time"
 msgstr "Heure"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:197
+#: admin/src/integrator/AdminIntegratorSettings.ts:215
 msgid "Hidden pages"
 msgstr "Pages cachées"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:198
+#: admin/src/integrator/AdminIntegratorSettings.ts:216
 msgid "From printer setup"
 msgstr "À partir de la configuration de l'imprimante"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:199
+#: admin/src/integrator/AdminIntegratorSettings.ts:217
 msgid "Presentation"
 msgstr "Présentation"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:200
+#: admin/src/integrator/AdminIntegratorSettings.ts:218
 #: src/control/Control.Zotero.js:1341 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr "Notes"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:201
+#: admin/src/integrator/AdminIntegratorSettings.ts:219
 msgid "Handouts"
 msgstr "Polycopié"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:202
+#: admin/src/integrator/AdminIntegratorSettings.ts:220
 #: src/control/Control.NavigatorPanel.ts:209
 msgid "Outline"
 msgstr "Contour"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:203
+#: admin/src/integrator/AdminIntegratorSettings.ts:221
 msgid "Handout horizontal"
 msgstr "Document horizontal"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:204
+#: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Images"
 msgstr "Images"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:205
+#: admin/src/integrator/AdminIntegratorSettings.ts:223
 msgid "Tables"
 msgstr "Tableaux"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:206
+#: admin/src/integrator/AdminIntegratorSettings.ts:224
 msgid "Controls"
 msgstr "Contrôles"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:207
+#: admin/src/integrator/AdminIntegratorSettings.ts:225
 msgid "Background"
 msgstr "Arrière plan"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:208
+#: admin/src/integrator/AdminIntegratorSettings.ts:226
 msgid "Print Black"
 msgstr "Imprimer en noir"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:209
+#: admin/src/integrator/AdminIntegratorSettings.ts:227
 msgid "Hidden text"
 msgstr "Texte caché"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:210
+#: admin/src/integrator/AdminIntegratorSettings.ts:228
 msgid "Placeholders"
 msgstr "Espaces réservés"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:211
+#: admin/src/integrator/AdminIntegratorSettings.ts:229
 msgid "Left pages"
 msgstr "Pages de gauche"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:212
+#: admin/src/integrator/AdminIntegratorSettings.ts:230
 msgid "Right pages"
 msgstr "Pages de droite"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:213
+#: admin/src/integrator/AdminIntegratorSettings.ts:231
 msgid "Brochure"
 msgstr "Brochure"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:214
+#: admin/src/integrator/AdminIntegratorSettings.ts:232
 msgid "Brochure Right to Left"
 msgstr "Brochure de droite à gauche"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:215
+#: admin/src/integrator/AdminIntegratorSettings.ts:233
 msgid "Images and Objects"
 msgstr "Images et objets"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:320
+#: admin/src/integrator/AdminIntegratorSettings.ts:338
 msgid "Invalid JSON file"
 msgstr "Fichier JSON invalide"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:324
+#: admin/src/integrator/AdminIntegratorSettings.ts:342
 msgid "Error reading file"
 msgstr "Erreur lors de la lecture du fichier"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:336
+#: admin/src/integrator/AdminIntegratorSettings.ts:354
 msgid "Autotext"
 msgstr "Texte auto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:338
+#: admin/src/integrator/AdminIntegratorSettings.ts:356
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -641,54 +650,54 @@ msgstr ""
 "dans votre document, tapez le raccourci pour une entrée de Texte Auto et "
 "appuyez sur F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:344
+#: admin/src/integrator/AdminIntegratorSettings.ts:362
 msgid "Upload Autotext"
 msgstr "Envoyer le Texte Auto"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:349
+#: admin/src/integrator/AdminIntegratorSettings.ts:367
 msgid "Custom dictionaries"
 msgstr "Dictionnaires personnalisés"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:351
+#: admin/src/integrator/AdminIntegratorSettings.ts:369
 msgid ""
-"Add or edit words in a spell check dictionary. Words in your wordbook (.dic)"
-" will be available for spelling checks."
+"Add or edit words in a spell check dictionary. Words in your wordbook (."
+"dic) will be available for spelling checks."
 msgstr ""
 "Ajouter ou éditer des mots dans un dictionnaire de vérification "
 "orthographique. Les mots dans votre dictionnaire (.dic) seront disponible "
 "pour la vérification orthographique."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:357
+#: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Upload Wordbook"
 msgstr "Envoyer le dictionnaire"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:362
+#: admin/src/integrator/AdminIntegratorSettings.ts:380
 msgid "Document settings"
 msgstr "Paramètres du document"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:363
+#: admin/src/integrator/AdminIntegratorSettings.ts:381
 #: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
 msgstr "Ajustez le comportement des documents de bureau."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:369
+#: admin/src/integrator/AdminIntegratorSettings.ts:387
 msgid "Upload Xcu"
 msgstr "Envoyer Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:420
+#: admin/src/integrator/AdminIntegratorSettings.ts:438
 msgid "Shared Config URL is missing in initial variables."
 msgstr ""
 "L'URL de configuration partagée est manquante dans les variables initiales."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:426
+#: admin/src/integrator/AdminIntegratorSettings.ts:444
 msgid "Access token is missing in initial variables."
 msgstr "Le token d’accès est manquant dans les variables initiales."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:462
+#: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Une erreur s'est produite. Veuillez rafraîchir la page."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:599
+#: admin/src/integrator/AdminIntegratorSettings.ts:642
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -696,7 +705,7 @@ msgstr ""
 "Une erreur s'est produite lors de la récupération du fichier de paramètres. "
 "Veuillez essayer d'actualiser la page."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:624
+#: admin/src/integrator/AdminIntegratorSettings.ts:667
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
@@ -704,43 +713,43 @@ msgstr ""
 "Une erreur s'est produite lors de la récupération du vocabulaire. Veuillez "
 "essayer d'actualiser la page."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:634
+#: admin/src/integrator/AdminIntegratorSettings.ts:677
 msgid "Interface Settings"
 msgstr "Paramètres de l'interface"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:636
+#: admin/src/integrator/AdminIntegratorSettings.ts:679
 msgid "Set default interface preferences."
 msgstr "Définir les préférences de l’interface par défaut."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:744
+#: admin/src/integrator/AdminIntegratorSettings.ts:787
 msgid "Select a tab to browser settings."
 msgstr "Sélectionnez un onglet pour les paramètres du navigateur."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:757
+#: admin/src/integrator/AdminIntegratorSettings.ts:800
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
 msgstr "Réinitialiser les paramètres du document par défaut"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:761
+#: admin/src/integrator/AdminIntegratorSettings.ts:804
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
 msgstr "Êtes-vous sûr de vouloir réinitialiser les paramètres du document ?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:778
+#: admin/src/integrator/AdminIntegratorSettings.ts:821
 #: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
 msgstr "Enregistrer les paramètres du document"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1049
+#: admin/src/integrator/AdminIntegratorSettings.ts:1095
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 "(Attention : L'accessibilité du serveur doit être activée pour basculer)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1131
+#: admin/src/integrator/AdminIntegratorSettings.ts:1192
 msgid "Notebookbar view"
 msgstr "Vue de la barre du bloc-notes"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1138
+#: admin/src/integrator/AdminIntegratorSettings.ts:1199
 #: src/control/Control.NotebookbarCalc.js:1582
 #: src/control/Control.NotebookbarDraw.js:481
 #: src/control/Control.NotebookbarImpress.js:591
@@ -748,19 +757,19 @@ msgstr "Vue de la barre du bloc-notes"
 msgid "Compact view"
 msgstr "Vue compacte"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1211
+#: admin/src/integrator/AdminIntegratorSettings.ts:1323
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
 "Une erreur s'est produite lors de l'envoi du fichier. Veuillez réessayer."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1287
+#: admin/src/integrator/AdminIntegratorSettings.ts:1399
 #: src/canvas/sections/CommentSection.ts:1132
 #: src/canvas/sections/CommentSection.ts:1137
 #: src/control/Control.ContextMenu.js:176 src/docdispatcher.ts:570
 msgid "Delete"
 msgstr "Supprimer"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1325
+#: admin/src/integrator/AdminIntegratorSettings.ts:1437
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
@@ -768,39 +777,39 @@ msgstr ""
 "Une erreur s'est produite lors de la suppression du fichier. Veuillez "
 "essayer d'actualiser la page."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1340
+#: admin/src/integrator/AdminIntegratorSettings.ts:1452
 msgid "Edit"
 msgstr "Modifier"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1366
+#: admin/src/integrator/AdminIntegratorSettings.ts:1478
 msgid "View Settings"
 msgstr "Voir les paramètres"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1367
+#: admin/src/integrator/AdminIntegratorSettings.ts:1479
 msgid "Adjust view settings."
 msgstr "Ajuster la vue des paramètres."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1377
+#: admin/src/integrator/AdminIntegratorSettings.ts:1489
 msgid "Option"
 msgstr "Option"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1397
+#: admin/src/integrator/AdminIntegratorSettings.ts:1509
 msgid ""
-"To use Zotero specify your API key here. You can create your API key in your"
-" "
+"To use Zotero specify your API key here. You can create your API key in "
+"your "
 msgstr ""
 "Pour utiliser Zotero, entrer votre clé d'API ici. Vous pouvez créer votre "
 "clé d'API dans votre "
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1405
+#: admin/src/integrator/AdminIntegratorSettings.ts:1517
 msgid "Zotero account API settings"
 msgstr "les paramètres d'API de votre Compte Zotero"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1414
+#: admin/src/integrator/AdminIntegratorSettings.ts:1526
 msgid "Document Signing"
 msgstr "Signature électronique de document"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1418
+#: admin/src/integrator/AdminIntegratorSettings.ts:1530
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
@@ -808,7 +817,7 @@ msgstr ""
 "Pour signer ce document, indiquez votre certificat de signature (clef et "
 "chaine CA) ici."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1828
+#: admin/src/integrator/AdminIntegratorSettings.ts:1940
 #: src/map/handler/Map.WOPI.js:745
 msgid "Error"
 msgstr "Erreur"
@@ -844,8 +853,7 @@ msgstr "Ajouter"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
-"Le format du dictionnaire est incorrect. Veuillez vérifier le fichier."
+msgstr "Le format du dictionnaire est incorrect. Veuillez vérifier le fichier."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
@@ -941,10 +949,10 @@ msgstr "Ctrl+Maj+Alt+D pour quitter"
 #: src/app/Debug.ts:1433
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
-"La gestion des événements a été retardée pendant une durée inattendue : "
-"{0} ms"
+"La gestion des événements a été retardée pendant une durée inattendue : {0} "
+"ms"
 
-#: src/app/TableStylesService.ts:206 src/app/TableStylesService.ts:208
+#: src/app/TableStylesService.ts:148 src/app/TableStylesService.ts:150
 msgid "Table Styles"
 msgstr "Styles de tableau"
 
@@ -1002,8 +1010,8 @@ msgstr "Afficher dans le navigateur"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/control/Control.JSDialogBuilder.js:1687
-#: src/layer/tile/CanvasTileLayer.js:3362
-#: src/layer/tile/CanvasTileLayer.js:3373
+#: src/layer/tile/CanvasTileLayer.js:3395
+#: src/layer/tile/CanvasTileLayer.js:3406
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -1021,8 +1029,8 @@ msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
-"Un autre utilisateur a mis à jour le commentaire. Souhaitez-vous écraser ces"
-" modifications ?"
+"Un autre utilisateur a mis à jour le commentaire. Souhaitez-vous écraser ces "
+"modifications ?"
 
 #: src/canvas/sections/CommentListSection.ts:1572 src/app/Socket.ts:1433
 msgid "Overwrite"
@@ -1171,9 +1179,9 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
-"Télécharger des ressources externes est interdit, mais coller des images est"
-" toujours possible. Cliquez-droit sur l'image, choisissez \"Copier image\" "
-"et collez la dans le document."
+"Télécharger des ressources externes est interdit, mais coller des images est "
+"toujours possible. Cliquez-droit sur l'image, choisissez \"Copier image\" et "
+"collez la dans le document."
 
 #: src/control/Control.AlertDialog.js:74
 msgid "External data source not allowed"
@@ -1267,8 +1275,8 @@ msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Si vous souhaitez partager de grands éléments en dehors de {productname}, il"
-" est nécessaire de les télécharger d'abord."
+"Si vous souhaitez partager de grands éléments en dehors de {productname}, il "
+"est nécessaire de les télécharger d'abord."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:304
@@ -1296,8 +1304,8 @@ msgstr "Téléchargement terminé et prêt à être copié vers le presse-papier
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
-"À partir de maintenant les notifications du presse-papiers apparaîtront dans"
-" la partie inférieure."
+"À partir de maintenant les notifications du presse-papiers apparaîtront dans "
+"la partie inférieure."
 
 #: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
@@ -3397,8 +3405,8 @@ msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
-"Le filtrage d'appel système risqué BPF (seccomp) n'est pas activé ; c'est un"
-" risque de sécurité."
+"Le filtrage d'appel système risqué BPF (seccomp) n'est pas activé ; c'est un "
+"risque de sécurité."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
@@ -3734,8 +3742,8 @@ msgid ""
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 "Le document contient des citations qui peuvent être inaccessibles via l’API "
-"Web. Cela peut causer des problèmes lors de l’édition des citations ou de la"
-" bibliographie."
+"Web. Cela peut causer des problèmes lors de l’édition des citations ou de la "
+"bibliographie."
 
 #: src/control/Control.Zotero.js:246 src/app/Socket.ts:2292
 msgid "Loading..."
@@ -3807,8 +3815,7 @@ msgstr "Style de citation"
 
 #: src/control/Control.Zotero.js:828
 msgid "An error occurred while fetching style list"
-msgstr ""
-"Une erreur est survenue lors de la récupération de la liste des styles"
+msgstr "Une erreur est survenue lors de la récupération de la liste des styles"
 
 #: src/control/Control.Zotero.js:836
 msgid "Failed to load styles"
@@ -3900,8 +3907,7 @@ msgstr "Modifier le document"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
-"Le document n'a pas pu être verrouillé et est ouvert en lecture seule."
+msgstr "Le document n'a pas pu être verrouillé et est ouvert en lecture seule."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
@@ -4519,8 +4525,7 @@ msgstr "Plus d’options pour {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1654
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
-"Les titres et les objets que vous ajoutez au document apparaîtront ici"
+msgstr "Les titres et les objets que vous ajoutez au document apparaîtront ici"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1702
 msgid "Search items"
@@ -4693,14 +4698,14 @@ msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"L'URL de l'hôte est vide. Le serveur coolwsd est probablement mal configuré,"
-" veuillez contacter l'administrateur."
+"L'URL de l'hôte est vide. Le serveur coolwsd est probablement mal configuré, "
+"veuillez contacter l'administrateur."
 
 #: src/errormessages.js:24
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears when"
-" more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears "
+"when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
 "Cette version de {productname} n'est pas prise en charge. Pour éviter de "
@@ -4726,8 +4731,8 @@ msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Le service n'est pas disponible. Veuillez essayer de nouveau plus tard et en"
-" faire part à votre administrateur si le problème persiste."
+"Le service n'est pas disponible. Veuillez essayer de nouveau plus tard et en "
+"faire part à votre administrateur si le problème persiste."
 
 #: src/errormessages.js:28
 msgid ""
@@ -4778,8 +4783,8 @@ msgstr "Lien incorrect : '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
-"You are leaving the document. The following web page will open in a new tab:"
-" "
+"You are leaving the document. The following web page will open in a new "
+"tab: "
 msgstr ""
 "Vous quittez le document. La page Web suivante s’ouvrira dans un nouvel "
 "onglet : "
@@ -4807,29 +4812,29 @@ msgstr ""
 #: src/errormessages.js:39
 msgid ""
 "Your {productname} cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may result"
-" in multiple users not seeing each other, conflicts in the document storage "
-"and/or copy/paste problems. Expected serverId {0} for routeToken {1} but "
-"connected to serverId {2}"
+"please contact your system administrator. Continuing with editing may "
+"result in multiple users not seeing each other, conflicts in the document "
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken "
+"{1} but connected to serverId {2}"
 msgstr ""
-"Votre {productname} cluster semble être malconfiguré ou scaling rapidement -"
-" veuillez contacter votre administrateur système. Poursuivre l'édition peut "
+"Votre {productname} cluster semble être malconfiguré ou scaling rapidement - "
+"veuillez contacter votre administrateur système. Poursuivre l'édition peut "
 "entraîner plusieurs utilisateurs qui ne se voient pas, des conflits dans le "
-"stockage de documents et/ou des problèmes de copie/coller. Attendu serveurId"
-" {0} pour routeToken {1} mais connecté à serverId {2}"
+"stockage de documents et/ou des problèmes de copie/coller. Attendu serveurId "
+"{0} pour routeToken {1} mais connecté à serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly. The reverse proxy might be misconfigured, please contact the "
-"administrator. For more info on proxy configuration please checkout "
-"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
+"administrator. For more info on proxy configuration please checkout https://"
+"sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
 "Échec d'établissement de connexion par socket ou fermeture inattendue de la "
-"connexion par socket. Le proxy inverse pourrait être mal configuré, veuillez"
-" contacter l'administrateur. Pour plus d'informations sur la configuration "
-"du proxy, veuillez consulter "
-"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
+"connexion par socket. Le proxy inverse pourrait être mal configuré, veuillez "
+"contacter l'administrateur. Pour plus d'informations sur la configuration du "
+"proxy, veuillez consulter https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
@@ -4892,11 +4897,11 @@ msgstr ""
 #: src/errormessages.js:55
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still download"
-" it now to preserve a copy locally."
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"L'enregistrement a échoué car le document est trop lourd ou dépasse l'espace"
-" de stockage restant. Le document sera désormais en lecture seule mais vous "
+"L'enregistrement a échoué car le document est trop lourd ou dépasse l'espace "
+"de stockage restant. Le document sera désormais en lecture seule mais vous "
 "pouvez toujours le télécharger pour en conserver une copie locale."
 
 #: src/errormessages.js:56
@@ -5018,7 +5023,7 @@ msgstr "Fonctions"
 msgid "Named Range"
 msgstr "Plage nommée"
 
-#: src/layer/tile/CanvasTileLayer.js:3390
+#: src/layer/tile/CanvasTileLayer.js:3423
 msgid "No Comments"
 msgstr "Aucun commentaire"
 
@@ -5059,8 +5064,8 @@ msgid ""
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
 "Un téléchargement en raison d'une opération de copier/coller volumineuse a "
-"déjà commencé. Veuillez attendre la fin du téléchargement ou l'annuler avant"
-" d'en démarrer un nouveau"
+"déjà commencé. Veuillez attendre la fin du téléchargement ou l'annuler avant "
+"d'en démarrer un nouveau"
 
 #: src/map/Clipboard.js:1417
 msgid "Paste from this document"
@@ -5316,15 +5321,15 @@ msgstr "Collabora Online Édition Développeur"
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" rel=\"noopener\" "
-"href=\"https://www.collaboraonline.com/solutions/collabora-office-android-"
-"ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">apps</a> are also available for "
+"mobile."
 msgstr ""
 "Bénéficiez des derniers développements en matière de productivité en ligne, "
 "que vous pouvez utiliser gratuitement, explorer et utiliser avec les autres "
-"dans le navigateur. Plusieurs <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://www.collaboraonline.com/solutions/collabora-office-android-"
-"ios/\">applications</a> mobiles sont également disponibles."
+"dans le navigateur. Plusieurs <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">applications</a> mobiles sont également disponibles."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -5332,16 +5337,15 @@ msgstr "Découvrir toutes les nouveautés"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
-"Check the <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://www.collaboraonline.com/code-25-04-release-notes/\">release "
-"notes</a> and learn all about: The latest Collabora Online Development "
-"Edition, aimed at home users and small teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
+"all about: The latest Collabora Online Development Edition, aimed at home "
+"users and small teams."
 msgstr ""
-"Consultez les <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://www.collaboraonline.com/code-25-04-release-notes/\">notes de "
-"mise à jour</a> et découvrez les nouveautés : La dernière édition de "
-"développement de Collabora Online, destinée aux utilisateurs privés et aux "
-"petites équipes."
+"Consultez les <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">notes de mise à jour</a> et "
+"découvrez les nouveautés : La dernière édition de développement de Collabora "
+"Online, destinée aux utilisateurs privés et aux petites équipes."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5354,25 +5358,23 @@ msgstr "https://collaboraonline.github.io/"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://collaboraonline.github.io/post/build-code/\">step-by-step "
-"instructions</a> and build CODE from scratch. You can also help out with <a "
-"target=\"_blank\" rel=\"noopener\" "
-"href=\"https://collaboraonline.github.io/post/translate/\">translations</a> "
-"or by <a target=\"_blank\" rel=\"noopener\" "
+"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
+"from scratch. You can also help out with <a target=\"_blank\" "
+"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
 "href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Vous souhaitez contribuer mais vous ne savez pas par où commencer ? Rendez-"
-"vous à la <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://collaboraonline.github.io/post/build-code/\">page "
-"d'instructions</a> et construisez CODE à partir de zéro. Vous pouvez "
-"également aider en <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://collaboraonline.github.io/post/translate/\">traduisant</a> ou"
-" en <a target=\"_blank\" rel=\"noopener\" "
-"href=\"https://collaboraonline.github.io/post/filebugs/\">rapportant un "
-"rapport de bogue</a> en y détaillant les étapes essentielles sur la façon "
-"dont le reproduire."
+"vous à la <a target=\"_blank\" rel=\"noopener\" href=\"https"
+"://collaboraonline.github.io/post/build-code/\">page d'instructions</a> et "
+"construisez CODE à partir de zéro. Vous pouvez également aider en <a target="
+"\"_blank\" rel=\"noopener\" href=\"https://collaboraonline.github.io/post/"
+"translate/\">traduisant</a> ou en <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">rapportant un rapport "
+"de bogue</a> en y détaillant les étapes essentielles sur la façon dont le "
+"reproduire."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
