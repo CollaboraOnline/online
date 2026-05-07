@@ -1291,26 +1291,29 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
           LO_PATH=`readlink -f ${with_lo_path%/}`
-          AC_MSG_RESULT([found])
+          AC_MSG_RESULT([given])
       else
-          AC_MSG_RESULT([not found])
+          AC_MSG_RESULT([not given])
           AS_IF([test "$enable_fuzzers" != "yes"],
                 [AC_MSG_ERROR([LibreOffice path must be configured: --with-lo-path])])
       fi
       ])
 
-JAIL_PATH=not-set
 SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
-version_file="$with_lo_path/program/versionrc"
-if test -f $version_file; then
-    JAILS_PATH="\${abs_top_builddir}/jails"
-    CACHE_PATH="\${abs_top_builddir}/cache"
-    SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
-    have_lo_path=true
-    lo_msg="test against $LO_PATH"
-    AC_MSG_RESULT([yes])
+if test -n "$with_lo_path"; then
+    version_file="$with_lo_path/program/versionrc"
+    if test -f $version_file; then
+        JAILS_PATH="\${abs_top_builddir}/jails"
+        CACHE_PATH="\${abs_top_builddir}/cache"
+        SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
+        have_lo_path=true
+        lo_msg="test against $LO_PATH"
+        AC_MSG_RESULT([yes])
+    else
+        AC_MSG_ERROR([bad --with-lo-path; file does not exist: $version_file])
+    fi
 else
     lo_msg="no integration tests"
     AC_MSG_RESULT([no])
