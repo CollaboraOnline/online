@@ -71,12 +71,21 @@ namespace LOKitHelper
 
     inline int getMode(const std::string &partData)
     {
-        Poco::JSON::Parser parser;
-        Poco::Dynamic::Var partJsonVar = parser.parse(partData);
-        const Poco::SharedPtr<Poco::JSON::Object>& partObject = partJsonVar.extract<Poco::JSON::Object::Ptr>();
+        if (partData.empty())
+            return 0;
 
-        if (partObject->has("mode"))
-            return std::atoi(partObject->get("mode").toString().c_str());
+        try
+        {
+            Poco::JSON::Parser parser;
+            Poco::Dynamic::Var partJsonVar = parser.parse(partData);
+            const Poco::SharedPtr<Poco::JSON::Object>& partObject = partJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+            if (partObject && partObject->has("mode"))
+                return std::atoi(partObject->get("mode").toString().c_str());
+        }
+        catch (const std::exception&)
+        {
+        }
         return 0;
     }
 
@@ -180,17 +189,23 @@ namespace LOKitHelper
         }
 
         ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
-        if (values)
+        if (values && values.get() && *values.get())
         {
-            Poco::JSON::Parser parser;
-            const auto var = parser.parse(values.get());
-            const auto& obj = var.extract<Poco::JSON::Object::Ptr>();
-            if (obj && obj->has("parts"))
+            try
             {
-                const auto parts = obj->getArray("parts");
-                std::ostringstream os;
-                parts->stringify(os);
-                resultInfo["partdimensions"] = os.str();
+                Poco::JSON::Parser parser;
+                const auto var = parser.parse(values.get());
+                const auto& obj = var.extract<Poco::JSON::Object::Ptr>();
+                if (obj && obj->has("parts"))
+                {
+                    const auto parts = obj->getArray("parts");
+                    std::ostringstream os;
+                    parts->stringify(os);
+                    resultInfo["partdimensions"] = os.str();
+                }
+            }
+            catch (const std::exception&)
+            {
             }
         }
 
