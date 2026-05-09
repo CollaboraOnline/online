@@ -30,6 +30,7 @@
 /// <reference path="../src/canvas/CanvasSectionObject.ts" />
 /// <reference path="../src/app/ViewLayoutCompareChanges.ts" />
 /// <reference path="../src/canvas/sections/TilesSection.ts" />
+/// <reference path="../src/canvas/sections/CalcRTLAwareDocumentPosition.ts" />
 /// <reference path="../src/app/iface/MapZoom.Interface.ts" />
 /// <reference path="../src/app/ServerCommand.ts" />
 

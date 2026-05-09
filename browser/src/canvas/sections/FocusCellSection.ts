@@ -49,6 +49,10 @@ class FocusCellSection extends CanvasSectionObject {
 		);
 	}
 
+	setPosition(x: number, y: number): void {
+		setCalcRTLAwareDocumentObjectPosition(this, x, y);
+	}
+
 	private static addFocusCellSection() {
 		if (FocusCellSection.instance === null) {
 			FocusCellSection.instance = new FocusCellSection();
@@ -83,6 +87,14 @@ class FocusCellSection extends CanvasSectionObject {
 
 		this.context.globalAlpha = 0.3;
 
+		// In RTL the cell sits on the right of the tile, so -pX1 lands
+		// far past the visible row; anchor the row bar at the tile
+		// section's left edge instead so it spans the row.
+		let rowX = -cursor.pX1;
+		if (app.calc.isRTL()) {
+			rowX = this.containerObject.getDocumentAnchor()[0] - this.myTopLeft[0];
+		}
+
 		this.context.fillRect(
 			0,
 			-app.calc.cellCursorRectangle.pY1,
@@ -91,7 +103,7 @@ class FocusCellSection extends CanvasSectionObject {
 		);
 
 		this.context.fillRect(
-			-app.calc.cellCursorRectangle.pX1,
+			rowX,
 			0,
 			this.sectionProperties.maxRow,
 			app.calc.cellCursorRectangle.pHeight,
@@ -108,7 +120,7 @@ class FocusCellSection extends CanvasSectionObject {
 		);
 
 		this.context.strokeRect(
-			-app.calc.cellCursorRectangle.pX1,
+			rowX,
 			0,
 			this.sectionProperties.maxRow,
 			app.calc.cellCursorRectangle.pHeight,
