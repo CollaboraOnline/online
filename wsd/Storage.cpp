@@ -62,8 +62,8 @@
 #include <androidapp.hpp>
 #elif defined(_WIN32)
 #include <windows.hpp>
-#elif defined(QTAPP)
-#include <qt.hpp>
+#elif defined(GTKAPP)
+#include <gtk.hpp>
 #elif WASMAPP
 #include <wasmapp.hpp>
 #endif
@@ -356,7 +356,13 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
     // Make sure the path is valid.
     const Poco::Path downloadPath = Poco::Path(getRootFilePath()).parent();
-    Poco::File(downloadPath).createDirectories();
+
+    std::string ext = Poco::Path(downloadPath).getExtension();
+        if (ext == "pdf" || ext == "epub" || ext == "odt" || ext == "ods" || ext == "odp" || ext == "docx" || ext == "xlsx" || ext == "pptx") {
+            Poco::File(Poco::Path(downloadPath).parent()).createDirectories();
+        } else {
+            Poco::File(downloadPath).createDirectories();
+        }
 
     // Check for available space.
     if (!FileUtil::checkDiskSpace(downloadPath.toString()))

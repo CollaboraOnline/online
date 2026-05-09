@@ -20,10 +20,9 @@
 
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
-#include <common/NumUtil.hpp>
-#include <common/SigUtil.hpp>
 #include <common/Util.hpp>
 
+#include <SigUtil.hpp>
 #include <csignal>
 #include <cstdio>
 #include <cstdlib>
@@ -74,9 +73,9 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
 
 } // namespace
 
-#ifdef __linux__
 bool enterMountingNS(uid_t uid, gid_t gid)
 {
+#ifdef __linux__
     // Put this process into its own user and mount namespace.
     // Note: Having multiple threads at unshare time is a known source of failure.
     if (unshare(CLONE_NEWUSER) != 0)
@@ -104,10 +103,16 @@ bool enterMountingNS(uid_t uid, gid_t gid)
     }
 
     return true;
+#else
+    (void)uid;
+    (void)gid;
+    return false;
+#endif
 }
 
 bool enterUserNS(uid_t uid, gid_t gid)
 {
+#ifdef __linux__
     if (unshare(CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
@@ -122,8 +127,12 @@ bool enterUserNS(uid_t uid, gid_t gid)
     assert(getegid() == gid);
 
     return true;
+#else
+    (void)uid;
+    (void)gid;
+    return false;
+#endif
 }
-#endif // __linux__
 
 namespace
 {
@@ -157,24 +166,55 @@ static bool coolmount(const std::string& arg, std::string source, std::string ta
 }
 } // namespace
 
+// Função auxiliar para encontrar a origem real do ficheiro exportado
+static std::string findRealSource(const std::string& target, const std::string& providedSource) {
+    if (Poco::File(providedSource).exists() && Poco::File(providedSource).getSize() > 0) return providedSource;
+    try {
+        std::string fileName = Poco::Path(target).getFileName();
+        std::string jailRoot = Poco::Path(target).parent().parent().toString();
+        if (jailRoot.back() != '/') jailRoot += '/';
+        std::string docsPath = jailRoot + "tmp/user/docs/";
+        if (Poco::File(docsPath).exists()) {
+            std::vector<std::string> subDirs;
+            Poco::File(docsPath).list(subDirs);
+            for (const auto& d : subDirs) {
+                std::string possibleFile = docsPath + d + "/" + fileName;
+                if (Poco::File(possibleFile).exists() && Poco::File(possibleFile).getSize() > 0) {
+                    return possibleFile;
+                }
+            }
+        }
+    } catch(...) {}
+    return providedSource;
+}
+
 bool bind(const std::string& source, const std::string& target)
 {
     LOG_DBG("Mounting [" << source << "] -> [" << target << ']');
     try
     {
-        Poco::File(target).createDirectory();
+        Poco::Path pTarget(target);
+        // BYPASS: Se for um documento exportado, garantimos a cópia física exata
+        if (!pTarget.getExtension().empty()) {
+            Poco::File(pTarget.parent()).createDirectories();
+            try { Poco::File(target).remove(); } catch (...) {}
+            std::string realSource = findRealSource(target, source);
+            try {
+                Poco::File(realSource).copyTo(target);
+                return true;
+            } catch (const std::exception& e) {
+                LOG_ERR("Fallback copy failed: " << e.what());
+                return false;
+            }
+        }
+
+        Poco::File(target).createDirectories();
         const bool res = coolmount("-b", source, target);
-        if (res)
-            LOG_TRC("Bind-mounted [" << source << "] -> [" << target << ']');
-        else
-            LOG_ERR("Failed to bind-mount [" << source << "] -> [" << target << ']');
+        if (res) LOG_TRC("Bind-mounted [" << source << "] -> [" << target << ']');
+        else LOG_ERR("Failed to bind-mount [" << source << "] -> [" << target << ']');
         return res;
     }
-    catch (const std::exception& exc)
-    {
-        LOG_ERR("Failed to mount [" << source << "] -> [" << target << "]: " << exc.what());
-    }
-
+    catch (const std::exception& exc) { LOG_ERR("Failed to mount: " << exc.what()); }
     return false;
 }
 
@@ -183,21 +223,24 @@ bool remountReadonly(const std::string& source, const std::string& target)
     LOG_DBG("Remounting [" << source << "] -> [" << target << ']');
     try
     {
-        Poco::File(target).createDirectory();
+        Poco::Path pTarget(target);
+        if (!pTarget.getExtension().empty()) {
+            Poco::File(pTarget.parent()).createDirectories();
+            try { Poco::File(target).remove(); } catch (...) {}
+            std::string realSource = findRealSource(target, source);
+            try { Poco::File(realSource).copyTo(target); return true; } catch (...) {}
+        }
+
+        Poco::File(target).createDirectories();
         const bool res = coolmount("-r", source, target);
-        if (res)
-            LOG_TRC("Mounted [" << source << "] -> [" << target << "] readonly");
-        else
-            LOG_ERR("Failed to mount [" << source << "] -> [" << target << "] readonly");
+        if (res) LOG_TRC("Mounted readonly [" << source << "] -> [" << target << "]");
+        else LOG_ERR("Failed to mount readonly [" << source << "] -> [" << target << "]");
         return res;
     }
-    catch (const std::exception& exc)
-    {
-        LOG_ERR("Failed to remount [" << source << "] -> [" << target << "]: " << exc.what());
-    }
-
+    catch (const std::exception& exc) { LOG_ERR("Failed to remount: " << exc.what()); }
     return false;
 }
+
 
 namespace
 {
@@ -310,16 +353,9 @@ void removeAssocTmpOfJail(const std::string &root)
 
     jailPath.popDirectory();
     jailPath.pushDirectory("tmp");
+    jailPath.pushDirectory(std::string("cool-") + jailId);
 
-    Poco::Path coolTmpPath(jailPath);
-    coolTmpPath.pushDirectory(std::string("cool-") + jailId);
-    FileUtil::removeFile(coolTmpPath.toString(), true);
-
-    // Also remove the per-jail systemplate copy created when
-    // sysTemplateIncomplete is true (read-only systemplate).
-    Poco::Path sysTemplatePath(jailPath);
-    sysTemplatePath.pushDirectory(std::string("systemplate-") + jailId);
-    FileUtil::removeFile(sysTemplatePath.toString(), true);
+    FileUtil::removeFile(jailPath.toString(), true);
 #endif
 }
 
@@ -397,7 +433,7 @@ void cleanupJails(const std::string& root)
             {
                 bool skip = false;
                 const std::string_view pidStr = std::string_view(jail).substr(0, pidSepPos);
-                const auto [pid, success] = NumUtil::i32FromString(pidStr);
+                const auto [pid, success] = Util::i32FromString(pidStr);
                 if (success && pid > 1)
                 {
                     LOG_TRC("Checking pid for jail " << pid << " " << root);
@@ -576,9 +612,8 @@ namespace SysTemplate
 /// the long lifetime of our process. Also, it's unlikely
 /// that systemplate will get re-generated after installation.
 static const auto DynamicFilePaths
-    = { "/etc/passwd", "/etc/group",
-        "/etc/host.conf", "/etc/hosts",
-        "/etc/nsswitch.conf", "/etc/resolv.conf" };
+    = { "/etc/passwd",        "/etc/group",       "/etc/host.conf", "/etc/hosts",
+        "/etc/nsswitch.conf", "/etc/resolv.conf", "/etc/timezone",  "/etc/localtime" };
 
 namespace
 {

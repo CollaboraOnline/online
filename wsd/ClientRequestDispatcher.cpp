@@ -16,41 +16,38 @@
 
 #include <config.h>
 
-#include <wsd/ClientRequestDispatcher.hpp>
-#include <wsd/ContentType.hpp>
-
 #if ENABLE_FEATURE_LOCK
-#include <common/CommandControl.hpp>
+#include <CommandControl.hpp>
 #endif
 
 #include <common/Anonymizer.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/NumUtil.hpp>
 #include <common/StateEnum.hpp>
+#include <COOLWSD.hpp>
+#include <ClientSession.hpp>
+#include <ConfigUtil.hpp>
+#include <Exceptions.hpp>
+#include <FileServer.hpp>
+#include <HttpRequest.hpp>
+#include <common/JsonUtil.hpp>
+#include <ProofKey.hpp>
+#include <ProxyRequestHandler.hpp>
+#include <RequestDetails.hpp>
+#include <Socket.hpp>
+#include <UserMessages.hpp>
 #include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
-#include <net/HttpRequest.hpp>
 #include <net/NetUtil.hpp>
-#include <net/Socket.hpp>
 #include <net/Uri.hpp>
-#include <wsd/COOLWSD.hpp>
-#include <wsd/ClientSession.hpp>
+#include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
-#include <wsd/Exceptions.hpp>
-#include <wsd/FileServer.hpp>
-#include <wsd/ProofKey.hpp>
-#include <wsd/ProxyRequestHandler.hpp>
-#include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
-#include <wsd/UserMessages.hpp>
 
 #if !MOBILEAPP
-#include <common/JailUtil.hpp>
-#include <wsd/Admin.hpp>
-#include <wsd/HostUtil.hpp>
+#include <Admin.hpp>
+#include <JailUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
+#include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
 #include <Poco/DOM/AutoPtr.h>
@@ -83,11 +80,6 @@ std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
 
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
-
-#if !MOBILEAPP
-static constexpr std::string_view MEDIA_STR = "str";
-static constexpr std::string_view MEDIA_MP4 = "url";
-#endif
 
 namespace
 {
@@ -811,6 +803,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     }
 
     size_t inBufferSize = socket->getInBuffer().size();
+    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), inBufferSize);
 
 #if 0 // debug a specific command's payload
         if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
@@ -822,7 +815,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
 #endif
 
-    headerSize = readHeader(socket, request, delayMs);
+    headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, delayMs);
     if (headerSize < 0)
         return;
 
@@ -873,41 +866,30 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
 
-    // In the iOS app, the URL of the document is sent over the FakeSocket by the code in
+    // The URL of the document is sent over the FakeSocket by the code in
     // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
     // HULLO message from the JavaScript in global.js.
 
-    // In other mobile apps and in CODA, it is done in some similar place.
-
+    // The "app document id", the numeric id of the document, from the appDocIdCounter
     // It's currently relevant only for iOS, macOS, and Windows, so fallback if it is not found
-    // (Android?).
-
-    // Unwrap what StreamSocket::readIncomingData() did
-    ssize_t len;
-    memcpy(&len, socket->getInBuffer().data(), sizeof(ssize_t));
-    const char* payload = socket->getInBuffer().data() + sizeof(ssize_t);
-    auto const space = std::string_view(payload, len).find(' ');
-    if (space != std::string_view::npos)
+    char* space = strchr(socket->getInBuffer().data(), ' ');
+    if (space != nullptr)
     {
         // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
         // its end, it might be followed in memory by more digits. Is there really no better way to
         // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
         // buffer?
-        const size_t appDocIdLen = len - (space + 1);
+        const size_t appDocIdLen =
+        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
         char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
-        memcpy(appDocIdBuffer, payload + space + 1, appDocIdLen);
+        memcpy(appDocIdBuffer, space + 1, appDocIdLen);
         appDocIdBuffer[appDocIdLen] = '\0';
-        auto [mobileAppDocId, docIdOk] = NumUtil::u64FromString(appDocIdBuffer);
-        if (!docIdOk)
-        {
-            mobileAppDocId = 0;
-            LOG_ERR("Bad document ID \"" << appDocIdBuffer << "\" in \""
-                                         << std::string_view(payload, len) << "\"");
-        }
+        const unsigned mobileAppDocId = Util::u64FromString(appDocIdBuffer, 0).first;
         free(appDocIdBuffer);
 
         handleClientWsUpgrade(request,
-                              RequestDetails(std::string(payload, space)),
+                              RequestDetails(std::string(socket->getInBuffer().data(),
+                                                         space - socket->getInBuffer().data())),
                               disposition, socket, mobileAppDocId);
     }
     else
@@ -915,107 +897,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         // no appDocId provided
         handleClientWsUpgrade(
             request,
-            RequestDetails(std::string(payload, len)),
+            RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
             disposition, socket);
     }
     socket->getInBuffer().clear();
 #endif // MOBILEAPP
-}
-
-ssize_t ClientRequestDispatcher::readHeader(const std::shared_ptr<StreamSocket>& socket,
-                                            Poco::Net::HTTPRequest& request,
-                                            std::chrono::duration<float, std::milli> delayMs)
-{
-    const std::string_view buffer = socket->getInBuffer().view();
-    assert(_headerPos <= buffer.size() &&
-           "Unexpected buffer shrunk under us — _headerPos is stale");
-    _headerPos = _headerPos > buffer.size() ? 0 : _headerPos; // Recover in release builds.
-
-    // Find the end of the header, if any.
-    constexpr std::string_view marker("\r\n\r\n");
-    const auto headerSize = buffer.find(marker, _headerPos);
-    if (headerSize == std::string_view::npos)
-    {
-        // A partial marker could span the boundary, so back up by marker.size()-1.
-        _headerPos = buffer.size() >= marker.size() ? buffer.size() - marker.size() + 1 : 0;
-        LOG_TRC("parseHeader: doesn't have enough data for the header yet. delay "
-                << delayMs.count() << "ms");
-        return -1;
-    }
-
-    // We found the end-of-header marker; Clear to allow for scanning again.
-    _headerPos = 0;
-
-    constexpr std::chrono::duration<float, std::milli> DelayMax =
-        std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
-    const size_t messagesize = buffer.size();
-    try
-    {
-        // Include the marker.
-        Poco::MemoryInputStream startmessage(socket->getInBuffer().data(),
-                                             headerSize + marker.size());
-        request.read(startmessage);
-    }
-    catch (const Poco::Net::NotAuthenticatedException& exc)
-    {
-        LOG_DBG("parseHeader: Exception caught with "
-                << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
-                << delayMs.count() << "ms");
-        socket->asyncShutdown();
-        return 0; //FIXME: Why not -1 as we've closed the socket already?
-    }
-    catch (const Poco::Net::UnsupportedRedirectException& exc)
-    {
-        LOG_DBG("parseHeader: Exception caught with "
-                << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
-                << delayMs.count() << "ms");
-        socket->asyncShutdown();
-        return -1;
-    }
-    catch (const Poco::Net::HTTPException& exc)
-    {
-        LOG_DBG("parseHeader: Exception caught with "
-                << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
-                << delayMs.count() << "ms");
-        socket->asyncShutdown();
-        return -1;
-    }
-    catch (const Poco::Exception& exc)
-    {
-        if (delayMs > DelayMax)
-        {
-            LOG_DBG("parseHeader: Exception caught with "
-                    << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
-                    << delayMs.count() << "ms");
-            socket->asyncShutdown();
-        }
-        else
-        {
-            LOG_DBG("parseHeader: Exception caught with "
-                    << messagesize << " bytes, continue: " << exc.displayText() << ", delay "
-                    << delayMs.count() << "ms");
-        }
-        return -1;
-    }
-    catch (const std::exception& exc)
-    {
-        if (delayMs > DelayMax)
-        {
-            LOG_DBG("parseHeader: Exception caught with "
-                    << messagesize << " bytes, shutdown: " << exc.what() << ", delay "
-                    << delayMs.count() << "ms");
-            socket->asyncShutdown();
-        }
-        else
-        {
-            LOG_DBG("parseHeader: Exception caught with "
-                    << messagesize << " bytes, continue: " << exc.what() << ", delay "
-                    << delayMs.count() << "ms");
-        }
-        return -1;
-    }
-
-    return headerSize + marker.size();
 }
 
 namespace
@@ -1253,28 +1139,14 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
             // Admin connections
             LOG_INF("Admin request: " << request.getURI());
             const bool allowed = allowedOrigin(request, requestDetails);
-            if (allowed && AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
+            if (AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
             {
                 // Hand the socket over to the Admin poll.
                 disposition.setTransfer(Admin::instance(),
                                         [](const std::shared_ptr<Socket>& /*moveSocket*/) {});
             }
             else
-            {
-                if (!allowed)
-                {
-                    LOG_ERR(
-                        "Rejecting admin WebSocket upgrade due to disallowed origin for request: "
-                        << request);
-                    HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
-                }
-                else
-                {
-                    LOG_ERR("Rejecting admin WebSocket upgrade due to bad/invalid request: "
-                            << request);
-                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-                }
-            }
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "getMetrics"))
@@ -1347,11 +1219,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-            servedSync = handleMediaRequest(request, disposition, socket, false);
-
-        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
-                 requestDetails.equals(1, "mediaVTT"))
-            servedSync = handleMediaRequest(request, disposition, socket, true);
+            servedSync = handleMediaRequest(request, disposition, socket);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
@@ -1366,13 +1234,9 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
             servedSync = handleClientProxyRequest(request, requestDetails, message, disposition);
-        else if (requestDetails.isWebSocket() &&
-                 requestDetails.equals(RequestDetails::Field::Type, "cool") &&
-                 (requestDetails.equals(1, "ws") || requestDetails.equals(2, "ws")))
-        {
-            // The new WebSocket URL has 'ws' as the second segment; support both old and new.
+        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
             servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
-        }
 
         else if (!requestDetails.isWebSocket() &&
                  (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
@@ -1540,7 +1404,6 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     return true;
 }
 
-//static
 void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
 {
     std::string output = R"({"status": ")" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
@@ -1552,7 +1415,7 @@ void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& so
     jsonResponse.set("X-Content-Type-Options", "nosniff");
 
     socket->sendAndShutdown(jsonResponse);
-    LOG_INF_S("Wopi Access Check request, result: " << nameShort(result));
+    LOG_INF("Wopi Access Check request, result: " << nameShort(result));
 }
 
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
@@ -1676,10 +1539,9 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
-    const std::string logPfx = getLogPrefix();
 
     httpProbeSession->setConnectFailHandler(
-        [socketWeak, callbackUrlStr, logPfx](const std::shared_ptr<http::Session>& probeSession)
+        [socketWeak, callbackUrlStr, this](const std::shared_ptr<http::Session>& probeSession)
         {
             CheckStatus status = CheckStatus::UnspecifiedError;
 
@@ -1704,32 +1566,34 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                     status = CheckStatus::ExpiredCertificate;
                 } else {
                     status = CheckStatus::CertificateValidation;
-                    LOG_DBG_S(logPfx << "Result ssl: " << probeSession->getSslVerifyMessage());
+                    LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
                 }
             }
+#else
+            (void) this; // to make the compiler happy wrt. the lambda capture
 #endif
 
             std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
             if (!destSocket)
             {
-                LOG_ERR_S(logPfx << "Invalid socket while sending wopi access check result for: "
+                LOG_ERR("Invalid socket while sending wopi access check result for: "
                         << callbackUrlStr);
                 return;
             }
             sendResult(destSocket, status);
     });
 
-    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr), logPfx]
-                          (const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr),
+                          this](const std::shared_ptr<http::Session>& probeSession)
     {
-        LOG_TRC_S(logPfx << "finishHandler ");
+        LOG_TRC("finishHandler ");
 
         const auto lastErrno = errno;
 
         const std::shared_ptr<http::Response> httpResponse = probeSession->response();
         const http::Response::State responseState = httpResponse->state();
         const http::StatusCode statusCode = httpResponse->statusCode();
-        LOG_DBG_S(logPfx << "Wopi Access Check: got response state: " << responseState << " "
+        LOG_DBG("Wopi Access Check: got response state: " << responseState << " "
                                             << ", response status code: " << statusCode << " "
                                             << ", last errno: " << lastErrno);
 
@@ -1762,7 +1626,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                 status = CheckStatus::Ok;
             } else {
                 status = CheckStatus::CertificateValidation;
-                LOG_WRN_S(logPfx << "Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
+                LOG_WRN("Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
             }
         }
 #endif
@@ -1770,8 +1634,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
-            LOG_ERR_S(logPfx
-                << "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
+            LOG_ERR(
+                "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
             return;
         }
         sendResult(destSocket, status);
@@ -1999,8 +1863,7 @@ bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
 
 bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                                  SocketDisposition& /*disposition*/,
-                                                 const std::shared_ptr<StreamSocket>& socket,
-                                                 bool bVTT)
+                                                 const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
 
@@ -2084,10 +1947,169 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         LOG_TRC_S("Move media request " << tag << " to docbroker thread");
 
         std::string range = request.get("Range", "none");
-        docBroker->handleMediaRequest(std::move(range), socket, tag, (bVTT ? std::string(MEDIA_STR)
-                                                                      : std::string(MEDIA_MP4)));
+        docBroker->handleMediaRequest(std::move(range), socket, tag);
     }
     return false; // async
+}
+
+std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
+{
+    static std::unordered_map<std::string, std::string> contentTypes{
+        { "svg", "image/svg+xml" },
+        { "pot", "application/vnd.ms-powerpoint" },
+        { "xla", "application/vnd.ms-excel" },
+
+        // Writer documents
+        { "sxw", "application/vnd.sun.xml.writer" },
+        { "odt", "application/vnd.oasis.opendocument.text" },
+        { "fodt", "application/vnd.oasis.opendocument.text-flat-xml" },
+
+        // Calc documents
+        { "sxc", "application/vnd.sun.xml.calc" },
+        { "ods", "application/vnd.oasis.opendocument.spreadsheet" },
+        { "fods", "application/vnd.oasis.opendocument.spreadsheet-flat-xml" },
+
+        // Impress documents
+        { "sxi", "application/vnd.sun.xml.impress" },
+        { "odp", "application/vnd.oasis.opendocument.presentation" },
+        { "fodp", "application/vnd.oasis.opendocument.presentation-flat-xml" },
+
+        // Draw documents
+        { "sxd", "application/vnd.sun.xml.draw" },
+        { "odg", "application/vnd.oasis.opendocument.graphics" },
+        { "fodg", "application/vnd.oasis.opendocument.graphics-flat-xml" },
+
+        // Chart documents
+        { "odc", "application/vnd.oasis.opendocument.chart" },
+
+        // Text master documents
+        { "sxg", "application/vnd.sun.xml.writer.global" },
+        { "odm", "application/vnd.oasis.opendocument.text-master" },
+
+        // Math documents
+        // In fact Math documents are not supported at all.
+        // See: https://bugs.documentfoundation.org/show_bug.cgi?id=97006
+        { "sxm", "application/vnd.sun.xml.math" },
+        { "odf", "application/vnd.oasis.opendocument.formula" },
+
+        // Text template documents
+        { "stw", "application/vnd.sun.xml.writer.template" },
+        { "ott", "application/vnd.oasis.opendocument.text-template" },
+
+        // Writer master document templates
+        { "otm", "application/vnd.oasis.opendocument.text-master-template" },
+
+        // Spreadsheet template documents
+        { "stc", "application/vnd.sun.xml.calc.template" },
+        { "ots", "application/vnd.oasis.opendocument.spreadsheet-template" },
+
+        // Presentation template documents
+        { "sti", "application/vnd.sun.xml.impress.template" },
+        { "otp", "application/vnd.oasis.opendocument.presentation-template" },
+
+        // Drawing template documents
+        { "std", "application/vnd.sun.xml.draw.template" },
+        { "otg", "application/vnd.oasis.opendocument.graphics-template" },
+
+        // MS Word
+        { "doc", "application/msword" },
+        { "dot", "application/msword" },
+
+        // MS Excel
+        { "xls", "application/vnd.ms-excel" },
+
+        // MS PowerPoint
+        { "ppt", "application/vnd.ms-powerpoint" },
+
+        // OOXML wordprocessing
+        { "docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+        { "docm", "application/vnd.ms-word.document.macroEnabled.12" },
+        { "dotx", "application/vnd.openxmlformats-officedocument.wordprocessingml.template" },
+        { "dotm", "application/vnd.ms-word.template.macroEnabled.12" },
+
+        // OOXML spreadsheet
+        { "xltx", "application/vnd.openxmlformats-officedocument.spreadsheetml.template" },
+        { "xltm", "application/vnd.ms-excel.template.macroEnabled.12" },
+        { "xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+        { "xlsb", "application/vnd.ms-excel.sheet.binary.macroEnabled.12" },
+        { "xlsm", "application/vnd.ms-excel.sheet.macroEnabled.12" },
+
+        // OOXML presentation
+        { "pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
+        { "pptm", "application/vnd.ms-powerpoint.presentation.macroEnabled.12" },
+        { "potx", "application/vnd.openxmlformats-officedocument.presentationml.template" },
+        { "potm", "application/vnd.ms-powerpoint.template.macroEnabled.12" },
+
+        // Others
+        { "wpd", "application/vnd.wordperfect" },
+        { "pdb", "application/x-aportisdoc" },
+        { "hwp", "application/x-hwp" },
+        { "wps", "application/vnd.ms-works" },
+        { "wri", "application/x-mswrite" },
+        { "dif", "application/x-dif-document" },
+        { "slk", "text/spreadsheet" },
+        { "csv", "text/csv" },
+        { "tsv", "text/tab-separated-values" },
+        { "dbf", "application/x-dbase" },
+        { "wk1", "application/vnd.lotus-1-2-3" },
+        { "wks", "application/vnd.lotus-1-2-3" },
+        { "wq2", "application/vnd.lotus-1-2-3" },
+        { "123", "application/vnd.lotus-1-2-3" },
+        { "wb1", "application/vnd.lotus-1-2-3" },
+        { "wq1", "application/vnd.lotus-1-2-3" },
+        { "xlr", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+        { "qpw", "application/vnd.ms-office" },
+        { "cgm", "image/cgm" },
+        { "dxf", "image/vnd.dxf" },
+        { "emf", "image/x-emf" },
+        { "wmf", "image/x-wmf" },
+        { "cdr", "application/coreldraw" },
+        { "vsd", "application/vnd.visio2013" },
+        { "vss", "application/vnd.visio" },
+        { "pub", "application/x-mspublisher" },
+        { "lrf", "application/x-sony-bbeb" },
+        { "gnumeric", "application/x-gnumeric" },
+        { "mw", "application/macwriteii" },
+        { "numbers", "application/x-iwork-numbers-sffnumbers" },
+        { "oth", "application/vnd.oasis.opendocument.text-web" },
+        { "p65", "application/x-pagemaker" },
+        { "rtf", "text/rtf" },
+        { "txt", "text/plain" },
+        { "fb2", "application/x-fictionbook+xml" },
+        { "cwk", "application/clarisworks" },
+        { "wpg", "image/x-wpg" },
+        { "pages", "application/x-iwork-pages-sffpages" },
+        { "ppsx", "application/vnd.openxmlformats-officedocument.presentationml.slideshow" },
+        { "key", "application/x-iwork-keynote-sffkey" },
+        { "abw", "application/x-abiword" },
+        { "fh", "image/x-freehand" },
+        { "sxs", "application/vnd.sun.xml.chart" },
+        { "602", "application/x-t602" },
+        { "bmp", "image/bmp" },
+        { "png", "image/png" },
+        { "gif", "image/gif" },
+        { "tiff", "image/tiff" },
+        { "jpg", "image/jpg" },
+        { "jpeg", "image/jpeg" },
+        { "pdf", "application/pdf" },
+    };
+
+    const std::string ext = Poco::Path(fileName).getExtension();
+
+    const auto it = contentTypes.find(ext);
+    if (it != contentTypes.end())
+        return it->second;
+
+    return "application/octet-stream";
+}
+
+bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
+{
+    const std::string contentType = getContentType(fileName);
+
+    return contentType == "application/vnd.oasis.opendocument.spreadsheet" ||
+           contentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+           contentType == "application/vnd.ms-excel";
 }
 
 bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
@@ -2143,7 +2165,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
         if (!fromPath.empty() && hasRequiredParameters)
         {
-            Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
+            Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
             AdditionalFilePocoUris additionalFileUrisPublic;
             for (const auto& key : {"template", "compare"})
             {
@@ -2153,7 +2175,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                     continue;
                 }
 
-                additionalFileUrisPublic[key] = RequestDetails::sanitizeLocalPath(it->second);
+                additionalFileUrisPublic[key] = RequestDetails::sanitizeURI(it->second);
             }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
@@ -2166,7 +2188,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
             const bool fullSheetPreview =
                 (form.has("FullSheetPreview") && form.get("FullSheetPreview") == "true");
-            if (fullSheetPreview && format == "pdf" && ContentType::isSpreadsheet(fromPath))
+            if (fullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
             {
                 //FIXME: We shouldn't have "true" as having the option already implies that
                 // we want it enabled (i.e. we shouldn't set the option if we don't want it).
@@ -2283,7 +2305,16 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 const std::string fileName = dirPath + '/' + form.get("name");
                 LOG_INF("Perform insertfile: " << formChildid << ", " << formName
                                                << ", filename: " << fileName);
-                Poco::File(dirPath).createDirectories();
+
+
+                std::string ext = Poco::Path(dirPath).getExtension();
+                if (ext == "pdf" || ext == "epub" || ext == "odt" || ext == "ods" || ext == "odp" || ext == "docx" || ext == "xlsx" || ext == "pptx") {
+                    Poco::File(Poco::Path(dirPath).parent()).createDirectories();
+                } else {
+                    Poco::File(dirPath).createDirectories();
+                }
+
+
                 std::string filename;
                 const std::map<std::string, std::string>& filenames = handler.getFilenames();
                 if (!filenames.empty())
@@ -2337,10 +2368,39 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
         const std::string decoded = Uri::decode(url);
 
-        const Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+        Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
                                                                  COOLWSD::ChildRoot + jailId,
                                                                  JAILED_DOCUMENT_ROOT + decoded));
+
+        // --- DEEP SEARCH PATCH ---
+        // Se o ficheiro não estiver na raiz, procura dinamicamente na subpasta de isolamento do user
+        if (!Poco::File(filePath).exists()) {
+            std::string currentDir = filePath.parent().toString();
+            size_t childRootsPos = currentDir.find("/child-roots/");
+            if (childRootsPos != std::string::npos) {
+                size_t tmpPos = currentDir.find("/tmp/", childRootsPos);
+                if (tmpPos != std::string::npos) {
+                    std::string docsDir = currentDir.substr(0, tmpPos + 1) + "tmp/user/docs/";
+                    if (Poco::File(docsDir).exists()) {
+                        std::vector<std::string> subDirs;
+                        Poco::File(docsDir).list(subDirs);
+                        for (const auto& d : subDirs) {
+                            std::string possiblePath = docsDir + d + "/" + filePath.getFileName();
+                            if (Poco::File(possiblePath).exists() && Poco::File(possiblePath).getSize() > 0) {
+                                filePath = Poco::Path(possiblePath);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // --- FIM DO PATCH ---
+
         const std::string filePathAnonym = COOLWSD::anonymizeUrl(filePath.toString());
+
+//       if (foundDownloadId && filePath.isAbsolute() && Poco::File(filePath).exists())
+//       const std::string filePathAnonym = COOLWSD::anonymizeUrl(filePath.toString());
 
         if (foundDownloadId && filePath.isAbsolute() && Poco::File(filePath).exists())
         {
@@ -2365,7 +2425,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             // Instruct browsers to download the file, not display it
             // with the exception of SVG where we need the browser to
             // actually show it.
-            response.setContentType(std::string(ContentType::fromFileName(fileName)));
+            response.setContentType(getContentType(fileName));
             if (serveAsAttachment)
                 response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
@@ -2415,7 +2475,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (fromPath.empty())
             return false;
 
-        Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
+        Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
         const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
         // This lock could become a bottleneck.
@@ -2546,13 +2606,6 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
     // First Upgrade.
     const bool allowed = allowedOrigin(request, requestDetails);
-    if (!allowed)
-    {
-        LOG_ERR("Rejecting WebSocket upgrade due to disallowed origin for request: " << request);
-        HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
-        return true; // Handled.
-    }
-
     auto ws = std::make_shared<WebSocketHandler>(socket, request, allowed);
 
     // Response to clients beyond this point is done via WebSocket.
@@ -2591,9 +2644,9 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr std::string_view status = R"(progress: { "id":"find" })";
+        static constexpr const char* const status = R"(progress: { "id":"find" })";
         LOG_TRC("Sending to Client [" << status << ']');
-        ws->sendTextMessage(status);
+        ws->sendMessage(status);
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
@@ -2603,8 +2656,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
     catch (const std::exception& exc)
     {
         LOG_ERR("Error while handling Client WS Request: " << exc.what());
-        constexpr std::string_view msg = "error: cmd=internal kind=load";
-        ws->sendTextMessage(msg);
+        const std::string msg = "error: cmd=internal kind=load";
+        ws->sendMessage(msg);
         ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
         socket->ignoreInput();
         return true;
