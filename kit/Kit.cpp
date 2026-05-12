@@ -4133,7 +4133,7 @@ void lokit_main(
 
         LOG_INF("New kit client websocket inserted.");
 
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
 
         // Since we don't track the bg-save process,
         // for example to prevent multiple parallel saves,
@@ -4149,7 +4149,7 @@ void lokit_main(
             Log::setLevel(LogLevel);
         }
         Log::setDisabledAreas(LogDisabledAreas);
-#endif
+    }
 
 #if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
         startMainLoop(kit, loKit, mainKit);

@@ -497,14 +497,14 @@ void DocumentBroker::pollThread()
         {
             case DocumentState::Activity::None:
             {
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
                 if (_checkFileInfo)
                 {
                     // We are done. Safe to reset.
                     LOG_TRC("Resetting checkFileInfo instance");
                     _checkFileInfo.reset();
                 }
-#endif
+            }
 
                 if (_uploadRequest && _uploadRequest->isComplete())
                 {
@@ -521,14 +521,14 @@ void DocumentBroker::pollThread()
                     continue;
                 }
 
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
                 // Remove idle documents after the configured time.
                 if (isLoaded() && getIdleTime() >= IdleDocTimeoutSecs)
                 {
                     autoSaveAndStop("idle");
                 }
+            }
                 else
-#endif
                 if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
                 {
                     if (!isLoaded())
@@ -584,7 +584,7 @@ void DocumentBroker::pollThread()
                             << limStoreFailures
                             << " Save failures: " << _saveManager.saveFailureCount()
                             << ", Upload failures: " << _storageManager.uploadFailureCount()
-#if !MOBILEAPP
+#if MOBILEAPP
                             << ". Giving up"
                             << (_storage && _quarantine && _quarantine->isEnabled()
                                     ? ". The document should be recoverable from the quarantine. "
@@ -678,7 +678,7 @@ void DocumentBroker::pollThread()
             break;
         }
 
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
         if ((now - lastClipboardHashUpdateTime) >= 2min)
         {
             for (const auto& it : _sessions)
@@ -701,7 +701,7 @@ void DocumentBroker::pollThread()
 
             lastClipboardHashUpdateTime = now;
         }
-#endif
+    }
     }
 
     LOG_INF("Finished polling doc ["
@@ -728,9 +728,9 @@ void DocumentBroker::pollThread()
         // If we are exiting because the owner discarded conflict changes, don't detect data loss.
         if (!(_docState.isCloseRequested() && _documentChangedInStorage))
         {
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
             dataLoss = true;
-#endif
+}
             if (haveModifyActivityAfterSaveRequest())
                 reason = "have unsaved modifications";
             else
@@ -922,10 +922,10 @@ DocumentBroker::~DocumentBroker()
     // and thread finished before we are destroyed.
     _childProcess.reset();
 
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
     // Remove from the admin last, to avoid racing the next test.
     _admin.rmDoc(_docKey);
-#endif
+}
 
     UNITWSD_CALL_INSTANCE(_unitWsd, DocBrokerDestroy(_docKey));
 }
@@ -1292,14 +1292,14 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
 
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
     if (!processPlugins(localPath))
     {
         // FIXME: Why don't we resume anyway?
         LOG_WRN("Failed to process plugins on file [" << localPath << ']');
         return false;
     }
-#endif //!MOBILEAPP
+} //!MOBILEAPP
 
     std::string localFilePath =
         Poco::Path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, getJailRoot(),
@@ -2713,7 +2713,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
         }
         break;
 
-#if !MOBILEAPP && !WASMAPP
+if (!Util::isMobileApp() && !WASMAPP) {
         case DocumentState::Activity::SwitchingToOffline:
         {
             // If we have nothing to upload, do the switching now.
@@ -2724,7 +2724,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
             }
         }
         break;
-#endif // !MOBILEAPP && !WASMAPP
+     } // !MOBILEAPP && !WASMAPP
 
         default:
         break;
@@ -2951,7 +2951,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
             }
             break;
 
-#if !MOBILEAPP && !WASMAPP
+if (!Util::isMobileApp() && !WASMAPP) {
             case DocumentState::Activity::SwitchingToOffline:
             {
                 LOG_DBG("Failed to switch to Offline because uploading post-save failed");
@@ -2959,7 +2959,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                 //TODO: Send error to the user.
             }
             break;
-#endif // !MOBILEAPP && !WASMAPP
+        } // !MOBILEAPP && !WASMAPP
 
             default:
                 reportUploadToStorageFailed();
@@ -3052,13 +3052,13 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
             }
             break;
 
-#if !MOBILEAPP && !WASMAPP
+if (!Util::isMobileApp() && !WASMAPP){
             case DocumentState::Activity::SwitchingToOffline:
             {
                 switchToOffline();
             }
             break;
-#endif // !MOBILEAPP && !WASMAPP
+        } // !MOBILEAPP && !WASMAPP
 
             default:
             {
@@ -3177,7 +3177,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
     UNITWSD_CALL_INSTANCE(_unitWsd, onDocumentUploaded(lastUploadSuccessful));
 
-#if !MOBILEAPP
+if (!Util::isMobileApp()) {
     if (lastUploadSuccessful && !isModified())
     {
         // Flag the document as uploaded in the admin console.
@@ -3187,7 +3187,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         _admin.uploadedAlert(_docKey, getPid(), lastUploadSuccessful);
     }
     _admin.getModel().sendMigrateMsgAfterSave(lastUploadSuccessful, _docKey);
-#endif
+}
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
