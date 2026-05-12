@@ -1237,8 +1237,12 @@ AC_SUBST(MAX_DOCUMENTS)
 
 FEEDBACK_URL=
 
-if test -n "$with_feedback_url"; then
+if test "$with_feedback_url" = "no"; then
+   FEEDBACK_URL=
+elif test -n "$with_feedback_url" -a "$with_feedback_url" != "yes"; then
    FEEDBACK_URL=$with_feedback_url
+else
+   FEEDBACK_URL="https://github.com/CollaboraOnline/online/issues/new?template=bug_report.md"
 fi
 
 AC_DEFINE_UNQUOTED([FEEDBACK_URL],["$FEEDBACK_URL"],[User feedback URL.])
