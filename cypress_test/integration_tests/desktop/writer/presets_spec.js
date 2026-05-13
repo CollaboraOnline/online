@@ -36,8 +36,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 
                 cy.cGet('.notebookbar > .unoSpellingAndGrammarDialog > button').first().click();
 
-		// we should end up with the "there are no misspelling information dialog"
-		cy.cGet('.ui-dialog-title').should('have.text', 'Spelling: Information');
+		// we should end up with the "there are no misspelling" Information messagebox.
+		// Scope to its own #Information; the underlying SpellingDialog stays visible
+		// behind it and a bare .ui-dialog-title would match both and concatenate.
+		cy.cGet('#Information.ui-dialog-title').should('have.text', 'Information');
 
 		cy.cGet('body').type('{esc}');
 		cy.cGet('body').type('{esc}');
@@ -65,8 +67,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 
                 cy.cGet('.notebookbar > .unoSpellingAndGrammarDialog > button').first().click();
 
-		// we should end up with the "there are no misspelling information dialog"
-		cy.cGet('.ui-dialog-title').should('have.text', 'Spelling: Information');
+		// we should end up with the "there are no misspelling" Information messagebox.
+		// Scope to its own #Information; the underlying SpellingDialog stays visible
+		// behind it and a bare .ui-dialog-title would match both and concatenate.
+		cy.cGet('#Information.ui-dialog-title').should('have.text', 'Information');
 
 		cy.cGet('body').type('{esc}');
 		cy.cGet('body').type('{esc}');
