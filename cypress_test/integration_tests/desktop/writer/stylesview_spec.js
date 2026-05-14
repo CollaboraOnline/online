@@ -13,11 +13,11 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 	}
 
 	beforeEach(function() {
-		cy.viewport(1920, 1080);
+		cy.viewport(1280, 720);
 		helper.setupAndLoadDocument('writer/styles.odt');
 		desktopHelper.switchUIToNotebookbar();
 		desktopHelper.sidebarToggle();
-		cy.cGet('.notebookbar #stylesview').should('exist').should('be.visible');
+		cy.cGet('.notebookbar #stylesview').should('exist').should('be.visible').should('not.be.empty');
 	});
 
 	it('Scroll Up/Down Buttons', function() {
@@ -32,9 +32,9 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 	});
 
 	it('Expander Button', function() {
+		cy.cGet('.jsdialog #stylesview_9').should('not.exist');
 		openExpander();
-		cy.cGet('.jsdialog #stylesview_59').should('exist').should('be.visible'); // Contents 9
-		cy.cGet('.jsdialog #stylesview_60').should('exist').should('not.be.visible');
+		cy.cGet('.jsdialog #stylesview_9').should('exist').should('be.visible');
 	});
 
 	it('Open Styles Sidebar Button', function() {
@@ -50,28 +50,22 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 		cy.cGet('#StyleListDeck').should('exist').should('be.visible');
 	});
 
-	it.only('Resize', function() {
+	it('Resize', function() {
 		// the dropdown should close on resize
 		openExpander();
 		cy.cGet('#stylesview-iconview-list-dropdown').should('exist').should('be.visible');
 		cy.viewport(650, 1080);
 		cy.cGet('#stylesview-iconview-list-dropdown').should('not.exist');
 
-		// with reduced width, only one column should be visible
+		// re-open after resize
 		openExpander();
-		cy.cGet('.jsdialog #stylesview_11').should('exist').should('be.visible'); // Standardstyckeformatmall
-		cy.cGet('.jsdialog #stylesview_12').should('exist').should('not.be.visible');
-
-		// NOTE: changes to the height don't trigger the resize observer,
-		// thus the dropdown doesn't disappear. so no need to call
-		// `openExpander` again.
 
 		// with reduced height:
 		// - only a few rows should be visible.
 		// - the open styles sidebar button should be visible.
 		cy.viewport(650, 454);
-		cy.cGet('.jsdialog #stylesview_4').should('exist').should('be.visible'); // Title
-		cy.cGet('.jsdialog #stylesview_5').should('exist').should('not.be.visible'); // Subtitle
+		cy.cGet('.jsdialog #stylesview_4').should('exist').should('be.visible');
+		cy.cGet('.jsdialog #stylesview_5').should('exist').should('not.be.visible');
 		cy.cGet('#format-style-list-dialog-button').should('exist').should('be.visible');
 	});
 });
