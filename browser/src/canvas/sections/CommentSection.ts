@@ -1141,7 +1141,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private onCommentKeyDown(e: KeyboardEvent): void {
+	public onCommentKeyDown(e: KeyboardEvent): void {
 		if (!(<any>window).mode.isDesktop()) {
 			return;
 		}
