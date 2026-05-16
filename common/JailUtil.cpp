@@ -286,6 +286,7 @@ static bool safeRemoveDir(const std::string& path)
 void removeAuxFolders(const std::string &root)
 {
     FileUtil::removeFile(Poco::Path(root, "tmp").toString(), true);
+    FileUtil::removeFile(Poco::Path(root, "systmp").toString(), true);
     FileUtil::removeFile(Poco::Path(root, "linkable").toString(), true);
 }
 
@@ -432,7 +433,7 @@ void cleanupJails(const std::string& root)
         }
     }
 
-    // Cleanup legacy top-level 'tmp' and 'linkable' directories if empty
+    // Cleanup top-level 'tmp', 'systmp', and 'linkable' directories unconditionally.
     removeAuxFolders(root);
 
     // Cleanup top-level 'jails' directory if empty

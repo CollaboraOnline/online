@@ -76,6 +76,9 @@ namespace FileUtil
     // Wraps std::filesystem::temp_directory_path(), and if that fails, uses obvious fallbacks.
     std::string getSysTempDirectoryPath();
 
+    /// Wraps std::filesystem::create_directories.
+    void createDirectories(std::string_view dir);
+
     /// Returns true iff the path given is writable by our *real* UID.
     bool isWritable(const char* path);
 
