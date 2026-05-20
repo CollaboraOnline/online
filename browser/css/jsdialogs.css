@@ -2580,6 +2580,24 @@ button.menubutton.sidebar > span {
 	align-content: start;
 }
 
+#FormulaDialog #ALTBOX > .ui-grid-cell:first-child {
+	display: flex !important;
+	justify-content: flex-start;
+	align-items: center;
+	gap: var(--spacing-xs);
+}
+
+#FormulaDialog #favorites,
+#FormulaDialog #favorites-button {
+	border: none !important;
+	background: transparent !important;
+	margin: 0 !important;
+	height: auto !important;
+	min-width: 0 !important;
+	width: auto !important;
+	padding: 2px;
+}
+
 /* text-area overflow on function wizard window */
 
 #FormulaDialog #ed_formula.ui-textarea {
