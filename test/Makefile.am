@@ -47,6 +47,7 @@ all_la_unit_tests = \
 	unit-close.la \
 	unit-user-presets.la \
 	unit-wopi-watermark.la \
+	unit-wopi-comment-avatar.la \
 	unit-crash.la \
 	unit-invalidation.la \
 	unit-httpws.la \
@@ -307,6 +308,8 @@ unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
 unit_wopi_lock_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
 unit_wopi_watermark_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_comment_avatar_la_SOURCES = UnitWopiCommentAvatar.cpp
+unit_wopi_comment_avatar_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fileurl_la_SOURCES = UnitWOPIFileUrl.cpp
