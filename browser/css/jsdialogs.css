@@ -2556,6 +2556,11 @@ button.menubutton.sidebar > span {
 #FormulaDialog #box3 {
 	display: grid;
 	min-width: 400px;
+	grid-template-rows: auto 1fr auto auto;
+}
+
+#FormulaDialog #box3:has(#favorites:not(.hidden)) #ParameterPage {
+	display: none !important;
 }
 
 #FormulaDialog .ui-tabs-content.jsdialog {
@@ -2569,6 +2574,10 @@ button.menubutton.sidebar > span {
 
 #FormulaDialog #ALTBOX #headline {
 	font-weight: bold;
+}
+
+#FormulaDialog #ALTBOX {
+	align-content: start;
 }
 
 /* text-area overflow on function wizard window */
