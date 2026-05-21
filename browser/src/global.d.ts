@@ -189,6 +189,7 @@ interface AppInterface {
 			notebookbarAccessibility: any;
 		};
 		notebookbarAccessibility: any;
+		compactViewAccessibility: any;
 		horizontalRuler: HRuler | null;
 		verticalRuler: VRuler | null;
 	};

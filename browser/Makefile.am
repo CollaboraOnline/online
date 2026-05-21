@@ -222,6 +222,7 @@ NODE_MODULES_JS =\
 	node_modules/jquery-ui/dist/jquery-ui.js \
 	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js' 2>/dev/null) \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
+	node_modules/smartmenus/dist/addons/keyboard/jquery.smartmenus.keyboard.js \
 	node_modules/fzstd/umd/index.js \
 	node_modules/gl-matrix/gl-matrix-min.js
 
@@ -390,6 +391,7 @@ COOL_JS_LST =\
 	src/core/Handler.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
+	src/dom/CompactViewAccessibility.ts \
 	src/dom/NotebookbarAccessibilityDefinitions.js \
 	src/dom/NotebookbarAccessibility.js \
 	src/map/handler/Map.Scroll.js \
