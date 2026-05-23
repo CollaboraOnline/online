@@ -89,6 +89,7 @@
 #include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/RegexUtil.hpp>
+#include <common/Seccomp.hpp>
 
 #include <common/Log.hpp>
 #include <MobileApp.hpp>
@@ -2256,6 +2257,14 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         ConfigUtil::getConfigValue<int>("per_document.limit_file_size_mb", 0));
     docProcSettings.setLimitNumberOpenFiles(
         ConfigUtil::getConfigValue<int>("per_document.limit_num_open_files", 0));
+
+    if (const int nofile = docProcSettings.getLimitNumberOpenFiles();
+        nofile > 0 && nofile < Rlimit::MinRequiredOpenFiles)
+    {
+        LOG_WRN("per_document.limit_num_open_files is "
+                << nofile << ", below the " << Rlimit::MinRequiredOpenFiles
+                << " files the kit needs at steady state. Loading documents may fail altogether");
+    }
 
     DocCleanupSettings &docCleanupSettings = docProcSettings.getCleanupSettings();
     docCleanupSettings.setEnable(
