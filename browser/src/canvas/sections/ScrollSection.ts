@@ -62,6 +62,9 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.scrollBarRailwayAlpha = this.map._docLayer._docType === 'spreadsheet' ? 1.0 : 0.5;
 		this.sectionProperties.scrollBarRailwayColor = '#EFEFEF';
 
+		this.refreshScrollBarThumbColor();
+		this.map.on('darkmodechanged', this.refreshScrollBarThumbColor, this);
+
 		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 		this.sectionProperties.drawHorizontalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 
@@ -118,6 +121,11 @@ export class ScrollSection extends CanvasSectionObject {
 			this.onScrollTo(this.pendingScrollEvent);
 			this.pendingScrollEvent = null;
 		}
+	}
+
+	private refreshScrollBarThumbColor(): void {
+		const value = getComputedStyle(document.documentElement).getPropertyValue('--color-scrollbar-thumb').trim();
+		this.sectionProperties.scrollBarThumbColor = value || '#7E8182';
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -259,7 +267,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 
-		this.context.fillStyle = '#7E8182';
+		this.context.fillStyle = this.sectionProperties.scrollBarThumbColor;
 
 
 		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.verticalScrollSize - this.sectionProperties.scrollBarThickness);
@@ -302,7 +310,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 
-		this.context.fillStyle = '#7E8182';
+		this.context.fillStyle = this.sectionProperties.scrollBarThumbColor;
 
 		this.context.fillRect(startX, startY, sizeX, this.sectionProperties.scrollBarThickness);
 
