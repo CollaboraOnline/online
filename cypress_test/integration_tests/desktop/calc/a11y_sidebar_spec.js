@@ -51,7 +51,7 @@ describe(['tagdesktop'], 'Accessibility Calc Sidebar Tests', { testIsolation: fa
 		helper.processToIdle(win);
 
 		cy.then(() => {
-			const container = win.app.map.sidebar.getContainer();
+			const container = win.app.map.sidebar.container;
 			const allInputs = container.querySelectorAll('input, select');
 			const target = Array.prototype.find.call(allInputs, function (el) {
 				if (!el.id) return false;
