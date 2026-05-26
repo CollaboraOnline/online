@@ -72,6 +72,7 @@ interface MapInterface extends Evented {
 
 	wopi: {
 		resetAppLoaded(): void;
+		onRenameFile(newName: string): void;
 		DisableInactiveMessages: boolean;
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
