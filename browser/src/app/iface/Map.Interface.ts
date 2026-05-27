@@ -125,4 +125,5 @@ interface MapInterface extends Evented {
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
 	insertThreadedComment(): void;
+	insertCommentInteractive(command: string, args: any): void;
 }
