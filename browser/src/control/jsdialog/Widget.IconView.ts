@@ -208,7 +208,6 @@ function _iconViewEntry(
 		}
 		builder._preventDocumentLosingFocusOnClick(entryContainer);
 
-		const isInNotebookbar = builder.options.cssClass === 'notebookbar';
 		entryContainer.addEventListener('keydown', function (e: KeyboardEvent) {
 			if (e.key === ' ' || e.code === 'Space')
 				parentContainer.builderCallback(
@@ -225,10 +224,9 @@ function _iconViewEntry(
 					builder,
 				);
 			else if (
-				isInNotebookbar &&
 				['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
 			) {
-				// In a notebookbar, arrows navigate the toolbar — don't send to core.
+				// Arrows are handled client-side, don't send to core too.
 			} else {
 				parentContainer.builderCallback(
 					'iconview',
@@ -428,12 +426,26 @@ JSDialog.iconView = function (
 		 * child of the dropdown, it gets selected by default which
 		 * is not desirable as that shows a blue frame around the
 		 * iconview.
+		 *
+		 * Forward focus from the container to an entry so arrows navigate
+		 * between entries, not out of the iconview.
 		 */
 		if (target === iconview) {
 			target.setAttribute('tabindex', '-1');
+			const entry = (iconview.querySelector('.ui-iconview-entry.selected') ||
+				iconview.querySelector('.ui-iconview-entry')) as HTMLElement | null;
+			if (entry) entry.focus();
 			return;
 		}
 	});
+
+	// Save the focused entry id. _updateWidgetImpl restores focus by id
+	// before our deferred entries exist, so restore it ourselves below.
+	const activeEl = document.activeElement as HTMLElement | null;
+	const focusedEntryId =
+		activeEl && activeEl.id && activeEl.id.startsWith(data.id + '_')
+			? activeEl.id
+			: null;
 
 	app.layoutingService.appendLayoutingTask(() => {
 		const shouldSelectFirstEntry =
@@ -454,6 +466,13 @@ JSDialog.iconView = function (
 		if (firstSelected) {
 			const offsetTop = firstSelected.offsetTop;
 			iconview.scrollTop = offsetTop;
+		}
+
+		if (focusedEntryId) {
+			const newEntry = iconview.querySelector(
+				'[id="' + focusedEntryId + '"]',
+			) as HTMLElement | null;
+			if (newEntry) newEntry.focus();
 		}
 	});
 
