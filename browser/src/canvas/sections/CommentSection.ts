@@ -368,6 +368,10 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menuBarCell = tdMenu;
 		const edit = window.L.DomUtil.create('div', 'cool-annotation-menu-edit', tdMenu);
 		edit.id = 'comment-annotation-menu-edit-' + this.sectionProperties.data.id;
+		// Honor an earlier Hide_Command for .uno:EditAnnotation; the class
+		// is toggled symmetrically by UIManager.showCommand later.
+		if (!app.map.uiManager.isCommandVisible('.uno:EditAnnotation'))
+			edit.classList.add('hidden-by-command');
 		edit.tabIndex = 0;
 		edit.onclick = this.onEditComment.bind(this);
 		edit.onkeypress = this.editOnKeyPress.bind(this);

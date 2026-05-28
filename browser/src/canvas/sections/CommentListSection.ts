@@ -1624,46 +1624,54 @@ export class CommentSection extends CanvasSectionObject {
 			build: function ($trigger: any) {
 				const blockChangeFromDifferentAuthor = this.map.isReadOnlyMode() && docLayer._docType === 'text' && this.map.getViewName(docLayer._viewId) !== $trigger[0].annotation.sectionProperties.data.author;
 				const isShownBig = this.sectionProperties.showSelectedBigger && this.sectionProperties.selectedComment === this.sectionProperties.commentList[this.getRootIndexOf($trigger[0].annotation.sectionProperties.data.id)];
+				// Honor Hide_Command for entries that map to a UNO command, so a host
+				// can suppress comment-dialog actions the same way it suppresses
+				// menubar / toolbar items.
+				const isShown = (uno: string): boolean =>
+					app.map.uiManager.isCommandVisible(uno);
+				const removeUno = docLayer._docType === 'text' ? '.uno:DeleteComment'
+					: (docLayer._docType === 'spreadsheet' ? '.uno:DeleteNote'
+						: '.uno:DeleteAnnotation');
 				return {
 					autoHide: true,
 					items: {
-						modify: blockChangeFromDifferentAuthor ? undefined : {
+						modify: (blockChangeFromDifferentAuthor || !isShown('.uno:EditAnnotation')) ? undefined : {
 							name: _('Modify'),
 							callback: function (key: any, options: any) {
 								this.modify.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						reply: (docLayer._docType !== 'text') ? undefined : {
+						reply: (docLayer._docType !== 'text' || !isShown('.uno:ReplyComment')) ? undefined : {
 							name: _('Reply'),
 							callback: function (key: any, options: any) {
 								this.reply.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						remove: blockChangeFromDifferentAuthor ? undefined : {
+						remove: (blockChangeFromDifferentAuthor || !isShown(removeUno)) ? undefined : {
 							name: _('Remove'),
 							callback: function (key: any, options: any) {
 								this.remove.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
 							}.bind(this)
 						},
-						removeThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor ? undefined : {
+						removeThread: (docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor || !isShown('.uno:DeleteCommentThread')) ? undefined : {
 							name: _('Remove Thread'),
 							callback: function (key: any, options: any) {
 								this.removeThread.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
 							}.bind(this)
 						},
-						resolve: docLayer._docType !== 'text' && !(['spreadsheet', 'drawing', 'presentation'].includes(docLayer._docType) && $trigger[0].annotation.sectionProperties.data.threaded) ? undefined : {
+						resolve: (docLayer._docType !== 'text' && !(['spreadsheet', 'drawing', 'presentation'].includes(docLayer._docType) && $trigger[0].annotation.sectionProperties.data.threaded)) || !isShown('.uno:ResolveComment') ? undefined : {
 							name: $trigger[0].annotation.sectionProperties.data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
 							callback: function (key: any, options: any) {
 								this.resolve.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						resolveThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() ? undefined : {
+						resolveThread: (docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() || !isShown('.uno:ResolveCommentThread')) ? undefined : {
 							name: this.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
 							callback: function (key: any, options: any) {
 								this.resolveThread.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						promote: docLayer._docType !== 'text' || $trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor ? undefined : {
+						promote: (docLayer._docType !== 'text' || $trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor || !isShown('.uno:PromoteComment')) ? undefined : {
 							name: _('Promote to top comment'),
 							callback: function (key: any, options: any) {
 								this.promote.call(this, options.$trigger[0].annotation);
@@ -1688,8 +1696,15 @@ export class CommentSection extends CanvasSectionObject {
 				show: function (options: any) {
 					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
 					setTimeout(function() {
-						options.items.modify.$node[0].tabIndex = 0;
-						options.items.modify.$node[0].focus();
+						// modify may be absent when Hide_Command suppressed
+						// .uno:EditAnnotation; fall back to the first visible
+						// item so the menu still gets initial focus.
+						const target = options.items.modify
+							|| Object.values(options.items).find((it: any) => it && it.$node);
+						if (target) {
+							(target as any).$node[0].tabIndex = 0;
+							(target as any).$node[0].focus();
+						}
 					}.bind(this), 10);
 				},
 				hide: function (options: any) {
