@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for the Collabora Online project
 title: ''
-labels: enhancement, unconfirmed, 25.04
+labels: enhancement, unconfirmed, 26.04
 assignees: ''
 
 ---
