@@ -1,0 +1,11 @@
+# Code owners for the parts this repository owns.
+#
+# Reviewers listed here are automatically requested on pull requests that
+# touch the matching paths. Each owner must have write access to the
+# repository for the review request to take effect.
+
+# Helm chart
+/kubernetes/helm/   @timar @Rash419
+
+# Docker image build
+/docker/            @timar @thebearon @juliusknorr
