@@ -3,16 +3,17 @@
 > [!IMPORTANT]
 > **About this repository.** Active development of Collabora Online has moved to our
 > Gerrit instance at **https://gerrit.collaboraoffice.com**, which is where the source code
-> and code review live. This GitHub repository is kept for two purposes:
+> and code review live. This GitHub repository is kept for:
 >
 > - **Issue tracking** — please [report bugs and request features here](https://github.com/CollaboraOnline/online/issues/new/choose).
 > - **Release artifacts** — the nightly container image, the Helm chart, and build assets are published from here.
 >
-> **Code changes are not accepted as GitHub pull requests** — PRs against `main` are closed
-> automatically. To submit a patch, follow [CONTRIBUTING.md](CONTRIBUTING.md#contributing-to-source-code)
-> and push to Gerrit instead.
+> **Source code changes go to Gerrit, not GitHub.** Follow
+> [CONTRIBUTING.md](CONTRIBUTING.md#contributing-to-source-code) and push to Gerrit instead.
+> Pull requests here are welcome only for the parts this repository owns — the
+> [Helm chart](kubernetes/helm/) and the [docker image build](docker/from-source-gh-action/).
 
-[![Development: Gerrit](https://img.shields.io/badge/Development-Gerrit-orange?logo=git "Code development and review happen on Gerrit. GitHub pull requests are closed automatically.")](https://gerrit.collaboraoffice.com)
+[![Development: Gerrit](https://img.shields.io/badge/Development-Gerrit-orange?logo=git "Code development and review of the application source happen on Gerrit.")](https://gerrit.collaboraoffice.com)
 
 
 [![Matrix](https://img.shields.io/badge/Matrix-%23cool--dev-turquoise.svg)](https://matrix.to/#/#cool-dev:matrix.org)

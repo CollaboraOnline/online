@@ -30,7 +30,7 @@ Help us to maximize the effort we can spend fixing issues and adding new feature
 
 Thanks for wanting to contribute source code to Collabora Online. You rock!
 
-Development and code review happen on our Gerrit instance at **https://gerrit.collaboraoffice.com**. Pull requests on GitHub will be automatically closed — please use Gerrit instead.
+Development and code review of the application source happen on our Gerrit instance at **https://gerrit.collaboraoffice.com** — please use Gerrit for source changes rather than GitHub pull requests. (Pull requests against the Helm chart and docker image build that live in this repository are welcome on GitHub.)
 
 1. **Sign in to Gerrit**: Go to https://gerrit.collaboraoffice.com and sign in with your GitHub account
 2. **Add your SSH key**: Go to https://gerrit.collaboraoffice.com/settings/#SSHKeys
