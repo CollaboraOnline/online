@@ -11,8 +11,8 @@ home: "https://www.collaboraonline.com/code/"
 icon: "https://avatars0.githubusercontent.com/u/22418908?s=200&v=4"
 sources:
   - "https://github.com/CollaboraOnline/online"
-  - "https://github.com/CollaboraOnline/online/tree/master/docker"
-  - "https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online"
+  - "https://github.com/CollaboraOnline/online/tree/main/docker"
+  - "https://github.com/CollaboraOnline/online/tree/main/kubernetes/helm/collabora-online"
 
 keywords:
   - "collabora-online"

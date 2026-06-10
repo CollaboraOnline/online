@@ -1,5 +1,0 @@
-# Ignore all localized bundles
-*.lproj/
-
-# …but keep Base.lproj (storyboards, base strings)
-!Base.lproj/

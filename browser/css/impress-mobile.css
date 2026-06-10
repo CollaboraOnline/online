@@ -1,8 +1,0 @@
-.slide-master-mode > .leaflet-container {
-	background-color: var(--color-primary-lighter);
-	box-shadow: inset 0px 0px 5px 0px var(--color-primary);
-}
-
-#presentation-controls-wrapper {
-	border-top: 1px solid var(--color-border);
-}

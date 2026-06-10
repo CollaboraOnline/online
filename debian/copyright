@@ -1,7 +1,0 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: coolwsd
-Maintainer: Andras Timar <andras.timar@collabora.com>
-Source: https://github.com/CollaboraOnline/online.git
-
-Copyright: 2021 Collabora Productivity <hello@collaboraoffice.com>
-License: MPL-2

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="failed_to_load_file">लोड गर्न फाइल निर्धारण गर्न असफल</string>
-    <string name="loading">लोडहुँदै छ...</string>
-    <string name="storage_permission_required">भण्डारण अनुमति आवश्यक छ</string>
-    <string name="temp_file_saving_disabled">यो फाइल पढ्ने मात्र हो, बचत अक्षम छ।</string>
-</resources>

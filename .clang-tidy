@@ -1,3 +1,0 @@
-Checks: 'clang-diagnostic-*,performance-*,unused-*,misc-*,-misc-macro-parentheses,-misc-static-assert,readability-redundant-*,-readability-redundant-declaration'
-WarningsAsErrors: '*'
-

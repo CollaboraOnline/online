@@ -23,7 +23,7 @@ spec:
         - |
           if [ ! -f /host-seccomp/cool-seccomp-profile.json ]; then
             wget -O /host-seccomp/cool-seccomp-profile.json \
-              https://raw.githubusercontent.com/CollaboraOnline/online/master/docker/cool-seccomp-profile.json
+              https://raw.githubusercontent.com/CollaboraOnline/online/main/docker/cool-seccomp-profile.json
             echo "Profile installed on $(hostname)"
           else
             echo "Profile already exists on $(hostname)"

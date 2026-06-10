@@ -1,8 +1,0 @@
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="file_icon_margin_end">8dp</dimen>
-    <dimen name="list_item_margin">8dp</dimen>
-    <dimen name="file_icon_width">32dp</dimen>
-    <dimen name="new_doc_fab_tweak_top">-11dp</dimen>
-    <dimen name="new_doc_fab_tweak_bottom">-7dp</dimen>
-</resources>

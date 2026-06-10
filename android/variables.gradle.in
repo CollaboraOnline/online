@@ -1,3 +1,0 @@
-ext {
-    absTopBuilddir = "@abs_top_builddir@"
-}

@@ -141,7 +141,7 @@ podLabels: {}
 podSecurityContext: {}
 #  fsGroup: 2000
 
-# https://github.com/CollaboraOnline/online/blob/master/docker/cool-seccomp-profile.json
+# https://github.com/CollaboraOnline/online/blob/main/docker/cool-seccomp-profile.json
 # use DaemonSet to install seccomp profile to node's /var/lib/kubelet/seccomp directory
 # once this option is enabled you can set following securityContext to use cool-seccomp-profile
 # securityContext:
