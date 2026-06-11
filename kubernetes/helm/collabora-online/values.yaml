@@ -35,6 +35,62 @@ collabora:
   #   aliases: ["<protocol>://<its-first-alias>:<port>, <protocol>://<its-second-alias>:<port>"]
   aliasgroups: []
 
+  # Structured coolwsd configuration. Each key is a coolwsd setting path in
+  # the same syntax as the --o: command-line option, including [n] indices
+  # and [@attr] attributes. The map is rendered into a file that coolwsd
+  # reads at startup.
+  # IMPORTANT: requires an image with overrides.d support (Collabora Online
+  # 26.04 or later). Older images silently ignore these settings. With such
+  # images keep using extra_params.
+  # Note: extra_params ranks higher than this map. When you set a key here
+  # that is also in extra_params (the default extra_params sets ssl.enable),
+  # clear extra_params or the value here will not take effect.
+  # Keys that contain brackets must be quoted. Quote large numbers as
+  # strings, otherwise Helm may render them in scientific notation.
+  # Example:
+  # config:
+  #   "ssl.enable": false
+  #   "indirection_endpoint.url": "http://example.com/controller/routeToken"
+  #   "monitors.monitor[0]": "ws://example.com/controller/ws"
+  #   "monitors.monitor[0][@retryInterval]": "5"
+  config: {}
+
+  # Bind coolwsd settings to values stored in Kubernetes Secrets. Keyed by
+  # the coolwsd setting path, so single entries can be overridden from
+  # another values file. coolwsd reads the secret value from the mounted
+  # secret file at startup. The value never enters the ConfigMap or the pod
+  # spec.
+  #
+  # Each entry:
+  #   create: false  When true, the chart creates the Secret with the given
+  #                  value. The value then lives in your values file and in
+  #                  the Helm release storage, so protect those (for example
+  #                  with SOPS or helm-secrets). When false, the Secret must
+  #                  already exist in the namespace.
+  #   value: ""      The secret value. Only allowed with create: true.
+  #   name: ""       Secret name. When create is true it defaults to
+  #                  "<release fullname>-config-secrets". Required when
+  #                  create is false.
+  #   key: ""        Key inside the Secret. Defaults to the setting path when
+  #                  that is a valid Secret key name (letters, digits, "-",
+  #                  "_", "."). Setting paths with brackets need an explicit
+  #                  key.
+  #
+  # Example:
+  # configFromSecrets:
+  #   "logging.anonymize.anonymization_salt":
+  #     create: true
+  #     value: "change-me"
+  #   "deepl.auth_key":
+  #     name: existing-secret
+  #     key: deepl-key
+  configFromSecrets: {}
+
+  # Deprecated in favour of the structured "config" map above, but kept as
+  # the default because it also works with images older than 26.04. Values
+  # given here are passed as --o: command-line options and override the
+  # "config" map. Once your image is 26.04 or later, move these to "config"
+  # and set extra_params to "".
   extra_params: --o:ssl.enable=false
 
   # External hostname:port of the server running coolwsd.
@@ -198,8 +254,8 @@ deployment:
 
 probes:
   # Scheme used by the kubelet to reach the probe endpoint.
-  # Set to HTTPS when SSL is terminated directly at coolwsd (e.g. via
-  # extra_params: --o:ssl.enable=true).
+  # Set to HTTPS when SSL is terminated directly at coolwsd (ssl.enable set
+  # to true through extra_params or the config map).
   scheme: HTTP
   startup:
     enabled: true

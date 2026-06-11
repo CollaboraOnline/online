@@ -22,6 +22,14 @@ data:
   aliasgroup{{ add $k 1 }}: {{ $alias }}
   {{- end }}
   {{- end }}
+  {{- if .Values.collabora.config }}
+  coolwsd-config-overrides: |
+    {{- include "collabora-online.configOverrides" . | trim | nindent 4 }}
+  {{- end }}
+  {{- if .Values.collabora.configFromSecrets }}
+  coolwsd-secret-overrides: |
+    {{- include "collabora-online.secretConfigOverrides" . | trim | nindent 4 }}
+  {{- end }}
   {{- if .Values.collabora.coolkitconfig_xcu_content }}
   coolkitconfig.xcu: |
     {{ .Values.collabora.coolkitconfig_xcu_content | nindent 4 }}
