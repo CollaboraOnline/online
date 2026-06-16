@@ -125,6 +125,7 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- include "collabora-online.configOverridesVolumeMounts" . | nindent 12 }}
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
       {{- end }}
@@ -143,4 +144,5 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- include "collabora-online.configOverridesVolumes" . | nindent 8 }}
 {{- end }}

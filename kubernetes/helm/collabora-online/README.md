@@ -56,6 +56,8 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       aliasgroups:
          - host: "https://example.integrator.com:443"
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
+      # with images 26.04 or later, prefer the structured `config` map over
+      # extra_params, see the "Structured configuration" section below
       # for production enviroment we recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
 
    resources:
@@ -102,6 +104,8 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       aliasgroups:
          - host: "https://example.integrator.com:443"
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
+      # with images 26.04 or later, prefer the structured `config` map over
+      # extra_params, see the "Structured configuration" section below
       # for production enviroment we recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
 
    resources:
@@ -145,7 +149,7 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
          server_name: <hostname>:<port>
       ```
 
-   - For production enviroment we recommended following resource values. We recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
+   - For production enviroment we recommended following resource values. We recommend setting `num_prespawn_children` to 4 (through `extra_params`, or through `collabora.config` with images 26.04 or later). It defines number of child processes to keep started in advance and waiting for new clients
 
       ``` yaml
       resources:
@@ -236,6 +240,106 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       content-length: 2
       content-type: text/plain
       ```
+
+## Structured configuration
+
+The `collabora.config` map configures coolwsd without editing coolwsd.xml or
+building long `--o:` option strings. Each key is a coolwsd setting path in
+the same syntax as the `--o:` command-line option, including `[n]` indices
+and `[@attr]` attributes. The chart renders the map into a ConfigMap that is
+mounted at `/etc/coolwsd/overrides.d` inside the pod, and coolwsd applies it
+at startup on top of coolwsd.xml. It needs an image of version 26.04 or
+later.
+
+``` yaml
+collabora:
+   # clear the deprecated default, it would override "ssl.enable" below
+   extra_params: ""
+   config:
+      "ssl.enable": false
+      "indirection_endpoint.url": "http://test.collabora.online:30080/controller/routeToken"
+      "monitors.monitor[0]": "ws://test.collabora.online:30080/controller/ws"
+      "monitors.monitor[0][@retryInterval]": "5"
+      "security.server_signature": true
+```
+
+Format rules:
+
+- Keys that contain brackets must be quoted in YAML.
+- Quote large numbers as strings, otherwise Helm may render them in
+  scientific notation.
+- Prefer a values file over `helm --set` for these keys, because the dots in
+  the key names collide with `--set` path syntax.
+- Key names are not validated against a schema. A typo creates an unknown
+  setting that coolwsd ignores. Each applied key is logged at INFO level at
+  startup, which helps spotting mistakes.
+
+To bind a setting to a value stored in a Kubernetes Secret, use
+`collabora.configFromSecrets`. It is a map keyed by the setting path, so an
+overlay values file can override a single entry. The secret value never
+enters the ConfigMap, the pod spec or the coolwsd logs. coolwsd reads it
+from the mounted secret file at startup.
+
+Each entry supports two modes:
+
+- `create: true` makes the chart create the Secret itself from the given
+  `value`. Convenient when your values files are protected anyway (SOPS,
+  helm-secrets) and for test setups. `name` defaults to
+  `<release fullname>-config-secrets` and `key` defaults to the setting
+  path.
+- `create: false` (the default) references a Secret that already exists in
+  the namespace, for example one managed by the external-secrets operator.
+  `name` is required.
+
+``` yaml
+collabora:
+   configFromSecrets:
+      # chart-created Secret, only the value is needed
+      "logging.anonymize.anonymization_salt":
+         create: true
+         value: "change-me"
+      # existing Secret managed outside the chart
+      "deepl.auth_key":
+         name: cool-config-secrets
+         key: deepl-key
+```
+
+For the `create: false` example the Secret could have been created with:
+
+``` bash
+kubectl create secret generic cool-config-secrets -n collabora \
+   --from-literal=deepl-key="..."
+```
+
+Setting paths with brackets are not valid Secret key names, so such entries
+need an explicit `key`.
+
+Precedence, strongest first: remote/dynamic configuration, `extra_params`
+(`--o:` command-line options), `config` and `configFromSecrets`, the
+coolwsd.xml base file, built-in defaults.
+
+Notes:
+
+- This feature needs an image that supports the overrides.d directory
+  (Collabora Online 26.04 or later). An older image silently ignores the
+  mounted overrides. The chart default therefore still uses `extra_params`
+  for `ssl.enable=false`.
+- `collabora.extra_params` is deprecated for images 26.04 and later, but it
+  keeps working and still overrides the `config` map. When you move a
+  setting to `config`, remove it from `extra_params` (including the chart
+  default `--o:ssl.enable=false`), otherwise the `extra_params` value wins
+  silently.
+- The admin console credentials cannot be set through `config` or
+  `configFromSecrets` (the chart rejects it): the chart always injects them
+  as environment variables, which rank higher. Use `collabora.username`,
+  `collabora.password` or `collabora.existingSecret`.
+- Changing `config` or `configFromSecrets` rolls the pods automatically (the
+  pod template carries a hash of the collabora values). This includes the
+  `value` of `create: true` entries, so rotating a chart-created secret is
+  just a `helm upgrade`. Changing only the VALUE inside an externally
+  managed Secret (`create: false`) does not roll the pods. Restart them
+  manually after rotating such a secret, for example with `kubectl rollout
+  restart`.
 
 ## Kubernetes cluster monitoring
 

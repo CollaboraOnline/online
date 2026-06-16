@@ -132,6 +132,7 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- include "collabora-online.configOverridesVolumeMounts" . | nindent 12 }}
             {{- if .Values.collabora.coolkitconfig_xcu_content }}
             - name: coolwsd-config
               mountPath: /etc/coolwsd/coolkitconfig.xcu
@@ -179,6 +180,7 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- include "collabora-online.configOverridesVolumes" . | nindent 8 }}
         {{- if or .Values.collabora.coolkitconfig_xcu_content .Values.collabora.coolwsd_xml_content }}
         - name: coolwsd-config
           configMap:
