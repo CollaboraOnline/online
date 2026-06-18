@@ -1,0 +1,24 @@
+{{- if .Values.reverseProxy.enabled -}}
+# Headless Service resolving to the individual Collabora pod IPs. The reverse
+# proxy hashes across these pods, so it needs them directly rather than the
+# round-robin ClusterIP main Service. publishNotReadyAddresses keeps the DNS
+# name returning pod IPs while a pod is briefly not ready, so nginx can still
+# resolve the upstream at startup.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "collabora-online.fullname" . }}-reverseproxy-headless
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+    - port: {{ .Values.reverseProxy.upstreamPort | default .Values.deployment.containerPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "collabora-online.selectorLabels" . | nindent 4 }}
+    type: main
+{{- end }}

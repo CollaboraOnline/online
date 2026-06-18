@@ -1,0 +1,17 @@
+{{- if .Values.reverseProxy.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "collabora-online.fullname" . }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.reverseProxy.service.type }}
+  ports:
+    - port: {{ .Values.reverseProxy.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "collabora-online.reverseproxy.selectorLabels" . | nindent 4 }}
+{{- end }}

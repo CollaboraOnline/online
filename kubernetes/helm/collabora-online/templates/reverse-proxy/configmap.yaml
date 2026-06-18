@@ -1,0 +1,87 @@
+{{- if .Values.reverseProxy.enabled -}}
+{{- $fullName := include "collabora-online.fullname" . -}}
+{{- $headless := printf "%s-reverseproxy-headless" $fullName -}}
+{{- $port := .Values.reverseProxy.upstreamPort | default .Values.deployment.containerPort -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+data:
+  nginx.conf: |
+{{- if .Values.reverseProxy.nginxConfigOverride }}
+{{ .Values.reverseProxy.nginxConfigOverride | indent 4 }}
+{{- else }}
+    worker_processes auto;
+    pid /run/nginx/nginx.pid;
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        client_body_temp_path /tmp/client_temp;
+        proxy_temp_path       /tmp/proxy_temp;
+        fastcgi_temp_path     /tmp/fastcgi_temp;
+        uwsgi_temp_path       /tmp/uwsgi_temp;
+        scgi_temp_path        /tmp/scgi_temp;
+
+        access_log /dev/stdout;
+        error_log  /dev/stderr;
+
+        # Send "Connection: upgrade" only for real WebSocket requests. Plain
+        # HTTP requests get "Connection: close", otherwise Collabora holds the
+        # connection open waiting for a WebSocket upgrade that never arrives.
+        map $http_upgrade $connection_upgrade {
+            default upgrade;
+            ''      close;
+        }
+
+        upstream coolwsd {
+            zone coolwsd 64k;
+            hash $arg_{{ .Values.reverseProxy.hashParam }};
+            server {{ $headless }}.{{ .Release.Namespace }}.svc.cluster.local:{{ $port }};
+        }
+        {{- if .Values.reverseProxy.controller.enabled }}
+
+        upstream controller {
+            server {{ required "reverseProxy.controller.upstream is required when reverseProxy.controller.enabled is true" .Values.reverseProxy.controller.upstream }};
+        }
+        {{- end }}
+
+        server {
+            listen {{ .Values.reverseProxy.containerPort }};
+            server_name _;
+
+            location = /nginx-health {
+                return 200 "ok\n";
+            }
+            {{- if .Values.reverseProxy.controller.enabled }}
+
+            location ~* ^/controller(/|$) {
+                proxy_pass               http://controller;
+                proxy_http_version       1.1;
+                proxy_set_header         Host $host;
+                proxy_set_header         Upgrade $http_upgrade;
+                proxy_set_header         Connection $connection_upgrade;
+                client_max_body_size     0;
+                proxy_read_timeout       {{ .Values.reverseProxy.proxyTimeout }};
+                proxy_send_timeout       {{ .Values.reverseProxy.proxyTimeout }};
+            }
+            {{- end }}
+
+            location / {
+                proxy_pass               http://coolwsd;
+                proxy_http_version       1.1;
+                proxy_set_header         Host $host;
+                proxy_set_header         Upgrade $http_upgrade;
+                proxy_set_header         Connection $connection_upgrade;
+                client_max_body_size     0;
+                proxy_read_timeout       {{ .Values.reverseProxy.proxyTimeout }};
+                proxy_send_timeout       {{ .Values.reverseProxy.proxyTimeout }};
+            }
+        }
+    }
+{{- end }}
+{{- end }}

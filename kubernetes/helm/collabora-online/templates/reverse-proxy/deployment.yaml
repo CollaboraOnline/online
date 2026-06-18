@@ -1,0 +1,114 @@
+{{- if .Values.reverseProxy.enabled -}}
+{{- $fullName := include "collabora-online.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.reverseProxy.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "collabora-online.reverseproxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.reverseProxy.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "collabora-online.reverseproxy.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.reverseProxy.endpointReloader.enabled }}
+      # The reloader sidecar signals the nginx master across containers.
+      serviceAccountName: {{ $fullName }}-reverseproxy
+      shareProcessNamespace: true
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.reverseProxy.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-reverseproxy
+          securityContext:
+            {{- toYaml .Values.reverseProxy.securityContext | nindent 12 }}
+          image: "{{ .Values.reverseProxy.image.repository }}:{{ .Values.reverseProxy.image.tag }}"
+          imagePullPolicy: {{ .Values.reverseProxy.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.reverseProxy.containerPort }}
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /nginx-health
+              port: {{ .Values.reverseProxy.containerPort }}
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /nginx-health
+              port: {{ .Values.reverseProxy.containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.reverseProxy.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+            - name: nginx-run
+              mountPath: /run/nginx
+        {{- if .Values.reverseProxy.endpointReloader.enabled }}
+        - name: reloader
+          securityContext:
+            {{- toYaml .Values.reverseProxy.securityContext | nindent 12 }}
+          image: "{{ .Values.reverseProxy.endpointReloader.image.repository }}:{{ .Values.reverseProxy.endpointReloader.image.tag }}"
+          imagePullPolicy: {{ .Values.reverseProxy.endpointReloader.image.pullPolicy }}
+          env:
+            - name: HOME
+              value: /tmp
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -u
+              echo "reloader: waiting for nginx pid file"
+              while [ ! -s /run/nginx/nginx.pid ]; do sleep 1; done
+              echo "reloader: watching EndpointSlices for {{ $fullName }}-reverseproxy-headless"
+              while true; do
+                kubectl get endpointslices -n {{ .Release.Namespace }} \
+                  -l kubernetes.io/service-name={{ $fullName }}-reverseproxy-headless \
+                  --watch -o name 2>&1 | while read -r ev; do
+                    sleep 2
+                    pid="$(cat /run/nginx/nginx.pid 2>/dev/null || echo '')"
+                    if [ -n "$pid" ]; then
+                      echo "reloader: COOL endpoints changed ($ev), reloading nginx (pid $pid)"
+                      kill -HUP "$pid" 2>/dev/null || echo "reloader: HUP failed"
+                    fi
+                  done
+                echo "reloader: watch dropped, reconnecting in 3s"
+                sleep 3
+              done
+          volumeMounts:
+            - name: nginx-run
+              mountPath: /run/nginx
+        {{- end }}
+      {{- with .Values.reverseProxy.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.reverseProxy.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.reverseProxy.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ $fullName }}-reverseproxy
+        - name: nginx-run
+          emptyDir: {}
+{{- end }}
