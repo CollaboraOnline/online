@@ -1,0 +1,28 @@
+{{- if and .Values.reverseProxy.enabled .Values.reverseProxy.route.enabled -}}
+{{- $fullName := include "collabora-online.fullname" . -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ $fullName }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+  {{- with .Values.reverseProxy.route.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.reverseProxy.route.host }}
+  host: {{ . | quote }}
+  {{- end }}
+  to:
+    kind: Service
+    name: {{ $fullName }}-reverseproxy
+    weight: 100
+  port:
+    targetPort: http
+  {{- with .Values.reverseProxy.route.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  wildcardPolicy: None
+{{- end }}

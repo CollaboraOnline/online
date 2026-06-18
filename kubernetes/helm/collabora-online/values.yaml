@@ -436,6 +436,119 @@ nginxDeny:
     #    hosts:
     #      - chart-example.local
 
+# An in-namespace nginx reverse proxy that load-balances across the Collabora
+# Online replicas with per-document affinity. Use it where you cannot install a
+# cluster ingress controller (for example OpenShift, where you front this with
+# the default Router through an OpenShift Route). nginx hashes on a request
+# parameter so every request for one document reaches the same pod.
+reverseProxy:
+  enabled: false
+
+  # nginx-unprivileged listens on 8080 and runs as a non-root user, so it
+  # passes restrictive pod security such as OpenShift restricted-v2 unchanged.
+  image:
+    repository: nginxinc/nginx-unprivileged
+    tag: stable
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+  containerPort: 8080
+
+  # The request parameter nginx hashes on to pin a document to one pod. Use
+  # "WOPISrc" for a standalone multi-replica setup (affinity with no extra
+  # components), or "RouteToken" when running with the COOL Controller.
+  hashParam: WOPISrc
+
+  # Port the Collabora pods listen on. Defaults to deployment.containerPort.
+  upstreamPort: 9980
+
+  # How long nginx keeps a proxied connection open. Editing sessions are
+  # long-lived WebSockets, so this is large.
+  proxyTimeout: "3600s"
+
+  # COOL Controller integration. When enabled, nginx also proxies /controller
+  # to the controller service. This is for the client-facing routeToken
+  # endpoint (indirection_endpoint.url), so it can live under the same external
+  # host as the documents. It is useful on OpenShift, where the controller has
+  # no ingress controller to expose it otherwise. Set hashParam to RouteToken
+  # alongside this.
+  # The controller's monitor WebSocket does NOT need this: point each COOL
+  # pod's monitors.monitor straight at the controller Service over cluster DNS
+  # (ws://<controller-service>:9000/controller/ws), which avoids an extra hop.
+  controller:
+    enabled: false
+    # host:port of the cool-controller service, for example
+    # cool-controller.collabora.svc.cluster.local:9000
+    upstream: ""
+
+  # Replace the whole generated nginx.conf. Leave empty to use the generated
+  # one. Only needed for cases the knobs above do not cover.
+  nginxConfigOverride: ""
+
+  # Open-source nginx resolves the upstream pod IPs only when it starts or
+  # reloads. This sidecar watches the Collabora EndpointSlices (a namespaced
+  # Role) and reloads nginx only when the pod set changes, so the upstream
+  # tracks live pods after a restart, scale or reinstall. It needs a shared
+  # process namespace so it can signal the nginx master. Disable it on clusters
+  # that forbid shareProcessNamespace, then reload nginx by hand after pod
+  # changes with kubectl rollout restart.
+  endpointReloader:
+    enabled: true
+    # Needs kubectl, a shell and kill. alpine/k8s has all three.
+    image:
+      repository: alpine/k8s
+      tag: "1.31.1"
+      pullPolicy: IfNotPresent
+
+  podAnnotations: []
+
+  # No runAsUser is pinned, so OpenShift assigns one from the namespace range.
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  # OpenShift entry point: a route.openshift.io/v1 Route to the proxy Service.
+  # The timeout annotation keeps long-lived WebSockets from being cut.
+  route:
+    enabled: false
+    host: ""
+    annotations:
+      haproxy.router.openshift.io/timeout: "3600s"
+    tls: {}
+    #  termination: edge
+    #  insecureEdgeTerminationPolicy: Redirect
+
+  # Standard Ingress to the proxy Service, for non-OpenShift clusters.
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+
 dynamicConfig:
   enabled: false
   logging:

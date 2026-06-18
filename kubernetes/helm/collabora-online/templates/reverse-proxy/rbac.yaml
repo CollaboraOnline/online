@@ -1,0 +1,38 @@
+{{- if and .Values.reverseProxy.enabled .Values.reverseProxy.endpointReloader.enabled -}}
+{{- $fullName := include "collabora-online.fullname" . -}}
+# Namespaced RBAC for the reloader sidecar: read the Collabora EndpointSlices
+# in this namespace. No cluster-scoped rights, so it works on locked-down
+# clusters.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $fullName }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $fullName }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["discovery.k8s.io"]
+    resources: ["endpointslices"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $fullName }}-reverseproxy
+  labels:
+    {{- include "collabora-online.reverseproxy.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $fullName }}-reverseproxy
+subjects:
+  - kind: ServiceAccount
+    name: {{ $fullName }}-reverseproxy
+    namespace: {{ .Release.Namespace }}
+{{- end }}

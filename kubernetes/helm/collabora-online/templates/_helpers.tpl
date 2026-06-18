@@ -100,3 +100,28 @@ HTTP
 HTTPS
 {{- end -}}
 {{- end }}
+
+{{/*
+Reverse proxy selector labels. The app.kubernetes.io/name here is distinct
+from the main one, so selectors that match the Collabora pods by
+app.kubernetes.io/name do not also match the reverse proxy. The COOL
+Controller watches deployments and pods by app.kubernetes.io/name set to its
+resourceName, so without a distinct name it would mistake the reverse proxy
+Deployment for a Collabora one.
+*/}}
+{{- define "collabora-online.reverseproxy.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "collabora-online.name" . }}-reverseproxy
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Reverse proxy common labels.
+*/}}
+{{- define "collabora-online.reverseproxy.labels" -}}
+helm.sh/chart: {{ include "collabora-online.chart" . }}
+{{ include "collabora-online.reverseproxy.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
