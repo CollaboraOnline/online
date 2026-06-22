@@ -83,3 +83,20 @@ Create the name of the SeccompProfileDaemonSet service account to use
 {{- default "default" .Values.daemonSetServiceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Probe scheme (HTTP or HTTPS) for the coolwsd pods.
+An explicit probes.scheme wins. Otherwise the scheme is derived from coolwsd's
+ssl.enable in collabora.extra_params: ssl.enable=false means coolwsd serves
+plain HTTP, while anything else - an explicit ssl.enable=true, or no flag at
+all so coolwsd's built-in default of true applies - means it serves HTTPS.
+*/}}
+{{- define "collabora-online.probeScheme" -}}
+{{- if .Values.probes.scheme -}}
+{{- .Values.probes.scheme | upper -}}
+{{- else if .Values.collabora.extra_params | default "" | lower | contains "ssl.enable=false" -}}
+HTTP
+{{- else -}}
+HTTPS
+{{- end -}}
+{{- end }}
