@@ -197,10 +197,12 @@ deployment:
     securityContext: {}
 
 probes:
-  # Scheme used by the kubelet to reach the probe endpoint.
-  # Set to HTTPS when SSL is terminated directly at coolwsd (e.g. via
-  # extra_params: --o:ssl.enable=true).
-  scheme: HTTP
+  # Scheme the kubelet uses to reach the coolwsd probe endpoint.
+  # Leave blank to derive it automatically from collabora.extra_params:
+  # ssl.enable=false serves plain HTTP, anything else (ssl.enable=true, or the
+  # flag absent so coolwsd's built-in default of true applies) serves HTTPS.
+  # Set this to HTTP or HTTPS only to override the derived value.
+  scheme: ""
   startup:
     enabled: true
     failureThreshold: 30
