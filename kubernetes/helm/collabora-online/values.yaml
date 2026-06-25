@@ -679,3 +679,10 @@ extraVolumes: []
 
 # Optionally specify an extra list of additional volumeMounts.
 extraVolumeMounts: []
+
+# Optionally specify a list of extra Kubernetes manifests to deploy with the
+# release. Each entry is rendered through tpl, so values may reference release
+# data. Use this to add provider-specific routing objects (for example an
+# APISIX ApisixRoute) without the chart needing explicit support for that
+# provider.
+extraObjects: []

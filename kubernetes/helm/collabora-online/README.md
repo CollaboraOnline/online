@@ -448,6 +448,42 @@ Service directly.
 
 ---
 
+## Extra objects
+
+The chart templates routing objects for the providers it supports directly: a
+standard `Ingress`, a Gateway API `HTTPRoute` (or an OpenShift `Route`), and
+the in-namespace reverse proxy. If your cluster uses a different gateway, you
+can deploy its objects through `extraObjects` instead of waiting for the chart
+to add explicit support for that gateway.
+
+`extraObjects` is a list of arbitrary Kubernetes manifests. The chart renders
+each one as-is into the release, so they are installed, upgraded and uninstalled
+along with everything else. Each entry is passed through `tpl`, so you can
+reference release values such as the release name or the service port.
+
+For example, to route Collabora through Apache APISIX, add its `ApisixRoute`
+custom resource:
+
+``` yaml
+extraObjects:
+  - apiVersion: apisix.apache.org/v2
+    kind: ApisixRoute
+    metadata:
+      name: '{{ include "collabora-online.fullname" . }}'
+    spec:
+      http:
+        - name: collabora
+          match:
+            hosts: ["office.example.com"]
+            paths: ["/*"]
+          backends:
+            - serviceName: '{{ include "collabora-online.fullname" . }}'
+              servicePort: '{{ .Values.service.port }}'
+```
+
+The same approach works for any other gateway (Traefik, Istio, Kong, ...): put
+its objects in `extraObjects` and they are deployed with the release.
+
 ## Useful commands to check what is happening
 
 Where is this pods, are they ready?
