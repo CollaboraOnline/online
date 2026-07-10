@@ -51,12 +51,39 @@ collabora:
   username: admin
   env: []
 
-  # name of a secret that holds the WOPI proof keys for Collabora
-  # How to generate this secret:
-  # 1. ssh-keygen -t rsa -N "" -m PEM -f proof_key
-  # 2. kubectl create secret generic <name-of-the-secret> --from-file=proof_key --from-file=proof_key.pub
-  # finally set proofKeysSecretRef to the name of the secret
+  # Name of a pre-existing secret holding the WOPI proof key. Used only when
+  # proofKeyGeneration.enabled is false. The secret must contain the private
+  # key under "proof_key" (a PEM RSA key) and may also contain "proof_key.pub".
+  # coolwsd reads only the private "proof_key"; the public file is mounted for
+  # completeness but is not read by the server.
+  # To create it by hand:
+  #   openssl genrsa -out proof_key 4096
+  #   openssl rsa -in proof_key -pubout -out proof_key.pub
+  #   kubectl create secret generic <name> --from-file=proof_key --from-file=proof_key.pub
   proofKeysSecretRef: ""
+
+  # Let the chart generate and manage the WOPI proof key. On first install a
+  # 4096-bit RSA private key is created and stored in a secret that Helm owns;
+  # on later upgrades the existing key is read back and kept unchanged, so it
+  # stays stable across all replicas. When enabled, proofKeysSecretRef is
+  # ignored.
+  #
+  # Because the secret belongs to the release, "helm uninstall" deletes it. A
+  # secret you create yourself and point to through proofKeysSecretRef is left
+  # in place instead.
+  #
+  # This is meant for installs driven by the helm command line. Keeping the key
+  # stable relies on reading the existing secret back from the live cluster.
+  # Tools that render the chart with "helm template" without live cluster
+  # access, such as Argo CD and Flux, do not perform that read, so every render
+  # generates a fresh key. That shows up as a permanent difference on the
+  # secret and can rotate the key on each sync, which breaks WOPI proof
+  # validation. In a GitOps setup, create the secret yourself and set
+  # proofKeysSecretRef instead of enabling generation here.
+  proofKeyGeneration:
+    enabled: false
+    # Name of the secret to create. Defaults to "<release>-wopi-proof".
+    secretName: ""
 
   # Provide custom coolwsd configuration files here.
   # Note: Content provided will override the default files (coolkitconfig.xcu, coolwsd.xml)

@@ -125,6 +125,16 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- if (include "collabora-online.proofKeysSecretName" .) }}
+            - name: wopi-proof
+              mountPath: /etc/coolwsd/proof_key
+              subPath: proof_key
+            {{- if not .Values.collabora.proofKeyGeneration.enabled }}
+            - name: wopi-proof
+              mountPath: /etc/coolwsd/proof_key.pub
+              subPath: proof_key.pub
+            {{- end }}
+            {{- end }}
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
       {{- end }}
@@ -143,4 +153,9 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- if (include "collabora-online.proofKeysSecretName" .) }}
+        - name: wopi-proof
+          secret:
+            secretName: {{ include "collabora-online.proofKeysSecretName" . | quote }}
+        {{- end }}
 {{- end }}

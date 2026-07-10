@@ -142,13 +142,15 @@ spec:
               mountPath: /etc/coolwsd/coolwsd.xml
               subPath: coolwsd.xml
             {{- end }}
-            {{- if .Values.collabora.proofKeysSecretRef }}
+            {{- if (include "collabora-online.proofKeysSecretName" .) }}
             - name: wopi-proof
               mountPath: /etc/coolwsd/proof_key
               subPath: proof_key
+            {{- if not .Values.collabora.proofKeyGeneration.enabled }}
             - name: wopi-proof
               mountPath: /etc/coolwsd/proof_key.pub
               subPath: proof_key.pub
+            {{- end }}
             {{- end }}
             {{- if .Values.deployment.customFonts.enabled }}
             - name: custom-fonts
@@ -193,10 +195,10 @@ spec:
                 path: coolwsd.xml
               {{- end }}
         {{- end }}
-        {{- if .Values.collabora.proofKeysSecretRef }}
+        {{- if (include "collabora-online.proofKeysSecretName" .) }}
         - name: wopi-proof
           secret:
-            secretName: {{ .Values.collabora.proofKeysSecretRef | quote }}
+            secretName: {{ include "collabora-online.proofKeysSecretName" . | quote }}
         {{- end }}
         {{- if .Values.deployment.customFonts.enabled }}
         - name: custom-fonts
