@@ -125,3 +125,16 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
+
+{{/*
+Name of the secret holding the WOPI proof key. Returns the generated secret
+name when automatic generation is on, otherwise the user-supplied
+proofKeysSecretRef. An empty result means no proof key is configured.
+*/}}
+{{- define "collabora-online.proofKeysSecretName" -}}
+{{- if .Values.collabora.proofKeyGeneration.enabled -}}
+{{- default (printf "%s-wopi-proof" (include "collabora-online.fullname" .)) .Values.collabora.proofKeyGeneration.secretName -}}
+{{- else -}}
+{{- .Values.collabora.proofKeysSecretRef -}}
+{{- end -}}
+{{- end -}}
