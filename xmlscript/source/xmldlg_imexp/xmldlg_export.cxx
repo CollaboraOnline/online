@@ -1,0 +1,1417 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * This file incorporates work covered by the following license notice:
+ *
+ *   Licensed to the Apache Software Foundation (ASF) under one or more
+ *   contributor license agreements. See the NOTICE file distributed
+ *   with this work for additional information regarding copyright
+ *   ownership. The ASF licenses this file to you under the Apache
+ *   License, Version 2.0 (the "License"); you may not use this file
+ *   except in compliance with the License. You may obtain a copy of
+ *   the License at http://www.apache.org/licenses/LICENSE-2.0 .
+ */
+
+#include "common.hxx"
+#include "exp_share.hxx"
+#include <xmlscript/xmlns.h>
+
+#include <o3tl/any.hxx>
+#include <sal/log.hxx>
+#include <comphelper/diagnose_ex.hxx>
+
+#include <com/sun/star/awt/CharSet.hpp>
+#include <com/sun/star/awt/FontFamily.hpp>
+#include <com/sun/star/awt/FontPitch.hpp>
+#include <com/sun/star/awt/FontSlant.hpp>
+#include <com/sun/star/awt/FontStrikeout.hpp>
+#include <com/sun/star/awt/FontType.hpp>
+#include <com/sun/star/awt/FontUnderline.hpp>
+#include <com/sun/star/awt/ImagePosition.hpp>
+#include <com/sun/star/awt/ImageScaleMode.hpp>
+#include <com/sun/star/awt/LineEndFormat.hpp>
+#include <com/sun/star/awt/PushButtonType.hpp>
+#include <com/sun/star/awt/VisualEffect.hpp>
+#include <com/sun/star/frame/XModel.hpp>
+#include <com/sun/star/util/Date.hpp>
+#include <com/sun/star/util/Time.hpp>
+#include <tools/date.hxx>
+#include <tools/time.hxx>
+
+#include <com/sun/star/io/XPersistObject.hpp>
+
+#include <com/sun/star/script/XScriptEventsSupplier.hpp>
+#include <com/sun/star/script/ScriptEventDescriptor.hpp>
+
+#include <com/sun/star/style/VerticalAlignment.hpp>
+
+#include <com/sun/star/lang/XMultiServiceFactory.hpp>
+#include <com/sun/star/lang/XServiceInfo.hpp>
+#include <com/sun/star/lang/Locale.hpp>
+
+#include <com/sun/star/view/SelectionType.hpp>
+
+#include <com/sun/star/form/binding/XListEntrySink.hpp>
+#include <com/sun/star/form/binding/XBindableValue.hpp>
+#include <com/sun/star/table/CellAddress.hpp>
+#include <com/sun/star/table/CellRangeAddress.hpp>
+#include <com/sun/star/document/XStorageBasedDocument.hpp>
+#include <com/sun/star/document/GraphicStorageHandler.hpp>
+#include <com/sun/star/document/XGraphicStorageHandler.hpp>
+#include <com/sun/star/graphic/XGraphic.hpp>
+#include <com/sun/star/xml/sax/XExtendedDocumentHandler.hpp>
+
+#include <comphelper/processfactory.hxx>
+#include <i18nlangtag/languagetag.hxx>
+#include <rtl/ref.hxx>
+
+using namespace ::com::sun::star;
+using namespace ::com::sun::star::uno;
+
+namespace xmlscript
+{
+
+Reference< xml::sax::XAttributeList > Style::createElement()
+{
+    rtl::Reference<ElementDescriptor> pStyle = new ElementDescriptor( XMLNS_DIALOGS_PREFIX ":style" );
+
+    // style-id
+    pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":style-id", _id );
+
+    // background-color
+    if (_set & 0x1)
+    {
+        pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":background-color", "0x" + OUString::number(_backgroundColor,16));
+    }
+
+    // text-color
+    if (_set & 0x2)
+    {
+        pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":text-color", "0x" + OUString::number(_textColor,16));
+    }
+
+    // textline-color
+    if (_set & 0x20)
+    {
+        pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":textline-color", "0x" + OUString::number(_textLineColor,16));
+    }
+
+    // fill-color
+    if (_set & 0x10)
+    {
+        pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":fill-color", "0x" + OUString::number(_fillColor,16));
+    }
+
+    // border
+    if (_set & 0x4)
+    {
+        switch (_border)
+        {
+        case BORDER_NONE:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":border", "none" );
+            break;
+        case BORDER_3D:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":border", "3d" );
+            break;
+        case BORDER_SIMPLE:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":border", "simple" );
+            break;
+        case BORDER_SIMPLE_COLOR: {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":border", "0x" + OUString::number(_borderColor,16));
+            break;
+        }
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected border value!" );
+            break;
+        }
+    }
+
+    // visual effect (look)
+    if (_set & 0x40)
+    {
+        switch (_visualEffect)
+        {
+        case awt::VisualEffect::NONE:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":look", "none" );
+            break;
+        case awt::VisualEffect::LOOK3D:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":look", "3d" );
+            break;
+        case awt::VisualEffect::FLAT:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":look", "simple" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected visual effect value!" );
+            break;
+        }
+    }
+
+    // font-
+    if (_set & 0x8)
+    {
+        awt::FontDescriptor def_descr;
+
+        // dialog:font-name CDATA #IMPLIED
+        if (def_descr.Name != _descr.Name)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-name", _descr.Name );
+        }
+        // dialog:font-height %numeric; #IMPLIED
+        if (def_descr.Height != _descr.Height)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-height", OUString::number( _descr.Height ) );
+        }
+        // dialog:font-width %numeric; #IMPLIED
+        if (def_descr.Width != _descr.Width)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-width", OUString::number( _descr.Width ) );
+        }
+        // dialog:font-stylename CDATA #IMPLIED
+        if (def_descr.StyleName != _descr.StyleName)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-stylename", _descr.StyleName );
+        }
+        // dialog:font-family "(decorative|modern|roman|script|swiss|system)" #IMPLIED
+        if (def_descr.Family != _descr.Family)
+        {
+            switch (_descr.Family)
+            {
+            case awt::FontFamily::DECORATIVE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-family", "decorative" );
+                break;
+            case awt::FontFamily::MODERN:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-family", "modern" );
+                break;
+            case awt::FontFamily::ROMAN:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-family", "roman" );
+                break;
+            case awt::FontFamily::SCRIPT:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-family", "script" );
+                break;
+            case awt::FontFamily::SWISS:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-family", "swiss" );
+                break;
+            case awt::FontFamily::SYSTEM:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-family", "system" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-family!" );
+                break;
+            }
+        }
+        // dialog:font-charset "(ansi|mac|ibmpc_437|ibmpc_850|ibmpc_860|ibmpc_861|ibmpc_863|ibmpc_865|system|symbol)" #IMPLIED
+        if (def_descr.CharSet != _descr.CharSet)
+        {
+            switch (_descr.CharSet)
+            {
+            case awt::CharSet::ANSI:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ansi" );
+                break;
+            case awt::CharSet::MAC:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "mac" );
+                break;
+            case awt::CharSet::IBMPC_437:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ibmpc_437" );
+                break;
+            case awt::CharSet::IBMPC_850:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ibmpc_850" );
+                break;
+            case awt::CharSet::IBMPC_860:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ibmpc_860" );
+                break;
+            case awt::CharSet::IBMPC_861:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ibmpc_861" );
+                break;
+            case awt::CharSet::IBMPC_863:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ibmpc_863" );
+                break;
+            case awt::CharSet::IBMPC_865:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "ibmpc_865" );
+                break;
+            case awt::CharSet::SYSTEM:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "system" );
+                break;
+            case awt::CharSet::SYMBOL:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charset", "symbol" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-charset!" );
+                break;
+            }
+        }
+        // dialog:font-pitch "(fixed|variable)" #IMPLIED
+        if (def_descr.Pitch != _descr.Pitch)
+        {
+            switch (_descr.Pitch)
+            {
+            case awt::FontPitch::FIXED:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-pitch", "fixed" );
+                break;
+            case awt::FontPitch::VARIABLE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-pitch", "variable" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-pitch!" );
+                break;
+            }
+        }
+        // dialog:font-charwidth CDATA #IMPLIED
+        if (def_descr.CharacterWidth != _descr.CharacterWidth)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-charwidth", OUString::number( _descr.CharacterWidth ) );
+        }
+        // dialog:font-weight CDATA #IMPLIED
+        if (def_descr.Weight != _descr.Weight)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-weight", OUString::number( _descr.Weight ) );
+        }
+        // dialog:font-slant "(oblique|italic|reverse_oblique|reverse_italic)" #IMPLIED
+        if (def_descr.Slant != _descr.Slant)
+        {
+            switch (_descr.Slant)
+            {
+            case awt::FontSlant_OBLIQUE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-slant", "oblique" );
+                break;
+            case awt::FontSlant_ITALIC:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-slant", "italic" );
+                break;
+            case awt::FontSlant_REVERSE_OBLIQUE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-slant", "reverse_oblique" );
+                break;
+            case awt::FontSlant_REVERSE_ITALIC:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-slant", "reverse_italic" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-slant!" );
+                break;
+            }
+        }
+        // dialog:font-underline "(single|double|dotted|dash|longdash|dashdot|dashdotdot|smallwave|wave|doublewave|bold|bolddotted|bolddash|boldlongdash|bolddashdot|bolddashdotdot|boldwave)" #IMPLIED
+        if (def_descr.Underline != _descr.Underline)
+        {
+            switch (_descr.Underline)
+            {
+            case awt::FontUnderline::SINGLE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "single" );
+                break;
+            case awt::FontUnderline::DOUBLE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "double" );
+                break;
+            case awt::FontUnderline::DOTTED:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "dotted" );
+                break;
+            case awt::FontUnderline::DASH:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "dash" );
+                break;
+            case awt::FontUnderline::LONGDASH:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "longdash" );
+                break;
+            case awt::FontUnderline::DASHDOT:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "dashdot" );
+                break;
+            case awt::FontUnderline::DASHDOTDOT:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "dashdotdot" );
+                break;
+            case awt::FontUnderline::SMALLWAVE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "smallwave" );
+                break;
+            case awt::FontUnderline::WAVE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "wave" );
+                break;
+            case awt::FontUnderline::DOUBLEWAVE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "doublewave" );
+                break;
+            case awt::FontUnderline::BOLD:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "bold" );
+                break;
+            case awt::FontUnderline::BOLDDOTTED:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "bolddotted" );
+                break;
+            case awt::FontUnderline::BOLDDASH:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "bolddash" );
+                break;
+            case awt::FontUnderline::BOLDLONGDASH:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "boldlongdash" );
+                break;
+            case awt::FontUnderline::BOLDDASHDOT:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "bolddashdot" );
+                break;
+            case awt::FontUnderline::BOLDDASHDOTDOT:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "bolddashdotdot" );
+                break;
+            case awt::FontUnderline::BOLDWAVE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-underline", "boldwave" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-underline!" );
+                break;
+            }
+        }
+        // dialog:font-strikeout "(single|double|bold|slash|x)" #IMPLIED
+        if (def_descr.Strikeout != _descr.Strikeout)
+        {
+            switch (_descr.Strikeout)
+            {
+            case awt::FontStrikeout::SINGLE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-strikeout", "single" );
+                break;
+            case awt::FontStrikeout::DOUBLE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-strikeout", "double" );
+                break;
+            case awt::FontStrikeout::BOLD:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-strikeout", "bold" );
+                break;
+            case awt::FontStrikeout::SLASH:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-strikeout", "slash" );
+                break;
+            case awt::FontStrikeout::X:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-strikeout", "x" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-strikeout!" );
+                break;
+            }
+        }
+        // dialog:font-orientation CDATA #IMPLIED
+        if (def_descr.Orientation != _descr.Orientation)
+        {
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-orientation", OUString::number( _descr.Orientation ) );
+        }
+        // dialog:font-kerning %boolean; #IMPLIED
+        if (bool(def_descr.Kerning) != bool(_descr.Kerning))
+        {
+            pStyle->addBoolAttr( XMLNS_DIALOGS_PREFIX ":font-kerning", _descr.Kerning );
+        }
+        // dialog:font-wordlinemode %boolean; #IMPLIED
+        if (bool(def_descr.WordLineMode) != bool(_descr.WordLineMode))
+        {
+            pStyle->addBoolAttr( XMLNS_DIALOGS_PREFIX ":font-wordlinemode", _descr.WordLineMode );
+        }
+        // dialog:font-type "(raster|device|scalable)" #IMPLIED
+        if (def_descr.Type != _descr.Type)
+        {
+            switch (_descr.Type)
+            {
+            case awt::FontType::RASTER:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-type", "raster" );
+                break;
+            case awt::FontType::DEVICE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-type", "device" );
+                break;
+            case awt::FontType::SCALABLE:
+                pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-type", "scalable" );
+                break;
+            default:
+                SAL_WARN( "xmlscript.xmldlg", "### unexpected font-type!" );
+                break;
+            }
+        }
+
+        // additional attributes not in FontDescriptor struct
+        // dialog:font-relief (none|embossed|engraved) #IMPLIED
+        switch (_fontRelief)
+        {
+        case awt::FontRelief::NONE: // don't export default
+            break;
+        case awt::FontRelief::EMBOSSED:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-relief", "embossed" );
+            break;
+        case awt::FontRelief::ENGRAVED:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-relief", "engraved" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected font-relief!" );
+            break;
+        }
+        // dialog:font-emphasismark (none|dot|circle|disc|accent|above|below) #IMPLIED
+        switch (_fontEmphasisMark)
+        {
+        case awt::FontEmphasisMark::NONE: // don't export default
+            break;
+        case awt::FontEmphasisMark::DOT:
+            pStyle->addAttribute(XMLNS_DIALOGS_PREFIX ":font-emphasismark", "dot" );
+            break;
+        case awt::FontEmphasisMark::CIRCLE:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-emphasismark", "circle" );
+            break;
+        case awt::FontEmphasisMark::DISC:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-emphasismark", "disc" );
+            break;
+        case awt::FontEmphasisMark::ACCENT:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-emphasismark", "accent" );
+            break;
+        case awt::FontEmphasisMark::ABOVE:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-emphasismark", "above" );
+            break;
+        case awt::FontEmphasisMark::BELOW:
+            pStyle->addAttribute( XMLNS_DIALOGS_PREFIX ":font-emphasismark", "below" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected font-emphasismark!" );
+            break;
+        }
+    }
+
+    return pStyle;
+}
+
+void ElementDescriptor::addNumberFormatAttr(
+    Reference< beans::XPropertySet > const & xFormatProperties )
+{
+    OUString sFormat;
+    lang::Locale locale;
+    OSL_VERIFY( xFormatProperties->getPropertyValue( "FormatString" ) >>= sFormat );
+    OSL_VERIFY( xFormatProperties->getPropertyValue( "Locale" ) >>= locale );
+
+    addAttribute(XMLNS_DIALOGS_PREFIX ":format-code", sFormat );
+
+    // format-locale
+    LanguageTag aLanguageTag( locale);
+    OUString aStr;
+    if (aLanguageTag.isIsoLocale())
+    {
+        // Old style "lll;CC" for compatibility, I really don't know what may
+        // consume this.
+        if (aLanguageTag.getCountry().isEmpty())
+            aStr = aLanguageTag.getLanguage();
+        else
+            aStr = aLanguageTag.getLanguage() + ";" + aLanguageTag.getCountry();
+    }
+    else
+    {
+        aStr = aLanguageTag.getBcp47( false);
+    }
+    addAttribute( XMLNS_DIALOGS_PREFIX ":format-locale", aStr );
+}
+
+Any ElementDescriptor::readProp( OUString const & rPropName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE != _xPropState->getPropertyState( rPropName ))
+    {
+        return _xProps->getPropertyValue( rPropName );
+    }
+    return Any();
+}
+
+void ElementDescriptor::readStringAttr(
+    OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE !=
+        _xPropState->getPropertyState( rPropName ))
+    {
+        Any a( _xProps->getPropertyValue( rPropName ) );
+        OUString v;
+        if (a >>= v)
+            addAttribute( rAttrName, v );
+        else
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected property type!" );
+    }
+}
+
+void ElementDescriptor::readHexLongAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE != _xPropState->getPropertyState( rPropName ))
+    {
+        Any a( _xProps->getPropertyValue( rPropName ) );
+        if (auto n = o3tl::tryAccess<sal_uInt32>(a))
+        {
+            addAttribute( rAttrName, "0x" + OUString::number(*n, 16)  );
+        }
+    }
+}
+
+void ElementDescriptor::readDateFormatAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (auto n = o3tl::tryAccess<sal_Int16>(a))
+    {
+        switch (*n)
+        {
+        case 0:
+            addAttribute( rAttrName, "system_short" );
+            break;
+        case 1:
+            addAttribute( rAttrName, "system_short_YY" );
+            break;
+        case 2:
+            addAttribute( rAttrName, "system_short_YYYY" );
+            break;
+        case 3:
+            addAttribute( rAttrName, "system_long" );
+            break;
+        case 4:
+            addAttribute( rAttrName, "short_DDMMYY" );
+            break;
+        case 5:
+            addAttribute( rAttrName, "short_MMDDYY" );
+            break;
+        case 6:
+            addAttribute( rAttrName, "short_YYMMDD" );
+            break;
+        case 7:
+            addAttribute( rAttrName, "short_DDMMYYYY" );
+            break;
+        case 8:
+            addAttribute( rAttrName, "short_MMDDYYYY" );
+            break;
+        case 9:
+            addAttribute( rAttrName, "short_YYYYMMDD" );
+            break;
+        case 10:
+            addAttribute( rAttrName, "short_YYMMDD_DIN5008" );
+            break;
+        case 11:
+            addAttribute( rAttrName, "short_YYYYMMDD_DIN5008" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected date format!" );
+            break;
+        }
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readDateAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (a.getValueTypeClass() == TypeClass_STRUCT && a.getValueType() == cppu::UnoType<util::Date>::get())
+    {
+        util::Date aUDate;
+        if (a >>= aUDate)
+        {
+            ::Date aTDate(aUDate);
+            addAttribute( rAttrName, OUString::number( aTDate.GetDate() ) );
+        }
+        else
+            OSL_FAIL( "### internal error" );
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readTimeAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (a.getValueTypeClass() == TypeClass_STRUCT && a.getValueType() == cppu::UnoType<util::Time>::get())
+    {
+        util::Time aUTime;
+        if (a >>= aUTime)
+        {
+            ::tools::Time aTTime(aUTime);
+            addAttribute( rAttrName, OUString::number( aTTime.GetTime() / ::tools::Time::nanoPerCenti ) );
+        }
+        else
+            OSL_FAIL( "### internal error" );
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readTimeFormatAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (auto n = o3tl::tryAccess<sal_Int16>(a))
+    {
+        switch (*n)
+        {
+        case 0:
+            addAttribute( rAttrName, "24h_short" );
+            break;
+        case 1:
+            addAttribute( rAttrName, "24h_long" );
+            break;
+        case 2:
+            addAttribute( rAttrName, "12h_short" );
+            break;
+        case 3:
+            addAttribute( rAttrName, "12h_long" );
+            break;
+        case 4:
+            addAttribute( rAttrName, "Duration_short" );
+            break;
+        case 5:
+            addAttribute( rAttrName, "Duration_long" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected time format!" );
+            break;
+        }
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readAlignAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (auto n = o3tl::tryAccess<sal_Int16>(a))
+    {
+        switch (*n)
+        {
+        case 0:
+            addAttribute( rAttrName, "left" );
+            break;
+        case 1:
+            addAttribute( rAttrName, "center" );
+            break;
+        case 2:
+            addAttribute( rAttrName, "right" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### illegal alignment value!" );
+            break;
+        }
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readVerticalAlignAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (a.getValueTypeClass() == TypeClass_ENUM && a.getValueType() == cppu::UnoType<style::VerticalAlignment>::get())
+    {
+        style::VerticalAlignment eAlign;
+        a >>= eAlign;
+        switch (eAlign)
+        {
+        case style::VerticalAlignment_TOP:
+            addAttribute( rAttrName, "top" );
+            break;
+        case style::VerticalAlignment_MIDDLE:
+            addAttribute( rAttrName, "center" );
+            break;
+        case style::VerticalAlignment_BOTTOM:
+            addAttribute( rAttrName, "bottom" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### illegal vertical alignment value!" );
+            break;
+        }
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readImageOrGraphicAttr(OUString const & rAttrName)
+{
+    OUString sURL;
+    if (beans::PropertyState_DEFAULT_VALUE != _xPropState->getPropertyState("Graphic"))
+    {
+        uno::Reference<graphic::XGraphic> xGraphic;
+        _xProps->getPropertyValue("Graphic") >>= xGraphic;
+        if (xGraphic.is())
+        {
+            Reference< document::XStorageBasedDocument > xDocStorage( _xDocument, UNO_QUERY );
+            if ( xDocStorage.is() )
+            {
+                Reference<XComponentContext> xContext = ::comphelper::getProcessComponentContext();
+                uno::Reference<document::XGraphicStorageHandler> xGraphicStorageHandler;
+                xGraphicStorageHandler.set(document::GraphicStorageHandler::createWithStorage(xContext, xDocStorage->getDocumentStorage()));
+                if (xGraphicStorageHandler.is())
+                {
+                    sURL = xGraphicStorageHandler->saveGraphic(xGraphic);
+                }
+            }
+        }
+    }
+    // tdf#130793 Above fails if the dialog is not part of a document. Export the ImageURL then.
+    if (sURL.isEmpty()
+        && beans::PropertyState_DEFAULT_VALUE != _xPropState->getPropertyState("ImageURL"))
+    {
+        _xProps->getPropertyValue("ImageURL") >>= sURL;
+    }
+    if (!sURL.isEmpty())
+        addAttribute(rAttrName, sURL);
+}
+
+void ElementDescriptor::readImageAlignAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    if (auto n = o3tl::tryAccess<sal_Int16>(a))
+    {
+        switch (*n)
+        {
+        case 0:
+            addAttribute( rAttrName, "left" );
+            break;
+        case 1:
+            addAttribute( rAttrName, "top" );
+            break;
+        case 2:
+            addAttribute( rAttrName, "right" );
+            break;
+        case 3:
+            addAttribute( rAttrName, "bottom" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### illegal image alignment value!" );
+            break;
+        }
+    }
+    else
+        OSL_FAIL( "### unexpected property type!" );
+}
+
+void ElementDescriptor::readImagePositionAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    auto n = o3tl::tryAccess<sal_Int16>(a);
+    if (!n)
+        return;
+
+    switch (*n)
+    {
+    case awt::ImagePosition::LeftTop:
+        addAttribute( rAttrName, "left-top" );
+        break;
+    case awt::ImagePosition::LeftCenter:
+        addAttribute( rAttrName, "left-center" );
+        break;
+    case awt::ImagePosition::LeftBottom:
+        addAttribute( rAttrName, "left-bottom" );
+        break;
+    case awt::ImagePosition::RightTop:
+        addAttribute( rAttrName, "right-top" );
+        break;
+    case awt::ImagePosition::RightCenter:
+        addAttribute( rAttrName, "right-center" );
+        break;
+    case awt::ImagePosition::RightBottom:
+        addAttribute( rAttrName, "right-bottom" );
+        break;
+    case awt::ImagePosition::AboveLeft:
+        addAttribute( rAttrName, "top-left" );
+        break;
+    case awt::ImagePosition::AboveCenter:
+        addAttribute( rAttrName, "top-center" );
+        break;
+    case awt::ImagePosition::AboveRight:
+        addAttribute( rAttrName, "top-right" );
+        break;
+    case awt::ImagePosition::BelowLeft:
+        addAttribute( rAttrName, "bottom-left" );
+        break;
+    case awt::ImagePosition::BelowCenter:
+        addAttribute( rAttrName, "bottom-center" );
+        break;
+    case awt::ImagePosition::BelowRight:
+        addAttribute( rAttrName, "bottom-right" );
+        break;
+    case awt::ImagePosition::Centered:
+        addAttribute( rAttrName, "center" );
+        break;
+    default:
+        SAL_WARN( "xmlscript.xmldlg", "### illegal image position value!" );
+        break;
+    }
+}
+
+void ElementDescriptor::readButtonTypeAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    auto n = o3tl::tryAccess<sal_Int16>(a);
+    if (!n)
+        return;
+
+    switch (static_cast<awt::PushButtonType>(*n))
+    {
+    case awt::PushButtonType_STANDARD:
+        addAttribute( rAttrName, "standard" );
+        break;
+    case awt::PushButtonType_OK:
+        addAttribute( rAttrName, "ok" );
+        break;
+    case awt::PushButtonType_CANCEL:
+        addAttribute( rAttrName, "cancel" );
+        break;
+    case awt::PushButtonType_HELP:
+        addAttribute( rAttrName, "help" );
+        break;
+    default:
+        SAL_WARN( "xmlscript.xmldlg", "### illegal button-type value!" );
+        break;
+    }
+}
+
+void ElementDescriptor::readOrientationAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    auto n = o3tl::tryAccess<sal_Int32>(a);
+    if (!n)
+        return;
+
+    switch (*n)
+    {
+    case 0:
+        addAttribute( rAttrName, "horizontal" );
+        break;
+    case 1:
+        addAttribute( rAttrName, "vertical" );
+        break;
+    default:
+        SAL_WARN( "xmlscript.xmldlg", "### illegal orientation value!" );
+        break;
+    }
+}
+
+void ElementDescriptor::readLineEndFormatAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any a( _xProps->getPropertyValue( rPropName ) );
+    auto n = o3tl::tryAccess<sal_Int16>(a);
+    if (!n)
+        return;
+
+    switch (*n)
+    {
+    case awt::LineEndFormat::CARRIAGE_RETURN:
+        addAttribute( rAttrName, "carriage-return" );
+        break;
+    case awt::LineEndFormat::LINE_FEED:
+        addAttribute( rAttrName, "line-feed" );
+        break;
+    case awt::LineEndFormat::CARRIAGE_RETURN_LINE_FEED:
+        addAttribute( rAttrName, "carriage-return-line-feed" );
+        break;
+    default:
+        SAL_WARN( "xmlscript.xmldlg", "### illegal line end format value!" );
+        break;
+    }
+}
+
+void ElementDescriptor::readDataAwareAttr( OUString const & rAttrName )
+{
+    Reference< lang::XMultiServiceFactory > xFac;
+    if ( _xDocument.is() )
+        xFac.set( _xDocument, uno::UNO_QUERY );
+
+    Reference< form::binding::XBindableValue > xBinding( _xProps, UNO_QUERY );
+
+    if ( xFac.is() && xBinding.is() && rAttrName == XMLNS_DIALOGS_PREFIX ":linked-cell" )
+    {
+        try
+        {
+            Reference< beans::XPropertySet > xConvertor( xFac->createInstance( "com.sun.star.table.CellAddressConversion" ), uno::UNO_QUERY );
+            Reference< beans::XPropertySet > xBindable( xBinding->getValueBinding(), UNO_QUERY );
+            if ( xBindable.is() )
+            {
+                table::CellAddress aAddress;
+                xBindable->getPropertyValue( "BoundCell" ) >>= aAddress;
+                xConvertor->setPropertyValue( "Address", Any( aAddress ) );
+                OUString sAddress;
+                xConvertor->getPropertyValue( "PersistentRepresentation" ) >>= sAddress;
+                if ( !sAddress.isEmpty() )
+                    addAttribute( rAttrName, sAddress );
+
+                SAL_INFO("xmlscript.xmldlg", "*** Bindable value " << sAddress );
+
+            }
+        }
+        catch( uno::Exception& )
+        {
+        }
+    }
+    Reference< form::binding::XListEntrySink > xEntrySink( _xProps, UNO_QUERY );
+    if ( !(xEntrySink.is() && rAttrName == XMLNS_DIALOGS_PREFIX ":source-cell-range") )
+        return;
+
+    Reference< beans::XPropertySet > xListSource( xEntrySink->getListEntrySource(), UNO_QUERY );
+    if ( !xListSource.is() )
+        return;
+
+    try
+    {
+        Reference< beans::XPropertySet > xConvertor( xFac->createInstance( "com.sun.star.table.CellRangeAddressConversion" ), uno::UNO_QUERY );
+
+        table::CellRangeAddress aAddress;
+        xListSource->getPropertyValue( "CellRange" ) >>= aAddress;
+
+        OUString sAddress;
+        xConvertor->setPropertyValue( "Address", Any( aAddress ) );
+        xConvertor->getPropertyValue( "PersistentRepresentation" ) >>= sAddress;
+        SAL_INFO("xmlscript.xmldlg","**** cell range source list " << sAddress );
+        if ( !sAddress.isEmpty() )
+            addAttribute( rAttrName, sAddress );
+    }
+    catch( uno::Exception& )
+    {
+    }
+}
+
+void ElementDescriptor::readSelectionTypeAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any aSelectionType ( _xProps->getPropertyValue( rPropName ) );
+
+    if (aSelectionType.getValueTypeClass() != TypeClass_ENUM ||
+        aSelectionType.getValueType() != cppu::UnoType<view::SelectionType>::get())
+        return;
+
+    ::view::SelectionType eSelectionType;
+    aSelectionType >>= eSelectionType;
+
+    switch (eSelectionType)
+    {
+        case ::view::SelectionType_NONE:
+            addAttribute( rAttrName, "none" );
+            break;
+        case ::view::SelectionType_SINGLE:
+            addAttribute( rAttrName, "single" );
+            break;
+        case ::view::SelectionType_MULTI:
+            addAttribute( rAttrName, "multi" );
+            break;
+        case ::view::SelectionType_RANGE:
+            addAttribute( rAttrName, "range" );
+            break;
+        default:
+            SAL_WARN( "xmlscript.xmldlg", "### illegal selection type value!" );
+            break;
+    }
+}
+
+void ElementDescriptor::readScrollableSettings()
+{
+    readLongAttr( "ScrollHeight",
+                  XMLNS_DIALOGS_PREFIX ":scrollheight" );
+    readLongAttr( "ScrollWidth",
+                  XMLNS_DIALOGS_PREFIX ":scrollwidth" );
+    readLongAttr( "ScrollTop",
+                  XMLNS_DIALOGS_PREFIX ":scrolltop" );
+    readLongAttr( "ScrollLeft",
+                  XMLNS_DIALOGS_PREFIX ":scrollleft" );
+    readBoolAttr( "HScroll",
+                  XMLNS_DIALOGS_PREFIX ":hscroll" );
+    readBoolAttr( "VScroll",
+                  XMLNS_DIALOGS_PREFIX ":vscroll" );
+}
+
+void ElementDescriptor::readImageScaleModeAttr( OUString const & rPropName, OUString const & rAttrName )
+{
+    if (beans::PropertyState_DEFAULT_VALUE == _xPropState->getPropertyState( rPropName ))
+        return;
+
+    Any aImageScaleMode( _xProps->getPropertyValue( rPropName ) );
+
+    if (aImageScaleMode.getValueTypeClass() != TypeClass_SHORT)
+        return;
+
+    sal_Int16 nImageScaleMode = 0;
+    aImageScaleMode >>= nImageScaleMode;
+
+    switch(nImageScaleMode)
+    {
+        case ::awt::ImageScaleMode::NONE:
+            addAttribute( rAttrName, "none" );
+            break;
+        case ::awt::ImageScaleMode::ISOTROPIC:
+            addAttribute( rAttrName, "isotropic" );
+            break;
+        case ::awt::ImageScaleMode::ANISOTROPIC:
+            addAttribute( rAttrName, "anisotropic" );
+            break;
+        default:
+            OSL_ENSURE( false, "### illegal image scale mode value.");
+            break;
+    }
+}
+
+void ElementDescriptor::readDefaults( bool supportPrintable, bool supportVisible )
+{
+    Any a( _xProps->getPropertyValue( "Name" ) );
+
+    // The following is a hack to allow 'form' controls to override the default
+    // control supported by dialogs. This should work well for both VBA support and
+    // normal LibreOffice (when normal 'Dialogs' decide to support form control models)
+    // In the future VBA support might require custom models ( and not the just the form
+    // variant of a control that we currently use ) In this case the door is still open,
+    // we just need to define a new way for the 'ServiceName' to be extracted from the
+    // incoming model. E.g. the use of supporting service
+    // "com.sun.star.form.FormComponent", 'ServiceName' and XPersistObject
+    // is only an implementation detail here, in the future some other
+    // method (perhaps a custom prop) could be used instead.
+    Reference< lang::XServiceInfo > xSrvInfo( _xProps, UNO_QUERY );
+    if ( xSrvInfo.is() && xSrvInfo->supportsService( "com.sun.star.form.FormComponent" ) )
+    {
+        Reference< io::XPersistObject > xPersist( _xProps, UNO_QUERY );
+        if ( xPersist.is() )
+        {
+            OUString sCtrlName = xPersist->getServiceName();
+            if ( !sCtrlName.isEmpty() )
+                    addAttribute( XMLNS_DIALOGS_PREFIX ":control-implementation", sCtrlName );
+        }
+    }
+    addAttribute( XMLNS_DIALOGS_PREFIX ":id", *o3tl::doAccess<OUString>(a) );
+    readShortAttr( "TabIndex", XMLNS_DIALOGS_PREFIX ":tab-index" );
+
+    bool bEnabled = false;
+    if (_xProps->getPropertyValue( "Enabled" ) >>= bEnabled)
+    {
+        if (! bEnabled)
+        {
+            addAttribute( XMLNS_DIALOGS_PREFIX ":disabled", "true" );
+        }
+    }
+    else
+    {
+        SAL_WARN( "xmlscript.xmldlg", "unexpected property type for \"Enabled\": not bool!" );
+    }
+
+    if (supportVisible) try
+    {
+        bool bVisible = true;
+        if (_xProps->getPropertyValue("EnableVisible" ) >>= bVisible)
+        {
+
+            // only write out the non default case
+            if (! bVisible)
+            {
+                addAttribute( XMLNS_DIALOGS_PREFIX ":visible", "false" );
+            }
+        }
+    }
+    catch( Exception& )
+    {
+        DBG_UNHANDLED_EXCEPTION("xmlscript.xmldlg");
+    }
+    // force writing of pos/size
+    a = _xProps->getPropertyValue( "PositionX" );
+    if (auto n = o3tl::tryAccess<sal_Int32>(a))
+    {
+        addAttribute( XMLNS_DIALOGS_PREFIX ":left", OUString::number(*n) );
+    }
+    a = _xProps->getPropertyValue( "PositionY" );
+    if (auto n = o3tl::tryAccess<sal_Int32>(a))
+    {
+        addAttribute( XMLNS_DIALOGS_PREFIX ":top", OUString::number(*n) );
+    }
+    a = _xProps->getPropertyValue( "Width" );
+    if (auto n = o3tl::tryAccess<sal_Int32>(a))
+    {
+        addAttribute( XMLNS_DIALOGS_PREFIX ":width", OUString::number(*n) );
+    }
+    a = _xProps->getPropertyValue( "Height" );
+    if (auto n = o3tl::tryAccess<sal_Int32>(a))
+    {
+        addAttribute( XMLNS_DIALOGS_PREFIX ":height", OUString::number(*n) );
+    }
+
+    if (supportPrintable)
+    {
+        readBoolAttr( "Printable", XMLNS_DIALOGS_PREFIX ":printable" );
+    }
+    readLongAttr( "Step", XMLNS_DIALOGS_PREFIX ":page" );
+    readStringAttr( "Tag", XMLNS_DIALOGS_PREFIX ":tag" );
+    readStringAttr( "HelpText", XMLNS_DIALOGS_PREFIX ":help-text" );
+    readStringAttr( "HelpURL", XMLNS_DIALOGS_PREFIX ":help-url" );
+}
+
+void ElementDescriptor::readEvents()
+{
+    Reference< script::XScriptEventsSupplier > xSupplier( _xProps, UNO_QUERY );
+    if (!xSupplier.is())
+        return;
+
+    Reference< container::XNameContainer > xEvents( xSupplier->getEvents() );
+    if (!xEvents.is())
+        return;
+
+    const Sequence< OUString > aNames( xEvents->getElementNames() );
+    for ( const auto& rName : aNames )
+    {
+        script::ScriptEventDescriptor descr;
+        if (xEvents->getByName( rName ) >>= descr)
+        {
+            SAL_WARN_IF( descr.ListenerType.isEmpty() ||
+                        descr.EventMethod.isEmpty() ||
+                        descr.ScriptCode.isEmpty() ||
+                        descr.ScriptType.isEmpty() , "xmlscript.xmldlg", "### invalid event descr!" );
+
+            OUString aEventName;
+
+            if (descr.AddListenerParam.isEmpty())
+            {
+                // detection of event-name
+                StringTriple const * p = g_pEventTranslations;
+                while (p->first)
+                {
+                    if (descr.EventMethod.equalsAscii(p->second) &&
+                        descr.ListenerType.equalsAscii(p->first))
+                    {
+                        aEventName = OStringToOUString( p->third, RTL_TEXTENCODING_ASCII_US );
+                        break;
+                    }
+                    ++p;
+                }
+            }
+
+            rtl::Reference<ElementDescriptor> pElem;
+
+            if (!aEventName.isEmpty()) // script:event
+            {
+                pElem = new ElementDescriptor( XMLNS_SCRIPT_PREFIX ":event" );
+                pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":event-name", aEventName );
+            }
+            else // script:listener-event
+            {
+                pElem = new ElementDescriptor( XMLNS_SCRIPT_PREFIX ":listener-event" );
+                pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":listener-type", descr.ListenerType );
+                pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":listener-method", descr.EventMethod );
+
+                if (!descr.AddListenerParam.isEmpty())
+                {
+                    pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":listener-param", descr.AddListenerParam );
+                }
+            }
+            if ( descr.ScriptType == "StarBasic" )
+            {
+                // separate optional location
+                sal_Int32 nIndex = descr.ScriptCode.indexOf( ':' );
+                if (nIndex >= 0)
+                {
+                    pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":location", descr.ScriptCode.copy( 0, nIndex ) );
+                    pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":macro-name", descr.ScriptCode.copy( nIndex +1 ) );
+                }
+                else
+                {
+                    pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":macro-name", descr.ScriptCode );
+                }
+            }
+            else
+            {
+                pElem->addAttribute(XMLNS_SCRIPT_PREFIX ":macro-name", descr.ScriptCode );
+            }
+
+            // language
+            pElem->addAttribute( XMLNS_SCRIPT_PREFIX ":language", descr.ScriptType );
+
+            addSubElement( pElem );
+        }
+        else
+        {
+            SAL_WARN( "xmlscript.xmldlg", "### unexpected event type in container!" );
+        }
+    }
+}
+
+static bool equalFont( Style const & style1, Style const & style2 )
+{
+    awt::FontDescriptor const & f1 = style1._descr;
+    awt::FontDescriptor const & f2 = style2._descr;
+    return (
+        f1.Name == f2.Name &&
+        f1.Height == f2.Height &&
+        f1.Width == f2.Width &&
+        f1.StyleName == f2.StyleName &&
+        f1.Family == f2.Family &&
+        f1.CharSet == f2.CharSet &&
+        f1.Pitch == f2.Pitch &&
+        f1.CharacterWidth == f2.CharacterWidth &&
+        f1.Weight == f2.Weight &&
+        f1.Slant == f2.Slant &&
+        f1.Underline == f2.Underline &&
+        f1.Strikeout == f2.Strikeout &&
+        f1.Orientation == f2.Orientation &&
+        bool(f1.Kerning) == bool(f2.Kerning) &&
+        bool(f1.WordLineMode) == bool(f2.WordLineMode) &&
+        f1.Type == f2.Type &&
+        style1._fontRelief == style2._fontRelief &&
+        style1._fontEmphasisMark == style2._fontEmphasisMark
+        );
+}
+
+OUString StyleBag::getStyleId( Style const & rStyle )
+{
+    if (! rStyle._set) // nothing set
+    {
+        return OUString(); // everything default: no need to export a specific style
+    }
+
+    // lookup existing style
+    for (auto & rExistingStyle : _styles)
+    {
+        short demanded_defaults = ~rStyle._set & rStyle._all;
+        // test, if defaults are not set
+        if ((~rExistingStyle._set & demanded_defaults) == demanded_defaults &&
+            (rStyle._set & (rExistingStyle._all & ~rExistingStyle._set)) == 0)
+        {
+            short bset = rStyle._set & rExistingStyle._set;
+            if ((bset & 0x1) &&
+                rStyle._backgroundColor != rExistingStyle._backgroundColor)
+                continue;
+            if ((bset & 0x2) &&
+                rStyle._textColor != rExistingStyle._textColor)
+                continue;
+            if ((bset & 0x20) &&
+                rStyle._textLineColor != rExistingStyle._textLineColor)
+                continue;
+            if ((bset & 0x10) &&
+                rStyle._fillColor != rExistingStyle._fillColor)
+                continue;
+            if ((bset & 0x4) &&
+                (rStyle._border != rExistingStyle._border ||
+                 (rStyle._border == BORDER_SIMPLE_COLOR &&
+                  rStyle._borderColor != rExistingStyle._borderColor)))
+                continue;
+            if ((bset & 0x8) &&
+                !equalFont( rStyle, rExistingStyle ))
+                continue;
+            if ((bset & 0x40) &&
+                rStyle._visualEffect != rExistingStyle._visualEffect)
+                continue;
+
+            // merge in
+            short bnset = rStyle._set & ~rExistingStyle._set;
+            if (bnset & 0x1)
+                rExistingStyle._backgroundColor = rStyle._backgroundColor;
+            if (bnset & 0x2)
+                rExistingStyle._textColor = rStyle._textColor;
+            if (bnset & 0x20)
+                rExistingStyle._textLineColor = rStyle._textLineColor;
+            if (bnset & 0x10)
+                rExistingStyle._fillColor = rStyle._fillColor;
+            if (bnset & 0x4) {
+                rExistingStyle._border = rStyle._border;
+                rExistingStyle._borderColor = rStyle._borderColor;
+            }
+            if (bnset & 0x8) {
+                rExistingStyle._descr = rStyle._descr;
+                rExistingStyle._fontRelief = rStyle._fontRelief;
+                rExistingStyle._fontEmphasisMark = rStyle._fontEmphasisMark;
+            }
+            if (bnset & 0x40)
+                rExistingStyle._visualEffect = rStyle._visualEffect;
+
+            rExistingStyle._all |= rStyle._all;
+            rExistingStyle._set |= rStyle._set;
+
+            return rExistingStyle._id;
+        }
+    }
+
+    // no appr style found, append new
+    Style aNewStyle( rStyle );
+    aNewStyle._id = OUString::number( _styles.size() );
+    _styles.push_back( aNewStyle );
+    return _styles.back()._id;
+}
+
+StyleBag::~StyleBag()
+{
+}
+
+void StyleBag::dump( Reference< xml::sax::XExtendedDocumentHandler > const & xOut )
+{
+    if ( _styles.empty())
+        return;
+
+    OUString aStylesName( XMLNS_DIALOGS_PREFIX ":styles" );
+    xOut->ignorableWhitespace( OUString() );
+    xOut->startElement( aStylesName, Reference< xml::sax::XAttributeList >() );
+    // export styles
+    for (auto & _style : _styles)
+    {
+        Reference< xml::sax::XAttributeList > xAttr( _style.createElement() );
+        static_cast< ElementDescriptor * >( xAttr.get() )->dump( xOut );
+    }
+    xOut->ignorableWhitespace( OUString() );
+    xOut->endElement( aStylesName );
+}
+
+void exportDialogModel(
+    Reference< xml::sax::XExtendedDocumentHandler > const & xOut,
+    Reference< container::XNameContainer > const & xDialogModel,
+    Reference< frame::XModel > const & xDocument )
+{
+    StyleBag all_styles;
+    // window
+    Reference< beans::XPropertySet > xProps( xDialogModel, UNO_QUERY );
+    OSL_ASSERT( xProps.is() );
+    Reference< beans::XPropertyState > xPropState( xProps, UNO_QUERY );
+    OSL_ASSERT( xPropState.is() );
+
+    rtl::Reference<ElementDescriptor> pElem = new ElementDescriptor( xProps, xPropState, XMLNS_DIALOGS_PREFIX ":bulletinboard", xDocument );
+    pElem->readBullitinBoard( &all_styles );
+
+    xOut->startDocument();
+
+    xOut->unknown(
+        "<!DOCTYPE dlg:window PUBLIC \"-//OpenOffice.org//DTD OfficeDocument 1.0//EN\""
+        " \"dialog.dtd\">" );
+    xOut->ignorableWhitespace( OUString() );
+
+    OUString aWindowName( XMLNS_DIALOGS_PREFIX ":window" );
+    rtl::Reference<ElementDescriptor> pWindow = new ElementDescriptor( xProps, xPropState, aWindowName, xDocument );
+    pWindow->readDialogModel( &all_styles );
+    xOut->ignorableWhitespace( OUString() );
+    xOut->startElement( aWindowName, pWindow );
+     // dump out events
+    pWindow->dumpSubElements( xOut );
+    // dump out stylebag
+    all_styles.dump( xOut );
+
+    if ( xDialogModel->getElementNames().hasElements() )
+    {
+        // open up bulletinboard
+        OUString aBBoardName( XMLNS_DIALOGS_PREFIX ":bulletinboard" );
+        xOut->ignorableWhitespace( OUString() );
+        xOut->startElement( aBBoardName, pElem );
+
+        pElem->dumpSubElements( xOut );
+        // end bulletinboard
+        xOut->ignorableWhitespace( OUString() );
+        xOut->endElement( aBBoardName );
+    }
+
+    // end window
+    xOut->ignorableWhitespace( OUString() );
+    xOut->endElement( aWindowName );
+
+    xOut->endDocument();
+}
+
+}
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

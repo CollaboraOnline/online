@@ -1,0 +1,104 @@
+--- configure	2022-08-27 10:09:35.721992976 +0100
++++ configure	2022-08-27 10:10:00.363873391 +0100
+@@ -14940,7 +14940,8 @@
+ 
+ MAYBE_WARN="$MAYBE_WARN -fno-strict-aliasing -fno-common"
+ 
+-MAYBE_WARN="$MAYBE_WARN -Wp,-D_FORTIFY_SOURCE=2"
++# breaks msan
++# MAYBE_WARN="$MAYBE_WARN -Wp,-D_FORTIFY_SOURCE=2"
+ 
+ # invalidate cached value if MAYBE_WARN has changed
+ if test "x$cairo_cv_warn_maybe" != "x$MAYBE_WARN"; then
+--- src/cairo-fixed-private.h
++++ src/cairo-fixed-private.h
+@@ -61,7 +61,7 @@
+ static inline cairo_fixed_t
+ _cairo_fixed_from_int (int i)
+ {
+-    return i << CAIRO_FIXED_FRAC_BITS;
++    return (unsigned)i << CAIRO_FIXED_FRAC_BITS;
+ }
+ 
+ /* This is the "magic number" approach to converting a double into fixed
+@@ -249,7 +249,7 @@
+     } else if ((f >> CAIRO_FIXED_FRAC_BITS) > INT16_MAX) {
+ 	x = INT32_MAX;
+     } else {
+-	x = f << (16 - CAIRO_FIXED_FRAC_BITS);
++	x = (uint32_t)f << (16 - CAIRO_FIXED_FRAC_BITS);
+     }
+ 
+     return x;
+--- src/cairo-gstate.c
++++ src/cairo-gstate.c
+@@ -2297,7 +2297,7 @@
+ 		if (!drop || KEEP_GLYPH (transformed_glyphs[j]))
+ 		    j++;
+ 	    }
+-	    memcpy (transformed_clusters, clusters,
++	    if (num_clusters != 0) memcpy (transformed_clusters, clusters,
+ 		    num_clusters * sizeof (cairo_text_cluster_t));
+ 	} else {
+ 	    const cairo_glyph_t *cur_glyph;
+@@ -2352,7 +2352,7 @@
+ 		if (! drop || KEEP_GLYPH (transformed_glyphs[j]))
+ 		    j++;
+ 	    }
+-	    memcpy (transformed_clusters, clusters,
++	    if (num_clusters != 0) memcpy (transformed_clusters, clusters,
+ 		    num_clusters * sizeof (cairo_text_cluster_t));
+ 	} else {
+ 	    const cairo_glyph_t *cur_glyph;
+--- src/cairo-surface.c
++++ src/cairo-surface.c
+@@ -2849,7 +2849,7 @@
+ 
+     if (_cairo_scaled_font_has_color_glyphs (scaled_font)) {
+         utf8_copy = malloc (sizeof (char) * utf8_len);
+-        memcpy (utf8_copy, utf8, sizeof (char) * utf8_len);
++        if (utf8_len != 0) memcpy (utf8_copy, utf8, sizeof (char) * utf8_len);
+         utf8 = utf8_copy;
+ 
+         status = composite_color_glyphs (surface, op,
+--- src/cairo-tor-scan-converter.c
++++ src/cairo-tor-scan-converter.c
+@@ -253,7 +253,7 @@
+ #elif GRID_XY == 15
+ #  define  GRID_AREA_TO_ALPHA(c)  (((c) << 4) + (c))
+ #elif GRID_XY == 2*256*15
+-#  define  GRID_AREA_TO_ALPHA(c)  (((c) + ((c)<<4) + 256) >> 9)
++#  define  GRID_AREA_TO_ALPHA(c)  (((c) + ((uint32_t)(c)<<4) + 256) >> 9)
+ #else
+ #  define  GRID_AREA_TO_ALPHA(c)  (((c)*255 + GRID_XY/2) / GRID_XY)
+ #endif
+--- src/cairo-xlib-render-compositor.c
++++ src/cairo-xlib-render-compositor.c
+@@ -1849,8 +1849,8 @@
+ 	    return _cairo_error (CAIRO_STATUS_NO_MEMORY);
+     }
+ 
+-    dx = -dst_x << 16;
+-    dy = -dst_y << 16;
++    dx = (unsigned)-dst_x << 16;
++    dy = (unsigned)-dst_y << 16;
+     for (i = 0; i < traps->num_traps; i++) {
+ 	cairo_trapezoid_t *t = &traps->traps[i];
+ 
+--- src/cairo-xlib-surface-shm.c
++++ src/cairo-xlib-surface-shm.c
+@@ -1152,9 +1152,11 @@
+     cairo_surface_t *surface;
+ 
+     surface = NULL;
+-    if (has_shm (other))
+-	surface = &_cairo_xlib_shm_surface_create (other, format, width, height,
+-						   FALSE, has_shm_pixmaps (other))->image.base;
++    if (has_shm (other)) {
++	cairo_xlib_shm_surface_t * shm_surface = _cairo_xlib_shm_surface_create (other, format, width, height,
++						   FALSE, has_shm_pixmaps (other));
++	if (shm_surface) surface = &shm_surface->image.base;
++    }
+ 
+     return surface;
+ }

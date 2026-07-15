@@ -1,0 +1,13 @@
+---
+assumeFilename: io/source/stm/odata.cxx
+excludelist:
+    io/source/connector/connector.hxx:
+    # Base class needs full type
+    - com/sun/star/connection/XConnection.hpp
+    - com/sun/star/connection/XConnectionBroadcaster.hpp
+    # Don't replace with impl. detail
+    - osl/socket.hxx
+    - osl/pipe.hxx
+    io/source/stm/opump.cxx:
+    # Don't replace with URE API impl. detail
+    - cppuhelper/interfacecontainer.hxx

@@ -1,0 +1,8 @@
+--enable-kf5
+--disable-dependency-tracking
+--with-jdk-home=/etc/alternatives/java_sdk_17
+--enable-odk
+--enable-mergelibs
+--disable-dconf
+--enable-python=internal
+--enable-atspi-tests

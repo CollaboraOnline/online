@@ -1,0 +1,50 @@
+---
+assumeFilename: xmloff/source/core/xmlexp.cxx
+excludelist:
+    xmloff/inc/XMLImageMapExport.hxx:
+    # Needed for css shortcut
+    - sal/types.h
+    xmloff/inc/XMLTextColumnsExport.hxx:
+    # Needed for css shortcut
+    - sal/types.h
+    xmloff/source/chart/PropertyMap.hxx:
+    # Needed for constants used in arrays
+    - xmloff/maptype.hxx
+    - xmloff/xmlnamespace.hxx
+    - xmloff/xmlement.hxx
+    - com/sun/star/chart/ChartAxisArrangeOrderType.hpp
+    - com/sun/star/chart/ChartAxisLabelPosition.hpp
+    - com/sun/star/chart/ChartAxisMarkPosition.hpp
+    - com/sun/star/chart/ErrorBarStyle.hpp
+    - com/sun/star/chart/ChartSolidType.hpp
+    - com/sun/star/chart/ChartDataRowSource.hpp
+    - com/sun/star/chart/DataLabelPlacement.hpp
+    - com/sun/star/chart/MissingValueTreatment.hpp
+    xmloff/source/forms/logging.hxx:
+    # Used after #ifdef TIMELOG
+    - stack
+    - sal/types.h
+    xmloff/source/forms/propertyexport.hxx:
+    # Used after #ifdef in non-DBG_UTIL builds
+    - xmloff/xmlexp.hxx
+    xmloff/source/xforms/XFormsModelExport.hxx:
+    # Needed for css shortcut
+    - sal/types.h
+    xmloff/source/core/fasttokenhandler.cxx:
+    # Needed for special array initialization
+    - tokennames.inc
+    xmloff/source/draw/sdpropls.cxx:
+    # Needed for extern type definitions at linking time
+    - enummaps.hxx
+    xmloff/source/meta/MetaExportComponent.cxx:
+    # Needed for direct member access
+    - com/sun/star/frame/XModel.hpp
+    xmloff/source/text/txtprmap.cxx:
+    # Needed for constructors parameter
+    - rtl/ref.hxx
+    xmloff/source/core/RDFaExportHelper.cxx:
+    - com/sun/star/frame/XModel.hpp
+    xmloff/source/draw/sdxmlimp.cxx:
+    - com/sun/star/frame/XModel.hpp
+    xmloff/source/xforms/xformsexport.cxx:
+    - com/sun/star/frame/XModel.hpp

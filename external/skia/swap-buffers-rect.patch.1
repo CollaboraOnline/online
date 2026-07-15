@@ -1,0 +1,155 @@
+diff -ur skia.org/tools/sk_app/MetalWindowContext.h skia/tools/sk_app/MetalWindowContext.h
+--- skia.org/tools/sk_app/MetalWindowContext.h	2023-07-08 21:49:27.179700423 +0200
++++ skia/tools/sk_app/MetalWindowContext.h	2023-07-08 21:51:53.416328675 +0200
+@@ -51,7 +51,7 @@
+ 
+     static void checkDestroyShared();
+ 
+-    void onSwapBuffers() override;
++    void onSwapBuffers(const SkIRect* rect = nullptr) override;
+ 
+     bool                        fValid;
+ 
+diff -ur skia.org/tools/sk_app/MetalWindowContext.mm skia/tools/sk_app/MetalWindowContext.mm
+--- skia.org/tools/sk_app/MetalWindowContext.mm	2023-07-08 21:49:27.179700423 +0200
++++ skia/tools/sk_app/MetalWindowContext.mm	2023-07-08 21:52:10.064396318 +0200
+@@ -191,7 +191,7 @@
+     return surface;
+ }
+ 
+-void MetalWindowContext::onSwapBuffers() {
++void MetalWindowContext::onSwapBuffers(const SkIRect*) {
+     id<CAMetalDrawable> currentDrawable = (id<CAMetalDrawable>)fDrawableHandle;
+ 
+     id<MTLCommandBuffer> commandBuffer([*fShared->fQueue commandBuffer]);
+diff -ur skia.org/tools/sk_app/unix/RasterWindowContext_unix.cpp skia/tools/sk_app/unix/RasterWindowContext_unix.cpp
+--- skia.org/tools/sk_app/unix/RasterWindowContext_unix.cpp	2023-07-08 21:49:27.183700444 +0200
++++ skia/tools/sk_app/unix/RasterWindowContext_unix.cpp	2023-07-08 21:54:06.840852252 +0200
+@@ -24,7 +24,7 @@
+     void setDisplayParams(const DisplayParams& params) override;
+ 
+ protected:
+-    void onSwapBuffers() override;
++    void onSwapBuffers(const SkIRect* rect = nullptr) override;
+ 
+     sk_sp<SkSurface> fBackbufferSurface;
+     Display* fDisplay;
+@@ -58,7 +58,7 @@
+ 
+ sk_sp<SkSurface> RasterWindowContext_xlib::getBackbufferSurface() { return fBackbufferSurface; }
+ 
+-void RasterWindowContext_xlib::onSwapBuffers() {
++void RasterWindowContext_xlib::onSwapBuffers(const SkIRect* rect) {
+     SkPixmap pm;
+     if (!fBackbufferSurface->peekPixels(&pm)) {
+         return;
+@@ -80,7 +80,9 @@
+     if (!XInitImage(&image)) {
+         return;
+     }
+-    XPutImage(fDisplay, fWindow, fGC, &image, 0, 0, 0, 0, pm.width(), pm.height());
++    SkIRect update = rect ? *rect : SkIRect::MakeWH( pm.width(), pm.height());
++    XPutImage(fDisplay, fWindow, fGC, &image, update.x(), update.y(),
++              update.x(), update.y(), update.width(), update.height());
+ }
+ 
+ }  // anonymous namespace
+diff -ur skia.org/tools/sk_app/VulkanWindowContext.cpp skia/tools/sk_app/VulkanWindowContext.cpp
+--- skia.org/tools/sk_app/VulkanWindowContext.cpp	2023-07-08 21:49:27.179700423 +0200
++++ skia/tools/sk_app/VulkanWindowContext.cpp	2023-07-08 21:52:53.676570245 +0200
+@@ -572,7 +572,7 @@
+     return sk_ref_sp(surface);
+ }
+ 
+-void VulkanWindowContext::onSwapBuffers() {
++void VulkanWindowContext::onSwapBuffers(const SkIRect*) {
+ 
+     BackbufferInfo* backbuffer = fBackbuffers + fCurrentBackbufferIndex;
+     sk_sp<SkSurface> surface = fSurfaces[backbuffer->fImageIndex];
+diff -ur skia.org/tools/sk_app/VulkanWindowContext.h skia/tools/sk_app/VulkanWindowContext.h
+--- skia.org/tools/sk_app/VulkanWindowContext.h	2023-07-08 21:49:27.179700423 +0200
++++ skia/tools/sk_app/VulkanWindowContext.h	2023-07-08 21:52:34.580494658 +0200
+@@ -71,7 +71,7 @@
+     bool createSwapchain(int width, int height, const DisplayParams& params);
+     bool createBuffers(VkFormat format, VkImageUsageFlags, SkColorType colorType, VkSharingMode);
+     void destroyBuffers();
+-    void onSwapBuffers() override;
++    void onSwapBuffers(const SkIRect* rect = nullptr) override;
+ 
+     // Create functions
+     CreateVkSurfaceFn fCreateVkSurfaceFn;
+diff -ur skia.org/tools/sk_app/win/RasterWindowContext_win.cpp skia/tools/sk_app/win/RasterWindowContext_win.cpp
+--- skia.org/tools/sk_app/win/RasterWindowContext_win.cpp	2023-07-08 21:49:27.183700444 +0200
++++ skia/tools/sk_app/win/RasterWindowContext_win.cpp	2023-07-08 21:55:26.169145828 +0200
+@@ -27,7 +27,7 @@
+     void setDisplayParams(const DisplayParams& params) override;
+ 
+ protected:
+-    void onSwapBuffers() override;
++    void onSwapBuffers(const SkIRect* rect=nullptr) override;
+ 
+     SkAutoMalloc fSurfaceMemory;
+     sk_sp<SkSurface> fBackbufferSurface;
+@@ -73,13 +73,17 @@
+ 
+ sk_sp<SkSurface> RasterWindowContext_win::getBackbufferSurface() { return fBackbufferSurface; }
+ 
+-void RasterWindowContext_win::onSwapBuffers() {
++void RasterWindowContext_win::onSwapBuffers(const SkIRect* rect) {
+     BITMAPINFO* bmpInfo = reinterpret_cast<BITMAPINFO*>(fSurfaceMemory.get());
+     HDC dc = GetDC(fWnd);
+     SkPixmap pixmap;
+     fBackbufferSurface->peekPixels(&pixmap);
+-    StretchDIBits(dc, 0, 0, fWidth, fHeight, 0, 0, fWidth, fHeight, pixmap.addr(), bmpInfo,
+-                   DIB_RGB_COLORS, SRCCOPY);
++    SkIRect update = rect ? *rect : SkIRect::MakeWH( fWidth, fHeight );
++    // It appears that y-axis handling is broken if it doesn't match the window size.
++    update = SkIRect::MakeXYWH( update.x(), 0, update.width(), fHeight );
++    StretchDIBits(dc, update.x(), update.y(), update.width(), update.height(),
++                  update.x(), update.y(), update.width(), update.height(),
++                  pixmap.addr(), bmpInfo, DIB_RGB_COLORS, SRCCOPY);
+     ReleaseDC(fWnd, dc);
+ }
+ 
+diff -ur skia.org/tools/sk_app/WindowContext.cpp skia/tools/sk_app/WindowContext.cpp
+--- skia.org/tools/sk_app/WindowContext.cpp	2023-07-08 21:49:27.179700423 +0200
++++ skia/tools/sk_app/WindowContext.cpp	2023-07-08 21:56:23.373350669 +0200
+@@ -20,7 +20,7 @@
+ 
+ WindowContext::~WindowContext() {}
+ 
+-void WindowContext::swapBuffers() {
++void WindowContext::swapBuffers(const SkIRect* rect) {
+ #if defined(SK_GRAPHITE)
+     if (fGraphiteContext) {
+         SkASSERT(fGraphiteRecorder);
+@@ -33,7 +33,7 @@
+         }
+     }
+ #endif
+-    this->onSwapBuffers();
++    this->onSwapBuffers(rect);
+ }
+ 
+ }   //namespace sk_app
+diff -ur skia.org/tools/sk_app/WindowContext.h skia/tools/sk_app/WindowContext.h
+--- skia.org/tools/sk_app/WindowContext.h	2023-07-08 21:49:27.179700423 +0200
++++ skia/tools/sk_app/WindowContext.h	2023-07-08 21:51:08.804143750 +0200
+@@ -31,7 +31,7 @@
+ 
+     virtual sk_sp<SkSurface> getBackbufferSurface() = 0;
+ 
+-    void swapBuffers();
++    void swapBuffers(const SkIRect* rect = nullptr);
+ 
+     virtual bool isValid() = 0;
+ 
+@@ -57,7 +57,7 @@
+ protected:
+     virtual bool isGpuContext() { return true;  }
+ 
+-    virtual void onSwapBuffers() = 0;
++    virtual void onSwapBuffers(const SkIRect* rect = nullptr) = 0;
+ 
+     sk_sp<GrDirectContext> fContext;
+ #if defined(SK_GRAPHITE)

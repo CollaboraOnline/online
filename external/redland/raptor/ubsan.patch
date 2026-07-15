@@ -1,0 +1,11 @@
+--- src/raptor_rfc2396.c
++++ src/raptor_rfc2396.c
+@@ -386,7 +386,7 @@
+   } 
+ 
+   
+-  if(prev && s == (cur+2) && cur[0] == '.' && cur[1] == '.') {
++  if(prev && cur && s == (cur+2) && cur[0] == '.' && cur[1] == '.') {
+     /* Remove <component>/.. at the end of the path */
+     *prev = '\0';
+     path_len -= (s-prev);

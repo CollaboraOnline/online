@@ -1,0 +1,4 @@
+*.doc binary
+*.sdw binary
+*.jcs binary
+schema/*/* export-ignore

@@ -1,0 +1,811 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * This file incorporates work covered by the following license notice:
+ *
+ *   Licensed to the Apache Software Foundation (ASF) under one or more
+ *   contributor license agreements. See the NOTICE file distributed
+ *   with this work for additional information regarding copyright
+ *   ownership. The ASF licenses this file to you under the Apache
+ *   License, Version 2.0 (the "License"); you may not use this file
+ *   except in compliance with the License. You may obtain a copy of
+ *   the License at http://www.apache.org/licenses/LICENSE-2.0 .
+ */
+
+#include <memory>
+#include <acmplwrd.hxx>
+#include <breakit.hxx>
+#include <cellatr.hxx>
+#include <checkit.hxx>
+#include <cmdid.h>
+#include <comphelper/processfactory.hxx>
+#include <doc.hxx>
+#include <editeng/acorrcfg.hxx>
+#include <editeng/autokernitem.hxx>
+#include <editeng/blinkitem.hxx>
+#include <editeng/boxitem.hxx>
+#include <editeng/brushitem.hxx>
+#include <editeng/formatbreakitem.hxx>
+#include <editeng/charhiddenitem.hxx>
+#include <editeng/charreliefitem.hxx>
+#include <editeng/charrotateitem.hxx>
+#include <editeng/charscaleitem.hxx>
+#include <editeng/cmapitem.hxx>
+#include <editeng/colritem.hxx>
+#include <editeng/contouritem.hxx>
+#include <editeng/crossedoutitem.hxx>
+#include <editeng/emphasismarkitem.hxx>
+#include <editeng/escapementitem.hxx>
+#include <editeng/fontitem.hxx>
+#include <editeng/fhgtitem.hxx>
+#include <editeng/forbiddenruleitem.hxx>
+#include <editeng/frmdiritem.hxx>
+#include <editeng/hngpnctitem.hxx>
+#include <editeng/hyphenzoneitem.hxx>
+#include <editeng/keepitem.hxx>
+#include <editeng/kernitem.hxx>
+#include <editeng/langitem.hxx>
+#include <editeng/lrspitem.hxx>
+#include <editeng/lspcitem.hxx>
+#include <editeng/nhypitem.hxx>
+#include <editeng/opaqitem.hxx>
+#include <editeng/orphitem.hxx>
+#include <editeng/paravertalignitem.hxx>
+#include <editeng/pbinitem.hxx>
+#include <editeng/pgrditem.hxx>
+#include <editeng/prntitem.hxx>
+#include <editeng/protitem.hxx>
+#include <editeng/postitem.hxx>
+#include <editeng/rsiditem.hxx>
+#include <svl/grabbagitem.hxx>
+#include <svl/voiditem.hxx>
+#include <editeng/scriptspaceitem.hxx>
+#include <editeng/shaditem.hxx>
+#include <editeng/shdditem.hxx>
+#include <editeng/spltitem.hxx>
+#include <editeng/svxacorr.hxx>
+#include <editeng/swafopt.hxx>
+#include <editeng/tstpitem.hxx>
+#include <editeng/twolinesitem.hxx>
+#include <editeng/ulspitem.hxx>
+#include <editeng/udlnitem.hxx>
+#include <editeng/wghtitem.hxx>
+#include <editeng/widwitem.hxx>
+#include <editeng/wrlmitem.hxx>
+#include <editeng/xmlcnitm.hxx>
+#include <i18nutil/transliteration.hxx>
+#include <editsh.hxx>
+#include <fchrfmt.hxx>
+#include <fmtanchr.hxx>
+#include <fmtautofmt.hxx>
+#include <fmtclbl.hxx>
+#include <fmtclds.hxx>
+#include <fmtcnct.hxx>
+#include <fmtcntnt.hxx>
+#include <fmteiro.hxx>
+#include <fmtflcnt.hxx>
+#include <fmtfld.hxx>
+#include <fmtfollowtextflow.hxx>
+#include <fmtfordr.hxx>
+#include <fmtfsize.hxx>
+#include <fmtftn.hxx>
+#include <fmtftntx.hxx>
+#include <formatlinebreak.hxx>
+#include <fmthdft.hxx>
+#include <fmtinfmt.hxx>
+#include <fmtline.hxx>
+#include <fmtlsplt.hxx>
+#include <fmtmeta.hxx>
+#include <formatcontentcontrol.hxx>
+#include <fmtornt.hxx>
+#include <fmtpdsc.hxx>
+#include <fmtrfmrk.hxx>
+#include <fmtrowsplt.hxx>
+#include <formatflysplit.hxx>
+#include <formatwraptextatflystart.hxx>
+#include <fmtruby.hxx>
+#include <fmtsrnd.hxx>
+#include <fmturl.hxx>
+#include <fmtwrapinfluenceonobjpos.hxx>
+#include <fntcache.hxx>
+#include <grfatr.hxx>
+#include <hfspacingitem.hxx>
+#include <hintids.hxx>
+#include <init.hxx>
+#include <paratr.hxx>
+#include <proofreadingiterator.hxx>
+#include <editeng/editids.hrc>
+#include <svl/macitem.hxx>
+#include <svx/sdtaitm.hxx>
+#include <swcalwrp.hxx>
+#include <SwStyleNameMapper.hxx>
+#include <tblafmt.hxx>
+#include <tgrditem.hxx>
+#include <tools/globname.hxx>
+#include <tox.hxx>
+#include <unotools/charclass.hxx>
+#include <unotools/configmgr.hxx>
+#include <unotools/collatorwrapper.hxx>
+#include <unotools/transliterationwrapper.hxx>
+#include <vcl/mapmod.hxx>
+#include <vcl/svapp.hxx>
+#include <vcl/settings.hxx>
+#include <salhelper/singletonref.hxx>
+#include <viscrs.hxx>
+
+using namespace ::com::sun::star;
+
+// some ranges for sets in collections/ nodes
+
+// AttrSet range for the 2 break attributes
+WhichRangesContainer const aBreakSetRange(svl::Items<
+    RES_PAGEDESC, RES_BREAK
+>);
+
+// AttrSet range for TextFormatColl
+// list attributes ( RES_PARATR_LIST_BEGIN - RES_PARATR_LIST_END ) are not
+// included in the paragraph style's itemset.
+WhichRangesContainer const aTextFormatCollSetRange(svl::Items<
+    RES_CHRATR_BEGIN, RES_CHRATR_END-1,
+    RES_PARATR_BEGIN, RES_PARATR_END-1,
+    RES_PARATR_LIST_LEVEL, RES_PARATR_LIST_LEVEL,
+    RES_FRMATR_BEGIN, RES_FRMATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1,
+
+    // FillAttribute support
+    XATTR_FILL_FIRST, XATTR_FILL_LAST
+
+>);
+
+// AttrSet range for GrfFormatColl
+WhichRangesContainer const aGrfFormatCollSetRange(svl::Items<
+    RES_FRMATR_BEGIN, RES_FRMATR_END-1,
+    RES_GRFATR_BEGIN, RES_GRFATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+// AttrSet range for TextNode
+WhichRangesContainer const aTextNodeSetRange(svl::Items<
+    RES_CHRATR_BEGIN, RES_CHRATR_END-1,
+    RES_PARATR_BEGIN, RES_PARATR_END-1,
+    RES_PARATR_LIST_BEGIN, RES_PARATR_LIST_END-1,
+    RES_FRMATR_BEGIN, RES_FRMATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1,
+
+    // FillAttribute support (paragraph FillStyle)
+    XATTR_FILL_FIRST, XATTR_FILL_LAST
+
+>);
+
+// AttrSet range for NoTextNode
+WhichRangesContainer const aNoTextNodeSetRange(svl::Items<
+    RES_FRMATR_BEGIN, RES_FRMATR_END-1,
+    RES_GRFATR_BEGIN, RES_GRFATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+WhichRangesContainer const aTableSetRange(svl::Items<
+    RES_FILL_ORDER,     RES_FRM_SIZE,
+    RES_LR_SPACE,       RES_BREAK,
+    RES_HORI_ORIENT,    RES_HORI_ORIENT,
+    RES_BACKGROUND,     RES_SHADOW,
+    RES_KEEP,           RES_KEEP,
+    RES_LAYOUT_SPLIT,   RES_LAYOUT_SPLIT,
+    RES_FRAMEDIR,       RES_FRAMEDIR,
+    // #i29550#
+    RES_COLLAPSING_BORDERS, RES_COLLAPSING_BORDERS,
+    // <-- collapsing
+    RES_FRMATR_GRABBAG, RES_FRMATR_GRABBAG,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+WhichRangesContainer const aTableLineSetRange(svl::Items<
+    RES_FILL_ORDER,     RES_FRM_SIZE,
+    RES_LR_SPACE,       RES_UL_SPACE,
+    // HasTextChangesOnly
+    RES_PRINT,          RES_PRINT,
+    RES_PROTECT,        RES_PROTECT,
+    RES_VERT_ORIENT,    RES_VERT_ORIENT,
+    RES_BACKGROUND,     RES_SHADOW,
+    RES_ROW_SPLIT,      RES_ROW_SPLIT,
+    RES_FRMATR_GRABBAG, RES_FRMATR_GRABBAG,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+WhichRangesContainer const aTableBoxSetRange(svl::Items<
+    RES_FILL_ORDER,     RES_FRM_SIZE,
+    RES_LR_SPACE,       RES_UL_SPACE,
+    // HasTextChangesOnly
+    RES_PRINT,          RES_PRINT,
+    RES_PROTECT,        RES_PROTECT,
+    RES_VERT_ORIENT,    RES_VERT_ORIENT,
+    RES_BACKGROUND,     RES_SHADOW,
+    RES_FRAMEDIR,       RES_FRAMEDIR,
+    RES_FRMATR_GRABBAG, RES_FRMATR_GRABBAG,
+    RES_BOXATR_BEGIN,   RES_BOXATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+// AttrSet range for SwFrameFormat
+WhichRangesContainer const aFrameFormatSetRange(svl::Items<
+    RES_FRMATR_BEGIN, RES_FRMATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1,
+
+    // FillAttribute support (TextFrame, OLE, Writer GraphicObject)
+    XATTR_FILL_FIRST, XATTR_FILL_LAST
+
+>);
+
+// AttrSet range for SwCharFormat
+WhichRangesContainer const aCharFormatSetRange(svl::Items<
+    RES_CHRATR_BEGIN, RES_CHRATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+// AttrSet range for character autostyles
+WhichRangesContainer const aCharAutoFormatSetRange(svl::Items<
+    RES_CHRATR_BEGIN, RES_CHRATR_END-1,
+    RES_TXTATR_UNKNOWN_CONTAINER, RES_TXTATR_UNKNOWN_CONTAINER,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+// AttrSet range for SwPageDescFormat
+WhichRangesContainer const aPgFrameFormatSetRange(svl::Items<
+    RES_FRMATR_BEGIN, RES_FRMATR_END-1,
+    RES_UNKNOWNATR_BEGIN, RES_UNKNOWNATR_END-1
+>);
+
+// create table for accessing default format attributes
+SwDfltAttrTab aAttrTab( POOLATTR_END - POOLATTR_BEGIN, nullptr );
+
+SfxItemInfo aSlotTab[] =
+{
+    // _nSID, _bNeedsPoolRegistration, _bShareable
+    { SID_ATTR_CHAR_CASEMAP,            false, true },  // RES_CHRATR_CASEMAP
+    { SID_ATTR_CHAR_CHARSETCOLOR,       false, true },  // RES_CHRATR_CHARSETCOLOR
+    { SID_ATTR_CHAR_COLOR,              true,  true },  // RES_CHRATR_COLOR
+    { SID_ATTR_CHAR_CONTOUR,            false, true },  // RES_CHRATR_CONTOUR
+    { SID_ATTR_CHAR_STRIKEOUT,          false, true },  // RES_CHRATR_CROSSEDOUT
+    { SID_ATTR_CHAR_ESCAPEMENT,         false, true },  // RES_CHRATR_ESCAPEMENT
+    { SID_ATTR_CHAR_FONT,               true,  true },  // RES_CHRATR_FONT
+    { SID_ATTR_CHAR_FONTHEIGHT,         false, true },  // RES_CHRATR_FONTSIZE
+    { SID_ATTR_CHAR_KERNING,            false, true },  // RES_CHRATR_KERNING
+    { SID_ATTR_CHAR_LANGUAGE,           false, true },  // RES_CHRATR_LANGUAGE
+    { SID_ATTR_CHAR_POSTURE,            false, true },  // RES_CHRATR_POSTURE
+    { 0,                                false, true },  // RES_CHRATR_UNUSED1
+    { SID_ATTR_CHAR_SHADOWED,           false, true },  // RES_CHRATR_SHADOWED
+    { SID_ATTR_CHAR_UNDERLINE,          true,  true },  // RES_CHRATR_UNDERLINE
+    { SID_ATTR_CHAR_WEIGHT,             false, true },  // RES_CHRATR_WEIGHT
+    { SID_ATTR_CHAR_WORDLINEMODE,       false, true },  // RES_CHRATR_WORDLINEMODE
+    { SID_ATTR_CHAR_AUTOKERN,           false, true },  // RES_CHRATR_AUTOKERN
+    { SID_ATTR_FLASH,                   false, true },  // RES_CHRATR_BLINK
+    { 0,                                false, true },  // RES_CHRATR_UNUSED2
+    { 0,                                false, true },  // RES_CHRATR_NOHYPHEN
+    { SID_ATTR_BRUSH_CHAR,              true,  true },  // RES_CHRATR_BACKGROUND
+    { SID_ATTR_CHAR_CJK_FONT,           true,  true },  // RES_CHRATR_CJK_FONT
+    { SID_ATTR_CHAR_CJK_FONTHEIGHT,     false, true },  // RES_CHRATR_CJK_FONTSIZE
+    { SID_ATTR_CHAR_CJK_LANGUAGE,       false, true },  // RES_CHRATR_CJK_LANGUAGE
+    { SID_ATTR_CHAR_CJK_POSTURE,        false, true },  // RES_CHRATR_CJK_POSTURE
+    { SID_ATTR_CHAR_CJK_WEIGHT,         false, true },  // RES_CHRATR_CJK_WEIGHT
+    { SID_ATTR_CHAR_CTL_FONT,           true,  true },  // RES_CHRATR_CTL_FONT
+    { SID_ATTR_CHAR_CTL_FONTHEIGHT,     false, true },  // RES_CHRATR_CTL_FONTSIZE
+    { SID_ATTR_CHAR_CTL_LANGUAGE,       false, true },  // RES_CHRATR_CTL_LANGUAGE
+    { SID_ATTR_CHAR_CTL_POSTURE,        false, true },  // RES_CHRATR_CTL_POSTURE
+    { SID_ATTR_CHAR_CTL_WEIGHT,         false, true },  // RES_CHRATR_CTL_WEIGHT
+    { SID_ATTR_CHAR_ROTATED,            false, true },  // RES_CHRATR_ROTATE
+    { SID_ATTR_CHAR_EMPHASISMARK,       false, true },  // RES_CHRATR_EMPHASIS_MARK
+    { SID_ATTR_CHAR_TWO_LINES,          false, true },  // RES_CHRATR_TWO_LINES
+    { SID_ATTR_CHAR_SCALEWIDTH,         false, true },  // RES_CHRATR_SCALEW
+    { SID_ATTR_CHAR_RELIEF,             false, true },  // RES_CHRATR_RELIEF
+    { SID_ATTR_CHAR_HIDDEN,             false, true },  // RES_CHRATR_HIDDEN
+    { SID_ATTR_CHAR_OVERLINE,           true,  true },  // RES_CHRATR_OVERLINE
+    { 0,                                false, true },  // RES_CHRATR_RSID
+    { SID_ATTR_CHAR_BOX,                true,  true },  // RES_CHRATR_BOX
+    { SID_ATTR_CHAR_SHADOW,             false, true },  // RES_CHRATR_SHADOW
+    { 0,                                true,  true },  // RES_CHRATR_HIGHLIGHT
+    { SID_ATTR_CHAR_GRABBAG,            false, true },  // RES_CHRATR_GRABBAG
+    { 0,                                false, true },  // RES_CHRATR_BIDIRTL
+    { 0,                                false, true },  // RES_CHRATR_IDCTHINT
+
+    { 0,                                true,  false }, // RES_TXTATR_REFMARK
+    { 0,                                true,  false }, // RES_TXTATR_TOXMARK
+    { 0,                                false, false }, // RES_TXTATR_META
+    { 0,                                false, false }, // RES_TXTATR_METAFIELD
+    { 0,                                false, true },  // RES_TXTATR_AUTOFMT
+    { FN_TXTATR_INET,                   true,  false }, // RES_TXTATR_INETFMT
+    { 0,                                false, false }, // RES_TXTATR_CHARFMT
+    { SID_ATTR_CHAR_CJK_RUBY,           true,  false }, // RES_TXTATR_CJK_RUBY
+    { 0,                                true,  true },  // RES_TXTATR_UNKNOWN_CONTAINER
+    { 0,                                true,  false }, // RES_TXTATR_INPUTFIELD
+    { 0,                                false, false }, // RES_TXTATR_CONTENTCONTROL
+
+    { 0,                                true,  false }, // RES_TXTATR_FIELD
+    { 0,                                false, false }, // RES_TXTATR_FLYCNT
+    { 0,                                false, false }, // RES_TXTATR_FTN
+    { 0,                                false, false }, // RES_TXTATR_ANNOTATION
+    { 0,                                false, false }, // RES_TXTATR_LINEBREAK
+    { 0,                                false, true },  // RES_TXTATR_DUMMY1
+
+    { SID_ATTR_PARA_LINESPACE,          false, true },  // RES_PARATR_LINESPACING
+    { SID_ATTR_PARA_ADJUST,             false, true },  // RES_PARATR_ADJUST
+    { SID_ATTR_PARA_SPLIT,              false, true },  // RES_PARATR_SPLIT
+    { SID_ATTR_PARA_ORPHANS,            false, true },  // RES_PARATR_ORPHANS
+    { SID_ATTR_PARA_WIDOWS,             false, true },  // RES_PARATR_WIDOWS
+    { SID_ATTR_TABSTOP,                 true,  true },  // RES_PARATR_TABSTOP
+    { SID_ATTR_PARA_HYPHENZONE,         false, true },  // RES_PARATR_HYPHENZONE
+    { FN_FORMAT_DROPCAPS,               false, false }, // RES_PARATR_DROP
+    { SID_ATTR_PARA_REGISTER,           false, true },  // RES_PARATR_REGISTER
+    { SID_ATTR_PARA_NUMRULE,            false, true },  // RES_PARATR_NUMRULE
+    { SID_ATTR_PARA_SCRIPTSPACE,        false, true },  // RES_PARATR_SCRIPTSPACE
+    { SID_ATTR_PARA_HANGPUNCTUATION,    false, true },  // RES_PARATR_HANGINGPUNCTUATION
+
+    { SID_ATTR_PARA_FORBIDDEN_RULES,    false, true },  // RES_PARATR_FORBIDDEN_RULES
+    { SID_PARA_VERTALIGN,               false, true },  // RES_PARATR_VERTALIGN
+    { SID_ATTR_PARA_SNAPTOGRID,         false, true },  // RES_PARATR_SNAPTOGRID
+    { SID_ATTR_BORDER_CONNECT,          false, true },  // RES_PARATR_CONNECT_BORDER
+
+    { SID_ATTR_PARA_OUTLINE_LEVEL,      false, true },  // RES_PARATR_OUTLINELEVEL //#outline level
+    { 0,                                false, true },  // RES_PARATR_RSID
+    { SID_ATTR_PARA_GRABBAG,            false, true },  // RES_PARATR_GRABBAG
+    { 0,                                false, true },  // RES_PARATR_LIST_ID
+    { 0,                                false, true },  // RES_PARATR_LIST_LEVEL
+    { 0,                                false, true },  // RES_PARATR_LIST_ISRESTART
+    { 0,                                false, true },  // RES_PARATR_LIST_RESTARTVALUE
+    { 0,                                false, true },  // RES_PARATR_LIST_ISCOUNTED
+    { 0,                                false, true },  // RES_PARATR_LIST_AUTOFMT
+
+    { 0,                                false, true },  // RES_FILL_ORDER
+    { 0,                                false, true },  // RES_FRM_SIZE
+    { SID_ATTR_PAGE_PAPERBIN,           false, true },  // RES_PAPER_BIN
+    { SID_ATTR_PARA_FIRSTLINESPACE,     false, true },  // RES_MARGIN_FIRSTLINE
+    { SID_ATTR_PARA_LEFTSPACE,          false, true },  // RES_MARGIN_TEXTLEFT
+    { SID_ATTR_PARA_RIGHTSPACE,         false, true },  // RES_MARGIN_RIGHT
+    { 0,                                false, true },  // RES_MARGIN_LEFT
+    { 0,                                false, true },  // RES_MARGIN_GUTTER
+    { 0,                                false, true },  // RES_MARGIN_GUTTER_RIGHT
+    { SID_ATTR_LRSPACE,                 false, true },  // RES_LR_SPACE
+    { SID_ATTR_ULSPACE,                 false, true },  // RES_UL_SPACE
+    { 0,                                true,  false }, // RES_PAGEDESC
+    { SID_ATTR_PARA_PAGEBREAK,          false, true },  // RES_BREAK
+    { 0,                                false, false }, // RES_CNTNT
+    { 0,                                false, true },  // RES_HEADER
+    { 0,                                false, true },  // RES_FOOTER
+    { 0,                                false, true },  // RES_PRINT
+    { FN_OPAQUE,                        false, true },  // RES_OPAQUE
+    { FN_SET_PROTECT,                   false, true },  // RES_PROTECT
+    { FN_SURROUND,                      false, true },  // RES_SURROUND
+    { FN_VERT_ORIENT,                   false, true },  // RES_VERT_ORIENT
+    { FN_HORI_ORIENT,                   false, true },  // RES_HORI_ORIENT
+    { 0,                                false, false }, // RES_ANCHOR
+    { SID_ATTR_BRUSH,                   true,  true },  // RES_BACKGROUND
+    { SID_ATTR_BORDER_OUTER,            true,  true },  // RES_BOX
+    { SID_ATTR_BORDER_SHADOW,           true,  true },  // RES_SHADOW
+    { SID_ATTR_MACROITEM,               false, true },  // RES_FRMMACRO
+    { FN_ATTR_COLUMNS,                  false, true },  // RES_COL
+    { SID_ATTR_PARA_KEEP,               false, true },  // RES_KEEP
+    { 0,                                true,  true },  // RES_URL
+    { 0,                                false, true },  // RES_EDIT_IN_READONLY
+
+    { 0,                                false, true },  // RES_LAYOUT_SPLIT
+    { 0,                                false, false }, // RES_CHAIN
+    { 0,                                false, true },  // RES_TEXTGRID
+    { FN_FORMAT_LINENUMBER,             false, true },  // RES_LINENUMBER
+    { 0,                                false, true },  // RES_FTN_AT_TXTEND
+    { 0,                                false, true },  // RES_END_AT_TXTEND
+    { 0,                                false, true },  // RES_COLUMNBALANCE
+
+    { SID_ATTR_FRAMEDIRECTION,          false, true },  // RES_FRAMEDIR
+
+    { SID_ATTR_HDFT_DYNAMIC_SPACING,    false, true },  // RES_HEADER_FOOTER_EAT_SPACING
+    { FN_TABLE_ROW_SPLIT,               false, true },  // RES_ROW_SPLIT
+    { 0,                                false, true },  // RES_FLY_SPLIT
+    // #i18732# - use slot-id define in svx
+    { SID_SW_FOLLOW_TEXT_FLOW,          false, true },  // RES_FOLLOW_TEXT_FLOW
+    // #i29550#
+    { SID_SW_COLLAPSING_BORDERS,        false, true },  // RES_COLLAPSING_BORDERS
+    // #i28701#
+    { SID_SW_WRAP_INFLUENCE_ON_OBJPOS,  false, true },  // RES_WRAP_INFLUENCE_ON_OBJPOS
+    { 0,                                false, false }, // RES_AUTO_STYLE
+    { 0,                                false, true },  // RES_FRMATR_STYLE_NAME
+    { 0,                                false, true },  // RES_FRMATR_CONDITIONAL_STYLE_NAME
+    { 0,                                false, true },  // RES_FRMATR_GRABBAG
+    { 0,                                false, true },  // RES_TEXT_VERT_ADJUST
+    { 0,                                false, true },  // RES_BACKGROUND_FULL_SIZE
+    { 0,                                false, true },  // RES_RTL_GUTTER
+    { 0,                                false, true },  // RES_DECORATIVE
+    { 0,                                false, true },  // RES_WRAP_TEXT_AT_FLY_START
+
+    { 0,                                false, true },  // RES_GRFATR_MIRRORGRF
+    { SID_ATTR_GRAF_CROP,               false, true },  // RES_GRFATR_CROPGRF
+    { 0,                                false, true },  // RES_GRFATR_ROTATION,
+    { 0,                                false, true },  // RES_GRFATR_LUMINANCE,
+    { 0,                                false, true },  // RES_GRFATR_CONTRAST,
+    { 0,                                false, true },  // RES_GRFATR_CHANNELR,
+    { 0,                                false, true },  // RES_GRFATR_CHANNELG,
+    { 0,                                false, true },  // RES_GRFATR_CHANNELB,
+    { 0,                                false, true },  // RES_GRFATR_GAMMA,
+    { 0,                                false, true },  // RES_GRFATR_INVERT,
+    { 0,                                false, true },  // RES_GRFATR_TRANSPARENCY,
+    { 0,                                false, true },  // RES_GRFATR_DUMMY4,
+    { 0,                                false, true },  // RES_GRFATR_DUMMY5,
+    { 0,                                false, true },  // RES_GRFATR_DUMMY6,
+
+    { 0,                                false, true },  // RES_BOXATR_FORMAT
+    { 0,                                true,  false }, // RES_BOXATR_FORMULA,
+    { 0,                                false, true },  // RES_BOXATR_VALUE
+
+    { 0,                                true,  true }   // RES_UNKNOWNATR_CONTAINER
+};
+
+std::vector<SvGlobalName> *pGlobalOLEExcludeList = nullptr;
+
+SwAutoCompleteWord* SwDoc::s_pAutoCompleteWords = nullptr;
+SwDoc* SwDoc::s_pLast = nullptr;
+
+SwCheckIt* pCheckIt = nullptr;
+static CharClass* pAppCharClass = nullptr;
+
+static CollatorWrapper* pCollator = nullptr,
+                *pCaseCollator = nullptr;
+
+SwCalendarWrapper& s_getCalendarWrapper()
+{
+    static SwCalendarWrapper aCalendarWrapper;
+    return aCalendarWrapper;
+}
+
+void InitCore()
+{
+    SfxPoolItem* pItem;
+
+    aAttrTab[ RES_CHRATR_CASEMAP- POOLATTR_BEGIN ] =        new SvxCaseMapItem( SvxCaseMap::NotMapped, RES_CHRATR_CASEMAP);
+    aAttrTab[ RES_CHRATR_CHARSETCOLOR- POOLATTR_BEGIN ] =   new SvxColorItem(RES_CHRATR_CHARSETCOLOR);
+    aAttrTab[ RES_CHRATR_COLOR- POOLATTR_BEGIN ] =          new SvxColorItem(RES_CHRATR_COLOR);
+    aAttrTab[ RES_CHRATR_CONTOUR- POOLATTR_BEGIN ] =        new SvxContourItem( false, RES_CHRATR_CONTOUR );
+    aAttrTab[ RES_CHRATR_CROSSEDOUT- POOLATTR_BEGIN ] =     new SvxCrossedOutItem( STRIKEOUT_NONE, RES_CHRATR_CROSSEDOUT );
+    aAttrTab[ RES_CHRATR_ESCAPEMENT- POOLATTR_BEGIN ] =     new SvxEscapementItem( RES_CHRATR_ESCAPEMENT );
+    aAttrTab[ RES_CHRATR_FONT- POOLATTR_BEGIN ] =           new SvxFontItem( RES_CHRATR_FONT );
+
+    aAttrTab[ RES_CHRATR_FONTSIZE- POOLATTR_BEGIN ] =       new SvxFontHeightItem( 240, 100, RES_CHRATR_FONTSIZE );
+    aAttrTab[ RES_CHRATR_KERNING- POOLATTR_BEGIN ] =        new SvxKerningItem( 0, RES_CHRATR_KERNING );
+    aAttrTab[ RES_CHRATR_LANGUAGE- POOLATTR_BEGIN ] =       new SvxLanguageItem(LANGUAGE_DONTKNOW, RES_CHRATR_LANGUAGE );
+    aAttrTab[ RES_CHRATR_POSTURE- POOLATTR_BEGIN ] =        new SvxPostureItem( ITALIC_NONE, RES_CHRATR_POSTURE );
+    aAttrTab[ RES_CHRATR_UNUSED1- POOLATTR_BEGIN ] =        new SfxVoidItem( RES_CHRATR_UNUSED1 );
+    aAttrTab[ RES_CHRATR_SHADOWED- POOLATTR_BEGIN ] =       new SvxShadowedItem( false, RES_CHRATR_SHADOWED );
+    aAttrTab[ RES_CHRATR_UNDERLINE- POOLATTR_BEGIN ] =      new SvxUnderlineItem( LINESTYLE_NONE, RES_CHRATR_UNDERLINE );
+    aAttrTab[ RES_CHRATR_WEIGHT- POOLATTR_BEGIN ] =         new SvxWeightItem( WEIGHT_NORMAL, RES_CHRATR_WEIGHT );
+    aAttrTab[ RES_CHRATR_RSID - POOLATTR_BEGIN ] =          new SvxRsidItem( 0, RES_CHRATR_RSID );
+    aAttrTab[ RES_CHRATR_WORDLINEMODE- POOLATTR_BEGIN ] =   new SvxWordLineModeItem( false, RES_CHRATR_WORDLINEMODE );
+    aAttrTab[ RES_CHRATR_AUTOKERN- POOLATTR_BEGIN ] =       new SvxAutoKernItem( false, RES_CHRATR_AUTOKERN );
+    aAttrTab[ RES_CHRATR_BLINK - POOLATTR_BEGIN ] =         new SvxBlinkItem( false, RES_CHRATR_BLINK );
+    aAttrTab[ RES_CHRATR_NOHYPHEN - POOLATTR_BEGIN ] =      new SvxNoHyphenItem( RES_CHRATR_NOHYPHEN );
+    aAttrTab[ RES_CHRATR_UNUSED2- POOLATTR_BEGIN ] =        new SfxVoidItem( RES_CHRATR_UNUSED2 );
+    aAttrTab[ RES_CHRATR_BACKGROUND - POOLATTR_BEGIN ] =    new SvxBrushItem( RES_CHRATR_BACKGROUND );
+
+    // CJK-Attributes
+    aAttrTab[ RES_CHRATR_CJK_FONT - POOLATTR_BEGIN ] =      new SvxFontItem( RES_CHRATR_CJK_FONT );
+    aAttrTab[ RES_CHRATR_CJK_FONTSIZE - POOLATTR_BEGIN ] =  new SvxFontHeightItem( 240, 100, RES_CHRATR_CJK_FONTSIZE );
+    aAttrTab[ RES_CHRATR_CJK_LANGUAGE - POOLATTR_BEGIN ] =  new SvxLanguageItem(LANGUAGE_DONTKNOW, RES_CHRATR_CJK_LANGUAGE);
+    aAttrTab[ RES_CHRATR_CJK_POSTURE - POOLATTR_BEGIN ] =   new SvxPostureItem(ITALIC_NONE, RES_CHRATR_CJK_POSTURE );
+    aAttrTab[ RES_CHRATR_CJK_WEIGHT - POOLATTR_BEGIN ] =    new SvxWeightItem( WEIGHT_NORMAL, RES_CHRATR_CJK_WEIGHT );
+
+    // CTL-Attributes
+    aAttrTab[ RES_CHRATR_CTL_FONT - POOLATTR_BEGIN ] =      new SvxFontItem( RES_CHRATR_CTL_FONT );
+    aAttrTab[ RES_CHRATR_CTL_FONTSIZE - POOLATTR_BEGIN ] =  new SvxFontHeightItem(  240, 100,  RES_CHRATR_CTL_FONTSIZE );
+    aAttrTab[ RES_CHRATR_CTL_LANGUAGE - POOLATTR_BEGIN ] =  new SvxLanguageItem(LANGUAGE_DONTKNOW, RES_CHRATR_CTL_LANGUAGE);
+    aAttrTab[ RES_CHRATR_CTL_POSTURE - POOLATTR_BEGIN ] =   new SvxPostureItem(ITALIC_NONE, RES_CHRATR_CTL_POSTURE );
+    aAttrTab[ RES_CHRATR_CTL_WEIGHT - POOLATTR_BEGIN ] =    new SvxWeightItem( WEIGHT_NORMAL, RES_CHRATR_CTL_WEIGHT );
+
+    aAttrTab[ RES_CHRATR_ROTATE - POOLATTR_BEGIN ] =        new SvxCharRotateItem( 0_deg10, false, RES_CHRATR_ROTATE );
+    aAttrTab[ RES_CHRATR_EMPHASIS_MARK - POOLATTR_BEGIN ] = new SvxEmphasisMarkItem( FontEmphasisMark::NONE, RES_CHRATR_EMPHASIS_MARK );
+    aAttrTab[ RES_CHRATR_TWO_LINES - POOLATTR_BEGIN ] =     new SvxTwoLinesItem( false, 0, 0, RES_CHRATR_TWO_LINES );
+    aAttrTab[ RES_CHRATR_SCALEW - POOLATTR_BEGIN ] =        new SvxCharScaleWidthItem( 100, RES_CHRATR_SCALEW );
+    aAttrTab[ RES_CHRATR_RELIEF - POOLATTR_BEGIN ] =        new SvxCharReliefItem( FontRelief::NONE, RES_CHRATR_RELIEF );
+    aAttrTab[ RES_CHRATR_HIDDEN - POOLATTR_BEGIN ] =        new SvxCharHiddenItem( false, RES_CHRATR_HIDDEN );
+    aAttrTab[ RES_CHRATR_OVERLINE- POOLATTR_BEGIN ] =       new SvxOverlineItem( LINESTYLE_NONE, RES_CHRATR_OVERLINE );
+    aAttrTab[ RES_CHRATR_BOX - POOLATTR_BEGIN ] =           new SvxBoxItem( RES_CHRATR_BOX );
+    aAttrTab[ RES_CHRATR_SHADOW - POOLATTR_BEGIN ] =        new SvxShadowItem( RES_CHRATR_SHADOW );
+    aAttrTab[ RES_CHRATR_HIGHLIGHT - POOLATTR_BEGIN ] =     new SvxBrushItem( RES_CHRATR_HIGHLIGHT );
+    aAttrTab[ RES_CHRATR_GRABBAG - POOLATTR_BEGIN ] =       new SfxGrabBagItem( RES_CHRATR_GRABBAG );
+
+// CharacterAttr - MSWord weak char direction/script override emulation
+    aAttrTab[ RES_CHRATR_BIDIRTL - POOLATTR_BEGIN ] = new SfxInt16Item( RES_CHRATR_BIDIRTL, sal_Int16(-1) );
+    aAttrTab[ RES_CHRATR_IDCTHINT - POOLATTR_BEGIN ] = new SfxInt16Item( RES_CHRATR_IDCTHINT, sal_Int16(-1) );
+
+    aAttrTab[ RES_TXTATR_REFMARK - POOLATTR_BEGIN ] =       new SwFormatRefMark( OUString() );
+    aAttrTab[ RES_TXTATR_TOXMARK - POOLATTR_BEGIN ] =       new SwTOXMark;
+    aAttrTab[ RES_TXTATR_META - POOLATTR_BEGIN ] =          SwFormatMeta::CreatePoolDefault(RES_TXTATR_META);
+    aAttrTab[ RES_TXTATR_METAFIELD - POOLATTR_BEGIN ] =     SwFormatMeta::CreatePoolDefault(RES_TXTATR_METAFIELD);
+    aAttrTab[ RES_TXTATR_AUTOFMT- POOLATTR_BEGIN ] =        new SwFormatAutoFormat;
+    aAttrTab[ RES_TXTATR_INETFMT - POOLATTR_BEGIN ] =       new SwFormatINetFormat( OUString(), OUString() );
+    aAttrTab[ RES_TXTATR_CHARFMT- POOLATTR_BEGIN ] =        new SwFormatCharFormat( nullptr );
+    aAttrTab[ RES_TXTATR_CJK_RUBY - POOLATTR_BEGIN ] =      new SwFormatRuby( OUString() );
+    aAttrTab[ RES_TXTATR_UNKNOWN_CONTAINER - POOLATTR_BEGIN ] = new SvXMLAttrContainerItem( RES_TXTATR_UNKNOWN_CONTAINER );
+    aAttrTab[ RES_TXTATR_INPUTFIELD - POOLATTR_BEGIN ] = new SwFormatField( RES_TXTATR_INPUTFIELD );
+    aAttrTab[ RES_TXTATR_CONTENTCONTROL - POOLATTR_BEGIN ] = new SwFormatContentControl( RES_TXTATR_CONTENTCONTROL );
+
+    aAttrTab[ RES_TXTATR_FIELD- POOLATTR_BEGIN ] =          new SwFormatField( RES_TXTATR_FIELD );
+    aAttrTab[ RES_TXTATR_FLYCNT - POOLATTR_BEGIN ] =        new SwFormatFlyCnt( nullptr );
+    aAttrTab[ RES_TXTATR_FTN - POOLATTR_BEGIN ] =           new SwFormatFootnote;
+    aAttrTab[ RES_TXTATR_ANNOTATION - POOLATTR_BEGIN ] = new SwFormatField( RES_TXTATR_ANNOTATION );
+    aAttrTab[RES_TXTATR_LINEBREAK - POOLATTR_BEGIN] = new SwFormatLineBreak(SwLineBreakClear::NONE);
+
+// TextAttr - Dummies
+    aAttrTab[ RES_TXTATR_DUMMY1 - POOLATTR_BEGIN ] =        new SfxBoolItem( RES_TXTATR_DUMMY1 );
+
+    aAttrTab[ RES_PARATR_LINESPACING- POOLATTR_BEGIN ] =    new SvxLineSpacingItem( LINE_SPACE_DEFAULT_HEIGHT, RES_PARATR_LINESPACING );
+    aAttrTab[ RES_PARATR_ADJUST- POOLATTR_BEGIN ] =         new SvxAdjustItem( SvxAdjust::Left, RES_PARATR_ADJUST );
+    aAttrTab[ RES_PARATR_SPLIT- POOLATTR_BEGIN ] =          new SvxFormatSplitItem( true, RES_PARATR_SPLIT );
+    aAttrTab[ RES_PARATR_WIDOWS- POOLATTR_BEGIN ] =         new SvxWidowsItem( 0, RES_PARATR_WIDOWS );
+    aAttrTab[ RES_PARATR_ORPHANS- POOLATTR_BEGIN ] =        new SvxOrphansItem( 0, RES_PARATR_ORPHANS );
+    aAttrTab[ RES_PARATR_TABSTOP- POOLATTR_BEGIN ] =        new SvxTabStopItem( 1, SVX_TAB_DEFDIST, SvxTabAdjust::Default, RES_PARATR_TABSTOP );
+
+    pItem = new SvxHyphenZoneItem( false, RES_PARATR_HYPHENZONE );
+    static_cast<SvxHyphenZoneItem*>(pItem)->GetMaxHyphens() = 0; // Default: 0
+    aAttrTab[ RES_PARATR_HYPHENZONE- POOLATTR_BEGIN ] =     pItem;
+
+    aAttrTab[ RES_PARATR_DROP- POOLATTR_BEGIN ] =           new SwFormatDrop;
+    aAttrTab[ RES_PARATR_REGISTER - POOLATTR_BEGIN ] =      new SwRegisterItem( false );
+    aAttrTab[ RES_PARATR_NUMRULE - POOLATTR_BEGIN ] =       new SwNumRuleItem( OUString() );
+
+    aAttrTab[ RES_PARATR_SCRIPTSPACE - POOLATTR_BEGIN ] =   new SvxScriptSpaceItem( true, RES_PARATR_SCRIPTSPACE );
+    aAttrTab[ RES_PARATR_HANGINGPUNCTUATION - POOLATTR_BEGIN ] = new SvxHangingPunctuationItem( true, RES_PARATR_HANGINGPUNCTUATION );
+    aAttrTab[ RES_PARATR_FORBIDDEN_RULES - POOLATTR_BEGIN ] = new SvxForbiddenRuleItem( true, RES_PARATR_FORBIDDEN_RULES );
+    aAttrTab[ RES_PARATR_VERTALIGN - POOLATTR_BEGIN ] =     new SvxParaVertAlignItem( SvxParaVertAlignItem::Align::Automatic, RES_PARATR_VERTALIGN );
+    aAttrTab[ RES_PARATR_SNAPTOGRID - POOLATTR_BEGIN ] =    new SvxParaGridItem( true, RES_PARATR_SNAPTOGRID );
+    aAttrTab[ RES_PARATR_CONNECT_BORDER - POOLATTR_BEGIN ] = new SwParaConnectBorderItem;
+
+    aAttrTab[ RES_PARATR_OUTLINELEVEL - POOLATTR_BEGIN ] =  new SfxUInt16Item( RES_PARATR_OUTLINELEVEL, 0 );
+    aAttrTab[ RES_PARATR_RSID - POOLATTR_BEGIN ] =          new SvxRsidItem( 0, RES_PARATR_RSID );
+    aAttrTab[ RES_PARATR_GRABBAG - POOLATTR_BEGIN ] =       new SfxGrabBagItem( RES_PARATR_GRABBAG );
+
+    aAttrTab[ RES_PARATR_LIST_ID - POOLATTR_BEGIN ] =       new SfxStringItem( RES_PARATR_LIST_ID, OUString() );
+    aAttrTab[ RES_PARATR_LIST_LEVEL - POOLATTR_BEGIN ] =    new SfxInt16Item( RES_PARATR_LIST_LEVEL, 0 );
+    aAttrTab[ RES_PARATR_LIST_ISRESTART - POOLATTR_BEGIN ] = new SfxBoolItem( RES_PARATR_LIST_ISRESTART, false );
+    aAttrTab[ RES_PARATR_LIST_RESTARTVALUE - POOLATTR_BEGIN ] = new SfxInt16Item( RES_PARATR_LIST_RESTARTVALUE, 1 );
+    aAttrTab[ RES_PARATR_LIST_ISCOUNTED - POOLATTR_BEGIN ] = new SfxBoolItem( RES_PARATR_LIST_ISCOUNTED, true );
+    aAttrTab[ RES_PARATR_LIST_AUTOFMT - POOLATTR_BEGIN ] = new SwFormatAutoFormat(RES_PARATR_LIST_AUTOFMT);//new SfxSetItem(RES_PARATR_LIST_AUTOFMT, std::make_unique<SfxItemSet>(aCharAutoFormatSetRange));
+
+    aAttrTab[ RES_FILL_ORDER- POOLATTR_BEGIN ] =            new SwFormatFillOrder;
+    aAttrTab[ RES_FRM_SIZE- POOLATTR_BEGIN ] =              new SwFormatFrameSize;
+    aAttrTab[ RES_PAPER_BIN- POOLATTR_BEGIN ] =             new SvxPaperBinItem( RES_PAPER_BIN );
+    aAttrTab[ RES_MARGIN_FIRSTLINE - POOLATTR_BEGIN ] =     new SvxFirstLineIndentItem(RES_MARGIN_FIRSTLINE);
+    aAttrTab[ RES_MARGIN_TEXTLEFT - POOLATTR_BEGIN ] =      new SvxTextLeftMarginItem(RES_MARGIN_TEXTLEFT);
+    aAttrTab[ RES_MARGIN_RIGHT - POOLATTR_BEGIN ] =         new SvxRightMarginItem(RES_MARGIN_RIGHT);
+    aAttrTab[ RES_MARGIN_LEFT - POOLATTR_BEGIN ] =          new SvxLeftMarginItem(RES_MARGIN_LEFT);
+    aAttrTab[ RES_MARGIN_GUTTER - POOLATTR_BEGIN ] =        new SvxGutterLeftMarginItem(RES_MARGIN_GUTTER);
+    aAttrTab[ RES_MARGIN_GUTTER_RIGHT - POOLATTR_BEGIN ] =  new SvxGutterRightMarginItem(RES_MARGIN_GUTTER_RIGHT);
+    aAttrTab[ RES_LR_SPACE- POOLATTR_BEGIN ] =              new SvxLRSpaceItem( RES_LR_SPACE );
+    aAttrTab[ RES_UL_SPACE- POOLATTR_BEGIN ] =              new SvxULSpaceItem( RES_UL_SPACE );
+    aAttrTab[ RES_PAGEDESC- POOLATTR_BEGIN ] =              new SwFormatPageDesc;
+    aAttrTab[ RES_BREAK- POOLATTR_BEGIN ] =                 new SvxFormatBreakItem( SvxBreak::NONE, RES_BREAK);
+    aAttrTab[ RES_CNTNT- POOLATTR_BEGIN ] =                 new SwFormatContent;
+    aAttrTab[ RES_HEADER- POOLATTR_BEGIN ] =                new SwFormatHeader;
+    aAttrTab[ RES_FOOTER- POOLATTR_BEGIN ] =                new SwFormatFooter;
+    aAttrTab[ RES_PRINT- POOLATTR_BEGIN ] =                 new SvxPrintItem( RES_PRINT );
+    aAttrTab[ RES_OPAQUE- POOLATTR_BEGIN ] =                new SvxOpaqueItem( RES_OPAQUE );
+    aAttrTab[ RES_PROTECT- POOLATTR_BEGIN ] =               new SvxProtectItem( RES_PROTECT );
+    aAttrTab[ RES_SURROUND- POOLATTR_BEGIN ] =              new SwFormatSurround;
+    aAttrTab[ RES_VERT_ORIENT- POOLATTR_BEGIN ] =           new SwFormatVertOrient;
+    aAttrTab[ RES_HORI_ORIENT- POOLATTR_BEGIN ] =           new SwFormatHoriOrient;
+    aAttrTab[ RES_ANCHOR- POOLATTR_BEGIN ] =                new SwFormatAnchor;
+    aAttrTab[ RES_BACKGROUND- POOLATTR_BEGIN ] =            new SvxBrushItem( RES_BACKGROUND );
+    aAttrTab[ RES_BOX- POOLATTR_BEGIN ] =                   new SvxBoxItem( RES_BOX );
+    aAttrTab[ RES_SHADOW- POOLATTR_BEGIN ] =                new SvxShadowItem( RES_SHADOW );
+    aAttrTab[ RES_FRMMACRO- POOLATTR_BEGIN ] =              new SvxMacroItem( RES_FRMMACRO );
+    aAttrTab[ RES_COL- POOLATTR_BEGIN ] =                   new SwFormatCol;
+    aAttrTab[ RES_KEEP - POOLATTR_BEGIN ] =                 new SvxFormatKeepItem( false, RES_KEEP );
+    aAttrTab[ RES_URL - POOLATTR_BEGIN ] =                  new SwFormatURL();
+    aAttrTab[ RES_EDIT_IN_READONLY - POOLATTR_BEGIN ] =     new SwFormatEditInReadonly;
+    aAttrTab[ RES_LAYOUT_SPLIT - POOLATTR_BEGIN ] =         new SwFormatLayoutSplit;
+    aAttrTab[ RES_CHAIN - POOLATTR_BEGIN ] =                new SwFormatChain;
+    aAttrTab[ RES_TEXTGRID - POOLATTR_BEGIN ] =             new SwTextGridItem;
+    aAttrTab[ RES_HEADER_FOOTER_EAT_SPACING - POOLATTR_BEGIN ] = new SwHeaderAndFooterEatSpacingItem;
+    aAttrTab[ RES_LINENUMBER - POOLATTR_BEGIN ] =           new SwFormatLineNumber;
+    aAttrTab[ RES_FTN_AT_TXTEND - POOLATTR_BEGIN ] =        new SwFormatFootnoteAtTextEnd;
+    aAttrTab[ RES_END_AT_TXTEND - POOLATTR_BEGIN ] =        new SwFormatEndAtTextEnd;
+    aAttrTab[ RES_COLUMNBALANCE - POOLATTR_BEGIN ] =        new SwFormatNoBalancedColumns;
+    aAttrTab[ RES_FRAMEDIR - POOLATTR_BEGIN ] =             new SvxFrameDirectionItem( SvxFrameDirection::Environment, RES_FRAMEDIR );
+    aAttrTab[ RES_ROW_SPLIT - POOLATTR_BEGIN ] =            new SwFormatRowSplit;
+    aAttrTab[ RES_FLY_SPLIT - POOLATTR_BEGIN ] =            new SwFormatFlySplit;
+
+    // #i18732#
+    aAttrTab[ RES_FOLLOW_TEXT_FLOW - POOLATTR_BEGIN ] =     new SwFormatFollowTextFlow(false);
+    // collapsing borders #i29550#
+    aAttrTab[ RES_COLLAPSING_BORDERS - POOLATTR_BEGIN ] =   new SfxBoolItem( RES_COLLAPSING_BORDERS, false );
+    // #i28701#
+    // #i35017# - constant name has changed
+    aAttrTab[ RES_WRAP_INFLUENCE_ON_OBJPOS - POOLATTR_BEGIN ] = new SwFormatWrapInfluenceOnObjPos( text::WrapInfluenceOnPosition::ONCE_CONCURRENT );
+
+    aAttrTab[ RES_AUTO_STYLE - POOLATTR_BEGIN ] =           new SwFormatAutoFormat( RES_AUTO_STYLE );
+    aAttrTab[ RES_FRMATR_STYLE_NAME - POOLATTR_BEGIN ] =    new SfxStringItem( RES_FRMATR_STYLE_NAME, OUString());
+    aAttrTab[ RES_FRMATR_CONDITIONAL_STYLE_NAME - POOLATTR_BEGIN ] = new SfxStringItem( RES_FRMATR_CONDITIONAL_STYLE_NAME, OUString() );
+    aAttrTab[ RES_FRMATR_GRABBAG - POOLATTR_BEGIN ] = new SfxGrabBagItem(RES_FRMATR_GRABBAG);
+    aAttrTab[ RES_TEXT_VERT_ADJUST - POOLATTR_BEGIN ] = new SdrTextVertAdjustItem(SDRTEXTVERTADJUST_TOP,RES_TEXT_VERT_ADJUST);
+    aAttrTab[ RES_BACKGROUND_FULL_SIZE - POOLATTR_BEGIN ] = new SfxBoolItem(RES_BACKGROUND_FULL_SIZE, true);
+    aAttrTab[ RES_RTL_GUTTER - POOLATTR_BEGIN ] = new SfxBoolItem(RES_RTL_GUTTER, false);
+    aAttrTab[ RES_DECORATIVE - POOLATTR_BEGIN ] = new SfxBoolItem(RES_DECORATIVE, false);
+    aAttrTab[ RES_WRAP_TEXT_AT_FLY_START - POOLATTR_BEGIN ] = new SwFormatWrapTextAtFlyStart;
+
+    aAttrTab[ RES_GRFATR_MIRRORGRF- POOLATTR_BEGIN ] =      new SwMirrorGrf;
+    aAttrTab[ RES_GRFATR_CROPGRF- POOLATTR_BEGIN ] =        new SwCropGrf;
+    aAttrTab[ RES_GRFATR_ROTATION - POOLATTR_BEGIN ] =      new SwRotationGrf;
+    aAttrTab[ RES_GRFATR_LUMINANCE - POOLATTR_BEGIN ] =     new SwLuminanceGrf;
+    aAttrTab[ RES_GRFATR_CONTRAST - POOLATTR_BEGIN ] =      new SwContrastGrf;
+    aAttrTab[ RES_GRFATR_CHANNELR - POOLATTR_BEGIN ] =      new SwChannelRGrf;
+    aAttrTab[ RES_GRFATR_CHANNELG - POOLATTR_BEGIN ] =      new SwChannelGGrf;
+    aAttrTab[ RES_GRFATR_CHANNELB - POOLATTR_BEGIN ] =      new SwChannelBGrf;
+    aAttrTab[ RES_GRFATR_GAMMA - POOLATTR_BEGIN ] =         new SwGammaGrf;
+    aAttrTab[ RES_GRFATR_INVERT - POOLATTR_BEGIN ] =        new SwInvertGrf;
+    aAttrTab[ RES_GRFATR_TRANSPARENCY - POOLATTR_BEGIN ] =  new SwTransparencyGrf;
+    aAttrTab[ RES_GRFATR_DRAWMODE - POOLATTR_BEGIN ] =      new SwDrawModeGrf;
+
+// GraphicAttr - Dummies
+    aAttrTab[ RES_GRFATR_DUMMY4 - POOLATTR_BEGIN ] =        new SfxBoolItem( RES_GRFATR_DUMMY4 );
+    aAttrTab[ RES_GRFATR_DUMMY5 - POOLATTR_BEGIN ] =        new SfxBoolItem( RES_GRFATR_DUMMY5 );
+
+    aAttrTab[ RES_BOXATR_FORMAT- POOLATTR_BEGIN ] =         new SwTableBoxNumFormat;
+    aAttrTab[ RES_BOXATR_FORMULA- POOLATTR_BEGIN ] =        new SwTableBoxFormula( OUString() );
+    aAttrTab[ RES_BOXATR_VALUE- POOLATTR_BEGIN ] =          new SwTableBoxValue;
+
+    aAttrTab[ RES_UNKNOWNATR_CONTAINER- POOLATTR_BEGIN ] =
+                new SvXMLAttrContainerItem( RES_UNKNOWNATR_CONTAINER );
+
+    // get the correct fonts:
+    ::GetDefaultFonts( (aAttrTab[ RES_CHRATR_FONT- POOLATTR_BEGIN ])->StaticWhichCast(RES_CHRATR_FONT),
+                       (aAttrTab[ RES_CHRATR_CJK_FONT - POOLATTR_BEGIN ])->StaticWhichCast(RES_CHRATR_CJK_FONT),
+                       (aAttrTab[ RES_CHRATR_CTL_FONT - POOLATTR_BEGIN ])->StaticWhichCast(RES_CHRATR_CTL_FONT) );
+
+    SwBreakIt::Create_( ::comphelper::getProcessComponentContext() );
+    pCheckIt = nullptr;
+
+    FrameInit();
+    TextInit_();
+
+    SwSelPaintRects::s_pMapMode = new MapMode;
+    SwFntObj::s_pPixMap = new MapMode;
+
+    pGlobalOLEExcludeList = new std::vector<SvGlobalName>;
+
+    if (!utl::ConfigManager::IsFuzzing())
+    {
+        const SvxSwAutoFormatFlags& rAFlags = SvxAutoCorrCfg::Get().GetAutoCorrect()->GetSwFlags();
+        SwDoc::s_pAutoCompleteWords = new SwAutoCompleteWord( rAFlags.nAutoCmpltListLen,
+                                            rAFlags.nAutoCmpltWordLen );
+    }
+    else
+    {
+        SwDoc::s_pAutoCompleteWords = new SwAutoCompleteWord( 0, 0 );
+    }
+}
+
+void FinitCore()
+{
+    FrameFinit();
+    TextFinit();
+
+    sw::proofreadingiterator::dispose();
+    SwBreakIt::Delete_();
+    delete pCheckIt;
+    delete pAppCharClass;
+    delete pCollator;
+    delete pCaseCollator;
+
+    // destroy default TableAutoFormat
+    delete SwTableAutoFormat::s_pDefaultBoxAutoFormat;
+
+    delete SwSelPaintRects::s_pMapMode;
+    delete SwFntObj::s_pPixMap;
+
+    delete SwEditShell::s_pAutoFormatFlags;
+
+#if OSL_DEBUG_LEVEL > 0
+    // free defaults to prevent assertions
+    if ( aAttrTab[0]->GetRefCount() )
+        SfxItemPool::ReleaseDefaults( &aAttrTab );
+#endif
+    delete SwDoc::s_pAutoCompleteWords;
+
+    // delete all default attributes
+    for(SfxPoolItem* pHt : aAttrTab)
+    {
+        delete pHt;
+    }
+
+    delete pGlobalOLEExcludeList;
+}
+
+// returns the APP - CharClass instance - used for all ToUpper/ToLower/...
+CharClass& GetAppCharClass()
+{
+    if ( !pAppCharClass )
+    {
+        pAppCharClass = new CharClass(
+            ::comphelper::getProcessComponentContext(),
+            SwBreakIt::Get()->GetLanguageTag( GetAppLanguageTag() ));
+    }
+    return *pAppCharClass;
+}
+
+void SwCalendarWrapper::LoadDefaultCalendar( LanguageType eLang )
+{
+    if( eLang != m_nLang )
+    {
+        m_nLang = eLang;
+        loadDefaultCalendar( LanguageTag::convertToLocale( m_nLang ));
+    }
+}
+
+LanguageType GetAppLanguage()
+{
+    if (!utl::ConfigManager::IsFuzzing())
+        return Application::GetSettings().GetLanguageTag().getLanguageType();
+    return LANGUAGE_ENGLISH_US;
+}
+
+const LanguageTag& GetAppLanguageTag()
+{
+    return Application::GetSettings().GetLanguageTag();
+}
+
+CollatorWrapper& GetAppCollator()
+{
+    if( !pCollator )
+    {
+        const lang::Locale& rLcl = g_pBreakIt->GetLocale( GetAppLanguage() );
+
+        pCollator = new CollatorWrapper( ::comphelper::getProcessComponentContext() );
+        pCollator->loadDefaultCollator( rLcl, SW_COLLATOR_IGNORES );
+    }
+    return *pCollator;
+}
+
+CollatorWrapper& GetAppCaseCollator()
+{
+    if( !pCaseCollator )
+    {
+        const lang::Locale& rLcl = g_pBreakIt->GetLocale( GetAppLanguage() );
+
+        pCaseCollator = new CollatorWrapper( ::comphelper::getProcessComponentContext() );
+        pCaseCollator->loadDefaultCollator( rLcl, 0 );
+    }
+    return *pCaseCollator;
+}
+
+namespace
+{
+    class TransWrp
+    {
+    private:
+        std::unique_ptr<utl::TransliterationWrapper> m_xTransWrp;
+    public:
+        TransWrp()
+        {
+            uno::Reference< uno::XComponentContext > xContext = ::comphelper::getProcessComponentContext();
+
+            m_xTransWrp.reset(new ::utl::TransliterationWrapper( xContext,
+                    TransliterationFlags::IGNORE_CASE |
+                    TransliterationFlags::IGNORE_KANA |
+                    TransliterationFlags::IGNORE_WIDTH ));
+
+            m_xTransWrp->loadModuleIfNeeded( GetAppLanguage() );
+        }
+        const ::utl::TransliterationWrapper& getTransliterationWrapper() const
+        {
+            return *m_xTransWrp;
+        }
+    };
+}
+
+const ::utl::TransliterationWrapper& GetAppCmpStrIgnore()
+{
+    static TransWrp theTransWrp;
+    return theTransWrp.getTransliterationWrapper();
+}
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

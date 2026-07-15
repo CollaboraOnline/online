@@ -1,0 +1,11 @@
+--enable-dbgutil
+--enable-compiler-plugins
+--enable-kf5
+--disable-compiler-plugins-analyzer-pch
+--disable-dependency-tracking
+--disable-split-debug
+--with-jdk-home=/etc/alternatives/java_sdk_17
+--enable-odk
+--disable-dconf
+--enable-python=internal
+--enable-atspi-tests
