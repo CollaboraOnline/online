@@ -1,0 +1,80 @@
+/*
+
+Settings for the Skia library. We compile the Skia library with these
+settings and also LO code uses this header to ensure the settings
+are the same.
+*/
+
+#ifndef CONFIG_SKIA_H
+#define CONFIG_SKIA_H
+
+// This is a setting that should be set manually and it affects LO
+// code rather than Skia itself. It basically controls setting
+// BackendCapabilities::mbSupportsBitmap32, i.e. whether one LO bitmap
+// contains all the 32bits of an image including the alpha (premultiplied).
+//
+// Since Skia does not natively support 24bpp, the preferred setup is
+// that the setting should be enabled, it makes the code faster and cleaner.
+//
+// Unfortunately VCL historically splits alpha into a whole separate
+// bitmap and works with 24bpp+8bpp, which is generally more complicated,
+// more error-prone and just worse, but that's how LO code has been
+// written and so there are many places in LO that expect this and
+// do not work correctly with true 32bpp bitmaps.
+//
+// So ultimately the 24+8 split should be dumped (preferably in all of LO,
+// not just the Skia-related code), but until all of LO works correctly
+// with 32bpp keep this disabled in order to avoid such breakages.
+
+//#define SKIA_USE_BITMAP32 1
+#define SKIA_USE_BITMAP32 0
+
+
+// GPU support (set by configure).
+#undef SK_GANESH
+// Vulkan support enabled (set by configure).
+#undef SK_VULKAN
+// Metal support enabled (set by configure).
+#undef SK_METAL
+
+// Memory allocator for Vulkan.
+#define SK_USE_VMA 1
+
+#define SK_CODEC_DECODES_PNG 1
+#define SK_ENCODE_PNG 1
+
+// These are just to avoid warnings (some headers use them even with GL disabled).
+#define SK_ASSUME_GL 1
+#define SK_ASSUME_GL_ES 0
+
+#define SK_ENABLE_SKSL 1
+
+// See https://codereview.chromium.org/2089583002 . This makes raster drawing
+// faster in some cases, it was made conditional because of some tests failing,
+// but if I'm reading the review correctly the code is in fact fine and just
+// those tests needed updating, which presumably has never happened.
+#define SK_DRAWBITMAPRECT_FAST_OFFSET 1
+
+// Default to BGRA. Skia already defaults to that on Windows, and it seems
+// the default X11 visual is actually also BGRA.
+#define SK_R32_SHIFT 16
+
+// Enable Skia's internal checks depending on DBG_UTIL mode.
+// ENABLE_SKIA_DEBUG controls whether to build with or without optimizations, and
+// is set by using --enable-skia=debug.
+#ifdef DBG_UTIL
+
+#define SK_DEBUG
+
+#define SK_ENABLE_DUMP_GPU
+
+#else
+
+#define SK_RELEASE
+
+#endif // DBG_UTIL
+
+// TODO ?
+//#define SK_R32_SHIFT 16
+
+#endif

@@ -1,0 +1,494 @@
+canvas/inc/rendering/icolorbuffer.hxx:37
+    enum canvas::IColorBuffer::Format A8R8G8B8
+canvas/inc/rendering/icolorbuffer.hxx:40
+    enum canvas::IColorBuffer::Format X8R8G8B8
+canvas/inc/rendering/irendermodule.hxx:55
+    enum canvas::IRenderModule::PrimitiveType Unknown
+chart2/source/model/main/Diagram.cxx:99
+    enum (anonymous namespace)::(unnamed at /home/noel/libo-plugin/chart2/source/model/main/Diagram.cxx:83:1) PROP_DIAGRAM_DATATABLEHBORDER
+chart2/source/model/main/Diagram.cxx:100
+    enum (anonymous namespace)::(unnamed at /home/noel/libo-plugin/chart2/source/model/main/Diagram.cxx:83:1) PROP_DIAGRAM_DATATABLEVBORDER
+chart2/source/model/main/Diagram.cxx:101
+    enum (anonymous namespace)::(unnamed at /home/noel/libo-plugin/chart2/source/model/main/Diagram.cxx:83:1) PROP_DIAGRAM_DATATABLEOUTLINE
+cui/source/options/optfltr.cxx:35
+    enum MSFltrPg2_CheckBoxEntries InvalidCBEntry
+drawinglayer/source/tools/emfphelperdata.cxx:67
+    enum emfplushelper::(unnamed at /home/noel/libo-plugin/drawinglayer/source/tools/emfphelperdata.cxx:61:5) WrapModeClamp
+drawinglayer/source/tools/emfpimage.hxx:30
+    emfplushelper::ImageDataType ImageDataTypeUnknown
+drawinglayer/source/tools/emfppen.hxx:75
+    enum emfplushelper::LineJoinType LineJoinTypeMiter
+drawinglayer/source/tools/emfppen.hxx:76
+    enum emfplushelper::LineJoinType LineJoinTypeBevel
+drawinglayer/source/tools/emfppen.hxx:77
+    enum emfplushelper::LineJoinType LineJoinTypeRound
+drawinglayer/source/tools/emfppen.hxx:78
+    enum emfplushelper::LineJoinType LineJoinTypeMiterClipped
+emfio/inc/mtftools.hxx:78
+    enum emfio::StockObject ANSI_FIXED_FONT
+emfio/inc/mtftools.hxx:79
+    enum emfio::StockObject ANSI_VAR_FONT
+emfio/inc/mtftools.hxx:80
+    enum emfio::StockObject SYSTEM_FIXED_FONT
+emfio/inc/mtftools.hxx:128
+    enum emfio::StretchMode HALFTONE
+emfio/inc/mtftools.hxx:129
+    enum emfio::StretchMode STRETCH_ANDSCANS
+emfio/inc/mtftools.hxx:130
+    enum emfio::StretchMode STRETCH_ORSCANS
+emfio/inc/mtftools.hxx:131
+    enum emfio::StretchMode STRETCH_DELETESCANS
+emfio/inc/mtftools.hxx:184
+    enum emfio::TextAlignmentMode TA_RTLREADING
+emfio/inc/mtftools.hxx:196
+    enum emfio::TernaryRasterOperation SRCERASE
+emfio/inc/mtftools.hxx:197
+    enum emfio::TernaryRasterOperation PATCOPY
+emfio/inc/mtftools.hxx:199
+    enum emfio::TernaryRasterOperation BLACKNESS
+emfio/inc/mtftools.hxx:200
+    enum emfio::TernaryRasterOperation WHITENESS
+emfio/inc/mtftools.hxx:214
+    enum emfio::PenStyle PS_USERSTYLE
+emfio/inc/mtftools.hxx:215
+    enum emfio::PenStyle PS_ALTERNATE
+emfio/inc/mtftools.hxx:235
+    enum emfio::CharacterSet ANSI_CHARSET
+emfio/inc/mtftools.hxx:237
+    enum emfio::CharacterSet SYMBOL_CHARSET
+emfio/inc/mtftools.hxx:238
+    enum emfio::CharacterSet SHIFTJIS_CHARSET
+emfio/inc/mtftools.hxx:239
+    enum emfio::CharacterSet HANGUL_CHARSET
+emfio/inc/mtftools.hxx:240
+    enum emfio::CharacterSet GB2312_CHARSET
+emfio/inc/mtftools.hxx:241
+    enum emfio::CharacterSet CHINESEBIG5_CHARSET
+emfio/inc/mtftools.hxx:244
+    enum emfio::CharacterSet MAC_CHARSET
+emfio/inc/mtftools.hxx:245
+    enum emfio::CharacterSet JOHAB_CHARSET
+emfio/inc/mtftools.hxx:246
+    enum emfio::CharacterSet GREEK_CHARSET
+emfio/inc/mtftools.hxx:247
+    enum emfio::CharacterSet TURKISH_CHARSET
+emfio/inc/mtftools.hxx:248
+    enum emfio::CharacterSet VIETNAMESE_CHARSET
+emfio/inc/mtftools.hxx:249
+    enum emfio::CharacterSet HEBREW_CHARSET
+emfio/inc/mtftools.hxx:250
+    enum emfio::CharacterSet ARABIC_CHARSET
+emfio/inc/mtftools.hxx:251
+    enum emfio::CharacterSet BALTIC_CHARSET
+emfio/inc/mtftools.hxx:252
+    enum emfio::CharacterSet RUSSIAN_CHARSET
+emfio/inc/mtftools.hxx:253
+    enum emfio::CharacterSet THAI_CHARSET
+emfio/inc/mtftools.hxx:254
+    enum emfio::CharacterSet EASTEUROPE_CHARSET
+emfio/inc/mtftools.hxx:283
+    enum emfio::FamilyFont FF_DONTCARE
+emfio/inc/mtftools.hxx:294
+    enum emfio::WeightFont FW_EXTRALIGHT
+emfio/inc/mtftools.hxx:296
+    enum emfio::WeightFont FW_NORMAL
+emfio/inc/mtftools.hxx:300
+    enum emfio::WeightFont FW_EXTRABOLD
+emfio/inc/mtftools.hxx:303
+    enum emfio::WeightFont FW_BLACK
+emfio/inc/mtftools.hxx:312
+    enum emfio::BrushStyle BS_HATCHED
+emfio/inc/mtftools.hxx:314
+    enum emfio::BrushStyle BS_INDEXED
+emfio/inc/mtftools.hxx:315
+    enum emfio::BrushStyle BS_DIBPATTERN
+emfio/inc/mtftools.hxx:316
+    enum emfio::BrushStyle BS_DIBPATTERNPT
+emfio/inc/mtftools.hxx:317
+    enum emfio::BrushStyle BS_PATTERN8X8
+emfio/inc/mtftools.hxx:318
+    enum emfio::BrushStyle BS_DIBPATTERN8X8
+emfio/inc/mtftools.hxx:319
+    enum emfio::BrushStyle BS_MONOPATTERN
+framework/inc/xml/imagesdocumenthandler.hxx:42
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ELEMENT_EXTERNALIMAGES
+framework/inc/xml/imagesdocumenthandler.hxx:43
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ELEMENT_EXTERNALENTRY
+framework/inc/xml/imagesdocumenthandler.hxx:44
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_HREF
+framework/inc/xml/imagesdocumenthandler.hxx:45
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_MASKCOLOR
+framework/inc/xml/imagesdocumenthandler.hxx:47
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_BITMAPINDEX
+framework/inc/xml/imagesdocumenthandler.hxx:48
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_MASKURL
+framework/inc/xml/imagesdocumenthandler.hxx:49
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_MASKMODE
+framework/inc/xml/imagesdocumenthandler.hxx:50
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_HIGHCONTRASTURL
+framework/inc/xml/imagesdocumenthandler.hxx:51
+    enum framework::OReadImagesDocumentHandler::Image_XML_Entry IMG_ATTRIBUTE_HIGHCONTRASTMASKURL
+framework/source/fwe/classes/actiontriggerpropertyset.cxx:50
+    enum (anonymous namespace)::EPROPERTIES PROPERTYCOUNT
+include/connectivity/dbtools.hxx:829
+    enum connectivity::dbase::DBFType dBaseIVMemo
+include/desktop/exithelper.h:26
+    enum EExitCodes EXITHELPER_NO_ERROR
+include/desktop/exithelper.h:26
+    int EXITHELPER_NO_ERROR
+include/desktop/exithelper.h:28
+    int EXITHELPER_FATAL_ERROR
+include/docmodel/color/Transformation.hxx:40
+    enum model::TransformationType SatOff
+include/editeng/borderline.hxx:135
+    enum SvxBorderLineStyle BORDER_LINE_STYLE_MAX
+include/filter/msfilter/ww8fields.hxx:28
+    enum ww::eField ePOSSIBLEBOOKMARK
+include/filter/msfilter/ww8fields.hxx:112
+    enum ww::eField eUNKNOWN2
+include/i18nutil/transliteration.hxx:45
+    enum TransliterationFlags NumToTextLower_zh_CN
+include/i18nutil/transliteration.hxx:47
+    enum TransliterationFlags NumToTextUpper_zh_CN
+include/i18nutil/transliteration.hxx:49
+    enum TransliterationFlags NumToTextLower_zh_TW
+include/i18nutil/transliteration.hxx:51
+    enum TransliterationFlags NumToTextUpper_zh_TW
+include/i18nutil/transliteration.hxx:53
+    enum TransliterationFlags NumToTextFormalHangul_ko
+include/i18nutil/transliteration.hxx:55
+    enum TransliterationFlags NumToTextFormalLower_ko
+include/i18nutil/transliteration.hxx:57
+    enum TransliterationFlags NumToTextFormalUpper_ko
+include/i18nutil/transliteration.hxx:117
+    enum TransliterationFlags smallToLarge_ja_JP
+include/i18nutil/transliteration.hxx:119
+    enum TransliterationFlags largeToSmall_ja_JP
+include/LibreOfficeKit/LibreOfficeKitEnums.h:56
+    LibreOfficeKitSelectionType LOK_SELTYPE_LARGE_TEXT
+include/LibreOfficeKit/LibreOfficeKitEnums.h:986
+    LibreOfficeKitExtTextInputType LOK_EXT_TEXTINPUT_POS
+include/oox/ole/axfontdata.hxx:39
+    enum AxFontFlags Disabled
+include/oox/ole/axfontdata.hxx:40
+    enum AxFontFlags AutoColor
+include/registry/regtype.h:128
+    enum RegError MERGE_ERROR
+include/registry/regtype.h:132
+    enum RegError MERGE_CONFLICT
+include/svl/inettype.hxx:181
+    enum INetContentType CONTENT_TYPE_IMAGE_WEBP
+include/svtools/colorcfg.hxx:47
+    enum svtools::ColorConfigEntry WRITERDIRECTCURSOR
+include/svx/diagram/datamodel.hxx:39
+    enum svx::diagram::TypeConstant XML_type
+include/svx/diagram/datamodel.hxx:40
+    enum svx::diagram::TypeConstant XML_asst
+include/svx/diagram/datamodel.hxx:45
+    enum svx::diagram::TypeConstant XML_parTrans
+include/svx/diagram/datamodel.hxx:50
+    enum svx::diagram::TypeConstant XML_sibTrans
+include/tools/stream.hxx:55
+    enum StreamMode DELETE_ON_CLOSE
+include/unotools/eventcfg.hxx:30
+    enum GlobalEventId STARTAPP
+include/unotools/eventcfg.hxx:31
+    enum GlobalEventId CLOSEAPP
+include/unotools/extendedsecurityoptions.hxx:28
+    enum SvtExtendedSecurityOptions::OpenHyperlinkMode OPEN_WITHSECURITYCHECK
+include/unotools/localedatawrapper.hxx:60
+    enum LongDateOrder Invalid
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent::AssignmentMode NoTakeOwnership
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent<class com::sun::star::beans::XPropertySet>::AssignmentMode NoTakeOwnership
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent<class com::sun::star::embed::XStorage>::AssignmentMode NoTakeOwnership
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent<class com::sun::star::sdb::XSingleSelectQueryComposer>::AssignmentMode NoTakeOwnership
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent<class com::sun::star::sdbc::XPreparedStatement>::AssignmentMode NoTakeOwnership
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent<class com::sun::star::sdbc::XStatement>::AssignmentMode NoTakeOwnership
+include/unotools/sharedunocomponent.hxx:149
+    enum utl::SharedUNOComponent<class com::sun::star::uno::XInterface>::AssignmentMode NoTakeOwnership
+include/vcl/pdf/PDFAnnotationMarker.hxx:59
+    enum vcl::pdf::PDFTextMarkerType Underline
+include/vcl/pdf/PDFAnnotationMarker.hxx:60
+    enum vcl::pdf::PDFTextMarkerType Squiggly
+include/vcl/pdf/PDFAnnotationMarker.hxx:61
+    enum vcl::pdf::PDFTextMarkerType StrikeOut
+include/vcl/pdf/PDFAnnotationSubType.hxx:19
+    enum vcl::pdf::PDFAnnotationSubType Link
+include/vcl/pdf/PDFAnnotationSubType.hxx:25
+    enum vcl::pdf::PDFAnnotationSubType Polyline
+include/vcl/pdf/PDFAnnotationSubType.hxx:27
+    enum vcl::pdf::PDFAnnotationSubType Underline
+include/vcl/pdf/PDFAnnotationSubType.hxx:28
+    enum vcl::pdf::PDFAnnotationSubType Squiggly
+include/vcl/pdf/PDFAnnotationSubType.hxx:29
+    enum vcl::pdf::PDFAnnotationSubType Strikeout
+include/vcl/pdf/PDFAnnotationSubType.hxx:31
+    enum vcl::pdf::PDFAnnotationSubType Caret
+include/vcl/pdf/PDFAnnotationSubType.hxx:34
+    enum vcl::pdf::PDFAnnotationSubType FileAttachment
+include/vcl/pdf/PDFAnnotationSubType.hxx:35
+    enum vcl::pdf::PDFAnnotationSubType Sound
+include/vcl/pdf/PDFAnnotationSubType.hxx:36
+    enum vcl::pdf::PDFAnnotationSubType Movie
+include/vcl/pdf/PDFAnnotationSubType.hxx:38
+    enum vcl::pdf::PDFAnnotationSubType Screen
+include/vcl/pdf/PDFAnnotationSubType.hxx:39
+    enum vcl::pdf::PDFAnnotationSubType Printermark
+include/vcl/pdf/PDFAnnotationSubType.hxx:40
+    enum vcl::pdf::PDFAnnotationSubType Trapnet
+include/vcl/pdf/PDFAnnotationSubType.hxx:41
+    enum vcl::pdf::PDFAnnotationSubType Watermark
+include/vcl/pdf/PDFAnnotationSubType.hxx:42
+    enum vcl::pdf::PDFAnnotationSubType Threed
+include/vcl/pdf/PDFAnnotationSubType.hxx:43
+    enum vcl::pdf::PDFAnnotationSubType Richmedia
+include/vcl/pdf/PDFAnnotationSubType.hxx:44
+    enum vcl::pdf::PDFAnnotationSubType XFAWidget
+include/vcl/toolkit/svtabbx.hxx:37
+    enum SvTabJustify AdjustRight
+include/vcl/toolkit/svtabbx.hxx:38
+    enum SvTabJustify AdjustLeft
+include/vcl/toolkit/treelistbox.hxx:146
+    enum DragDropMode APP_COPY
+include/vcl/toolkit/treelistbox.hxx:150
+    enum DragDropMode ALL
+include/vcl/vclenum.hxx:362
+    enum TrackingEventFlags Focus
+include/vcl/windowstate.hxx:38
+    enum vcl::WindowState FullScreen
+libreofficekit/qa/gtktiledviewer/gtv-lok-dialog.cxx:71
+    enum (unnamed at /home/noel/libo-plugin/libreofficekit/qa/gtktiledviewer/gtv-lok-dialog.cxx:69:1) PROP_0
+libreofficekit/source/gtk/lokdocview.cxx:310
+    enum (unnamed at /home/noel/libo-plugin/libreofficekit/source/gtk/lokdocview.cxx:308:1) PROP_0
+reportdesign/source/filter/xml/xmlEnums.hxx:42
+    enum rptxml::XMLReportToken XML_TOK_REPORT_ELEMENT
+sc/qa/unit/ucalc_copypaste.cxx:44
+    enum TestCopyPaste::CalcMode NoCalc
+sc/source/filter/excel/xiescher.cxx:480
+    enum (unnamed at /home/noel/libo-plugin/sc/source/filter/excel/xiescher.cxx:480:17) eCreateFromOffice
+sc/source/filter/inc/decl.h:23
+    enum WKTYP eWK4
+sc/source/ui/inc/anyrefdg.hxx:142
+    enum ScRefHdlrControllerImpl::(unnamed at /home/noel/libo-plugin/sc/source/ui/inc/anyrefdg.hxx:142:5) SLOTID
+sc/source/ui/inc/anyrefdg.hxx:142
+    enum ScRefHdlrControllerImpl<class SfxModelessDialogController>::(unnamed at /home/noel/libo-plugin/sc/source/ui/inc/anyrefdg.hxx:142:5) SLOTID
+sc/source/ui/inc/anyrefdg.hxx:142
+    enum ScRefHdlrControllerImpl<class SfxTabDialogController, false>::(unnamed at /home/noel/libo-plugin/sc/source/ui/inc/anyrefdg.hxx:142:5) SLOTID
+sc/source/ui/StatisticsDialogs/RegressionDialog.cxx:101
+    enum (anonymous namespace)::ScRegType LINEAR
+starmath/inc/mathml/def.hxx:100
+    enum SmMlAttributeValueEmpty MlEmpty
+starmath/inc/mathml/def.hxx:142
+    enum SmMlAttributeValueLspace NMlEmpty
+starmath/inc/mathml/def.hxx:159
+    enum SmMlAttributeValueMathsize NMlEmpty
+starmath/inc/mathml/def.hxx:203
+    enum SmMlAttributeValueRspace NMlEmpty
+starmath/inc/mathml/mathmlMo.hxx:46
+    enum moOpDP movablelimits
+starmath/inc/mathml/mathmlMo.hxx:47
+    enum moOpDP starmathCustom
+starmath/inc/mathml/mathmlMo.hxx:48
+    enum moOpDP starmathCustomMo
+starmath/inc/mathml/mathmlMo.hxx:55
+    enum moOpDF nonedf
+svx/inc/sxmkitm.hxx:25
+    enum SdrMeasureKind SDRMEASURE_RADIUS
+svx/source/inc/datanavi.hxx:61
+    enum svxform::DataGroupType DGTUnknown
+sw/inc/docary.hxx:72
+    enum SwVectorModifyBase::DestructorPolicy KeepElements
+sw/inc/docary.hxx:72
+    enum SwVectorModifyBase<class SwNumRule *>::DestructorPolicy KeepElements
+sw/inc/docary.hxx:72
+    enum SwVectorModifyBase<class SwSectionFormat *>::DestructorPolicy KeepElements
+sw/inc/docary.hxx:73
+    enum SwVectorModifyBase::DestructorPolicy FreeElements
+sw/inc/tblenum.hxx:35
+    enum TableChgWidthHeightType InvalidPos
+sw/source/filter/ww8/ww8scan.hxx:385
+    enum ePLCFT SEP
+sw/source/filter/ww8/ww8struc.hxx:949
+    enum WW8_FSPA::FSPAOrient RelPgMargin
+sw/source/filter/ww8/ww8struc.hxx:949
+    enum WW8_FSPA::FSPAOrient RelText
+sw/source/ui/fldui/fldref.cxx:763
+    enum (anonymous namespace)::FMT_REF_IDX FMT_REF_PAGE_IDX
+sw/source/ui/fldui/fldref.cxx:764
+    enum (anonymous namespace)::FMT_REF_IDX FMT_REF_CHAPTER_IDX
+sw/source/ui/fldui/fldref.cxx:765
+    enum (anonymous namespace)::FMT_REF_IDX FMT_REF_TEXT_IDX
+sw/source/ui/fldui/fldref.cxx:766
+    enum (anonymous namespace)::FMT_REF_IDX FMT_REF_UPDOWN_IDX
+sw/source/ui/fldui/fldref.cxx:768
+    enum (anonymous namespace)::FMT_REF_IDX FMT_REF_ONLYNUMBER_IDX
+sw/source/ui/fldui/fldref.cxx:769
+    enum (anonymous namespace)::FMT_REF_IDX FMT_REF_ONLYCAPTION_IDX
+sw/source/uibase/utlui/content.cxx:1029
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_OUTLINE_LEVEL
+sw/source/uibase/utlui/content.cxx:1030
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_DRAGMODE
+sw/source/uibase/utlui/content.cxx:1032
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_LINK_REGION
+sw/source/uibase/utlui/content.cxx:1033
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_COPY_REGION
+sw/source/uibase/utlui/content.cxx:1034
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_DISPLAY
+sw/source/uibase/utlui/content.cxx:1039
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_EDIT_ENTRY
+sw/source/uibase/utlui/content.cxx:1040
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_DELETE_ENTRY
+sw/source/uibase/utlui/content.cxx:1041
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_SEND_OUTLINE_TO_CLIPBOARD_ENTRY
+sw/source/uibase/utlui/content.cxx:1043
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_OUTLINE_TRACKING_DEFAULT
+sw/source/uibase/utlui/content.cxx:1044
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_OUTLINE_TRACKING_FOCUS
+sw/source/uibase/utlui/content.cxx:1045
+    enum (anonymous namespace)::STR_CONTEXT_IDX IDX_STR_OUTLINE_TRACKING_OFF
+sw/source/uibase/utlui/glbltree.cxx:93
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_UPDATE
+sw/source/uibase/utlui/glbltree.cxx:94
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_EDIT_CONTENT
+sw/source/uibase/utlui/glbltree.cxx:95
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_EDIT_INSERT
+sw/source/uibase/utlui/glbltree.cxx:96
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_INDEX
+sw/source/uibase/utlui/glbltree.cxx:97
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_FILE
+sw/source/uibase/utlui/glbltree.cxx:98
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_NEW_FILE
+sw/source/uibase/utlui/glbltree.cxx:100
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_DELETE
+sw/source/uibase/utlui/glbltree.cxx:101
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_UPDATE_SEL
+sw/source/uibase/utlui/glbltree.cxx:102
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_UPDATE_INDEX
+sw/source/uibase/utlui/glbltree.cxx:103
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_UPDATE_LINK
+sw/source/uibase/utlui/glbltree.cxx:104
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_UPDATE_ALL
+sw/source/uibase/utlui/glbltree.cxx:106
+    enum (anonymous namespace)::GLOBAL_CONTEXT_IDX IDX_STR_EDIT_LINK
+ucb/source/ucp/webdav-curl/webdavresponseparser.cxx:56
+    enum (anonymous namespace)::WebDAVNamespace WebDAVNamespace_last
+ucb/source/ucp/webdav-curl/webdavresponseparser.cxx:109
+    enum (anonymous namespace)::WebDAVName WebDAVName_last
+ucbhelper/source/client/proxydecider.cxx:127
+    enum ucbhelper::proxydecider_impl::InternetProxyDecider_Impl::ProxyType Manual
+vcl/inc/dndhelper.hxx:32
+    enum vcl::DragOrDrop Drop
+vcl/inc/font/PhysicalFontFace.hxx:105
+    vcl::font::NameID NAME_ID_COPYRIGHT
+vcl/inc/font/PhysicalFontFace.hxx:107
+    vcl::font::NameID NAME_ID_FONT_SUBFAMILY
+vcl/inc/font/PhysicalFontFace.hxx:108
+    vcl::font::NameID NAME_ID_UNIQUE_ID
+vcl/inc/font/PhysicalFontFace.hxx:109
+    vcl::font::NameID NAME_ID_FULL_NAME
+vcl/inc/font/PhysicalFontFace.hxx:110
+    vcl::font::NameID NAME_ID_VERSION_STRING
+vcl/inc/font/PhysicalFontFace.hxx:111
+    vcl::font::NameID NAME_ID_POSTSCRIPT_NAME
+vcl/inc/font/PhysicalFontFace.hxx:112
+    vcl::font::NameID NAME_ID_TRADEMARK
+vcl/inc/font/PhysicalFontFace.hxx:113
+    vcl::font::NameID NAME_ID_MANUFACTURER
+vcl/inc/font/PhysicalFontFace.hxx:114
+    vcl::font::NameID NAME_ID_DESIGNER
+vcl/inc/font/PhysicalFontFace.hxx:115
+    vcl::font::NameID NAME_ID_DESCRIPTION
+vcl/inc/font/PhysicalFontFace.hxx:116
+    vcl::font::NameID NAME_ID_VENDOR_URL
+vcl/inc/font/PhysicalFontFace.hxx:117
+    vcl::font::NameID NAME_ID_DESIGNER_URL
+vcl/inc/font/PhysicalFontFace.hxx:118
+    vcl::font::NameID NAME_ID_LICENSE
+vcl/inc/font/PhysicalFontFace.hxx:119
+    vcl::font::NameID NAME_ID_LICENSE_URL
+vcl/inc/font/PhysicalFontFace.hxx:121
+    vcl::font::NameID NAME_ID_TYPOGRAPHIC_FAMILY
+vcl/inc/font/PhysicalFontFace.hxx:122
+    vcl::font::NameID NAME_ID_TYPOGRAPHIC_SUBFAMILY
+vcl/inc/font/PhysicalFontFace.hxx:123
+    vcl::font::NameID NAME_ID_MAC_FULL_NAME
+vcl/inc/font/PhysicalFontFace.hxx:124
+    vcl::font::NameID NAME_ID_SAMPLE_TEXT
+vcl/inc/font/PhysicalFontFace.hxx:125
+    vcl::font::NameID NAME_ID_CID_FINDFONT_NAME
+vcl/inc/font/PhysicalFontFace.hxx:126
+    vcl::font::NameID NAME_ID_WWS_FAMILY
+vcl/inc/font/PhysicalFontFace.hxx:127
+    vcl::font::NameID NAME_ID_WWS_SUBFAMILY
+vcl/inc/font/PhysicalFontFace.hxx:128
+    vcl::font::NameID NAME_ID_LIGHT_BACKGROUND
+vcl/inc/font/PhysicalFontFace.hxx:129
+    vcl::font::NameID NAME_ID_DARK_BACKGROUND
+vcl/inc/font/PhysicalFontFace.hxx:130
+    vcl::font::NameID NAME_ID_VARIATIONS_PS_PREFIX
+vcl/inc/salptype.hxx:43
+    enum SalPrinterError General
+vcl/inc/unx/saldisp.hxx:63
+    srv_vendor_t vendor_none
+vcl/inc/unx/sessioninhibitor.hxx:25
+    enum ApplicationInhibitFlags APPLICATION_INHIBIT_SWITCH
+vcl/inc/unx/sessioninhibitor.hxx:26
+    enum ApplicationInhibitFlags APPLICATION_INHIBIT_SUSPEND
+vcl/source/app/svapp.cxx:1132
+    enum (unnamed at /home/noel/libo-plugin/vcl/source/app/svapp.cxx:1132:1) hwAll
+vcl/source/filter/graphicfilter2.cxx:34
+    enum (anonymous namespace)::MetafileType Memory
+vcl/source/filter/graphicfilter2.cxx:35
+    enum (anonymous namespace)::MetafileType Disk
+vcl/source/filter/graphicfilter2.cxx:39
+    enum (anonymous namespace)::MetafileVersion Version100
+vcl/source/filter/graphicfilter2.cxx:40
+    enum (anonymous namespace)::MetafileVersion Version300
+vcl/source/filter/ipcd/ipcd.cxx:41
+    enum (anonymous namespace)::PCDResolution PCDRES_4BASE
+vcl/source/filter/ipcd/ipcd.cxx:42
+    enum (anonymous namespace)::PCDResolution PCDRES_16BASE
+vcl/source/fontsubset/ttcr.hxx:48
+    enum vcl::TTCRErrCodes TTCR_UNKNOWN
+vcl/unx/gtk3/gtkinst.cxx:7887
+    enum (unnamed at /home/noel/libo-plugin/vcl/unx/gtk3/gtkinst.cxx:7885:1) PROP_0
+vcl/unx/gtk3/gtkinst.cxx:7892
+    enum (unnamed at /home/noel/libo-plugin/vcl/unx/gtk3/gtkinst.cxx:7885:1) PROP_SHADOW_TYPE
+writerfilter/source/ooxml/OOXMLFactory.hxx:30
+    enum writerfilter::ooxml::ResourceType NoResource
+writerfilter/source/ooxml/OOXMLFactory.hxx:31
+    enum writerfilter::ooxml::ResourceType Table
+writerfilter/source/ooxml/OOXMLFactory.hxx:32
+    enum writerfilter::ooxml::ResourceType Stream
+writerfilter/source/ooxml/OOXMLFactory.hxx:35
+    enum writerfilter::ooxml::ResourceType Properties
+writerfilter/source/ooxml/OOXMLFactory.hxx:39
+    enum writerfilter::ooxml::ResourceType Shape
+writerfilter/source/ooxml/OOXMLFactory.hxx:41
+    enum writerfilter::ooxml::ResourceType Value
+writerfilter/source/ooxml/OOXMLFactory.hxx:42
+    enum writerfilter::ooxml::ResourceType XNote
+writerfilter/source/ooxml/OOXMLFactory.hxx:43
+    enum writerfilter::ooxml::ResourceType TextTableCell
+writerfilter/source/ooxml/OOXMLFactory.hxx:44
+    enum writerfilter::ooxml::ResourceType TextTableRow
+writerfilter/source/ooxml/OOXMLFactory.hxx:45
+    enum writerfilter::ooxml::ResourceType TextTable
+writerfilter/source/ooxml/OOXMLFactory.hxx:46
+    enum writerfilter::ooxml::ResourceType PropertyTable
+writerfilter/source/ooxml/OOXMLFactory.hxx:47
+    enum writerfilter::ooxml::ResourceType Math
+writerfilter/source/ooxml/OOXMLFactory.hxx:48
+    enum writerfilter::ooxml::ResourceType Any
+writerfilter/source/ooxml/OOXMLFactory.hxx:53
+    enum writerfilter::ooxml::ResourceType CommentEx
+writerfilter/source/ooxml/OOXMLFactory.hxx:54
+    enum writerfilter::ooxml::ResourceType Theme
+writerfilter/source/ooxml/OOXMLFastContextHandler.hxx:202
+    enum writerfilter::ooxml::OOXMLFastContextHandler::eMathParaJc INLINE

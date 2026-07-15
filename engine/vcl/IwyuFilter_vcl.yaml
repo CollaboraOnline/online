@@ -1,0 +1,118 @@
+---
+assumeFilename: vcl/source/app/svapp.cxx
+excludelist:
+    vcl/inc/salusereventlist.hxx:
+    # Don't propose hxx -> h change in URE libs
+    - osl/thread.hxx
+    vcl/inc/headless/svpinst.hxx:
+    # Don't propose hxx -> h change in URE libs
+    - osl/thread.hxx
+    vcl/inc/unx/gendata.hxx:
+    # Don't propose hxx -> h change in URE libs
+    - osl/socket.hxx
+    vcl/inc/unx/saldisp.hxx:
+    # Don't replace with generated header
+    - epoxy/glx.h
+    vcl/inc/unx/svsys.h:
+    # Empty header, but keep intact for nice system abstraction
+    - X11/Xlib.h
+    - X11/Xutil.h
+    - X11/XKBlib.h
+    vcl/inc/svsys.h:
+    # Needed for nice system abstraction
+    - unx/svsys.h
+    vcl/qa/cppunit/outdev.cxx:
+    # Needed for direct member access
+    - basegfx/matrix/b2dhommatrix.hxx
+    vcl/source/app/salplug.cxx:
+    # Needed on WIN32
+    - salframe.hxx
+    vcl/source/app/svdata.cxx:
+    # Needed on WIN32
+    - com/sun/star/accessibility/MSAAService.hpp
+    - salframe.hxx
+    vcl/source/app/svmain.cxx:
+    # Needed on WIN32
+    - desktop/exithelper.h
+    vcl/source/components/factory.cxx:
+    # Actually these are used
+    - com/sun/star/lang/XMultiServiceFactory.hpp
+    - com/sun/star/lang/XSingleServiceFactory.hpp
+    vcl/source/filter/FilterConfigItem.cxx:
+    # Needed for direct member access
+    - com/sun/star/task/XStatusIndicator.hpp
+    vcl/source/filter/ipdf/pdfdocument.cxx:
+    - comphelper/scopeguard.hxx
+    # Actually these are used
+    - com/sun/star/security/XCertificate.hpp
+    - vector
+    vcl/source/filter/jpeg/JpegWriter.hxx:
+    # Needed for direct member access
+    - vcl/BitmapReadAccess.hxx
+    vcl/source/filter/wmf/wmfexternal.cxx:
+    # Actually these are used
+    - com/sun/star/beans/PropertyValue.hpp
+    vcl/source/fontsubset/sft.cxx:
+    # Needed on WIN32 / MAC / IOS
+    - xlat.hxx
+    vcl/source/gdi/configsettings.cxx:
+    # Needed for OSL_DEBUG_LEVEL > 2
+    - sal/log.hxx
+    vcl/source/gdi/salgdilayout.cxx:
+    # Needed on WIN32
+    - desktop/exithelper.h
+    vcl/source/helper/commandinfoprovider.cxx:
+    # Actually these are used
+    - com/sun/star/frame/XFrame.hpp
+    vcl/source/image/ImageTree.cxx:
+    # Actually these are used
+    - com/sun/star/container/XNameAccess.hpp
+    - com/sun/star/uno/Reference.hxx
+    vcl/source/treelist/headbar.cxx:
+    # Actually these are used
+    - com/sun/star/accessibility/XAccessible.hpp
+    vcl/source/window/dialog.cxx:
+    # comphelper::ScopeGuard is actually used
+    - comphelper/scopeguard.hxx
+    vcl/source/window/event.cxx:
+    # comphelper::ScopeGuard is actually used
+    - comphelper/scopeguard.hxx
+    vcl/unx/generic/app/saldisp.cxx:
+    # needed for transitive cursor includes
+    - unx/x11_cursors/salcursors.h
+    vcl/unx/generic/gdi/font.cxx:
+    # Complete type needed for implicit dtor
+    - vcl/fontcharmap.hxx
+    vcl/unx/generic/glyphs/freetype_glyphcache.cxx:
+    # Needed for FreeType header macros
+    - ft2build.h
+    vcl/unx/generic/print/genpspgraphics.cxx:
+    # Complete type needed for implicit dtor
+    - vcl/fontcharmap.hxx
+    vcl/unx/gtk3_kde5/gtk3_kde5_filepicker.cxx:
+    # Actually these are used
+    - QUrl
+    - KFileWidget
+    vcl/unx/gtk3_kde5/kde5_filepicker.cxx:
+    # Actually these are used
+    - KWindowSystem
+    - KFileWidget
+    - QtCore/QDebug
+    - QtCore/QUrl
+    - QtWidgets/QCheckBox
+    - QtWidgets/QFileDialog
+    - QtWidgets/QGridLayout
+    - QtWidgets/QWidget
+    - QtWidgets/QApplication
+    vcl/unx/gtk3_kde5/kde5_lo_filepicker_main.cxx:
+    # Actually these are used
+    - QApplication
+    - QCommandLineParser
+    vcl/unx/gtk3_kde5/kde5_filepicker_ipc.cxx:
+    # Actually these are used
+    - QUrl
+    - QApplication
+    - QDebug
+    vcl/qa/cppunit/filter/ipdf/ipdf.cxx:
+    - prewin.h
+    - postwin.h

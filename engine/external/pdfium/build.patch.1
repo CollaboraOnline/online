@@ -1,0 +1,91 @@
+-*- Mode: diff -*-
+diff --git a/core/fpdfdoc/cpdf_metadata.cpp b/core/fpdfdoc/cpdf_metadata.cpp
+index 31564f45f..5858549ef 100644
+--- a/core/fpdfdoc/cpdf_metadata.cpp
++++ b/core/fpdfdoc/cpdf_metadata.cpp
+@@ -87,7 +87,7 @@ std::vector<UnsupportedFeature> CPDF_Metadata::CheckForSharedForm() const {
+   CFX_XMLParser parser(stream);
+   std::unique_ptr<CFX_XMLDocument> doc = parser.Parse();
+   if (!doc)
+-    return {};
++    return std::vector<UnsupportedFeature>();
+ 
+   std::vector<UnsupportedFeature> unsupported;
+   CheckForSharedFormInternal(/*depth=*/0, doc->GetRoot(), &unsupported);
+diff --git a/core/fxge/cfx_face.cpp b/core/fxge/cfx_face.cpp
+index 7d9cd0f44..0d0a311aa 100644
+--- a/core/fxge/cfx_face.cpp
++++ b/core/fxge/cfx_face.cpp
+@@ -654,7 +654,7 @@ int CFX_Face::GetCharIndex(uint32_t code) {
+ }
+ 
+ int CFX_Face::GetNameIndex(const char* name) {
+-  return FT_Get_Name_Index(GetRec(), name);
++  return FT_Get_Name_Index(GetRec(), const_cast<char*>(name));
+ }
+ 
+ FX_RECT CFX_Face::GetCharBBox(uint32_t code, int glyph_index) {
+diff --git a/core/fpdfdoc/cpdf_action.cpp b/core/fpdfdoc/cpdf_action.cpp
+index a5b687d76..076a260d5 100644
+--- a/core/fpdfdoc/cpdf_action.cpp
++++ b/core/fpdfdoc/cpdf_action.cpp
+@@ -21,7 +21,7 @@
+ 
+ namespace {
+ 
+-constexpr auto kActionTypeStrings = fxcrt::ToArray<const char*>({
++std::array<const char*, 18> kActionTypeStrings = {
+     "GoTo",
+     "GoToR",
+     "GoToE",
+@@ -40,7 +40,7 @@ constexpr auto kActionTypeStrings = fxcrt::ToArray<const char*>({
+     "Rendition",
+     "Trans",
+     "GoTo3DView",
+-});
++};
+ 
+ }  // namespace
+ 
+diff --git a/core/fpdfdoc/cpdf_dest.cpp b/core/fpdfdoc/cpdf_dest.cpp
+index 8026a75d5..34c20d62f 100644
+--- a/core/fpdfdoc/cpdf_dest.cpp
++++ b/core/fpdfdoc/cpdf_dest.cpp
+@@ -21,9 +21,9 @@ namespace {
+ 
+ // These arrays are indexed by the PDFDEST_VIEW_* constants.
+ 
+-constexpr auto kZoomModes =
+-    fxcrt::ToArray<const char*>({"Unknown", "XYZ", "Fit", "FitH", "FitV",
+-                                 "FitR", "FitB", "FitBH", "FitBV"});
++std::array<const char*, 9>  kZoomModes = {
++    "Unknown", "XYZ", "Fit", "FitH", "FitV",
++                                 "FitR", "FitB", "FitBH", "FitBV"};
+ 
+ constexpr auto kZoomModeMaxParamCount =
+     fxcrt::ToArray<const uint8_t>({0, 3, 0, 1, 1, 4, 0, 1, 1});
+--- pdfium/fpdfsdk/fpdf_annot.cpp.orig	2024-08-15 10:01:30.443712200 +0200
++++ pdfium/fpdfsdk/fpdf_annot.cpp	2024-08-15 10:04:41.161274500 +0200
+@@ -1079,8 +1079,8 @@
+   if (appearanceMode < 0 || appearanceMode >= FPDF_ANNOT_APPEARANCEMODE_COUNT)
+     return false;
+ 
+-  static constexpr auto kModeKeyForMode =
+-      fxcrt::ToArray<const char*>({"N", "R", "D"});
++  static constexpr std::array<const char*, 3UL> kModeKeyForMode
++      ({"N", "R", "D"});
+   static_assert(kModeKeyForMode.size() == FPDF_ANNOT_APPEARANCEMODE_COUNT,
+                 "length of kModeKeyForMode should be equal to "
+                 "FPDF_ANNOT_APPEARANCEMODE_COUNT");
+--- a/core/fxcrt/fx_memory_wrappers.h	2025-02-13 13:38:35.761778900 +0100
++++ b/core/fxcrt/fx_memory_wrappers.h	2025-02-13 13:38:48.136654800 +0100
+@@ -33,9 +33,6 @@
+ template <class T, void* Alloc(size_t, size_t), void Free(void*)>
+ struct FxPartitionAllocAllocator {
+  public:
+-  static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value ||
+-                    IsFXDataPartitionException<T>::value,
+-                "Only numeric types allowed in this partition");
+ 
+   using value_type = T;
+   using pointer = T*;

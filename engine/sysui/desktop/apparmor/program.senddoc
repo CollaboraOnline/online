@@ -1,0 +1,37 @@
+# ------------------------------------------------------------------
+#
+#    Copyright (C) 2016 Canonical Ltd.
+#    Copyright (C) 2017 Software in the Public Interest, Inc.
+#
+#    This Source Code Form is subject to the terms of the Mozilla Public
+#    License, v. 2.0. If a copy of the MPL was not distributed with this
+#    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+#    Authors: Bryan Quigley <bryan.quigley@canonical.com>
+#             Rene Engelhard <rene@debian.org>
+#
+# ------------------------------------------------------------------
+
+#include <tunables/global>
+
+profile libreoffice-senddoc INSTDIR-program/senddoc {
+  #include <abstractions/base>
+
+  #include <abstractions/user-tmp>
+
+  /{usr/,}bin/sh        rmix,
+  /{usr/,}bin/bash      rmix,
+  /{usr/,}bin/dash      rmix,
+  /{usr/,}bin/sed       rmix,
+  /usr/bin/dirname      rmix,
+  /usr/bin/basename     rmix,
+  /{usr/,}bin/grep      rmix,
+  /{usr/,}bin/uname     rmix,
+  /usr/bin/xdg-open     rPUx,
+  /usr/bin/xdg-email    rPUx,
+  /dev/null             rw,
+  INSTDIR-program/uri-encode rmpux,
+  /usr/share/libreoffice/share/config/* r,
+  owner @{HOME}/.config/libreoffice{,dev}/?/user/uno_packages/cache/log.txt rw,
+}
+
