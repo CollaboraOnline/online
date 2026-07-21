@@ -45,9 +45,13 @@ if test ! -f poco/lib/libPocoFoundation.a ; then
     wget https://pocoproject.org/releases/poco-1.12.5p2/poco-1.12.5p2-all.tar.gz
     tar -xzf poco-1.12.5p2-all.tar.gz
     cd poco-1.12.5p2-all/
-    ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord --prefix=$BUILDDIR/poco
+    ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord --prefix=$BUILDDIR/poco
     make -j $(nproc)
     make install
+    mkdir -p $BUILDDIR/poco-engine/workdir/UnpackedTarball/poco \
+             $BUILDDIR/poco-engine/workdir/LinkTarget
+    ln -s $BUILDDIR/poco/include $BUILDDIR/poco-engine/workdir/UnpackedTarball/poco/include
+    ln -s $BUILDDIR/poco/lib $BUILDDIR/poco-engine/workdir/LinkTarget/StaticLibrary
     cd ..
 fi
 
@@ -79,7 +83,7 @@ cp -a online/engine/instdir "$INSTDIR"/opt/collaboraoffice
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$BUILDDIR"/online/engine/include --with-lo-path=/opt/collaboraoffice --with-poco-includes=$BUILDDIR/poco/include --with-poco-libs=$BUILDDIR/poco/lib $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$BUILDDIR"/online/engine/include --with-lo-path=/opt/collaboraoffice --with-lo-builddir=$BUILDDIR/poco-engine $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online && make -j $(nproc)) || exit 1
 
 # copy stuff
