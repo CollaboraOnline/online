@@ -39,23 +39,6 @@ cd "$BUILDDIR"
 rm -rf "$INSTDIR" || true
 mkdir -p "$INSTDIR"
 
-##### build static poco #####
-
-if test ! -f poco/lib/libPocoFoundation.a ; then
-    wget https://pocoproject.org/releases/poco-1.12.5p2/poco-1.12.5p2-all.tar.gz
-    tar -xzf poco-1.12.5p2-all.tar.gz
-    cd poco-1.12.5p2-all/
-    ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord --prefix=$BUILDDIR/poco
-    make -j $(nproc)
-    make install
-    mkdir -p $BUILDDIR/poco-engine/workdir/UnpackedTarball/poco \
-             $BUILDDIR/poco-engine/workdir/LinkTarget
-    ln -s $BUILDDIR/poco/include $BUILDDIR/poco-engine/workdir/UnpackedTarball/poco/include
-    ln -s $BUILDDIR/poco/lib $BUILDDIR/poco-engine/workdir/LinkTarget/StaticLibrary
-    cd ..
-fi
-
-
 ##### cloning & updating #####
 
 # Clone the online monorepo (engine/ contains the rendering engine)
@@ -67,6 +50,8 @@ fi
 
 ##### engine #####
 
+engine_dir="$BUILDDIR/online/engine"
+
 if [ -z "$ENGINE_ASSETS" ]; then
   # build engine from source
   ( cd online/engine && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format --disable-symbols ) || exit 1
@@ -74,6 +59,12 @@ if [ -z "$ENGINE_ASSETS" ]; then
 else
   # drop in prebuilt engine assets
   ( cd online/engine && wget "$ENGINE_ASSETS" -O engine-assets.tar.xz && tar -xzf engine-assets.tar.xz && rm engine-assets.tar.xz ) || exit 1
+  # The asset's config_host.mk holds the engine paths of the setup it was built in, so rewrite that
+  # to where we unpacked it:
+  old_engine_dir=$(sed -n 's/^export SRCDIR=//p' "$engine_dir/config_host.mk")
+  if [ -n "$old_engine_dir" ] && [ "$old_engine_dir" != "$engine_dir" ]; then
+    sed -i "s|$old_engine_dir|$engine_dir|g" "$engine_dir/config_host.mk"
+  fi
 fi
 
 mkdir -p "$INSTDIR"/opt/
@@ -83,7 +74,7 @@ cp -a online/engine/instdir "$INSTDIR"/opt/collaboraoffice
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$BUILDDIR"/online/engine/include --with-lo-path=/opt/collaboraoffice --with-lo-builddir=$BUILDDIR/poco-engine $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$BUILDDIR"/online/engine/include --with-lo-path=/opt/collaboraoffice --with-lo-builddir="$engine_dir" $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online && make -j $(nproc)) || exit 1
 
 # copy stuff
