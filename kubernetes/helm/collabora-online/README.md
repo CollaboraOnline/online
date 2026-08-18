@@ -448,6 +448,46 @@ Service directly.
 
 ---
 
+## Extra volumes, mounts and environment variables
+
+`extraVolumes`, `extraVolumeMounts` and `extraEnvVars` put anything else the
+Collabora pod needs into it. Each one takes the plain Kubernetes form, and the
+chart appends the entries after the ones it renders itself. All three reach both
+workload kinds, so they apply whether `deployment.kind` is `Deployment` or
+`StatefulSet`.
+
+One case is a WOPI host served with a certificate signed by a private authority.
+Mount the certificate of that authority and name it in `SSL_CERT_FILE`, and
+Collabora reaches the host over a verified connection:
+
+``` yaml
+extraVolumes:
+  - name: internal-ca
+    secret:
+      secretName: internal-ca
+
+extraVolumeMounts:
+  - name: internal-ca
+    mountPath: /etc/ssl/internal-ca
+    readOnly: true
+
+extraEnvVars:
+  - name: SSL_CERT_FILE
+    value: /etc/ssl/internal-ca/ca.crt
+```
+
+`SSL_CERT_FILE` names the one file that is trusted, and the public authorities
+the system carries are left out once it is set. Put every certificate that has to
+be verified in that file. `SSL_CERT_DIR` names a directory of certificates and
+works the same way.
+
+The other common case is a writable directory. Collabora needs one wherever
+`child_root_path` and `cache_files.path` point when the root filesystem is read
+only, and an `emptyDir` volume mounted under `/tmp` covers it.
+
+Environment variables can also be given under `collabora.env`, which takes the
+same form.
+
 ## Extra objects
 
 The chart templates routing objects for the providers it supports directly: a
