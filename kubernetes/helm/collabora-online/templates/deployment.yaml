@@ -125,7 +125,10 @@ spec:
                   key: password
                   {{- end }}
             {{- with .Values.collabora.env }}
-            {{ toYaml . | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.extraEnvVars }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
