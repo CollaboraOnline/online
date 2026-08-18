@@ -707,6 +707,11 @@ extraVolumes: []
 # Optionally specify an extra list of additional volumeMounts.
 extraVolumeMounts: []
 
+# Optionally specify an extra list of additional environment variables for the
+# Collabora container. Each entry takes the Kubernetes form, a name with a plain
+# value or a name with a valueFrom reference to a secret or a config map.
+extraEnvVars: []
+
 # Optionally specify a list of extra Kubernetes manifests to deploy with the
 # release. Each entry is rendered through tpl, so values may reference release
 # data. Use this to add provider-specific routing objects (for example an
