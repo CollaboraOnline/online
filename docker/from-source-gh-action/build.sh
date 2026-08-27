@@ -53,28 +53,24 @@ fi
 engine_dir="$BUILDDIR/online/engine"
 
 # The engine assets tarball has to be a complete engine build tree.  Online's own
-# C++ is built by the engine's gbuild, which resolves the POCO archives and
-# headers, plus the externals online links against, out of the engine's workdir.
-# Those externals are expat, libpng, openssl and zstd; zlib comes from the
-# system.  This list mirrors the one the publishing job packs, so keep the two in
-# step, and keep both in step with what online links.
+# C++ is built by the engine's gbuild, which resolves the libraries online links
+# against out of the engine's workdir.  Those are expat, libpng, openssl and
+# zstd, all of them C; zlib comes from the system, and POCO is built below.  This
+# list mirrors the one the publishing job packs, so keep the two in step, and
+# keep both in step with what online links.
 engine_assets_paths=(
     instdir
     workdir/Misc/DUMMY
     workdir/Executable/concat-deps.run
     workdir/Headers/Executable/concat-deps
-    workdir/Headers/StaticLibrary/libPocoFoundation.a
+    workdir/Headers/StaticLibrary/libexpat.a
     workdir/LinkTarget/Executable/concat-deps
-    workdir/LinkTarget/StaticLibrary/libPocoFoundation.a
-    workdir/LinkTarget/StaticLibrary/libPocoZip.a
     workdir/LinkTarget/StaticLibrary/libexpat.a
     workdir/LinkTarget/StaticLibrary/liblibpng.a
     workdir/LinkTarget/StaticLibrary/libzstd.a
     workdir/Package/openssl.filelist
     workdir/Package/prepared/openssl
     workdir/ExternalProject/openssl.done
-    workdir/UnpackedTarball/poco/include/Poco/Net/WebSocket.h
-    workdir/UnpackedTarball/poco.update
     workdir/UnpackedTarball/expat/lib
     workdir/UnpackedTarball/expat.update
     workdir/UnpackedTarball/libpng
@@ -108,6 +104,32 @@ check_engine_assets() {
     fi
 }
 
+build_engine_poco() {
+    local tarball version sha256
+    cd "$engine_dir" || return 1
+    # POCO is the one C++ library online links out of the engine workdir, so it
+    # has to come from the compiler that links it.  The assets are built on
+    # another machine, whose libstdc++ string ABI need not be this container's,
+    # and archives from the older ABI do not link here at all.  So discard the
+    # POCO the tarball brought, unpack markers included, and build it from the
+    # engine's own sources.  With the markers left in place gbuild would take
+    # the tree for already unpacked and never lay down the sources.
+    rm -rf workdir/UnpackedTarball/poco workdir/UnpackedTarball/poco.* \
+           workdir/LinkTarget/StaticLibrary/libPoco*.a* \
+           workdir/Headers/StaticLibrary/libPoco*.a
+    tarball=$(sed -n 's/^POCO_TARBALL := //p' download.lst)
+    sha256=$(sed -n 's/^POCO_SHA256SUM := //p' download.lst)
+    version=${tarball#poco-}
+    version=${version%%-all.*}
+    test -n "$tarball" -a -n "$sha256" -a -n "$version" || return 1
+    mkdir -p external/tarballs || return 1
+    # POCO is not on the LibreOffice tarball mirror, it has its own bucket.
+    wget -nc -P external/tarballs \
+         "https://pocoproject.org/releases/poco-$version/$tarball" || return 1
+    echo "$sha256  external/tarballs/$tarball" | sha256sum -c - || return 1
+    make -j "$(nproc)" -C external/poco BUILDDIR="$engine_dir"
+}
+
 if [ -z "$ENGINE_ASSETS" ]; then
   # build engine from source
   ( cd "$engine_dir" && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format --disable-symbols ) || exit 1
@@ -124,6 +146,7 @@ else
   # The libraries all arrive built, so external fetching is off and the engine's
   # fetch target has nothing left to do.
   ( cd "$engine_dir" && ./autogen.sh --with-distro=CPLinux-LOKit --with-lang=en-US --without-package-format --disable-symbols --disable-fetch-external ) || exit 1
+  ( build_engine_poco ) || exit 1
 fi
 
 mkdir -p "$INSTDIR"/opt/

@@ -18,16 +18,12 @@ installation was enough, which is why this list is longer than it used to be.
     workdir/Headers
     workdir/Executable/concat-deps.run
     workdir/LinkTarget/Executable/concat-deps
-    workdir/LinkTarget/StaticLibrary/libPoco*.a
     workdir/LinkTarget/StaticLibrary/libexpat.a
     workdir/LinkTarget/StaticLibrary/liblibpng.a
     workdir/LinkTarget/StaticLibrary/libzstd.a
     workdir/Package/openssl.filelist
     workdir/Package/prepared/openssl
     workdir/ExternalProject/openssl.done
-    workdir/UnpackedTarball/poco/include
-    workdir/UnpackedTarball/poco.done
-    workdir/UnpackedTarball/poco.update
     workdir/UnpackedTarball/expat/lib
     workdir/UnpackedTarball/expat.done
     workdir/UnpackedTarball/expat.update
@@ -48,10 +44,10 @@ naming what is absent rather than an error deep inside gbuild.
 
 ## What each entry is for
 
-POCO is one of the engine's own third-party libraries, which is why its archives
-and headers come from the engine workdir rather than from a system package. The
-other four are the libraries online links against and the engine bundles: expat,
-libpng, openssl and zstd. zlib comes from the system.
+The four libraries are the ones online links against and the engine bundles:
+expat, libpng, openssl and zstd. All four are C, so an archive built anywhere
+links here. zlib comes from the system. POCO is the exception, and is dealt with
+below.
 
 The rest are the markers gbuild reads to decide that something is already built:
 `.done` and `.update` for each unpacked tarball, `openssl.filelist` and
@@ -66,6 +62,35 @@ alongside it, and gbuild tries to relink them. An engine build creates `DUMMY`
 first, so in a faithfully unpacked tree it stays older than everything it
 guards. Both archive formats keep modification times, `zip` at 2-second
 granularity, which is harmless at that distance.
+
+## Why POCO is built here rather than shipped
+
+POCO is the one C++ library online links out of the engine workdir, and a C++
+static library only links against objects from a compatible libstdc++ ABI. The
+archives that were shipped carried the pre-C++11 `std::string` ABI, because the
+publishing job builds under a toolchain that defaults to it, while this image's
+compiler emits the newer one. Nothing linked: every reference to a POCO function
+taking a `std::string` came out undefined. The pcre2 error configure reports in
+that situation is a symptom of the failed link test, not a missing package.
+
+So `build.sh` builds POCO itself, from the engine's own sources and with the
+compiler that is going to link it. It fetches the tarball the engine's
+`download.lst` names, checks it against the checksum there, and runs
+`make -C external/poco`. That costs a couple of minutes and does not care what
+the assets were built with.
+
+POCO is therefore not part of the list above. A tarball may still carry
+`workdir/UnpackedTarball/poco`, `workdir/LinkTarget/StaticLibrary/libPoco*.a` and
+the poco unpack markers, and older ones do; `build.sh` deletes them on arrival,
+markers included. Left in place they would tell gbuild the tarball is already
+unpacked, and the sources would never be laid down. The deletion also means
+`ENGINE_ASSETS` can point at an older or differently branched asset without the
+POCO in it turning into a link failure.
+
+Before the gbuild switch this did not arise. Online built its own POCO in the
+container and reached the engine only through the LibreOfficeKit C API at run
+time, so what the assets were compiled with never mattered. Linking the engine's
+C++ archives statically is what makes it matter.
 
 ## Why config_host.mk is not in the list
 
@@ -96,16 +121,12 @@ tarball; this is the part that has to match the list above:
       workdir/Headers
       workdir/Executable/concat-deps.run
       workdir/LinkTarget/Executable/concat-deps
-      workdir/LinkTarget/StaticLibrary/libPoco*.a
       workdir/LinkTarget/StaticLibrary/libexpat.a
       workdir/LinkTarget/StaticLibrary/liblibpng.a
       workdir/LinkTarget/StaticLibrary/libzstd.a
       workdir/Package/openssl.filelist
       workdir/Package/prepared/openssl
       workdir/ExternalProject/openssl.done
-      workdir/UnpackedTarball/poco/include
-      workdir/UnpackedTarball/poco.done
-      workdir/UnpackedTarball/poco.update
       workdir/UnpackedTarball/expat/lib
       workdir/UnpackedTarball/expat.done
       workdir/UnpackedTarball/expat.update
@@ -133,7 +154,8 @@ than quietly publishing a short tarball.
 
 The list therefore lives in three places that have to agree: the `assets` array
 in the publishing job, the `engine_assets_paths` array in `build.sh`, and this
-file. What drives all three is which libraries online links against, so the
+file. The publishing job may pack more than the list asks for, POCO being the
+case in point; what it must not do is pack less. What drives all three is which libraries online links against, so the
 trigger to revisit them is online gaining or dropping one.
 
 ## Build locally
