@@ -104,6 +104,23 @@ check_engine_assets() {
     fi
 }
 
+detect_engine_cxx_abi() {
+    # The engine's COKit interface passes std::string and std::vector across the
+    # boundary into the engine's own libraries, so online has to be compiled with
+    # the same libstdc++ string ABI as the engine it is going to call.  A prebuilt
+    # engine comes from another machine, whose compiler default need not be this
+    # container's, so read the ABI off the engine and follow it.  Ubuntu's
+    # libstdc++ carries both, and online links no other C++ library, so either
+    # answer builds.
+    local abi=0
+    if nm -D --defined-only "$engine_dir"/instdir/program/libmergedlo.so 2>/dev/null \
+       | grep -q __cxx11 ; then
+        abi=1
+    fi
+    echo "Engine libstdc++ string ABI: _GLIBCXX_USE_CXX11_ABI=$abi"
+    engine_abi_flag="-D_GLIBCXX_USE_CXX11_ABI=$abi"
+}
+
 build_engine_poco() {
     local tarball version sha256
     cd "$engine_dir" || return 1
@@ -127,13 +144,14 @@ build_engine_poco() {
     wget -nc -P external/tarballs \
          "https://pocoproject.org/releases/poco-$version/$tarball" || return 1
     echo "$sha256  external/tarballs/$tarball" | sha256sum -c - || return 1
-    make -j "$(nproc)" -C external/poco BUILDDIR="$engine_dir"
+    make -j "$(nproc)" -C external/poco BUILDDIR="$engine_dir" ENVCFLAGSCXX="$engine_abi_flag"
 }
 
 if [ -z "$ENGINE_ASSETS" ]; then
   # build engine from source
   ( cd "$engine_dir" && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format --disable-symbols ) || exit 1
   ( cd "$engine_dir" && make $ENGINE_BUILD_TARGET ) || exit 1
+  detect_engine_cxx_abi
 else
   # drop in prebuilt engine assets
   ( cd "$engine_dir" && wget "$ENGINE_ASSETS" -O engine-assets.tar.gz && tar -xzf engine-assets.tar.gz && rm engine-assets.tar.gz ) || exit 1
@@ -146,6 +164,7 @@ else
   # The libraries all arrive built, so external fetching is off and the engine's
   # fetch target has nothing left to do.
   ( cd "$engine_dir" && ./autogen.sh --with-distro=CPLinux-LOKit --with-lang=en-US --without-package-format --disable-symbols --disable-fetch-external ) || exit 1
+  detect_engine_cxx_abi
   ( build_engine_poco ) || exit 1
 fi
 
@@ -156,8 +175,8 @@ cp -a "$engine_dir"/instdir "$INSTDIR"/opt/collaboraoffice
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$engine_dir"/include --with-lo-path=/opt/collaboraoffice --with-lo-builddir="$engine_dir" $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
-( cd online && make -j $(nproc)) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$engine_dir"/include --with-lo-path=/opt/collaboraoffice --with-lo-builddir="$engine_dir" CPPFLAGS="$engine_abi_flag" $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && make -j $(nproc) ENVCFLAGSCXX="$engine_abi_flag" ) || exit 1
 
 # copy stuff
 ( cd online && DESTDIR="$INSTDIR" make install ) || exit 1
