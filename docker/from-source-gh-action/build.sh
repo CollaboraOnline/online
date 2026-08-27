@@ -73,7 +73,7 @@ if [ -z "$ENGINE_ASSETS" ]; then
   ( cd online/engine && make $ENGINE_BUILD_TARGET ) || exit 1
 else
   # drop in prebuilt engine assets
-  ( cd online/engine && wget "$ENGINE_ASSETS" -O engine-assets.tar.xz && tar -xzf engine-assets.tar.xz && rm engine-assets.tar.xz ) || exit 1
+  ( cd online/engine && wget "$ENGINE_ASSETS" -O engine-assets.tar.gz && tar -xzf engine-assets.tar.gz && rm engine-assets.tar.gz ) || exit 1
 fi
 
 mkdir -p "$INSTDIR"/opt/
