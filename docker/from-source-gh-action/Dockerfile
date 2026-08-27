@@ -21,7 +21,8 @@ RUN --mount=type=cache,target=/var/cache/apt apt-get update && \
     pkg-config fontconfig snapd chromium-browser \
     rsync curl \
     # engine build dependencies
-    git build-essential zip ccache autoconf gperf nasm xsltproc flex bison
+    git build-essential zip ccache autoconf gperf nasm xsltproc flex bison \
+    uuid-dev ninja-build
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y nodejs
 
