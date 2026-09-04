@@ -154,7 +154,7 @@ if [ -z "$ENGINE_ASSETS" ]; then
   detect_engine_cxx_abi
 else
   # drop in prebuilt engine assets
-  ( cd "$engine_dir" && wget "$ENGINE_ASSETS" -O engine-assets.tar.gz && tar -xzf engine-assets.tar.gz && rm engine-assets.tar.gz ) || exit 1
+  ( cd "$engine_dir" && wget "$ENGINE_ASSETS" -O engine-assets.tar.gz && tar --no-same-owner -xzf engine-assets.tar.gz && rm engine-assets.tar.gz ) || exit 1
   check_engine_assets || exit 1
   # The assets come from another machine, so configure the tree here.  gbuild
   # compiles online's C++ with the compiler, the linker and the paths that
@@ -170,6 +170,12 @@ fi
 
 mkdir -p "$INSTDIR"/opt/
 cp -a "$engine_dir"/instdir "$INSTDIR"/opt/collaboraoffice
+# The engine tree keeps the file modes its build tools chose, and the zip tool that packs
+# the autotext, autocorrect and template archives leaves them readable by their owner
+# only.  The image runs coolwsd as a different user, which reads and copies every file of
+# this tree into each jail, so every file becomes readable by everyone.  Directories and
+# files that were already executable stay executable.
+chmod -R a+rX "$INSTDIR"/opt/collaboraoffice
 
 ##### coolwsd & cool #####
 

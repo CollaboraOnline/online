@@ -107,6 +107,20 @@ the switches the assets were built with, so the choices between system and
 bundled libraries agree with the archives in the tarball. Anything the tarball
 ships under that name is overwritten.
 
+## Why build.sh resets the file modes
+
+The tarball keeps the owner and the modes that the files had on the publishing
+machine. The zip tool there writes the archives it creates, such as the autotext
+`.bau` files, the autocorrect `.dat` files and the `.otp` and `.ott` templates,
+readable by their owner only. The image runs coolwsd as its own `cool` user, and
+each kit reads every file of the engine tree while it fills its jail, so one such
+file stops every document from loading.
+
+So `build.sh` extracts the tarball without keeping the owner, which leaves the
+files owned by root like a packaged installation, and makes every file of the
+copied engine tree readable by everyone. Directories and files that were already
+executable keep their execute bits.
+
 ## How the publishing job packs it
 
 That job is not in this repository. It builds the engine and then packs the
