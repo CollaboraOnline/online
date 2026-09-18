@@ -296,6 +296,8 @@ route:
 ingress:
   enabled: false
   className: ""
+  # Additional labels to add to the Ingress resource. These are merged with the default labels.
+  labels: {}
   annotations: {}
   # # nginx
   #  nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
