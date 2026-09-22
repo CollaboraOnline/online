@@ -15,6 +15,50 @@ entries:
           image: docker.io/alpine/k8s:1.31.1
     apiVersion: v2
     appVersion: 26.04.4.1.1
+    created: "2026-09-22T13:03:07.28921247Z"
+    description: Collabora Online helm chart
+    digest: c6e57067565a97d741b213cc6356a864d57335b6530725f7e910f9920b92864e
+    home: https://www.collaboraonline.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/main/docker
+    - https://github.com/CollaboraOnline/online/tree/main/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.3.4/collabora-online-1.3.4.tgz
+    version: 1.3.4
+  - annotations:
+      artifacthub.io/images: |
+        - name: collabora
+          image: docker.io/collabora/code:26.04.4.1.1
+        - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+        - name: nginx-unprivileged
+          image: docker.io/nginxinc/nginx-unprivileged:stable
+        - name: kubectl
+          image: docker.io/alpine/k8s:1.31.1
+    apiVersion: v2
+    appVersion: 26.04.4.1.1
     created: "2026-09-17T16:24:23.232944493Z"
     description: Collabora Online helm chart
     digest: 366b94c4e8e93375f460dbaedd554535a4213efb5b5c0e657abe4db7ad38fe07
@@ -2899,4 +2943,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2026-09-17T16:24:23.233174943Z"
+generated: "2026-09-22T13:03:07.289391284Z"
