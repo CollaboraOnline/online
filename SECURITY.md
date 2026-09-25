@@ -15,3 +15,10 @@ Currently the following Collabora Online versions are supported with security up
 ## Reporting a Vulnerability
 
 If you find a security vulnerability in Collabora Online please send an email to *officesecurity@lists.freedesktop.org*. 
+
+## What we do not treat as a vulnerability
+
+We fix these as ordinary bugs, without a CVE:
+
+- Denial of service on its own, including crashes, hangs and resource exhaustion. If it leads to something more, such as code execution or data disclosure, we assess that instead.
+- Missing hardening with no demonstrated exploit.
