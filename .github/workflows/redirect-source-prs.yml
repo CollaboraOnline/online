@@ -1,0 +1,60 @@
+name: Redirect source PRs to Gerrit
+
+# Pull requests are accepted here only for the parts this repository owns: the
+# Helm chart and the docker image build. Anything else is source code, which is
+# reviewed on Gerrit, so close the pull request and point the author there.
+#
+# pull_request_target runs this file from main, never from the pull request, and
+# nothing here checks out or runs the contributor's code.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+    branches: [main]
+
+jobs:
+  close:
+    # Maintainers and dependabot may still open pull requests for other files.
+    if: >-
+      github.event.pull_request.user.login != 'dependabot[bot]' &&
+      !contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+                github.event.pull_request.author_association)
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const allowed = ['kubernetes/helm/', 'docker/from-source-gh-action/'];
+            const pr = context.payload.pull_request;
+
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100,
+            });
+            // A rename counts on both sides, so moving a file out of the
+            // allowed directories is caught too.
+            const paths = files.flatMap(f => [f.filename, f.previous_filename].filter(Boolean));
+            const outside = paths.filter(p => !allowed.some(dir => p.startsWith(dir)));
+            if (outside.length === 0) {
+              core.info('Only Helm chart and docker build files changed, leaving the PR open.');
+              return;
+            }
+
+            const shown = outside.slice(0, 10).map(p => `- ${p}`).join('\n');
+            const more = outside.length > 10 ? `\n- ...and ${outside.length - 10} more` : '';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: `Thank you for your contribution! Pull requests on GitHub are only accepted for the Helm chart (kubernetes/helm/) and the docker image build (docker/from-source-gh-action/). This one also changes:\n\n${shown}${more}\n\nSource code is reviewed on Gerrit. Please submit your patch to the main branch of the online repo at https://gerrit.collaboraoffice.com.\n\nSee [CONTRIBUTING.md](https://github.com/CollaboraOnline/online/blob/main/CONTRIBUTING.md) for details. This PR has been automatically closed.`,
+            });
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              state: 'closed',
+            });
