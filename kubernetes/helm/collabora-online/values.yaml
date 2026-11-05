@@ -278,16 +278,18 @@ route:
   # -- Additional rules  to deny some path like ingresses
   additionalRules: []
   # eg with traefik as controller all following path will be redirect to noop@internal
+  # The RegularExpression match for the admin pages needs Traefik 3.4.5 or later. The
+  # /cool/adminws and /cool/getMetrics blocks work on any version.
   # - matches:
   #     - path:
   #         type: PathPrefix
   #         value: /cool/getMetrics
   #     - path:
   #         type: PathPrefix
-  #         value: /cool/adminws/
+  #         value: /cool/adminws
   #     - path:
-  #         type: PathPrefix
-  #         value: /browser/dist/admin/
+  #         type: RegularExpression
+  #         value: ^/browser/(.*/)?admin(Analytics|Audit|ClusterOverview|ClusterOverviewAbout|History|Log|Settings)?\.html$
   #   backendRefs:
   #     - group: traefik.io
   #       kind: TraefikService
@@ -304,8 +306,8 @@ ingress:
   # # block admin urls from outside
   #  nginx.ingress.kubernetes.io/server-snippet: |
   #    location /cool/getMetrics { deny all; return 403; }
-  #    location /cool/adminws/ { deny all; return 403; }
-  #    location /browser/dist/admin/admin.html { deny all; return 403; }
+  #    location /cool/adminws { deny all; return 403; }
+  #    location ~ ^/browser/(.*/)?admin(?!IntegratorSettings)[A-Za-z]*\.html$ { deny all; return 403; }
   #
   # # HAProxy
   #  haproxy.org/timeout-tunnel: "3600s"
@@ -323,11 +325,18 @@ ingress:
   #  haproxy-ingress.github.io/balance-algorithm: url_param WOPISrc check_post
   #  haproxy-ingress.github.io/config-backend:
   #    hash-type consistent
-  # # block admin urls from outside
+  # # block admin urls from outside. coolwsd resolves dot segments and percent escapes before
+  # # routing, so match the path in the same form. normalize-uri needs HAProxy 2.4 or later
+  # # and "expose-experimental-directives" in the global section (config-global).
+  #    http-request normalize-uri path-merge-slashes
+  #    http-request normalize-uri path-strip-dot
+  #    http-request normalize-uri path-strip-dotdot
+  #    http-request normalize-uri percent-decode-unreserved
   #    acl admin_url path_beg /cool/getMetrics
-  #    acl admin_url path_beg /cool/adminws/
-  #    acl admin_url path_beg /browser/dist/admin/admin.html
-  #    http-request deny if admin_url
+  #    acl admin_url path_beg /cool/adminws
+  #    acl admin_page path_reg ^/browser/(.*(/|%2[Ff]))?admin[A-Za-z]*\.html$
+  #    acl integrator_page path_end /adminIntegratorSettings.html
+  #    http-request deny if admin_url || admin_page !integrator_page
   #
   hosts:
     - host: chart-example.local
@@ -404,8 +413,8 @@ podDisruptionBudget:
 # ```yaml
 # nginx.ingress.kubernetes.io/server-snippet: |
 #   location /cool/getMetrics { deny all; return 403; }
-#   location /cool/adminws/ { deny all; return 403; }
-#   location /browser/dist/admin/admin.html { deny all; return 403; }
+#   location /cool/adminws { deny all; return 403; }
+#   location ~ ^/browser/(.*/)?admin(?!IntegratorSettings)[A-Za-z]*\.html$ { deny all; return 403; }
 # ```
 #
 # This a workaround in our helm chart where we will deploying a dummy deny-service which can enabled or disabled based on yaml value.
@@ -417,15 +426,17 @@ podDisruptionBudget:
 #   ingress:
 #     enabled: true
 #     className: "nginx"
+#     annotations:
+#       nginx.ingress.kubernetes.io/use-regex: "true"
 #     hosts:
 #       - host: test.collabora.online
 #         paths:
-#         - path: "/browser/dist/admin/admin.html"
+#         - path: '/browser/(.*/)?admin(?!IntegratorSettings)[A-Za-z]*\.html$'
 #           pathType: ImplementationSpecific
 #         - path: "/cool/getMetrics"
-#           pathType: Exact
-#         - path: "/cool/adminws/"
-#           pathType: Exact
+#           pathType: Prefix
+#         - path: "/cool/adminws"
+#           pathType: Prefix
 
 nginxDeny:
   enabled: false
