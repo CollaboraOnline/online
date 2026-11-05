@@ -27,6 +27,37 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.reverseProxy.podSecurityContext | nindent 8 }}
+      {{- if .Values.reverseProxy.endpointReloader.enabled }}
+      initContainers:
+        # nginx needs at least one server in the upstream to start, so this
+        # writes the first server list and waits until it names a pod.
+        - name: upstream-init
+          securityContext:
+            {{- toYaml .Values.reverseProxy.securityContext | nindent 12 }}
+          image: "{{ .Values.reverseProxy.endpointReloader.image.repository }}:{{ .Values.reverseProxy.endpointReloader.image.tag }}"
+          imagePullPolicy: {{ .Values.reverseProxy.endpointReloader.image.pullPolicy }}
+          env:
+            - name: HOME
+              value: /tmp
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -u
+              until sh /scripts/render-upstream.sh /etc/nginx/upstreams/coolwsd.conf; do
+                echo "upstream-init: no Collabora pod is listed yet"
+                sleep 2
+              done
+              echo "upstream-init: wrote the first server list"
+              cat /etc/nginx/upstreams/coolwsd.conf
+          volumeMounts:
+            - name: config
+              mountPath: /scripts/render-upstream.sh
+              subPath: render-upstream.sh
+              readOnly: true
+            - name: upstreams
+              mountPath: /etc/nginx/upstreams
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}-reverseproxy
           securityContext:
@@ -58,6 +89,11 @@ spec:
               readOnly: true
             - name: nginx-run
               mountPath: /run/nginx
+            {{- if .Values.reverseProxy.endpointReloader.enabled }}
+            - name: upstreams
+              mountPath: /etc/nginx/upstreams
+              readOnly: true
+            {{- end }}
         {{- if .Values.reverseProxy.endpointReloader.enabled }}
         - name: reloader
           securityContext:
@@ -72,24 +108,51 @@ spec:
             - -c
             - |
               set -u
+              conf=/etc/nginx/upstreams/coolwsd.conf
+              # The list that nginx loaded last.
+              loaded="$conf.loaded"
               echo "reloader: waiting for nginx pid file"
               while [ ! -s /run/nginx/nginx.pid ]; do sleep 1; done
+              # This container does not know which list nginx holds, so the
+              # first pass reloads nginx.
+              rm -f "$loaded"
               echo "reloader: watching EndpointSlices for {{ $fullName }}-reverseproxy-headless"
               while true; do
-                kubectl get endpointslices -n {{ .Release.Namespace }} \
+                # The watch ends after 60 seconds and the loop starts it again.
+                # A new watch first lists the existing slices, so a pass runs
+                # at least once a minute and repeats a pass that failed.
+                timeout 60 kubectl get endpointslices -n {{ .Release.Namespace }} \
                   -l kubernetes.io/service-name={{ $fullName }}-reverseproxy-headless \
                   --watch -o name 2>&1 | while read -r ev; do
+                    case "$ev" in
+                      endpointslice*) ;;
+                      *) echo "reloader: $ev" ;;
+                    esac
                     sleep 2
-                    pid="$(cat /run/nginx/nginx.pid 2>/dev/null || echo '')"
-                    if [ -n "$pid" ]; then
-                      echo "reloader: COOL endpoints changed ($ev), reloading nginx (pid $pid)"
-                      kill -HUP "$pid" 2>/dev/null || echo "reloader: HUP failed"
+                    # nginx reloads when the written list differs from the one
+                    # it loaded last. The list counts as loaded only after the
+                    # signal reached nginx.
+                    sh /scripts/render-upstream.sh "$conf"
+                    if ! cmp -s "$conf" "$loaded"; then
+                      pid="$(cat /run/nginx/nginx.pid 2>/dev/null)"
+                      if [ -n "$pid" ] && kill -HUP "$pid" 2>/dev/null; then
+                        cp "$conf" "$loaded"
+                        echo "reloader: reloaded nginx (pid $pid) with this list:"
+                        cat "$conf"
+                      else
+                        echo "reloader: could not signal nginx, trying again on the next pass"
+                      fi
                     fi
                   done
-                echo "reloader: watch dropped, reconnecting in 3s"
                 sleep 3
               done
           volumeMounts:
+            - name: config
+              mountPath: /scripts/render-upstream.sh
+              subPath: render-upstream.sh
+              readOnly: true
+            - name: upstreams
+              mountPath: /etc/nginx/upstreams
             - name: nginx-run
               mountPath: /run/nginx
         {{- end }}
@@ -109,6 +172,10 @@ spec:
         - name: config
           configMap:
             name: {{ $fullName }}-reverseproxy
+        {{- if .Values.reverseProxy.endpointReloader.enabled }}
+        - name: upstreams
+          emptyDir: {}
+        {{- end }}
         - name: nginx-run
           emptyDir: {}
 {{- end }}

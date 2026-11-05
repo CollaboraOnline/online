@@ -40,8 +40,20 @@ data:
 
         upstream coolwsd {
             zone coolwsd 64k;
+{{- if .Values.reverseProxy.endpointReloader.enabled }}
+            # The consistent form places each server line on a ring by its
+            # address, so the order of the lines does not matter. When a pod
+            # comes or goes, only the parameter values on that pod's part of
+            # the ring move, and every other document stays on its pod. The
+            # reloader writes one server line per pod into the included file.
+            hash $arg_{{ .Values.reverseProxy.hashParam }} consistent;
+            include /etc/nginx/upstreams/coolwsd.conf;
+{{- else }}
+            # One name stands for every pod here. nginx resolves it when it
+            # starts and picks a pod by its position in the resolved list.
             hash $arg_{{ .Values.reverseProxy.hashParam }};
             server {{ $headless }}.{{ .Release.Namespace }}.svc.cluster.local:{{ $port }};
+{{- end }}
         }
         {{- if .Values.reverseProxy.controller.enabled }}
 
@@ -83,5 +95,33 @@ data:
             }
         }
     }
+{{- end }}
+{{- if .Values.reverseProxy.endpointReloader.enabled }}
+  # Writes one nginx server line per pod address in the EndpointSlices to the
+  # file named as its argument. A pod that is starting or stopping is listed
+  # too. A starting pod refuses the connection and nginx tries the next pod.
+  # A stopping pod still holds its documents. The lines are sorted and unique,
+  # so the same set of pods always gives the same file. It exits with 0 when
+  # at least one pod is listed, and the file then holds that list. It exits
+  # with 1 when no pod is listed, and leaves the file as it was, because nginx
+  # does not load an upstream without servers.
+  render-upstream.sh: |
+    #!/bin/sh
+    set -u
+    NAMESPACE="{{ .Release.Namespace }}"
+    SELECTOR="kubernetes.io/service-name={{ $headless }}"
+    PORT="{{ $port }}"
+    target="$1"
+    next="$target.next"
+    kubectl get endpointslices -n "$NAMESPACE" -l "$SELECTOR" \
+      -o jsonpath={{ `'{range .items[*].endpoints[*]}{.addresses[0]}{"\n"}{end}'` }} \
+      | awk -v port="$PORT" {{ `'$1 != "" { address = $1; if (index(address, ":")) address = "[" address "]"; print "server " address ":" port ";" }'` }} \
+      | sort -u > "$next"
+    if [ -s "$next" ]; then
+        mv "$next" "$target"
+        exit 0
+    fi
+    rm -f "$next"
+    exit 1
 {{- end }}
 {{- end }}
