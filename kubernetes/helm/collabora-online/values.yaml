@@ -522,16 +522,22 @@ reverseProxy:
     upstream: ""
 
   # Replace the whole generated nginx.conf. Leave empty to use the generated
-  # one. Only needed for cases the knobs above do not cover.
+  # one. Only needed for cases the knobs above do not cover. With
+  # endpointReloader enabled, the list of pods is in
+  # /etc/nginx/upstreams/coolwsd.conf, one server line per pod, for an
+  # override to include in its upstream block.
   nginxConfigOverride: ""
 
-  # Open-source nginx resolves the upstream pod IPs only when it starts or
-  # reloads. This sidecar watches the Collabora EndpointSlices (a namespaced
-  # Role) and reloads nginx only when the pod set changes, so the upstream
-  # tracks live pods after a restart, scale or reinstall. It needs a shared
+  # This sidecar watches the Collabora EndpointSlices (a namespaced Role),
+  # writes one nginx server line per pod, and reloads nginx only when that
+  # list changes, so the upstream tracks live pods after a restart, scale or
+  # reinstall. With one line per pod, nginx uses consistent hashing: a pod
+  # that comes or goes moves only its own documents. It needs a shared
   # process namespace so it can signal the nginx master. Disable it on clusters
-  # that forbid shareProcessNamespace, then reload nginx by hand after pod
-  # changes with kubectl rollout restart.
+  # that forbid shareProcessNamespace. nginx then resolves the headless Service
+  # once at start, picks a pod by its position in that list, and needs a
+  # kubectl rollout restart after pod changes. Documents can then move between
+  # pods on a restart, so keep it enabled when you can.
   endpointReloader:
     enabled: true
     # Needs kubectl, a shell and kill. alpine/k8s has all three.

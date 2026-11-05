@@ -375,11 +375,15 @@ Enable it with `reverseProxy.enabled=true`. It creates:
 - a `ClusterIP` Service for the proxy,
 - a headless Service that resolves to the individual Collabora pods (nginx
   hashes across these),
-- a reloader sidecar that watches the Collabora EndpointSlices and reloads
-  nginx when the pod set changes, so the upstream tracks live pods after a
-  restart or scale. It uses a namespaced Role only. Disable it with
+- a reloader sidecar that watches the Collabora EndpointSlices, writes one
+  nginx server line per pod, and reloads nginx when that list changes, so the
+  upstream tracks live pods after a restart or scale. With one line per pod,
+  nginx uses consistent hashing, so a pod that comes or goes moves only the
+  documents it held. It uses a namespaced Role only. Disable it with
   `reverseProxy.endpointReloader.enabled=false` on clusters that forbid a
   shared process namespace, then reload nginx by hand after pod changes.
+  Without it, nginx picks a pod by its position in the address list of the
+  headless Service, so documents can move between pods on every reload.
 
 `reverseProxy.hashParam` chooses what nginx hashes on. The default `WOPISrc`
 gives correct per-document affinity for a standalone multi-replica deployment
