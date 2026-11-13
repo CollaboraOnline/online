@@ -492,6 +492,33 @@ only, and an `emptyDir` volume mounted under `/tmp` covers it.
 Environment variables can also be given under `collabora.env`, which takes the
 same form.
 
+## Custom fonts
+
+Set `deployment.customFonts.enabled=true` to have the chart create a PVC and
+mount it read-only at `/usr/share/fonts/custom` and
+`/opt/cool/systemplate/usr/share/fonts/custom` in the coolwsd pods.
+
+coolwsd cannot be used to fill that volume, because it is mounted read-only
+there and the Collabora Online image is distroless (no shell, no `tar`), so
+`kubectl cp` into a coolwsd pod is not possible. The chart therefore also
+deploys a helper Deployment, named `<fullname>-custom-fonts`, which idles at
+0 replicas. Scale it up only while copying the fonts in:
+
+```sh
+kubectl -n collabora scale deployment/collabora-online-custom-fonts --replicas=1
+kubectl -n collabora rollout status deployment/collabora-online-custom-fonts
+kubectl -n collabora cp ./MyFont.ttf <pod>:/mnt/fonts/
+kubectl -n collabora scale deployment/collabora-online-custom-fonts --replicas=0
+```
+
+(With a release name other than `collabora-online`, the Deployment is
+`<release>-collabora-online-custom-fonts`.) Then restart the coolwsd pods so
+the fonts are picked up.
+
+The helper idles at 0 replicas so that there is no pod to leave behind: an
+idle pod previously made `helm upgrade --wait` wait for a pod that would never
+become Ready again.
+
 ## Extra objects
 
 The chart templates routing objects for the providers it supports directly: a

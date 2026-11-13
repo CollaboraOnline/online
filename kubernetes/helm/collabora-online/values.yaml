@@ -212,6 +212,21 @@ deployment:
   # note: different from aliasgroups
   hostAliases: null
 
+  # Mount a PVC read-only at /usr/share/fonts/custom and
+  # /opt/cool/systemplate/usr/share/fonts/custom to deliver fonts which are not
+  # shipped in the image.
+  #
+  # coolwsd cannot be used to fill that PVC: it mounts it read-only, and the
+  # runtime image is distroless, so there is no shell and no tar for `kubectl
+  # cp`. Instead the chart deploys a helper Deployment named
+  # <fullname>-custom-fonts which idles at 0 replicas. To add fonts:
+  #
+  #   kubectl -n collabora scale deployment/collabora-online-custom-fonts --replicas=1
+  #   kubectl -n collabora rollout status deployment/collabora-online-custom-fonts
+  #   kubectl -n collabora cp ./MyFont.ttf <pod>:/mnt/fonts/
+  #   kubectl -n collabora scale deployment/collabora-online-custom-fonts --replicas=0
+  #
+  # Restart the coolwsd pods afterwards so the new fonts are picked up.
   customFonts:
     enabled: false
     pvc:
@@ -221,6 +236,7 @@ deployment:
     image:
       repository: alpine
       tag: 3.22.0
+    # Applied to the helper container only.
     securityContext: {}
 
 probes:

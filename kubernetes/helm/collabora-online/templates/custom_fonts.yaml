@@ -21,12 +21,19 @@ spec:
   storageClassName: {{ .Values.deployment.customFonts.pvc.storageClassName }}
   {{- end }}
 ---
-apiVersion: v1
-kind: Pod
+# The fonts volume is mounted read-only into coolwsd, and the runtime image is
+# distroless (no shell, no tar), so fonts cannot be copied into it directly.
+# This workload is a writable landing pad for them: scale it to 1, copy the
+# fonts into /mnt/fonts, scale it back to 0.
+#
+# It idles at 0 replicas, so there is never a pod to become Ready and it cannot
+# block `helm upgrade --wait`.
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ include "collabora-online.fullname" . }}-custom-fonts
   labels:
-    {{- include "collabora-online.labels" . | nindent 4 }}
+    {{- include "collabora-online.customFonts.labels" . | nindent 4 }}
     {{- with .Values.deployment.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -35,18 +42,33 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  restartPolicy: Never
-  containers:
-    - name: {{ .Chart.Name }}-custom-fonts
-      securityContext:
-        {{- toYaml .Values.securityContext | nindent 12 }}
-      image: "{{ .Values.deployment.customFonts.image.repository }}:{{ .Values.deployment.customFonts.image.tag }}"
-      command: ["sleep", "3600"]
-      volumeMounts:
-        - mountPath: /mnt/fonts
-          name: fonts
-  volumes:
-    - name: fonts
-      persistentVolumeClaim:
-        claimName: {{ include "collabora-online.fullname" . }}-custom-fonts
+  replicas: 0
+  selector:
+    matchLabels:
+      {{- include "collabora-online.customFonts.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "collabora-online.customFonts.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      # sleep(1) is PID 1 here and does not handle SIGTERM, so do not wait for
+      # the default 30s when scaling the helper back down.
+      terminationGracePeriodSeconds: 1
+      containers:
+        - name: {{ .Chart.Name }}-custom-fonts
+          securityContext:
+            {{- toYaml .Values.deployment.customFonts.securityContext | nindent 12 }}
+          image: "{{ .Values.deployment.customFonts.image.repository }}:{{ .Values.deployment.customFonts.image.tag }}"
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - mountPath: /mnt/fonts
+              name: fonts
+      volumes:
+        - name: fonts
+          persistentVolumeClaim:
+            claimName: {{ include "collabora-online.fullname" . }}-custom-fonts
 {{- end }}

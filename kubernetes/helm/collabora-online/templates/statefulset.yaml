@@ -138,6 +138,14 @@ spec:
               subPath: proof_key.pub
             {{- end }}
             {{- end }}
+            {{- if .Values.deployment.customFonts.enabled }}
+            - name: custom-fonts
+              mountPath: /usr/share/fonts/custom
+              readOnly: true
+            - name: custom-fonts
+              mountPath: /opt/cool/systemplate/usr/share/fonts/custom
+              readOnly: true
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- .Values.extraVolumeMounts | toYaml | nindent 12 }}
             {{- end }}
@@ -163,6 +171,11 @@ spec:
         - name: wopi-proof
           secret:
             secretName: {{ include "collabora-online.proofKeysSecretName" . | quote }}
+        {{- end }}
+        {{- if .Values.deployment.customFonts.enabled }}
+        - name: custom-fonts
+          persistentVolumeClaim:
+            claimName: {{ include "collabora-online.fullname" . }}-custom-fonts
         {{- end }}
         {{- if .Values.extraVolumes }}
         {{- .Values.extraVolumes | toYaml | nindent 8 }}

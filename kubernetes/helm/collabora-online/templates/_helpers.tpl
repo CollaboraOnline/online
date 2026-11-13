@@ -102,6 +102,31 @@ HTTPS
 {{- end }}
 
 {{/*
+Custom fonts helper selector labels.
+
+Deliberately distinct from collabora-online.selectorLabels: the chart's
+PodDisruptionBudget, NetworkPolicy and the COOL controller all select on
+app.kubernetes.io/name alone, and the fonts helper must not be counted as a
+coolwsd pod.
+*/}}
+{{- define "collabora-online.customFonts.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "collabora-online.name" . }}-custom-fonts
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Custom fonts helper common labels.
+*/}}
+{{- define "collabora-online.customFonts.labels" -}}
+helm.sh/chart: {{ include "collabora-online.chart" . }}
+{{ include "collabora-online.customFonts.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
 Reverse proxy selector labels. The app.kubernetes.io/name here is distinct
 from the main one, so selectors that match the Collabora pods by
 app.kubernetes.io/name do not also match the reverse proxy. The COOL
